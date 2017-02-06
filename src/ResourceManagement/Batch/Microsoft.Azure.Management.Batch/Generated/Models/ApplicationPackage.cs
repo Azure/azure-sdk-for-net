@@ -53,50 +53,49 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
 
         /// <summary>
-        /// Gets or sets the ID of the application.
+        /// Gets the ID of the application.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the version of the application package.
+        /// Gets the version of the application package.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        public string Version { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the current state of the application package. Possible
-        /// values include: 'pending', 'active', 'unmapped'
+        /// Gets the current state of the application package. Possible values
+        /// include: 'pending', 'active', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public PackageState? State { get; set; }
+        public PackageState? State { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the format of the application package, if the package
-        /// is active.
+        /// Gets the format of the application package, if the package is
+        /// active.
         /// </summary>
         [JsonProperty(PropertyName = "format")]
-        public string Format { get; set; }
+        public string Format { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the storage URL at which the application package is
-        /// stored.
+        /// Gets the storage URL at which the application package is stored.
         /// </summary>
         [JsonProperty(PropertyName = "storageUrl")]
-        public string StorageUrl { get; set; }
+        public string StorageUrl { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the UTC time at which the storage URL will expire.
+        /// Gets the UTC time at which the storage URL will expire.
         /// </summary>
         [JsonProperty(PropertyName = "storageUrlExpiry")]
-        public System.DateTime? StorageUrlExpiry { get; set; }
+        public System.DateTime? StorageUrlExpiry { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the time at which the package was last activated, if
-        /// the package is active.
+        /// Gets the time at which the package was last activated, if the
+        /// package is active.
         /// </summary>
         [JsonProperty(PropertyName = "lastActivationTime")]
-        public System.DateTime? LastActivationTime { get; set; }
+        public System.DateTime? LastActivationTime { get; protected set; }
 
     }
 }

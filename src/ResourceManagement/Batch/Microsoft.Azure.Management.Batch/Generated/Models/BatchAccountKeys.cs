@@ -38,16 +38,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
 
         /// <summary>
-        /// Gets or sets the primary key associated with the account.
+        /// Gets the primary key associated with the account.
         /// </summary>
         [JsonProperty(PropertyName = "primary")]
-        public string Primary { get; set; }
+        public string Primary { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the secondary key associated with the account.
+        /// Gets the secondary key associated with the account.
         /// </summary>
         [JsonProperty(PropertyName = "secondary")]
-        public string Secondary { get; set; }
+        public string Secondary { get; protected set; }
 
     }
 }

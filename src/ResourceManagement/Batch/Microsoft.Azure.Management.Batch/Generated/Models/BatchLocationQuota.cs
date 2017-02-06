@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
 
         /// <summary>
-        /// Gets or sets the number of Batch accounts that may be created under
-        /// the subscription in the specified region.
+        /// Gets the number of Batch accounts that may be created under the
+        /// subscription in the specified region.
         /// </summary>
         [JsonProperty(PropertyName = "accountQuota")]
-        public int? AccountQuota { get; set; }
+        public int? AccountQuota { get; protected set; }
 
     }
 }

@@ -64,16 +64,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Type { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the location of the resource
+        /// Gets the location of the resource
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the tags of the resource
+        /// Gets the tags of the resource
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; protected set; }
 
     }
 }

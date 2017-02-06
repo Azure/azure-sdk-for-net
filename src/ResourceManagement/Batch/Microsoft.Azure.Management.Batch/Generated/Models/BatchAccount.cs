@@ -32,12 +32,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the BatchAccount class.
         /// </summary>
-        /// <param name="coreQuota">The core quota for this Batch
-        /// account.</param>
-        /// <param name="poolQuota">The pool quota for this Batch
-        /// account.</param>
-        /// <param name="activeJobAndJobScheduleQuota">The active job and job
-        /// schedule quota for this Batch account.</param>
         /// <param name="id">The ID of the resource</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource</param>
@@ -48,13 +42,25 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Invalid', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</param>
+        /// <param name="poolAllocationMode">The allocation mode to use for
+        /// creating pools in the Batch account.</param>
+        /// <param name="keyVaultReference">A reference to the Azure key vault
+        /// associated with the Batch account.</param>
         /// <param name="autoStorage">The properties and status of any auto
-        /// storage account associated with the account.</param>
-        public BatchAccount(int coreQuota, int poolQuota, int activeJobAndJobScheduleQuota, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), AutoStorageProperties autoStorage = default(AutoStorageProperties))
+        /// storage account associated with the Batch account.</param>
+        /// <param name="coreQuota">The core quota for this Batch
+        /// account.</param>
+        /// <param name="poolQuota">The pool quota for this Batch
+        /// account.</param>
+        /// <param name="activeJobAndJobScheduleQuota">The active job and job
+        /// schedule quota for this Batch account.</param>
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int coreQuota = default(int), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
             ProvisioningState = provisioningState;
+            PoolAllocationMode = poolAllocationMode;
+            KeyVaultReference = keyVaultReference;
             AutoStorage = autoStorage;
             CoreQuota = coreQuota;
             PoolQuota = poolQuota;
@@ -69,38 +75,54 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string AccountEndpoint { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the provisioned state of the resource. Possible values
+        /// Gets the provisioned state of the resource. Possible values
         /// include: 'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Cancelled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProvisioningState ProvisioningState { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the properties and status of any auto storage account
-        /// associated with the account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.autoStorage")]
-        public AutoStorageProperties AutoStorage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the core quota for this Batch account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.coreQuota")]
-        public int CoreQuota { get; set; }
-
-        /// <summary>
-        /// Gets or sets the pool quota for this Batch account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.poolQuota")]
-        public int PoolQuota { get; set; }
-
-        /// <summary>
-        /// Gets or sets the active job and job schedule quota for this Batch
+        /// Gets the allocation mode to use for creating pools in the Batch
         /// account.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'BatchService', 'UserSubscription'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.poolAllocationMode")]
+        public PoolAllocationMode? PoolAllocationMode { get; protected set; }
+
+        /// <summary>
+        /// Gets a reference to the Azure key vault associated with the Batch
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultReference")]
+        public KeyVaultReference KeyVaultReference { get; protected set; }
+
+        /// <summary>
+        /// Gets the properties and status of any auto storage account
+        /// associated with the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoStorage")]
+        public AutoStorageProperties AutoStorage { get; protected set; }
+
+        /// <summary>
+        /// Gets the core quota for this Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coreQuota")]
+        public int CoreQuota { get; protected set; }
+
+        /// <summary>
+        /// Gets the pool quota for this Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.poolQuota")]
+        public int PoolQuota { get; protected set; }
+
+        /// <summary>
+        /// Gets the active job and job schedule quota for this Batch account.
+        /// </summary>
         [JsonProperty(PropertyName = "properties.activeJobAndJobScheduleQuota")]
-        public int ActiveJobAndJobScheduleQuota { get; set; }
+        public int ActiveJobAndJobScheduleQuota { get; protected set; }
 
         /// <summary>
         /// Validate the object.
@@ -110,6 +132,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (KeyVaultReference != null)
+            {
+                KeyVaultReference.Validate();
+            }
             if (AutoStorage != null)
             {
                 AutoStorage.Validate();

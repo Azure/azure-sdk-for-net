@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Batch
             Application = new ApplicationOperations(this);
             Location = new LocationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-12-01";
+            ApiVersion = "2017-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

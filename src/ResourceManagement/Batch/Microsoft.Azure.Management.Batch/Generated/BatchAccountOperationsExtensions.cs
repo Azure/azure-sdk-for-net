@@ -363,6 +363,13 @@ namespace Microsoft.Azure.Management.Batch
             /// <summary>
             /// Gets the account keys for the specified Batch account.
             /// </summary>
+            /// <remarks>
+            /// This operation applies only to Batch accounts created with a
+            /// poolAllocationMode of 'BatchService'. If the Batch account was created with
+            /// a poolAllocationMode of 'UserSubscription', clients cannot use access to
+            /// keys to authenticate, and must use Azure Active Directory instead. In this
+            /// case, getting the keys will fail.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -380,6 +387,13 @@ namespace Microsoft.Azure.Management.Batch
             /// <summary>
             /// Gets the account keys for the specified Batch account.
             /// </summary>
+            /// <remarks>
+            /// This operation applies only to Batch accounts created with a
+            /// poolAllocationMode of 'BatchService'. If the Batch account was created with
+            /// a poolAllocationMode of 'UserSubscription', clients cannot use access to
+            /// keys to authenticate, and must use Azure Active Directory instead. In this
+            /// case, getting the keys will fail.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
