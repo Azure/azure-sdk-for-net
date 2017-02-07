@@ -59,5 +59,16 @@ namespace Samples.Tests
                 ManageResourceGroup.Program.RunSample(rollUpClient);
             }
         }
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "ResourceManager")]
+        public void DeployVirtualMachineUsingARMTemplate()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                DeployUsingARMTemplateWithProgress.Program.RunSample(rollUpClient);
+            }
+        }
     }
 }
