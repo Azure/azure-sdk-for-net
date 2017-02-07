@@ -1548,7 +1548,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/va/{getContentSummaryFilePath}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{getContentSummaryFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", Client.AdlsFileSystemDnsSuffix);
             _url = _url.Replace("{getContentSummaryFilePath}", System.Uri.EscapeDataString(getContentSummaryFilePath));
