@@ -1,4 +1,4 @@
-# Prepare for Azure Management Libraries for .NET 1.0.0-beta5#
+﻿# Prepare for Azure Management Libraries for .NET 1.0.0-beta5#
 
 Steps to migrate code that uses Azure Management Libraries for .NET from beta 4 to beta 5 …
 
@@ -29,7 +29,7 @@ The following sample statement creates a virtual machine with an unmanaged opera
        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
        .Create();
 
-For additional sample code, please see <a href="https://github.com/azure-samples/compute-java-manage-virtual-machine-with-unmanaged-disks">Manage Virtual Machine With Unmanaged Disks</a> ready-to-run sample. 
+For additional sample code, please see <a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-with-unmanaged-disks">Manage Virtual Machine With Unmanaged Disks</a> ready-to-run sample. 
 
 ## Converting virtual machines with storage account based disks to use managed disks
  ##
