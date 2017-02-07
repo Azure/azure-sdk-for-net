@@ -487,7 +487,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             if (mustUploadBlob)
             {
                 // upload the file
-                System.Threading.Tasks.Task uploadTask = blob.UploadFromFileAsync(stageThisFile.LocalFileToStage, FileMode.Open);
+                System.Threading.Tasks.Task uploadTask = blob.UploadFromFileAsync(stageThisFile.LocalFileToStage);
 
                 await uploadTask.ConfigureAwait(continueOnCapturedContext: false);
             }
