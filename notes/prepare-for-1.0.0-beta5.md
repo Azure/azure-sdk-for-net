@@ -36,8 +36,10 @@ For additional sample code, please see <a href="https://github.com/Azure-Samples
 You can convert a virtual machine with unmanaged disks (Storage Account based) to managed disks with a single reboot.
 
     var virtualMachines = azure.VirtualMachines.List();
-    foreach (var virtualMachine : virtualMachines) {
-        if (!virtualMachine.IsManagedDiskEnabled) {
+    foreach (var virtualMachine : virtualMachines) 
+    {
+        if (!virtualMachine.IsManagedDiskEnabled) 
+        {
             virtualMachine.Deallocate();
             virtualMachine.ConvertToManaged();
         }
