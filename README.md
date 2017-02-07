@@ -1,4 +1,4 @@
-
+﻿
 #Azure Management Libraries for .NET
 
 This README is based on the latest released preview version (1.0 beta 5). If you are looking for other releases, see [More Information](#more-information)
@@ -78,7 +78,7 @@ var virtualMachineScaleSet = azure.VirtualMachineScaleSets
 	.WithSsh(sshKey)
 	.WithNewDataDisk(100)		 
 	.WithNewDataDisk(100, 1, CachingTypes.ReadWrite)
-        .WithNewDataDisk(100, 2, CachingTypes.ReadWrite, StorageAccountTypes.StandardLRS)
+	.WithNewDataDisk(100, 2, CachingTypes.ReadWrite, StorageAccountTypes.StandardLRS)
 	.WithCapacity(3)
 	.Create();
 ```
