@@ -79,11 +79,6 @@
 	<UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
 	<UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   
-	<!-- Building ClientRuntime projects -->
-	<Target Name="BuildClientRuntime" Condition="Exists($(ClientRuntimeRootDir))">
-	  <Exec Command="dotnet restore" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
-	  <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
-	</Target>
 
 	<Target Name="DisableSN" > 
 		<!-- Check for admin privs -->
@@ -141,7 +136,7 @@
 		  Condition="!Exists('$(ZipExe)')" />
 	</Target>
   
-	<Target Name="Build" DependsOnTargets="BuildClientRuntime;BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
+	<Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
 		<PropertyGroup>
 		  <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
 		  <_TemporaryNetCoreFeeds>-s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/cli-deps/api/v3/index.json</_TemporaryNetCoreFeeds>
