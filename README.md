@@ -1,14 +1,15 @@
 
 #Azure Management Libraries for .NET
 
-This README is based on the latest released preview version (1.0 beta 4). If you are looking for other releases, see [More Information](#more-information)
+This README is based on the latest released preview version (1.0 beta 5). If you are looking for other releases, see [More Information](#more-information)
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
-**1.0 beta 4** is a developer preview that supports major parts of: 
+**1.0 beta 5** is a developer preview that supports major parts of:  
 
 - Azure Virtual Machines and VM Extensions
 - Virtual Machine Scale Sets
+- Managed Disks
 - Storage
 - Networking (virtual networks, subnets, network interfaces, IP addresses, network security groups, load balancers, DNS, traffic managers and application gateways)
 - Resource Manager
@@ -40,7 +41,7 @@ var windowsVM = azure.VirtualMachines.Define("myWindowsVM")
     .WithPrimaryPrivateIpAddressDynamic()
     .WithNewPrimaryPublicIpAddress("mywindowsvmdns")
     .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-    .WithAdminUserName("tirekicker")
+    .WithAdminUsername("tirekicker")
     .WithPassword(password)
     .WithSize(VirtualMachineSizeTypes.StandardD3V2)
     .Create();
@@ -54,11 +55,7 @@ You can update a virtual machine instance by using an `Update() … Apply()` met
 
 ```csharp
 windowsVM.Update()
-	.WithNewDataDisk(10)
-	.DefineNewDataDisk(dataDiskName)
-	    .WithSizeInGB(20)
-	    .WithCaching(CachingTypes.ReadWrite)
-	    .Attach()
+	.WithNewDataDisk(20, dataDiskName, CachingTypes.ReadWrite)
 	.Apply();
 ```
 **Create a Virtual Machine Scale Set**
@@ -77,11 +74,11 @@ var virtualMachineScaleSet = azure.VirtualMachineScaleSets
 	.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
 	.WithoutPrimaryInternalLoadBalancer()
 	.WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-	.WithRootUserName(userName)
+	.WithRootUsername(userName)
 	.WithSsh(sshKey)
-	.WithNewStorageAccount(storageAccountName1)
-	.WithNewStorageAccount(storageAccountName2)
-	.WithNewStorageAccount(storageAccountName3)
+	.WithNewDataDisk(100)		 
+	.WithNewDataDisk(100, 1, CachingTypes.ReadWrite)
+        .WithNewDataDisk(100, 2, CachingTypes.ReadWrite, StorageAccountTypes.StandardLRS)
 	.WithCapacity(3)
 	.Create();
 ```
@@ -177,7 +174,7 @@ var database = sqlServer.Databases.Define(databaseName)
 
 #Sample Code
 
-You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps), Key Vault, Redis, CDN and Batch … 
+You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Managed Disks, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps), Key Vault, Redis, CDN and Batch … 
 
 <table>
   <tr>
@@ -188,26 +185,33 @@ You can find plenty of sample code that illustrates management scenarios in Azur
     <td>Virtual Machines</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-vm">Manage virtual machine</a></li>
-<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-availability-sets"> Manage availability set</li>
-<li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-images">List virtual machine images</li>
-<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-using-vm-extensions">Manage virtual machines using VM extensions</li>
-<li><a href="https://github.com/Azure-Samples/compute-dotnet-create-virtual-machines-from-generalized-image-or-specialized-vhd">Create virtual machines from generalized image or specialized VHD</li>
-<li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-extension-images">List virtual machine extension images</li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-availability-sets"> Manage availability set</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-images">List virtual machine images</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-using-vm-extensions">Manage virtual machines using VM extensions</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-extension-images">List virtual machine extension images</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-create-virtual-machines-from-generalized-image-or-specialized-vhd">Create virtual machines from generalized image or specialized VHD</a></li>
+<li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-create-virtual-machine-using-custom-image">Create virtual machine using custom image from virtual machine</a></li>
+<li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-create-virtual-machine-using-custom-image-from-VHD">Create virtual machine using custom image from VHD</a></li>
+<li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-create-virtual-machine-using-specialized-disk-from-VHD">Create virtual machine by importing a specialized operating system disk VHD</a></li>
+<li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-create-virtual-machine-using-specialized-disk-from-snapshot">Create virtual machine using specialized VHD from snapshot</a></li>
+<li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-convert-existing-virtual-machines-to-use-managed-disks">Convert virtual machines to use managed disks</a></li>
+<li><a href="https://github.com/azure-samples/compute-dotnet-manage-virtual-machine-with-unmanaged-disks">Manage virtual machine with unmanaged disks</a></li>
 </ul>
 </td>
   </tr>
   <tr>
     <td>Virtual Machines - parallel execution</td>
     <td><ul style="list-style-type:circle">
-<li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-in-parallel">Create multiple virtual machines in parallel</li>
-<li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-with-network-in-parallel">Create multiple virtual machines with network in parallel</li>
-<li><a href="http://github.com/azure-samples/compute-dotnet-create-virtual-machines-across-regions-in-parallel">Create multiple virtual machines across regions in parallel</li>
+<li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-in-parallel">Create multiple virtual machines in parallel</a></li>
+<li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-with-network-in-parallel">Create multiple virtual machines with network in parallel</a></li>
+<li><a href="http://github.com/azure-samples/compute-dotnet-create-virtual-machines-across-regions-in-parallel">Create multiple virtual machines across regions in parallel</a></li>
 </ul></td>
   </tr>
   <tr>
     <td>Virtual Machine Scale Sets</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-sets">Manage virtual machine scale sets (behind an Internet facing load balancer)</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-set-with-unmanaged-disks">Manage virtual machine scale sets with unmanaged disks</a></li>
 </ul></td>
   </tr>
   <tr>
@@ -288,6 +292,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 <li><a href="https://github.com/Azure-Samples/resources-dotnet-manage-resource">Manage resources</a></li>
 <li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-using-arm-template">Deploy resources with ARM templates</a></li>
 <li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-using-arm-template-with-progress">Deploy resources with ARM templates (with progress)</a></li>
+<li><a href="https://github.com/Azure-Samples/resources-java-deploy-virtual-machine-with-managed-disks-using-arm-template">Deploy a virtual machine with managed disks using an ARM template</a></li>
 </ul></td>
   </tr>
   <tr>
@@ -316,9 +321,9 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 # Download
 
 
-**1.0 beta 4**
+**1.0 beta 5**
 
-1.0 beta 4 release builds are available on NuGet:
+1.0 beta 5 release builds are available on NuGet:
 
 Azure Management Library                              | Package name                              | Stable (1.0 beta 4 release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
@@ -343,7 +348,7 @@ Traffic Manager  |`Microsoft.Azure.Management.TrafficManager.Fluent`  | [![NuGet
 
 # Help
 
-If you are migrating your code to 1.0 beta 4, you can use these notes for [preparing your code for 1.0 beta 4 from 1.0 beta 3](./notes/prepare-for-1.0.0-beta4.md).
+If you are migrating your code to 1.0 beta 5, you can use these notes for [preparing your code for 1.0 beta 5 from 1.0 beta 4](./notes/prepare-for-1.0.0-beta5.md).
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
@@ -365,7 +370,8 @@ If you would like to become an active contributor to this project please follow 
 
 | Version           | SHA1                                                                                      | Remarks                                               |
 |-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
-| 1.0.0-beta3       | [1.0.0-beta3](https://github.com/Azure/azure-net-for-net/tree/1.0.0-beta3)               | Tagged release for 1.0.0-beta3 version of Azure management libraries |
+| 1.0.0-beta4       | [1.0.0-beta4](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta4)           | Tagged release for 1.0.0-beta4 version of Azure management libraries |
+| 1.0.0-beta3       | [1.0.0-beta3](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta3)           | Tagged release for 1.0.0-beta3 version of Azure management libraries |
 | AutoRest       | [AutoRest](https://github.com/selvasingh/azure-sdk-for-net/tree/AutoRest)               | Main branch for AutoRest generated raw clients |
 
 ---
