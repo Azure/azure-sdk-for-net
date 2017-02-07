@@ -65,6 +65,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="firewallState">The current state of the IP address
         /// firewall for this Data Lake store account. Possible values include:
         /// 'Enabled', 'Disabled'</param>
+        /// <param name="firewallAllowAzureIps">The current state of allowing
+        /// or disallowing IPs originating within Azure through the firewall.
+        /// If the firewall is disabled, this is not enforced. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this Data Lake store account.</param>
         /// <param name="trustedIdProviderState">The current state of the
@@ -85,7 +89,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// current month. Possible values include: 'Consumption',
         /// 'Commitment_1TB', 'Commitment_10TB', 'Commitment_100TB',
         /// 'Commitment_500TB', 'Commitment_1PB', 'Commitment_5PB'</param>
-        public DataLakeStoreAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), System.DateTime? creationTime = default(System.DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), FirewallState? firewallState = default(FirewallState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), IList<TrustedIdProvider> trustedIdProviders = default(IList<TrustedIdProvider>), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultGroup = default(string), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?))
+        public DataLakeStoreAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), System.DateTime? creationTime = default(System.DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), IList<TrustedIdProvider> trustedIdProviders = default(IList<TrustedIdProvider>), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultGroup = default(string), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -96,6 +100,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
             EncryptionProvisioningState = encryptionProvisioningState;
             EncryptionConfig = encryptionConfig;
             FirewallState = firewallState;
+            FirewallAllowAzureIps = firewallAllowAzureIps;
             FirewallRules = firewallRules;
             TrustedIdProviderState = trustedIdProviderState;
             TrustedIdProviders = trustedIdProviders;
@@ -162,6 +167,15 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallState")]
         public FirewallState? FirewallState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of allowing or disallowing IPs
+        /// originating within Azure through the firewall. If the firewall is
+        /// disabled, this is not enforced. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallAllowAzureIps")]
+        public FirewallAllowAzureIpsState? FirewallAllowAzureIps { get; set; }
 
         /// <summary>
         /// Gets or sets the list of firewall rules associated with this Data

@@ -41,7 +41,7 @@ namespace DataLakeAnalytics.Tests
         public string SecretPwd { get; set; }
         public string CredentialName { get; set; }
         public string HostUrl { get; set; }
-        public string Location = "East US 2";
+        public string Location = "Brazil South";
         public DataLakeAnalyticsManagementHelper DataLakeAnalyticsManagementHelper { get; set; }
         private MockContext context;
         public CommonTestFixture(MockContext contextToUse, bool createWasbAccount = false, bool isDogfood = false)

@@ -22,18 +22,20 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store firewall rule information
+    /// Data Lake Analytics firewall rule update parameters
     /// </summary>
     [JsonTransformation]
-    public partial class FirewallRule : SubResource
+    public partial class UpdateFirewallRuleParameters
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallRule class.
+        /// Initializes a new instance of the UpdateFirewallRuleParameters
+        /// class.
         /// </summary>
-        public FirewallRule() { }
+        public UpdateFirewallRuleParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallRule class.
+        /// Initializes a new instance of the UpdateFirewallRuleParameters
+        /// class.
         /// </summary>
         /// <param name="startIpAddress">the start IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
@@ -41,11 +43,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="endIpAddress">the end IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        public UpdateFirewallRuleParameters(string startIpAddress = default(string), string endIpAddress = default(string))
         {
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
@@ -66,23 +64,6 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         [JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StartIpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StartIpAddress");
-            }
-            if (EndIpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EndIpAddress");
-            }
-        }
     }
 }
 

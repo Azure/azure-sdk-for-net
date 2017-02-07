@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
 
         /// <summary>
+        /// Gets the IFirewallRulesOperations.
+        /// </summary>
+        IFirewallRulesOperations FirewallRules { get; }
+
+        /// <summary>
         /// Gets the IStorageAccountsOperations.
         /// </summary>
         IStorageAccountsOperations StorageAccounts { get; }

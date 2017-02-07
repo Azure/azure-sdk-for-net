@@ -6,26 +6,26 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DataLake.Store.Models
+namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
+    using Analytics;
     using Azure;
     using DataLake;
     using Management;
     using Azure;
     using Management;
     using DataLake;
-    using Store;
+    using Analytics;
     using Newtonsoft.Json;
     using Rest;
     using Rest.Serialization;
-    using Store;
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store firewall rule information
+    /// Data Lake Analytics firewall rule information
     /// </summary>
     [JsonTransformation]
-    public partial class FirewallRule : SubResource
+    public partial class FirewallRule : OptionalSubResource
     {
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
@@ -85,5 +85,6 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
     }
 }
+
 
 
