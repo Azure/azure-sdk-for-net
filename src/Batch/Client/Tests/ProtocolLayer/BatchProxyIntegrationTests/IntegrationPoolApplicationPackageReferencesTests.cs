@@ -59,7 +59,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
             poolAddParameter.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = "bad" } };
 
             var exception = Assert.Throws<AggregateException>(() => client.Pool.AddAsync(poolAddParameter).Result);
@@ -80,7 +80,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
             poolAddParameter.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = "bad", Version = "999" } };
             var exception = Assert.Throws<AggregateException>(() => client.Pool.AddAsync(poolAddParameter).Result);
 
@@ -99,7 +99,7 @@
         {
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -122,7 +122,7 @@
         {
             var poolId = Guid.NewGuid().ToString();
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
             poolAddParameter.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = AppPackageIdOne } }; // valid pkg, but has no default set
@@ -144,7 +144,7 @@
             string poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -169,7 +169,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -193,7 +193,7 @@
         {
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -218,7 +218,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -244,7 +244,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -277,7 +277,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
             try
             {
                 var addResponse = client.Pool.AddAsync(poolAddParameter).Result;
@@ -313,7 +313,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -350,7 +350,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
             try
             {
                 client.Pool.AddAsync(poolAddParameter).Wait();
@@ -387,7 +387,7 @@
             var poolId = Guid.NewGuid().ToString();
             var client = new BatchServiceClient(new Uri(Url), new BatchSharedKeyCredential(AccountName, AccountKey));
 
-            var poolAddParameter = new PoolAddParameter(poolId, "small", "4");
+            var poolAddParameter = new PoolAddParameter(poolId, "small", cloudServiceConfiguration: new CloudServiceConfiguration("4"));
 
             poolAddParameter.ApplicationPackageReferences = new[]
             {
@@ -423,11 +423,11 @@
 
                 Func<Task> cleanupTask = async () =>
                     {
-                        await mgmtClient.Applications.DeleteApplicationPackageAsync(resourceGroupName, accountName, AppPackageIdOne, "1.0");
-                        await mgmtClient.Applications.DeleteApplicationPackageAsync(resourceGroupName, accountName, AppPackageIdTwo, "1.0");
-                        await mgmtClient.Applications.DeleteApplicationPackageAsync(resourceGroupName, accountName, AppPackageIdTwo, "1.1");
-                        await mgmtClient.Applications.DeleteApplicationAsync(resourceGroupName, accountName, AppPackageIdOne);
-                        await mgmtClient.Applications.DeleteApplicationAsync(resourceGroupName, accountName, AppPackageIdTwo);
+                        await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, AppPackageIdOne, "1.0");
+                        await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, AppPackageIdTwo, "1.0");
+                        await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, AppPackageIdTwo, "1.1");
+                        await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, AppPackageIdOne);
+                        await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, AppPackageIdTwo);
                     };
 
                 Task.Run(cleanupTask).GetAwaiter().GetResult();
