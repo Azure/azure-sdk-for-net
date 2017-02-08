@@ -214,6 +214,12 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\ServerKeyCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionProtectorCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecureConnectionScenarioTest\SecureConnectionPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

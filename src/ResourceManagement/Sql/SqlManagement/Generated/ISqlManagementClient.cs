@@ -317,6 +317,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations of Azure SQL Database that interact
+        /// with Azure Key Vault Server Keys. Contains operations to: Add,
+        /// Delete, and Retrieve Server Ke.
+        /// </summary>
+        IServerKeyOperations ServerKey
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// Servers.  Contains operations to: Create, Retrieve, Update, and
         /// Delete servers.

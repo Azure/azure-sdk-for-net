@@ -38,20 +38,19 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
-    /// Represents all the operations of Azure SQL Database Transparent Data
-    /// Encryption.  Contains operations to: Retrieve, and Update Transparent
-    /// Data Encryption.
+    /// Represents all the operations of Azure SQL Database that interact with
+    /// Azure Key Vault Server Keys. Contains operations to: Add, Delete, and
+    /// Retrieve Server Ke.
     /// </summary>
-    internal partial class TransparentDataEncryptionOperations : IServiceOperations<SqlManagementClient>, ITransparentDataEncryptionOperations
+    internal partial class ServerKeyOperations : IServiceOperations<SqlManagementClient>, IServerKeyOperations
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// TransparentDataEncryptionOperations class.
+        /// Initializes a new instance of the ServerKeyOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal TransparentDataEncryptionOperations(SqlManagementClient client)
+        internal ServerKeyOperations(SqlManagementClient client)
         {
             this._client = client;
         }
@@ -68,29 +67,32 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Begins creating a new or updating an existing Azure SQL Server
-        /// Transparent Data Encryption Protector.To determine the status of
-        /// the operation call GetCreateOrUpdateOperationStatus.
+        /// Begins creating a new Azure SQL Server Key or updating an existing
+        /// Azure SQL Server Key. To determine the status of the operation
+        /// call GetCreateOrUpdateOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server which will be updated.
+        /// Required. The name of the Azure SQL Server to which to add the
+        /// Server Key.
+        /// </param>
+        /// <param name='keyName'>
+        /// Required. The name of the Azure SQL Server Key.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for creating or updating an
-        /// Encryption Protector.
+        /// Required. The required parameters for createing or updating a
+        /// Server Key.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Azure Sql Database Transparent Data
-        /// Encryption Protector create or update request.
+        /// Represents the response to a Azure Sql Server Key operation request.
         /// </returns>
-        public async Task<EncryptionProtectorCreateOrUpdateResponse> BeginCreateOrUpdateEncryptionProtectorAsync(string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ServerKeyCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string serverName, string keyName, ServerKeyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -100,6 +102,10 @@ namespace Microsoft.Azure.Management.Sql
             if (serverName == null)
             {
                 throw new ArgumentNullException("serverName");
+            }
+            if (keyName == null)
+            {
+                throw new ArgumentNullException("keyName");
             }
             if (parameters == null)
             {
@@ -119,8 +125,9 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("keyName", keyName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateEncryptionProtectorAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
@@ -136,7 +143,8 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/encryptionProtector/current";
+            url = url + "/keys/";
+            url = url + Uri.EscapeDataString(keyName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -174,15 +182,15 @@ namespace Microsoft.Azure.Management.Sql
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject encryptionProtectorCreateOrUpdateParametersValue = new JObject();
-                requestDoc = encryptionProtectorCreateOrUpdateParametersValue;
+                JObject serverKeyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = serverKeyCreateOrUpdateParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                encryptionProtectorCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                serverKeyCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
-                if (parameters.Properties.ServerKeyName != null)
+                if (parameters.Properties.Uri != null)
                 {
-                    propertiesValue["serverKeyName"] = parameters.Properties.ServerKeyName;
+                    propertiesValue["uri"] = parameters.Properties.Uri;
                 }
                 
                 if (parameters.Properties.Type != null)
@@ -221,13 +229,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    EncryptionProtectorCreateOrUpdateResponse result = null;
+                    ServerKeyCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new EncryptionProtectorCreateOrUpdateResponse();
+                        result = new ServerKeyCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -274,21 +282,14 @@ namespace Microsoft.Azure.Management.Sql
                                 errorInstance.Target = targetInstance;
                             }
                             
-                            EncryptionProtector encryptionProtectorInstance = new EncryptionProtector();
-                            result.EncryptionProtector = encryptionProtectorInstance;
+                            ServerKey serverKeyInstance = new ServerKey();
+                            result.ServerKey = serverKeyInstance;
                             
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                EncryptionProtectorProperties propertiesInstance = new EncryptionProtectorProperties();
-                                encryptionProtectorInstance.Properties = propertiesInstance;
-                                
-                                JToken serverKeyNameValue = propertiesValue2["serverKeyName"];
-                                if (serverKeyNameValue != null && serverKeyNameValue.Type != JTokenType.Null)
-                                {
-                                    string serverKeyNameInstance = ((string)serverKeyNameValue);
-                                    propertiesInstance.ServerKeyName = serverKeyNameInstance;
-                                }
+                                ServerKeyProperties propertiesInstance = new ServerKeyProperties();
+                                serverKeyInstance.Properties = propertiesInstance;
                                 
                                 JToken typeValue = propertiesValue2["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
@@ -303,34 +304,48 @@ namespace Microsoft.Azure.Management.Sql
                                     string uriInstance = ((string)uriValue);
                                     propertiesInstance.Uri = uriInstance;
                                 }
+                                
+                                JToken thumbprintValue = propertiesValue2["thumbprint"];
+                                if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                {
+                                    string thumbprintInstance = ((string)thumbprintValue);
+                                    propertiesInstance.Thumbprint = thumbprintInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue2["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                encryptionProtectorInstance.Id = idInstance;
+                                serverKeyInstance.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                encryptionProtectorInstance.Name = nameInstance;
+                                serverKeyInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
                             if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
                                 string typeInstance2 = ((string)typeValue2);
-                                encryptionProtectorInstance.Type = typeInstance2;
+                                serverKeyInstance.Type = typeInstance2;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                encryptionProtectorInstance.Location = locationInstance;
+                                serverKeyInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -340,7 +355,7 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    encryptionProtectorInstance.Tags.Add(tagsKey, tagsValue);
+                                    serverKeyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -359,7 +374,232 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
                     if (statusCode == HttpStatusCode.Created)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Begins deleting an existing Azure SQL Server Key.To determine the
+        /// status of the operation call GetDeleteOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server to which the Azure SQL
+        /// Server Key belongs
+        /// </param>
+        /// <param name='keyName'>
+        /// Required. The name of the Azure SQL Server Key.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to an Azure Sql Server Key Delete request.
+        /// </returns>
+        public async Task<ServerKeyDeleteResponse> BeginDeleteAsync(string resourceGroupName, string serverName, string keyName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (keyName == null)
+            {
+                throw new ArgumentNullException("keyName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("keyName", keyName);
+                TracingAdapter.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/keys/";
+            url = url + Uri.EscapeDataString(keyName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerKeyDeleteResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerKeyDeleteResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken operationValue = responseDoc["operation"];
+                            if (operationValue != null && operationValue.Type != JTokenType.Null)
+                            {
+                                string operationInstance = ((string)operationValue);
+                                result.Operation = operationInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                result.StartTime = startTimeInstance;
+                            }
+                            
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -392,290 +632,31 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Creates or updates an Azure SQL Database Transparent Data
-        /// Encryption Operation.
+        /// Creates a new Azure SQL Server Key or updates an existing Azure SQL
+        /// Server Key.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Server to which to add the
+        /// Server Key.
         /// </param>
-        /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database for which setting the
-        /// Transparent Data Encryption applies.
+        /// <param name='keyName'>
+        /// Required. The name of the Azure SQL Server Key.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for creating or updating
-        /// transparent data encryption.
+        /// Required. The required parameters for createing or updating a
+        /// Server Key.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get for a Azure Sql Database
-        /// Transparent Data Encryption request.
+        /// Represents the response to a Azure Sql Server Key operation request.
         /// </returns>
-        public async Task<TransparentDataEncryptionGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException("databaseName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Properties == null)
-            {
-                throw new ArgumentNullException("parameters.Properties");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/databases/";
-            url = url + Uri.EscapeDataString(databaseName);
-            url = url + "/transparentDataEncryption/current";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject transparentDataEncryptionCreateOrUpdateParametersValue = new JObject();
-                requestDoc = transparentDataEncryptionCreateOrUpdateParametersValue;
-                
-                JObject propertiesValue = new JObject();
-                transparentDataEncryptionCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                
-                if (parameters.Properties.State != null)
-                {
-                    propertiesValue["status"] = parameters.Properties.State;
-                }
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    TransparentDataEncryptionGetResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new TransparentDataEncryptionGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            TransparentDataEncryption transparentDataEncryptionInstance = new TransparentDataEncryption();
-                            result.TransparentDataEncryption = transparentDataEncryptionInstance;
-                            
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                            {
-                                TransparentDataEncryptionProperties propertiesInstance = new TransparentDataEncryptionProperties();
-                                transparentDataEncryptionInstance.Properties = propertiesInstance;
-                                
-                                JToken statusValue = propertiesValue2["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    string statusInstance = ((string)statusValue);
-                                    propertiesInstance.State = statusInstance;
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                transparentDataEncryptionInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                transparentDataEncryptionInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                transparentDataEncryptionInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                transparentDataEncryptionInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    transparentDataEncryptionInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Creates a new or updates an existing Azure SQL Server Transparent
-        /// Data Encryption Protector.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server which will be updated.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The required parameters for creating or updating an
-        /// Encryption Protector.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents the response to a Azure Sql Database Transparent Data
-        /// Encryption Protector create or update request.
-        /// </returns>
-        public async Task<EncryptionProtectorCreateOrUpdateResponse> CreateOrUpdateEncryptionProtectorAsync(string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ServerKeyCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string keyName, ServerKeyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             SqlManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -686,18 +667,19 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("keyName", keyName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateEncryptionProtectorAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            EncryptionProtectorCreateOrUpdateResponse response = await client.TransparentDataEncryption.BeginCreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters, cancellationToken).ConfigureAwait(false);
+            ServerKeyCreateOrUpdateResponse response = await client.ServerKey.BeginCreateOrUpdateAsync(resourceGroupName, serverName, keyName, parameters, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            EncryptionProtectorCreateOrUpdateResponse result = await client.TransparentDataEncryption.GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ServerKeyCreateOrUpdateResponse result = await client.ServerKey.GetCreateOrUpdateOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -712,7 +694,7 @@ namespace Microsoft.Azure.Management.Sql
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.TransparentDataEncryption.GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                result = await client.ServerKey.GetCreateOrUpdateOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
@@ -733,28 +715,104 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns an Azure SQL Database Transparent Data Encryption Response.
+        /// Deletes an existing Azure SQL Server Key.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Server to which the Azure SQL
+        /// Server Key belongs
         /// </param>
-        /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database for which the
-        /// Transparent Data Encryption applies.
+        /// <param name='keyName'>
+        /// Required. The name of the Azure SQL Server Key to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get for a Azure Sql Database
-        /// Transparent Data Encryption request.
+        /// Represents the response to an Azure Sql Server Key Delete request.
         /// </returns>
-        public async Task<TransparentDataEncryptionGetResponse> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        public async Task<ServerKeyDeleteResponse> DeleteAsync(string resourceGroupName, string serverName, string keyName, CancellationToken cancellationToken)
+        {
+            SqlManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("keyName", keyName);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            ServerKeyDeleteResponse response = await client.ServerKey.BeginDeleteAsync(resourceGroupName, serverName, keyName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            ServerKeyDeleteResponse result = await client.ServerKey.GetDeleteOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 5;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.ServerKey.GetDeleteOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 15;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Gets an Azure Sql Server Key.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server that has the
+        /// key.
+        /// </param>
+        /// <param name='keyName'>
+        /// Required. The name of the Azure Key Vault Key to be retrieved from
+        /// the Azure SQL Database Server.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Server Key request.
+        /// </returns>
+        public async Task<ServerKeyGetResponse> GetAsync(string resourceGroupName, string serverName, string keyName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -765,9 +823,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("serverName");
             }
-            if (databaseName == null)
+            if (keyName == null)
             {
-                throw new ArgumentNullException("databaseName");
+                throw new ArgumentNullException("keyName");
             }
             
             // Tracing
@@ -779,7 +837,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("keyName", keyName);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -796,11 +854,10 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/databases/";
-            url = url + Uri.EscapeDataString(databaseName);
-            url = url + "/transparentDataEncryption/current";
+            url = url + "/keys/";
+            url = url + Uri.EscapeDataString(keyName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -859,13 +916,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    TransparentDataEncryptionGetResponse result = null;
+                    ServerKeyGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new TransparentDataEncryptionGetResponse();
+                        result = new ServerKeyGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -874,20 +931,41 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            TransparentDataEncryption transparentDataEncryptionInstance = new TransparentDataEncryption();
-                            result.TransparentDataEncryption = transparentDataEncryptionInstance;
+                            ServerKey serverKeyInstance = new ServerKey();
+                            result.ServerKey = serverKeyInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                TransparentDataEncryptionProperties propertiesInstance = new TransparentDataEncryptionProperties();
-                                transparentDataEncryptionInstance.Properties = propertiesInstance;
+                                ServerKeyProperties propertiesInstance = new ServerKeyProperties();
+                                serverKeyInstance.Properties = propertiesInstance;
                                 
-                                JToken statusValue = propertiesValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                JToken typeValue = propertiesValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    string statusInstance = ((string)statusValue);
-                                    propertiesInstance.State = statusInstance;
+                                    string typeInstance = ((string)typeValue);
+                                    propertiesInstance.Type = typeInstance;
+                                }
+                                
+                                JToken uriValue = propertiesValue["uri"];
+                                if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                {
+                                    string uriInstance = ((string)uriValue);
+                                    propertiesInstance.Uri = uriInstance;
+                                }
+                                
+                                JToken thumbprintValue = propertiesValue["thumbprint"];
+                                if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                {
+                                    string thumbprintInstance = ((string)thumbprintValue);
+                                    propertiesInstance.Thumbprint = thumbprintInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
                                 }
                             }
                             
@@ -895,28 +973,28 @@ namespace Microsoft.Azure.Management.Sql
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                transparentDataEncryptionInstance.Id = idInstance;
+                                serverKeyInstance.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                transparentDataEncryptionInstance.Name = nameInstance;
+                                serverKeyInstance.Name = nameInstance;
                             }
                             
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
-                                string typeInstance = ((string)typeValue);
-                                transparentDataEncryptionInstance.Type = typeInstance;
+                                string typeInstance2 = ((string)typeValue2);
+                                serverKeyInstance.Type = typeInstance2;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                transparentDataEncryptionInstance.Location = locationInstance;
+                                serverKeyInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -926,7 +1004,7 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    transparentDataEncryptionInstance.Tags.Add(tagsKey, tagsValue);
+                                    serverKeyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -962,8 +1040,8 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets the status of an Azure SQL Server Transparent Data Encryption
-        /// Protector create or update operation.
+        /// Gets the status of an Azure SQL Server Key create or update
+        /// operation.
         /// </summary>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation
@@ -972,10 +1050,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Azure Sql Database Transparent Data
-        /// Encryption Protector create or update request.
+        /// Represents the response to a Azure Sql Server Key operation request.
         /// </returns>
-        public async Task<EncryptionProtectorCreateOrUpdateResponse> GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<ServerKeyCreateOrUpdateResponse> GetCreateOrUpdateOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -991,7 +1068,7 @@ namespace Microsoft.Azure.Management.Sql
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                TracingAdapter.Enter(invocationId, this, "GetCreateOrUpdateEncryptionProtectorOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetCreateOrUpdateOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1040,13 +1117,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    EncryptionProtectorCreateOrUpdateResponse result = null;
+                    ServerKeyCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new EncryptionProtectorCreateOrUpdateResponse();
+                        result = new ServerKeyCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1093,21 +1170,14 @@ namespace Microsoft.Azure.Management.Sql
                                 errorInstance.Target = targetInstance;
                             }
                             
-                            EncryptionProtector encryptionProtectorInstance = new EncryptionProtector();
-                            result.EncryptionProtector = encryptionProtectorInstance;
+                            ServerKey serverKeyInstance = new ServerKey();
+                            result.ServerKey = serverKeyInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                EncryptionProtectorProperties propertiesInstance = new EncryptionProtectorProperties();
-                                encryptionProtectorInstance.Properties = propertiesInstance;
-                                
-                                JToken serverKeyNameValue = propertiesValue["serverKeyName"];
-                                if (serverKeyNameValue != null && serverKeyNameValue.Type != JTokenType.Null)
-                                {
-                                    string serverKeyNameInstance = ((string)serverKeyNameValue);
-                                    propertiesInstance.ServerKeyName = serverKeyNameInstance;
-                                }
+                                ServerKeyProperties propertiesInstance = new ServerKeyProperties();
+                                serverKeyInstance.Properties = propertiesInstance;
                                 
                                 JToken typeValue = propertiesValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
@@ -1122,34 +1192,48 @@ namespace Microsoft.Azure.Management.Sql
                                     string uriInstance = ((string)uriValue);
                                     propertiesInstance.Uri = uriInstance;
                                 }
+                                
+                                JToken thumbprintValue = propertiesValue["thumbprint"];
+                                if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                {
+                                    string thumbprintInstance = ((string)thumbprintValue);
+                                    propertiesInstance.Thumbprint = thumbprintInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                encryptionProtectorInstance.Id = idInstance;
+                                serverKeyInstance.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                encryptionProtectorInstance.Name = nameInstance;
+                                serverKeyInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
                             if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
                                 string typeInstance2 = ((string)typeValue2);
-                                encryptionProtectorInstance.Type = typeInstance2;
+                                serverKeyInstance.Type = typeInstance2;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                encryptionProtectorInstance.Location = locationInstance;
+                                serverKeyInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -1159,7 +1243,7 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    encryptionProtectorInstance.Tags.Add(tagsKey, tagsValue);
+                                    serverKeyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -1169,11 +1253,180 @@ namespace Microsoft.Azure.Management.Sql
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
                     }
                     if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Server Key delete operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to an Azure Sql Server Key Delete request.
+        /// </returns>
+        public async Task<ServerKeyDeleteResponse> GetDeleteOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetDeleteOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerKeyDeleteResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerKeyDeleteResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken operationValue = responseDoc["operation"];
+                            if (operationValue != null && operationValue.Type != JTokenType.Null)
+                            {
+                                string operationInstance = ((string)operationValue);
+                                result.Operation = operationInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                result.StartTime = startTimeInstance;
+                            }
+                            
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
                     if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
@@ -1203,8 +1456,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns an Azure SQL Database Transparent Data Encryption Protector
-        /// Response.
+        /// Gets all Azure SQL Database Server Keys for a server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -1217,10 +1469,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get for a Azure Sql Database
-        /// Transparent Data Encryption EncryptionProtector request.
+        /// Represents the response to a List Azure Sql Server Key request.
         /// </returns>
-        public async Task<EncryptionProtectorGetResponse> GetEncryptionProtectorAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
+        public async Task<ServerKeyListResponse> ListAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1241,7 +1492,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                TracingAdapter.Enter(invocationId, this, "GetEncryptionProtectorAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1257,7 +1508,7 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/encryptionProtector/current";
+            url = url + "/keys";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -1318,257 +1569,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    EncryptionProtectorGetResponse result = null;
+                    ServerKeyListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new EncryptionProtectorGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            EncryptionProtector encryptionProtectorInstance = new EncryptionProtector();
-                            result.EncryptionProtector = encryptionProtectorInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                EncryptionProtectorProperties propertiesInstance = new EncryptionProtectorProperties();
-                                encryptionProtectorInstance.Properties = propertiesInstance;
-                                
-                                JToken serverKeyNameValue = propertiesValue["serverKeyName"];
-                                if (serverKeyNameValue != null && serverKeyNameValue.Type != JTokenType.Null)
-                                {
-                                    string serverKeyNameInstance = ((string)serverKeyNameValue);
-                                    propertiesInstance.ServerKeyName = serverKeyNameInstance;
-                                }
-                                
-                                JToken typeValue = propertiesValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    propertiesInstance.Type = typeInstance;
-                                }
-                                
-                                JToken uriValue = propertiesValue["uri"];
-                                if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                {
-                                    string uriInstance = ((string)uriValue);
-                                    propertiesInstance.Uri = uriInstance;
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                encryptionProtectorInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                encryptionProtectorInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                            {
-                                string typeInstance2 = ((string)typeValue2);
-                                encryptionProtectorInstance.Type = typeInstance2;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                encryptionProtectorInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    encryptionProtectorInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Returns an Azure SQL Database Transparent Data Encryption Activity
-        /// Response.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
-        /// </param>
-        /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database for which the
-        /// Transparent Data Encryption applies.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents the response to a List Azure Sql Database Transparent
-        /// Data Encryption Activity request.
-        /// </returns>
-        public async Task<TransparentDataEncryptionActivityListResponse> ListActivityAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException("databaseName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("databaseName", databaseName);
-                TracingAdapter.Enter(invocationId, this, "ListActivityAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/databases/";
-            url = url + Uri.EscapeDataString(databaseName);
-            url = url + "/transparentDataEncryption/current/operationResults";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    TransparentDataEncryptionActivityListResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new TransparentDataEncryptionActivityListResponse();
+                        result = new ServerKeyListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1582,253 +1589,14 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    TransparentDataEncryptionActivity transparentDataEncryptionActivityInstance = new TransparentDataEncryptionActivity();
-                                    result.TransparentDataEncryptionActivities.Add(transparentDataEncryptionActivityInstance);
+                                    ServerKey serverKeyInstance = new ServerKey();
+                                    result.ServerKeys.Add(serverKeyInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        TransparentDataEncryptionActivityProperties propertiesInstance = new TransparentDataEncryptionActivityProperties();
-                                        transparentDataEncryptionActivityInstance.Properties = propertiesInstance;
-                                        
-                                        JToken statusValue = propertiesValue["status"];
-                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                        {
-                                            string statusInstance = ((string)statusValue);
-                                            propertiesInstance.Status = statusInstance;
-                                        }
-                                        
-                                        JToken percentCompleteValue = propertiesValue["percentComplete"];
-                                        if (percentCompleteValue != null && percentCompleteValue.Type != JTokenType.Null)
-                                        {
-                                            float percentCompleteInstance = ((float)percentCompleteValue);
-                                            propertiesInstance.PercentComplete = percentCompleteInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        transparentDataEncryptionActivityInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        transparentDataEncryptionActivityInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        transparentDataEncryptionActivityInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        transparentDataEncryptionActivityInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            transparentDataEncryptionActivityInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Returns an Azure SQL Database Transparent Data Encryption
-        /// Encryption Protector List Response.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents the response to an Azure Sql Database Transparent Data
-        /// Encryption Encryption Protector List request.
-        /// </returns>
-        public async Task<EncryptionProtectorListResponse> ListEncryptionProtectorsAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                TracingAdapter.Enter(invocationId, this, "ListEncryptionProtectorsAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/encryptionProtector";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EncryptionProtectorListResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new EncryptionProtectorListResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    EncryptionProtector encryptionProtectorInstance = new EncryptionProtector();
-                                    result.EncryptionProtector.Add(encryptionProtectorInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        EncryptionProtectorProperties propertiesInstance = new EncryptionProtectorProperties();
-                                        encryptionProtectorInstance.Properties = propertiesInstance;
-                                        
-                                        JToken serverKeyNameValue = propertiesValue["serverKeyName"];
-                                        if (serverKeyNameValue != null && serverKeyNameValue.Type != JTokenType.Null)
-                                        {
-                                            string serverKeyNameInstance = ((string)serverKeyNameValue);
-                                            propertiesInstance.ServerKeyName = serverKeyNameInstance;
-                                        }
+                                        ServerKeyProperties propertiesInstance = new ServerKeyProperties();
+                                        serverKeyInstance.Properties = propertiesInstance;
                                         
                                         JToken typeValue = propertiesValue["type"];
                                         if (typeValue != null && typeValue.Type != JTokenType.Null)
@@ -1843,34 +1611,48 @@ namespace Microsoft.Azure.Management.Sql
                                             string uriInstance = ((string)uriValue);
                                             propertiesInstance.Uri = uriInstance;
                                         }
+                                        
+                                        JToken thumbprintValue = propertiesValue["thumbprint"];
+                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance = ((string)thumbprintValue);
+                                            propertiesInstance.Thumbprint = thumbprintInstance;
+                                        }
+                                        
+                                        JToken creationDateValue = propertiesValue["creationDate"];
+                                        if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                            propertiesInstance.CreationDate = creationDateInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        encryptionProtectorInstance.Id = idInstance;
+                                        serverKeyInstance.Id = idInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        encryptionProtectorInstance.Name = nameInstance;
+                                        serverKeyInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue2 = valueValue["type"];
                                     if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                     {
                                         string typeInstance2 = ((string)typeValue2);
-                                        encryptionProtectorInstance.Type = typeInstance2;
+                                        serverKeyInstance.Type = typeInstance2;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        encryptionProtectorInstance.Location = locationInstance;
+                                        serverKeyInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1880,7 +1662,7 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            encryptionProtectorInstance.Tags.Add(tagsKey, tagsValue);
+                                            serverKeyInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }

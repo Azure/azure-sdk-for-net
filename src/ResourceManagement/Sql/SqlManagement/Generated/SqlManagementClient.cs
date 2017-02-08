@@ -378,6 +378,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._serverDisasterRecoveryConfigurations; }
         }
         
+        private IServerKeyOperations _serverKey;
+        
+        /// <summary>
+        /// Represents all the operations of Azure SQL Database that interact
+        /// with Azure Key Vault Server Keys. Contains operations to: Add,
+        /// Delete, and Retrieve Server Ke.
+        /// </summary>
+        public virtual IServerKeyOperations ServerKey
+        {
+            get { return this._serverKey; }
+        }
+        
         private IServerOperations _servers;
         
         /// <summary>
@@ -477,6 +489,7 @@ namespace Microsoft.Azure.Management.Sql
             this._serverAdvisors = new ServerAdvisorOperations(this);
             this._communicationLinks = new ServerCommunicationLinkOperations(this);
             this._serverDisasterRecoveryConfigurations = new ServerDisasterRecoveryConfigurationOperations(this);
+            this._serverKey = new ServerKeyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverRecommendedActions = new ServerRecommendedActionOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
@@ -572,6 +585,7 @@ namespace Microsoft.Azure.Management.Sql
             this._serverAdvisors = new ServerAdvisorOperations(this);
             this._communicationLinks = new ServerCommunicationLinkOperations(this);
             this._serverDisasterRecoveryConfigurations = new ServerDisasterRecoveryConfigurationOperations(this);
+            this._serverKey = new ServerKeyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverRecommendedActions = new ServerRecommendedActionOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
