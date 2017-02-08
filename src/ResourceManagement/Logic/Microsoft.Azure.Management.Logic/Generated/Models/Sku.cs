@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(SkuName? name = default(SkuName?), ResourceReference plan = default(ResourceReference))
+        public Sku(SkuName name, ResourceReference plan = default(ResourceReference))
         {
             Name = name;
             Plan = plan;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName? Name { get; set; }
+        public SkuName Name { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to plan.
@@ -48,5 +48,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "plan")]
         public ResourceReference Plan { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

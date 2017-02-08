@@ -110,5 +110,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, WorkflowParameter> Parameters { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
+        }
     }
 }

@@ -17,38 +17,35 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The integration account sku.
+    /// Logic REST API operation
     /// </summary>
-    public partial class IntegrationAccountSku
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountSku class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public IntegrationAccountSku() { }
+        public Operation() { }
 
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountSku class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public IntegrationAccountSku(IntegrationAccountSkuName name)
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
+            Display = display;
         }
 
         /// <summary>
-        /// Gets or sets the sku name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Standard'
+        /// Gets or sets operation name: {provider}/{resource}/{operation}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public IntegrationAccountSkuName Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the object that represents the operation.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; set; }
+
     }
 }

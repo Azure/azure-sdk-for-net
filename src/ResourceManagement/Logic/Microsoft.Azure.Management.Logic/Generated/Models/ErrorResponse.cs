@@ -17,38 +17,36 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The integration account sku.
+    /// Error reponse indicates Logic service is not able to process the
+    /// incoming request. The reason is provided in the error message.
     /// </summary>
-    public partial class IntegrationAccountSku
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountSku class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public IntegrationAccountSku() { }
+        public ErrorResponse() { }
 
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountSku class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public IntegrationAccountSku(IntegrationAccountSkuName name)
+        public ErrorResponse(string code = default(string), string message = default(string))
         {
-            Name = name;
+            Code = code;
+            Message = message;
         }
 
         /// <summary>
-        /// Gets or sets the sku name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Standard'
+        /// Gets or sets error code.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public IntegrationAccountSkuName Name { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets error message indicating why the operation failed.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
+
     }
 }

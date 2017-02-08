@@ -675,6 +675,10 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workflow");
             }
+            if (workflow != null)
+            {
+                workflow.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1797,6 +1801,10 @@ namespace Microsoft.Azure.Management.Logic
             if (workflow == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workflow");
+            }
+            if (workflow != null)
+            {
+                workflow.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
