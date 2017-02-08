@@ -13,13 +13,12 @@ namespace Microsoft.Azure.Management.Network.Models
     using Network;
 
     /// <summary>
-    /// Defines values for NetworkOperationStatus.
+    /// Defines values for Access.
     /// </summary>
-    public static class NetworkOperationStatus
+    public static class Access
     {
-        public const string InProgress = "InProgress";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
+        public const string Allow = "Allow";
+        public const string Deny = "Deny";
     }
 }
 
