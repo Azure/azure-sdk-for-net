@@ -325,7 +325,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 
 1.0 beta 5 release builds are available on NuGet:
 
-Azure Management Library                              | Package name                              | Stable (1.0 beta 4 release)
+Azure Management Library                              | Package name                              | Stable (1.0 beta 5 release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
 Azure Management Client (wrapper package) | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
 App Service (Web Apps) | `Microsoft.Azure.Management.AppService.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/)
