@@ -1,38 +1,38 @@
+{
+  "Name": "TaskDependencies",
+  "ProtocolName": "Models.TaskDependencies",
+  "Comment": "Specifies any dependencies of a task. Any task that is explicitly specified or within a dependency range must complete before the dependant task will be scheduled.",
+  "IsConstructorPublic": false,
+  "Properties": [
     {
-      "Name": "TaskDependencies",
-      "ProtocolName": "Models.TaskDependencies",
-      "Comment": "Specifies the tasks that a <see cref=\"CloudTask\"/> depends on. The task will not be scheduled until all depended-on tasks have completed successfully.",
-      "IsConstructorPublic": false,
-      "Properties": [
-        {
-          "Key": {
-            "Type": "IReadOnlyList<TaskIdRange>",
-            "Name": "TaskIdRanges",
-            "SummaryComment": "The list of task ranges that must complete before this task can be scheduled.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "read,write",
-            "HideSetter": true
-          },
-          "Value": {
-            "Type": "IList<Models.TaskIdRange>",
-            "Name": "TaskIdRanges"
-          }
-        },
-        {
-          "Key": {
-            "Type": "IReadOnlyList<string>",
-            "Name": "TaskIds",
-            "SummaryComment": "The list of task ids that must complete before this task can be scheduled.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "read,write",
-            "HideSetter": true
-          },
-          "Value": {
-            "Type": "IList<string>",
-            "Name": "TaskIds"
-          }
-        }
-      ]
+      "Key": {
+        "Type": "IReadOnlyList<TaskIdRange>",
+        "Name": "TaskIdRanges",
+        "SummaryComment": "The list of task IDs that this task depends on. All tasks in this list must complete successfully before the dependent task can be scheduled.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "HideSetter": true
+      },
+      "Value": {
+        "Type": "IList<Models.TaskIdRange>",
+        "Name": "TaskIdRanges"
+      }
+    },
+    {
+      "Key": {
+        "Type": "IReadOnlyList<string>",
+        "Name": "TaskIds",
+        "SummaryComment": "The list of task ID ranges that this task depends on. All tasks in all ranges must complete successfully before the dependent task can be scheduled.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "HideSetter": true
+      },
+      "Value": {
+        "Type": "IList<string>",
+        "Name": "TaskIds"
+      }
     }
+  ]
+}

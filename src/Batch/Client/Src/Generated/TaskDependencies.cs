@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Specifies the tasks that a <see cref="CloudTask"/> depends on. The task will not be scheduled until all depended-on 
-    /// tasks have completed successfully.
+    /// Specifies any dependencies of a task. Any task that is explicitly specified or within a dependency range must complete 
+    /// before the dependant task will be scheduled.
     /// </summary>
     public partial class TaskDependencies : ITransportObjectProvider<Models.TaskDependencies>, IPropertyMetadata
     {
@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Batch
         #region TaskDependencies
 
         /// <summary>
-        /// Gets the list of task ranges that must complete before this task can be scheduled.
+        /// Gets the list of task IDs that this task depends on. All tasks in this list must complete successfully before 
+        /// the dependent task can be scheduled.
         /// </summary>
         public IReadOnlyList<TaskIdRange> TaskIdRanges
         {
@@ -58,7 +59,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the list of task ids that must complete before this task can be scheduled.
+        /// Gets the list of task ID ranges that this task depends on. All tasks in all ranges must complete successfully 
+        /// before the dependent task can be scheduled.
         /// </summary>
         public IReadOnlyList<string> TaskIds
         {

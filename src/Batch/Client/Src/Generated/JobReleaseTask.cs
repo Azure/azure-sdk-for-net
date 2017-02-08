@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Batch
                     "RetentionTime",
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
                     "UserIdentity",
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
             }
         }
 
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the user identity under which the task runs.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task runs as a non-administrative user unique to the task
+        /// If omitted, the task runs as a non-administrative user unique to the task.
         /// </remarks>
         public UserIdentity UserIdentity
         {
