@@ -327,7 +327,7 @@ namespace Test.Azure.Management.Logic
         /// Creates an Integration account agreement
         /// </summary>
         /// <param name="integrationAccountAgreementName">Name of the integration account agreement</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>        
+        /// <param name="integrationAccountName">Name of the integration account</param>
         /// <returns>Agreement instance</returns>
         private IntegrationAccountAgreement CreateIntegrationAccountAgreementInstance(
             string integrationAccountAgreementName,
