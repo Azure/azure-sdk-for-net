@@ -24,18 +24,54 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10, 3.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.2",
-    "Microsoft.Azure.Management.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Graph.RBAC.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Sql.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta50, 2.0)",
+    "Microsoft.Azure.Management.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.ResourceManager.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Storage.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Compute.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Network.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Graph.RBAC.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.KeyVault.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Batch.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Sql.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Cdn.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Redis.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.AppService.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
     "SSH.NET": "2016.0.0"
   }
 }

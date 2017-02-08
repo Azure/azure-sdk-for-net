@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Storage Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Storage management APIs.")]
 
-[assembly: AssemblyVersion("1.0.0.50")]
-[assembly: AssemblyFileVersion("1.0.0.50")]
+[assembly: AssemblyVersion("1.0.0.51")]
+[assembly: AssemblyFileVersion("1.0.0.51")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

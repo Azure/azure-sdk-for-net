@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta50",
+  "version": "1.0.0-beta51",
   "title": "Microsoft Azure Graph RBAC Management Library",
   "description": "Provides Graph RBAC management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
@@ -21,7 +21,7 @@
 
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5, 4.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta50, 2.0)"
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta51, 2.0)"
   },
 
   "frameworks": {
