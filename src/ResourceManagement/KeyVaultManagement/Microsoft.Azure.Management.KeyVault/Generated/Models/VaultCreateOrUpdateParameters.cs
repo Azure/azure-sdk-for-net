@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// vault should be created.</param>
         /// <param name="properties">Properties of the vault</param>
         /// <param name="tags">The tags that will be assigned to the key
-        /// vault. </param>
+        /// vault.</param>
         public VaultCreateOrUpdateParameters(string location, VaultProperties properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Properties = new VaultProperties();

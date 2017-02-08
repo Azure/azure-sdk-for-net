@@ -17,10 +17,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// </summary>
     public static class KeyPermissions
     {
-        /// <remarks>
-        /// All permission will be deprecated in a later release.
-        /// </remarks>
-        public const string All = "all";
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
         public const string WrapKey = "wrapKey";

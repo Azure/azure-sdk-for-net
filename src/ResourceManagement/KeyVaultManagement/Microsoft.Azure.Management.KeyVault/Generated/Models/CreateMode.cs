@@ -13,17 +13,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SecretPermissions.
+    /// Defines values for CreateMode.
     /// </summary>
-    public static class SecretPermissions
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CreateMode
     {
-        public const string Get = "get";
-        public const string List = "list";
-        public const string Set = "set";
-        public const string Delete = "delete";
-        public const string Backup = "backup";
-        public const string Restore = "restore";
-        public const string Recover = "recover";
-        public const string Purge = "purge";
+        [EnumMember(Value = "recover")]
+        Recover,
+        [EnumMember(Value = "default")]
+        Default
     }
 }
