@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
+﻿// Copyright (c) Microsoft and contributors.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,45 +14,152 @@
 
 extern alias fs;  // Temporary bridge until the Batch core NuGet without file staging is published
 
-namespace BatchClientIntegrationTests
+namespace Batch.FileStaging.Tests
 {
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Net.Http;
+    using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
-    using BatchTestCommon;
+    using Fixtures;
     using Microsoft.Azure.Batch;
-    using Microsoft.Azure.Batch.Common;
     using Microsoft.Azure.Batch.FileStaging;
     using StagingStorageAccount = fs::Microsoft.Azure.Batch.FileStaging.StagingStorageAccount;  // Temporary bridge until the Batch core NuGet without file staging is published
     using FileToStage = fs::Microsoft.Azure.Batch.FileStaging.FileToStage;  // Temporary bridge until the Batch core NuGet without file staging is published
+    using SequentialFileStagingArtifact = fs::Microsoft.Azure.Batch.FileStaging.SequentialFileStagingArtifact;  // Temporary bridge until the Batch core NuGet without file staging is published
+    using TestResources;
     using IntegrationTestUtilities;
-    using Protocol=Microsoft.Azure.Batch.Protocol;
     using Xunit;
     using Xunit.Abstractions;
-    using Xunit.Sdk;
+    using Constants = Microsoft.Azure.Batch.Constants;
 
-    public class AddTaskCollectionIntegrationTests
+    [Collection("SharedPoolCollection")]
+    public class FileStagingIntegrationTests
     {
-        private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(2);
-        private static readonly TimeSpan LongTestTimeout = TimeSpan.FromMinutes(4);
-
         private readonly ITestOutputHelper testOutputHelper;
+        private readonly PoolFixture poolFixture;
 
-        public AddTaskCollectionIntegrationTests(ITestOutputHelper testOutputHelper)
+        public FileStagingIntegrationTests(ITestOutputHelper testOutputHelper, PaasWindowsPoolFixture poolFixture)
         {
             this.testOutputHelper = testOutputHelper;
+            this.poolFixture = poolFixture;
+        }
+
+        [Fact]
+        public void CanAddTaskWithFilesToStage()
+        {
+            StagingStorageAccount storageCreds = TestUtilities.GetStorageCredentialsFromEnvironment();
+
+            using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+            {
+                string jobId = "TestTaskWithFilesToStage-" + TestUtilities.GetMyName();
+
+                try
+                {
+                    CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                    job.Commit();
+                    CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
+
+                    CloudTask myTask = new CloudTask(id: "CountWordsTask", commandline: @"cmd /c dir /s .. & dir & wc localwords.txt");
+
+                    myTask.FilesToStage = new List<IFileStagingProvider>
+                        {
+                            new FileToStage(Resources.LocalWordsDotText, storageCreds)
+                        };
+
+                    // add the task to the job
+                    var artifacts = boundJob.AddTask(myTask);
+                    var specificArtifact = artifacts[typeof(FileToStage)];
+                    SequentialFileStagingArtifact sfsa = specificArtifact as SequentialFileStagingArtifact;
+
+                    Assert.NotNull(sfsa);
+
+                    // Open the new Job as bound.
+                    CloudPool boundPool = batchCli.PoolOperations.GetPool(boundJob.ExecutionInformation.PoolId);
+
+                    // wait for the task to complete
+                    TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
+
+                    taskStateMonitor.WaitAll(
+                        boundJob.ListTasks(),
+                        Microsoft.Azure.Batch.Common.TaskState.Completed,
+                        TimeSpan.FromMinutes(10),
+                        controlParams: null,
+                        additionalBehaviors: new[]
+                        {
+                                // spam/logging interceptor
+                                new Microsoft.Azure.Batch.Protocol.RequestInterceptor((x) =>
+                                {
+                                    this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
+
+                                    try
+                                    {
+                                        // print out the compute node states... we are actually waiting on the compute nodes
+                                        List<ComputeNode> allComputeNodes = boundPool.ListComputeNodes().ToList();
+
+                                        this.testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
+
+                                        allComputeNodes.ForEach(
+                                            (icn) =>
+                                            {
+                                                this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
+                                            });
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // there is a race between the pool-life-job and the end of the job.. and the ListComputeNodes above
+                                        Assert.True(false, "SampleWithFilesAndPool probably can ignore this if its pool not found: " + ex.ToString());
+                                    }
+                                })
+                        });
+
+                    List<CloudTask> tasks = boundJob.ListTasks().ToList();
+                    CloudTask myCompletedTask = tasks.Single();
+
+                    foreach (CloudTask curTask in tasks)
+                    {
+                        this.testOutputHelper.WriteLine("Task Id: " + curTask.Id + ", state: " + curTask.State);
+                    }
+
+                    boundPool.Refresh();
+
+                    this.testOutputHelper.WriteLine("Pool Id: " + boundPool.Id + ", state: " + boundPool.State);
+
+                    string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
+                    string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
+
+                    this.testOutputHelper.WriteLine("StdOut: ");
+                    this.testOutputHelper.WriteLine(stdOut);
+
+                    this.testOutputHelper.WriteLine("StdErr: ");
+                    this.testOutputHelper.WriteLine(stdErr);
+
+                    this.testOutputHelper.WriteLine("Task Files:");
+
+                    foreach (NodeFile curFile in myCompletedTask.ListNodeFiles(recursive: true))
+                    {
+                        this.testOutputHelper.WriteLine("    Filename: " + curFile.Name);
+                    }
+
+                    var files = myCompletedTask.ListNodeFiles(recursive: true).ToList();
+
+                    // confirm the files are there
+                    Assert.True(files.Any(file => file.Name.Contains("localWords.txt")), "mising file: localWords.txt");
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                }
+            }
         }
 
         [Theory, InlineData(false), InlineData(true)]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public async Task CanAddTasksWithFilesToStage(bool useJobOperations)
+        public async Task CanBulkAddTasksWithFilesToStage(bool useJobOperations)
         {
-            const string testName = "Bug1360227_AddTasksBatchWithFilesToStage";
+            const string testName = "TestBulkAddTaskWithFilesToStage";
             const int taskCount = 499;
             List<string> localFilesToStage = new List<string>();
 
@@ -61,7 +168,7 @@ namespace BatchClientIntegrationTests
             ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>> artifacts = new ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>>();
 
             List<int> legArtifactsCountList = new List<int>();
-            using(CancellationTokenSource cts = new CancellationTokenSource())
+            using (CancellationTokenSource cts = new CancellationTokenSource())
             {
                 //Spawn a thread to monitor the files to stage as we go - we should observe that
                 Task t = Task.Factory.StartNew(() =>
@@ -73,41 +180,37 @@ namespace BatchClientIntegrationTests
                     }
                 });
 
-                await SynchronizationContextHelper.RunTestAsync(async () =>
+                StagingStorageAccount storageCredentials = TestUtilities.GetStorageCredentialsFromEnvironment();
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
                 {
-                    StagingStorageAccount storageCredentials = TestUtilities.GetStorageCredentialsFromEnvironment();
-                    using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                    await this.AddTasksSimpleTestAsync(
+                        batchCli,
+                        testName,
+                        taskCount,
+                        parallelOptions: new BatchClientParallelOptions() { MaxDegreeOfParallelism = 2 },
+                        resultHandlerFunc: null,
+                        storageCredentials: storageCredentials,
+                        localFilesToStage: localFilesToStage,
+                        fileStagingArtifacts: artifacts,
+                        useJobOperations: useJobOperations).ConfigureAwait(false);
+
+                    cts.Cancel();
+
+                    await t.ConfigureAwait(false); //Wait for the spawned thread to exit
+
+                    this.testOutputHelper.WriteLine("File staging leg count: [");
+                    foreach (int fileStagingArtifactsCount in legArtifactsCountList)
                     {
-                        await this.AddTasksSimpleTestAsync(
-                            batchCli,
-                            testName,
-                            taskCount,
-                            parallelOptions: new BatchClientParallelOptions() { MaxDegreeOfParallelism = 2 },
-                            resultHandlerFunc: null,
-                            storageCredentials: storageCredentials,
-                            localFilesToStage: localFilesToStage,
-                            fileStagingArtifacts: artifacts,
-                            useJobOperations: useJobOperations).ConfigureAwait(false);
-
-                        cts.Cancel();
-
-                        await t.ConfigureAwait(false); //Wait for the spawned thread to exit
-
-                        this.testOutputHelper.WriteLine("File staging leg count: [");
-                        foreach (int fileStagingArtifactsCount in legArtifactsCountList)
-                        {
-                            this.testOutputHelper.WriteLine(fileStagingArtifactsCount + ", ");
-                        }
-                        this.testOutputHelper.WriteLine("]");
-
-                        const int expectedFinalFileStagingArtifactsCount = taskCount / 100 + 1;
-                        const int expectedInitialFileStagingArtifactsCount = 0;
-
-                        Assert.Equal(expectedInitialFileStagingArtifactsCount, legArtifactsCountList.First());
-                        Assert.Equal(expectedFinalFileStagingArtifactsCount, legArtifactsCountList.Last());
+                        this.testOutputHelper.WriteLine(fileStagingArtifactsCount + ", ");
                     }
-                },
-                TestTimeout);
+                    this.testOutputHelper.WriteLine("]");
+
+                    const int expectedFinalFileStagingArtifactsCount = taskCount / 100 + 1;
+                    const int expectedInitialFileStagingArtifactsCount = 0;
+
+                    Assert.Equal(expectedInitialFileStagingArtifactsCount, legArtifactsCountList.First());
+                    Assert.Equal(expectedFinalFileStagingArtifactsCount, legArtifactsCountList.Last());
+                }
             }
         }
 
@@ -179,9 +282,9 @@ namespace BatchClientIntegrationTests
 
                 this.testOutputHelper.WriteLine("Initial job commit for job: {0}", jobId);
                 unboundJob.PoolInformation = new PoolInformation()
-                    {
-                        PoolId = "DummyPool"
-                    };
+                {
+                    PoolId = "DummyPool"
+                };
                 unboundJob.Id = jobId;
                 await unboundJob.CommitAsync().ConfigureAwait(false);
 
@@ -253,7 +356,7 @@ namespace BatchClientIntegrationTests
 
                 if (lastFilesToStageList != null)
                 {
-                    TestUtilities.AssertThrows<InvalidOperationException>(() => lastFilesToStageList.Add(new FileToStage("test", null)));
+                    Assert.Throws<InvalidOperationException>(() => lastFilesToStageList.Add(new FileToStage("test", null)));
                 }
 
                 //Ensure the task lists match
