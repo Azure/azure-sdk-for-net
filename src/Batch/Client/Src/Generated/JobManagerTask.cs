@@ -65,13 +65,13 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
             {
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
-                    ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
+                    ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
                     "ApplicationPackageReferences",
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o)),
                     "AuthenticationTokenSettings",
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
                     "CommandLine",
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Batch
                     "RunExclusive",
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
                     "UserIdentity",
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
             }
         }
 
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the user identity under which the task runs.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task runs as a non-administrative user unique to the task
+        /// If omitted, the task runs as a non-administrative user unique to the task.
         /// </remarks>
         public UserIdentity UserIdentity
         {
