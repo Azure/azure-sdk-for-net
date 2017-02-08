@@ -109,42 +109,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             CompareExpectedResult(result.Shares[0]);
         }
 
-        [Fact]
-        public void PutShare()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.ShareGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-
-            var result = client.Shares.Put(Constants.ResourceGroupName, Constants.FarmId, Constants.ShareAName);
-
-            var expectedUri = string.Format(
-                GetUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Uri.EscapeDataString(Constants.ShareAName)
-                );
-
-            Assert.Equal(expectedUri, handler.Uri.AbsoluteUri);
-
-            Assert.Equal(HttpMethod.Put, handler.Method);
-
-            CompareExpectedResult(result.Share);
-        }
-
         private void CompareExpectedResult(ShareModel result)
         {
             Assert.Equal("||localhost|smb1", result.Properties.ShareName);

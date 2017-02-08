@@ -14,7 +14,7 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customization\EventQueryException.cs" />
-    <Compile Include="Customization\StorageAdminManagementClient.Customization.cs" />
+    <!-- Compile Include="Customization\StorageAdminManagementClient.Customization.cs" /> -->
     <Compile Include="Generated\StorageAdminManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

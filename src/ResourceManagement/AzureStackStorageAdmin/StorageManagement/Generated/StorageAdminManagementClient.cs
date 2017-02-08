@@ -33,7 +33,7 @@ using System.Xml;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.AzureStack.AzureConsistentStorage;
-using Microsoft.AzureStack.AzureConsistentStorage.Models;
+using Microsoft.AzureStack.AzureConsistentStorage.Models ;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.AzureStack.AzureConsistentStorage
@@ -142,7 +142,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public partial class AcquisitionModel : ResourceBase
+    public partial class AcquisitionModel : Microsoft.AzureStack.AzureConsistentStorage.Models.ResourceBase
     {
         private Acquisition _properties;
         
