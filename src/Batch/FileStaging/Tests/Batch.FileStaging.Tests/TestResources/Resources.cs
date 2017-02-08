@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿namespace BatchClientIntegrationTests.TestResources
+namespace Batch.FileStaging.Tests.TestResources
 {
     using System;
     using System.Collections.Generic;

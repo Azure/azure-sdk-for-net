@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿namespace BatchClientIntegrationTests.Fixtures
+namespace Batch.FileStaging.Tests.Fixtures
 {
     using System.Collections.Generic;
     using IntegrationTestUtilities;
