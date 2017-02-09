@@ -490,6 +490,24 @@ namespace Microsoft.Azure.Management.HDInsight
 
             //Roles
             var roles = new List<Role>();
+            if ((clusterCreateParameters.OSType == OSType.Linux) &&
+                (clusterCreateParameters.ClusterType.Equals("Sandbox", StringComparison.OrdinalIgnoreCase)))
+            {
+                var sandboxHeadNode = new Role
+                {
+                    Name = "headnode",
+                    TargetInstanceCount = 1,
+                    HardwareProfile = new HardwareProfile
+                    {
+                        VmSize = "Standard_D13_V2"
+                    },
+                    OsProfile = osProfile,
+                    VirtualNetworkProfile = vnetProfile,
+                    ScriptActions = headnodeactions
+                };
+                roles.Add(sandboxHeadNode);
+                return roles;
+            }
             var headNodeSize = GetHeadNodeSize(clusterCreateParameters);
             var headNode = new Role
             {

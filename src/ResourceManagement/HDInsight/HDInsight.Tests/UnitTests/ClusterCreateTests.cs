@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xunit;
 using Microsoft.Azure.Management.HDInsight.Models;
 using Newtonsoft.Json;
+using HDInsight.Tests.Helpers;
 
 namespace HDInsight.Tests.UnitTests
 {
@@ -71,6 +72,22 @@ namespace HDInsight.Tests.UnitTests
             {
                 Assert.True(false, "Deserialization error");
             }
+        }
+
+        [Fact]
+        public void TestCreateLinuxDevSkuCluster()
+        {
+            string clusterName = "hdisdk-SandboxLinuxClusterTest";
+            var clusterCreateParams = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+            clusterCreateParams.ClusterType = "Sandbox";
+            clusterCreateParams.Version = "3.5";
+
+            ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
+            var extendedParams = op.GetExtendedClusterCreateParameters(clusterName, clusterCreateParams);
+            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles.Count, 1);
+            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].HardwareProfile.VmSize, "Standard_D13_V2");
+            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].Name, "headnode");
+            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].TargetInstanceCount, 1);            
         }
     }
 }
