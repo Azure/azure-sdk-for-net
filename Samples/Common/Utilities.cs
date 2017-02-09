@@ -1340,6 +1340,12 @@ namespace Microsoft.Azure.Management.Samples.Common
                 info.WorkingDirectory = assetPath;
                 Process.Start(info).WaitForExit();
             }
+            else
+            {
+                File.Copy(
+                    Path.Combine(Utilities.ProjectPath, "Asset", "SampleTestCertificate.pfx"),
+                    Path.Combine(Utilities.ProjectPath, "Asset", pfxPath));
+            }
         }
     }
 }

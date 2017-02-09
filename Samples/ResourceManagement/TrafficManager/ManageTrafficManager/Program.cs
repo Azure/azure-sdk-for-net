@@ -42,8 +42,7 @@ namespace ManageTrafficManager
             string appServicePlanNamePrefix = SdkContext.RandomResourceName("jplan1_", 15);
             string webAppNamePrefix = SdkContext.RandomResourceName("webapp1-", 20);
             string tmName = SdkContext.RandomResourceName("jsdktm-", 20);
-
-
+            
             // The regions in which web app needs to be created
             //
             regions.Add(Region.USWest2);
@@ -125,7 +124,7 @@ namespace ManageTrafficManager
                             .WithManagedHostnameBindings(domain, webAppName)
                             .DefineSslBinding()
                             .ForHostname(webAppName + "." + domain.Name)
-                            .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset") + "/" + pfxPath, certPassword)
+                            .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), certPassword)
                             .WithSniBasedSsl()
                             .Attach()
                             .DefineSourceControl()
