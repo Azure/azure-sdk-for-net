@@ -141,6 +141,7 @@
         <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPublicMinimal.json</string>
         <string>TestResults\\Fluent.xml</string>
         <string>TestResults\\Sample.Tests.xml</string>
+        <string>Samples\\Common\\Asset</string>
       </Filters>
     </ResourceFilter>
   </ResourceSearchFilters>

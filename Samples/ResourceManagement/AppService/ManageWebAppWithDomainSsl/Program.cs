@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
-using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 
 namespace ManageWebAppWithDomainSsl
@@ -128,7 +128,7 @@ namespace ManageWebAppWithDomainSsl
                                 .WithManagedHostnameBindings(domain, app1Name)
                                 .DefineSslBinding()
                                     .ForHostname(app1Name + "." + domainName)
-                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CertificatePassword)
+                                    .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), CertificatePassword)
                                     .WithSniBasedSsl()
                                     .Attach()
                                 .Apply();
@@ -142,7 +142,7 @@ namespace ManageWebAppWithDomainSsl
                                 .WithManagedHostnameBindings(domain, app2Name)
                                 .DefineSslBinding()
                                     .ForHostname(app2Name + "." + domainName)
-                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CertificatePassword)
+                                    .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), CertificatePassword)
                                     .WithSniBasedSsl()
                                     .Attach()
                                 .Apply();

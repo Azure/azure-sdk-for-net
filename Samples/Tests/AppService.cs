@@ -3,6 +3,7 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -70,26 +71,24 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppWithDomainSslTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppWithDomainSsl.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppWithDomainSsl.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact(Skip = "TODO: Investigate and fix the failure in the product")]
         [Trait("Samples", "AppService")]
         public void ManageWebAppWithTrafficManagerTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppWithTrafficManager.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppWithTrafficManager.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
     }
 }

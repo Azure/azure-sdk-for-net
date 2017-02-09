@@ -1344,7 +1344,8 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 File.Copy(
                     Path.Combine(Utilities.ProjectPath, "Asset", "SampleTestCertificate.pfx"),
-                    Path.Combine(Utilities.ProjectPath, "Asset", pfxPath));
+                    Path.Combine(Utilities.ProjectPath, "Asset", pfxPath),
+                    overwrite: true);
             }
         }
     }

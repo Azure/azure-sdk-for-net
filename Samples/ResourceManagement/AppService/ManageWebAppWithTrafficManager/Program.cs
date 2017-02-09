@@ -264,7 +264,7 @@ namespace ManageWebAppWithTrafficManager
                     .WithManagedHostnameBindings(domain, name)
                     .DefineSslBinding()
                         .ForHostname(name + "." + domain.Name)
-                        .WithPfxCertificateToUpload("Asset/" + pfxPath, CERT_PASSWORD)
+                        .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), CERT_PASSWORD)
                         .WithSniBasedSsl()
                         .Attach()
                     .DefineSourceControl()
