@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -233,15 +233,14 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
 
         /// <summary>
         /// Creates a new Power BI Workspace Collection with the specified properties.
-        /// A Power BI Workspace Collection contains one or more Power BI Workspaces
-        /// and can be used to provision keys that provide API access to those Power
-        /// BI Workspaces.
+        /// A Power BI Workspace Collection contains one or more workspaces, and can
+        /// be used to provision keys that provide API access to those workspaces.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='body'>
         /// Create workspace collection request
@@ -446,7 +445,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='body'>
         /// Update workspace collection request
@@ -650,7 +649,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -673,7 +672,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -832,8 +831,8 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         }
 
         /// <summary>
-        /// Check that the specified Power BI Workspace Collection name is valid and
-        /// not in use.
+        /// Verify the specified Power BI Workspace Collection name is valid and not
+        /// already in use.
         /// </summary>
         /// <param name='location'>
         /// Azure location
@@ -1024,7 +1023,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         }
 
         /// <summary>
-        /// Retrieves all existing Power BI Workspace Collections in the specified
+        /// Retrieves all existing Power BI workspace collections in the specified
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1202,7 +1201,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         }
 
         /// <summary>
-        /// Retrieves all existing Power BI Workspace Collections in the specified
+        /// Retrieves all existing Power BI workspace collections in the specified
         /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -1378,7 +1377,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1565,7 +1564,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='body'>
         /// Access key to regenerate

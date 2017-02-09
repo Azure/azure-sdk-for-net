@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
     using Models;
 
     /// <summary>
-    /// Client to manage your Power BI embedded workspace collections and
+    /// Client to manage your Power BI Embedded workspace collections and
     /// retrieve workspaces.
     /// </summary>
     public partial interface IPowerBIEmbeddedManagementClient : IDisposable
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Gets subscription credentials which uniquely identify a Microsoft
         /// Azure subscription. The subscription ID forms part of the URI for
         /// every service call.
         /// </summary>
