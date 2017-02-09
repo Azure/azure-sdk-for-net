@@ -27,6 +27,7 @@
     <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiProducts.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.IdentityProviders.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Loggers.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.OpenIdConnectProviders.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Properties.cs" />
@@ -215,13 +216,13 @@
     <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wsdl.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wsdl_SoapToRest.json" >
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\ApiOperationsCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\ApiProductsCreateListUpdateDelete.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
@@ -237,6 +238,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\GroupUsersListAddRemove.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\IdentityProviderCreateListUpdateDelete.json" >
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\LoggersCreateListUpdateDelete.json">

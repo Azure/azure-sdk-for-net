@@ -27,6 +27,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
 {
     internal static class ModelHelper
     {
+        internal static int MaxStringSizeForUrlEscapeData = 32766;
+
         internal static string GetStatusDirectory(string status)
         {
             var statusDir = status;
@@ -57,7 +59,18 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
                 return string.Empty;
             }
 
-            return Uri.EscapeDataString(inputValue);
+            var escapeString = string.Empty;
+            int i = 0;
+
+            while (i < inputValue.Length / MaxStringSizeForUrlEscapeData)
+            {
+                escapeString += Uri.EscapeDataString(inputValue.Substring(MaxStringSizeForUrlEscapeData * i, MaxStringSizeForUrlEscapeData));
+                i++;
+            }
+
+            escapeString += Uri.EscapeDataString(inputValue.Substring(MaxStringSizeForUrlEscapeData * i));
+
+            return escapeString;
         }
 
         internal static IEnumerable<KeyValuePair<string, string>> BuildNameValueList(string paramName, IEnumerable<KeyValuePair<string, string>> nameValuePairs)

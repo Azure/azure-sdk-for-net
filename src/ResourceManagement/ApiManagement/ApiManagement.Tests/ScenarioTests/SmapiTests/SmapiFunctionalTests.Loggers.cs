@@ -63,6 +63,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(getResponse.Value);
                 Assert.Equal(newloggerId, getResponse.Value.Id);
                 Assert.NotNull(getResponse.Value.Description);
+                Assert.NotNull(getResponse.Value.Credentials);
+                Assert.Equal(2, getResponse.Value.Credentials.Keys.Count);
                 Assert.Equal(LoggerTypeContract.AzureEventHub, getResponse.Value.Type);
 
                 var listLoggers = ApiManagementClient.Loggers.List(ResourceGroupName, ApiManagementServiceName, null);
@@ -96,6 +98,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(getResponse.Value);
                 Assert.Equal(newloggerId, getResponse.Value.Id);
                 Assert.Equal(patchedDescription, getResponse.Value.Description);
+                Assert.NotNull(getResponse.Value.Credentials);
                 Assert.Equal(LoggerTypeContract.AzureEventHub, getResponse.Value.Type);
 
                 // delete the logger 

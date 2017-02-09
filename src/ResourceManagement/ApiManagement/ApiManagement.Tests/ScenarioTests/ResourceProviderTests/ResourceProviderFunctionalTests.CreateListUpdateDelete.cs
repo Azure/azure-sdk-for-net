@@ -127,8 +127,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
                 Assert.NotNull(updateResponse.Value);
                 Assert.Equal("Succeeded", updateResponse.Value.Properties.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(createServiceParameters.SkuProperties.Capacity, updateResponse.Value.SkuProperties.Capacity);
-                Assert.Equal(createServiceParameters.SkuProperties.SkuType, updateResponse.Value.SkuProperties.SkuType);
+                Assert.Equal(updateRequest.SkuProperties.Capacity, updateResponse.Value.SkuProperties.Capacity);
+                Assert.Equal(updateRequest.SkuProperties.SkuType, updateResponse.Value.SkuProperties.SkuType);
                 Assert.Equal(createServiceParameters.Properties.AddresserEmail, updateResponse.Value.Properties.AddresserEmail);
                 Assert.Equal(createServiceParameters.Properties.PublisherEmail, updateResponse.Value.Properties.PublisherEmail);
                 Assert.Equal(createServiceParameters.Properties.PublisherName, updateResponse.Value.Properties.PublisherName);
@@ -141,8 +141,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);
                 Assert.Equal("Succeeded", getResponse.Value.Properties.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(createServiceParameters.SkuProperties.Capacity, getResponse.Value.SkuProperties.Capacity);
-                Assert.Equal(createServiceParameters.SkuProperties.SkuType, getResponse.Value.SkuProperties.SkuType);
+                Assert.Equal(updateRequest.SkuProperties.Capacity, getResponse.Value.SkuProperties.Capacity);
+                Assert.Equal(updateRequest.SkuProperties.SkuType, getResponse.Value.SkuProperties.SkuType);
                 Assert.Equal(createServiceParameters.Properties.AddresserEmail, getResponse.Value.Properties.AddresserEmail);
                 Assert.Equal(createServiceParameters.Properties.PublisherEmail, getResponse.Value.Properties.PublisherEmail);
                 Assert.Equal(createServiceParameters.Properties.PublisherName, getResponse.Value.Properties.PublisherName);

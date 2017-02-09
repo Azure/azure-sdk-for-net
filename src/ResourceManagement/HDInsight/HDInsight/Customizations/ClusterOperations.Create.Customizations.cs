@@ -26,6 +26,8 @@ namespace Microsoft.Azure.Management.HDInsight
 {
     internal partial class ClusterOperations : IClusterOperations
     {
+        private static string _wasbStorageAccountKeyFormat = "fs.azure.account.key.{0}";
+
         /// <summary>
         /// Creates a new HDInsight cluster with the specified parameters.
         /// </summary>
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
         }
 
-        private ClusterCreateParametersExtended GetExtendedClusterCreateParameters(
+        internal ClusterCreateParametersExtended GetExtendedClusterCreateParameters(
             string clusterName, ClusterCreateParameters clusterCreateParameters)
         {
             var createParamsExtended = new ClusterCreateParametersExtended
@@ -257,36 +259,12 @@ namespace Microsoft.Azure.Management.HDInsight
                 coreConfig = new Dictionary<string, string>();
             }
 
-            if (!coreConfig.ContainsKey("fs.defaultFS"))
-            {
-                var storageAccountNameKey = "fs.defaultFS";
-                if (clusterCreateParameters.Version != null && clusterCreateParameters.Version.Equals("2.1"))
-                {
-                    storageAccountNameKey = "fs.default.name";
-                }
+            AddDefaultStorageAccountToCoreConfig(clusterName, clusterCreateParameters, coreConfig);
 
-                var container = !string.IsNullOrEmpty(clusterCreateParameters.DefaultStorageContainer)
-                    ? clusterCreateParameters.DefaultStorageContainer
-                    : clusterName;
-                coreConfig.Add(storageAccountNameKey,
-                    string.Format("wasb://{0}@{1}", container, clusterCreateParameters.DefaultStorageAccountName));
-            }
+            AddWasbStorageAccountKeyToCoreConfig(clusterCreateParameters, coreConfig);
 
-            var defaultStorageConfigKey = string.Format("fs.azure.account.key.{0}",
-                clusterCreateParameters.DefaultStorageAccountName);
-            if (!coreConfig.ContainsKey(defaultStorageConfigKey))
-            {
-                coreConfig.Add(defaultStorageConfigKey, clusterCreateParameters.DefaultStorageAccountKey);
-            }
+            AddAdditionalStorageAcountsToCoreConfig(clusterCreateParameters, coreConfig);
 
-            foreach (var storageAccount in clusterCreateParameters.AdditionalStorageAccounts)
-            {
-                var configKey = string.Format("fs.azure.account.key.{0}", storageAccount.Key);
-                if (!coreConfig.ContainsKey(configKey))
-                {
-                    coreConfig.Add(configKey, storageAccount.Value);
-                }
-            }
             if (!coreConfigExists)
             {
                 configurations.Add(ConfigurationKey.CoreSite, coreConfig);
@@ -350,8 +328,68 @@ namespace Microsoft.Azure.Management.HDInsight
                     configurations[ConfigurationKey.ClusterIdentity] = datalakeConfig;
                 }
             }
-
             return configurations;
+        }
+
+        private static void AddAdditionalStorageAcountsToCoreConfig(ClusterCreateParameters clusterCreateParameters, Dictionary<string, string> coreConfig)
+        {
+            foreach (var storageAccount in clusterCreateParameters.AdditionalStorageAccounts)
+            {
+                var configKey = string.Format(_wasbStorageAccountKeyFormat, storageAccount.Key);
+                if (!string.IsNullOrEmpty(storageAccount.Value) && !coreConfig.ContainsKey(configKey))
+                {
+                    coreConfig.Add(configKey, storageAccount.Value);
+                }
+            }
+        }
+
+        private static void AddWasbStorageAccountKeyToCoreConfig(ClusterCreateParameters clusterCreateParameters, Dictionary<string, string> coreConfig)
+        {
+            var storageAccountInfo = clusterCreateParameters.DefaultStorageInfo as AzureStorageInfo;
+            if (storageAccountInfo != null)
+            {
+                string defaultStorageConfigKey = string.Format(_wasbStorageAccountKeyFormat, clusterCreateParameters.DefaultStorageInfo.StorageAccountName);
+                string storageAccountKey = storageAccountInfo.StorageAccountKey;
+
+                if (!string.IsNullOrEmpty(storageAccountKey) && !coreConfig.ContainsKey(defaultStorageConfigKey))
+                {
+                    coreConfig.Add(defaultStorageConfigKey, storageAccountKey);
+                }
+            }
+        }
+
+        private static void AddDefaultStorageAccountToCoreConfig(string clusterName, ClusterCreateParameters clusterCreateParameters, Dictionary<string, string> coreConfig)
+        {
+            string coreConfigDefaultFSKey = "fs.defaultFS";
+            string coreConfigDefaultFSKeyFor_2_1_Clusters = "fs.default.name";
+
+            var defaultStorageAccountKey = (clusterCreateParameters.Version != null && clusterCreateParameters.Version.Equals("2.1"))
+                                                ? coreConfigDefaultFSKeyFor_2_1_Clusters
+                                                : coreConfigDefaultFSKey;
+
+            var azureStorageAccountInfo = clusterCreateParameters.DefaultStorageInfo as AzureStorageInfo;
+            var azureDataLakeStorageInfo = clusterCreateParameters.DefaultStorageInfo as AzureDataLakeStoreInfo;
+
+            if(azureStorageAccountInfo != null)
+            {
+                if (string.IsNullOrWhiteSpace(azureStorageAccountInfo.StorageContainer))
+                {
+                    var storageInfoWithContainerName = new AzureStorageInfo(azureStorageAccountInfo.StorageAccountName, azureStorageAccountInfo.StorageAccountKey, clusterName);
+                    clusterCreateParameters.DefaultStorageInfo = storageInfoWithContainerName;
+                    coreConfig[defaultStorageAccountKey] = storageInfoWithContainerName.StorageAccountUri;
+                }
+                else
+                {
+                    coreConfig[defaultStorageAccountKey] = azureStorageAccountInfo.StorageAccountUri;
+                }
+            }
+            else if (azureDataLakeStorageInfo != null)
+            {
+                // setup the parameters required for DataLake containers
+                coreConfig[defaultStorageAccountKey] = "adl://home";
+                coreConfig["dfs.adls.home.hostname"] = azureDataLakeStorageInfo.StorageAccountName;
+                coreConfig["dfs.adls.home.mountpoint"] = azureDataLakeStorageInfo.StorageRootPath;
+            }
         }
 
         private static IEnumerable<Role> GetRoleCollection(ClusterCreateParameters clusterCreateParameters)
@@ -517,7 +555,13 @@ namespace Microsoft.Azure.Management.HDInsight
             return roles;
         }
 
-        private static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static readonly Dictionary<string, string> HeadNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { 
+                    {"hadoop", "Standard_D3" },
+                    {"spark", "Standard_D12"},
+                    {"InteractiveHive", "Standard_D13_v2"},
+                };
+
+        internal static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
         {
             string headNodeSize;
             if (clusterCreateParameters.HeadNodeSize != null)
@@ -526,23 +570,21 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                if (clusterCreateParameters.ClusterType.Equals("Hadoop", StringComparison.OrdinalIgnoreCase))
-                {
-                    headNodeSize = "Standard_D3";
-                }
-                else if (clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase))
-                {
-                    headNodeSize = "Standard_D12";
-                }
-                else
+                if (! HeadNodeDefaultSizes.TryGetValue(clusterCreateParameters.ClusterType, out headNodeSize))
                 {
                     headNodeSize = "Large";
                 }
             }
+
             return headNodeSize;
         }
 
-        private static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static readonly Dictionary<string, string> WorkerNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { 
+                    {"spark", "Standard_D12"},
+                    {"InteractiveHive", "Standard_D13_v2"},
+                };
+
+        internal static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
         {
             string workerNodeSize;
             if (clusterCreateParameters.WorkerNodeSize != null)
@@ -551,10 +593,12 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                workerNodeSize = clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase)
-                    ? "Standard_D12"
-                    : "Standard_D3";
+                if (!WorkerNodeDefaultSizes.TryGetValue(clusterCreateParameters.ClusterType, out workerNodeSize))
+                {
+                    workerNodeSize = "Standard_D3";
+                }
             }
+
             return workerNodeSize;
         }
     }

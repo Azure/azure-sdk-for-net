@@ -238,7 +238,7 @@ namespace Sql2.Tests.ScenarioTests
 
                     //////////////////////////////////////////////////////////////////////
                     // Get database test.
-                    
+
                     // Get first database
                     var getDatabase1 = sqlClient.Databases.Get(resGroupName, serverName, databaseName);
 
@@ -422,6 +422,97 @@ namespace Sql2.Tests.ScenarioTests
                     TestUtilities.ValidateOperationResponse(resumeResponse, HttpStatusCode.OK);
                     VerifyDatabaseInformation(resumeResponse.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo, "Online");
                     ///////////////////////////////////////////////////////////////////////
+                }
+                finally
+                {
+                    // Clean up the resource group.
+                    resClient.ResourceGroups.Delete(resGroupName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests for the database CRUD operations
+        /// </summary>
+        [Fact]
+        public void DatabaseReadScaleTest()
+        {
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                // Variables for server create
+                string serverName = "csm-sql-dbreadscalecrud-server2";
+                string resGroupName = "csm-rg-dbreadscalecrud";
+                string serverLocation = "Southeast Asia";
+                string adminLogin = "testlogin";
+                string adminPass = "Testp@ss";
+                string version = "12.0";
+
+                // Variables for database create
+                string databaseName = "csm-sql-dbreadscalecrud-db";
+                string databaseEditionPremium = "Premium";
+                long databaseMaxSize = 5L * 1024L * 1024L * 1024L; // 5 GB
+
+                var readScaleEnabled = "Enabled";
+                var readScaleDisabled = "Disabled";
+
+                   // Create the resource group.
+                resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
+                {
+                    Location = serverLocation,
+                });
+
+                try
+                {
+                    //////////////////////////////////////////////////////////////////////
+                    // Create server for test.
+                    var createServerResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new ServerCreateOrUpdateProperties()
+                        {
+                            AdministratorLogin = adminLogin,
+                            AdministratorLoginPassword = adminPass,
+                            Version = version,
+                        }
+                    });
+                    var createDbResponse1 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new DatabaseCreateOrUpdateProperties()
+                        {
+                            Edition = databaseEditionPremium,
+                            MaxSizeBytes = databaseMaxSize,
+                            ReadScale = readScaleEnabled,
+                        },
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createDbResponse1, HttpStatusCode.Created);
+                    Assert.Equal(createDbResponse1.Database.Properties.ReadScale, readScaleEnabled);
+
+                    //Update Read Scale Option
+                    var updateDb = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new DatabaseCreateOrUpdateProperties()
+                        {
+                            ReadScale = readScaleDisabled
+                        },
+                    });
+                    TestUtilities.ValidateOperationResponse(updateDb);
+                    Assert.Equal(updateDb.Database.Properties.ReadScale, readScaleDisabled);
+
+                    // Get first database
+                    var getDb1 = sqlClient.Databases.Get(resGroupName, serverName, databaseName);
+                    TestUtilities.ValidateOperationResponse(getDb1);
+                    Assert.Equal(getDb1.Database.Properties.ReadScale, readScaleDisabled);
                 }
                 finally
                 {

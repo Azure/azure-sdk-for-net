@@ -179,6 +179,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._groupUsers; }
         }
         
+        private IIdentityProviderOperations _identityProvider;
+        
+        /// <summary>
+        /// Operations for managing Identity Providers.
+        /// </summary>
+        public virtual IIdentityProviderOperations IdentityProvider
+        {
+            get { return this._identityProvider; }
+        }
+        
         private ILoggerOperations _loggers;
         
         /// <summary>
@@ -427,6 +437,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._certificates = new CertificatesOperations(this);
             this._groups = new GroupsOperations(this);
             this._groupUsers = new GroupUsersOperations(this);
+            this._identityProvider = new IdentityProviderOperations(this);
             this._loggers = new LoggerOperations(this);
             this._openIdConnectProviders = new OpenIdConnectProvidersOperations(this);
             this._policySnippents = new PolicySnippetsOperations(this);
@@ -450,7 +461,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._userIdentities = new UserIdentitiesOperations(this);
             this._users = new UsersOperations(this);
             this._userSubscriptions = new UserSubscriptionsOperations(this);
-            this._apiVersion = "2016-07-07";
+            this._apiVersion = "2016-10-10";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -524,6 +535,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._certificates = new CertificatesOperations(this);
             this._groups = new GroupsOperations(this);
             this._groupUsers = new GroupUsersOperations(this);
+            this._identityProvider = new IdentityProviderOperations(this);
             this._loggers = new LoggerOperations(this);
             this._openIdConnectProviders = new OpenIdConnectProvidersOperations(this);
             this._policySnippents = new PolicySnippetsOperations(this);
@@ -547,7 +559,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._userIdentities = new UserIdentitiesOperations(this);
             this._users = new UsersOperations(this);
             this._userSubscriptions = new UserSubscriptionsOperations(this);
-            this._apiVersion = "2016-07-07";
+            this._apiVersion = "2016-10-10";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -795,6 +807,74 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (value == GrantTypesContract.ClientCredentials)
             {
                 return "clientCredentials";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type IdentityProviderTypeContract.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static IdentityProviderTypeContract ParseIdentityProviderTypeContract(string value)
+        {
+            if ("facebook".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IdentityProviderTypeContract.Facebook;
+            }
+            if ("google".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IdentityProviderTypeContract.Google;
+            }
+            if ("microsoft".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IdentityProviderTypeContract.Microsoft;
+            }
+            if ("twitter".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IdentityProviderTypeContract.Twitter;
+            }
+            if ("aad".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IdentityProviderTypeContract.Aad;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type IdentityProviderTypeContract to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string IdentityProviderTypeContractToString(IdentityProviderTypeContract value)
+        {
+            if (value == IdentityProviderTypeContract.Facebook)
+            {
+                return "facebook";
+            }
+            if (value == IdentityProviderTypeContract.Google)
+            {
+                return "google";
+            }
+            if (value == IdentityProviderTypeContract.Microsoft)
+            {
+                return "microsoft";
+            }
+            if (value == IdentityProviderTypeContract.Twitter)
+            {
+                return "twitter";
+            }
+            if (value == IdentityProviderTypeContract.Aad)
+            {
+                return "aad";
             }
             throw new ArgumentOutOfRangeException("value");
         }

@@ -3,7 +3,11 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.ApiManagement</id>
     <title>Microsoft Azure ApiManagement Service Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <releaseNotes><![CDATA[
+3.2.0
+  * Updated api-version to 2016-10-10
+  * Added property credentials to Logger Contract
+]]></releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>

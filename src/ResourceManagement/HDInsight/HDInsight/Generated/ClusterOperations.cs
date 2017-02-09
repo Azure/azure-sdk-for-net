@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.HDInsight
     /// </summary>
     internal partial class ClusterOperations : IServiceOperations<HDInsightManagementClient>, IClusterOperations
     {
+        private const string _userAgentString = "ARM SDK v2.0.0";
+
         /// <summary>
         /// Initializes a new instance of the ClusterOperations class.
         /// </summary>
@@ -154,7 +156,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -345,7 +347,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -618,7 +620,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1519,7 +1521,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1914,7 +1916,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2546,7 +2548,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3153,7 +3155,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3527,7 +3529,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3698,7 +3700,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3843,7 +3845,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4424,7 +4426,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
@@ -4863,7 +4865,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5477,7 +5479,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

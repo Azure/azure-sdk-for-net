@@ -286,7 +286,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                             stream,
                             path,
                             string.Empty,
-                            string.Empty);
+                            string.Empty,
+                            null);
                     }
 
                     Assert.NotNull(importResponse);
@@ -327,7 +328,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                             stream,
                             path,
                             string.Empty,
-                            string.Empty);
+                            string.Empty,
+                            null);
                     }
 
                     Assert.NotNull(importResponse);
@@ -376,6 +378,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                             swaggerMediaType,
                             stream,
                             path,
+                            null,
                             null,
                             null);
                     }
@@ -462,7 +465,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                             stream,
                             path,
                             wsdlServiceName,
-                            wsdlEndpointName);
+                            wsdlEndpointName,
+                            "http");
                     }
 
                     Assert.NotNull(importResponse);
@@ -504,6 +508,91 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     
                     var doc = XDocument.Parse(wsdlOutput);
                     doc.Validate(xsds, (s, e) => { Assert.True( false, e.Message); });
+                }
+                finally
+                {
+                    // remove the API
+                    ApiManagementClient.Apis.Delete(ResourceGroupName, ApiManagementServiceName, soapApiId, "*");
+                }
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
+        public void ApiImportExport_Wsdl_SoapToRest()
+        {
+            TestUtilities.StartTest("SmapiFunctionalTests", "ApiImportExport_Wsdl_SoapToRest");
+
+            try
+            {
+                const string wsdlPath = "./Resources/Weather.wsdl";
+                const string wsdlXsdSchema = "./Resources/wsdl11.xsd";
+                const string wsdlMediaType = "application/wsdl+xml";
+                const string path = "soapApi";
+                const string wsdlServiceName = "Weather";
+                const string wsdlEndpointName = "WeatherSoap";
+                string soapApiId = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    AzureOperationResponse importResponse = null;
+                    using (var stream = File.OpenRead(wsdlPath))
+                    {
+                        importResponse = ApiManagementClient.Apis.Import(
+                            ResourceGroupName,
+                            ApiManagementServiceName,
+                            soapApiId,
+                            wsdlMediaType,
+                            stream,
+                            path,
+                            wsdlServiceName,
+                            wsdlEndpointName,
+                            "soap");
+                    }
+
+                    Assert.NotNull(importResponse);
+                    Assert.Equal(HttpStatusCode.Created, importResponse.StatusCode);
+
+                    // get the api to check it was created
+                    var getResponse = ApiManagementClient.Apis.Get(ResourceGroupName, ApiManagementServiceName, soapApiId);
+
+                    Assert.NotNull(getResponse);
+                    Assert.NotNull(getResponse.Value);
+                    Assert.Equal(soapApiId, getResponse.Value.Id);
+                    Assert.Equal(path, getResponse.Value.Path);
+                    Assert.Equal(ApiTypeContract.Soap, getResponse.Value.Type);
+
+                    // export API
+                    var exportResponse = ApiManagementClient.Apis.Export(
+                        ResourceGroupName,
+                        ApiManagementServiceName,
+                        soapApiId,
+                        wsdlMediaType);
+
+                    Assert.NotNull(exportResponse);
+                    Assert.NotNull(exportResponse.Content);
+
+                    string wsdlOutput;
+                    using (Stream stream = new MemoryStream(exportResponse.Content))
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        wsdlOutput = sr.ReadToEnd();
+                    }
+
+                    XmlSchemaSet xsds = new XmlSchemaSet();
+                    byte[] expectedSchema = File.ReadAllBytes(wsdlXsdSchema);
+                    using (Stream xsdstream = new MemoryStream(expectedSchema))
+                    {
+                        xsds.Add(XmlSchema.Read(xsdstream, (s, e) => { Assert.True(false, e.Message); }));
+                        xsds.Compile();
+                    }
+
+                    var doc = XDocument.Parse(wsdlOutput);
+                    doc.Validate(xsds, (s, e) => { Assert.True(false, e.Message); });
                 }
                 finally
                 {

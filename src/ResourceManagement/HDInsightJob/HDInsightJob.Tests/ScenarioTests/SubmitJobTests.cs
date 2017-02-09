@@ -184,7 +184,9 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient();
 
-                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(8)) == 0);
+                // The default Http client time out would be MaxBackOff (8min) + 2 mins for HDinsight gateway
+                // time out and having 1 min extra buffer.
+                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(11)) == 0);
             }
         }
 
@@ -206,6 +208,25 @@ namespace HDInsightJob.Tests
             };
 
             SubmitHiveJobAndValidateOutput(parameters, "Massachusetts	United States");
+        }
+
+        [Fact]
+        public void SubmitHiveJobLargeQuery()
+        {
+            var query = string.Empty;
+
+            // Maximum input string size Uri.EscapeDataString can accept is 65520.
+            while(query.Length < 65520)
+            {
+                query += "select 1.0000000001 + 0.00001 limit 1;";
+            }
+
+            var parameters = new HiveJobSubmissionParameters
+            {
+                Query = query
+            };
+
+            SubmitHiveJobAndValidateOutput(parameters, "1.0000100001");
         }
 
         [Fact]
@@ -693,10 +714,10 @@ namespace HDInsightJob.Tests
 
         private IStorageAccess GetStorageAccessObject(bool IsWindowsCluster = false)
         {
-                return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
-                                        IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
-                                        IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
-           
+            return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
+                                    IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
+                                    IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
+
         }
     }
 }

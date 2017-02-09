@@ -17,6 +17,7 @@ using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
+using System;
 
 namespace HDInsight.Tests.Helpers
 {
@@ -84,6 +85,13 @@ namespace HDInsight.Tests.Helpers
             while (stopwatch.Elapsed < timeout);
 
             Xunit.Assert.True(!createError);
+        }
+
+        public static bool IsRecordMode()
+        {
+            string testMode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+            bool recordMode = !string.IsNullOrEmpty(testMode) && testMode.Equals("Record", StringComparison.OrdinalIgnoreCase);
+            return recordMode;
         }
     }
 }

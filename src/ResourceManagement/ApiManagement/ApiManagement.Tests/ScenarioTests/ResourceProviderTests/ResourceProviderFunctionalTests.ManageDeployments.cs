@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
         /// Common Test Subnet Resource
         /// </summary>
         const string SubnetResourceId =
-                    "/subscriptions/20010222-2b48-4245-a95c-090db6312d5f/resourceGroups/Default-Networking/providers/Microsoft.Network/virtualNetworks/apim-hydra-vnet2/subnets/default";
+                    "/subscriptions/20010222-2b48-4245-a95c-090db6312d5f/resourceGroups/onesdk2423/providers/Microsoft.Network/virtualNetworks/hydra-apim-vnet/subnets/default";
 
         [Fact]
         public void ManageDeployments()
