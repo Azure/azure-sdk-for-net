@@ -23,7 +23,7 @@ API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</de
     <dependencies>
       <group targetFramework=".NETFramework4.5">
         <dependency id="WindowsAzure.Storage" version="8.0.1" />
-        <dependency id="Azure.Batch" version="5.1.2" />
+        <dependency id="Azure.Batch" version="6.0.0" />
       </group>
     </dependencies>
   </metadata>

@@ -1,5 +1,25 @@
 ## Azure.Batch release notes
 
+### Changes in 6.0.0
+#### REST API version
+This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
+
+#### Features
+- Added support for running a task under a configurable user identity via the `UserIdentity` property on all task objects (`CloudTask`, `JobPreparationTask`, `StartTask`, etc). `UserIdentity` replaces `RunElevated`. `UserIdentity` supports running a task as a predefined named user (via `UserIdentity.UserName`) or an automatically created user. The `AutoUserSpecification` specifies an automatically created user account under which to run the task. To translate existing code, change `RunElevated = true` to `UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.Admin))` and `RunElevated = false` to `UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.NonAdmin))`.
+- Added support for defining pool-wide users, via the `UserAccounts` property on `CloudPool` and `PoolSpecification`. You can run a task as such a user using the `UserIdentity` constructor that takes a user name.
+- Added support for requesting the Batch service provide an authentication token to the task when it runs. This is done using the `AuthenticationTokenSettings` on `CloudTask` and `JobManagerTask`. This avoids the need to pass Batch account keys to the task in order to issue requests to the Batch service.
+- Added support for specifying an action to take on a task's dependencies if the task fails using the `DependencyAction` property of `ExitOptions`.
+- Added support for deploying nodes using custom VHDs, via the `OSDisk` property of `VirtualMachineConfiguration`. Note that the Batch account being used must have been created with `PoolAllocationMode = UserSubscription` to allow this.
+- Moved `FileToStage` implementation to Azure.Batch.FileStaging NuGet package.
+- Added support for Azure Active Directory based authentication. Use `BatchClient.Open/OpenAsync(BatchTokenCredentials)` to use this form of authentication. This is mandatory for accounts with `PoolAllocationMode = UserSubscription`.
+
+#### Package dependencies
+- Removed the dependency on `WindowsAzure.Storage`.
+- Updated to use version 3.3.5 of `Microsoft.Rest.ClientRuntime.Azure`.
+
+#### Documentation
+- Improved and clarified documentation.
+
 ### Changes in 5.1.2
 #### Bug fixes
 - Fixed a bug where performing `JobOperations.GetNodeFile` and `PoolOperations.GetNodeFile` could throw an `OutOfMemoryException` if the file that was being examined was large.
