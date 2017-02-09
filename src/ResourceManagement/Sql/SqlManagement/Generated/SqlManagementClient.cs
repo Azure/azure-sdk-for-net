@@ -234,6 +234,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._elasticPoolRecommendedActions; }
         }
         
+        private IFailoverGroupOperations _failoverGroups;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Failover Group.  Contains operations to: Create, Retrieve, Update,
+        /// and Delete.
+        /// </summary>
+        public virtual IFailoverGroupOperations FailoverGroups
+        {
+            get { return this._failoverGroups; }
+        }
+        
         private IFirewallRuleOperations _firewallRules;
         
         /// <summary>
@@ -477,6 +489,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPoolAdvisors = new ElasticPoolAdvisorOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._elasticPoolRecommendedActions = new ElasticPoolRecommendedActionOperations(this);
+            this._failoverGroups = new FailoverGroupOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
             this._jobAccounts = new JobAccountOperations(this);
@@ -573,6 +586,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPoolAdvisors = new ElasticPoolAdvisorOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._elasticPoolRecommendedActions = new ElasticPoolRecommendedActionOperations(this);
+            this._failoverGroups = new FailoverGroupOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
             this._jobAccounts = new JobAccountOperations(this);
