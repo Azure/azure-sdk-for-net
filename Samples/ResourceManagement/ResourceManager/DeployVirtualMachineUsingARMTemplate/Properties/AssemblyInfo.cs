@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -11,11 +10,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Microsoft.Azure.Management.Sql.Fluent")]
+[assembly: AssemblyProduct("DeployVirtualMachineUsingARMTemplate")]
 [assembly: AssemblyTrademark("")]
-
-[assembly: AssemblyVersion("1.0.0.51")]
-[assembly: AssemblyFileVersion("1.0.0.51")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -23,4 +19,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ecb29486-d22f-46b3-bc85-c49cde693192")]
+[assembly: Guid("a0d86812-8532-4b5e-998a-ef7257061f7b")]
