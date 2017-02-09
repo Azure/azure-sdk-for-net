@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "disabled")]
         Disabled
     }
-    internal static class SchedulingStateEnumExtension
-    {
-        internal static string ToSerializedValue(this SchedulingState? value )  =>
-            value == null ? null : (( SchedulingState )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this SchedulingState value )
-        {
-            switch( value )
-            {
-                case SchedulingState.Enabled:
-                    return "enabled";
-                case SchedulingState.Disabled:
-                    return "disabled";
-            }
-            return null;
-        }
-
-        internal static SchedulingState? ParseSchedulingState( this string value )
-        {
-            switch( value )
-            {
-                case "enabled":
-                    return SchedulingState.Enabled;
-                case "disabled":
-                    return SchedulingState.Disabled;
-            }
-            return null;
-        }
-    }
 }

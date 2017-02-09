@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class OSTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this OSType? value )  =>
-            value == null ? null : (( OSType )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this OSType value )
-        {
-            switch( value )
-            {
-                case OSType.Linux:
-                    return "linux";
-                case OSType.Windows:
-                    return "windows";
-                case OSType.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static OSType? ParseOSType( this string value )
-        {
-            switch( value )
-            {
-                case "linux":
-                    return OSType.Linux;
-                case "windows":
-                    return OSType.Windows;
-                case "unmapped":
-                    return OSType.Unmapped;
-            }
-            return null;
-        }
-    }
 }

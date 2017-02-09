@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class PoolLifetimeOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this PoolLifetimeOption? value )  =>
-            value == null ? null : (( PoolLifetimeOption )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this PoolLifetimeOption value )
-        {
-            switch( value )
-            {
-                case PoolLifetimeOption.JobSchedule:
-                    return "jobSchedule";
-                case PoolLifetimeOption.Job:
-                    return "job";
-                case PoolLifetimeOption.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static PoolLifetimeOption? ParsePoolLifetimeOption( this string value )
-        {
-            switch( value )
-            {
-                case "jobSchedule":
-                    return PoolLifetimeOption.JobSchedule;
-                case "job":
-                    return PoolLifetimeOption.Job;
-                case "unmapped":
-                    return PoolLifetimeOption.Unmapped;
-            }
-            return null;
-        }
-    }
 }

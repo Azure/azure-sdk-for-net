@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "upgrading")]
         Upgrading
     }
-    internal static class PoolStateEnumExtension
-    {
-        internal static string ToSerializedValue(this PoolState? value )  =>
-            value == null ? null : (( PoolState )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this PoolState value )
-        {
-            switch( value )
-            {
-                case PoolState.Active:
-                    return "active";
-                case PoolState.Deleting:
-                    return "deleting";
-                case PoolState.Upgrading:
-                    return "upgrading";
-            }
-            return null;
-        }
-
-        internal static PoolState? ParsePoolState( this string value )
-        {
-            switch( value )
-            {
-                case "active":
-                    return PoolState.Active;
-                case "deleting":
-                    return PoolState.Deleting;
-                case "upgrading":
-                    return PoolState.Upgrading;
-            }
-            return null;
-        }
-    }
 }

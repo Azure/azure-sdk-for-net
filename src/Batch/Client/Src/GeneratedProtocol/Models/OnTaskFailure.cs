@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "performExitOptionsJobAction")]
         PerformExitOptionsJobAction
     }
-    internal static class OnTaskFailureEnumExtension
-    {
-        internal static string ToSerializedValue(this OnTaskFailure? value )  =>
-            value == null ? null : (( OnTaskFailure )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this OnTaskFailure value )
-        {
-            switch( value )
-            {
-                case OnTaskFailure.NoAction:
-                    return "noAction";
-                case OnTaskFailure.PerformExitOptionsJobAction:
-                    return "performExitOptionsJobAction";
-            }
-            return null;
-        }
-
-        internal static OnTaskFailure? ParseOnTaskFailure( this string value )
-        {
-            switch( value )
-            {
-                case "noAction":
-                    return OnTaskFailure.NoAction;
-                case "performExitOptionsJobAction":
-                    return OnTaskFailure.PerformExitOptionsJobAction;
-            }
-            return null;
-        }
-    }
 }

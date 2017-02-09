@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class SchedulingErrorCategoryEnumExtension
-    {
-        internal static string ToSerializedValue(this SchedulingErrorCategory? value )  =>
-            value == null ? null : (( SchedulingErrorCategory )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this SchedulingErrorCategory value )
-        {
-            switch( value )
-            {
-                case SchedulingErrorCategory.UserError:
-                    return "userError";
-                case SchedulingErrorCategory.ServerError:
-                    return "serverError";
-                case SchedulingErrorCategory.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static SchedulingErrorCategory? ParseSchedulingErrorCategory( this string value )
-        {
-            switch( value )
-            {
-                case "userError":
-                    return SchedulingErrorCategory.UserError;
-                case "serverError":
-                    return SchedulingErrorCategory.ServerError;
-                case "unmapped":
-                    return SchedulingErrorCategory.Unmapped;
-            }
-            return null;
-        }
-    }
 }

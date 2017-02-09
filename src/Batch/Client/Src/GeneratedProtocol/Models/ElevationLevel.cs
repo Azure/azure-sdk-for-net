@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "admin")]
         Admin
     }
-    internal static class ElevationLevelEnumExtension
-    {
-        internal static string ToSerializedValue(this ElevationLevel? value )  =>
-            value == null ? null : (( ElevationLevel )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this ElevationLevel value )
-        {
-            switch( value )
-            {
-                case ElevationLevel.NonAdmin:
-                    return "nonAdmin";
-                case ElevationLevel.Admin:
-                    return "admin";
-            }
-            return null;
-        }
-
-        internal static ElevationLevel? ParseElevationLevel( this string value )
-        {
-            switch( value )
-            {
-                case "nonAdmin":
-                    return ElevationLevel.NonAdmin;
-                case "admin":
-                    return ElevationLevel.Admin;
-            }
-            return null;
-        }
-    }
 }

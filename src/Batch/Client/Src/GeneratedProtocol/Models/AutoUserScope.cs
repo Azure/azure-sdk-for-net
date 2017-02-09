@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "pool")]
         Pool
     }
-    internal static class AutoUserScopeEnumExtension
-    {
-        internal static string ToSerializedValue(this AutoUserScope? value )  =>
-            value == null ? null : (( AutoUserScope )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this AutoUserScope value )
-        {
-            switch( value )
-            {
-                case AutoUserScope.Task:
-                    return "task";
-                case AutoUserScope.Pool:
-                    return "pool";
-            }
-            return null;
-        }
-
-        internal static AutoUserScope? ParseAutoUserScope( this string value )
-        {
-            switch( value )
-            {
-                case "task":
-                    return AutoUserScope.Task;
-                case "pool":
-                    return AutoUserScope.Pool;
-            }
-            return null;
-        }
-    }
 }

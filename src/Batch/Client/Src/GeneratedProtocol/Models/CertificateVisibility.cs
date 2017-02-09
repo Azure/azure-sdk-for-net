@@ -34,41 +34,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class CertificateVisibilityEnumExtension
-    {
-        internal static string ToSerializedValue(this CertificateVisibility? value )  =>
-            value == null ? null : (( CertificateVisibility )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this CertificateVisibility value )
-        {
-            switch( value )
-            {
-                case CertificateVisibility.StartTask:
-                    return "startTask";
-                case CertificateVisibility.Task:
-                    return "task";
-                case CertificateVisibility.RemoteUser:
-                    return "remoteUser";
-                case CertificateVisibility.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static CertificateVisibility? ParseCertificateVisibility( this string value )
-        {
-            switch( value )
-            {
-                case "startTask":
-                    return CertificateVisibility.StartTask;
-                case "task":
-                    return CertificateVisibility.Task;
-                case "remoteUser":
-                    return CertificateVisibility.RemoteUser;
-                case "unmapped":
-                    return CertificateVisibility.Unmapped;
-            }
-            return null;
-        }
-    }
 }

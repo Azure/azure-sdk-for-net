@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class CertificateStoreLocationEnumExtension
-    {
-        internal static string ToSerializedValue(this CertificateStoreLocation? value )  =>
-            value == null ? null : (( CertificateStoreLocation )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this CertificateStoreLocation value )
-        {
-            switch( value )
-            {
-                case CertificateStoreLocation.CurrentUser:
-                    return "currentUser";
-                case CertificateStoreLocation.LocalMachine:
-                    return "localMachine";
-                case CertificateStoreLocation.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static CertificateStoreLocation? ParseCertificateStoreLocation( this string value )
-        {
-            switch( value )
-            {
-                case "currentUser":
-                    return CertificateStoreLocation.CurrentUser;
-                case "localMachine":
-                    return CertificateStoreLocation.LocalMachine;
-                case "unmapped":
-                    return CertificateStoreLocation.Unmapped;
-            }
-            return null;
-        }
-    }
 }

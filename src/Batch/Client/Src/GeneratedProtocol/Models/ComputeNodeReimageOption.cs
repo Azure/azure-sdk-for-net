@@ -34,41 +34,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
         RetainedData
     }
-    internal static class ComputeNodeReimageOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this ComputeNodeReimageOption? value )  =>
-            value == null ? null : (( ComputeNodeReimageOption )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this ComputeNodeReimageOption value )
-        {
-            switch( value )
-            {
-                case ComputeNodeReimageOption.Requeue:
-                    return "requeue";
-                case ComputeNodeReimageOption.Terminate:
-                    return "terminate";
-                case ComputeNodeReimageOption.TaskCompletion:
-                    return "taskCompletion";
-                case ComputeNodeReimageOption.RetainedData:
-                    return "retainedData";
-            }
-            return null;
-        }
-
-        internal static ComputeNodeReimageOption? ParseComputeNodeReimageOption( this string value )
-        {
-            switch( value )
-            {
-                case "requeue":
-                    return ComputeNodeReimageOption.Requeue;
-                case "terminate":
-                    return ComputeNodeReimageOption.Terminate;
-                case "taskCompletion":
-                    return ComputeNodeReimageOption.TaskCompletion;
-                case "retainedData":
-                    return ComputeNodeReimageOption.RetainedData;
-            }
-            return null;
-        }
-    }
 }

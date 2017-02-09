@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "readWrite")]
         ReadWrite
     }
-    internal static class CachingTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this CachingType? value )  =>
-            value == null ? null : (( CachingType )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this CachingType value )
-        {
-            switch( value )
-            {
-                case CachingType.None:
-                    return "none";
-                case CachingType.ReadOnly:
-                    return "readOnly";
-                case CachingType.ReadWrite:
-                    return "readWrite";
-            }
-            return null;
-        }
-
-        internal static CachingType? ParseCachingType( this string value )
-        {
-            switch( value )
-            {
-                case "none":
-                    return CachingType.None;
-                case "readOnly":
-                    return CachingType.ReadOnly;
-                case "readWrite":
-                    return CachingType.ReadWrite;
-            }
-            return null;
-        }
-    }
 }

@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "stopping")]
         Stopping
     }
-    internal static class AllocationStateEnumExtension
-    {
-        internal static string ToSerializedValue(this AllocationState? value )  =>
-            value == null ? null : (( AllocationState )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this AllocationState value )
-        {
-            switch( value )
-            {
-                case AllocationState.Steady:
-                    return "steady";
-                case AllocationState.Resizing:
-                    return "resizing";
-                case AllocationState.Stopping:
-                    return "stopping";
-            }
-            return null;
-        }
-
-        internal static AllocationState? ParseAllocationState( this string value )
-        {
-            switch( value )
-            {
-                case "steady":
-                    return AllocationState.Steady;
-                case "resizing":
-                    return AllocationState.Resizing;
-                case "stopping":
-                    return AllocationState.Stopping;
-            }
-            return null;
-        }
-    }
 }
