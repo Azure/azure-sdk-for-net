@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate
     }
-    internal static class JobActionEnumExtension
-    {
-        internal static string ToSerializedValue(this JobAction? value )  =>
-            value == null ? null : (( JobAction )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this JobAction value )
-        {
-            switch( value )
-            {
-                case JobAction.None:
-                    return "none";
-                case JobAction.Disable:
-                    return "disable";
-                case JobAction.Terminate:
-                    return "terminate";
-            }
-            return null;
-        }
-
-        internal static JobAction? ParseJobAction( this string value )
-        {
-            switch( value )
-            {
-                case "none":
-                    return JobAction.None;
-                case "disable":
-                    return JobAction.Disable;
-                case "terminate":
-                    return JobAction.Terminate;
-            }
-            return null;
-        }
-    }
 }

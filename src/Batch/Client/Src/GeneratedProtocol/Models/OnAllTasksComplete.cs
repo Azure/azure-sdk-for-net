@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "terminateJob")]
         TerminateJob
     }
-    internal static class OnAllTasksCompleteEnumExtension
-    {
-        internal static string ToSerializedValue(this OnAllTasksComplete? value )  =>
-            value == null ? null : (( OnAllTasksComplete )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this OnAllTasksComplete value )
-        {
-            switch( value )
-            {
-                case OnAllTasksComplete.NoAction:
-                    return "noAction";
-                case OnAllTasksComplete.TerminateJob:
-                    return "terminateJob";
-            }
-            return null;
-        }
-
-        internal static OnAllTasksComplete? ParseOnAllTasksComplete( this string value )
-        {
-            switch( value )
-            {
-                case "noAction":
-                    return OnAllTasksComplete.NoAction;
-                case "terminateJob":
-                    return OnAllTasksComplete.TerminateJob;
-            }
-            return null;
-        }
-    }
 }

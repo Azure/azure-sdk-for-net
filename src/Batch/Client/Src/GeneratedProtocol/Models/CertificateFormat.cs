@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class CertificateFormatEnumExtension
-    {
-        internal static string ToSerializedValue(this CertificateFormat? value )  =>
-            value == null ? null : (( CertificateFormat )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this CertificateFormat value )
-        {
-            switch( value )
-            {
-                case CertificateFormat.Pfx:
-                    return "pfx";
-                case CertificateFormat.Cer:
-                    return "cer";
-                case CertificateFormat.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static CertificateFormat? ParseCertificateFormat( this string value )
-        {
-            switch( value )
-            {
-                case "pfx":
-                    return CertificateFormat.Pfx;
-                case "cer":
-                    return CertificateFormat.Cer;
-                case "unmapped":
-                    return CertificateFormat.Unmapped;
-            }
-            return null;
-        }
-    }
 }

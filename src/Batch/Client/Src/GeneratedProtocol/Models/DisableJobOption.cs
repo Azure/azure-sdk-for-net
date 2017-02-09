@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "wait")]
         Wait
     }
-    internal static class DisableJobOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this DisableJobOption? value )  =>
-            value == null ? null : (( DisableJobOption )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this DisableJobOption value )
-        {
-            switch( value )
-            {
-                case DisableJobOption.Requeue:
-                    return "requeue";
-                case DisableJobOption.Terminate:
-                    return "terminate";
-                case DisableJobOption.Wait:
-                    return "wait";
-            }
-            return null;
-        }
-
-        internal static DisableJobOption? ParseDisableJobOption( this string value )
-        {
-            switch( value )
-            {
-                case "requeue":
-                    return DisableJobOption.Requeue;
-                case "terminate":
-                    return DisableJobOption.Terminate;
-                case "wait":
-                    return DisableJobOption.Wait;
-            }
-            return null;
-        }
-    }
 }

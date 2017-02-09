@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "block")]
         Block
     }
-    internal static class DependencyActionEnumExtension
-    {
-        internal static string ToSerializedValue(this DependencyAction? value )  =>
-            value == null ? null : (( DependencyAction )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this DependencyAction value )
-        {
-            switch( value )
-            {
-                case DependencyAction.Satisfy:
-                    return "satisfy";
-                case DependencyAction.Block:
-                    return "block";
-            }
-            return null;
-        }
-
-        internal static DependencyAction? ParseDependencyAction( this string value )
-        {
-            switch( value )
-            {
-                case "satisfy":
-                    return DependencyAction.Satisfy;
-                case "block":
-                    return DependencyAction.Block;
-            }
-            return null;
-        }
-    }
 }

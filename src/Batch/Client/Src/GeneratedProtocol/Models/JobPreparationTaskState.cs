@@ -30,33 +30,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "completed")]
         Completed
     }
-    internal static class JobPreparationTaskStateEnumExtension
-    {
-        internal static string ToSerializedValue(this JobPreparationTaskState? value )  =>
-            value == null ? null : (( JobPreparationTaskState )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this JobPreparationTaskState value )
-        {
-            switch( value )
-            {
-                case JobPreparationTaskState.Running:
-                    return "running";
-                case JobPreparationTaskState.Completed:
-                    return "completed";
-            }
-            return null;
-        }
-
-        internal static JobPreparationTaskState? ParseJobPreparationTaskState( this string value )
-        {
-            switch( value )
-            {
-                case "running":
-                    return JobPreparationTaskState.Running;
-                case "completed":
-                    return JobPreparationTaskState.Completed;
-            }
-            return null;
-        }
-    }
 }

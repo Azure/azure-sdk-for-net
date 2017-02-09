@@ -36,45 +36,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "deleting")]
         Deleting
     }
-    internal static class JobScheduleStateEnumExtension
-    {
-        internal static string ToSerializedValue(this JobScheduleState? value )  =>
-            value == null ? null : (( JobScheduleState )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this JobScheduleState value )
-        {
-            switch( value )
-            {
-                case JobScheduleState.Active:
-                    return "active";
-                case JobScheduleState.Completed:
-                    return "completed";
-                case JobScheduleState.Disabled:
-                    return "disabled";
-                case JobScheduleState.Terminating:
-                    return "terminating";
-                case JobScheduleState.Deleting:
-                    return "deleting";
-            }
-            return null;
-        }
-
-        internal static JobScheduleState? ParseJobScheduleState( this string value )
-        {
-            switch( value )
-            {
-                case "active":
-                    return JobScheduleState.Active;
-                case "completed":
-                    return JobScheduleState.Completed;
-                case "disabled":
-                    return JobScheduleState.Disabled;
-                case "terminating":
-                    return JobScheduleState.Terminating;
-                case "deleting":
-                    return JobScheduleState.Deleting;
-            }
-            return null;
-        }
-    }
 }

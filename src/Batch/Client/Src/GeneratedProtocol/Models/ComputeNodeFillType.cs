@@ -32,37 +32,4 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
-    internal static class ComputeNodeFillTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ComputeNodeFillType? value )  =>
-            value == null ? null : (( ComputeNodeFillType )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this ComputeNodeFillType value )
-        {
-            switch( value )
-            {
-                case ComputeNodeFillType.Spread:
-                    return "spread";
-                case ComputeNodeFillType.Pack:
-                    return "pack";
-                case ComputeNodeFillType.Unmapped:
-                    return "unmapped";
-            }
-            return null;
-        }
-
-        internal static ComputeNodeFillType? ParseComputeNodeFillType( this string value )
-        {
-            switch( value )
-            {
-                case "spread":
-                    return ComputeNodeFillType.Spread;
-                case "pack":
-                    return ComputeNodeFillType.Pack;
-                case "unmapped":
-                    return ComputeNodeFillType.Unmapped;
-            }
-            return null;
-        }
-    }
 }
