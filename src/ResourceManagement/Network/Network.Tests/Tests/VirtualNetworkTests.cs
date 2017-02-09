@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
@@ -212,6 +215,161 @@ namespace Networks.Tests
 
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
+
+        [Fact]
+        public void VirtualNetworkPeeringTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                string vnet1Name = TestUtilities.GenerateName();
+                string vnet2Name = TestUtilities.GenerateName();
+                string subnet1Name = TestUtilities.GenerateName();
+                string subnet2Name = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnet1Name,
+                            AddressPrefix = "10.0.1.0/24",
+                        },
+                        new Subnet()
+                        {
+                            Name = subnet2Name,
+                            AddressPrefix = "10.0.2.0/24",
+                        }
+                    }
+                };
+
+                // Put Vnet
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnet1Name, vnet);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+                // Get Vnet
+                var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnet1Name);
+                Assert.Equal(vnet1Name, getVnetResponse.Name);
+                Assert.NotNull(getVnetResponse.ResourceGuid);
+                Assert.Equal("Succeeded", getVnetResponse.ProvisioningState);
+
+                // Create vnet2
+                var vnet2 = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.1.0.0/16",
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnet1Name,
+                            AddressPrefix = "10.1.1.0/24",
+                        }
+                    }
+                };
+
+                // Put Vnet2
+                var putVnet2 = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnet2Name, vnet2);
+                Assert.Equal("Succeeded", putVnet2.ProvisioningState);
+
+                // Create peering object
+                var peering = new VirtualNetworkPeering()
+                {
+                    AllowForwardedTraffic = true,
+                    RemoteVirtualNetwork = new Microsoft.Azure.Management.Network.Models.SubResource
+                    {
+                        Id = putVnet2.Id
+                    }
+                };
+
+                // Create Peering
+                networkManagementClient.VirtualNetworkPeerings.CreateOrUpdate(resourceGroupName, vnet1Name, "peer1", peering);
+
+                // Get Peering
+                var getPeer = networkManagementClient.VirtualNetworkPeerings.Get(resourceGroupName, vnet1Name, "peer1");
+                Assert.Equal("peer1", getPeer.Name);
+                Assert.Equal(true, getPeer.AllowForwardedTraffic);
+                Assert.Equal(true, getPeer.AllowVirtualNetworkAccess);
+                Assert.Equal(false, getPeer.AllowGatewayTransit);
+                Assert.NotNull(getPeer.RemoteVirtualNetwork);
+                Assert.Equal(putVnet2.Id, getPeer.RemoteVirtualNetwork.Id);
+
+                // List Peering
+                var listPeer = networkManagementClient.VirtualNetworkPeerings.List(resourceGroupName, vnet1Name).ToList();
+                Assert.Equal(1, listPeer.Count);
+                Assert.Equal("peer1", listPeer[0].Name);
+                Assert.Equal(true, listPeer[0].AllowForwardedTraffic);
+                Assert.Equal(true, listPeer[0].AllowVirtualNetworkAccess);
+                Assert.Equal(false, listPeer[0].AllowGatewayTransit);
+                Assert.NotNull(listPeer[0].RemoteVirtualNetwork);
+                Assert.Equal(putVnet2.Id, listPeer[0].RemoteVirtualNetwork.Id);
+
+                // Get peering from GET vnet
+                var peeringVnet = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnet1Name);
+                Assert.Equal(vnet1Name, peeringVnet.Name);
+                Assert.Equal(1, peeringVnet.VirtualNetworkPeerings.Count());
+                Assert.Equal("peer1", peeringVnet.VirtualNetworkPeerings[0].Name);
+                Assert.Equal(true, peeringVnet.VirtualNetworkPeerings[0].AllowForwardedTraffic);
+                Assert.Equal(true, peeringVnet.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess);
+                Assert.Equal(false, peeringVnet.VirtualNetworkPeerings[0].AllowGatewayTransit);
+                Assert.NotNull(peeringVnet.VirtualNetworkPeerings[0].RemoteVirtualNetwork);
+                Assert.Equal(putVnet2.Id, peeringVnet.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id);
+
+                // Delete Peering
+                networkManagementClient.VirtualNetworkPeerings.Delete(resourceGroupName, vnet1Name, "peer1");
+
+                listPeer = networkManagementClient.VirtualNetworkPeerings.List(resourceGroupName, vnet1Name).ToList();
+                Assert.Equal(0, listPeer.Count);
+
+                peeringVnet = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnet1Name);
+                Assert.Equal(vnet1Name, peeringVnet.Name);
+                Assert.Equal(0, peeringVnet.VirtualNetworkPeerings.Count());
+
+                // Delete Vnets
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnet1Name);
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnet2Name);
             }
         }
     }

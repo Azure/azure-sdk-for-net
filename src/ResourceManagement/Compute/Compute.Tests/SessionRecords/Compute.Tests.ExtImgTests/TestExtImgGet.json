@@ -1,22 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions/2.0?api-version=2016-03-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zLzIuMD9hcGktdmVyc2lvbj0yMDE2LTAzLTMw",
+      "RequestUri": "/subscriptions/b52fce95-de5f-4b37-afca-db203a5d0b6a/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions/2.0?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjUyZmNlOTUtZGU1Zi00YjM3LWFmY2EtZGIyMDNhNWQwYjZhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zLzIuMD9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12427642-03b1-497c-8348-c3d74ee6b587"
+          "99b43a13-b9c6-4215-96ea-84d3fd7404a0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.0.0.0"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/14.0.0-prerelease"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"operatingSystem\": \"Windows\",\r\n    \"computeRole\": \"IaaS\",\r\n    \"vmScaleSetEnabled\": false,\r\n    \"supportsMultipleExtensions\": false\r\n  },\r\n  \"location\": \"westus\",\r\n  \"name\": \"2.0\",\r\n  \"id\": \"/Subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"operatingSystem\": \"Windows\",\r\n    \"computeRole\": \"IaaS\",\r\n    \"vmScaleSetEnabled\": false,\r\n    \"supportsMultipleExtensions\": false\r\n  },\r\n  \"location\": \"westus\",\r\n  \"name\": \"2.0\",\r\n  \"id\": \"/Subscriptions/b52fce95-de5f-4b37-afca-db203a5d0b6a/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 16 Mar 2016 04:09:15 GMT"
+          "Fri, 27 Jan 2017 06:06:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,16 +48,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4bc847ee-c015-4b87-9c39-b471f71c5d98"
+          "9cd84122-81a8-4183-8347-22c47c7917f8"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "12954"
         ],
         "x-ms-correlation-request-id": [
-          "57f125ff-64fe-4b1c-bbfe-eacaaaf0e4e0"
+          "a9c3271a-a9e3-4df4-913d-070424d47842"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160316T040916Z:57f125ff-64fe-4b1c-bbfe-eacaaaf0e4e0"
+          "WESTUS2:20170127T060634Z:a9c3271a-a9e3-4df4-913d-070424d47842"
         ]
       },
       "StatusCode": 200
@@ -64,6 +65,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "e33f361b-53c2-4cc7-b829-78906708387b"
+    "SubscriptionId": "b52fce95-de5f-4b37-afca-db203a5d0b6a"
   }
 }

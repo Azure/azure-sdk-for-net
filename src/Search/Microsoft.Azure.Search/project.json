@@ -1,5 +1,5 @@
 {
-  "version": "2.0.4-preview",
+  "version": "3.0.2",
   "title": "Microsoft Azure Search Library",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
   "authors": [ "Microsoft" ],
@@ -10,8 +10,8 @@
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Search", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
-    "requireLicenseAcceptance":  true,
-    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API. It includes support for indexing Azure Blob and Table storage, indexer field mappings, custom analyzers, and ETags. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade."
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "This is the newest major version of the Azure Search .NET SDK, based on version 2016-09-01 of the Azure Search REST API. New in this version is support for indexing Azure Blob and Table storage, indexer field mappings, custom analyzers, and ETags. Also included is support for reflection-based field definitions via the FieldBuilder class, thanks to a contribution from Ian Griffiths (https://github.com/idg10). See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade."
   },
 
   "buildOptions": {
@@ -22,15 +22,12 @@
     "nowarn": [ "1591" ]
   },
   "dependencies": {
-    "Microsoft.Spatial": "6.15.0"
+    "Microsoft.Spatial": "6.15.0",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.4,4.0)"
   },
 
   "frameworks": {
-    "net45": {
-      "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
-      }
-    },
+    "net45": { },
     "netstandard1.5": {
       "buildOptions": { "define": [ "PORTABLE" ] },
       "imports": ["dnxcore50"],
@@ -65,8 +62,7 @@
         "System.Xml.ReaderWriter": "4.0.11",
         "System.Xml.XDocument": "4.0.11",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Dynamic.Runtime": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Dynamic.Runtime": "4.0.11"
       }
     },
     "netstandard1.1": {
@@ -75,8 +71,7 @@
       "dependencies": {
         "NETStandard.Library": "1.6.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Dynamic.Runtime": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Dynamic.Runtime": "4.0.11"
       }
     }
   }

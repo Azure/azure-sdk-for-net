@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;

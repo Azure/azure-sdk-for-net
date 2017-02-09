@@ -24,14 +24,16 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the MachineLearningWorkspace class.
         /// </summary>
-        /// <param name="id">The workspace ARM resource id.</param>
+        /// <param name="id">Specifies the workspace ID of the machine
+        /// learning workspace associated with the web service</param>
         public MachineLearningWorkspace(string id)
         {
             Id = id;
         }
 
         /// <summary>
-        /// Gets or sets the workspace ARM resource id.
+        /// Gets or sets specifies the workspace ID of the machine learning
+        /// workspace associated with the web service
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

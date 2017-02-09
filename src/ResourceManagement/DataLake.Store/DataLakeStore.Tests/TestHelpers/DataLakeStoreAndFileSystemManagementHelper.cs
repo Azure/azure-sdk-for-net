@@ -1,19 +1,7 @@
 ﻿using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
-//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
@@ -103,7 +91,7 @@ namespace DataLakeStore.Tests
             if (!exists)
             {
                 dataLakeStoreManagementClient.Account.Create(resourceGroupName, accountName,
-                    new DataLakeStoreAccount {Location = location, Name = accountName});
+                    new DataLakeStoreAccount {Location = location});
                 
                 accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
                     accountName);
@@ -112,9 +100,9 @@ namespace DataLakeStore.Tests
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
                 int minutesWaited = 0;
                 int timeToWaitInMinutes = 15;
-                while (accountGetResponse.Properties.ProvisioningState !=
+                while (accountGetResponse.ProvisioningState !=
                        DataLakeStoreAccountStatus.Succeeded &&
-                       accountGetResponse.Properties.ProvisioningState !=
+                       accountGetResponse.ProvisioningState !=
                        DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
@@ -126,12 +114,12 @@ namespace DataLakeStore.Tests
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.Properties.ProvisioningState !=
+                accountGetResponse.ProvisioningState !=
                 DataLakeStoreAccountStatus.Succeeded,
                 "Account failed to be provisioned into the success state. Actual State: " +
-                accountGetResponse.Properties.ProvisioningState);
+                accountGetResponse.ProvisioningState);
 
-            return accountGetResponse.Properties.Endpoint;
+            return accountGetResponse.Endpoint;
         }
 
         internal void ThrowIfTrue(bool condition, string message)

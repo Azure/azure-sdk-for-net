@@ -1,19 +1,8 @@
-﻿// 
-// Copyright © Microsoft Corporation, All Rights Reserved
+﻿//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
-// OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
-// ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
-// PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
-//
-// See the Apache License, Version 2.0 for the specific language
-// governing permissions and limitations under the License.
 
 using System;
 using System.Security.Cryptography.X509Certificates;
@@ -42,8 +31,14 @@ namespace SampleKeyVaultClientWebRole
                     X509Certificate2Collection col = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false); // Don't validate certs, since the test root isn't installed.
                     if (col != null && col.Count != 0)
                     {
-                        store.Close();
-                        return col[0];
+                        foreach (X509Certificate2 cert in col)
+                        {
+                            if (cert.HasPrivateKey)
+                            {
+                                store.Close();
+                                return cert;
+                            }
+                        }
                     }
                 }
             }

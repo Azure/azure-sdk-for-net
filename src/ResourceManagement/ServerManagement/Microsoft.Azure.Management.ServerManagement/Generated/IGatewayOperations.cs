@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='expand'>
         /// Gets subscription credentials which uniquely identify Microsoft
         /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call. Possible values include: 'status'
+        /// every service call. Possible values include: 'status', 'download'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

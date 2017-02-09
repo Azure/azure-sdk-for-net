@@ -1,3 +1,3 @@
 {
-  "projects": [ "../../ClientRuntime", "../../TestFramework/", "Microsoft.Azure.Management.NotificationHubs" ]
+  "projects": [ "Microsoft.Azure.Management.NotificationHubs" ]
 }

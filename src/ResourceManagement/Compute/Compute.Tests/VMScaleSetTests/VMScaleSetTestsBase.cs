@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -50,7 +38,12 @@ namespace Compute.Tests
 
             return vmExtension;
         }
-        protected VirtualMachineScaleSet CreateDefaultVMScaleSetInput(string rgName, string storageAccountName, ImageReference imageRef, string subnetId)
+        protected VirtualMachineScaleSet CreateDefaultVMScaleSetInput(
+            string rgName,
+            string storageAccountName,
+            ImageReference imageRef,
+            string subnetId,
+            bool hasManagedDisks = false)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
@@ -66,7 +59,7 @@ namespace Compute.Tests
                     Capacity = 2,
                     Name = VirtualMachineSizeTypes.StandardA0,
                 },
-                OverProvision = false,
+                Overprovision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
                     Mode = UpgradeMode.Automatic
@@ -76,13 +69,22 @@ namespace Compute.Tests
                     StorageProfile = new VirtualMachineScaleSetStorageProfile()
                     {
                         ImageReference = imageRef,
-                        OsDisk = new VirtualMachineScaleSetOSDisk
+                        OsDisk = hasManagedDisks ? null : new VirtualMachineScaleSetOSDisk
                         {
                             Caching = CachingTypes.None,
                             CreateOption = DiskCreateOptionTypes.FromImage,
                             Name = "test",
-                            VhdContainers = new List<string> { vhdContainer }
+                            VhdContainers = new List<string>{ vhdContainer }
                         },
+                        DataDisks = !hasManagedDisks ? null : new List<VirtualMachineScaleSetDataDisk>
+                        {
+                            new VirtualMachineScaleSetDataDisk
+                            {
+                                Lun = 1,
+                                CreateOption = DiskCreateOptionTypes.Empty,
+                                DiskSizeGB = 128
+                            }
+                        }
                     },
                     OsProfile = new VirtualMachineScaleSetOSProfile()
                     {
@@ -128,6 +130,7 @@ namespace Compute.Tests
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
+            bool createWithManagedDisks = false,
             Subnet subnet = null)
         {
             try
@@ -140,6 +143,7 @@ namespace Compute.Tests
                                                                                      extensionProfile,
                                                                                      vmScaleSetCustomizer,
                                                                                      createWithPublicIpAddress,
+                                                                                     createWithManagedDisks,
                                                                                      subnet);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
@@ -161,12 +165,21 @@ namespace Compute.Tests
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            bool createWithManagedDisks = false)
         {
             try
             {
                 var createOrUpdateResponse = CreateVMScaleSetAndGetOperationResponse(
-                    rgName, vmssName, storageAccount, imageRef, out inputVMScaleSet, extensionProfile, vmScaleSetCustomizer);
+                    rgName,
+                    vmssName,
+                    storageAccount,
+                    imageRef,
+                    out inputVMScaleSet,
+                    extensionProfile,
+                    vmScaleSetCustomizer,
+                    createWithPublicIpAddress,
+                    createWithManagedDisks);
 
                 var lroResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, inputVMScaleSet.Name, inputVMScaleSet);
 
@@ -195,6 +208,7 @@ namespace Compute.Tests
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
+            bool createWithManagedDisks = false,
             Subnet subnet = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
@@ -214,7 +228,7 @@ namespace Compute.Tests
                 subnetResponse,
                 getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
 
-            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id);
+            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
@@ -227,7 +241,7 @@ namespace Compute.Tests
             Assert.True(createOrUpdateResponse.Name == vmssName);
             Assert.True(createOrUpdateResponse.Location.ToLower() == inputVMScaleSet.Location.ToLower().Replace(" ", ""));
 
-            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse);
+            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks);
 
             return createOrUpdateResponse;
         }
@@ -241,10 +255,10 @@ namespace Compute.Tests
             // TODO: AutoRest
             Assert.NotNull(vmScaleSetInstanceView.Extensions);
             int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount >= vmScaleSet.Sku.Capacity);
+            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
         }
 
-        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut)
+        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -253,17 +267,96 @@ namespace Compute.Tests
 
             Assert.NotNull(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk);
 
-            Assert.True(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.Name
-                     == vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Name);
-
-            if (vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Image != null)
+            if (!hasManagedDisks)
             {
-                Assert.True(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.Image.Uri
-                            == vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Image.Uri);
-            }
+                Assert.True(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.Name
+                            == vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Name);
 
-            Assert.True(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.Caching
-                     == vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Caching);
+                if (vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Image != null)
+                {
+                    Assert.True(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.Image.Uri
+                                == vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Image.Uri);
+                }
+
+                Assert.True(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.Caching
+                            == vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Caching);
+            }
+            else
+            {
+                Assert.NotNull(vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk.ManagedDisk);
+
+                if (vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk != null)
+                {
+                    VirtualMachineScaleSetOSDisk osDisk = vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk;
+                    VirtualMachineScaleSetOSDisk osDiskOut =
+                        vmScaleSetOut.VirtualMachineProfile.StorageProfile.OsDisk;
+
+                    if (osDisk.Caching != null)
+                    {
+                        Assert.True(osDisk.Caching == osDiskOut.Caching);
+                    }
+                    else
+                    {
+                        Assert.NotNull(osDiskOut.Caching);
+                    }
+
+                    Assert.NotNull(osDiskOut.ManagedDisk);
+                    if (osDisk.ManagedDisk != null && osDisk.ManagedDisk.StorageAccountType != null)
+                    {
+                        Assert.True(osDisk.ManagedDisk.StorageAccountType == osDiskOut.ManagedDisk.StorageAccountType);
+                    }
+                    else
+                    {
+                        Assert.NotNull(osDiskOut.ManagedDisk.StorageAccountType);
+                    }
+
+                    if (osDisk.Name != null)
+                    {
+                        Assert.Equal(osDiskOut.Name, osDisk.Name);
+                    }
+
+                    Assert.True(osDiskOut.CreateOption == DiskCreateOptionTypes.FromImage);
+                }
+
+                if (vmScaleSet.VirtualMachineProfile.StorageProfile.DataDisks != null
+                    && vmScaleSet.VirtualMachineProfile.StorageProfile.DataDisks.Count > 0)
+                {
+                    Assert.Equal(
+                        vmScaleSet.VirtualMachineProfile.StorageProfile.DataDisks.Count,
+                        vmScaleSetOut.VirtualMachineProfile.StorageProfile.DataDisks.Count);
+
+                    foreach (VirtualMachineScaleSetDataDisk dataDisk in vmScaleSet.VirtualMachineProfile.StorageProfile.DataDisks)
+                    {
+                        VirtualMachineScaleSetDataDisk matchingDataDisk
+                            = vmScaleSetOut.VirtualMachineProfile.StorageProfile.DataDisks.FirstOrDefault(disk => disk.Lun == dataDisk.Lun);
+                        Assert.NotNull(matchingDataDisk);
+
+                        if (dataDisk.Caching != null)
+                        {
+                            Assert.True(dataDisk.Caching == matchingDataDisk.Caching);
+                        }
+                        else
+                        {
+                            Assert.NotNull(matchingDataDisk.Caching);
+                        }
+
+                        if (dataDisk.ManagedDisk != null && dataDisk.ManagedDisk.StorageAccountType != null)
+                        {
+                            Assert.True(dataDisk.ManagedDisk.StorageAccountType == matchingDataDisk.ManagedDisk.StorageAccountType);
+                        }
+                        else
+                        {
+                            Assert.NotNull(matchingDataDisk.ManagedDisk.StorageAccountType);
+                        }
+
+                        if (dataDisk.Name != null)
+                        {
+                            Assert.Equal(dataDisk.Name, matchingDataDisk.Name);
+                        }
+                        Assert.True(dataDisk.CreateOption == matchingDataDisk.CreateOption);
+                    }
+                }
+            }
 
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&
                vmScaleSet.VirtualMachineProfile.OsProfile.Secrets.Any())

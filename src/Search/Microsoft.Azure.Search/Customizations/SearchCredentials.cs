@@ -4,7 +4,6 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Credentials used to authenticate to an Azure Search service.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx"/>
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/"/>
     /// </summary>
     public class SearchCredentials : ServiceClientCredentials
     {

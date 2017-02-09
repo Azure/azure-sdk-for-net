@@ -9,8 +9,8 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Microsoft Azure Search Library")]
 [assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.4.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
@@ -26,6 +26,6 @@ namespace Microsoft.Azure.Search
     internal class Consts
     {
         // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes.
-        public const string TargetApiVersion = "2015-02-28-Preview";
+        public const string TargetApiVersion = "2016-09-01";
     }
 }

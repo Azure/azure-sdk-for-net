@@ -24,14 +24,16 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the CommitmentPlan class.
         /// </summary>
-        /// <param name="id">The commitment plan ARM resource  id.</param>
+        /// <param name="id">Specifies the Azure Resource Manager ID of the
+        /// commitment plan associated with the web service.</param>
         public CommitmentPlan(string id)
         {
             Id = id;
         }
 
         /// <summary>
-        /// Gets or sets the commitment plan ARM resource  id.
+        /// Gets or sets specifies the Azure Resource Manager ID of the
+        /// commitment plan associated with the web service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

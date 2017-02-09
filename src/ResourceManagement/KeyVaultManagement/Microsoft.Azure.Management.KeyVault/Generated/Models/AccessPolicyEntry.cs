@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// secrets and certificates.</param>
         /// <param name="applicationId"> Application ID of the client making
         /// request on behalf of a principal</param>
-        public AccessPolicyEntry(Guid tenantId, Guid objectId, Permissions permissions, Guid? applicationId = default(Guid?))
+        public AccessPolicyEntry(Guid tenantId, string objectId, Permissions permissions, Guid? applicationId = default(Guid?))
         {
             TenantId = tenantId;
             ObjectId = objectId;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// policies.
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
-        public Guid ObjectId { get; set; }
+        public string ObjectId { get; set; }
 
         /// <summary>
         /// Gets or sets  Application ID of the client making request on
@@ -87,6 +87,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (ObjectId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectId");
+            }
             if (Permissions == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Permissions");

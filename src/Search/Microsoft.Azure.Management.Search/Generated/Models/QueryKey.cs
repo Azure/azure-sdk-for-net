@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes an API key for a given Azure Search service that has
@@ -30,6 +24,9 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the QueryKey class.
         /// </summary>
+        /// <param name="name">The name of the query API key; may be
+        /// empty.</param>
+        /// <param name="key">The value of the query API key.</param>
         public QueryKey(string name = default(string), string key = default(string))
         {
             Name = name;
@@ -39,13 +36,13 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Gets the name of the query API key; may be empty.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets the value of the query API key.
         /// </summary>
-        [JsonProperty(PropertyName = "key")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "key")]
         public string Key { get; private set; }
 
     }

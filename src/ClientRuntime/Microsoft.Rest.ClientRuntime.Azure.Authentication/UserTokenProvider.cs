@@ -293,7 +293,7 @@ namespace Microsoft.Rest.Azure.Authentication
                 authResult.TenantId,
                 authResult.UserInfo.DisplayableId);
         }
-#endif
+
         /// <summary>
         /// Log in to azure active directory in non-interactive mode using organizational id credentials and the default token cache. Default service 
         /// settings (authority, audience) for logging in to azure resource manager are used.
@@ -374,7 +374,7 @@ namespace Microsoft.Rest.Azure.Authentication
                 throw new AuthenticationException(Resources.ErrorAcquiringToken, ex);
             }
         }
-
+#endif
         // please remove this preprocessor #if whenever ADAL will go public with the new library 
 #if PORTABLE
         /// <summary>

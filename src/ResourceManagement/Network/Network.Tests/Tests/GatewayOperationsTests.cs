@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -134,7 +137,7 @@ namespace Networks.Tests
                 Assert.Equal(VirtualNetworkGatewaySkuTier.Standard, getVirtualNetworkGatewayResponse.Sku.Tier);
 
                 // 4A. ResetVirtualNetworkGateway API
-                var resetVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
+                var resetVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName);
                 //Assert.Equal("Succeeded", resetVirtualNetworkGatewayResponse.ProvisioningState);
 
                 // 4B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called

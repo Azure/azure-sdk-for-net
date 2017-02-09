@@ -370,9 +370,8 @@ namespace Microsoft.Azure.Search.Tests
                 expectedIndexer.Parameters
                     .ExcludeFileNameExtensions(".pdf")
                     .IndexFileNameExtensions(".docx")
-                    .IndexStorageMetadataOnly()
-                    .SkipContent()
-                    .ParseDelimitedTextFiles("a", "b", "c");
+                    .SetBlobExtractionMode(BlobExtractionMode.StorageMetadata)
+                    .DoNotFailOnUnsupportedContentType();
 
                 Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
                 ExpectSameStartTime(expectedIndexer, actualIndexer);

@@ -1,3 +1,3 @@
 {
-  "projects": [ "../../ClientRuntime", "../../TestFramework/", "Microsoft.Azure.Management.ServiceBus" ]
+  "projects": [ "Microsoft.Azure.Management.ServiceBus" ]
 }

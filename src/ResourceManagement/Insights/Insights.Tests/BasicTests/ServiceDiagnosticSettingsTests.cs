@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -68,9 +56,9 @@ namespace Insights.Tests.BasicTests
             AreEqual(expResponse, actualResponse);
         }
 
-        private static ServiceDiagnosticSettingsCreateOrUpdateParameters CreateDiagnosticSettingsParams()
+        private static ServiceDiagnosticSettingsResource CreateDiagnosticSettingsParams()
         {
-            return new ServiceDiagnosticSettingsCreateOrUpdateParameters
+            return new ServiceDiagnosticSettingsResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
                 ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
@@ -98,7 +86,8 @@ namespace Insights.Tests.BasicTests
                         },
                         TimeGrain = TimeSpan.FromMinutes(1)
                     }
-                }
+                },
+                Location = ""
             };
         }
 

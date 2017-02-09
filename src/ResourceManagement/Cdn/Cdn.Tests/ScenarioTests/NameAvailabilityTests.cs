@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
 using System.Net;
@@ -41,8 +29,9 @@ namespace Cdn.Tests.ScenarioTests
                 // Generate new endpoint name
                 string endpointName = TestUtilities.GenerateName("endpoint-unique");
                 
+
                 // CheckNameAvailability should return true
-                var output = cdnMgmtClient.NameAvailability.CheckNameAvailability(endpointName, ResourceType.MicrosoftCdnProfilesEndpoints);
+                var output = cdnMgmtClient.CheckNameAvailability(endpointName);
                 Assert.Equal(output.NameAvailable, true);
 
                 // Create endpoint with that name then CheckNameAvailability again
@@ -52,7 +41,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -62,10 +51,10 @@ namespace Cdn.Tests.ScenarioTests
                             {"key2","value2"}
                         }
                 };
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create endpoint with this name
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -79,10 +68,10 @@ namespace Cdn.Tests.ScenarioTests
                         }
                     }
                 };
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // CheckNameAvailability after endpoint was created should return false
-                output = cdnMgmtClient.NameAvailability.CheckNameAvailability(endpointName, ResourceType.MicrosoftCdnProfilesEndpoints);
+                output = cdnMgmtClient.CheckNameAvailability(endpointName);
                 Assert.Equal(output.NameAvailable, false);
 
                 // Delete resource group

@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
@@ -46,7 +34,7 @@ namespace Storage.Tests.Helpers
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "eastasia";
+        public static string DefaultLocation = IsTestTenant ? null : "eastus2euap";
         public static SkuName DefaultSkuName = SkuName.StandardGRS;
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
@@ -214,6 +202,113 @@ namespace Storage.Tests.Helpers
                 Assert.Equal(account.Tags["key1"], "value1");
                 Assert.Equal(account.Tags["key2"], "value2");
             }
+        }
+
+        public static AccountSasParameters ParseAccountSASToken(string accountSAS)
+        {
+            string[] sasProperties = accountSAS.Substring(1).Split(new char[] { '&' });
+            AccountSasParameters parameters = new AccountSasParameters();
+            foreach (var property in sasProperties)
+            {
+                string[] keyValue = property.Split(new char[] { '=' });
+                switch (keyValue[0])
+                {
+                    case "ss":
+                        parameters.Services = keyValue[1];
+                        break;
+                    case "srt":
+                        parameters.ResourceTypes = keyValue[1];
+                        break;
+                    case "sp":
+                        parameters.Permissions = keyValue[1];
+                        break;
+                    case "st":
+                        parameters.SharedAccessStartTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "se":
+                        parameters.SharedAccessExpiryTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "sip":
+                        parameters.IPAddressOrRange = keyValue[1];
+                        break;
+                    case "spr":
+                        if (keyValue[1] == "https")
+                            parameters.Protocols = HttpProtocol.Https;
+                        else if (keyValue[1] == "https,http")
+                            parameters.Protocols = HttpProtocol.Httpshttp;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return parameters;
+        }
+
+        public static ServiceSasParameters ParseServiceSASToken(string serviceSAS)
+        {
+            string[] sasProperties = serviceSAS.Substring(1).Split(new char[] { '&' });
+            ServiceSasParameters parameters = new ServiceSasParameters();
+            foreach (var property in sasProperties)
+            {
+                string[] keyValue = property.Split(new char[] { '=' });
+                switch (keyValue[0])
+                {
+                    case "sr":
+                        parameters.Resource = keyValue[1];
+                        break;
+                    case "sp":
+                        parameters.Permissions = keyValue[1];
+                        break;
+                    case "st":
+                        parameters.SharedAccessStartTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "se":
+                        parameters.SharedAccessExpiryTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "sip":
+                        parameters.IPAddressOrRange = keyValue[1];
+                        break;
+                    case "spr":
+                        if (keyValue[1] == "https")
+                            parameters.Protocols = HttpProtocol.Https;
+                        else if (keyValue[1] == "https,http")
+                            parameters.Protocols = HttpProtocol.Httpshttp;
+                        break;
+                    case "si":
+                        parameters.Identifier = keyValue[1];
+                        break;
+                    case "spk":
+                        parameters.PartitionKeyStart = keyValue[1];
+                        break;
+                    case "epk":
+                        parameters.PartitionKeyEnd = keyValue[1];
+                        break;
+                    case "srk":
+                        parameters.RowKeyStart = keyValue[1];
+                        break;
+                    case "erk":
+                        parameters.RowKeyEnd = keyValue[1];
+                        break;
+                    case "rscc":
+                        parameters.CacheControl = keyValue[1];
+                        break;
+                    case "rscd":
+                        parameters.ContentDisposition = keyValue[1];
+                        break;
+                    case "rsce":
+                        parameters.ContentEncoding = keyValue[1];
+                        break;
+                    case "rscl":
+                        parameters.ContentLanguage = keyValue[1];
+                        break;
+                    case "rsct":
+                        parameters.ContentType = keyValue[1];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return parameters;
         }
     }
 }

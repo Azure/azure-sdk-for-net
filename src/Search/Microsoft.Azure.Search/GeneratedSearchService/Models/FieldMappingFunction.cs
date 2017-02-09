@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Represents a function that transforms a value from a data source
     /// before indexing.
-    /// <see href="https://azure.microsoft.com/documentation/articles/search-indexer-field-mappings/" />
+    /// <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings" />
     /// </summary>
     public partial class FieldMappingFunction
     {

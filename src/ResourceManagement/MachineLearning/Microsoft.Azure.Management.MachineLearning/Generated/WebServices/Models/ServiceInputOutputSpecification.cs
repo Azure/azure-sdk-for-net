@@ -28,10 +28,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// </summary>
         /// <param name="type">The type of the entity described in swagger.
         /// Always 'object'.</param>
-        /// <param name="properties">Map of name to swagger schema for each
-        /// input or output of the web service.</param>
-        /// <param name="title">Swagger schema title.</param>
-        /// <param name="description">Swagger schema description.</param>
+        /// <param name="properties">Specifies a collection that contains the
+        /// column schema for each input or output of the web service. For
+        /// more information, see the Swagger specification.</param>
+        /// <param name="title">The title of your Swagger schema.</param>
+        /// <param name="description">The description of the Swagger
+        /// schema.</param>
         public ServiceInputOutputSpecification(string type, System.Collections.Generic.IDictionary<string, TableSpecification> properties, string title = default(string), string description = default(string))
         {
             Title = title;
@@ -41,13 +43,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets or sets swagger schema title.
+        /// Gets or sets the title of your Swagger schema.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets swagger schema description.
+        /// Gets or sets the description of the Swagger schema.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
@@ -60,8 +62,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets map of name to swagger schema for each input or
-        /// output of the web service.
+        /// Gets or sets specifies a collection that contains the column
+        /// schema for each input or output of the web service. For more
+        /// information, see the Swagger specification.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public System.Collections.Generic.IDictionary<string, TableSpecification> Properties { get; set; }

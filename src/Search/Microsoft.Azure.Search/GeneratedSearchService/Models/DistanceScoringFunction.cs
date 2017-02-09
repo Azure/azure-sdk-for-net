@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines a function that boosts scores based on distance from a
     /// geographic location.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Add-scoring-profiles-to-a-search-index" />
     /// </summary>
     [JsonObject("distance")]
     public partial class DistanceScoringFunction : ScoringFunction

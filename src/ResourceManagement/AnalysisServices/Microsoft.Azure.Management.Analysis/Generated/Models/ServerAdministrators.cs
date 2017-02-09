@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Array of administrator user identities
+    /// An array of administrator user identities
     /// </summary>
     public partial class ServerAdministrators
     {
@@ -23,15 +23,15 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <summary>
         /// Initializes a new instance of the ServerAdministrators class.
         /// </summary>
-        /// <param name="members">Collection of administrator user
-        /// identities</param>
+        /// <param name="members">An array of administrator user
+        /// identities.</param>
         public ServerAdministrators(System.Collections.Generic.IList<string> members = default(System.Collections.Generic.IList<string>))
         {
             Members = members;
         }
 
         /// <summary>
-        /// Gets or sets collection of administrator user identities
+        /// Gets or sets an array of administrator user identities.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "members")]
         public System.Collections.Generic.IList<string> Members { get; set; }

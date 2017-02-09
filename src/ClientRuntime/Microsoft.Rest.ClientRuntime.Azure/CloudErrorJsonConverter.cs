@@ -50,6 +50,11 @@ namespace Microsoft.Rest.Azure
                 throw new ArgumentNullException("serializer");
             }
 
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
             JObject jObject = JObject.Load(reader);
             JProperty errorObject = jObject.Properties().FirstOrDefault(p => 
                 ErrorNode.Equals(p.Name, StringComparison.OrdinalIgnoreCase));

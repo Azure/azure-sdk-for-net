@@ -1,34 +1,12 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
 using Xunit;
 
 namespace Compute.Tests
@@ -54,52 +32,88 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                EnsureClientsInitialized(context);
+                TestScaleSetOperationsInternal(context);
+            }
+        }
 
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-                // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                var vmssName = TestUtilities.GenerateName("vmss");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                VirtualMachineScaleSet inputVMScaleSet;
+        /// <summary>
+        /// Covers following Operations for ManagedDisks:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VMScaleSet with extension
+        /// Get VMScaleSet Model View
+        /// Get VMScaleSet Instance View
+        /// List VMScaleSets in a RG
+        /// List Available Skus
+        /// Delete VMScaleSet
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
+        public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TestScaleSetOperationsInternal(context, hasManagedDisks: true);
+            }
+        }
 
-                VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
+        public void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
+        {
+            EnsureClientsInitialized(context);
+
+            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+            // Create resource group
+            var rgName = TestUtilities.GenerateName(TestPrefix);
+            var vmssName = TestUtilities.GenerateName("vmss");
+            string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+            VirtualMachineScaleSet inputVMScaleSet;
+
+            VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
+            {
+                Extensions = new List<VirtualMachineScaleSetExtension>()
                 {
-                    Extensions = new List<VirtualMachineScaleSetExtension>()
-                    {
-                        GetTestVMSSVMExtension(),
-                    }
-                };
+                    GetTestVMSSVMExtension(),
+                }
+            };
 
-                try
-                {
-                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+            try
+            {
+                var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
 
-                    var getResponse = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet, extensionProfile, (vmScaleSet) => { vmScaleSet.OverProvision = true; });
+                var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                    rgName,
+                    vmssName,
+                    storageAccountOutput,
+                    imageRef,
+                    out inputVMScaleSet,
+                    extensionProfile,
+                    (vmScaleSet) => { vmScaleSet.Overprovision = true; },
+                    createWithManagedDisks: hasManagedDisks);
 
-                    ValidateVMScaleSet(inputVMScaleSet, getResponse);
+                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks);
 
-                    var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
-                    Assert.NotNull(getInstanceViewResponse);
-                    ValidateVMScaleSetInstanceView(inputVMScaleSet, getInstanceViewResponse);
+                var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
+                Assert.NotNull(getInstanceViewResponse);
+                ValidateVMScaleSetInstanceView(inputVMScaleSet, getInstanceViewResponse);
                     
-                    var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
-                    ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName));
+                var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
+                ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
 
-                    var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
-                    Assert.NotNull(listSkusResponse);
-                    Assert.False(listSkusResponse.Count() == 0);
+                var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
+                Assert.NotNull(listSkusResponse);
+                Assert.False(listSkusResponse.Count() == 0);
 
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
-                }
-                finally
-                {
-                     //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
-                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    m_ResourcesClient.ResourceGroups.Delete(rgName);
-                }
+                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+            }
+            finally
+            {
+                //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                m_ResourcesClient.ResourceGroups.Delete(rgName);
             }
         }
     }

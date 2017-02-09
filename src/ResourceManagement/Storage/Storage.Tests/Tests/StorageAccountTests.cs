@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -84,7 +72,7 @@ namespace Storage.Tests
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
                 parameters.Encryption = new Encryption
                 {
-                    Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } },
+                    Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
@@ -92,7 +80,28 @@ namespace Storage.Tests
                 // Verify encryption settings
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                if (null != account.Encryption.Services.Table)
+                {
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
+                }
+
+                if (null != account.Encryption.Services.Queue)
+                {
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
+                }
             }
         }
 
@@ -295,7 +304,7 @@ namespace Storage.Tests
 
                 // Create and get a Premium LRS storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                parameters.Sku.Name = SkuName.PremiumLRS;
+                parameters.Sku.Name = SkuName.StandardLRS;
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
@@ -348,7 +357,7 @@ namespace Storage.Tests
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
                 parameters.Encryption = new Encryption()
                 {
-                    Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } },
+                    Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
                 };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
@@ -358,8 +367,30 @@ namespace Storage.Tests
 
                 var account = accounts.ToArray()[0];
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                if (null != account.Encryption.Services.Table)
+                {
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
+                }
+
+                if (null != account.Encryption.Services.Queue)
+                {
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
+                }
             }
         }
 
@@ -418,14 +449,14 @@ namespace Storage.Tests
                 StorageAccountKey key1 = keys.Keys.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key1"));
                 Assert.NotNull(key1);
-                Assert.Equal(KeyPermission.FULL, key1.Permissions);
+                Assert.Equal(KeyPermission.Full, key1.Permissions);
                 Assert.NotNull(key1.Value);
 
                 // Validate Key2
                 StorageAccountKey key2 = keys.Keys.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
                 Assert.NotNull(key2);
-                Assert.Equal(KeyPermission.FULL, key2.Permissions);
+                Assert.Equal(KeyPermission.Full, key2.Permissions);
                 Assert.NotNull(key2.Value);
             }
         }
@@ -559,7 +590,7 @@ namespace Storage.Tests
                     Kind = Kind.Storage,
                     Encryption = new Encryption()
                     {
-                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } }
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
                     }
                 };
                 account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
@@ -567,8 +598,30 @@ namespace Storage.Tests
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                if (null != account.Encryption.Services.Table)
+                {
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
+                }
+
+                if (null != account.Encryption.Services.Queue)
+                {
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
+                }
 
                 // Update storage custom domains
                 parameters = new StorageAccountCreateParameters
@@ -648,7 +701,7 @@ namespace Storage.Tests
                 {
                     Encryption = new Encryption()
                     {
-                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } }
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
                     }
                 };
                 account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
@@ -656,8 +709,30 @@ namespace Storage.Tests
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                if (null != account.Encryption.Services.Table)
+                {
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
+                }
+
+                if (null != account.Encryption.Services.Queue)
+                {
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
+                }
 
                 // Update storage custom domains
                 parameters = new StorageAccountUpdateParameters
@@ -734,13 +809,13 @@ namespace Storage.Tests
 
                 // Query usage
                 var usages = storageMgmtClient.Usage.List();
-                Assert.Equal(1, usages.Value.Count());
-                Assert.Equal(UsageUnit.Count, usages.Value.First().Unit);
-                Assert.NotNull(usages.Value.First().CurrentValue);
-                Assert.Equal(100, usages.Value.First().Limit);
-                Assert.NotNull(usages.Value.First().Name);
-                Assert.Equal("StorageAccounts", usages.Value.First().Name.Value);
-                Assert.Equal("Storage Accounts", usages.Value.First().Name.LocalizedValue);
+                Assert.Equal(1, usages.Count());
+                Assert.Equal(UsageUnit.Count, usages.First().Unit);
+                Assert.NotNull(usages.First().CurrentValue);
+                Assert.Equal(250, usages.First().Limit);
+                Assert.NotNull(usages.First().Name);
+                Assert.Equal("StorageAccounts", usages.First().Name.Value);
+                Assert.Equal("Storage Accounts", usages.First().Name.LocalizedValue);
             }
         }
 
@@ -755,6 +830,375 @@ namespace Storage.Tests
                 var ops = resourcesClient.ResourceProviderOperationDetails.List("Microsoft.Storage", "2015-06-15");
 
                 Assert.Equal(ops.Count(), 7);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListAccountSASTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                var accountSasParameters = new AccountSasParameters()
+                {
+                    Services = "bftq",
+                    ResourceTypes = "sco",
+                    Permissions = "rdwlacup",
+                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
+                    Protocols = HttpProtocol.Httpshttp,
+                    SharedAccessStartTime = DateTime.UtcNow,
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                    KeyToSign = "key1"
+                };
+                var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
+
+                Assert.Equal(accountSasParameters.Services, resultCredentials.Services);
+                Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
+                Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
+                Assert.Equal(accountSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
+                Assert.Equal(accountSasParameters.Protocols, resultCredentials.Protocols);
+
+                //Assert.Equal(accountSasParameters.SharedAccessStartTime, resultCredentials.SharedAccessStartTime);
+
+                Assert.NotNull(accountSasParameters.SharedAccessStartTime);
+                Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListAccountSASWithDefaultProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var accountSasParameters = new AccountSasParameters()
+                {
+                    Services = "b",
+                    ResourceTypes = "sco",
+                    Permissions = "rl",
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                };
+
+                var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
+
+                Assert.Equal(accountSasParameters.Services, resultCredentials.Services);
+                Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
+                Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
+
+                Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListAccountSASWithMissingProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var accountSasParameters = new AccountSasParameters()
+                {
+                    Services = "b",
+                    ResourceTypes = "sco",
+                    Permissions = "rl",
+                };
+                try
+                {
+                    var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
+                    var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Equal("Values for request parameters are invalid: signedExpiry.", ex.Message);
+                    return;
+                }
+                throw new Exception("AccountSasToken shouldn't be returned without SharedAccessExpiryTime");
+            }
+        }
+        [Fact]
+        public void StorageAccountListServiceSASTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                var serviceSasParameters = new ServiceSasParameters()
+                {
+                    CanonicalizedResource = "/blob/" + accountName + "/music",
+                    Resource = "c",
+                    Permissions = "rdwlacup",
+                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
+                    Protocols = HttpProtocol.Httpshttp,
+                    SharedAccessStartTime = DateTime.UtcNow,
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                    KeyToSign = "key1"
+                };
+                var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
+
+                Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
+                Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
+                Assert.Equal(serviceSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
+                Assert.Equal(serviceSasParameters.Protocols, resultCredentials.Protocols);
+
+                Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
+                Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListServiceSASWithDefaultProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var serviceSasParameters = new ServiceSasParameters()
+                {
+                    CanonicalizedResource = "/blob/" + accountName + "/music",
+                    Resource = "c",
+                    Permissions = "rl",
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                };
+
+                var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
+
+                Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
+                Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
+                
+                Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListServiceSASWithMissingProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var serviceSasParameters = new ServiceSasParameters()
+                {
+                    CanonicalizedResource = "/blob/" + accountName + "/music",
+                    Resource = "b",
+                    Permissions = "rl",
+                };
+                try
+                {
+                    var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
+                    var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Equal("Values for request parameters are invalid: signedExpiry.", ex.Message);
+                    return;
+                }
+                throw new Exception("AccountSasToken shouldn't be returned without SharedAccessExpiryTime");
+            }
+        }
+
+        [Fact]
+        public void StorageAccountUpdateEncryptionTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
+
+                // Update storage account type
+                var parameters = new StorageAccountUpdateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+
+                // Update storage tags
+                parameters = new StorageAccountUpdateParameters
+                {
+                    Tags = new Dictionary<string, string>
+                    {
+                        {"key3","value3"},
+                        {"key4","value4"},
+                        {"key5","value6"}
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.Equal(account.Tags.Count, parameters.Tags.Count);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(account.Tags.Count, parameters.Tags.Count);
+
+                // 1. Update storage encryption
+                parameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption()
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.NotNull(account.Encryption);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.Encryption);
+                Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                // 2. Explicitly disable file encryption service.
+                parameters.Encryption.Services.File.Enabled = false;
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.NotNull(account.Encryption);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.Encryption);
+                Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.Null(account.Encryption.Services.File);
+
+                // 3. Restore storage encryption
+                parameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption()
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.NotNull(account.Encryption);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.Encryption);
+                Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                // 4. Remove file encryption service field.
+                parameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption()
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } }
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.NotNull(account.Encryption);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.Encryption);
+                Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
             }
         }
     }

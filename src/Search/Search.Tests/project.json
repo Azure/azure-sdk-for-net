@@ -29,7 +29,7 @@
       "version": "1.0.0" 
     }, 
     "Search.Management.Tests": "1.0.0",
-    "Microsoft.Azure.Search": "2.0.4-preview",
+    "Microsoft.Azure.Search": "3.0.2",
     "Microsoft.AspNetCore.WebUtilities": "1.0.0"
   }
 }

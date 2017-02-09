@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
@@ -30,13 +32,15 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the password.
+        /// Gets or sets the certificate password, return value will always be
+        /// empty.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the pfx.
+        /// Gets or sets the pfx certificate. Accepts certification in base64
+        /// encoding, return value will always be empty.
         /// </summary>
         [JsonProperty(PropertyName = "pfx")]
         public string Pfx { get; set; }

@@ -23,50 +23,59 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebServiceProperties class.
         /// </summary>
-        /// <param name="title">The title of the Azure ML web service.</param>
-        /// <param name="description">The description of the Azure ML web
+        /// <param name="title">The title of the web service.</param>
+        /// <param name="description">The description of the web
         /// service.</param>
-        /// <param name="createdOn">The moment of time the Azure ML web
+        /// <param name="createdOn">Read Only: The date and time when the web
         /// service was created.</param>
-        /// <param name="modifiedOn">The moment of time the web service was
-        /// last modified.</param>
-        /// <param name="provisioningState">The web service resource's
-        /// provisioning state. Possible values include: 'Unknown',
-        /// 'Provisioning', 'Succeeded', 'Failed', 'Canceled'</param>
-        /// <param name="keys">The set of access keys for the web service. If
-        /// not specified at creation time (PUT), they will be generated
-        /// automatically by the resource provider.</param>
-        /// <param name="readOnlyProperty">If true, the web service can no
-        /// longer be updated / patched, only removed. Otherwise, the service
-        /// resource supports changes.</param>
-        /// <param name="swaggerLocation">The uri for the swagger spec
-        /// associated with this web service.</param>
-        /// <param name="exposeSampleData">Flag that controls whether to
-        /// expose sample data or not in the web service's swagger
-        /// definition.</param>
-        /// <param name="realtimeConfiguration">Configuration for the
-        /// service's realtime endpoint.</param>
+        /// <param name="modifiedOn">Read Only: The date and time when the web
+        /// service was last modified.</param>
+        /// <param name="provisioningState">Read Only: The provision state of
+        /// the web service. Valid values are Unknown, Provisioning,
+        /// Succeeded, and Failed. Possible values include: 'Unknown',
+        /// 'Provisioning', 'Succeeded', 'Failed'</param>
+        /// <param name="keys">Contains the web service provisioning keys. If
+        /// you do not specify provisioning keys, the Azure Machine Learning
+        /// system generates them for you. Note: The keys are not returned
+        /// from calls to GET operations.</param>
+        /// <param name="readOnlyProperty">When set to true, indicates that
+        /// the web service is read-only and can no longer be updated or
+        /// patched, only removed. Default, is false. Note: Once set to true,
+        /// you cannot change its value.</param>
+        /// <param name="swaggerLocation">Read Only: Contains the URI of the
+        /// swagger spec associated with this web service.</param>
+        /// <param name="exposeSampleData">When set to true, sample data is
+        /// included in the web service's swagger definition. The default
+        /// value is true.</param>
+        /// <param name="realtimeConfiguration">Contains the configuration
+        /// settings for the web service endpoint.</param>
         /// <param name="diagnostics">Settings controlling the diagnostics
         /// traces collection for the web service.</param>
-        /// <param name="storageAccount">The storage account associated with
-        /// the service. This is used to store both datasets and diagnostic
-        /// traces. This information is required at creation time (PUT) and
-        /// only the key is updateable after that. The account credentials
-        /// are hidden on a GET web service call.</param>
-        /// <param name="machineLearningWorkspace">This is only populated at
-        /// creation time (PUT) for web services originating from an AzureML
-        /// Studio experiment.</param>
-        /// <param name="commitmentPlan">The commitment plan associated with
-        /// this web service. This is required to be specified at creation
-        /// time (PUT) and is not updateable afterwards.</param>
-        /// <param name="input">Swagger schema for the service's input(s), as
-        /// applicable.</param>
-        /// <param name="output">Swagger schema for the service's output(s),
-        /// as applicable.</param>
-        /// <param name="exampleRequest">Sample request data for each of the
-        /// service's inputs, as applicable.</param>
-        /// <param name="assets">Set of assets associated with the web
-        /// service.</param>
+        /// <param name="storageAccount">Specifies the storage account that
+        /// Azure Machine Learning uses to store information about the web
+        /// service. Only the name of the storage account is returned from
+        /// calls to GET operations. When updating the storage account
+        /// information, you must ensure that all necessary assets are
+        /// available in the new storage account or calls to your web service
+        /// will fail.</param>
+        /// <param name="machineLearningWorkspace">Specifies the Machine
+        /// Learning workspace containing the experiment that is source for
+        /// the web service.</param>
+        /// <param name="commitmentPlan">Contains the commitment plan
+        /// associated with this web service. Set at creation time. Once set,
+        /// this value cannot be changed. Note: The commitment plan is not
+        /// returned from calls to GET operations.</param>
+        /// <param name="input">Contains the Swagger 2.0 schema describing one
+        /// or more of the web service's inputs. For more information, see
+        /// the Swagger specification.</param>
+        /// <param name="output">Contains the Swagger 2.0 schema describing
+        /// one or more of the web service's outputs. For more information,
+        /// see the Swagger specification.</param>
+        /// <param name="exampleRequest">Defines sample input data for one or
+        /// more of the service's inputs.</param>
+        /// <param name="assets">Contains user defined properties describing
+        /// web service assets. Properties are expressed as Key/Value
+        /// pairs.</param>
         /// <param name="parameters">The set of global parameters values
         /// defined for the web service, given as a global parameter name to
         /// default value map. If no default value is specified, the
@@ -95,68 +104,73 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets or sets the title of the Azure ML web service.
+        /// Gets or sets the title of the web service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the description of the Azure ML web service.
+        /// Gets or sets the description of the web service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the moment of time the Azure ML web service was created.
+        /// Gets read Only: The date and time when the web service was created.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "createdOn")]
         public System.DateTime? CreatedOn { get; private set; }
 
         /// <summary>
-        /// Gets the moment of time the web service was last modified.
+        /// Gets read Only: The date and time when the web service was last
+        /// modified.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "modifiedOn")]
         public System.DateTime? ModifiedOn { get; private set; }
 
         /// <summary>
-        /// Gets the web service resource's provisioning state. Possible
-        /// values include: 'Unknown', 'Provisioning', 'Succeeded', 'Failed',
-        /// 'Canceled'
+        /// Gets read Only: The provision state of the web service. Valid
+        /// values are Unknown, Provisioning, Succeeded, and Failed. Possible
+        /// values include: 'Unknown', 'Provisioning', 'Succeeded', 'Failed'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the set of access keys for the web service. If not
-        /// specified at creation time (PUT), they will be generated
-        /// automatically by the resource provider.
+        /// Gets or sets contains the web service provisioning keys. If you do
+        /// not specify provisioning keys, the Azure Machine Learning system
+        /// generates them for you. Note: The keys are not returned from
+        /// calls to GET operations.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "keys")]
         public WebServiceKeys Keys { get; set; }
 
         /// <summary>
-        /// Gets or sets if true, the web service can no longer be updated /
-        /// patched, only removed. Otherwise, the service resource supports
-        /// changes.
+        /// Gets or sets when set to true, indicates that the web service is
+        /// read-only and can no longer be updated or patched, only removed.
+        /// Default, is false. Note: Once set to true, you cannot change its
+        /// value.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "readOnly")]
         public bool? ReadOnlyProperty { get; set; }
 
         /// <summary>
-        /// Gets the uri for the swagger spec associated with this web service.
+        /// Gets read Only: Contains the URI of the swagger spec associated
+        /// with this web service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "swaggerLocation")]
         public string SwaggerLocation { get; private set; }
 
         /// <summary>
-        /// Gets or sets flag that controls whether to expose sample data or
-        /// not in the web service's swagger definition.
+        /// Gets or sets when set to true, sample data is included in the web
+        /// service's swagger definition. The default value is true.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "exposeSampleData")]
         public bool? ExposeSampleData { get; set; }
 
         /// <summary>
-        /// Gets or sets configuration for the service's realtime endpoint.
+        /// Gets or sets contains the configuration settings for the web
+        /// service endpoint.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "realtimeConfiguration")]
         public RealtimeConfiguration RealtimeConfiguration { get; set; }
@@ -169,53 +183,58 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public DiagnosticsConfiguration Diagnostics { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account associated with the service. This
-        /// is used to store both datasets and diagnostic traces. This
-        /// information is required at creation time (PUT) and only the key
-        /// is updateable after that. The account credentials are hidden on a
-        /// GET web service call.
+        /// Gets or sets specifies the storage account that Azure Machine
+        /// Learning uses to store information about the web service. Only
+        /// the name of the storage account is returned from calls to GET
+        /// operations. When updating the storage account information, you
+        /// must ensure that all necessary assets are available in the new
+        /// storage account or calls to your web service will fail.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storageAccount")]
         public StorageAccount StorageAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets this is only populated at creation time (PUT) for web
-        /// services originating from an AzureML Studio experiment.
+        /// Gets or sets specifies the Machine Learning workspace containing
+        /// the experiment that is source for the web service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "machineLearningWorkspace")]
         public MachineLearningWorkspace MachineLearningWorkspace { get; set; }
 
         /// <summary>
-        /// Gets or sets the commitment plan associated with this web service.
-        /// This is required to be specified at creation time (PUT) and is
-        /// not updateable afterwards.
+        /// Gets or sets contains the commitment plan associated with this web
+        /// service. Set at creation time. Once set, this value cannot be
+        /// changed. Note: The commitment plan is not returned from calls to
+        /// GET operations.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "commitmentPlan")]
         public CommitmentPlan CommitmentPlan { get; set; }
 
         /// <summary>
-        /// Gets or sets swagger schema for the service's input(s), as
-        /// applicable.
+        /// Gets or sets contains the Swagger 2.0 schema describing one or
+        /// more of the web service's inputs. For more information, see the
+        /// Swagger specification.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "input")]
         public ServiceInputOutputSpecification Input { get; set; }
 
         /// <summary>
-        /// Gets or sets swagger schema for the service's output(s), as
-        /// applicable.
+        /// Gets or sets contains the Swagger 2.0 schema describing one or
+        /// more of the web service's outputs. For more information, see the
+        /// Swagger specification.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "output")]
         public ServiceInputOutputSpecification Output { get; set; }
 
         /// <summary>
-        /// Gets or sets sample request data for each of the service's inputs,
-        /// as applicable.
+        /// Gets or sets defines sample input data for one or more of the
+        /// service's inputs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "exampleRequest")]
         public ExampleRequest ExampleRequest { get; set; }
 
         /// <summary>
-        /// Gets or sets set of assets associated with the web service.
+        /// Gets or sets contains user defined properties describing web
+        /// service assets. Properties are expressed as Key/Value pairs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "assets")]
         public System.Collections.Generic.IDictionary<string, AssetItem> Assets { get; set; }

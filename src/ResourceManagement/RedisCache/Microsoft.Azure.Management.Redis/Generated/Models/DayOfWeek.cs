@@ -28,6 +28,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         [System.Runtime.Serialization.EnumMember(Value = "Saturday")]
         Saturday,
         [System.Runtime.Serialization.EnumMember(Value = "Sunday")]
-        Sunday
+        Sunday,
+        [System.Runtime.Serialization.EnumMember(Value = "Everyday")]
+        Everyday,
+        [System.Runtime.Serialization.EnumMember(Value = "Weekend")]
+        Weekend
     }
 }

@@ -1,16 +1,6 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
@@ -55,8 +45,7 @@ namespace DataLakeAnalytics.Tests
                         // TODO: figure out why this is no longer showing up as a property
                         // Type = JobType.USql, 
                         Script = "DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;"
-                    },
-                    JobId = jobId
+                    }
                 };
 
                 // check to make sure the job doesn't already exist
@@ -79,7 +68,6 @@ namespace DataLakeAnalytics.Tests
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
                 // Resubmit the job
-                jobToSubmit.JobId = secondId;
                 jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, secondId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
@@ -113,7 +101,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
                 // Just compile the job, which requires a jobId in the job object.
-                jobToSubmit.JobId = getJobResponse.JobId;
+                // jobToSubmit.JobId = getJobResponse.JobId;
                 var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
                 Assert.NotNull(compileResponse);
 

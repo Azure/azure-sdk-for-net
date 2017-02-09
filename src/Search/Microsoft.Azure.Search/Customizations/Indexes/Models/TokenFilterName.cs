@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Defines the names of all token filters supported by Azure Search.
-    /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx"/>
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<TokenFilterName>))]
     public sealed class TokenFilterName : ExtensibleEnum<TokenFilterName>
     {
         // MAINTENANCE NOTE: Keep these ordered the same as the table on this page:
-        // https://msdn.microsoft.com/library/azure/mt605304.aspx
+        // https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search
 
         /// <summary>
         /// A token filter that applies the Arabic normalizer to normalize the orthography.
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Search.Models
         /// back of an input token.
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html" />
         /// </summary>
-        public static readonly TokenFilterName EdgeNGram = new TokenFilterName("edgeNGram");
+        public static readonly TokenFilterName EdgeNGram = new TokenFilterName("edgeNGram_v2");
 
         /// <summary>
         /// Removes elisions. For example, "l'avion" (the plane) will be converted
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Search.Models
         /// Generates n-grams of the given size(s).
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html" />
         /// </summary>
-        public static readonly TokenFilterName NGram = new TokenFilterName("nGram");
+        public static readonly TokenFilterName NGram = new TokenFilterName("nGram_v2");
 
         /// <summary>
         /// Applies normalization for Persian.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Language specific stemming filter.
-        /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx#TokenFilters" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters" />
         /// </summary>
         public static readonly TokenFilterName Stemmer = new TokenFilterName("stemmer");
 
@@ -244,10 +244,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the token filter.</param>
         /// <returns>A TokenFilterName instance with the given name.</returns>
-        public static TokenFilterName Create(string name)
-        {
-            // Token filter names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new TokenFilterName(name);
-        }
+        public static TokenFilterName Create(string name) => Lookup(name) ?? new TokenFilterName(name);
+
+        /// <summary>
+        /// Defines implicit conversion from string to TokenFilterName.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a TokenFilterName.</returns>
+        public static implicit operator TokenFilterName(string name) => Create(name);
     }
 }

@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Search
 
     internal static class JsonUtility
     {
-        private static readonly IContractResolver CamelCaseResolver = new CamelCasePropertyNamesContractResolver();
+        internal static IContractResolver CamelCaseResolver { get; } = new CamelCasePropertyNamesContractResolver();
 
-        private static readonly IContractResolver DefaultResolver = new DefaultContractResolver();
+        internal static IContractResolver DefaultResolver { get; } = new DefaultContractResolver();
 
         public static JsonSerializerSettings CreateTypedSerializerSettings<T>(
             JsonSerializerSettings baseSettings,

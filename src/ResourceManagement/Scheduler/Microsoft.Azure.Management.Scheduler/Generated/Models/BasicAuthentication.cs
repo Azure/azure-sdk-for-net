@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
@@ -33,7 +35,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string Username { get; set; }
 
         /// <summary>
-        /// Gets or sets the password.
+        /// Gets or sets the password, return value will always be empty.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

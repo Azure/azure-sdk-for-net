@@ -57,6 +57,11 @@ namespace Microsoft.Rest.Serialization
         public override object ReadJson(JsonReader reader,
             Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
             JObject item = JObject.Load(reader);
             string typeDiscriminator = (string) item[Discriminator];
             Type derivedType = GetDerivedType(typeof (T), typeDiscriminator);

@@ -13,13 +13,14 @@
           "2"
         ],
         "x-ms-client-request-id": [
-          "51b7ad69-a2d8-45bd-a676-60090ccd2d09"
+          "b1e9216f-a9dc-4406-81bb-1a395c4ab778"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.8"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationRequired\",\r\n    \"message\": \"The location property is required for this definition.\"\r\n  }\r\n}",
@@ -37,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Sep 2016 22:31:14 GMT"
+          "Fri, 21 Oct 2016 20:49:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -46,13 +47,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "c96390f4-a9e4-4a3f-b37b-ab35288f1a56"
+          "829478d6-6829-493f-a319-bc0bef8824af"
         ],
         "x-ms-correlation-request-id": [
-          "c96390f4-a9e4-4a3f-b37b-ab35288f1a56"
+          "829478d6-6829-493f-a319-bc0bef8824af"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160926T223114Z:c96390f4-a9e4-4a3f-b37b-ab35288f1a56"
+          "WESTUS2:20161021T204934Z:829478d6-6829-493f-a319-bc0bef8824af"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -73,13 +74,14 @@
           "36"
         ],
         "x-ms-client-request-id": [
-          "2ab2136d-2df1-4980-81a7-dc899dfceac4"
+          "2d198ec1-debe-4a0c-9da9-03a04ac05fbb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.8"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationNotAvailableForResourceType\",\r\n    \"message\": \"The provided location 'neverneverland' is not available for resource type 'Microsoft.ServerManagement/gateways'. List of available regions for the resource type is 'centralus,eastus,northeurope,westeurope'.\"\r\n  }\r\n}",
@@ -97,7 +99,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 26 Sep 2016 22:31:14 GMT"
+          "Fri, 21 Oct 2016 20:49:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -106,13 +108,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "4fdb74ed-720a-426c-89e6-438c60474de2"
+          "bf096db5-961f-40cb-ac2b-d67ef03c1bf8"
         ],
         "x-ms-correlation-request-id": [
-          "4fdb74ed-720a-426c-89e6-438c60474de2"
+          "bf096db5-961f-40cb-ac2b-d67ef03c1bf8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160926T223115Z:4fdb74ed-720a-426c-89e6-438c60474de2"
+          "WESTUS2:20161021T204934Z:bf096db5-961f-40cb-ac2b-d67ef03c1bf8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

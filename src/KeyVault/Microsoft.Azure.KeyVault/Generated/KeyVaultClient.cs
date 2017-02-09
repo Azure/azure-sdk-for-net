@@ -162,7 +162,7 @@ namespace Microsoft.Azure.KeyVault
         private void Initialize()
         {
             this.BaseUri = "{vaultBaseUrl}";
-            this.ApiVersion = "2015-06-01";
+            this.ApiVersion = "2016-10-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

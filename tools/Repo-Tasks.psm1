@@ -86,6 +86,9 @@ This cmdlet will only prompt you for Subscription and Tenant information, rest a
     $env:TEST_CSM_ORGID_AUTHENTICATION=$formattedConnStr
     Write-Host ""
 
+    # Set AZURE_TEST_MODE
+    $env:AZURE_TEST_MODE=$RecordMode
+
     # Retrieve the environment variable
     Write-Host ""
     Write-Host "Below connection string was set. Start Visual Studio by typing devenv" -ForegroundColor Green
@@ -231,20 +234,27 @@ AutoRest-AzureDotNetSDK
 AzureDotNetSDK-TestProject
 AzurePowerShell-TestProject
 #>
+    msbuild.exe "$env:repoRoot\build.proj" /t:BuildProjectTemplates
+
     if($env:VisualStudioVersion -eq "14.0")
     {
-        if((Test-Path "$env:repoRoot\tools\ProjectTemplates\") -eq $true)
+        $templateDirNames = Get-ChildItem "$env:repoRoot\tools\ProjectTemplates\" -Directory
+
+        foreach($dirName in $templateDirNames)
         {
-            Write-Host "Installing VS templates for 'AutoRest as well as Test Project'"
-            Copy-Item "$env:repoRoot\tools\ProjectTemplates\*.zip" "$env:USERPROFILE\Documents\Visual Studio 2015\Templates\ProjectTemplates\"
-            Write-Host "Installed VS Test Project Templates for Powershell and DotNet SDK test projects"
-            Write-Host ""
-            Write-Host "Restart VS (if already open), search for 'AutoRest-AzureDotNetSdk', 'AzureDotNetSDK-TestProject'" -ForegroundColor Yellow
+            $templateFullPath = "$env:TEMP\$dirName.zip"
+            if((Test-Path $templateFullPath) -eq $true)
+            {
+                Write-Host "Installing '$dirName' template"
+                Copy-Item $templateFullPath "$env:USERPROFILE\Documents\Visual Studio 2015\Templates\ProjectTemplates\"
+            }
+            else
+            {
+                Write-Host "Missing templates to install, make sure you have project templates available in the repo under $env:repoRoot\tools\ProjectTemplates\"
+            }
         }
-        else
-        {
-            Write-Host "Missing templates to install, make sure you have project templates available in the repo under $env:repoRoot\tools\ProjectTemplates\"
-        }
+
+        Write-Host "Restart VS (if already open), search for 'AzureDotNetSDK'" -ForegroundColor Yellow        
     }
     else
     {

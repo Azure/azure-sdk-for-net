@@ -16,6 +16,8 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     public enum GatewayExpandOption
     {
         [System.Runtime.Serialization.EnumMember(Value = "status")]
-        Status
+        Status,
+        [System.Runtime.Serialization.EnumMember(Value = "download")]
+        Download
     }
 }

@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -35,7 +23,7 @@ namespace Compute.Tests
 {
     public class VMScaleSetVMTestsBase : VMScaleSetTestsBase
     {
-        protected void ValidateVMScaleSetVM(VirtualMachineScaleSetVM vmScaleSetVM, string skuName, VirtualMachineScaleSetVM vmScaleSetVMOut)
+        protected void ValidateVMScaleSetVM(VirtualMachineScaleSetVM vmScaleSetVM, string skuName, VirtualMachineScaleSetVM vmScaleSetVMOut, bool hasManagedDisks = false)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetVMOut.ProvisioningState));
 
@@ -44,14 +32,35 @@ namespace Compute.Tests
             
             Assert.NotNull(vmScaleSetVMOut.StorageProfile.OsDisk);
 
-            if (vmScaleSetVM.StorageProfile.OsDisk.Image != null)
+            if (hasManagedDisks)
             {
-                Assert.True(vmScaleSetVMOut.StorageProfile.OsDisk.Image.Uri
-                            == vmScaleSetVM.StorageProfile.OsDisk.Image.Uri);
-            }
+                Assert.True(vmScaleSetVMOut.StorageProfile.OsDisk.ManagedDisk != null);
+                Assert.True(vmScaleSetVMOut.StorageProfile.OsDisk.ManagedDisk.Id != null);
+                if (vmScaleSetVM.StorageProfile.DataDisks != null)
+                {
+                    Assert.Equal(vmScaleSetVM.StorageProfile.DataDisks.Count,
+                        vmScaleSetVMOut.StorageProfile.DataDisks.Count);
 
-            Assert.True(vmScaleSetVMOut.StorageProfile.OsDisk.Caching
-                     == vmScaleSetVM.StorageProfile.OsDisk.Caching);
+                    foreach (var dataDiskOut in vmScaleSetVM.StorageProfile.DataDisks)
+                    {
+                        var dataDisk =
+                            vmScaleSetVM.StorageProfile.DataDisks.FirstOrDefault(d => d.Lun == dataDiskOut.Lun);
+                        Assert.Equal(dataDisk.CreateOption, dataDiskOut.CreateOption);
+                        Assert.Equal(dataDisk.DiskSizeGB, dataDiskOut.DiskSizeGB);
+                    }
+                }
+            }
+            else
+            {
+                if (vmScaleSetVM.StorageProfile.OsDisk.Image != null)
+                {
+                    Assert.True(vmScaleSetVMOut.StorageProfile.OsDisk.Image.Uri
+                                == vmScaleSetVM.StorageProfile.OsDisk.Image.Uri);
+                }
+
+                Assert.True(vmScaleSetVMOut.StorageProfile.OsDisk.Caching
+                         == vmScaleSetVM.StorageProfile.OsDisk.Caching);
+            }
 
             if (vmScaleSetVM.OsProfile.Secrets != null &&
                vmScaleSetVM.OsProfile.Secrets.Any())
@@ -74,23 +83,26 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView)
+        protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
             Assert.True(vmScaleSetVMInstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
 
-            var instanceView = vmScaleSetVMInstanceView;
-            Assert.NotNull(instanceView.Disks);
-            Assert.True(instanceView.Disks.Any());
+            if (!hasManagedDisks)
+            {
+                var instanceView = vmScaleSetVMInstanceView;
+                Assert.NotNull(instanceView.Disks);
+                Assert.True(instanceView.Disks.Any());
 
-            DiskInstanceView diskInstanceView = instanceView.Disks.First();
-            Assert.NotNull(diskInstanceView);
-            Assert.NotNull(diskInstanceView.Statuses[0].DisplayStatus);
-            Assert.NotNull(diskInstanceView.Statuses[0].Code);
-            Assert.NotNull(diskInstanceView.Statuses[0].Level);
+                DiskInstanceView diskInstanceView = instanceView.Disks.First();
+                Assert.NotNull(diskInstanceView);
+                Assert.NotNull(diskInstanceView.Statuses[0].DisplayStatus);
+                Assert.NotNull(diskInstanceView.Statuses[0].Code);
+                Assert.NotNull(diskInstanceView.Statuses[0].Level);
+            }
         }
 
-        protected VirtualMachineScaleSetVM GenerateVMScaleSetVMModel(VirtualMachineScaleSet inputVMScaleSet, string instanceId)
+        protected VirtualMachineScaleSetVM GenerateVMScaleSetVMModel(VirtualMachineScaleSet inputVMScaleSet, string instanceId, bool hasManagedDisks = false)
         {
             VirtualMachineScaleSetVM expectedVirtualMachineScaleSetVM = new VirtualMachineScaleSetVM()
             {
@@ -109,17 +121,30 @@ namespace Compute.Tests
                 StorageProfile = new StorageProfile()
                 {
                     ImageReference = inputVMScaleSet.VirtualMachineProfile.StorageProfile.ImageReference,
-                    OsDisk = new OSDisk()
+                    OsDisk = hasManagedDisks ? null : new OSDisk()
                     {
                         Name = inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Name,
                         Caching = inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Caching,
                         CreateOption = inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.CreateOption,
                         OsType = inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.OsType,
                         Image = inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.Image,
-                    }
+                    },
                 },
             };
 
+            if (hasManagedDisks && inputVMScaleSet.VirtualMachineProfile.StorageProfile.DataDisks != null)
+            {
+                expectedVirtualMachineScaleSetVM.StorageProfile.DataDisks = new List<DataDisk>();
+                foreach (var dataDisk in inputVMScaleSet.VirtualMachineProfile.StorageProfile.DataDisks)
+                {
+                    expectedVirtualMachineScaleSetVM.StorageProfile.DataDisks.Add(new DataDisk()
+                    {
+                        Lun = dataDisk.Lun,
+                        DiskSizeGB = dataDisk.DiskSizeGB,
+                        CreateOption = dataDisk.CreateOption
+                    });
+                }
+            }
             return expectedVirtualMachineScaleSetVM;
         }
     }

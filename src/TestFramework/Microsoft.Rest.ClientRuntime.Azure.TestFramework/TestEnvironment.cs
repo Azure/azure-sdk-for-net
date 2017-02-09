@@ -171,7 +171,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             if (Enum.TryParse<HttpRecorderMode>(testMode, out recorderMode))
             {
                 HttpMockServer.Mode = recorderMode;
-
             }
             else
             {
@@ -234,11 +233,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string password = this.ConnectionString.GetValue(ConnectionStringKeys.PasswordKey);
             string spnClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey);
             string spnSecret = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalSecretKey);
+            //We use this because when login silently using userTokenProvider, we need to provide a well known ClientId for an app that has delegating permissions.
+            //All first party app have that permissions, so we use PowerShell app ClientId
+            string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
 
             /*
             Currently we prioritize login as below:
-            1) UserName / Password combination
-            2) ServicePrincipal/ServicePrincipal Secret Key
+            1) ServicePrincipal/ServicePrincipal Secret Key
+            2) UserName / Password combination
             3) Interactive Login (where user will be presented with prompt to login)
            */
             #region Login
@@ -253,24 +255,30 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 TokenAudience = this.Endpoints.GraphTokenAudienceUri
             };
 
-            if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(password)))
-            {
-                Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                                                                           .LoginSilentAsync(spnClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
-
-                this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
-            }
-            else if ((!string.IsNullOrEmpty(spnClientId)) && (!string.IsNullOrEmpty(spnSecret)))
+            if ((!string.IsNullOrEmpty(spnClientId)) && (!string.IsNullOrEmpty(spnSecret)))
             {
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await ApplicationTokenProvider
                                                                            .LoginSilentAsync(this.Tenant, spnClientId, spnSecret, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
             }
+            else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(password)))
+            {
+#if NET45
+                Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
+                                                                           .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+
+                this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
+#else
+                throw new NotSupportedException("Username/Password login is supported only in NET45 projects");
+#endif
+            }
             else
             {
 #if NET45
                 InteractiveLogin(this.Tenant, aadServiceSettings, graphAADServiceSettings);
+#else
+                throw new NotSupportedException("Interactive Login is supported only in NET45 projects");
 #endif
             }
             #endregion
@@ -314,7 +322,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void VerifySubscription()
         {
-            #region
+#region
             if (!(string.IsNullOrEmpty(this.SubscriptionId)) || (this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase)))
             {
                 //TokenCredentials cred = this.TokenInfo[TokenAudience.Management];
@@ -339,7 +347,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     throw new Exception(exceptionString);
                 }
             }
-            #endregion
+#endregion
         }
 
         /// <summary>
@@ -414,6 +422,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             return keyValue;
         }
 
-        #endregion
+#endregion
     }
 }

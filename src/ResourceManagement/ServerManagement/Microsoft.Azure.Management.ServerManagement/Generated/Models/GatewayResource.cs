@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// version</param>
         /// <param name="publishedTimeUtc">the date/time of the last published
         /// gateway</param>
-        public GatewayResource(string id = default(string), string type = default(string), string name = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string etag = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), UpgradeMode? upgradeMode = default(UpgradeMode?), string desiredVersion = default(string), System.Collections.Generic.IList<GatewayStatus> instances = default(System.Collections.Generic.IList<GatewayStatus>), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), System.DateTime? publishedTimeUtc = default(System.DateTime?))
+        /// <param name="installerDownload">installer download uri</param>
+        /// <param name="minimumVersion">minimum gateway version</param>
+        public GatewayResource(string id = default(string), string type = default(string), string name = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string etag = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), UpgradeMode? upgradeMode = default(UpgradeMode?), string desiredVersion = default(string), System.Collections.Generic.IList<GatewayStatus> instances = default(System.Collections.Generic.IList<GatewayStatus>), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), System.DateTime? publishedTimeUtc = default(System.DateTime?), string installerDownload = default(string), string minimumVersion = default(string))
             : base(id, type, name, location, tags, etag)
         {
             Created = created;
@@ -55,6 +57,8 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
             ActiveMessageCount = activeMessageCount;
             LatestPublishedMsiVersion = latestPublishedMsiVersion;
             PublishedTimeUtc = publishedTimeUtc;
+            InstallerDownload = installerDownload;
+            MinimumVersion = minimumVersion;
         }
 
         /// <summary>
@@ -108,6 +112,18 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publishedTimeUtc")]
         public System.DateTime? PublishedTimeUtc { get; set; }
+
+        /// <summary>
+        /// Gets installer download uri
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.installerDownload")]
+        public string InstallerDownload { get; private set; }
+
+        /// <summary>
+        /// Gets minimum gateway version
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.minimumVersion")]
+        public string MinimumVersion { get; private set; }
 
     }
 }

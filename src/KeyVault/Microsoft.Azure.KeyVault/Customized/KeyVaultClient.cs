@@ -37,8 +37,9 @@ namespace Microsoft.Azure.KeyVault
         /// Constructor
         /// </summary>
         /// <param name="authenticationCallback">The authentication callback</param>
-        public KeyVaultClient(AuthenticationCallback authenticationCallback)
-            : this(new KeyVaultCredential(authenticationCallback))
+        /// <param name='handlers'>Optional. The delegating handlers to add to the http client pipeline.</param>
+        public KeyVaultClient(AuthenticationCallback authenticationCallback, params DelegatingHandler[] handlers)
+            : this(new KeyVaultCredential(authenticationCallback), handlers)
         {
         }
 
@@ -46,10 +47,21 @@ namespace Microsoft.Azure.KeyVault
         /// Constructor
         /// </summary>
         /// <param name="authenticationCallback">The authentication callback</param>
-        /// <param name='handlers'>Optional. The delegating handlers to add to the http client pipeline.</param>
-        public KeyVaultClient(AuthenticationCallback authenticationCallback, params DelegatingHandler[] handlers)
-            : this(new KeyVaultCredential(authenticationCallback), handlers)
+        /// <param name="httpClient">Customized HTTP client </param>
+        public KeyVaultClient(AuthenticationCallback authenticationCallback, HttpClient httpClient)
+            : this(new KeyVaultCredential(authenticationCallback), httpClient)
         {
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="credential">Credential for key vault operations</param>
+        /// <param name="httpClient">Customized HTTP client </param>
+        public KeyVaultClient(KeyVaultCredential credential, HttpClient httpClient)
+            : this(credential)
+        {
+            base.HttpClient = httpClient;
         }
 
         /// <summary>

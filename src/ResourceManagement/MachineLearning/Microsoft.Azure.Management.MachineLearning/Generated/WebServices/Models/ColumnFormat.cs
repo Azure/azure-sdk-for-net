@@ -16,7 +16,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     {
         public const string Byte = "Byte";
         public const string Char = "Char";
-        public const string Datetime = "Datetime";
+        public const string Complex64 = "Complex64";
+        public const string Complex128 = "Complex128";
+        public const string DateTime = "Date-time";
+        public const string DateTimeOffset = "Date-timeOffset";
         public const string Double = "Double";
         public const string Duration = "Duration";
         public const string Float = "Float";

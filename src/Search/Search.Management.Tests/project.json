@@ -24,15 +24,16 @@
     }
   },
   "dependencies": {
-    "Microsoft.NETCore.App": { 
-      "type": "platform", 
-      "version": "1.0.0" 
-    }, 
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
     "Microsoft.Azure.Test.HttpRecorder": "[1.6.7-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.5.1-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.4,4.0)",
     "Microsoft.Azure.Management.ResourceManager": "1.1.1-preview",
-    "Microsoft.Azure.Management.Search": "0.9.0-preview",
+    "Microsoft.Azure.Management.Search": "1.0.1",
+    "Microsoft.Azure.Search": "3.0.2",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   }

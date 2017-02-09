@@ -1,17 +1,5 @@
-//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -150,80 +138,95 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeploymentTestsTemplateAsJsonString()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.Created)
-            {
-                Content = new StringContent(@"{
-                    'id': 'foo',
-                    'name': 'test-release-3',
-                    'properties': {
-                        'parameters': {
-                            'storageAccountName': {
-				                'type': 'String',
-				                'value': 'tianotest04'
-			                }
-		                },
-		                'mode': 'Incremental',
-		                'provisioningState': 'Succeeded',
-		                'timestamp': '2016-07-12T17:36:39.2398177Z',
-		                'duration': 'PT0.5966357S',
-		                'correlationId': 'c0d728d5-5b97-41b9-b79a-abcd9eb5fe4a'
+            var responseBody = @"{
+                'id': 'foo',
+                'name': 'test-release-3',
+                'properties': {
+                    'parameters': {
+                        'storageAccountName': {
+				            'type': 'String',
+				            'value': 'tianotest04'
+			            }
+		            },
+		            'mode': 'Incremental',
+		            'provisioningState': 'Succeeded',
+		            'timestamp': '2016-07-12T17:36:39.2398177Z',
+		            'duration': 'PT0.5966357S',
+		            'correlationId': 'c0d728d5-5b97-41b9-b79a-abcd9eb5fe4a'
+	            }
+            }";
+
+            var templateString = @"{
+                '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#',
+                'contentVersion': '1.0.0.0',
+                'parameters': {
+                    'storageAccountName': {
+		                'type': 'string'
 	                }
-                }")
-            };
+                },
+                'resources': [
+                ],
+                'outputs': {  }
+            }";
 
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.Created };
-
-            var client = GetResourceManagementClient(handler);
-
-            var parameters = new Deployment
-            {
-                Properties = new DeploymentProperties()
-                {
-                    Template = @"{
-                        '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#',
-                        'contentVersion': '1.0.0.0',
-                        'parameters': {
-                            'storageAccountName': {
-		                        'type': 'string'
-	                        }
-                        },
-                        'resources': [
-                        ],
-                        'outputs': {  }
-                    }",
-                    Parameters = @"{
-                        '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#',
-                        'contentVersion': '1.0.0.0',
-                        'parameters': {
-                            'storageAccountName': {
-		                        'value': 'tianotest04'
-	                        }
-                        }
-                    }",
-                    Mode = DeploymentMode.Incremental
+            var parametersStringFull = @"{
+                '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#',
+                'contentVersion': '1.0.0.0',
+                'parameters': {
+                    'storageAccountName': {
+		                'value': 'tianotest04'
+	                }
                 }
-            };
+            }";
 
-            var result = client.Deployments.CreateOrUpdate("foo", "myrealease-3.14", parameters);
+            var parametersStringsShort = @"{
+                'storageAccountName': {
+		            'value': 'tianotest04'
+	            }
+            }";
 
-            JObject json = JObject.Parse(handler.Request);
+            for (int i = 0; i < 2; i++)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Created)
+                {
+                    Content = new StringContent(responseBody)
+                };
 
-            // Validate headers 
-            Assert.Equal("application/json; charset=utf-8", handler.ContentHeaders.GetValues("Content-Type").First());
-            Assert.Equal(HttpMethod.Put, handler.Method);
-            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.Created };
 
-            // Validate payload
-            Assert.Equal("Incremental", json["properties"]["mode"].Value<string>());
-            Assert.Equal("tianotest04", json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
-            Assert.Equal("1.0.0.0", json["properties"]["template"]["contentVersion"].Value<string>());
+                var client = GetResourceManagementClient(handler);
 
-            // Validate result
-            Assert.Equal("foo", result.Id);
-            Assert.Equal("test-release-3", result.Name);
-            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
-            Assert.Equal(DeploymentMode.Incremental, result.Properties.Mode);
-            Assert.True(result.Properties.Parameters.ToString().Contains("\"value\": \"tianotest04\""));
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = templateString,
+                        Parameters = i == 0 ? parametersStringFull: parametersStringsShort,
+                        Mode = DeploymentMode.Incremental
+                    }
+                };
+
+                var result = client.Deployments.CreateOrUpdate("foo", "myrealease-3.14", parameters);
+
+                JObject json = JObject.Parse(handler.Request);
+
+                // Validate headers 
+                Assert.Equal("application/json; charset=utf-8", handler.ContentHeaders.GetValues("Content-Type").First());
+                Assert.Equal(HttpMethod.Put, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                // Validate payload
+                Assert.Equal("Incremental", json["properties"]["mode"].Value<string>());
+                Assert.Equal("tianotest04", json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
+                Assert.Equal("1.0.0.0", json["properties"]["template"]["contentVersion"].Value<string>());
+
+                // Validate result
+                Assert.Equal("foo", result.Id);
+                Assert.Equal("test-release-3", result.Name);
+                Assert.Equal("Succeeded", result.Properties.ProvisioningState);
+                Assert.Equal(DeploymentMode.Incremental, result.Properties.Mode);
+                Assert.True(result.Properties.Parameters.ToString().Contains("\"value\": \"tianotest04\""));
+            }
         }
 
         [Fact]

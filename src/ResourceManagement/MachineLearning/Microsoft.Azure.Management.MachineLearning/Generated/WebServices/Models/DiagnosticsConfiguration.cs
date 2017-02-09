@@ -23,12 +23,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the DiagnosticsConfiguration class.
         /// </summary>
-        /// <param name="level">Level of tracing to be used: None - disables
-        /// tracing; Error - collects only error (stderr) traces; All -
-        /// collects all traces (stdout and stderr). Possible values include:
-        /// 'None', 'Error', 'All'</param>
-        /// <param name="expiry">Moment of time after which diagnostics are no
-        /// longer collected. If null, diagnostic collection is not time
+        /// <param name="level">Specifies the verbosity of the diagnostic
+        /// output. Valid values are: None - disables tracing; Error -
+        /// collects only error (stderr) traces; All - collects all traces
+        /// (stdout and stderr). Possible values include: 'None', 'Error',
+        /// 'All'</param>
+        /// <param name="expiry">Specifies the date and time when the logging
+        /// will cease. If null, diagnostic collection is not time
         /// limited.</param>
         public DiagnosticsConfiguration(string level, System.DateTime? expiry = default(System.DateTime?))
         {
@@ -37,17 +38,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets or sets level of tracing to be used: None - disables tracing;
-        /// Error - collects only error (stderr) traces; All - collects all
-        /// traces (stdout and stderr). Possible values include: 'None',
-        /// 'Error', 'All'
+        /// Gets or sets specifies the verbosity of the diagnostic output.
+        /// Valid values are: None - disables tracing; Error - collects only
+        /// error (stderr) traces; All - collects all traces (stdout and
+        /// stderr). Possible values include: 'None', 'Error', 'All'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "level")]
         public string Level { get; set; }
 
         /// <summary>
-        /// Gets or sets moment of time after which diagnostics are no longer
-        /// collected. If null, diagnostic collection is not time limited.
+        /// Gets or sets specifies the date and time when the logging will
+        /// cease. If null, diagnostic collection is not time limited.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "expiry")]
         public System.DateTime? Expiry { get; set; }

@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using Microsoft.Rest.TransientFaultHandling;
-#if net45
+#if NET45
 using Microsoft.Win32;
 #endif
 namespace Microsoft.Rest
@@ -42,7 +42,7 @@ namespace Microsoft.Rest
         /// </summary>
         private string _fxVersion;
 
-#if net45
+#if NET45
         /// <summary>
         /// Indicates OS Name
         /// </summary>
@@ -407,9 +407,10 @@ namespace Microsoft.Rest
         {
             HttpClient.DefaultRequestHeaders.UserAgent.Clear();
             HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
-#if net45
+#if NET45
             // If you want to log ProductName in userAgent, it has to be without spaces
-            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OsName, OsVersion));
+            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OSNAME, OsName));
+            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
 #endif
         }
     }

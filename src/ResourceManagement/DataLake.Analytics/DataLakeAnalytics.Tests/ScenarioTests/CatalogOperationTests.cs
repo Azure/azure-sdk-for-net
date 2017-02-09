@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Linq;
@@ -164,6 +152,115 @@ namespace DataLakeAnalytics.Tests
         }
 
         [Fact]
+        public void CredentialCRUDTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                commonData.HostUrl =
+                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
+                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
+                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
+                    commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
+                using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
+                {
+                    // create the credential
+                    clientToUse.Catalog.CreateCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName,
+                        new DataLakeAnalyticsCatalogCredentialCreateParameters
+                        {
+                            Password = commonData.SecretPwd,
+                            Uri = "https://adlasecrettest.contoso.com:443",
+                            UserId = TestUtilities.GenerateGuid("fakeUserId01").ToString()
+                        });
+
+                    // Attempt to create the secret again, which should throw
+                    Assert.Throws<CloudException>(
+                        () => clientToUse.Catalog.CreateCredential(
+                                commonData.SecondDataLakeAnalyticsAccountName,
+                                commonData.DatabaseName, commonData.SecretName,
+                                new DataLakeAnalyticsCatalogCredentialCreateParameters
+                                {
+                                    Password = commonData.SecretPwd,
+                                    Uri = "https://adlasecrettest.contoso.com:443",
+                                    UserId = TestUtilities.GenerateGuid("fakeUserId02").ToString()
+                                }));
+
+                    // create another credential
+                    var secondSecretName = commonData.SecretName + "dup";
+                    clientToUse.Catalog.CreateCredential(
+                    commonData.SecondDataLakeAnalyticsAccountName,
+                    commonData.DatabaseName, secondSecretName,
+                    new DataLakeAnalyticsCatalogCredentialCreateParameters
+                    {
+                        Password = commonData.SecretPwd,
+                        Uri = "https://adlasecrettest.contoso.com:443",
+                        UserId = TestUtilities.GenerateGuid("fakeUserId03").ToString()
+                    });
+
+                    // Get the credential and ensure the response contains a date.
+                    var secretGetResponse = clientToUse.Catalog.GetCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName);
+
+                    Assert.NotNull(secretGetResponse);
+                    Assert.NotNull(secretGetResponse.Name);
+
+                    // Get the Credential list
+                    var credListResponse = clientToUse.Catalog.ListCredentials(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName);
+                    Assert.True(credListResponse.Count() >= 1);
+                    // look for the credential we created
+                    Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.SecretName)));
+
+
+                    // Get the specific credential as well
+                    var credGetResponse = clientToUse.Catalog.GetCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName);
+                    Assert.Equal(commonData.SecretName, credGetResponse.Name);
+
+                    // Delete the credential
+                    clientToUse.Catalog.DeleteCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName,
+                        new DataLakeAnalyticsCatalogCredentialDeleteParameters(commonData.SecretPwd));
+
+                    // Try to get the credential which should throw
+                    Assert.Throws<CloudException>(() => clientToUse.Catalog.GetCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName));
+
+                    // Re-create and delete the credential using cascade = true, which should still succeed.
+                    clientToUse.Catalog.CreateCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName,
+                        new DataLakeAnalyticsCatalogCredentialCreateParameters
+                        {
+                            Password = commonData.SecretPwd,
+                            Uri = "https://adlasecrettest.contoso.com:443",
+                            UserId = TestUtilities.GenerateGuid("fakeUserId01").ToString()
+                        });
+
+                    clientToUse.Catalog.DeleteCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName,
+                        new DataLakeAnalyticsCatalogCredentialDeleteParameters(commonData.SecretPwd), cascade: true);
+
+                    // Try to get the credential which should throw
+                    Assert.Throws<CloudException>(() => clientToUse.Catalog.GetCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName));
+
+                    // TODO: once support is available for delete all credentials add tests here for that.
+                }
+            }
+        }
+
+        [Fact]
         public void SecretAndCredentialCRUDTest()
         {
             // NOTE: This is deprecated and will be removed in a future release
@@ -181,7 +278,7 @@ namespace DataLakeAnalytics.Tests
                     using (var jobClient = commonData.GetDataLakeAnalyticsJobManagementClient(context))
                     {
                         // create the secret
-                        var secretCreateResponse = clientToUse.Catalog.CreateSecret(
+                        clientToUse.Catalog.CreateSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
                             commonData.DatabaseName, commonData.SecretName,
                             new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters

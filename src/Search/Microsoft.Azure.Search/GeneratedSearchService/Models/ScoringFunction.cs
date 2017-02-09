@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Abstract base class for functions that can modify document scores
     /// during ranking.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Add-scoring-profiles-to-a-search-index" />
     /// </summary>
     public partial class ScoringFunction
     {

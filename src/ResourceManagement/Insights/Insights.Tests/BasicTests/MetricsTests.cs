@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -82,7 +70,7 @@ namespace Insights.Tests.BasicTests
                             Count = 1,
                             Maximum = 10.0,
                             Minimum = 10.0,
-                            Timestamp = DateTime.Parse("2014-08-20T12:15:23.00Z"),
+                            TimeStamp = DateTime.Parse("2014-08-20T12:15:23.00Z"),
                             Total = 10.0
                         }
                     }
@@ -126,7 +114,7 @@ namespace Insights.Tests.BasicTests
                 Assert.Equal(exp.Count, act.Count);
                 Assert.Equal(exp.Maximum, act.Maximum);
                 Assert.Equal(exp.Minimum, act.Minimum);
-                Assert.Equal(exp.Timestamp.ToUniversalTime(), act.Timestamp.ToUniversalTime());
+                Assert.Equal(exp.TimeStamp.ToUniversalTime(), act.TimeStamp.ToUniversalTime());
                 Assert.Equal(exp.Total, act.Total);
             }
         }

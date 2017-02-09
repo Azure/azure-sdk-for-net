@@ -8,17 +8,11 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response containing the primary and secondary API keys for a given
-    /// Azure Search service.
+    /// Response containing the primary and secondary admin API keys for a
+    /// given Azure Search service.
     /// </summary>
     public partial class AdminKeyResult
     {
@@ -30,6 +24,10 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the AdminKeyResult class.
         /// </summary>
+        /// <param name="primaryKey">The primary admin API key of the Search
+        /// service.</param>
+        /// <param name="secondaryKey">The secondary admin API key of the
+        /// Search service.</param>
         public AdminKeyResult(string primaryKey = default(string), string secondaryKey = default(string))
         {
             PrimaryKey = primaryKey;
@@ -37,15 +35,15 @@ namespace Microsoft.Azure.Management.Search.Models
         }
 
         /// <summary>
-        /// Gets the primary API key of the Search service.
+        /// Gets the primary admin API key of the Search service.
         /// </summary>
-        [JsonProperty(PropertyName = "primaryKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; private set; }
 
         /// <summary>
-        /// Gets the secondary API key of the Search service.
+        /// Gets the secondary admin API key of the Search service.
         /// </summary>
-        [JsonProperty(PropertyName = "secondaryKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; private set; }
 
     }

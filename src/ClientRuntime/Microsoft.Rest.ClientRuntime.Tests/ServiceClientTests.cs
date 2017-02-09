@@ -215,11 +215,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.True(testProduct.Product.Version.Equals(testProductVersion));
         }
 
-        #if net45
+#if NET451
         [Fact]
         public void VerifyOsInfoInUserAgent()
         {
-
             string osInfoProductName = "OSName";
 
             FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
@@ -231,6 +230,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.NotEmpty(osProduct.Product.Name);
             Assert.NotEmpty(osProduct.Product.Version);
         }
-        #endif
+#endif
     }
 }
