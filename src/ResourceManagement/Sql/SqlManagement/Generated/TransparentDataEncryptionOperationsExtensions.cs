@@ -37,6 +37,68 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class TransparentDataEncryptionOperationsExtensions
     {
         /// <summary>
+        /// Begins creating a new or updating an existing Azure SQL Server
+        /// Transparent Data Encryption Protector.To determine the status of
+        /// the operation call GetCreateOrUpdateOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server which will be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating an
+        /// Encryption Protector.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        public static EncryptionProtectorCreateOrUpdateResponse BeginCreateOrUpdateEncryptionProtector(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITransparentDataEncryptionOperations)s).BeginCreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins creating a new or updating an existing Azure SQL Server
+        /// Transparent Data Encryption Protector.To determine the status of
+        /// the operation call GetCreateOrUpdateOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server which will be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating an
+        /// Encryption Protector.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        public static Task<EncryptionProtectorCreateOrUpdateResponse> BeginCreateOrUpdateEncryptionProtectorAsync(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters)
+        {
+            return operations.BeginCreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Creates or updates an Azure SQL Database Transparent Data
         /// Encryption Operation.
         /// </summary>
@@ -107,6 +169,66 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Creates a new or updates an existing Azure SQL Server Transparent
+        /// Data Encryption Protector.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server which will be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating an
+        /// Encryption Protector.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        public static EncryptionProtectorCreateOrUpdateResponse CreateOrUpdateEncryptionProtector(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITransparentDataEncryptionOperations)s).CreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a new or updates an existing Azure SQL Server Transparent
+        /// Data Encryption Protector.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server which will be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating an
+        /// Encryption Protector.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        public static Task<EncryptionProtectorCreateOrUpdateResponse> CreateOrUpdateEncryptionProtectorAsync(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns an Azure SQL Database Transparent Data Encryption Response.
         /// </summary>
         /// <param name='operations'>
@@ -164,6 +286,102 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<TransparentDataEncryptionGetResponse> GetAsync(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return operations.GetAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Server Transparent Data Encryption
+        /// Protector create or update operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        public static EncryptionProtectorCreateOrUpdateResponse GetCreateOrUpdateEncryptionProtectorOperationStatus(this ITransparentDataEncryptionOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITransparentDataEncryptionOperations)s).GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Server Transparent Data Encryption
+        /// Protector create or update operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        public static Task<EncryptionProtectorCreateOrUpdateResponse> GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(this ITransparentDataEncryptionOperations operations, string operationStatusLink)
+        {
+            return operations.GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database Transparent Data Encryption Protector
+        /// Response.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get for a Azure Sql Database
+        /// Transparent Data Encryption EncryptionProtector request.
+        /// </returns>
+        public static EncryptionProtectorGetResponse GetEncryptionProtector(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITransparentDataEncryptionOperations)s).GetEncryptionProtectorAsync(resourceGroupName, serverName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database Transparent Data Encryption Protector
+        /// Response.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get for a Azure Sql Database
+        /// Transparent Data Encryption EncryptionProtector request.
+        /// </returns>
+        public static Task<EncryptionProtectorGetResponse> GetEncryptionProtectorAsync(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName)
+        {
+            return operations.GetEncryptionProtectorAsync(resourceGroupName, serverName, CancellationToken.None);
         }
         
         /// <summary>
@@ -226,6 +444,58 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<TransparentDataEncryptionActivityListResponse> ListActivityAsync(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return operations.ListActivityAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database Transparent Data Encryption
+        /// Encryption Protector List Response.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server.
+        /// </param>
+        /// <returns>
+        /// Represents the response to an Azure Sql Database Transparent Data
+        /// Encryption Encryption Protector List request.
+        /// </returns>
+        public static EncryptionProtectorListResponse ListEncryptionProtectors(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITransparentDataEncryptionOperations)s).ListEncryptionProtectorsAsync(resourceGroupName, serverName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database Transparent Data Encryption
+        /// Encryption Protector List Response.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ITransparentDataEncryptionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server.
+        /// </param>
+        /// <returns>
+        /// Represents the response to an Azure Sql Database Transparent Data
+        /// Encryption Encryption Protector List request.
+        /// </returns>
+        public static Task<EncryptionProtectorListResponse> ListEncryptionProtectorsAsync(this ITransparentDataEncryptionOperations operations, string resourceGroupName, string serverName)
+        {
+            return operations.ListEncryptionProtectorsAsync(resourceGroupName, serverName, CancellationToken.None);
         }
     }
 }
