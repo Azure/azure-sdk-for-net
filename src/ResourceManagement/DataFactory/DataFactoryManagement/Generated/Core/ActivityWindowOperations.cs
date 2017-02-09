@@ -927,7 +927,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(parameters.DataFactoryName);
-            url = url + "/pipelines/";
+            url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(parameters.PipelineName);
             url = url + "/activitywindows";
             List<string> queryParameters = new List<string>();
@@ -1338,7 +1338,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(parameters.DataFactoryName);
-            url = url + "/pipelines/";
+            url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(parameters.PipelineName);
             url = url + "/activities/";
             url = url + Uri.EscapeDataString(parameters.ActivityName);
