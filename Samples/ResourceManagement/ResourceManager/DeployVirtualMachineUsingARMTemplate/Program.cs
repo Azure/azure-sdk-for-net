@@ -24,7 +24,7 @@ namespace DeployVirtualMachineUsingARMTemplate
 
             try
             {
-                var templateJson = GetTemplate();
+                var templateJson = Utilities.GetArmTemplate("ArmTemplateVM.json");
 
                 //=============================================================
                 // Create resource group.
@@ -59,7 +59,7 @@ namespace DeployVirtualMachineUsingARMTemplate
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Failed") ||
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
                 {
-                    SdkContext.DelayProvider.Delay(10000, CancellationToken.None).Wait();
+                    SdkContext.DelayProvider.Delay(10000);
                     deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
                     Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
                 }
@@ -105,17 +105,5 @@ namespace DeployVirtualMachineUsingARMTemplate
             }
         }
 
-        private static string GetTemplate()
-        {
-            var adminUsername = "tirekicker";
-            var adminPassword = "12NewPA$$w0rd!";
-            var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
-
-            var parsedTemplate = JObject.Parse(armTemplateString);
-            parsedTemplate.SelectToken("parameters.adminUsername")["defaultValue"] = adminUsername;
-            parsedTemplate.SelectToken("parameters.adminPassword")["defaultValue"] = adminPassword;
-
-            return parsedTemplate.ToString();
-        }
     }
 }

@@ -8,9 +8,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 {
     public class DelayProvider
     {
-        public virtual async Task Delay(int milliseconds, CancellationToken cancellationToken)
+        public virtual async Task DelayAsync(int milliseconds, CancellationToken cancellationToken)
         {
             await Task.Delay(milliseconds, cancellationToken);
+        }
+
+        public void Delay(int milliseconds)
+        {
+            this.DelayAsync(milliseconds, CancellationToken.None).GetAwaiter().GetResult();
         }
     }
 }

@@ -20,12 +20,12 @@ using Microsoft.Azure.Management.Dns.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using CoreFtp;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
+using Renci.SshNet;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1465,6 +1465,57 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
 
             return "[Running in PlaybackMode]";
+        }
+
+        public static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    using (var sshClient = new SshClient(host, port, userName, password))
+                    {
+                        Utilities.Log("Trying to de-provision: " + host);
+                        sshClient.Connect();
+                        var commandToExecute = "sudo waagent -deprovision+user --force";
+                        using (var command = sshClient.CreateCommand(commandToExecute))
+                        {
+                            var commandOutput = command.Execute();
+                            Utilities.Log(commandOutput);
+                        }
+                        sshClient.Disconnect();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
+
+        public static string GetArmTemplate(string templateFileName)
+        {
+            var adminUsername = "tirekicker";
+            var adminPassword = "12NewPA$$w0rd!";
+            var hostingPlanName = SdkContext.RandomResourceName("hpRSAT", 24);
+            var webAppName = SdkContext.RandomResourceName("wnRSAT", 24);
+            var armTemplateString = File.ReadAllText(Path.Combine(Utilities.ProjectPath, "Asset", templateFileName));
+
+            var parsedTemplate = JObject.Parse(armTemplateString);
+
+            if (String.Equals("ArmTemplate.json", templateFileName, StringComparison.OrdinalIgnoreCase))
+            {
+                parsedTemplate.SelectToken("parameters.hostingPlanName")["defaultValue"] = hostingPlanName;
+                parsedTemplate.SelectToken("parameters.webSiteName")["defaultValue"] = webAppName;
+                parsedTemplate.SelectToken("parameters.skuName")["defaultValue"] = "F1";
+                parsedTemplate.SelectToken("parameters.skuCapacity")["defaultValue"] = 1;
+            }
+            else if (String.Equals("ArmTemplateVM.json", templateFileName, StringComparison.OrdinalIgnoreCase))
+            {
+                parsedTemplate.SelectToken("parameters.adminUsername")["defaultValue"] = adminUsername;
+                parsedTemplate.SelectToken("parameters.adminPassword")["defaultValue"] = adminPassword;
+            }
+            return parsedTemplate.ToString();
         }
     }
 }

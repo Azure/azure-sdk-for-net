@@ -77,7 +77,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app1Url + "/helloworld...");
                 Utilities.CheckAddress("http://" + app1Url + "/helloworld");
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app1Url + "/helloworld...");
                 Utilities.Log(Utilities.CheckAddress("http://" + app1Url + "/helloworld"));
 
@@ -112,7 +112,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app2Url + "/helloworld...");
                 Utilities.CheckAddress("http://" + app2Url + "/helloworld");
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app2Url + "/helloworld...");
                 Utilities.Log(Utilities.CheckAddress("http://" + app2Url + "/helloworld"));
 
@@ -136,7 +136,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app3Url + "...");
                 Utilities.CheckAddress("http://" + app3Url);
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app3Url + "...");
                 Utilities.Log(Utilities.CheckAddress("http://" + app3Url));
 
@@ -162,7 +162,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app4Url + "...");
                 Utilities.CheckAddress("http://" + app4Url);
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app4Url + "...");
                 Utilities.Log(Utilities.CheckAddress("http://" + app4Url));
             }

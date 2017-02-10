@@ -110,6 +110,7 @@
     "ManageRedis": "1.0.0-*",
     "DeployUsingARMTemplate": "1.0.0-*",
     "DeployUsingARMTemplateWithProgress": "1.0.0-*",
+    "DeployVirtualMachineUsingARMTemplate": "1.0.0-*",
     "ManageResource": "1.0.0-*",
     "ManageResourceGroup": "1.0.0-*",
     "ManageSqlDatabase": "1.0.0-*",

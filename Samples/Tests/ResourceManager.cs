@@ -3,6 +3,7 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,59 +16,52 @@ namespace Samples.Tests
         {
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "ResourceManager")]
         public void DeployUsingARMTemplateTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                DeployUsingARMTemplate.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                DeployUsingARMTemplate.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "ResourceManager")]
         public void DeployUsingARMTemplateWithProgressTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                DeployUsingARMTemplateWithProgress.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                DeployUsingARMTemplateWithProgress.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "ResourceManager")]
         public void ManageResourceTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageResource.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageResource.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "ResourceManager")]
         public void ManageResourceGroupTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageResourceGroup.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageResourceGroup.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "ResourceManager")]
-        public void DeployVirtualMachineUsingARMTemplate()
+        public void DeployVirtualMachineUsingARMTemplateTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                DeployUsingARMTemplateWithProgress.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                DeployVirtualMachineUsingARMTemplate.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
     }
 }

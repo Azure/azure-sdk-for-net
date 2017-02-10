@@ -110,7 +110,7 @@ namespace ManageWebAppStorageAccountConnection
                 // warm up
                 Utilities.Log("Warming up " + App1Url + "/azure-samples-blob-traverser...");
                 Utilities.CheckAddress("http://" + App1Url + "/azure-samples-blob-traverser");
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + App1Url + "/azure-samples-blob-traverser...");
                 Utilities.Log(Utilities.CheckAddress("http://" + App1Url + "/azure-samples-blob-traverser"));
             }
