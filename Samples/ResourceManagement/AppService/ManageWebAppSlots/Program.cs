@@ -134,7 +134,7 @@ namespace ManageWebAppSlots
             Utilities.Print(app);
 
             Utilities.Log("CURLing " + appUrl + "...");
-            Utilities.Log(CheckAddress("http://" + appUrl));
+            Utilities.Log(Utilities.CheckAddress("http://" + appUrl));
             return app;
         }
 
@@ -169,10 +169,10 @@ namespace ManageWebAppSlots
             Utilities.Log("Deployed staging branch to slot " + slot.Name);
 
             Utilities.Log("CURLing " + slotUrl + "...");
-            Utilities.Log(CheckAddress("http://" + slotUrl));
+            Utilities.Log(Utilities.CheckAddress("http://" + slotUrl));
 
             Utilities.Log("CURLing " + appUrl + "...");
-            Utilities.Log(CheckAddress("http://" + appUrl));
+            Utilities.Log(Utilities.CheckAddress("http://" + appUrl));
         }
 
         private static void SwapProductionBackToSlot(IAzure azure, IDeploymentSlot slot)
@@ -185,15 +185,7 @@ namespace ManageWebAppSlots
             Utilities.Log("Swapped production slot back to " + slot.Name);
 
             Utilities.Log("CURLing " + appUrl + "...");
-            Utilities.Log(CheckAddress("http://" + appUrl));
-        }
-
-        private static HttpResponseMessage CheckAddress(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                return client.GetAsync(url).Result;
-            }
+            Utilities.Log(Utilities.CheckAddress("http://" + appUrl));
         }
     }
 }

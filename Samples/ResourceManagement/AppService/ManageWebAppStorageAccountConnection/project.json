@@ -10,8 +10,6 @@
       "target": "project",
       "type": "build"
     },
-    "CoreFTP": "1.2.0",
-    "WindowsAzure.Storage": "7.2.1",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0"

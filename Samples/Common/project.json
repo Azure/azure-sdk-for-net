@@ -5,40 +5,25 @@
     "Microsoft.Azure.Management.Fluent": {
       "target": "project",
       "type": "build"
-    }
+    },
+    "CoreFTP": "1.2.0"
   },
   
   "frameworks": {
-    "net45": {
-      "buildOptions": {
-        "define": [ "NET45" ],
-        "debugType": "portable"
-      },
-      "dependencies": {
-      }
-    },
     "netstandard1.5": {
       "buildOptions": {
         "define": [ "NETSTANDARD15", "PORTABLE" ],
         "debugType": "portable"
       },
-      "imports": [ "dnxcore50" ],
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
       "dependencies": {
         "NETStandard.Library": "1.6.1",
         "System.Diagnostics.Process": "4.3.0",
-        "System.Reflection": "4.3.0"
-      }
-    },
-    "netstandard1.1": {
-      "buildOptions": {
-        "define": [ "NETSTANDARD11", "PORTABLE" ],
-        "debugType": "portable"
-      },
-      "imports": [ "dnxcore50" ],
-      "dependencies": {
-        "NETStandard.Library": "1.6.1",
-        "System.Diagnostics.Process": "4.3.0",
-        "System.Console": "4.3.0"
+        "System.Reflection": "4.3.0",
+        "WindowsAzure.Storage": "8.0.1"
       }
     }
   }

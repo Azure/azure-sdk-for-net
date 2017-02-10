@@ -173,25 +173,8 @@ namespace ManageCdn
             Utilities.Print(app);
 
             Utilities.Log("CURLing " + appUrl + "...");
-            Utilities.Log(CheckAddress("http://" + appUrl));
+            Utilities.Log(Utilities.CheckAddress("http://" + appUrl));
             return app;
-        }
-
-        private static HttpResponseMessage CheckAddress(string url)
-        {
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    return client.GetAsync(url).Result;
-                }
-            }
-            catch(Exception ex)
-            {
-                Utilities.Log(ex);
-            }
-
-            return null;
         }
     }
 }

@@ -21,6 +21,11 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Net.Http;
+using CoreFtp;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1347,6 +1352,119 @@ namespace Microsoft.Azure.Management.Samples.Common
                     Path.Combine(Utilities.ProjectPath, "Asset", pfxPath),
                     overwrite: true);
             }
+        }
+
+        public static void UploadFileToFtp(IPublishingProfile profile, string filePath)
+        {
+            if (!IsRunningMocked)
+            {
+                string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
+
+                using (var ftpClient = new FtpClient(new FtpClientConfiguration
+                {
+                    Host = host,
+                    Username = profile.FtpUsername,
+                    Password = profile.FtpPassword
+                }))
+                {
+                    var fileinfo = new FileInfo(filePath);
+                    ftpClient.LoginAsync().GetAwaiter().GetResult();
+                    ftpClient.ChangeWorkingDirectoryAsync("./site/wwwroot/webapps").GetAwaiter().GetResult();
+
+                    using (var writeStream = ftpClient.OpenFileWriteStreamAsync(Path.GetFileName(filePath)).GetAwaiter().GetResult())
+                    {
+                        var fileReadStream = fileinfo.OpenRead();
+                        fileReadStream.CopyToAsync(writeStream).GetAwaiter().GetResult();
+                    }
+                }
+            }
+        }
+
+        public static void UploadFilesToContainer(string connectionString, string containerName, params string [] filePaths)
+        {
+            if (!IsRunningMocked)
+            {
+                CloudStorageAccount storageAccount;
+
+                try
+                {
+                    storageAccount = CloudStorageAccount.Parse(connectionString);
+                }
+                catch (FormatException)
+                {
+                    Utilities.Log("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
+                    Utilities.ReadLine();
+                    throw;
+                }
+                catch (ArgumentException)
+                {
+                    Utilities.Log("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
+                    Utilities.ReadLine();
+                    throw;
+                }
+
+                // Create a blob client for interacting with the blob service.
+                var blobClient = storageAccount.CreateCloudBlobClient();
+
+                // Create a container for organizing blobs within the storage account.
+                Utilities.Log("1. Creating Container");
+                var container = blobClient.GetContainerReference(containerName);
+                container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+
+                var containerPermissions = new BlobContainerPermissions();
+                // Include public access in the permissions object
+                containerPermissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                // Set the permissions on the container
+                container.SetPermissionsAsync(containerPermissions).GetAwaiter().GetResult();
+
+                foreach (var filePath in filePaths)
+                {
+                    var blob = container.GetBlockBlobReference(Path.GetFileName(filePath));
+                    blob.UploadFromFileAsync(filePath).GetAwaiter().GetResult();
+                }
+            }
+        }
+
+        public static void DeployByGit(IPublishingProfile profile)
+        {
+            if (!IsRunningMocked)
+            {
+                string gitCommand = "git";
+                string gitInitArgument = @"init";
+                string gitAddArgument = @"add -A";
+                string gitCommitArgument = @"commit -am ""Initial commit"" ";
+                string gitPushArgument = $"push https://{profile.GitUsername}:{profile.GitPassword}@{profile.GitUrl} master:master -f";
+
+                ProcessStartInfo info = new ProcessStartInfo(gitCommand, gitInitArgument);
+                info.WorkingDirectory = Path.Combine(ProjectPath, "Asset", "azure-samples-appservice-helloworld");
+                Process.Start(info).WaitForExit();
+                info.Arguments = gitAddArgument;
+                Process.Start(info).WaitForExit();
+                info.Arguments = gitCommitArgument;
+                Process.Start(info).WaitForExit();
+                info.Arguments = gitPushArgument;
+                Process.Start(info).WaitForExit();
+            }
+        }
+        
+        public static string CheckAddress(string url)
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        return client.GetAsync(url).Result.ToString();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+
+            return "[Running in PlaybackMode]";
         }
     }
 }
