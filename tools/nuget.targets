@@ -96,6 +96,7 @@
 	</Target>
 
 	<Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
+		<Error Condition=" '$(Scope)' == 'all' OR '$(Scope)' == 'all' " Text="Publishing nuget package without specifying scope has now been disabled" />
 		<Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 		<Message Text="Trying to Create directory $(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
 		<MakeDir Directories="$(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(NuGetPublishingSource)', '^(?i)http'))" />
