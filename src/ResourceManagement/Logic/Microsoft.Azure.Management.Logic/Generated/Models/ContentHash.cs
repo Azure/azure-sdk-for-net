@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets the algorithm.
+        /// Gets or sets the algorithm of the content hash.
         /// </summary>
         [JsonProperty(PropertyName = "algorithm")]
         public string Algorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the value.
+        /// Gets or sets the value of the content hash.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

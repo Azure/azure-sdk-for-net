@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Logic.Models
     /// The integration account schema.
     /// </summary>
     [JsonTransformation]
-    public partial class IntegrationAccountSchema : IntegrationAccountResource
+    public partial class IntegrationAccountSchema : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountSchema class.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountSchema class.
         /// </summary>
-        public IntegrationAccountSchema(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SchemaType? schemaType = default(SchemaType?), string targetNamespace = default(string), string documentName = default(string), string fileName = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink))
+        public IntegrationAccountSchema(SchemaType? schemaType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string targetNamespace = default(string), string documentName = default(string), string fileName = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), object content = default(object), string contentType = default(string), ContentLink contentLink = default(ContentLink))
             : base(id, name, type, location, tags)
         {
             SchemaType = schemaType;
@@ -104,7 +104,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets the content link.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentLink")]
-        public IntegrationAccountContentLink ContentLink { get; private set; }
+        public ContentLink ContentLink { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

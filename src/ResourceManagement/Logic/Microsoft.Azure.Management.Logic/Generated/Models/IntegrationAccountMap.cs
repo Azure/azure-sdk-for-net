@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Logic.Models
     /// The integration account map.
     /// </summary>
     [JsonTransformation]
-    public partial class IntegrationAccountMap : IntegrationAccountResource
+    public partial class IntegrationAccountMap : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
         /// </summary>
-        public IntegrationAccountMap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MapType? mapType = default(MapType?), IntegrationAccountMapPropertiesParametersSchema parametersSchema = default(IntegrationAccountMapPropertiesParametersSchema), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink), object metadata = default(object))
+        public IntegrationAccountMap(MapType? mapType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IntegrationAccountMapPropertiesParametersSchema parametersSchema = default(IntegrationAccountMapPropertiesParametersSchema), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), ContentLink contentLink = default(ContentLink), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             MapType = mapType;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets the content link.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentLink")]
-        public IntegrationAccountContentLink ContentLink { get; private set; }
+        public ContentLink ContentLink { get; private set; }
 
         /// <summary>
         /// Gets or sets the metadata.
@@ -92,5 +92,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "properties.metadata")]
         public object Metadata { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

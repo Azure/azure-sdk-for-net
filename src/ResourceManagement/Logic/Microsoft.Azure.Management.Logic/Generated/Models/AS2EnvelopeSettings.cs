@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2EnvelopeSettings class.
         /// </summary>
-        public AS2EnvelopeSettings(string messageContentType = default(string), bool? transmitFileNameInMimeHeader = default(bool?), string fileNameTemplate = default(string), bool? suspendMessageOnFileNameGenerationError = default(bool?), bool? autogenerateFileName = default(bool?))
+        public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName)
         {
             MessageContentType = messageContentType;
             TransmitFileNameInMimeHeader = transmitFileNameInMimeHeader;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// mime header.
         /// </summary>
         [JsonProperty(PropertyName = "transmitFileNameInMimeHeader")]
-        public bool? TransmitFileNameInMimeHeader { get; set; }
+        public bool TransmitFileNameInMimeHeader { get; set; }
 
         /// <summary>
         /// Gets or sets the template for file name.
@@ -62,14 +62,31 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// file name generation error.
         /// </summary>
         [JsonProperty(PropertyName = "suspendMessageOnFileNameGenerationError")]
-        public bool? SuspendMessageOnFileNameGenerationError { get; set; }
+        public bool SuspendMessageOnFileNameGenerationError { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to auto generate file
         /// name.
         /// </summary>
         [JsonProperty(PropertyName = "autogenerateFileName")]
-        public bool? AutogenerateFileName { get; set; }
+        public bool AutogenerateFileName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MessageContentType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageContentType");
+            }
+            if (FileNameTemplate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FileNameTemplate");
+            }
+        }
     }
 }

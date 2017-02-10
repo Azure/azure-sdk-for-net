@@ -14,17 +14,16 @@ namespace Microsoft.Azure.Management.Logic
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
-    /// IntegrationAccountPartnersOperations operations.
+    /// CertificatesOperations operations.
     /// </summary>
-    public partial interface IIntegrationAccountPartnersOperations
+    public partial interface ICertificatesOperations
     {
         /// <summary>
-        /// Gets a list of integration account partners.
+        /// Gets a list of integration account certificates.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -32,8 +31,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='top'>
+        /// The number of items to be included in the result.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,9 +49,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IntegrationAccountPartner>>> ListWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountPartnerFilter> odataQuery = default(ODataQuery<IntegrationAccountPartnerFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationAccountCertificate>>> ListByIntegrationAccountsWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an integration account partner.
+        /// Gets an integration account certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -60,8 +59,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='partnerName'>
-        /// The integration account partner name.
+        /// <param name='certificateName'>
+        /// The integration account certificate name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,9 +77,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IntegrationAccountPartner>> GetWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string partnerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationAccountCertificate>> GetWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an integration account partner.
+        /// Creates or updates an integration account certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -88,11 +87,11 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='partnerName'>
-        /// The integration account partner name.
+        /// <param name='certificateName'>
+        /// The integration account certificate name.
         /// </param>
-        /// <param name='partner'>
-        /// The integration account partner.
+        /// <param name='certificate'>
+        /// The integration account certificate.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -109,9 +108,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IntegrationAccountPartner>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string partnerName, IntegrationAccountPartner partner, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationAccountCertificate>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string certificateName, IntegrationAccountCertificate certificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an integration account partner.
+        /// Deletes an integration account certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -119,8 +118,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='partnerName'>
-        /// The integration account partner name.
+        /// <param name='certificateName'>
+        /// The integration account certificate name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -134,9 +133,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string partnerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of integration account partners.
+        /// Gets a list of integration account certificates.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -156,6 +155,6 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IntegrationAccountPartner>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationAccountCertificate>>> ListByIntegrationAccountsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -26,12 +26,12 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// IntegrationAccountPartnersOperations operations.
+    /// MapsOperations operations.
     /// </summary>
-    internal partial class IntegrationAccountPartnersOperations : IServiceOperations<LogicManagementClient>, IIntegrationAccountPartnersOperations
+    internal partial class MapsOperations : IServiceOperations<LogicManagementClient>, IMapsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountPartnersOperations class.
+        /// Initializes a new instance of the MapsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal IntegrationAccountPartnersOperations(LogicManagementClient client)
+        internal MapsOperations(LogicManagementClient client)
         {
             if (client == null) 
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Logic
         public LogicManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of integration account partners.
+        /// Gets a list of integration account maps.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<IntegrationAccountPartner>>> ListWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountPartnerFilter> odataQuery = default(ODataQuery<IntegrationAccountPartnerFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<IntegrationAccountMap>>> ListByIntegrationAccountsWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountMapFilter> odataQuery = default(ODataQuery<IntegrationAccountMapFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -112,11 +112,11 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByIntegrationAccounts", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/partners").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Logic
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<IntegrationAccountPartner>>();
+            var _result = new AzureOperationResponse<IPage<IntegrationAccountMap>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Logic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<IntegrationAccountPartner>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<IntegrationAccountMap>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Logic
         }
 
         /// <summary>
-        /// Gets an integration account partner.
+        /// Gets an integration account map.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -265,8 +265,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='partnerName'>
-        /// The integration account partner name.
+        /// <param name='mapName'>
+        /// The integration account map name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IntegrationAccountPartner>> GetWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string partnerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IntegrationAccountMap>> GetWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string mapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -300,9 +300,9 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "integrationAccountName");
             }
-            if (partnerName == null)
+            if (mapName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "partnerName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "mapName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -317,17 +317,17 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
-                tracingParameters.Add("partnerName", partnerName);
+                tracingParameters.Add("mapName", mapName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/partners/{partnerName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
-            _url = _url.Replace("{partnerName}", Uri.EscapeDataString(partnerName));
+            _url = _url.Replace("{mapName}", Uri.EscapeDataString(mapName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.Logic
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IntegrationAccountPartner>();
+            var _result = new AzureOperationResponse<IntegrationAccountMap>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Management.Logic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IntegrationAccountPartner>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IntegrationAccountMap>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -457,7 +457,7 @@ namespace Microsoft.Azure.Management.Logic
         }
 
         /// <summary>
-        /// Creates or updates an integration account partner.
+        /// Creates or updates an integration account map.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -465,11 +465,11 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='partnerName'>
-        /// The integration account partner name.
+        /// <param name='mapName'>
+        /// The integration account map name.
         /// </param>
-        /// <param name='partner'>
-        /// The integration account partner.
+        /// <param name='map'>
+        /// The integration account map.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IntegrationAccountPartner>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string partnerName, IntegrationAccountPartner partner, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IntegrationAccountMap>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string mapName, IntegrationAccountMap map, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -503,17 +503,21 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "integrationAccountName");
             }
-            if (partnerName == null)
+            if (mapName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "partnerName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "mapName");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (partner == null)
+            if (map == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "partner");
+                throw new ValidationException(ValidationRules.CannotBeNull, "map");
+            }
+            if (map != null)
+            {
+                map.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -524,18 +528,18 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
-                tracingParameters.Add("partnerName", partnerName);
-                tracingParameters.Add("partner", partner);
+                tracingParameters.Add("mapName", mapName);
+                tracingParameters.Add("map", map);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/partners/{partnerName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
-            _url = _url.Replace("{partnerName}", Uri.EscapeDataString(partnerName));
+            _url = _url.Replace("{mapName}", Uri.EscapeDataString(mapName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -577,9 +581,9 @@ namespace Microsoft.Azure.Management.Logic
 
             // Serialize Request
             string _requestContent = null;
-            if(partner != null)
+            if(map != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(partner, this.Client.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(map, this.Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -638,7 +642,7 @@ namespace Microsoft.Azure.Management.Logic
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IntegrationAccountPartner>();
+            var _result = new AzureOperationResponse<IntegrationAccountMap>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -651,7 +655,7 @@ namespace Microsoft.Azure.Management.Logic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IntegrationAccountPartner>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IntegrationAccountMap>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -669,7 +673,7 @@ namespace Microsoft.Azure.Management.Logic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IntegrationAccountPartner>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IntegrationAccountMap>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -689,7 +693,7 @@ namespace Microsoft.Azure.Management.Logic
         }
 
         /// <summary>
-        /// Deletes an integration account partner.
+        /// Deletes an integration account map.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -697,8 +701,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='partnerName'>
-        /// The integration account partner name.
+        /// <param name='mapName'>
+        /// The integration account map name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -715,7 +719,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string partnerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string mapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -729,9 +733,9 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "integrationAccountName");
             }
-            if (partnerName == null)
+            if (mapName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "partnerName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "mapName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -746,17 +750,17 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
-                tracingParameters.Add("partnerName", partnerName);
+                tracingParameters.Add("mapName", mapName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/partners/{partnerName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
-            _url = _url.Replace("{partnerName}", Uri.EscapeDataString(partnerName));
+            _url = _url.Replace("{mapName}", Uri.EscapeDataString(mapName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -860,7 +864,7 @@ namespace Microsoft.Azure.Management.Logic
         }
 
         /// <summary>
-        /// Gets a list of integration account partners.
+        /// Gets a list of integration account maps.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -883,7 +887,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<IntegrationAccountPartner>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<IntegrationAccountMap>>> ListByIntegrationAccountsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -898,7 +902,7 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByIntegrationAccountsNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -995,7 +999,7 @@ namespace Microsoft.Azure.Management.Logic
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<IntegrationAccountPartner>>();
+            var _result = new AzureOperationResponse<IPage<IntegrationAccountMap>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1008,7 +1012,7 @@ namespace Microsoft.Azure.Management.Logic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<IntegrationAccountPartner>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<IntegrationAccountMap>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Logic.Models
     /// The integration account agreement.
     /// </summary>
     [JsonTransformation]
-    public partial class IntegrationAccountAgreement : IntegrationAccountResource
+    public partial class IntegrationAccountAgreement : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountAgreement
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the IntegrationAccountAgreement
         /// class.
         /// </summary>
-        public IntegrationAccountAgreement(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), AgreementType? agreementType = default(AgreementType?), string hostPartner = default(string), string guestPartner = default(string), BusinessIdentity hostIdentity = default(BusinessIdentity), BusinessIdentity guestIdentity = default(BusinessIdentity), AgreementContent content = default(AgreementContent))
+        public IntegrationAccountAgreement(AgreementType? agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             CreatedTime = createdTime;
@@ -101,5 +101,46 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "properties.content")]
         public AgreementContent Content { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (HostPartner == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "HostPartner");
+            }
+            if (GuestPartner == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GuestPartner");
+            }
+            if (HostIdentity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "HostIdentity");
+            }
+            if (GuestIdentity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GuestIdentity");
+            }
+            if (Content == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Content");
+            }
+            if (this.HostIdentity != null)
+            {
+                this.HostIdentity.Validate();
+            }
+            if (this.GuestIdentity != null)
+            {
+                this.GuestIdentity.Validate();
+            }
+            if (this.Content != null)
+            {
+                this.Content.Validate();
+            }
+        }
     }
 }

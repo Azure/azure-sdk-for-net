@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12MessageFilter class.
         /// </summary>
-        public X12MessageFilter(MessageFilterType? messageFilterType = default(MessageFilterType?))
+        public X12MessageFilter(MessageFilterType messageFilterType)
         {
             MessageFilterType = messageFilterType;
         }
@@ -39,7 +39,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Include', 'Exclude'
         /// </summary>
         [JsonProperty(PropertyName = "messageFilterType")]
-        public MessageFilterType? MessageFilterType { get; set; }
+        public MessageFilterType MessageFilterType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

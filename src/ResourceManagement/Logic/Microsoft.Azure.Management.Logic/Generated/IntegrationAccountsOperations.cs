@@ -1209,7 +1209,7 @@ namespace Microsoft.Azure.Management.Logic
         }
 
         /// <summary>
-        /// Lists the integration account callback URL.
+        /// Gets the integration account callback URL.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -1238,7 +1238,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CallbackUrl>> ListCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CallbackUrl>> GetCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -1271,7 +1271,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListCallbackUrl", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCallbackUrl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

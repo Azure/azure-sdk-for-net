@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2ErrorSettings class.
         /// </summary>
-        public AS2ErrorSettings(bool? suspendDuplicateMessage = default(bool?), bool? resendIfMdnNotReceived = default(bool?))
+        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived)
         {
             SuspendDuplicateMessage = suspendDuplicateMessage;
             ResendIfMdnNotReceived = resendIfMdnNotReceived;
@@ -40,14 +40,24 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// message.
         /// </summary>
         [JsonProperty(PropertyName = "suspendDuplicateMessage")]
-        public bool? SuspendDuplicateMessage { get; set; }
+        public bool SuspendDuplicateMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to resend message If MDN
         /// is not received.
         /// </summary>
         [JsonProperty(PropertyName = "resendIfMdnNotReceived")]
-        public bool? ResendIfMdnNotReceived { get; set; }
+        public bool ResendIfMdnNotReceived { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

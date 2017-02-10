@@ -26,12 +26,12 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// IntegrationAccountSchemasOperations operations.
+    /// SchemasOperations operations.
     /// </summary>
-    internal partial class IntegrationAccountSchemasOperations : IServiceOperations<LogicManagementClient>, IIntegrationAccountSchemasOperations
+    internal partial class SchemasOperations : IServiceOperations<LogicManagementClient>, ISchemasOperations
     {
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountSchemasOperations class.
+        /// Initializes a new instance of the SchemasOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal IntegrationAccountSchemasOperations(LogicManagementClient client)
+        internal SchemasOperations(LogicManagementClient client)
         {
             if (client == null) 
             {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<IntegrationAccountSchema>>> ListWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<IntegrationAccountSchema>>> ListByIntegrationAccountsWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByIntegrationAccounts", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -515,6 +515,10 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "schema");
             }
+            if (schema != null)
+            {
+                schema.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -883,7 +887,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<IntegrationAccountSchema>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<IntegrationAccountSchema>>> ListByIntegrationAccountsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -898,7 +902,7 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByIntegrationAccountsNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the BusinessIdentity class.
         /// </summary>
-        public BusinessIdentity(string qualifier = default(string), string value = default(string))
+        public BusinessIdentity(string qualifier, string value)
         {
             Qualifier = qualifier;
             Value = value;
@@ -47,5 +47,22 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Qualifier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Qualifier");
+            }
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
+        }
     }
 }

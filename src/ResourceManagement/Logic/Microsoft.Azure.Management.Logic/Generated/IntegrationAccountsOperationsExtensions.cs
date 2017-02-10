@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Logic
             }
 
             /// <summary>
-            /// Lists the integration account callback URL.
+            /// Gets the integration account callback URL.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -280,13 +280,13 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='parameters'>
             /// The callback URL parameters.
             /// </param>
-            public static CallbackUrl ListCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters)
+            public static CallbackUrl GetCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountsOperations)s).ListCallbackUrlAsync(resourceGroupName, integrationAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntegrationAccountsOperations)s).GetCallbackUrlAsync(resourceGroupName, integrationAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the integration account callback URL.
+            /// Gets the integration account callback URL.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -303,9 +303,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CallbackUrl> ListCallbackUrlAsync(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CallbackUrl> GetCallbackUrlAsync(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListCallbackUrlWithHttpMessagesAsync(resourceGroupName, integrationAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCallbackUrlWithHttpMessagesAsync(resourceGroupName, integrationAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

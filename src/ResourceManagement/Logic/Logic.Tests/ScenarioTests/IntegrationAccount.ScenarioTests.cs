@@ -234,12 +234,12 @@ namespace Test.Azure.Management.Logic
                     CreateIntegrationAccountInstance(integrationAccountName));
 
                 // Get the IntegrationAccount and verify the content
-                var callbackUrl1 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
+                var callbackUrl1 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
                     integrationAccountName, new ListCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl1);
 
-                var callbackUrl2 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
+                var callbackUrl2 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
                     integrationAccountName, new ListCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl2);

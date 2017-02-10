@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactSchemaReference class.
         /// </summary>
-        public EdifactSchemaReference(string messageId = default(string), string messageVersion = default(string), string messageRelease = default(string), string senderApplicationId = default(string), string senderApplicationQualifier = default(string), string associationAssignedCode = default(string), string schemaName = default(string))
+        public EdifactSchemaReference(string messageId, string messageVersion, string messageRelease, string schemaName, string senderApplicationId = default(string), string senderApplicationQualifier = default(string), string associationAssignedCode = default(string))
         {
             MessageId = messageId;
             MessageVersion = messageVersion;
@@ -82,5 +82,30 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MessageId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageId");
+            }
+            if (MessageVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageVersion");
+            }
+            if (MessageRelease == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageRelease");
+            }
+            if (SchemaName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaName");
+            }
+        }
     }
 }

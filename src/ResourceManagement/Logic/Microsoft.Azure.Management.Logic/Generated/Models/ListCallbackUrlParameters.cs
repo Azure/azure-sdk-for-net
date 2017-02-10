@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets or sets the expiry time.
         /// </summary>
-        [JsonProperty(PropertyName = "NotAfter")]
+        [JsonProperty(PropertyName = "notAfter")]
         public DateTime? NotAfter { get; set; }
 
         /// <summary>

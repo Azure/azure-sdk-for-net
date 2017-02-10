@@ -47,10 +47,10 @@ namespace Test.Azure.Management.Logic
                 instance.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.MD5;
                 instance.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.MD5;
 
-                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName, instance);
 
-                var getAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                var getAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
                 integrationAccountName,
                 integrationAccountAgreementName);
 
@@ -58,7 +58,7 @@ namespace Test.Azure.Management.Logic
                 Assert.Equal(getAgreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
                 Assert.Equal(getAgreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
 
-                client.IntegrationAccountAgreements.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Agreements.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountAgreementName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -83,7 +83,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName,
                     CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,
                         AgreementType.AS2));
@@ -91,7 +91,7 @@ namespace Test.Azure.Management.Logic
                 var updateAgreement = CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName,
                     integrationAccountName);
 
-                var updatedAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(
+                var updatedAgreement = client.Agreements.CreateOrUpdate(
                     Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountAgreementName, updateAgreement);
@@ -126,12 +126,12 @@ namespace Test.Azure.Management.Logic
                 instance.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.SHA1;
                 instance.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.SHA1;
 
-                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName, instance);
 
                 Assert.Equal(agreement.Name, integrationAccountAgreementName);
 
-                var getAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                var getAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountAgreementName);
 
@@ -180,10 +180,10 @@ namespace Test.Azure.Management.Logic
                 overrideSetting.TimeFormat = X12TimeFormat.HHMM;
                 instance.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides.Add(overrideSetting);
 
-                var x12Agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var x12Agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationX12AccountAgreementName, instance );
 
-                var fetchedAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                var fetchedAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationX12AccountAgreementName);
 
                 Assert.Equal(fetchedAgreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides[0].ResponsibleAgencyCode,"X");
@@ -216,24 +216,24 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                client.IntegrationAccountAgreements.CreateOrUpdate(
+                client.Agreements.CreateOrUpdate(
                     Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName1,
                     CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName1, integrationAccountName,
                         AgreementType.AS2));
 
-                client.IntegrationAccountAgreements.CreateOrUpdate(
+                client.Agreements.CreateOrUpdate(
                     Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName2,
                     CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName2, integrationAccountName,
                         AgreementType.Edifact));
 
-                client.IntegrationAccountAgreements.CreateOrUpdate(
+                client.Agreements.CreateOrUpdate(
                     Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName3,
                     CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName3, integrationAccountName));
 
-                var agreements = client.IntegrationAccountAgreements.List(Constants.DefaultResourceGroup,
+                var agreements = client.Agreements.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
                     integrationAccountName);
 
                 Assert.True(agreements.Count() == 3);
@@ -260,7 +260,7 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountAgreementName,
                     CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName));
 
@@ -269,7 +269,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Agreements.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountAgreementName));
             }
         }
@@ -297,18 +297,18 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, CreateIntegrationAccountInstance(integrationAccountName));
 
-                var as2Agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var as2Agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAs2AccountAgreementName,
                     CreateIntegrationAccountAgreementInstanceFromFile(integrationAs2AccountAgreementName,
                         integrationAccountName, AgreementType.AS2));
 
-                var edifactAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(
+                var edifactAgreement = client.Agreements.CreateOrUpdate(
                     Constants.DefaultResourceGroup,
                     integrationAccountName, integrationEdifactAccountAgreementName,
                     CreateIntegrationAccountAgreementInstanceFromFile(integrationEdifactAccountAgreementName,
                         integrationAccountName, AgreementType.Edifact));
 
-                var x12Agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var x12Agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationX12AccountAgreementName,
                     CreateIntegrationAccountAgreementInstanceFromFile(integrationX12AccountAgreementName,
                         integrationAccountName, AgreementType.X12));

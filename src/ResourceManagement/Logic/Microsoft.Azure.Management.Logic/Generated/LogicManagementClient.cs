@@ -113,29 +113,29 @@ namespace Microsoft.Azure.Management.Logic
         public virtual IIntegrationAccountsOperations IntegrationAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountSchemasOperations.
+        /// Gets the ISchemasOperations.
         /// </summary>
-        public virtual IIntegrationAccountSchemasOperations IntegrationAccountSchemas { get; private set; }
+        public virtual ISchemasOperations Schemas { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountMapsOperations.
+        /// Gets the IMapsOperations.
         /// </summary>
-        public virtual IIntegrationAccountMapsOperations IntegrationAccountMaps { get; private set; }
+        public virtual IMapsOperations Maps { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountPartnersOperations.
+        /// Gets the IPartnersOperations.
         /// </summary>
-        public virtual IIntegrationAccountPartnersOperations IntegrationAccountPartners { get; private set; }
+        public virtual IPartnersOperations Partners { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountAgreementsOperations.
+        /// Gets the IAgreementsOperations.
         /// </summary>
-        public virtual IIntegrationAccountAgreementsOperations IntegrationAccountAgreements { get; private set; }
+        public virtual IAgreementsOperations Agreements { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountCertificatesOperations.
+        /// Gets the ICertificatesOperations.
         /// </summary>
-        public virtual IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; private set; }
+        public virtual ICertificatesOperations Certificates { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the LogicManagementClient class.
@@ -345,11 +345,11 @@ namespace Microsoft.Azure.Management.Logic
             this.WorkflowRuns = new WorkflowRunsOperations(this);
             this.WorkflowRunActions = new WorkflowRunActionsOperations(this);
             this.IntegrationAccounts = new IntegrationAccountsOperations(this);
-            this.IntegrationAccountSchemas = new IntegrationAccountSchemasOperations(this);
-            this.IntegrationAccountMaps = new IntegrationAccountMapsOperations(this);
-            this.IntegrationAccountPartners = new IntegrationAccountPartnersOperations(this);
-            this.IntegrationAccountAgreements = new IntegrationAccountAgreementsOperations(this);
-            this.IntegrationAccountCertificates = new IntegrationAccountCertificatesOperations(this);
+            this.Schemas = new SchemasOperations(this);
+            this.Maps = new MapsOperations(this);
+            this.Partners = new PartnersOperations(this);
+            this.Agreements = new AgreementsOperations(this);
+            this.Certificates = new CertificatesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-06-01";
             this.AcceptLanguage = "en-US";

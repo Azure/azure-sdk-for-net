@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Logic.Models
     /// <summary>
     /// The integration account.
     /// </summary>
-    public partial class IntegrationAccount : IntegrationAccountResource
+    public partial class IntegrationAccount : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccount class.

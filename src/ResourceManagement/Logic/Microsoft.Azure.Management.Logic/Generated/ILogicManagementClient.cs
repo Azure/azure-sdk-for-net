@@ -107,29 +107,29 @@ namespace Microsoft.Azure.Management.Logic
         IIntegrationAccountsOperations IntegrationAccounts { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountSchemasOperations.
+        /// Gets the ISchemasOperations.
         /// </summary>
-        IIntegrationAccountSchemasOperations IntegrationAccountSchemas { get; }
+        ISchemasOperations Schemas { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountMapsOperations.
+        /// Gets the IMapsOperations.
         /// </summary>
-        IIntegrationAccountMapsOperations IntegrationAccountMaps { get; }
+        IMapsOperations Maps { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountPartnersOperations.
+        /// Gets the IPartnersOperations.
         /// </summary>
-        IIntegrationAccountPartnersOperations IntegrationAccountPartners { get; }
+        IPartnersOperations Partners { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountAgreementsOperations.
+        /// Gets the IAgreementsOperations.
         /// </summary>
-        IIntegrationAccountAgreementsOperations IntegrationAccountAgreements { get; }
+        IAgreementsOperations Agreements { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountCertificatesOperations.
+        /// Gets the ICertificatesOperations.
         /// </summary>
-        IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; }
+        ICertificatesOperations Certificates { get; }
 
             /// <summary>
         /// Lists all of the available Logic REST API operations.
