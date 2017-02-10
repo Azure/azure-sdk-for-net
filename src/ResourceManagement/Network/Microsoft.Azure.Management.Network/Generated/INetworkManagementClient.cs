@@ -165,6 +165,21 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; }
 
         /// <summary>
+        /// Gets the IRouteFiltersOperations.
+        /// </summary>
+        IRouteFiltersOperations RouteFilters { get; }
+
+        /// <summary>
+        /// Gets the IRouteFilterRulesOperations.
+        /// </summary>
+        IRouteFilterRulesOperations RouteFilterRules { get; }
+
+        /// <summary>
+        /// Gets the IBgpServiceCommunitiesOperations.
+        /// </summary>
+        IBgpServiceCommunitiesOperations BgpServiceCommunities { get; }
+
+        /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available
         /// for use.
         /// </summary>
