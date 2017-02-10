@@ -33,7 +33,7 @@ using System.Xml;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.AzureStack.AzureConsistentStorage;
-using Microsoft.AzureStack.AzureConsistentStorage.Models ;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.AzureStack.AzureConsistentStorage
@@ -138,7 +138,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         {
         }
     }
-    
+
     /// <summary>
     /// Your documentation here.
     /// </summary>
@@ -578,11 +578,16 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
         }
         
         private string _containerState;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
         public string ContainerState
         {
             get { return this._containerState; }
             set { this._containerState = value; }
         }
+        
         private string _shareName;
         
         /// <summary>
@@ -1887,15 +1892,27 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
     public partial class MigrateContainerResponse : AzureOperationResponse
     {
         private string _location;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
         public string Location
         {
             get { return this._location; }
             set { this._location = value; }
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the MigrateContainerResponse class.
+        /// </summary>
         public MigrateContainerResponse()
         {
         }
     }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
     public partial class MigrationParameters : ResourceBase
     {
         private string _containerName;
@@ -1967,17 +1984,27 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
         }
         
         private string _failureReason;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
         public string FailureReason
         {
             get { return this._failureReason; }
             set { this._failureReason = value; }
         }
+        
         private string _jobId;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
         public string JobId
         {
             get { return this._jobId; }
             set { this._jobId = value; }
         }
+        
         private string _migrationStatus;
         
         /// <summary>
@@ -13260,8 +13287,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
         public static MigrateContainerResponse MigrateContainer(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, MigrationParameters parameters)
         {
@@ -13294,8 +13320,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
         public static Task<MigrateContainerResponse> MigrateContainerAsync(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, MigrationParameters parameters)
         {
@@ -13561,8 +13586,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
         Task<MigrateContainerResponse> MigrateContainerAsync(string resourceGroupName, string farmId, string shareName, MigrationParameters parameters, CancellationToken cancellationToken);
         
@@ -14104,6 +14128,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                                         ulong usedBytesInPrimaryVolumeInstance = ((ulong)usedBytesInPrimaryVolumeValue);
                                         containerInstance.UsedBytesInPrimaryVolume = usedBytesInPrimaryVolumeInstance;
                                     }
+                                    
                                     JToken containerStateValue = containersValue["containerState"];
                                     if (containerStateValue != null && containerStateValue.Type != JTokenType.Null)
                                     {
@@ -15145,71 +15170,69 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken migrationResultValue = responseDoc["MigrationResult"];
-                        if (migrationResultValue != null && migrationResultValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            MigrationResult migrationResultInstance = new MigrationResult();
-                            
-                            JToken jobIdValue = migrationResultValue["jobId"];
+                            JToken jobIdValue = responseDoc["jobId"];
                             if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
                             {
                                 string jobIdInstance = ((string)jobIdValue);
-                                migrationResultInstance.JobId = jobIdInstance;
+                                result.JobId = jobIdInstance;
                             }
-                            JToken sourceShareNameValue = migrationResultValue["sourceShareName"];
+                            
+                            JToken sourceShareNameValue = responseDoc["sourceShareName"];
                             if (sourceShareNameValue != null && sourceShareNameValue.Type != JTokenType.Null)
                             {
                                 string sourceShareNameInstance = ((string)sourceShareNameValue);
-                                migrationResultInstance.SourceShareName = sourceShareNameInstance;
+                                result.SourceShareName = sourceShareNameInstance;
                             }
                             
-                            JToken storageAccountNameValue = migrationResultValue["storageAccountName"];
+                            JToken storageAccountNameValue = responseDoc["storageAccountName"];
                             if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
                             {
                                 string storageAccountNameInstance = ((string)storageAccountNameValue);
-                                migrationResultInstance.StorageAccountName = storageAccountNameInstance;
+                                result.StorageAccountName = storageAccountNameInstance;
                             }
                             
-                            JToken containerNameValue = migrationResultValue["containerName"];
+                            JToken containerNameValue = responseDoc["containerName"];
                             if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                             {
                                 string containerNameInstance = ((string)containerNameValue);
-                                migrationResultInstance.ContainerName = containerNameInstance;
+                                result.ContainerName = containerNameInstance;
                             }
                             
-                            JToken destinationShareNameValue = migrationResultValue["destinationShareName"];
+                            JToken destinationShareNameValue = responseDoc["destinationShareName"];
                             if (destinationShareNameValue != null && destinationShareNameValue.Type != JTokenType.Null)
                             {
                                 string destinationShareNameInstance = ((string)destinationShareNameValue);
-                                migrationResultInstance.DestinationShareName = destinationShareNameInstance;
+                                result.DestinationShareName = destinationShareNameInstance;
                             }
                             
-                            JToken migrationStatusValue = migrationResultValue["migrationStatus"];
+                            JToken migrationStatusValue = responseDoc["migrationStatus"];
                             if (migrationStatusValue != null && migrationStatusValue.Type != JTokenType.Null)
                             {
                                 string migrationStatusInstance = ((string)migrationStatusValue);
-                                migrationResultInstance.MigrationStatus = migrationStatusInstance;
+                                result.MigrationStatus = migrationStatusInstance;
                             }
                             
-                            JToken subEntitiesCompletedValue = migrationResultValue["subEntitiesCompleted"];
+                            JToken subEntitiesCompletedValue = responseDoc["subEntitiesCompleted"];
                             if (subEntitiesCompletedValue != null && subEntitiesCompletedValue.Type != JTokenType.Null)
                             {
                                 ulong subEntitiesCompletedInstance = ((ulong)subEntitiesCompletedValue);
-                                migrationResultInstance.SubEntitiesCompleted = subEntitiesCompletedInstance;
+                                result.SubEntitiesCompleted = subEntitiesCompletedInstance;
                             }
                             
-                            
-                            JToken subEntitiesFailedValue = migrationResultValue["subEntitiesFailed"];
+                            JToken subEntitiesFailedValue = responseDoc["subEntitiesFailed"];
                             if (subEntitiesFailedValue != null && subEntitiesFailedValue.Type != JTokenType.Null)
                             {
                                 ulong subEntitiesFailedInstance = ((ulong)subEntitiesFailedValue);
-                                migrationResultInstance.SubEntitiesFailed = subEntitiesFailedInstance;
+                                result.SubEntitiesFailed = subEntitiesFailedInstance;
                             }
-                            JToken failureReasonValue = migrationResultValue["failureReason"];
+                            
+                            JToken failureReasonValue = responseDoc["failureReason"];
                             if (failureReasonValue != null && failureReasonValue.Type != JTokenType.Null)
                             {
                                 string failureReasonInstance = ((string)failureReasonValue);
-                                migrationResultInstance.FailureReason = failureReasonInstance;
+                                result.FailureReason = failureReasonInstance;
                             }
                         }
                         
@@ -15530,8 +15553,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
         public async Task<MigrateContainerResponse> MigrateContainerAsync(string resourceGroupName, string farmId, string shareName, MigrationParameters parameters, CancellationToken cancellationToken)
         {
