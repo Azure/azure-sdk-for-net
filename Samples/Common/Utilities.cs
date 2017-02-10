@@ -1517,5 +1517,10 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
             return parsedTemplate.ToString();
         }
+
+        public static string GetCertificatePath(string certificateName)
+        {
+            return Path.Combine(Utilities.ProjectPath, "Asset", certificateName);
+        }
     }
 }

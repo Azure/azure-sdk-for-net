@@ -101,7 +101,9 @@ namespace ManageSimpleApplicationGateway
                         .DefineRequestRoutingRule("HTTPs-1443-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpsPort(1443)
-                            .WithSslCertificateFromPfxFile(new FileInfo("myTest._pfx"))
+                            .WithSslCertificateFromPfxFile(
+                                new FileInfo(
+                                    Utilities.GetCertificatePath("NetworkTestCertificate1.pfx")))
                             .WithSslCertificatePassword("Abc123")
                             .ToBackendHttpPort(8080)
                             .ToBackendIpAddress("11.1.1.1")
