@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Network
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
+        JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
+        JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
@@ -178,6 +178,15 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IBgpServiceCommunitiesOperations.
         /// </summary>
         IBgpServiceCommunitiesOperations BgpServiceCommunities { get; }
+        
+        /// Gets the INetworkWatchersOperations.
+        /// </summary>
+        INetworkWatchersOperations NetworkWatchers { get; }
+
+        /// <summary>
+        /// Gets the IPacketCapturesOperations.
+        /// </summary>
+        IPacketCapturesOperations PacketCaptures { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available

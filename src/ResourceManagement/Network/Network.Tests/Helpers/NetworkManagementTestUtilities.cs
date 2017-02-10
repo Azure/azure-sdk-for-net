@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Storage;
 using ResourceGroups.Tests;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -22,6 +24,20 @@ namespace Networks.Tests.Helpers
         {
             handler.IsPassThrough = true;
             var client = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
+            return client;
+        }
+
+        public static ComputeManagementClient GetComputeManagementClientWithHandler(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<ComputeManagementClient>(handlers: handler);
+            return client;
+        }
+
+        public static StorageManagementClient GetStorageManagementClientWithHandler(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<StorageManagementClient>(handlers: handler);
             return client;
         }
 

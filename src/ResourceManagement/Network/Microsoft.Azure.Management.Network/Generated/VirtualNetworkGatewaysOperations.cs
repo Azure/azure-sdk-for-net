@@ -167,6 +167,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -214,7 +216,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -251,7 +253,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkGateway>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -372,6 +374,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -419,7 +423,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -456,7 +460,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<VirtualNetworkGateway>>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -605,6 +609,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -658,7 +664,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -695,7 +701,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -816,6 +822,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -869,7 +877,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -906,7 +914,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkGateway>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -924,7 +932,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkGateway>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -1029,6 +1037,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -1205,6 +1215,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -1252,7 +1264,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -1289,7 +1301,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkGateway>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -1376,6 +1388,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -1423,7 +1437,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -1460,7 +1474,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<VirtualNetworkGateway>>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
