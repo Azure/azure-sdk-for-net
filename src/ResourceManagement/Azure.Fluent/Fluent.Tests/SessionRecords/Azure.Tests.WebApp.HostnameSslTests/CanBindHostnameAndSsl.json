@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1df97c93-2b99-457d-b306-3b0ed0a929b7"
+          "bc3c52e4-53f1-4247-8e8b-1d8f74320b42"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'javacsmrg9b9912262' could not be found.\"\r\n  }\r\n}",
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 02:13:13 GMT"
+          "Sat, 11 Feb 2017 02:15:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,13 +41,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "2828b4d9-9058-467c-b264-53f144446c2d"
+          "a24e6a16-b22e-431f-a6cd-69bb0f7f4d39"
         ],
         "x-ms-correlation-request-id": [
-          "2828b4d9-9058-467c-b264-53f144446c2d"
+          "a24e6a16-b22e-431f-a6cd-69bb0f7f4d39"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T021314Z:2828b4d9-9058-467c-b264-53f144446c2d"
+          "WESTUS2:20170211T021505Z:a24e6a16-b22e-431f-a6cd-69bb0f7f4d39"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -58,12 +58,14 @@
   ],
   "Names": {
     "CanBindHostnameAndSsl": [
-      "javacsmrg2165",
-      "java-webapp-3856",
-      "java-asp-5061"
+      "javacsmrg5921",
+      "java-webapp-7016",
+      "java-asp-8595"
     ]
   },
-"Variables": {
-    "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
+  "Variables": {
+    "ServicePrincipal": "db2b2faa-5626-455b-ac5a-0ee3e9337312",
+    "AADTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "SubscriptionId": "c549f475-dee8-428c-bb19-829a55e52f77"
   }
 }

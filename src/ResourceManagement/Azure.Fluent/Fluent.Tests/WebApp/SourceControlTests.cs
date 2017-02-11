@@ -4,10 +4,9 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,7 +15,7 @@ namespace Azure.Tests.WebApp
 {
     public class SourceControlTests
     {
-        [Fact(Skip = "Failing at 31")]
+        [Fact]
         public async Task CanDeploySourceControl()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
@@ -39,20 +38,12 @@ namespace Azure.Tests.WebApp
                         .Attach()
                     .Create();
                 Assert.NotNull(webApp);
-                var response = await CheckAddress("http://" + WebAppName + "." + "azurewebsites.Net");
+                var response = await TestHelper.CheckAddress("http://" + WebAppName + "." + "azurewebsites.Net");
                 Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
 
                 var body = await response.Content.ReadAsStringAsync();
                 Assert.NotNull(body);
                 Assert.True(body.Contains("Hello world from linux 4"));
-            }
-        }
-
-        private static async Task<HttpResponseMessage> CheckAddress(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                return await client.GetAsync(url);
             }
         }
     }

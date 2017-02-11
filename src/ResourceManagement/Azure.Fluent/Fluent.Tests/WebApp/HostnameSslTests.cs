@@ -18,7 +18,7 @@ namespace Azure.Tests.WebApp
 {
     public class HostnameSslTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact(Skip = "Test requires javacsmrg9b9912262 RG to be configured manually")]
         public async Task CanBindHostnameAndSsl()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
@@ -47,7 +47,7 @@ namespace Azure.Tests.WebApp
                 var webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
                 Assert.NotNull(webApp);
 
-                var response = await CheckAddress("http://" + WebAppName + "." + domain.Name);
+                var response = await TestHelper.CheckAddress("http://" + WebAppName + "." + domain.Name);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
 
@@ -55,10 +55,10 @@ namespace Azure.Tests.WebApp
                 webApp.Update()
                         .WithManagedHostnameBindings(domain, WebAppName + "-1", WebAppName + "-2")
                         .Apply();
-                response = await CheckAddress("http://" + WebAppName + "-1." + domain.Name);
+                response = await TestHelper.CheckAddress("http://" + WebAppName + "-1." + domain.Name);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
-                response = await CheckAddress("http://" + WebAppName + "-2." + domain.Name);
+                response = await TestHelper.CheckAddress("http://" + WebAppName + "-2." + domain.Name);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
 
@@ -76,7 +76,7 @@ namespace Azure.Tests.WebApp
                 {
                     try
                     {
-                        response = await CheckAddress("https://" + WebAppName + "." + domain.Name);
+                        response = await TestHelper.CheckAddress("https://" + WebAppName + "." + domain.Name);
                     }
                     catch (Exception)
                     {
@@ -90,14 +90,6 @@ namespace Azure.Tests.WebApp
                 }
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
-            }
-        }
-
-        private static async Task<HttpResponseMessage> CheckAddress(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                return await client.GetAsync(url);
             }
         }
     }

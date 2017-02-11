@@ -14,7 +14,7 @@ namespace Azure.Tests.WebApp
         private static readonly string GroupName = "javacsmrg319";
         private static readonly string CertificateName = "javagoodcert319";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact(Skip = "Test requires javacsmrg319 RG to be configured manually")]
         public void CanCRDCertificate()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))

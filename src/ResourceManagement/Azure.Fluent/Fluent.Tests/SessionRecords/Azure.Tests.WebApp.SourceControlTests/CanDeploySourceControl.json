@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/javacsmrg9723?api-version=2016-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2phdmFjc21yZzk3MjM/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourcegroups/javacsmrg8668?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlZ3JvdXBzL2phdmFjc21yZzg2Njg/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "5f9e6a2f-f346-4141-8ac7-4e92196e0798"
+          "39758dcc-d19c-4440-a52e-fbcdda8e32d8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723\",\r\n  \"name\": \"javacsmrg9723\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668\",\r\n  \"name\": \"javacsmrg8668\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "179"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:06:19 GMT"
+          "Sat, 11 Feb 2017 02:09:56 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,13 +47,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "5d95899b-c99f-47bf-b693-36adcbfd3c51"
+          "6de9e1f4-78a7-49b1-b7f0-9914d39e7a36"
         ],
         "x-ms-correlation-request-id": [
-          "5d95899b-c99f-47bf-b693-36adcbfd3c51"
+          "6de9e1f4-78a7-49b1-b7f0-9914d39e7a36"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060619Z:5d95899b-c99f-47bf-b693-36adcbfd3c51"
+          "CENTRALUS:20170211T020956Z:6de9e1f4-78a7-49b1-b7f0-9914d39e7a36"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/javacsmrg9723?api-version=2016-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2phdmFjc21yZzk3MjM/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourcegroups/javacsmrg8668?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlZ3JvdXBzL2phdmFjc21yZzg2Njg/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -74,17 +74,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "8799a105-7e3b-4c1a-a261-233cc2a0597a"
+          "1ce23849-1381-499d-ac91-f91bc8948561"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723\",\r\n  \"name\": \"javacsmrg9723\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668\",\r\n  \"name\": \"javacsmrg8668\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "179"
@@ -99,22 +99,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:06:18 GMT"
+          "Sat, 11 Feb 2017 02:09:56 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-request-id": [
-          "01320f8d-21d4-4034-80f2-27c10950b87c"
+          "fb8d4c17-33a2-4821-80da-f5ad576282c4"
         ],
         "x-ms-correlation-request-id": [
-          "01320f8d-21d4-4034-80f2-27c10950b87c"
+          "fb8d4c17-33a2-4821-80da-f5ad576282c4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060619Z:01320f8d-21d4-4034-80f2-27c10950b87c"
+          "CENTRALUS:20170211T020956Z:fb8d4c17-33a2-4821-80da-f5ad576282c4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,29 +123,29 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/serverfarms/java-asp-9179?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzk3MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2VydmVyZmFybXMvamF2YS1hc3AtOTE3OT9hcGktdmVyc2lvbj0yMDE2LTA5LTAx",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/serverfarms/java-asp-1970?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2VydmVyZmFybXMvamF2YS1hc3AtMTk3MD9hcGktdmVyc2lvbj0yMDE2LTA5LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"capacity\": 3\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "143"
+          "123"
         ],
         "x-ms-client-request-id": [
-          "f8950e77-11f6-46c5-ba2b-2607e6f048fe"
+          "b214b233-8aa0-48a1-9f45-804d71eb3bfe"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/serverfarms/java-asp-9179\",\r\n  \"name\": \"java-asp-9179\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"serverFarmId\": 0,\r\n    \"name\": \"java-asp-9179\",\r\n    \"workerSize\": \"Small\",\r\n    \"workerSizeId\": 0,\r\n    \"workerTierName\": null,\r\n    \"numberOfWorkers\": 3,\r\n    \"currentWorkerSize\": \"Small\",\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 3,\r\n    \"status\": \"Ready\",\r\n    \"webSpace\": \"javacsmrg9723-WestUSwebspace\",\r\n    \"subscription\": \"9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": \"Shared\",\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"West US\",\r\n    \"perSiteScaling\": false,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"kind\": \"app\",\r\n    \"resourceGroup\": \"javacsmrg9723\",\r\n    \"reserved\": false,\r\n    \"mdmId\": \"waws-prod-bay-051_13674\",\r\n    \"targetWorkerCount\": 0,\r\n    \"targetWorkerSizeId\": 0,\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 3\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/serverfarms/java-asp-1970\",\r\n  \"name\": \"java-asp-1970\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"serverFarmId\": 0,\r\n    \"name\": \"java-asp-1970\",\r\n    \"workerSize\": \"Small\",\r\n    \"workerSizeId\": 0,\r\n    \"workerTierName\": null,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": \"Small\",\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": \"Ready\",\r\n    \"webSpace\": \"javacsmrg8668-WestUSwebspace\",\r\n    \"subscription\": \"c549f475-dee8-428c-bb19-829a55e52f77\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": \"Shared\",\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"West US\",\r\n    \"perSiteScaling\": false,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"kind\": \"app\",\r\n    \"resourceGroup\": \"javacsmrg8668\",\r\n    \"reserved\": false,\r\n    \"mdmId\": \"waws-prod-bay-039_18772\",\r\n    \"targetWorkerCount\": 0,\r\n    \"targetWorkerSizeId\": 0,\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -157,7 +157,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:06:25 GMT"
+          "Sat, 11 Feb 2017 02:10:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -175,7 +175,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "419e4ded-dce1-4c21-9a62-c6239963c2fb"
+          "58226cb3-adde-4bbb-ab33-543e10d2ee0e"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -187,19 +187,19 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "c27115df-ce68-4ae2-af48-b2a79e074d9d"
+          "9c85fe2e-c745-411a-8ef7-1d4f001752d2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060625Z:c27115df-ce68-4ae2-af48-b2a79e074d9d"
+          "CENTRALUS:20170211T021008Z:9c85fe2e-c745-411a-8ef7-1d4f001752d2"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488?api-version=2016-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzk3MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtMTQ4OD9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNT9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/javacsmrg9723/providers/Microsoft.Web/serverFarms/java-asp-9179\",\r\n    \"siteConfig\": {\r\n      \"location\": \"westus\"\r\n    }\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverFarmId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourcegroups/javacsmrg8668/providers/Microsoft.Web/serverFarms/java-asp-1970\",\r\n    \"siteConfig\": {\r\n      \"location\": \"westus\"\r\n    }\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -208,17 +208,17 @@
           "279"
         ],
         "x-ms-client-request-id": [
-          "2244acc2-0be5-4e76-a4ff-d641938b7ce2"
+          "60e2f323-642e-4a6e-ba03-264178fe7fd9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488\",\r\n  \"name\": \"java-webapp-1488\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"java-webapp-1488\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"java-webapp-1488.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"javacsmrg9723-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-bay-051.api.azurewebsites.windows.net:454/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/webspaces/javacsmrg9723-WestUSwebspace/sites/java-webapp-1488\",\r\n    \"repositorySiteName\": \"java-webapp-1488\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"java-webapp-1488.azurewebsites.net\",\r\n      \"java-webapp-1488.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"java-webapp-1488.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"java-webapp-1488.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/serverfarms/java-asp-9179\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-01-07T06:06:27.443\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"java-webapp-1488\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.78.17.157,40.78.21.191,40.78.22.38,40.78.21.180\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-bay-051\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"javacsmrg9723\",\r\n    \"defaultHostName\": \"java-webapp-1488.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715\",\r\n  \"name\": \"java-webapp-6715\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"java-webapp-6715\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"java-webapp-6715.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"javacsmrg8668-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-bay-039.api.azurewebsites.windows.net:454/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/webspaces/javacsmrg8668-WestUSwebspace/sites/java-webapp-6715\",\r\n    \"repositorySiteName\": \"java-webapp-6715\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"java-webapp-6715.azurewebsites.net\",\r\n      \"java-webapp-6715.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"java-webapp-6715.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"java-webapp-6715.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/serverfarms/java-asp-1970\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-02-11T02:10:10.783\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"java-webapp-6715\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"104.42.225.41,104.42.224.45,104.42.225.216,104.42.230.71\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-bay-039\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"javacsmrg8668\",\r\n    \"defaultHostName\": \"java-webapp-6715.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -230,7 +230,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:06:28 GMT"
+          "Sat, 11 Feb 2017 02:10:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -248,7 +248,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "76e6ed02-fc22-47d3-8266-eee91d8187cf"
+          "05c13885-2a7f-4c8d-a1e3-7013f621c20a"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -257,35 +257,35 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "02b97339-bcfa-4831-82d6-4b89ddb45e80"
+          "b88958d7-89cd-4d1a-9045-caea74edcea6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060629Z:02b97339-bcfa-4831-82d6-4b89ddb45e80"
+          "CENTRALUS:20170211T021015Z:b88958d7-89cd-4d1a-9045-caea74edcea6"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488?api-version=2016-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzk3MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtMTQ4OD9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNT9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ebb2161c-6df2-4235-8f2b-18eb20ccace2"
+          "8e186e00-c9e4-4f3a-83af-1c5439358554"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488\",\r\n  \"name\": \"java-webapp-1488\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"java-webapp-1488\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"java-webapp-1488.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"javacsmrg9723-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-bay-051.api.azurewebsites.windows.net:454/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/webspaces/javacsmrg9723-WestUSwebspace/sites/java-webapp-1488\",\r\n    \"repositorySiteName\": \"java-webapp-1488\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"java-webapp-1488.azurewebsites.net\",\r\n      \"java-webapp-1488.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"java-webapp-1488.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"java-webapp-1488.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/serverfarms/java-asp-9179\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-01-07T06:06:27.693\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"java-webapp-1488\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.78.17.157,40.78.21.191,40.78.22.38,40.78.21.180\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-bay-051\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"javacsmrg9723\",\r\n    \"defaultHostName\": \"java-webapp-1488.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715\",\r\n  \"name\": \"java-webapp-6715\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"java-webapp-6715\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"java-webapp-6715.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"javacsmrg8668-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-bay-039.api.azurewebsites.windows.net:454/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/webspaces/javacsmrg8668-WestUSwebspace/sites/java-webapp-6715\",\r\n    \"repositorySiteName\": \"java-webapp-6715\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"java-webapp-6715.azurewebsites.net\",\r\n      \"java-webapp-6715.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"java-webapp-6715.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"java-webapp-6715.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/serverfarms/java-asp-1970\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-02-11T02:10:11.113\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"java-webapp-6715\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"104.42.225.41,104.42.224.45,104.42.225.216,104.42.230.71\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-bay-039\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"javacsmrg8668\",\r\n    \"defaultHostName\": \"java-webapp-6715.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -297,7 +297,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:06:28 GMT"
+          "Sat, 11 Feb 2017 02:10:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -306,7 +306,7 @@
           "chunked"
         ],
         "ETag": [
-          "\"1D268AC2EDAF1D0\""
+          "\"1D2840BF969C190\""
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -318,7 +318,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f113563e-3ba0-4b5c-af4f-5d2bc87de109"
+          "05075fe0-2519-4cad-b93c-25a94ebc20cf"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -327,20 +327,20 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14988"
         ],
         "x-ms-correlation-request-id": [
-          "6da86716-ba35-4c58-868d-8068978d8e4b"
+          "2770f057-2779-49f9-bbe5-e6ff574d49d0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060629Z:6da86716-ba35-4c58-868d-8068978d8e4b"
+          "CENTRALUS:20170211T021016Z:2770f057-2779-49f9-bbe5-e6ff574d49d0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488/sourcecontrols/web?api-version=2016-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzk3MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtMTQ4OC9zb3VyY2Vjb250cm9scy93ZWI/YXBpLXZlcnNpb249MjAxNi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/sourcecontrols/web?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNS9zb3VyY2Vjb250cm9scy93ZWI/YXBpLXZlcnNpb249MjAxNi0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"isMercurial\": false\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -351,17 +351,17 @@
           "203"
         ],
         "x-ms-client-request-id": [
-          "93fe7214-0258-42cc-9e26-e82636339cc2"
+          "a29942ff-f547-4704-9e9a-5eaf8088acd8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488/sourcecontrols/web\",\r\n  \"name\": \"java-webapp-1488\",\r\n  \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"deploymentRollbackEnabled\": false,\r\n    \"isMercurial\": false,\r\n    \"provisioningState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/sourcecontrols/web\",\r\n  \"name\": \"java-webapp-6715\",\r\n  \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"deploymentRollbackEnabled\": false,\r\n    \"isMercurial\": false,\r\n    \"provisioningState\": \"InProgress\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "461"
@@ -376,13 +376,13 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:06:43 GMT"
+          "Sat, 11 Feb 2017 02:10:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"1D268AC2EDAF1D0\""
+          "\"1D2840BF969C190\""
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -391,7 +391,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "adfb07e3-77c1-4903-ae9d-f8e62dd5f22e"
+          "069f0773-6044-438f-89a6-a420390a32de"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -400,29 +400,29 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "db148058-b783-483c-8a1b-a4cdfa716d0a"
+          "7c7f1960-4878-4ea5-b01f-6edde362f005"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060643Z:db148058-b783-483c-8a1b-a4cdfa716d0a"
+          "CENTRALUS:20170211T021027Z:7c7f1960-4878-4ea5-b01f-6edde362f005"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488/sourcecontrols/web?api-version=2016-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzk3MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtMTQ4OC9zb3VyY2Vjb250cm9scy93ZWI/YXBpLXZlcnNpb249MjAxNi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/sourcecontrols/web?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNS9zb3VyY2Vjb250cm9scy93ZWI/YXBpLXZlcnNpb249MjAxNi0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488/sourcecontrols/web\",\r\n  \"name\": \"java-webapp-1488\",\r\n  \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"deploymentRollbackEnabled\": false,\r\n    \"isMercurial\": false,\r\n    \"provisioningState\": \"InProgress\",\r\n    \"provisioningDetails\": \"2017-01-07T06:06:52.9090521 https://java-webapp-1488.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub&time=2017-01-07_06-06-51Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/sourcecontrols/web\",\r\n  \"name\": \"java-webapp-6715\",\r\n  \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"deploymentRollbackEnabled\": false,\r\n    \"isMercurial\": false,\r\n    \"provisioningState\": \"InProgress\",\r\n    \"provisioningDetails\": \"2017-02-11T02:10:57.1111089 https://java-webapp-6715.scm.azurewebsites.net/api/deployments/latest?deployer=GitHub&time=2017-02-11_02-10-36Z\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "625"
@@ -437,13 +437,13 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:07:15 GMT"
+          "Sat, 11 Feb 2017 02:10:56 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"1D268AC38192000\""
+          "\"1D2840C030B1E60\""
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -452,7 +452,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3ab46b2a-06aa-41af-9614-780733645098"
+          "90513f62-50fd-4c4e-a776-932fd43f8c13"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -461,29 +461,29 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14987"
         ],
         "x-ms-correlation-request-id": [
-          "b9471a0c-bb47-4fe3-9dad-97a7ebda9620"
+          "7fab90ae-9021-460e-99ce-1cf69858b028"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060715Z:b9471a0c-bb47-4fe3-9dad-97a7ebda9620"
+          "CENTRALUS:20170211T021057Z:7fab90ae-9021-460e-99ce-1cf69858b028"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488/sourcecontrols/web?api-version=2016-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzk3MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtMTQ4OC9zb3VyY2Vjb250cm9scy93ZWI/YXBpLXZlcnNpb249MjAxNi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/sourcecontrols/web?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNS9zb3VyY2Vjb250cm9scy93ZWI/YXBpLXZlcnNpb249MjAxNi0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488/sourcecontrols/web\",\r\n  \"name\": \"java-webapp-1488\",\r\n  \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"deploymentRollbackEnabled\": false,\r\n    \"isMercurial\": false,\r\n    \"provisioningState\": \"Failed\",\r\n    \"provisioningDetails\": \"System.Net.WebException: The remote server returned an error: (502) Bad Gateway.\\r\\n   at System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)\\r\\n   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.Web.Hosting.Administration.SiteRepositoryProvider.TrackerContext.<GetResponseAsync>d__78.MoveNext()\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.Web.Hosting.Administration.SiteRepositoryProvider.<CheckDeploymentStatus>d__34.MoveNext()\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.Web.Hosting.Administration.WebCloudController.<CheckDeploymentStatus>d__2d3.MoveNext()\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/sourcecontrols/web\",\r\n  \"name\": \"java-webapp-6715\",\r\n  \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"repoUrl\": \"https://github.Com/jianghaolu/azure-site-test\",\r\n    \"branch\": \"master\",\r\n    \"isManualIntegration\": true,\r\n    \"deploymentRollbackEnabled\": false,\r\n    \"isMercurial\": false,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -495,7 +495,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 06:07:45 GMT"
+          "Sat, 11 Feb 2017 02:11:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -504,7 +504,7 @@
           "chunked"
         ],
         "ETag": [
-          "\"1D268AC38192000\""
+          "\"1D2840C030B1E60\""
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -516,7 +516,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f19d83ff-1cdf-4573-9381-de95983ce5fd"
+          "9d7a813e-8b8d-44e8-9629-488ee97f58ad"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -525,13 +525,214 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14986"
         ],
         "x-ms-correlation-request-id": [
-          "ab2e62a4-ca9b-429c-b7af-cc48b115b953"
+          "71536220-5fca-46f4-88de-b0892b573cab"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170107T060745Z:ab2e62a4-ca9b-429c-b7af-cc48b115b953"
+          "CENTRALUS:20170211T021128Z:71536220-5fca-46f4-88de-b0892b573cab"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/config/appsettings/list?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNS9jb25maWcvYXBwc2V0dGluZ3MvbGlzdD9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8f13d024-309c-463c-b394-0ac00105f009"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/config/appsettings\",\r\n  \"name\": \"appsettings\",\r\n  \"type\": \"Microsoft.Web/sites/config\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"WEBSITE_NODE_DEFAULT_VERSION\": \"6.9.1\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 11 Feb 2017 02:11:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "af6172a5-6bfc-49b7-8863-848563993f7a"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "ecd93551-0e25-44ad-91c1-e4082d0d80c6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170211T021128Z:ecd93551-0e25-44ad-91c1-e4082d0d80c6"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/config/slotConfigNames?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNS9jb25maWcvc2xvdENvbmZpZ05hbWVzP2FwaS12ZXJzaW9uPTIwMTYtMDgtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cb3fd7b8-df38-4ffb-a868-3f5739005349"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": \"java-webapp-6715\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"connectionStringNames\": null,\r\n    \"appSettingNames\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 11 Feb 2017 02:11:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "cff6356d-6ac6-40ed-a338-e3c87a29df1c"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "99cc24a8-419c-4df5-8116-d99c4b270e21"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170211T021128Z:99cc24a8-419c-4df5-8116-d99c4b270e21"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/config/connectionstrings/list?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzg2NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvamF2YS13ZWJhcHAtNjcxNS9jb25maWcvY29ubmVjdGlvbnN0cmluZ3MvbGlzdD9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dd1b6592-d775-4bd7-8e3f-c51279f6cc34"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta51"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg8668/providers/Microsoft.Web/sites/java-webapp-6715/config/connectionstrings\",\r\n  \"name\": \"connectionstrings\",\r\n  \"type\": \"Microsoft.Web/sites/config\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"properties\": {}\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 11 Feb 2017 02:11:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e27d2e4f-d1b2-422f-8ae3-39895e667404"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "c51cf90e-fcce-4203-b497-c374e74f59a9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170211T021128Z:c51cf90e-fcce-4203-b497-c374e74f59a9"
         ]
       },
       "StatusCode": 200
@@ -539,12 +740,14 @@
   ],
   "Names": {
     "CanDeploySourceControl": [
-      "javacsmrg9723",
-      "java-webapp-1488",
-      "java-asp-9179"
+      "javacsmrg8668",
+      "java-webapp-6715",
+      "java-asp-1970"
     ]
   },
   "Variables": {
-    "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
+    "ServicePrincipal": "db2b2faa-5626-455b-ac5a-0ee3e9337312",
+    "AADTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "SubscriptionId": "c549f475-dee8-428c-bb19-829a55e52f77"
   }
 }
