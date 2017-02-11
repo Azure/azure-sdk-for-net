@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Logic.Models
     /// <summary>
     /// The callback url parameters.
     /// </summary>
-    public partial class ListCallbackUrlParameters
+    public partial class GetCallbackUrlParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ListCallbackUrlParameters class.
+        /// Initializes a new instance of the GetCallbackUrlParameters class.
         /// </summary>
-        public ListCallbackUrlParameters() { }
+        public GetCallbackUrlParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the ListCallbackUrlParameters class.
+        /// Initializes a new instance of the GetCallbackUrlParameters class.
         /// </summary>
-        public ListCallbackUrlParameters(DateTime? notAfter = default(DateTime?), KeyType? keyType = default(KeyType?))
+        public GetCallbackUrlParameters(DateTime? notAfter = default(DateTime?), KeyType? keyType = default(KeyType?))
         {
             NotAfter = notAfter;
             KeyType = keyType;

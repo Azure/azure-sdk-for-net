@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the
         /// IntegrationAccountAgreementFilter class.
         /// </summary>
-        public IntegrationAccountAgreementFilter(AgreementType? agreementType = default(AgreementType?))
+        public IntegrationAccountAgreementFilter(AgreementType agreementType)
         {
             AgreementType = agreementType;
         }
@@ -41,7 +41,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Possible values include: 'NotSpecified', 'AS2', 'X12', 'Edifact'
         /// </summary>
         [JsonProperty(PropertyName = "agreementType")]
-        public AgreementType? AgreementType { get; set; }
+        public AgreementType AgreementType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

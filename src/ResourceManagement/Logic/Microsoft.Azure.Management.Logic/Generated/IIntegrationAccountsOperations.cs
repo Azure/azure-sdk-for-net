@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CallbackUrl>> GetCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CallbackUrl>> GetCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of integration accounts by subscription.
         /// </summary>

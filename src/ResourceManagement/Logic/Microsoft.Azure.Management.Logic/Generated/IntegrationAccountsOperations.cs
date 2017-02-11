@@ -1238,7 +1238,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CallbackUrl>> GetCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CallbackUrl>> GetCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {

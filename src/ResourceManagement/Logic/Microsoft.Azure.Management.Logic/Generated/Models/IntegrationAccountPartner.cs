@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountPartner class.
         /// </summary>
-        public IntegrationAccountPartner(PartnerType? partnerType, PartnerContent content, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object))
+        public IntegrationAccountPartner(PartnerType partnerType, PartnerContent content, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             PartnerType = partnerType;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'B2B'
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerType")]
-        public PartnerType? PartnerType { get; set; }
+        public PartnerType PartnerType { get; set; }
 
         /// <summary>
         /// Gets the created time.

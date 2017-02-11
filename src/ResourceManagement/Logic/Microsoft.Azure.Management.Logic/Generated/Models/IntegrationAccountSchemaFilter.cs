@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the IntegrationAccountSchemaFilter
         /// class.
         /// </summary>
-        public IntegrationAccountSchemaFilter(SchemaType? schemaType = default(SchemaType?))
+        public IntegrationAccountSchemaFilter(SchemaType schemaType)
         {
             SchemaType = schemaType;
         }
@@ -41,7 +41,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Possible values include: 'NotSpecified', 'Xml'
         /// </summary>
         [JsonProperty(PropertyName = "schemaType")]
-        public SchemaType? SchemaType { get; set; }
+        public SchemaType SchemaType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

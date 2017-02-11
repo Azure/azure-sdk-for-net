@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountSchema class.
         /// </summary>
-        public IntegrationAccountSchema(SchemaType? schemaType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string targetNamespace = default(string), string documentName = default(string), string fileName = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), object content = default(object), string contentType = default(string), ContentLink contentLink = default(ContentLink))
+        public IntegrationAccountSchema(SchemaType schemaType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string targetNamespace = default(string), string documentName = default(string), string fileName = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), object content = default(object), string contentType = default(string), ContentLink contentLink = default(ContentLink))
             : base(id, name, type, location, tags)
         {
             SchemaType = schemaType;
@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Xml'
         /// </summary>
         [JsonProperty(PropertyName = "properties.schemaType")]
-        public SchemaType? SchemaType { get; set; }
+        public SchemaType SchemaType { get; set; }
 
         /// <summary>
-        /// Gets or sets the target namespace.
+        /// Gets or sets the targetnamespace of the schema.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetNamespace")]
         public string TargetNamespace { get; set; }

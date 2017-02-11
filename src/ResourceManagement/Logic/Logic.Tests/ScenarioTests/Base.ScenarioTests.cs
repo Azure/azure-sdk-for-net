@@ -36,10 +36,7 @@ namespace Test.Azure.Management.Logic
         protected Sku Sku => new Sku
         {
             Name = SkuName.Standard,
-            Plan = new ResourceReference
-            {
-                Id = ServicePlanResourceId
-            }
+            Plan = new ResourceReference(id: ServicePlanResourceId)
         };
 
         protected LogicManagementClient GetIntegrationAccountClient(MockContext context)

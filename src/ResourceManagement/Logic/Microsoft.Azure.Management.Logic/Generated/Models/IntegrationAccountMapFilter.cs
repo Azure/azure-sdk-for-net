@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the IntegrationAccountMapFilter
         /// class.
         /// </summary>
-        public IntegrationAccountMapFilter(MapType? mapType = default(MapType?))
+        public IntegrationAccountMapFilter(MapType mapType)
         {
             MapType = mapType;
         }
@@ -41,7 +41,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// values include: 'NotSpecified', 'Xslt'
         /// </summary>
         [JsonProperty(PropertyName = "mapType")]
-        public MapType? MapType { get; set; }
+        public MapType MapType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

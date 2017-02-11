@@ -235,14 +235,29 @@ namespace Test.Azure.Management.Logic
 
                 // Get the IntegrationAccount and verify the content
                 var callbackUrl1 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName, new ListCallbackUrlParameters());
+                    integrationAccountName, new GetCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl1);
 
                 var callbackUrl2 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName, new ListCallbackUrlParameters());
+                    integrationAccountName, new GetCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl2);
+
+                var callbackUrl3 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                integrationAccountName, new GetCallbackUrlParameters(DateTime.Today.AddDays(10),KeyType.Primary));
+
+                Assert.NotNull(callbackUrl3);
+
+                var callbackUrl4= client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                integrationAccountName, new GetCallbackUrlParameters(keyType: KeyType.Primary));
+
+                Assert.NotNull(callbackUrl4);
+
+                var callbackUrl5 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                integrationAccountName, new GetCallbackUrlParameters(notAfter: DateTime.Today.AddDays(10)));
+
+                Assert.NotNull(callbackUrl5);
 
                 // Delete the IntegrationAccount
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);

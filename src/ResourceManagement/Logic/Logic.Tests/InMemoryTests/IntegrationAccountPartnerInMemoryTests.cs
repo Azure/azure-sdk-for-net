@@ -161,7 +161,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Partner
             };
 
-            var result = client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner(PartnerType.B2B,new PartnerContent()));
+            var result = client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner(PartnerType.B2B, new PartnerContent()));
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

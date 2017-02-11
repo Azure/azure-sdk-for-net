@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='parameters'>
             /// The callback URL parameters.
             /// </param>
-            public static CallbackUrl GetCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters)
+            public static CallbackUrl GetCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters parameters)
             {
                 return Task.Factory.StartNew(s => ((IIntegrationAccountsOperations)s).GetCallbackUrlAsync(resourceGroupName, integrationAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CallbackUrl> GetCallbackUrlAsync(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CallbackUrl> GetCallbackUrlAsync(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCallbackUrlWithHttpMessagesAsync(resourceGroupName, integrationAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

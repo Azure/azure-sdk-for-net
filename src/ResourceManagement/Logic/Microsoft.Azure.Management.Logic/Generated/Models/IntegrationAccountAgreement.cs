@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the IntegrationAccountAgreement
         /// class.
         /// </summary>
-        public IntegrationAccountAgreement(AgreementType? agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object))
+        public IntegrationAccountAgreement(AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             CreatedTime = createdTime;
@@ -69,28 +69,30 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'AS2', 'X12', 'Edifact'
         /// </summary>
         [JsonProperty(PropertyName = "properties.agreementType")]
-        public AgreementType? AgreementType { get; set; }
+        public AgreementType AgreementType { get; set; }
 
         /// <summary>
-        /// Gets or sets the host partner.
+        /// Gets or sets the integration account partner that is set as host
+        /// partner for this agreement.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostPartner")]
         public string HostPartner { get; set; }
 
         /// <summary>
-        /// Gets or sets the guest partner.
+        /// Gets or sets the integration account partner that is set as guest
+        /// partner for this agreement.
         /// </summary>
         [JsonProperty(PropertyName = "properties.guestPartner")]
         public string GuestPartner { get; set; }
 
         /// <summary>
-        /// Gets or sets the host identity.
+        /// Gets or sets the business identity of the host partner.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostIdentity")]
         public BusinessIdentity HostIdentity { get; set; }
 
         /// <summary>
-        /// Gets or sets the guest identity.
+        /// Gets or sets the business identity of the guest partner.
         /// </summary>
         [JsonProperty(PropertyName = "properties.guestIdentity")]
         public BusinessIdentity GuestIdentity { get; set; }
