@@ -1,5 +1,5 @@
 {
-  "version": "2.1.1-preview",
+  "version": "2.1.2",
   "title": "ETW Logger for Microsoft AutoRest Generated Clients",
   "description": "Enables tracing of event messages for AutoRest generated client libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to the \"Microsoft.Rest\" event source.",
   "copyright": "Copyright (c) Microsoft Corporation",
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime": "[2.3.3,3.0)"
+    "Microsoft.Rest.ClientRuntime": "[2.3.5,3.0)"
   },
 
   "frameworks": {

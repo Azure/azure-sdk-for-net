@@ -168,6 +168,21 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
 
         /// <summary>
+        /// Gets the IRouteFiltersOperations.
+        /// </summary>
+        public virtual IRouteFiltersOperations RouteFilters { get; private set; }
+
+        /// <summary>
+        /// Gets the IRouteFilterRulesOperations.
+        /// </summary>
+        public virtual IRouteFilterRulesOperations RouteFilterRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IBgpServiceCommunitiesOperations.
+        /// </summary>
+        public virtual IBgpServiceCommunitiesOperations BgpServiceCommunities { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -387,6 +402,9 @@ namespace Microsoft.Azure.Management.Network
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
+            RouteFilters = new RouteFiltersOperations(this);
+            RouteFilterRules = new RouteFilterRulesOperations(this);
+            BgpServiceCommunities = new BgpServiceCommunitiesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

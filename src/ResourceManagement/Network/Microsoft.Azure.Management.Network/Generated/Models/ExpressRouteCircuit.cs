@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; protected set; }
 
     }
 }
