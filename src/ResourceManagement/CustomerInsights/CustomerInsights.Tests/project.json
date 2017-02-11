@@ -7,13 +7,13 @@
     "summary": "CustomerInsights.Tests Tests.",
     "tags": [ "" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
   },
   "buildOptions": {
+    "compile": "../../../../tools/DisableTestRunParallel.cs",
     "delaySign": true,
-    "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk",
-    "compile": "../../../../tools/DisableTestRunParallel.cs"
+    "publicSign": false
   },
   
   "testRunner": "xunit",
