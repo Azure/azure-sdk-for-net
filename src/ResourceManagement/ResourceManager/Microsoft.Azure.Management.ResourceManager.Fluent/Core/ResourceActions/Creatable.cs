@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
                         IFluentResourceT thisResource = this as IFluentResourceT;
                         if (thisResource == null)
                         {
-                            taskCompletionSource.SetException(new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
+                            taskCompletionSource.SetException(new InvalidOperationException("Internal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
                         }
                         else
                         {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
             }
             else
             {
-                taskCompletionSource.SetException(new InvalidOperationException("Interal Error: Creatable::CreateAsync can be invoked only on preparer"));
+                taskCompletionSource.SetException(new InvalidOperationException("Internal Error: Creatable::CreateAsync can be invoked only on preparer"));
             }
             return taskCompletionSource.Task;
         }
