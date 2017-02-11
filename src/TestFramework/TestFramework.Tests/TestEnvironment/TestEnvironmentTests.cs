@@ -28,6 +28,26 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<string>("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
         }
 
+        [Fact]
+        public void LoadCustomEnvironment()
+        {
+            string cnnStr = @"SubscriptionId=18b0dcf-550319fa5eac;" +
+                "AADTenant=72f988bf-2d7cd011db47;" +
+                "HttpRecorderMode=Playback;" +
+                "Environment=Custom;" +
+                "ResourceManagementUri=https://brazilus.management.azure.com/;" +
+                "ServiceManagementUri=https://brazilus.management.azure.com/";
+
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", cnnStr);
+            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string resMgrUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.ResourceManagementUriKey];
+            string SvcMgrUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServiceManagementUriKey];
+            
+            Assert.Equal<string>("https://brazilus.management.azure.com/", resMgrUri);
+            Assert.Equal<string>("https://brazilus.management.azure.com/", SvcMgrUri);
+        }
+
         [Fact(Skip = "environmentsetting string needs to be set using credentials from keyvault for domain that still have userName/Password and 2FA disabled")]
         public void LoginUsnPwd()
         {

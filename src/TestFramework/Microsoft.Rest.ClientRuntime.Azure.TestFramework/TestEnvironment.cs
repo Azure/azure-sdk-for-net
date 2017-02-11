@@ -150,6 +150,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 EnvEndpoints.Add(EnvironmentNames.Dogfood, new TestEndpoints(EnvironmentNames.Dogfood));
                 EnvEndpoints.Add(EnvironmentNames.Next, new TestEndpoints(EnvironmentNames.Next));
                 EnvEndpoints.Add(EnvironmentNames.Current, new TestEndpoints(EnvironmentNames.Current));
+                EnvEndpoints.Add(EnvironmentNames.Custom, new TestEndpoints(EnvironmentNames.Custom));
             }
         }
 
@@ -276,7 +277,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             else
             {
 #if NET45
-                InteractiveLogin(this.Tenant, aadServiceSettings, graphAADServiceSettings);
+                //InteractiveLogin(this.Tenant, aadServiceSettings, graphAADServiceSettings);
+                InteractiveLogin(this.Tenant, PowerShellClientId);
 #else
                 throw new NotSupportedException("Interactive Login is supported only in NET45 projects");
 #endif
@@ -290,24 +292,67 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="tenant"></param>
         /// <param name="aadServiceSettings"></param>
         /// <param name="graphAADServiceSettings"></param>
-        private void InteractiveLogin(string tenant, ActiveDirectoryServiceSettings aadServiceSettings, ActiveDirectoryServiceSettings graphAADServiceSettings)
+        private void InteractiveLogin(string tenant, string clientId
+            /*ActiveDirectoryServiceSettings aadServiceSettings, 
+            ActiveDirectoryServiceSettings graphAADServiceSettings*/)
         {
 #if NET45
+
+            ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
+                TokenAudience = this.Endpoints.AADTokenAudienceUri
+            };
+
+            ActiveDirectoryServiceSettings graphAADServiceSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
+                TokenAudience = this.Endpoints.GraphTokenAudienceUri
+            };
+
             ActiveDirectoryClientSettings clientSettings = new ActiveDirectoryClientSettings()
             {
-                ClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey),
+                //ClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey),
+                ClientId = clientId,
                 ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob"),
-                PromptBehavior = PromptBehavior.Auto
+                PromptBehavior = PromptBehavior.Always
             };
+
+            TaskScheduler scheduler;
+            if (SynchronizationContext.Current != null)
+            {
+                scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            }
+            else
+            {
+                scheduler = TaskScheduler.Current;
+            }
+
+
+            //Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
+            //                    .LoginWithPromptAsync(this.Tenant, 
+            //                    clientSettings, 
+            //                    aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+
             Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                                                                       .LoginWithPromptAsync(this.Tenant, clientSettings, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+                                .LoginWithPromptAsync(this.Tenant,
+                                clientSettings,
+                                aadServiceSettings, scheduler).ConfigureAwait(continueOnCapturedContext: false));
 
             this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
 
             try
             {
+                //Task<TokenCredentials> graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
+                //                .LoginWithPromptAsync(this.Tenant,
+                //                clientSettings,
+                //                graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: true));
+
+
                 Task<TokenCredentials> graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                                .LoginWithPromptAsync(this.Tenant, clientSettings, graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: true));
+                                .LoginWithPromptAsync(this.Tenant,
+                                clientSettings,
+                                graphAADServiceSettings, scheduler).ConfigureAwait(continueOnCapturedContext: true));
                 this.TokenInfo[TokenAudience.Graph] = graphAuthResult.Result;
             }
             catch
@@ -421,7 +466,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             return keyValue;
         }
-
 #endregion
     }
 }

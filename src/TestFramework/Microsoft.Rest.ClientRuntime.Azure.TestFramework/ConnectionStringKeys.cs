@@ -81,6 +81,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         public const string AADTokenAudienceUriKey = "AADTokenAudienceUri";
 
+        public const string GraphTokenAudienceUriKey = "GraphTokenAudienceUri";
+
         /// <summary>
         /// The key inside the connection string for the base management URI
         /// </summary>
@@ -104,7 +106,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// The key inside the connection string for the RDFE Portal URI
         /// </summary>
-        //public const string RdfePortalUriKey = "RdfePortalUri";
+        public const string RdfePortalUriKey = "RdfePortalUri";
 
         /// <summary>
         /// The key inside the connection string for the DataLake FileSystem URI suffix
@@ -119,9 +121,22 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// Endpoint to use for AAD authentication
         /// </summary>
-        public const string AADAuthenticationEndpointKey = "AADAuthEndpoint";
+        public const string AADAuthUriKey = "AADAuthUri";
 
-        public const string GraphTokenAudienceUriKey = "GraphTokenAudienceUri";
+        /// <summary>
+        /// Publishsettings endpoint
+        /// </summary>
+        public const string PublishSettingsFileUriKey = "PublishSettingsFileUri";
+
+        /// <summary>
+        /// Service Management endpoint
+        /// </summary>
+        public const string ServiceManagementUriKey = "ServiceManagementUri";
+
+        /// <summary>
+        /// Resource Management endpoint
+        /// </summary>
+        public const string ResourceManagementUriKey = "ResourceManagementUri";
 
         #endregion
     }

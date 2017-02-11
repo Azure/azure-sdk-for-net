@@ -294,6 +294,42 @@ namespace Microsoft.Rest.Azure.Authentication
                 authResult.UserInfo.DisplayableId);
         }
 
+        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain,
+            ActiveDirectoryClientSettings clientSettings,
+            ActiveDirectoryServiceSettings serviceSettings, TaskScheduler scheduler)
+        {
+            var authenticationContext = GetAuthenticationContext(domain, serviceSettings, TokenCache.DefaultShared);
+            var task = new Task<AuthenticationResult>(() =>
+            {
+                try
+                {
+                    var result = authenticationContext.AcquireToken(
+                        serviceSettings.TokenAudience.ToString(),
+                        clientSettings.ClientId,
+                        clientSettings.ClientRedirectUri,
+                        clientSettings.PromptBehavior,
+                        UserIdentifier.AnyUser,
+                        clientSettings.AdditionalQueryParameters);
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    throw new AuthenticationException(
+                        string.Format(CultureInfo.CurrentCulture, Resources.ErrorAcquiringToken,
+                            e.Message), e);
+                }
+            });
+
+            task.Start(scheduler);
+            var authResult = await task.ConfigureAwait(false);
+            var newUserId = new UserIdentifier(authResult.UserInfo.DisplayableId,
+                UserIdentifierType.RequiredDisplayableId);
+            return new TokenCredentials(
+                new UserTokenProvider(authenticationContext, clientSettings.ClientId, serviceSettings.TokenAudience, newUserId),
+                authResult.TenantId,
+                authResult.UserInfo.DisplayableId);
+        }
+
         /// <summary>
         /// Log in to azure active directory in non-interactive mode using organizational id credentials and the default token cache. Default service 
         /// settings (authority, audience) for logging in to azure resource manager are used.

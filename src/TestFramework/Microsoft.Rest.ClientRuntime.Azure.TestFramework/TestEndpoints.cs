@@ -9,7 +9,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         Prod,
         Dogfood,
         Next,
-        Current
+        Current,
+        Custom
     }
 
     public class TestEndpoints
@@ -98,6 +99,26 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         break;
                         #endregion
                     }
+                case EnvironmentNames.Custom:
+                    {
+                        //string customUri = "http://custom.com";
+                        #region
+                        Name = EnvironmentNames.Custom;
+                        //AADAuthUri = new Uri(customUri);
+                        //GalleryUri = new Uri("");
+                        //GraphUri = new Uri("");
+                        //IbizaPortalUri = new Uri("");
+                        //RdfePortalUri = new Uri("");
+                        //ResourceManagementUri = new Uri("");
+                        //ServiceManagementUri = new Uri("");
+                        //AADTokenAudienceUri = new Uri("");
+                        //GraphTokenAudienceUri = new Uri("");
+                        //DataLakeStoreServiceUri = new Uri("");
+                        //DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("");
+                        //PublishingSettingsFileUri = new Uri("");
+                        break;
+                        #endregion
+                    }
             }
             #endregion
         }
@@ -120,6 +141,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             DataLakeAnalyticsJobAndCatalogServiceUri = testEndpoint.DataLakeAnalyticsJobAndCatalogServiceUri;
             AADTokenAudienceUri = testEndpoint.AADTokenAudienceUri;
             GraphTokenAudienceUri = testEndpoint.GraphTokenAudienceUri;
+            PublishingSettingsFileUri = testEndpoint.PublishingSettingsFileUri;
         }
 
         /// <summary>
@@ -127,53 +149,79 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         /// <param name="testEndpoint">endPoint that needs to be updated according to connection string</param>
         /// <param name="connString">User provided connection string</param>
-        internal TestEndpoints(TestEndpoints testEndpoint, ConnectionString connString): this(testEndpoint)
+        internal TestEndpoints(TestEndpoints testEndpoint, ConnectionString connStr) : this(testEndpoint)
         {
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.BaseUriKey)))
+            UpdateEnvironmentEndpoint(connStr);
+        }
+
+        internal TestEndpoints(EnvironmentNames envName, ConnectionString connStr): this(envName)
+        {
+            UpdateEnvironmentEndpoint(connStr);
+        }
+
+        private void UpdateEnvironmentEndpoint(ConnectionString connStr)
+        {
+            #region
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.AADTokenAudienceUriKey))
             {
-                ResourceManagementUri = new Uri(connString.GetValue(ConnectionStringKeys.BaseUriKey));
+                AADTokenAudienceUri = new Uri(connStr.GetValue(ConnectionStringKeys.AADTokenAudienceUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.GraphUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.GraphTokenAudienceUriKey))
             {
-                GraphUri = new Uri(connString.GetValue(ConnectionStringKeys.GraphUriKey));
+                GraphTokenAudienceUri = new Uri(connStr.GetValue(ConnectionStringKeys.GraphTokenAudienceUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.GalleryUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.GraphUriKey))
             {
-                GalleryUri = new Uri(connString.GetValue(ConnectionStringKeys.GalleryUriKey));
+                GraphUri = new Uri(connStr.GetValue(ConnectionStringKeys.GraphUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.AADAuthenticationEndpointKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.GalleryUriKey))
             {
-                AADAuthUri = new Uri(connString.GetValue(ConnectionStringKeys.AADAuthenticationEndpointKey));
+                GalleryUri = new Uri(connStr.GetValue(ConnectionStringKeys.GalleryUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.IbizaPortalUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.IbizaPortalUriKey))
             {
-                IbizaPortalUri = new Uri(connString.GetValue(ConnectionStringKeys.IbizaPortalUriKey));
+                IbizaPortalUri = new Uri(connStr.GetValue(ConnectionStringKeys.IbizaPortalUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.DataLakeStoreServiceUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.RdfePortalUriKey))
             {
-                DataLakeStoreServiceUri = new Uri(connString.GetValue(ConnectionStringKeys.DataLakeStoreServiceUriKey));
+                RdfePortalUri = new Uri(connStr.GetValue(ConnectionStringKeys.RdfePortalUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.DataLakeAnalyticsJobAndCatalogServiceUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.DataLakeStoreServiceUriKey))
             {
-                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri(connString.GetValue(ConnectionStringKeys.DataLakeAnalyticsJobAndCatalogServiceUriKey));
+                DataLakeStoreServiceUri = new Uri(connStr.GetValue(ConnectionStringKeys.DataLakeStoreServiceUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.AADTokenAudienceUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.DataLakeAnalyticsJobAndCatalogServiceUriKey))
             {
-                AADTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.AADTokenAudienceUriKey));
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri(connStr.GetValue(ConnectionStringKeys.DataLakeAnalyticsJobAndCatalogServiceUriKey));
             }
 
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.GraphTokenAudienceUriKey)))
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.AADAuthUriKey))
             {
-                GraphTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.GraphTokenAudienceUriKey));
+                AADAuthUri = new Uri(connStr.GetValue(ConnectionStringKeys.AADAuthUriKey));
             }
 
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.PublishSettingsFileUriKey))
+            {
+                PublishingSettingsFileUri = new Uri(connStr.GetValue(ConnectionStringKeys.PublishSettingsFileUriKey));
+            }
+
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.ServiceManagementUriKey))
+            {
+                ServiceManagementUri = new Uri(connStr.GetValue(ConnectionStringKeys.ServiceManagementUriKey));
+            }
+
+            if (connStr.HasNonEmptyValue(ConnectionStringKeys.ResourceManagementUriKey))
+            {
+                ResourceManagementUri = new Uri(connStr.GetValue(ConnectionStringKeys.ResourceManagementUriKey));
+            }
+            #endregion
         }
 
         //TestEnvironment Name
@@ -211,6 +259,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         // Graph Token Audience 
         public Uri GraphTokenAudienceUri { get; set; }
+
+        public Uri PublishingSettingsFileUri { get; set; }
+
+        //public Uri AADServiceUri { get; set; }
 
     }
 }
