@@ -4,6 +4,7 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -234,6 +235,111 @@ namespace DataLakeAnalytics.Tests
 
                 // delete the second account that was created to ensure that we properly clean up after ourselves.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, accountToChange.Name);
+            }
+        }
+
+        [Fact]
+        public void FirewallTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
+
+                // Create a an account with trusted ID provider and firewall rules.
+                var firewallStart = "127.0.0.1";
+                var firewallEnd = "127.0.0.2";
+                var firewallRuleName1 = TestUtilities.GenerateName("firerule1");
+                var adlaAcocunt = TestUtilities.GenerateName("adla01");
+                // Create a test account
+                var responseCreate =
+                    clientToUse.Account.Create(commonData.ResourceGroupName, adlaAcocunt,
+                        parameters: new DataLakeAnalyticsAccount
+                        {
+                            Location = commonData.Location,
+                            DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
+                            DataLakeStoreAccounts = new List<DataLakeStoreAccountInfo>
+                            {
+                                new DataLakeStoreAccountInfo
+                                {
+                                    Name = commonData.DataLakeStoreAccountName,
+                                    Suffix = commonData.DataLakeStoreAccountSuffix
+                                }
+                            },
+                            FirewallRules = new List<FirewallRule>
+                            {
+                                new FirewallRule(firewallStart, firewallEnd, name: firewallRuleName1)
+                            },
+                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled,
+                            FirewallState = FirewallState.Enabled
+                        });
+
+                Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, responseCreate.ProvisioningState);
+
+                // get the account and ensure that all the values are properly set.
+                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, adlaAcocunt);
+
+                // validate the account creation process
+                Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, responseGet.ProvisioningState);
+                Assert.NotNull(responseCreate.Id);
+                Assert.NotNull(responseGet.Id);
+                Assert.Contains(adlaAcocunt, responseGet.Id);
+                Assert.Equal(commonData.Location, responseGet.Location);
+                Assert.Equal(adlaAcocunt, responseGet.Name);
+                Assert.Equal("Microsoft.DataLakeAnalytics/accounts", responseGet.Type);
+
+                // validate firewall state
+                Assert.Equal(FirewallState.Enabled, responseGet.FirewallState);
+                Assert.Equal(1, responseGet.FirewallRules.Count());
+                Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
+                Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
+                Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
+                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
+
+                // Test getting the specific firewall rules
+                var firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
+                Assert.Equal(firewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(firewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+
+                var updatedFirewallStart = "192.168.0.0";
+                var updatedFirewallEnd = "192.168.0.1";
+                firewallRule.StartIpAddress = updatedFirewallStart;
+                firewallRule.EndIpAddress = updatedFirewallEnd;
+
+                // Update the firewall rule to change the start/end ip addresses
+                firewallRule = clientToUse.FirewallRules.CreateOrUpdate(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1, firewallRule);
+                Assert.Equal(updatedFirewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+                // just update the firewall rule start IP
+                firewallRule = clientToUse.FirewallRules.Update(
+                    commonData.ResourceGroupName,
+                    adlaAcocunt,
+                    firewallRuleName1,
+                    new UpdateFirewallRuleParameters
+                    {
+                        StartIpAddress = firewallStart
+                    });
+
+                Assert.Equal(firewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+                // Remove the firewall rule and verify it is gone.
+                clientToUse.FirewallRules.Delete(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
+
+                try
+                {
+                    firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
+                    Assert.True(false, "Attempting to retrieve a deleted firewall rule did not throw.");
+                }
+                catch (CloudException e)
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
             }
         }
     }

@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IFirewallRulesOperations.
+        /// </summary>
+        public virtual IFirewallRulesOperations FirewallRules { get; private set; }
+
+        /// <summary>
         /// Gets the IStorageAccountsOperations.
         /// </summary>
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
@@ -295,6 +300,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
+            FirewallRules = new FirewallRulesOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             DataLakeStoreAccounts = new DataLakeStoreAccountsOperations(this);
             Account = new AccountOperations(this);

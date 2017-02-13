@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DataLake.Store
+namespace Microsoft.Azure.Management.DataLake.Analytics
 {
     using Azure;
     using DataLake;
@@ -27,12 +27,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TrustedIdProvidersOperations operations.
+    /// FirewallRulesOperations operations.
     /// </summary>
-    internal partial class TrustedIdProvidersOperations : IServiceOperations<DataLakeStoreAccountManagementClient>, ITrustedIdProvidersOperations
+    internal partial class FirewallRulesOperations : IServiceOperations<DataLakeAnalyticsAccountManagementClient>, IFirewallRulesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the TrustedIdProvidersOperations class.
+        /// Initializes a new instance of the FirewallRulesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal TrustedIdProvidersOperations(DataLakeStoreAccountManagementClient client)
+        internal FirewallRulesOperations(DataLakeAnalyticsAccountManagementClient client)
         {
             if (client == null)
             {
@@ -50,29 +50,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Gets a reference to the DataLakeStoreAccountManagementClient
+        /// Gets a reference to the DataLakeAnalyticsAccountManagementClient
         /// </summary>
-        public DataLakeStoreAccountManagementClient Client { get; private set; }
+        public DataLakeAnalyticsAccountManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates or updates the specified trusted identity provider. During update,
-        /// the trusted identity provider with the specified name will be replaced with
-        /// this new provider
+        /// Creates or updates the specified firewall rule. During update, the firewall
+        /// rule with the specified name will be replaced with this new firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake Store
+        /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account to add or replace the trusted
-        /// identity provider.
+        /// The name of the Data Lake Analytics account to add or replace the firewall
+        /// rule.
         /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider. This is used for differentiation
-        /// of providers in the account.
+        /// <param name='firewallRuleName'>
+        /// The name of the firewall rule to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create or replace the trusted identity provider.
+        /// Parameters supplied to create or update the firewall rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -95,7 +93,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TrustedIdProvider>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FirewallRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -105,9 +103,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (trustedIdProviderName == null)
+            if (firewallRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "trustedIdProviderName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
             }
             if (parameters == null)
             {
@@ -134,17 +132,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("trustedIdProviderName", trustedIdProviderName);
+                tracingParameters.Add("firewallRuleName", firewallRuleName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{trustedIdProviderName}", System.Uri.EscapeDataString(trustedIdProviderName));
+            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -248,7 +246,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TrustedIdProvider>();
+            var _result = new AzureOperationResponse<FirewallRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -261,7 +259,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TrustedIdProvider>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -281,22 +279,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Updates the specified trusted identity provider.
+        /// Updates the specified firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake Store
+        /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account to which to update the trusted
-        /// identity provider.
+        /// The name of the Data Lake Analytics account to which to update the firewall
+        /// rule.
         /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider. This is used for differentiation
-        /// of providers in the account.
+        /// <param name='firewallRuleName'>
+        /// The name of the firewall rule to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to update the trusted identity provider.
+        /// Parameters supplied to update the firewall rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -319,7 +316,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TrustedIdProvider>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, UpdateTrustedIdProviderParameters parameters = default(UpdateTrustedIdProviderParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FirewallRule>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -329,9 +326,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (trustedIdProviderName == null)
+            if (firewallRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "trustedIdProviderName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
             }
             if (Client.ApiVersion == null)
             {
@@ -350,17 +347,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("trustedIdProviderName", trustedIdProviderName);
+                tracingParameters.Add("firewallRuleName", firewallRuleName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{trustedIdProviderName}", System.Uri.EscapeDataString(trustedIdProviderName));
+            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -464,7 +461,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TrustedIdProvider>();
+            var _result = new AzureOperationResponse<FirewallRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -477,7 +474,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TrustedIdProvider>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -497,19 +494,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Deletes the specified trusted identity provider from the specified Data
-        /// Lake Store account
+        /// Deletes the specified firewall rule from the specified Data Lake Analytics
+        /// account
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake Store
+        /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to delete the trusted
-        /// identity provider.
+        /// The name of the Data Lake Analytics account from which to delete the
+        /// firewall rule.
         /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider to delete.
+        /// <param name='firewallRuleName'>
+        /// The name of the firewall rule to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -529,7 +526,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -539,9 +536,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (trustedIdProviderName == null)
+            if (firewallRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "trustedIdProviderName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
             }
             if (Client.ApiVersion == null)
             {
@@ -560,16 +557,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("trustedIdProviderName", trustedIdProviderName);
+                tracingParameters.Add("firewallRuleName", firewallRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{trustedIdProviderName}", System.Uri.EscapeDataString(trustedIdProviderName));
+            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -674,18 +671,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Gets the specified Data Lake Store trusted identity provider.
+        /// Gets the specified Data Lake Analytics firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake Store
+        /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the trusted
-        /// identity provider.
+        /// The name of the Data Lake Analytics account from which to get the firewall
+        /// rule.
         /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider to retrieve.
+        /// <param name='firewallRuleName'>
+        /// The name of the firewall rule to retrieve.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -708,7 +705,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TrustedIdProvider>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FirewallRule>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -718,9 +715,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (trustedIdProviderName == null)
+            if (firewallRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "trustedIdProviderName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
             }
             if (Client.ApiVersion == null)
             {
@@ -739,16 +736,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("trustedIdProviderName", trustedIdProviderName);
+                tracingParameters.Add("firewallRuleName", firewallRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{trustedIdProviderName}", System.Uri.EscapeDataString(trustedIdProviderName));
+            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -846,7 +843,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TrustedIdProvider>();
+            var _result = new AzureOperationResponse<FirewallRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -859,7 +856,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TrustedIdProvider>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -879,16 +876,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Lists the Data Lake Store trusted identity providers within the specified
-        /// Data Lake Store account.
+        /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+        /// Analytics account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake Store
+        /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the trusted
-        /// identity providers.
+        /// The name of the Data Lake Analytics account from which to get the firewall
+        /// rules.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -911,7 +908,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TrustedIdProvider>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FirewallRule>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -943,7 +940,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -1043,7 +1040,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<TrustedIdProvider>>();
+            var _result = new AzureOperationResponse<IPage<FirewallRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1056,7 +1053,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TrustedIdProvider>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -1076,8 +1073,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Lists the Data Lake Store trusted identity providers within the specified
-        /// Data Lake Store account.
+        /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+        /// Analytics account.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1103,7 +1100,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TrustedIdProvider>>> ListByAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FirewallRule>>> ListByAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1215,7 +1212,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<TrustedIdProvider>>();
+            var _result = new AzureOperationResponse<IPage<FirewallRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1228,7 +1225,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TrustedIdProvider>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -1249,5 +1246,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
     }
 }
+
 
 
