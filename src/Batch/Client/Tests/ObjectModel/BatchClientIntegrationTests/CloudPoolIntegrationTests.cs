@@ -818,7 +818,7 @@
                             Assert.Equal(result.Submitted.Name, result.Returned.Name);
                             Assert.Null(result.Returned.Password);
                             Assert.Equal(result.Submitted.ElevationLevel ?? ElevationLevel.NonAdmin, result.Returned.ElevationLevel);
-                            Assert.Equal(result.Submitted.SshPrivateKey, result.Returned.SshPrivateKey);
+                            Assert.Null(result.Returned.SshPrivateKey);
                         }
                     }
                     finally
@@ -856,7 +856,10 @@
                                 osDisk: new OSDisk(imageUris)),
                             targetDedicated);
                         var exception = Assert.Throws<BatchException>(() => pool.Commit());
-                        Assert.Equal("abc", exception.RequestInformation.BatchError.Code);
+                        Assert.Equal(BatchErrorCodeStrings.InvalidPropertyValue, exception.RequestInformation.BatchError.Code);
+                        Assert.Equal(
+                            "Property osDisk is allowed only for Batch accounts created with poolAllocationMode of BatchService",
+                            exception.RequestInformation.BatchError.Values[1].Value);
                     }
                     finally
                     {
