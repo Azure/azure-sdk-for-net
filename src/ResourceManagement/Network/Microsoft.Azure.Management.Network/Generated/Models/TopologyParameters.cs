@@ -29,14 +29,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the TopologyParameters class.
         /// </summary>
         /// <param name="targetResourceGroupName">The name of the target
-        /// resource group.</param>
+        /// resource group to perform topology on.</param>
         public TopologyParameters(string targetResourceGroupName)
         {
             TargetResourceGroupName = targetResourceGroupName;
         }
 
         /// <summary>
-        /// Gets or sets the name of the target resource group.
+        /// Gets or sets the name of the target resource group to perform
+        /// topology on.
         /// </summary>
         [JsonProperty(PropertyName = "targetResourceGroupName")]
         public string TargetResourceGroupName { get; set; }

@@ -145,6 +145,16 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
+        /// Gets the INetworkWatchersOperations.
+        /// </summary>
+        INetworkWatchersOperations NetworkWatchers { get; }
+
+        /// <summary>
+        /// Gets the IPacketCapturesOperations.
+        /// </summary>
+        IPacketCapturesOperations PacketCaptures { get; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
@@ -178,15 +188,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IBgpServiceCommunitiesOperations.
         /// </summary>
         IBgpServiceCommunitiesOperations BgpServiceCommunities { get; }
-        
-        /// Gets the INetworkWatchersOperations.
-        /// </summary>
-        INetworkWatchersOperations NetworkWatchers { get; }
-
-        /// <summary>
-        /// Gets the IPacketCapturesOperations.
-        /// </summary>
-        IPacketCapturesOperations PacketCaptures { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available

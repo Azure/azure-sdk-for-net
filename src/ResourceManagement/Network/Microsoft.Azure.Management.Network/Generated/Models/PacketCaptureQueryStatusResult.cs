@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// session was stopped.</param>
         /// <param name="packetCaptureError">List of errors of packet capture
         /// session.</param>
-        public PacketCaptureQueryStatusResult(string name = default(string), string id = default(string), System.DateTime? captureStartTime = default(System.DateTime?), string packetCaptureStatus = default(string), string stopReason = default(string), IList<CaptureError> packetCaptureError = default(IList<CaptureError>))
+        public PacketCaptureQueryStatusResult(string name = default(string), string id = default(string), System.DateTime? captureStartTime = default(System.DateTime?), string packetCaptureStatus = default(string), string stopReason = default(string), IList<string> packetCaptureError = default(IList<string>))
         {
             Name = name;
             Id = id;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets list of errors of packet capture session.
         /// </summary>
         [JsonProperty(PropertyName = "packetCaptureError")]
-        public IList<CaptureError> PacketCaptureError { get; set; }
+        public IList<string> PacketCaptureError { get; set; }
 
     }
 }

@@ -28,15 +28,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the FlowLogStatusParameters class.
         /// </summary>
-        /// <param name="targetResourceId">The target resource to capture flow
-        /// log.</param>
+        /// <param name="targetResourceId">The target resource where getting
+        /// the flow logging status.</param>
         public FlowLogStatusParameters(string targetResourceId)
         {
             TargetResourceId = targetResourceId;
         }
 
         /// <summary>
-        /// Gets or sets the target resource to capture flow log.
+        /// Gets or sets the target resource where getting the flow logging
+        /// status.
         /// </summary>
         [JsonProperty(PropertyName = "targetResourceId")]
         public string TargetResourceId { get; set; }

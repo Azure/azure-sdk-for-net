@@ -148,6 +148,16 @@ namespace Microsoft.Azure.Management.Network
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
 
         /// <summary>
+        /// Gets the INetworkWatchersOperations.
+        /// </summary>
+        public virtual INetworkWatchersOperations NetworkWatchers { get; private set; }
+
+        /// <summary>
+        /// Gets the IPacketCapturesOperations.
+        /// </summary>
+        public virtual IPacketCapturesOperations PacketCaptures { get; private set; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
@@ -181,15 +191,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IBgpServiceCommunitiesOperations.
         /// </summary>
         public virtual IBgpServiceCommunitiesOperations BgpServiceCommunities { get; private set; }
-
-        /// Gets the INetworkWatchersOperations.
-        /// </summary>
-        public virtual INetworkWatchersOperations NetworkWatchers { get; private set; }
-
-        /// <summary>
-        /// Gets the IPacketCapturesOperations.
-        /// </summary>
-        public virtual IPacketCapturesOperations PacketCaptures { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -407,6 +408,8 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
+            NetworkWatchers = new NetworkWatchersOperations(this);
+            PacketCaptures = new PacketCapturesOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
@@ -414,8 +417,6 @@ namespace Microsoft.Azure.Management.Network
             RouteFilters = new RouteFiltersOperations(this);
             RouteFilterRules = new RouteFilterRulesOperations(this);
             BgpServiceCommunities = new BgpServiceCommunitiesOperations(this);
-            NetworkWatchers = new NetworkWatchersOperations(this);
-            PacketCaptures = new PacketCapturesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

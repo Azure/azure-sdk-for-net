@@ -30,17 +30,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the VerificationIPFlowParameters
         /// class.
         /// </summary>
-        /// <param name="targetResourceId">The resource identifier of the
-        /// target resource against which the action is to be
-        /// performed.</param>
+        /// <param name="targetResourceId">The ID of the target resource to
+        /// perform next-hop on.</param>
         /// <param name="direction">The direction of the packet represented as
         /// a 5-tuple. Possible values include: 'Inbound', 'Outbound'</param>
         /// <param name="protocol">Protocol to be verified on. Possible values
         /// include: 'TCP', 'UDP'</param>
-        /// <param name="localPort">The local port. Acceptable values are
-        /// single integer (0-65535) or range.</param>
-        /// <param name="remotePort">The remote port. Acceptable values are
-        /// single integer (0-65535) or range.</param>
+        /// <param name="localPort">The local port. Acceptable values are a
+        /// single integer in the range (0-65535). Support for * for the source
+        /// port, which depends on the direction.</param>
+        /// <param name="remotePort">The remote port. Acceptable values are a
+        /// single integer in the range (0-65535). Support for * for the source
+        /// port, which depends on the direction.</param>
         /// <param name="localIPAddress">The local IP address. Acceptable
         /// values are valid IPv4 addresses.</param>
         /// <param name="remoteIPAddress">The remote IP address. Acceptable
@@ -61,8 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the resource identifier of the target resource against
-        /// which the action is to be performed.
+        /// Gets or sets the ID of the target resource to perform next-hop on.
         /// </summary>
         [JsonProperty(PropertyName = "targetResourceId")]
         public string TargetResourceId { get; set; }
@@ -82,15 +82,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the local port. Acceptable values are single integer
-        /// (0-65535) or range.
+        /// Gets or sets the local port. Acceptable values are a single integer
+        /// in the range (0-65535). Support for * for the source port, which
+        /// depends on the direction.
         /// </summary>
         [JsonProperty(PropertyName = "localPort")]
         public string LocalPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the remote port. Acceptable values are single integer
-        /// (0-65535) or range.
+        /// Gets or sets the remote port. Acceptable values are a single
+        /// integer in the range (0-65535). Support for * for the source port,
+        /// which depends on the direction.
         /// </summary>
         [JsonProperty(PropertyName = "remotePort")]
         public string RemotePort { get; set; }

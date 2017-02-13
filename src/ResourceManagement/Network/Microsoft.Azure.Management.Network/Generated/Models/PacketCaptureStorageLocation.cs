@@ -36,8 +36,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// packet capture. Must be a well-formed URI describing the location
         /// to save the packet capture.</param>
         /// <param name="filePath">A valid local path on the targeting VM. Must
-        /// include the name of the capture file (*.cap). Required if no
-        /// storage ID is provided, otherwise optional.</param>
+        /// include the name of the capture file (*.cap). For linux virtual
+        /// machine it must start with /var/captures. Required if no storage ID
+        /// is provided, otherwise optional.</param>
         public PacketCaptureStorageLocation(string storageId = default(string), string storagePath = default(string), string filePath = default(string))
         {
             StorageId = storageId;
@@ -62,7 +63,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets a valid local path on the targeting VM. Must include
-        /// the name of the capture file (*.cap). Required if no storage ID is
+        /// the name of the capture file (*.cap). For linux virtual machine it
+        /// must start with /var/captures. Required if no storage ID is
         /// provided, otherwise optional.
         /// </summary>
         [JsonProperty(PropertyName = "filePath")]
