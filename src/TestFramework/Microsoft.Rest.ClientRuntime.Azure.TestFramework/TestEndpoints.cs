@@ -18,7 +18,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// 
         /// </summary>
-        internal TestEndpoints() { }
+        private TestEndpoints() { }
         internal TestEndpoints(EnvironmentNames testEnvName)
         {
             #region environment switch
@@ -99,23 +99,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         break;
                         #endregion
                     }
+
                 case EnvironmentNames.Custom:
                     {
-                        //string customUri = "http://custom.com";
                         #region
-                        Name = EnvironmentNames.Custom;
-                        //AADAuthUri = new Uri(customUri);
-                        //GalleryUri = new Uri("");
-                        //GraphUri = new Uri("");
-                        //IbizaPortalUri = new Uri("");
-                        //RdfePortalUri = new Uri("");
-                        //ResourceManagementUri = new Uri("");
-                        //ServiceManagementUri = new Uri("");
-                        //AADTokenAudienceUri = new Uri("");
-                        //GraphTokenAudienceUri = new Uri("");
-                        //DataLakeStoreServiceUri = new Uri("");
-                        //DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("");
-                        //PublishingSettingsFileUri = new Uri("");
+                        Name = EnvironmentNames.Custom;                        
                         break;
                         #endregion
                     }
@@ -154,11 +142,23 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             UpdateEnvironmentEndpoint(connStr);
         }
 
-        internal TestEndpoints(EnvironmentNames envName, ConnectionString connStr): this(envName)
+        /// <summary>
+        /// Constructor updates endpoint URI that matches Environment names with supplied URI's in connection string
+        /// </summary>
+        /// <param name="envName">EnvironmentName</param>
+        /// <param name="connStr">ConnectionString object</param>
+        internal TestEndpoints(EnvironmentNames envName, ConnectionString connStr) : this(envName)
         {
             UpdateEnvironmentEndpoint(connStr);
         }
 
+        /// <summary>
+        /// This function will update the URI keyvalue pairs passed into connection string and update accordingly
+        /// E.g. You want to use Prod environment, but would like to use a custom ResourceManagementUri URI in prod env.
+        /// So instead of the hard coded prod ResourceManagementUri https://management.core.windows.net, you would like to use
+        /// https://brazilus.management.azure.com
+        /// </summary>
+        /// <param name="connStr">ConnectionString object</param>
         private void UpdateEnvironmentEndpoint(ConnectionString connStr)
         {
             #region

@@ -261,8 +261,19 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings, 
             ActiveDirectoryServiceSettings serviceSettings, UserIdentifier userId, TokenCache cache)
         {
+            return await LoginWithPromptAsync(domain, clientSettings, serviceSettings, userId, cache, () => { return TaskScheduler.FromCurrentSynchronizationContext(); });
+        }
+
+        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
+            ActiveDirectoryServiceSettings serviceSettings, Func<TaskScheduler> taskScheduler)
+        {
+            return await LoginWithPromptAsync(domain, clientSettings, serviceSettings, UserIdentifier.AnyUser, TokenCache.DefaultShared, taskScheduler);
+        }
+
+        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
+            ActiveDirectoryServiceSettings serviceSettings, UserIdentifier userId, TokenCache cache, Func<TaskScheduler> taskScheduler)
+        {
             var authenticationContext = GetAuthenticationContext(domain, serviceSettings, cache);
-            TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var task = new Task<AuthenticationResult>(() =>
             {
                 try
@@ -274,7 +285,7 @@ namespace Microsoft.Rest.Azure.Authentication
                         clientSettings.PromptBehavior,
                         userId,
                         clientSettings.AdditionalQueryParameters);
-                    return result;
+                    return result;                    
                 }
                 catch (Exception e)
                 {
@@ -284,43 +295,7 @@ namespace Microsoft.Rest.Azure.Authentication
                 }
             });
 
-            task.Start(scheduler);
-            var authResult = await task.ConfigureAwait(false);
-            var newUserId = new UserIdentifier(authResult.UserInfo.DisplayableId,
-                UserIdentifierType.RequiredDisplayableId);
-            return new TokenCredentials(
-                new UserTokenProvider(authenticationContext, clientSettings.ClientId,serviceSettings.TokenAudience, newUserId),
-                authResult.TenantId,
-                authResult.UserInfo.DisplayableId);
-        }
-
-        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain,
-            ActiveDirectoryClientSettings clientSettings,
-            ActiveDirectoryServiceSettings serviceSettings, TaskScheduler scheduler)
-        {
-            var authenticationContext = GetAuthenticationContext(domain, serviceSettings, TokenCache.DefaultShared);
-            var task = new Task<AuthenticationResult>(() =>
-            {
-                try
-                {
-                    var result = authenticationContext.AcquireToken(
-                        serviceSettings.TokenAudience.ToString(),
-                        clientSettings.ClientId,
-                        clientSettings.ClientRedirectUri,
-                        clientSettings.PromptBehavior,
-                        UserIdentifier.AnyUser,
-                        clientSettings.AdditionalQueryParameters);
-                    return result;
-                }
-                catch (Exception e)
-                {
-                    throw new AuthenticationException(
-                        string.Format(CultureInfo.CurrentCulture, Resources.ErrorAcquiringToken,
-                            e.Message), e);
-                }
-            });
-
-            task.Start(scheduler);
+            task.Start(taskScheduler());
             var authResult = await task.ConfigureAwait(false);
             var newUserId = new UserIdentifier(authResult.UserInfo.DisplayableId,
                 UserIdentifierType.RequiredDisplayableId);

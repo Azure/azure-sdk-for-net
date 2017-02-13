@@ -25,6 +25,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         const string TestCSMOrgIdConnectionStringKey = "TEST_CSM_ORGID_AUTHENTICATION";
 
         /// <summary>
+        /// Environment variable that can also be used to set HttpRecorder mode
+        /// </summary>
+        const string AZURE_TEST_MODE_ENVKEY = "AZURE_TEST_MODE";
+
+        /// <summary>
         /// Connection string used by Test Environment
         /// </summary>
         public ConnectionString ConnectionString { get; private set; }
@@ -159,7 +164,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void SetupHttpRecorderMode()
         {
-            string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+            string testMode = Environment.GetEnvironmentVariable(AZURE_TEST_MODE_ENVKEY);
 
             if (string.IsNullOrEmpty(testMode))
             {   
@@ -210,7 +215,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 {
                     HttpMockServer.Variables.Add(ConnectionStringKeys.SubscriptionIdKey, this.SubscriptionId);
                 }
-                
 
                 //We are not going to support custom key-value pairs in CustomeEnvValues
                 //If users wants to add new keyValue pairs, they can do it by using this.ConnectionString.KeyValuePairs.Add("foo", "bar");
@@ -245,6 +249,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             3) Interactive Login (where user will be presented with prompt to login)
            */
             #region Login
+            #region aadSettings
             ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
             {
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
@@ -255,6 +260,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
                 TokenAudience = this.Endpoints.GraphTokenAudienceUri
             };
+            #endregion
 
             if ((!string.IsNullOrEmpty(spnClientId)) && (!string.IsNullOrEmpty(spnSecret)))
             {
@@ -277,8 +283,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             else
             {
 #if NET45
-                //InteractiveLogin(this.Tenant, aadServiceSettings, graphAADServiceSettings);
-                InteractiveLogin(this.Tenant, PowerShellClientId);
+                InteractiveLogin(this.Tenant, PowerShellClientId,
+                                    aadServiceSettings, graphAADServiceSettings);
 #else
                 throw new NotSupportedException("Interactive Login is supported only in NET45 projects");
 #endif
@@ -292,28 +298,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="tenant"></param>
         /// <param name="aadServiceSettings"></param>
         /// <param name="graphAADServiceSettings"></param>
-        private void InteractiveLogin(string tenant, string clientId
-            /*ActiveDirectoryServiceSettings aadServiceSettings, 
-            ActiveDirectoryServiceSettings graphAADServiceSettings*/)
+        private void InteractiveLogin(string tenant, string PsClientId, 
+                                        ActiveDirectoryServiceSettings aadServiceSettings,
+                                        ActiveDirectoryServiceSettings graphAADServiceSettings)
         {
-#if NET45
-
-            ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
-            {
-                AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
-                TokenAudience = this.Endpoints.AADTokenAudienceUri
-            };
-
-            ActiveDirectoryServiceSettings graphAADServiceSettings = new ActiveDirectoryServiceSettings()
-            {
-                AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
-                TokenAudience = this.Endpoints.GraphTokenAudienceUri
-            };
-
+#if NET45   
             ActiveDirectoryClientSettings clientSettings = new ActiveDirectoryClientSettings()
             {
-                //ClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey),
-                ClientId = clientId,
+                ClientId = PsClientId,
                 ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob"),
                 PromptBehavior = PromptBehavior.Always
             };
@@ -328,31 +320,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 scheduler = TaskScheduler.Current;
             }
 
-
-            //Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-            //                    .LoginWithPromptAsync(this.Tenant, 
-            //                    clientSettings, 
-            //                    aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
-
             Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
                                 .LoginWithPromptAsync(this.Tenant,
                                 clientSettings,
-                                aadServiceSettings, scheduler).ConfigureAwait(continueOnCapturedContext: false));
-
+                                aadServiceSettings, () => { return scheduler; }).ConfigureAwait(continueOnCapturedContext: false));
+            
             this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
+            this.ConnectionString.KeyValuePairs[ConnectionStringKeys.UserIdKey] = this.TokenInfo[TokenAudience.Management].CallerId;
 
             try
-            {
-                //Task<TokenCredentials> graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                //                .LoginWithPromptAsync(this.Tenant,
-                //                clientSettings,
-                //                graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: true));
-
-
+            {   
                 Task<TokenCredentials> graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
                                 .LoginWithPromptAsync(this.Tenant,
                                 clientSettings,
-                                graphAADServiceSettings, scheduler).ConfigureAwait(continueOnCapturedContext: true));
+                                graphAADServiceSettings, () => { return scheduler; }).ConfigureAwait(continueOnCapturedContext: true));
                 this.TokenInfo[TokenAudience.Graph] = graphAuthResult.Result;
             }
             catch
@@ -367,29 +348,52 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void VerifySubscription()
         {
-#region
-            if (!(string.IsNullOrEmpty(this.SubscriptionId)) || (this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase)))
+            #region
+            string matchedSubscriptionId = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            string callerId = string.Empty;
+            string subs = string.Empty;
+
+            if (this.TokenInfo[TokenAudience.Management] != null)
             {
-                //TokenCredentials cred = this.TokenInfo[TokenAudience.Management];
+                try { callerId = this.TokenInfo[TokenAudience.Management].CallerId; } catch { }
+            }
 
+            if (!(string.IsNullOrEmpty(this.SubscriptionId)) && !(this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase)))
+            {
                 List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
-                string subscriptionId = subscriptionList.Where((sub) => sub.SubscriptionId.Equals(this.SubscriptionId, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().SubscriptionId;
-
-                if (string.IsNullOrEmpty(subscriptionId))
+                if (subscriptionList.Any<SubscriptionInfo>())
                 {
-                    StringBuilder sb = new StringBuilder("List of subscriptions retrieved:\r\n");
+                    matchedSubscriptionId = subscriptionList.Where((sub) => sub.SubscriptionId.Equals(this.SubscriptionId, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().SubscriptionId;
                     foreach (SubscriptionInfo subInfo in subscriptionList)
                     {
-                        sb.AppendLine(subInfo.SubscriptionId);
+                        subs += subInfo.Id + ",";
                     }
+                }
 
-                    //TODO: Find a way to get userId that is being used to retrive subscriptions
-                    //Currently if there occurs a situation, the subscription list retrieved does not match the supplied subscriptionIds
-                    //There is not way to let the user know as to for what user the subscription list was retrieved.
-                    string exceptionString = string.Format("Either no subscription was provided in connection string (e.g. TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId=<subscritionId> or " +
-                        "The provided SubscriptionId in connections string - '{0}' does not match the list of subscriptions associated with the account \r\n {1}", this.SubscriptionId, sb.ToString());
+                if (string.IsNullOrEmpty(matchedSubscriptionId))
+                {
+                    sb.AppendLine(string.Format("SubscriptionList:'{0}' retrieved for the user/spn id '{1}', do not match with the provided subscriptionId '{2}' in connection string",
+                        subs, callerId, this.SubscriptionId));
 
-                    throw new Exception(exceptionString);
+                    throw new Exception(sb.ToString());
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(this.SubscriptionId))
+                {
+                    sb.AppendLine(string.Format("'{0}': connection string contains no subscriptionId info", 
+                                                    TestCSMOrgIdConnectionStringKey));
+                    sb.AppendLine("Provide SubcriptionId info in connection string");
+                    throw new Exception(sb.ToString());
+                }
+                else if(this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase))
+                {
+                    sb.AppendLine(string.Format("'{0}': connection string contains subscriptionId as '{1}'",
+                                                    TestCSMOrgIdConnectionStringKey, this.SubscriptionId));
+                    sb.AppendLine("Provide valid SubcriptionId info in connection string");
+                    throw new Exception(sb.ToString());
                 }
             }
 #endregion

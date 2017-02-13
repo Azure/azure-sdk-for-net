@@ -81,6 +81,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         public const string AADTokenAudienceUriKey = "AADTokenAudienceUri";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public const string GraphTokenAudienceUriKey = "GraphTokenAudienceUri";
 
         /// <summary>
@@ -121,7 +124,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// Endpoint to use for AAD authentication
         /// </summary>
-        public const string AADAuthUriKey = "AADAuthUri";
+        public const string AADAuthUriKey = "AADAuthUri";   //Most probably ActiveDirectoryAuthority
 
         /// <summary>
         /// Publishsettings endpoint
