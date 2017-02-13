@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
@@ -52,12 +40,12 @@ namespace DataLakeAnalytics.Tests
                                     Name = commonData.DataLakeStoreAccountName,
                                     Suffix = commonData.DataLakeStoreAccountSuffix
                                 }
-                            }
-                            ,
+                            },
                             Tags = new Dictionary<string, string>
                             {
                                 { "testkey","testvalue" }
-                            }
+                            },
+                            NewTier = TierType.Commitment100AUHours
                         });
 
                 // verify the account exists
@@ -91,7 +79,8 @@ namespace DataLakeAnalytics.Tests
 
                 // Confirm that the account creation did succeed
                 Assert.True(responseGet.ProvisioningState == DataLakeAnalyticsAccountStatus.Succeeded);
-
+                Assert.Equal(TierType.Commitment100AUHours, responseGet.CurrentTier);
+                Assert.Equal(TierType.Commitment100AUHours, responseGet.NewTier);
                 // Update the account and confirm the updates make it in.
                 var newAccount = responseGet;
                 var firstStorageAccountName = newAccount.DataLakeStoreAccounts.ToList()[0].Name;
@@ -106,7 +95,8 @@ namespace DataLakeAnalytics.Tests
 
                 var updateAccount = new DataLakeAnalyticsAccountUpdateParameters
                 {
-                    Tags = newAccount.Tags
+                    Tags = newAccount.Tags,
+                    NewTier = TierType.Consumption
                 };
 
                 var updateResponse = clientToUse.Account.Update(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, updateAccount);
@@ -126,13 +116,20 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
                 Assert.True(updateResponseGet.DataLakeStoreAccounts.Count == 1);
                 Assert.True(updateResponseGet.DataLakeStoreAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
+                Assert.Equal(TierType.Commitment100AUHours, updateResponseGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
 
                 // Create another account and ensure that list account returns both
                 responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName);
                 var accountToChange = responseGet;
                 var newAcctName = accountToChange.Name + "secondacct";
 
-                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, accountToChange);
+                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, new DataLakeAnalyticsAccount
+                {
+                    Location = accountToChange.Location,
+                    DefaultDataLakeStoreAccount = accountToChange.DefaultDataLakeStoreAccount,
+                    DataLakeStoreAccounts = accountToChange.DataLakeStoreAccounts
+                });
 
                 var listResponse = clientToUse.Account.List();
 

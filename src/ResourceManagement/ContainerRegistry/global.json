@@ -1,0 +1,3 @@
+{
+  "projects": [ "Microsoft.Azure.Management.ContainerRegistry", "ContainerRegistry.Tests"]
+}

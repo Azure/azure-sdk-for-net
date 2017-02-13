@@ -24,16 +24,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the RealtimeConfiguration class.
         /// </summary>
-        /// <param name="maxConcurrentCalls">Maximum number of concurrent
-        /// calls allowed on the realtime endpoint.</param>
+        /// <param name="maxConcurrentCalls">Specifies the maximum concurrent
+        /// calls that can be made to the web service. Minimum value: 4,
+        /// Maximum value: 200.</param>
         public RealtimeConfiguration(int? maxConcurrentCalls = default(int?))
         {
             MaxConcurrentCalls = maxConcurrentCalls;
         }
 
         /// <summary>
-        /// Gets or sets maximum number of concurrent calls allowed on the
-        /// realtime endpoint.
+        /// Gets or sets specifies the maximum concurrent calls that can be
+        /// made to the web service. Minimum value: 4, Maximum value: 200.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "maxConcurrentCalls")]
         public int? MaxConcurrentCalls { get; set; }

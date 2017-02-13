@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
@@ -34,7 +36,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public RetryType? RetryType { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry interval between retries.
+        /// Gets or sets the retry interval between retries, specify duration
+        /// in ISO 8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "retryInterval")]
         public TimeSpan? RetryInterval { get; set; }

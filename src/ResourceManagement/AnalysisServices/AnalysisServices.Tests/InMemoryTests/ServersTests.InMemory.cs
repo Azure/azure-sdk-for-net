@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -42,7 +30,7 @@ namespace AnalysisServices.Tests.InMemoryTests
         {
             var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Created)
             {
-                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Provisioning"))
+                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Provisioning", "Provisioning"))
             };
 
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
@@ -50,7 +38,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Succeeded"))
+                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Succeeded", "Succeeded"))
             };
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
@@ -71,7 +59,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
+           
             Assert.Equal(result.ProvisioningState, "Succeeded");
+            Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
         }
 
@@ -80,7 +70,7 @@ namespace AnalysisServices.Tests.InMemoryTests
         {
             var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Created)
             {
-                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Provisioning"))
+                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Provisioning", "Provisioning"))
             };
 
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
@@ -88,7 +78,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Succeeded"))
+                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Succeeded", "Succeeded"))
             };
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
@@ -110,6 +100,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
             Assert.Equal(result.ProvisioningState, "Succeeded");
+            Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
         }
 
@@ -134,7 +125,7 @@ namespace AnalysisServices.Tests.InMemoryTests
         {
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Succeeded"))
+                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Succeeded", "Succeeded"))
             };
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
@@ -161,6 +152,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
             Assert.Equal(result.ProvisioningState, "Succeeded");
+            Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
         }
 
@@ -284,6 +276,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
+                                        'state': 'Succeeded',
                                         'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server1',
                                         'asAdministrators': {
@@ -308,6 +301,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
+                                        'state': 'Succeeded',
                                         'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server2',
                                         'asAdministrators': {
@@ -373,6 +367,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
+                                        'state': 'Succeeded',
                                         'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server1',
                                         'asAdministrators': {
@@ -397,6 +392,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
+                                        'state': 'Succeeded',
                                         'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server2',
                                         'asAdministrators': {
@@ -450,6 +446,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(createdResource.Id, referenceResource.Id);
             Assert.Equal(createdResource.Type, referenceResource.Type);
             Assert.Equal(createdResource.ProvisioningState, referenceResource.ProvisioningState);
+            Assert.Equal(createdResource.State, referenceResource.State);
             Assert.Equal(createdResource.ServerFullName, referenceResource.ServerFullName);
             Assert.Equal(createdResource.AsAdministrators, referenceResource.AsAdministrators);
         }

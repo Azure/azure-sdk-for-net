@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
@@ -21,7 +23,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// Initializes a new instance of the
         /// ServiceBusBrokeredMessageProperties class.
         /// </summary>
-        public ServiceBusBrokeredMessageProperties(string contentType = default(string), string correlationId = default(string), bool? forcePersistence = default(bool?), string label = default(string), string messageId = default(string), string partitionKey = default(string), string replyTo = default(string), string replyToSessionId = default(string), DateTime? scheduledEnqueueTimeUtc = default(DateTime?), string sessionId = default(string), DateTime? timeToLive = default(DateTime?), string to = default(string), string viaPartitionKey = default(string))
+        public ServiceBusBrokeredMessageProperties(string contentType = default(string), string correlationId = default(string), bool? forcePersistence = default(bool?), string label = default(string), string messageId = default(string), string partitionKey = default(string), string replyTo = default(string), string replyToSessionId = default(string), DateTime? scheduledEnqueueTimeUtc = default(DateTime?), string sessionId = default(string), TimeSpan? timeToLive = default(TimeSpan?), string to = default(string), string viaPartitionKey = default(string))
         {
             ContentType = contentType;
             CorrelationId = correlationId;
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the correlation id.
+        /// Gets or sets the correlation ID.
         /// </summary>
         [JsonProperty(PropertyName = "correlationId")]
         public string CorrelationId { get; set; }
@@ -63,7 +65,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string Label { get; set; }
 
         /// <summary>
-        /// Gets or sets the message id.
+        /// Gets or sets the message ID.
         /// </summary>
         [JsonProperty(PropertyName = "messageId")]
         public string MessageId { get; set; }
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string ReplyTo { get; set; }
 
         /// <summary>
-        /// Gets or sets the reply to session id.
+        /// Gets or sets the reply to session ID.
         /// </summary>
         [JsonProperty(PropertyName = "replyToSessionId")]
         public string ReplyToSessionId { get; set; }
@@ -93,7 +95,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public DateTime? ScheduledEnqueueTimeUtc { get; set; }
 
         /// <summary>
-        /// Gets or sets the session id.
+        /// Gets or sets the session ID.
         /// </summary>
         [JsonProperty(PropertyName = "sessionId")]
         public string SessionId { get; set; }
@@ -102,7 +104,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// Gets or sets the time to live.
         /// </summary>
         [JsonProperty(PropertyName = "timeToLive")]
-        public DateTime? TimeToLive { get; set; }
+        public TimeSpan? TimeToLive { get; set; }
 
         /// <summary>
         /// Gets or sets the to.

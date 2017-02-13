@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -52,43 +40,80 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                EnsureClientsInitialized(context);
-
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-
-                // Create resource group
-                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
-                var vmssName = TestUtilities.GenerateName("vmss");
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                VirtualMachineScaleSet inputVMScaleSet;
-
-                bool passed = false;
-                try
-                {
-                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
-
-                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet);
-
-                    // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
-                    m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
-                    // TODO: Re-enable the test once GA
-                    //m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name);
-                    m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
-                    m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
-                    m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
-
-                    passed = true;
-                }
-                finally
-                {
-                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
-                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    m_ResourcesClient.ResourceGroups.Delete(rgName);
-                }
-
-                Assert.True(passed);
+                TestVMScaleSetOperationsInternal(context);
             }
+        }
+
+        /// <summary>
+        /// Covers following Operations for a ScaleSet with ManagedDisks:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VMScaleSet
+        /// Start VMScaleSet
+        /// Reimage VMScaleSet
+        /// ReimageAll VMScaleSet
+        /// Stop VMScaleSet
+        /// Restart VMScaleSet
+        /// Deallocate VMScaleSet
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetOperations_ManagedDisks()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TestVMScaleSetOperationsInternal(context, hasManagedDisks: true);
+            }
+        }
+
+        public void TestVMScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
+        {
+            EnsureClientsInitialized(context);
+
+            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+            // Create resource group
+            string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+            var vmssName = TestUtilities.GenerateName("vmss");
+            string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+            VirtualMachineScaleSet inputVMScaleSet;
+
+            bool passed = false;
+            try
+            {
+                var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                    rgName,
+                    vmssName,
+                    storageAccountOutput,
+                    imageRef,
+                    out inputVMScaleSet,
+                    createWithManagedDisks: hasManagedDisks);
+
+                // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
+                m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
+                m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name);
+                if (hasManagedDisks)
+                {
+                    m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name);
+                }
+                m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
+                m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
+                m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
+                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
+
+                passed = true;
+            }
+            finally
+            {
+                // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                m_ResourcesClient.ResourceGroups.Delete(rgName);
+            }
+
+            Assert.True(passed);
         }
         
         /// <summary>

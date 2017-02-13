@@ -31,7 +31,7 @@ namespace KeyVault.Management.Tests
 
                 string vaultName = TestUtilities.GenerateName("sdktestvault");
                 var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var objectIdGuid = testBase.objectId;
                 var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
                 var accPol = new AccessPolicyEntry
                 {
@@ -158,7 +158,7 @@ namespace KeyVault.Management.Tests
 
                 string vaultName = TestUtilities.GenerateName("sdktestvault");
                 var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var objectIdGuid = testBase.objectId;
                 var applicationId = Guid.Parse(testBase.applicationId);
                 var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
                 var accPol = new AccessPolicyEntry
@@ -326,7 +326,7 @@ namespace KeyVault.Management.Tests
 
                 string rgName = TestUtilities.GenerateName("sdktestrg");
                 var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var objectIdGuid = testBase.objectId;
 
                 var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
@@ -384,7 +384,7 @@ namespace KeyVault.Management.Tests
 
                 while (vaults.NextPageLink != null)
                 {
-                    vaults = client.Vaults.ListNext(vaults.NextPageLink);
+                    vaults = client.Vaults.ListByResourceGroupNext(vaults.NextPageLink);
                     Assert.NotNull(vaults);
                     foreach (var v in vaults)
                     {

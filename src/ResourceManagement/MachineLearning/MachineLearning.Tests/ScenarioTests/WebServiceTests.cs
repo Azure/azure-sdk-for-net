@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -188,9 +176,9 @@ namespace MachineLearning.Tests.ScenarioTests
                     WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, otherResourceGroupName, otherServiceName, otherService, serviceDefinition);
 
                     // Validate that only the first 3 services are returned on the get call for web services in a subscription & resource group
-                    var servicesInGroup = amlServicesClient.WebServices.ListInResourceGroup(resourceGroupName);
+                    var servicesInGroup = amlServicesClient.WebServices.ListByResourceGroup(resourceGroupName);
                     Assert.NotNull(servicesInGroup);
-                    IList<WebService> servicesList = servicesInGroup.Value;
+                    IList<WebService> servicesList = servicesInGroup.ToList();
                     Assert.NotNull(servicesList);
                     Assert.Equal(3, servicesList.Count);
                     string service1ExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, resourceGroupName, webServiceName);
@@ -203,7 +191,7 @@ namespace MachineLearning.Tests.ScenarioTests
                     // Validate that all services are called when getting the AML service resource list for the subscription
                     var servicesInSubscription = amlServicesClient.WebServices.List();
                     Assert.NotNull(servicesInSubscription);
-                    servicesList = servicesInSubscription.Value;
+                    servicesList = servicesInSubscription.ToList();
                     Assert.NotNull(servicesList);
                     Assert.True(servicesList.Count >= 4);
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase)));

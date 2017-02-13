@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -65,13 +53,13 @@ namespace Compute.Tests
                     inputContainerService.AgentPoolProfiles[0].Count = 2;
                     UpdateContainerService(rgName, csName, inputContainerService);
 
-                    containerService = m_CrpClient.ContainerService.Get(rgName, containerService.Name);
+                    containerService = m_CrpClient.ContainerServices.Get(rgName, containerService.Name);
                     ValidateContainerService(inputContainerService, containerService);
 
-                    var listResult = m_CrpClient.ContainerService.List(rgName);
+                    var listResult = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(listResult.Any(a => a.Name == containerService.Name));
-                    m_CrpClient.ContainerService.Delete(rgName, containerService.Name);
-                    var listResultAfterDeletion = m_CrpClient.ContainerService.List(rgName);
+                    m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
+                    var listResultAfterDeletion = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(!listResultAfterDeletion.Any());
                 }
                 finally

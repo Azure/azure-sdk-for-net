@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -869,6 +857,102 @@ namespace Cdn.Tests.ScenarioTests
                         profileName,
                         endpointName,
                         "invalid\\custom/domain"); });
+
+                // Delete resource group
+                CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void EndpointCheckUsageTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create clients
+                var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
+                var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
+
+                // Create resource group
+                var resourceGroupName = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create a standard cdn profile
+                string profileName = TestUtilities.GenerateName("profile");
+                Profile createParameters = new Profile
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.StandardAkamai },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        }
+                };
+
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
+
+                //Create an endpoint under this profile
+                string endpointName = TestUtilities.GenerateName("endpoint");
+                var endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    }
+                };
+
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+
+                // Check usage should return one with current value being zero
+                var endpointLevelUsage = cdnMgmtClient.Endpoints.ListResourceUsage(resourceGroupName, profileName, endpointName);
+                Assert.Equal(2, endpointLevelUsage.Count());
+
+                var defaultEndpointLevelGeoFilterUsage = endpointLevelUsage.First(u => u.ResourceType.Equals("geofilter"));
+                Assert.Equal(25, defaultEndpointLevelGeoFilterUsage.Limit);
+                Assert.Equal(0, defaultEndpointLevelGeoFilterUsage.CurrentValue);
+
+                //Update endpoint to have geo filters
+                var endpointUpdateParameters = new EndpointUpdateParameters
+                {
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>
+                            {
+                                "AU"
+                            }
+                        },
+                        new GeoFilter {
+                            RelativePath = "/mycars",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>
+                            {
+                                "AU"
+                            }
+                        }
+                    }
+                };
+
+                endpoint = cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+
+                // Check usage again
+                endpointLevelUsage = cdnMgmtClient.Endpoints.ListResourceUsage(resourceGroupName, profileName, endpointName);
+                Assert.Equal(2, endpointLevelUsage.Count());
+
+                var endpointLevelGeoFilterUsage = endpointLevelUsage.First(u => u.ResourceType.Equals("geofilter"));
+                Assert.Equal(25, endpointLevelGeoFilterUsage.Limit);
+                Assert.Equal(2, endpointLevelGeoFilterUsage.CurrentValue);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);

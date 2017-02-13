@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
@@ -25,7 +27,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the http authentication type. Possible values
+        /// Gets or sets the HTTP authentication type. Possible values
         /// include: 'NotSpecified', 'ClientCertificate',
         /// 'ActiveDirectoryOAuth', 'Basic'
         /// </summary>

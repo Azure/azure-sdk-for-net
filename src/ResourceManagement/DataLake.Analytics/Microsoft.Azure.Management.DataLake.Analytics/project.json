@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1-preview",
+  "version": "2.0.0",
   "description": "Provides Data Lake Analytics account, job and catalog management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -9,7 +9,8 @@
     "tags": [ "Microsoft Azure Data Lake Analytics management", "DataLakeAnalytics", "Data Lake Analytics management", "REST HTTP client", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "See https://github.com/azure/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/DataLake.Analytics/changelog.md for release notes."
   },
 
   "buildOptions": {

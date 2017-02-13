@@ -86,6 +86,9 @@ This cmdlet will only prompt you for Subscription and Tenant information, rest a
     $env:TEST_CSM_ORGID_AUTHENTICATION=$formattedConnStr
     Write-Host ""
 
+    # Set AZURE_TEST_MODE
+    $env:AZURE_TEST_MODE=$RecordMode
+
     # Retrieve the environment variable
     Write-Host ""
     Write-Host "Below connection string was set. Start Visual Studio by typing devenv" -ForegroundColor Green
