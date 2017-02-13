@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public SchemaType SchemaType { get; set; }
 
         /// <summary>
-        /// Gets or sets the targetnamespace of the schema.
+        /// Gets or sets the target namespace of the schema.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetNamespace")]
         public string TargetNamespace { get; set; }
