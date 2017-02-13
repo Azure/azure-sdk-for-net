@@ -66,6 +66,10 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Represents the time when the interaction or profile update
         /// happened.</param>
         /// <param name="typeName">The name of the entity.</param>
+        /// <param name="idPropertyNames">The id property names. Properties
+        /// which uniquely identify an interaction instance.</param>
+        /// <param name="participantProfiles">Profiles that participated in the
+        /// interaction.</param>
         /// <param name="primaryParticipantProfilePropertyName">The primary
         /// participant property name for an interaction ,This is used to
         /// logically represent the agent of the interaction, Specify the
@@ -205,11 +209,14 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string TypeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the id property names. Properties which uniquely
+        /// identify an interaction instance.
         /// </summary>
         [JsonProperty(PropertyName = "properties.idPropertyNames")]
         public IList<string> IdPropertyNames { get; set; }
 
         /// <summary>
+        /// Gets or sets profiles that participated in the interaction.
         /// </summary>
         [JsonProperty(PropertyName = "properties.participantProfiles")]
         public IList<Participant> ParticipantProfiles { get; set; }

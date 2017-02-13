@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Initializes a new instance of the Participant class.
         /// </summary>
         /// <param name="profileTypeName">Profile type name.</param>
+        /// <param name="participantPropertyReferences">The property
+        /// references.</param>
         /// <param name="participantName">Participant name.</param>
         /// <param name="displayName">Localized display name.</param>
         /// <param name="description">Localized descriptions.</param>
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string ProfileTypeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the property references.
         /// </summary>
         [JsonProperty(PropertyName = "participantPropertyReferences")]
         public IList<ParticipantPropertyReference> ParticipantPropertyReferences { get; set; }

@@ -33,6 +33,15 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <summary>
         /// Initializes a new instance of the ConnectorMappingProperties class.
         /// </summary>
+        /// <param name="errorManagement">The error management setting for the
+        /// mapping.</param>
+        /// <param name="format">The format of mapping property.</param>
+        /// <param name="availability">The availability of mapping
+        /// property.</param>
+        /// <param name="structure">Ingestion mapping information at property
+        /// level.</param>
+        /// <param name="completeOperation">The operation after import is
+        /// done.</param>
         /// <param name="folderPath">The folder path for the mapping.</param>
         /// <param name="fileFilter">The file filter for the mapping.</param>
         /// <param name="hasHeader">If the file contains a header or
@@ -69,26 +78,31 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public bool? HasHeader { get; set; }
 
         /// <summary>
+        /// Gets or sets the error management setting for the mapping.
         /// </summary>
         [JsonProperty(PropertyName = "errorManagement")]
         public ConnectorMappingErrorManagement ErrorManagement { get; set; }
 
         /// <summary>
+        /// Gets or sets the format of mapping property.
         /// </summary>
         [JsonProperty(PropertyName = "format")]
         public ConnectorMappingFormat Format { get; set; }
 
         /// <summary>
+        /// Gets or sets the availability of mapping property.
         /// </summary>
         [JsonProperty(PropertyName = "availability")]
         public ConnectorMappingAvailability Availability { get; set; }
 
         /// <summary>
+        /// Gets or sets ingestion mapping information at property level.
         /// </summary>
         [JsonProperty(PropertyName = "structure")]
         public IList<ConnectorMappingStructure> Structure { get; set; }
 
         /// <summary>
+        /// Gets or sets the operation after import is done.
         /// </summary>
         [JsonProperty(PropertyName = "completeOperation")]
         public ConnectorMappingCompleteOperation CompleteOperation { get; set; }

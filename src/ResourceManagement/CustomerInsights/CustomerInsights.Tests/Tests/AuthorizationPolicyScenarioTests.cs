@@ -82,7 +82,7 @@ namespace CustomerInsights.Tests.Tests
                     "Microsoft.CustomerInsights/hubs/AuthorizationPolicies",
                     StringComparer.OrdinalIgnoreCase);
 
-                Thread.Sleep(100);
+                TestUtilities.Wait(1000);
 
                 var getResultPolicy = aciClient.AuthorizationPolicies.Get(ResourceGroupName, HubName, policyName);
                 Assert.Equal(policyName, getResultPolicy.PolicyName);
@@ -145,7 +145,7 @@ namespace CustomerInsights.Tests.Tests
                     policyName2,
                     policyResourceFormat2);
 
-                Thread.Sleep(1000);
+                TestUtilities.Wait(1000);
 
                 var policyList = aciClient.AuthorizationPolicies.ListByHub(ResourceGroupName, HubName);
 

@@ -66,6 +66,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Represents the time when the interaction or profile update
         /// happened.</param>
         /// <param name="typeName">The name of the entity.</param>
+        /// <param name="strongIds">The strong IDs.</param>
         public ProfileResourceFormat(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, IList<string>> attributes = default(IDictionary<string, IList<string>>), IDictionary<string, string> description = default(IDictionary<string, string>), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, IDictionary<string, string>> localizedAttributes = default(IDictionary<string, IDictionary<string, string>>), string smallImage = default(string), string mediumImage = default(string), string largeImage = default(string), string apiEntitySetName = default(string), EntityTypes? entityType = default(EntityTypes?), IList<PropertyDefinition> fields = default(IList<PropertyDefinition>), int? instancesCount = default(int?), System.DateTime? lastChangedUtc = default(System.DateTime?), string provisioningState = default(string), string schemaItemTypeLink = default(string), string tenantId = default(string), string timestampFieldName = default(string), string typeName = default(string), IList<StrongId> strongIds = default(IList<StrongId>))
             : base(id, name, type)
         {
@@ -199,6 +200,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string TypeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the strong IDs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.strongIds")]
         public IList<StrongId> StrongIds { get; set; }
