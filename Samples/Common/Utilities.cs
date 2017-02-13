@@ -18,18 +18,30 @@ using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
+using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using CoreFtp;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
+using Renci.SshNet;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
     public static class Utilities
     {
+        public static bool IsRunningMocked { get;set; }
         public static Action<string> LoggerMethod { get; set; }
         public static Func<string> PauseMethod { get; set; }
+
+        public static string ProjectPath { get; set; }
 
         static Utilities()
         {
             LoggerMethod = Console.WriteLine;
             PauseMethod = Console.ReadLine;
+            ProjectPath = ".";
         }
 
         public static void Log(string message)
@@ -1317,6 +1329,198 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
             Utilities.Log(builder.ToString());
+        }
+
+        public static void CreateCertificate(string domainName, string pfxPath, string password)
+        {
+            if (!IsRunningMocked)
+            {
+                string args = string.Format(
+                    @".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""",
+                    pfxPath,
+                    password,
+                    domainName);
+                ProcessStartInfo info = new ProcessStartInfo("powershell", args);
+                string assetPath = Path.Combine(ProjectPath, "Asset");
+                info.WorkingDirectory = assetPath;
+                Process.Start(info).WaitForExit();
+            }
+            else
+            {
+                File.Copy(
+                    Path.Combine(Utilities.ProjectPath, "Asset", "SampleTestCertificate.pfx"),
+                    Path.Combine(Utilities.ProjectPath, "Asset", pfxPath),
+                    overwrite: true);
+            }
+        }
+
+        public static void UploadFileToFtp(IPublishingProfile profile, string filePath)
+        {
+            if (!IsRunningMocked)
+            {
+                string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
+
+                using (var ftpClient = new FtpClient(new FtpClientConfiguration
+                {
+                    Host = host,
+                    Username = profile.FtpUsername,
+                    Password = profile.FtpPassword
+                }))
+                {
+                    var fileinfo = new FileInfo(filePath);
+                    ftpClient.LoginAsync().GetAwaiter().GetResult();
+                    ftpClient.ChangeWorkingDirectoryAsync("./site/wwwroot/webapps").GetAwaiter().GetResult();
+
+                    using (var writeStream = ftpClient.OpenFileWriteStreamAsync(Path.GetFileName(filePath)).GetAwaiter().GetResult())
+                    {
+                        var fileReadStream = fileinfo.OpenRead();
+                        fileReadStream.CopyToAsync(writeStream).GetAwaiter().GetResult();
+                    }
+                }
+            }
+        }
+
+        public static void UploadFilesToContainer(string connectionString, string containerName, params string [] filePaths)
+        {
+            if (!IsRunningMocked)
+            {
+                CloudStorageAccount storageAccount;
+
+                try
+                {
+                    storageAccount = CloudStorageAccount.Parse(connectionString);
+                }
+                catch (FormatException)
+                {
+                    Utilities.Log("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
+                    Utilities.ReadLine();
+                    throw;
+                }
+                catch (ArgumentException)
+                {
+                    Utilities.Log("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
+                    Utilities.ReadLine();
+                    throw;
+                }
+
+                // Create a blob client for interacting with the blob service.
+                var blobClient = storageAccount.CreateCloudBlobClient();
+
+                // Create a container for organizing blobs within the storage account.
+                Utilities.Log("1. Creating Container");
+                var container = blobClient.GetContainerReference(containerName);
+                container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+
+                var containerPermissions = new BlobContainerPermissions();
+                // Include public access in the permissions object
+                containerPermissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                // Set the permissions on the container
+                container.SetPermissionsAsync(containerPermissions).GetAwaiter().GetResult();
+
+                foreach (var filePath in filePaths)
+                {
+                    var blob = container.GetBlockBlobReference(Path.GetFileName(filePath));
+                    blob.UploadFromFileAsync(filePath).GetAwaiter().GetResult();
+                }
+            }
+        }
+
+        public static void DeployByGit(IPublishingProfile profile)
+        {
+            if (!IsRunningMocked)
+            {
+                string gitCommand = "git";
+                string gitInitArgument = @"init";
+                string gitAddArgument = @"add -A";
+                string gitCommitArgument = @"commit -am ""Initial commit"" ";
+                string gitPushArgument = $"push https://{profile.GitUsername}:{profile.GitPassword}@{profile.GitUrl} master:master -f";
+
+                ProcessStartInfo info = new ProcessStartInfo(gitCommand, gitInitArgument);
+                info.WorkingDirectory = Path.Combine(ProjectPath, "Asset", "azure-samples-appservice-helloworld");
+                Process.Start(info).WaitForExit();
+                info.Arguments = gitAddArgument;
+                Process.Start(info).WaitForExit();
+                info.Arguments = gitCommitArgument;
+                Process.Start(info).WaitForExit();
+                info.Arguments = gitPushArgument;
+                Process.Start(info).WaitForExit();
+            }
+        }
+        
+        public static string CheckAddress(string url)
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        return client.GetAsync(url).Result.ToString();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+
+            return "[Running in PlaybackMode]";
+        }
+
+        public static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    using (var sshClient = new SshClient(host, port, userName, password))
+                    {
+                        Utilities.Log("Trying to de-provision: " + host);
+                        sshClient.Connect();
+                        var commandToExecute = "sudo waagent -deprovision+user --force";
+                        using (var command = sshClient.CreateCommand(commandToExecute))
+                        {
+                            var commandOutput = command.Execute();
+                            Utilities.Log(commandOutput);
+                        }
+                        sshClient.Disconnect();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
+
+        public static string GetArmTemplate(string templateFileName)
+        {
+            var adminUsername = "tirekicker";
+            var adminPassword = "12NewPA$$w0rd!";
+            var hostingPlanName = SdkContext.RandomResourceName("hpRSAT", 24);
+            var webAppName = SdkContext.RandomResourceName("wnRSAT", 24);
+            var armTemplateString = File.ReadAllText(Path.Combine(Utilities.ProjectPath, "Asset", templateFileName));
+
+            var parsedTemplate = JObject.Parse(armTemplateString);
+
+            if (String.Equals("ArmTemplate.json", templateFileName, StringComparison.OrdinalIgnoreCase))
+            {
+                parsedTemplate.SelectToken("parameters.hostingPlanName")["defaultValue"] = hostingPlanName;
+                parsedTemplate.SelectToken("parameters.webSiteName")["defaultValue"] = webAppName;
+                parsedTemplate.SelectToken("parameters.skuName")["defaultValue"] = "F1";
+                parsedTemplate.SelectToken("parameters.skuCapacity")["defaultValue"] = 1;
+            }
+            else if (String.Equals("ArmTemplateVM.json", templateFileName, StringComparison.OrdinalIgnoreCase))
+            {
+                parsedTemplate.SelectToken("parameters.adminUsername")["defaultValue"] = adminUsername;
+                parsedTemplate.SelectToken("parameters.adminPassword")["defaultValue"] = adminPassword;
+            }
+            return parsedTemplate.ToString();
+        }
+
+        public static string GetCertificatePath(string certificateName)
+        {
+            return Path.Combine(Utilities.ProjectPath, "Asset", certificateName);
         }
     }
 }

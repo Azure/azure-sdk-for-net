@@ -100,7 +100,7 @@ namespace ManageDns
 
                 // Waiting for a minute for DNS CName entry to propagate
                 Utilities.Log("Waiting a minute for CName record entry to propagate...");
-                Thread.Sleep(60 * 1000);
+                SdkContext.DelayProvider.Delay(60 * 1000);
 
                 // Step 2: Adds a web app host name binding for www.[customDomainName]
                 //         This binding action will fail if the CName record propagation is not yet completed

@@ -67,17 +67,19 @@ namespace ManageWebAppSourceControl
 
                 Utilities.Log("Deploying helloworld.War to " + app1Name + " through FTP...");
 
-                UploadFileToFtp(app1.GetPublishingProfile(), "helloworld.war", "Asset/helloworld.war").GetAwaiter().GetResult();
+                Utilities.UploadFileToFtp(
+                    app1.GetPublishingProfile(), 
+                    Path.Combine(Utilities.ProjectPath, "Asset", "helloworld.war"));
 
                 Utilities.Log("Deployment helloworld.War to web app " + app1.Name + " completed");
                 Utilities.Print(app1);
 
                 // warm up
                 Utilities.Log("Warming up " + app1Url + "/helloworld...");
-                CheckAddress("http://" + app1Url + "/helloworld");
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                Utilities.CheckAddress("http://" + app1Url + "/helloworld");
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app1Url + "/helloworld...");
-                Utilities.Log(CheckAddress("http://" + app1Url + "/helloworld"));
+                Utilities.Log(Utilities.CheckAddress("http://" + app1Url + "/helloworld"));
 
                 //============================================================
                 // Create a second web app with local git source control
@@ -102,31 +104,17 @@ namespace ManageWebAppSourceControl
                 Utilities.Log("Deploying a local Tomcat source to " + app2Name + " through Git...");
 
                 var profile = app2.GetPublishingProfile();
-                string gitCommand = "git";
-                string gitInitArgument = @"init";
-                string gitAddArgument = @"add -A";
-                string gitCommitArgument = @"commit -am ""Initial commit"" ";
-                string gitPushArgument = @"push " + string.Format("https://{0}:{1}@{2}", profile.GitUsername, profile.GitPassword, profile.GitUrl) + " master:master -f";
-
-                ProcessStartInfo info = new ProcessStartInfo(gitCommand, gitInitArgument);
-                info.WorkingDirectory = "Asset/azure-samples-appservice-helloworld";
-                Process.Start(info).WaitForExit();
-                info.Arguments = gitAddArgument;
-                Process.Start(info).WaitForExit();
-                info.Arguments = gitCommitArgument;
-                Process.Start(info).WaitForExit();
-                info.Arguments = gitPushArgument;
-                Process.Start(info).WaitForExit();
+                Utilities.DeployByGit(profile);
 
                 Utilities.Log("Deployment to web app " + app2.Name + " completed");
                 Utilities.Print(app2);
 
                 // warm up
                 Utilities.Log("Warming up " + app2Url + "/helloworld...");
-                CheckAddress("http://" + app2Url + "/helloworld");
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                Utilities.CheckAddress("http://" + app2Url + "/helloworld");
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app2Url + "/helloworld...");
-                Utilities.Log(CheckAddress("http://" + app2Url + "/helloworld"));
+                Utilities.Log(Utilities.CheckAddress("http://" + app2Url + "/helloworld"));
 
                 //============================================================
                 // Create a 3rd web app with a public GitHub repo in Azure-Samples
@@ -147,10 +135,10 @@ namespace ManageWebAppSourceControl
 
                 // warm up
                 Utilities.Log("Warming up " + app3Url + "...");
-                CheckAddress("http://" + app3Url);
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                Utilities.CheckAddress("http://" + app3Url);
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app3Url + "...");
-                Utilities.Log(CheckAddress("http://" + app3Url));
+                Utilities.Log(Utilities.CheckAddress("http://" + app3Url));
 
                 //============================================================
                 // Create a 4th web app with a personal GitHub repo and turn on continuous integration
@@ -173,10 +161,10 @@ namespace ManageWebAppSourceControl
 
                 // warm up
                 Utilities.Log("Warming up " + app4Url + "...");
-                CheckAddress("http://" + app4Url);
-                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                Utilities.CheckAddress("http://" + app4Url);
+                SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app4Url + "...");
-                Utilities.Log(CheckAddress("http://" + app4Url));
+                Utilities.Log(Utilities.CheckAddress("http://" + app4Url));
             }
             catch (FileNotFoundException)
             {
@@ -224,38 +212,6 @@ namespace ManageWebAppSourceControl
             {
                 Utilities.Log(e);
             }
-        }
-        
-        private static HttpResponseMessage CheckAddress(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                return client.GetAsync(url).Result;
-            }
-        }
-
-        public static async Task UploadFileToFtp(IPublishingProfile profile, string fileName, string filePath)
-        {
-            string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
-
-            using (var ftpClient = new FtpClient(new FtpClientConfiguration
-            {
-                Host = host,
-                Username = profile.FtpUsername,
-                Password = profile.FtpPassword
-            }))
-            {
-                var fileinfo = new FileInfo(filePath);
-                await ftpClient.LoginAsync();
-                await ftpClient.ChangeWorkingDirectoryAsync("./site/wwwroot/webapps");
-
-                using (var writeStream = await ftpClient.OpenFileWriteStreamAsync(fileName))
-                {
-                    var fileReadStream = fileinfo.OpenRead();
-                    await fileReadStream.CopyToAsync(writeStream);
-                }
-            }
-
         }
     }
 }

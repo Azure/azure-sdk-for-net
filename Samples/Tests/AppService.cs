@@ -3,94 +3,84 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class AppService
+    public class AppService : Samples.Tests.TestBase
     {
         public AppService(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppBasicTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppBasic.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppBasic.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSourceControlTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppSourceControl.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+               this.GetType().FullName,
+               ManageWebAppSourceControl.Program.RunSample,
+               Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSlotsTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppSlots.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppSlots.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSqlConnectionTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppSqlConnection.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppSqlConnection.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppStorageAccountConnectionTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppStorageAccountConnection.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+               this.GetType().FullName,
+               ManageWebAppStorageAccountConnection.Program.RunSample,
+               Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppWithDomainSslTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppWithDomainSsl.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppWithDomainSsl.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact(Skip = "TODO: Investigate and fix the failure in the product")]
         [Trait("Samples", "AppService")]
         public void ManageWebAppWithTrafficManagerTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageWebAppWithTrafficManager.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageWebAppWithTrafficManager.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
     }
 }

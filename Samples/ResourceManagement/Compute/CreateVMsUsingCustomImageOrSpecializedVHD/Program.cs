@@ -74,7 +74,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.PrintVirtualMachine(linuxVM);
 
                 // De-provision the virtual machine
-                DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, UserName, Password);
+                Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, UserName, Password);
 
                 //=============================================================
                 // Deallocate the virtual machine
@@ -169,30 +169,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 }
             }
         }
-
-        protected static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
-        {
-            try
-            {
-                using (var sshClient = new SshClient(host, port, userName, password))
-                {
-                    Utilities.Log("Trying to de-provision: " + host);
-                    sshClient.Connect();
-                    var commandToExecute = "sudo waagent -deprovision+user --force";
-                    using (var command = sshClient.CreateCommand(commandToExecute))
-                    {
-                        var commandOutput = command.Execute();
-                        Utilities.Log(commandOutput);
-                    }
-                    sshClient.Disconnect();
-                }
-            }
-            catch (Exception ex)
-            {
-                Utilities.Log(ex);
-            }
-        }
-
+        
         public static void Main(string[] args)
         {
             try

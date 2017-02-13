@@ -13,7 +13,7 @@ namespace Azure.Tests.WebApp
         private static string GroupName = "javacsmrg9b9912262";
         private static string CertificateName = "graphdmcert7720";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact(Skip = "Test requires javacsmrg9b9912262 RG to be configured manually")]
         public void CanCRUDCertificateOrder()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))

@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
-using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 
 namespace ManageWebAppWithDomainSsl
@@ -115,7 +115,7 @@ namespace ManageWebAppWithDomainSsl
 
                 Utilities.Log("Creating a self-signed certificate " + pfxPath + "...");
 
-                CreateCertificate(domainName, pfxPath, CertificatePassword);
+                Utilities.CreateCertificate(domainName, pfxPath, CertificatePassword);
 
                 Utilities.Log("Created self-signed certificate " + pfxPath);
 
@@ -128,7 +128,7 @@ namespace ManageWebAppWithDomainSsl
                                 .WithManagedHostnameBindings(domain, app1Name)
                                 .DefineSslBinding()
                                     .ForHostname(app1Name + "." + domainName)
-                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CertificatePassword)
+                                    .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), CertificatePassword)
                                     .WithSniBasedSsl()
                                     .Attach()
                                 .Apply();
@@ -142,7 +142,7 @@ namespace ManageWebAppWithDomainSsl
                                 .WithManagedHostnameBindings(domain, app2Name)
                                 .DefineSslBinding()
                                     .ForHostname(app2Name + "." + domainName)
-                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CertificatePassword)
+                                    .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), CertificatePassword)
                                     .WithSniBasedSsl()
                                     .Attach()
                                 .Apply();
@@ -192,22 +192,6 @@ namespace ManageWebAppWithDomainSsl
             {
                 Utilities.Log(e);
             }
-        }
-
-        private static HttpResponseMessage CheckAddress(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                return client.GetAsync(url).Result;
-            }
-        }
-
-        private static void CreateCertificate(string domainName, string pfxPath, string password)
-        {
-            string args = string.Format(@".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""", pfxPath, password, domainName);
-            ProcessStartInfo info = new ProcessStartInfo("powershell", args);
-            info.WorkingDirectory = "Asset";
-            Process.Start(info).WaitForExit();
         }
     }
 }

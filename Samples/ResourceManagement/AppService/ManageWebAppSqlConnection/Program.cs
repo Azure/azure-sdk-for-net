@@ -151,13 +151,5 @@ namespace ManageWebAppSqlConnection
                 Utilities.Log(e);
             }
         }
-
-        private static HttpResponseMessage CheckAddress(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                return client.GetAsync(url).Result;
-            }
-        }
     }
 }

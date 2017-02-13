@@ -21,8 +21,8 @@ namespace ManageApplicationGateway
     {
         private static readonly string UserName = "tirekicker";
         private static readonly string SshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-        private static readonly string SslCertificatePfxPath = "myTest._pfx"; // Relative to project root directory by default
-        private static readonly string SslCertificatePfxPath2 = "myTest2._pfx"; // Relative to project root directory by default
+        private static readonly string SslCertificatePfxPath = "NetworkTestCertificate1.pfx"; // Relative to project root directory by default
+        private static readonly string SslCertificatePfxPath2 = "NetworkTestCertificate2.pfx"; // Relative to project root directory by default
         private const int BackendPools = 2;
         private const int VMCountInAPool = 4;
 
@@ -237,7 +237,9 @@ namespace ManageApplicationGateway
                         .DefineRequestRoutingRule("HTTPs-443-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpsPort(443)
-                            .WithSslCertificateFromPfxFile(new FileInfo(SslCertificatePfxPath))
+                            .WithSslCertificateFromPfxFile(
+                                new FileInfo(
+                                    Utilities.GetCertificatePath(SslCertificatePfxPath)))
                             .WithSslCertificatePassword("Abc123")
                             .ToBackendHttpPort(8080)
                             .ToBackendIpAddress(IPAddresses[1, 0])
@@ -268,7 +270,9 @@ namespace ManageApplicationGateway
                         .DefineRequestRoutingRule("HTTPs-1443-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpsPort(1443)
-                            .WithSslCertificateFromPfxFile(new FileInfo(SslCertificatePfxPath2))
+                            .WithSslCertificateFromPfxFile(
+                                new FileInfo(
+                                    Utilities.GetCertificatePath(SslCertificatePfxPath2)))
                             .WithSslCertificatePassword("Abc123")
                             .ToBackendHttpPort(8080)
                             .ToBackendIpAddress(IPAddresses[0, 0])

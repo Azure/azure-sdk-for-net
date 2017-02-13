@@ -25,7 +25,7 @@ namespace DeployUsingARMTemplateWithProgress
 
             try
             {
-                var templateJson = GetTemplate();
+                var templateJson = Utilities.GetArmTemplate("ArmTemplate.json");
 
                 //=============================================================
                 // Create resource group.
@@ -60,7 +60,7 @@ namespace DeployUsingARMTemplateWithProgress
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Failed") || 
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
                 {
-                    SdkContext.DelayProvider.Delay(10000, CancellationToken.None).Wait();
+                    SdkContext.DelayProvider.Delay(10000);
                     deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
                     Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
                 }
@@ -104,21 +104,6 @@ namespace DeployUsingARMTemplateWithProgress
             {
                 Utilities.Log(ex);
             }
-        }
-
-        private static string GetTemplate()
-        {
-            var hostingPlanName = SdkContext.RandomResourceName("hpRSAT", 24);
-            var webAppName = SdkContext.RandomResourceName("wnRSAT", 24);
-            var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
-
-            var parsedTemplate = JObject.Parse(armTemplateString);
-            parsedTemplate.SelectToken("parameters.hostingPlanName")["defaultValue"] = hostingPlanName;
-            parsedTemplate.SelectToken("parameters.webSiteName")["defaultValue"] = webAppName;
-            parsedTemplate.SelectToken("parameters.skuName")["defaultValue"] = "F1";
-            parsedTemplate.SelectToken("parameters.skuCapacity")["defaultValue"] = 1;
-
-            return parsedTemplate.ToString();
         }
     }
 }

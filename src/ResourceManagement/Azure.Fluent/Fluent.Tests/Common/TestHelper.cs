@@ -1,32 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Batch.Fluent;
+using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Fluent;
+using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System;
-using Xunit.Abstractions;
 using Microsoft.Azure.Management.Sql.Fluent;
-using Microsoft.Azure.Management.AppService.Fluent;
-using Microsoft.Azure.Management.KeyVault.Fluent;
-using Microsoft.Azure.Management.Cdn.Fluent;
-using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Net.Http;
 using Microsoft.Azure.Test.HttpRecorder;
-using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
-using System.Reflection;
 using Microsoft.Rest.Azure;
-using Azure.Tests;
-using System.Diagnostics;
 using Renci.SshNet;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit.Abstractions;
 
 namespace Fluent.Tests.Common
 {
@@ -318,6 +317,21 @@ namespace Fluent.Tests.Common
                 }
                 sshClient.Disconnect();
             }
+        }
+
+        public static async Task<HttpResponseMessage> CheckAddress(string url)
+        {
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                using (var client = new HttpClient())
+                {
+                    return await client.GetAsync(url);
+                }
+            }
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                        {
+                            Content = new StringContent("Hello world from linux 4")
+                        };
         }
     }
 }

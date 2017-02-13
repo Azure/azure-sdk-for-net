@@ -8,12 +8,11 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Compute
+    public class Compute : Samples.Tests.TestBase
     {
         public Compute(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact]
@@ -82,15 +81,13 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineExtensionTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachineExtension.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageVirtualMachineExtension.Program.RunSample);
         }
 
         [Fact]

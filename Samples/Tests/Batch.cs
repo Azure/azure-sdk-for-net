@@ -8,12 +8,11 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Batch
+    public class Batch : Samples.Tests.TestBase
     {
         public Batch(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact]

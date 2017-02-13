@@ -10,8 +10,6 @@ namespace Azure.Tests
 {
     public class AzureTests
     {
-        private ISubscriptions subscriptions;
-
         public AzureTests(ITestOutputHelper output)
         {
             TestHelper.TestLogger = output;

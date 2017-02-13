@@ -3,105 +3,91 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Network
+    public class Network : Samples.Tests.TestBase
     {
         public Network(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageApplicationGatewayTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageApplicationGateway.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageApplicationGateway.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageInternalLoadBalancerTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageInternalLoadBalancer.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageInternalLoadBalancer.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact(Skip = "Fails in record mode with: Addition of a VM with managed disks to non-managed Availability Set or addition of a VM with blob based disks to managed Availability Set is not supported. Please create an Availability Set with 'managed' property set in order to add a VM with managed disks to it.")]
         [Trait("Samples", "Network")]
         public void ManageInternetFacingLoadBalancerTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageInternetFacingLoadBalancer.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageInternetFacingLoadBalancer.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageIpAddressTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageIpAddress.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageIpAddress.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageNetworkInterfaceTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageNetworkInterface.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageNetworkInterface.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageNetworkSecurityGroupTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageNetworkSecurityGroup.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageNetworkSecurityGroup.Program.RunSample);
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageSimpleApplicationGatewayTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageSimpleApplicationGateway.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageSimpleApplicationGateway.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageVirtualNetworkTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualNetwork.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageVirtualNetwork.Program.RunSample);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Tests.WebApp
 {
     public class WebAppsTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDWebApp()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))

@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Def
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace ManageTrafficManager
 {
@@ -41,8 +42,7 @@ namespace ManageTrafficManager
             string appServicePlanNamePrefix = SdkContext.RandomResourceName("jplan1_", 15);
             string webAppNamePrefix = SdkContext.RandomResourceName("webapp1-", 20);
             string tmName = SdkContext.RandomResourceName("jsdktm-", 20);
-
-
+            
             // The regions in which web app needs to be created
             //
             regions.Add(Region.USWest2);
@@ -50,7 +50,7 @@ namespace ManageTrafficManager
             regions.Add(Region.AsiaEast);
             regions.Add(Region.IndiaWest);
             regions.Add(Region.USCentral);
-
+            
             try
             {
                 azure.ResourceGroups.Define(rgName)
@@ -86,7 +86,7 @@ namespace ManageTrafficManager
 
                 var pfxPath = domainName + ".pfx";
                 Utilities.Log("Creating a self-signed certificate " + pfxPath + "...");
-                CreateCertificate(domainName, pfxPath, certPassword);
+                Utilities.CreateCertificate(domainName, pfxPath, certPassword);
                 Utilities.Log("Created self-signed certificate " + pfxPath);
 
                 //============================================================
@@ -124,7 +124,7 @@ namespace ManageTrafficManager
                             .WithManagedHostnameBindings(domain, webAppName)
                             .DefineSslBinding()
                             .ForHostname(webAppName + "." + domain.Name)
-                            .WithPfxCertificateToUpload("Asset/" + pfxPath, certPassword)
+                            .WithPfxCertificateToUpload(Path.Combine(Utilities.ProjectPath, "Asset", pfxPath), certPassword)
                             .WithSniBasedSsl()
                             .Attach()
                             .DefineSourceControl()
@@ -257,14 +257,6 @@ namespace ManageTrafficManager
             {
                 Utilities.Log(e);
             }
-        }
-
-        private static void CreateCertificate(string domainName, string pfxPath, string password)
-        {
-            string args = string.Format(@".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""", pfxPath, password, domainName);
-            ProcessStartInfo info = new ProcessStartInfo("powershell", args);
-            info.WorkingDirectory = "Asset";
-            Process.Start(info).WaitForExit();
         }
     }
 }

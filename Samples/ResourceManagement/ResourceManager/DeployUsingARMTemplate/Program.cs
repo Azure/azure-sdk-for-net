@@ -22,7 +22,7 @@ namespace DeployUsingARMTemplate
 
             try
             {
-                var templateJson = GetTemplate();
+                var templateJson = Utilities.GetArmTemplate("ArmTemplate.json");
 
                 //=============================================================
                 // Create resource group.
@@ -85,21 +85,6 @@ namespace DeployUsingARMTemplate
             {
                 Utilities.Log(ex);
             }
-        }
-
-        private static string GetTemplate()
-        {
-            var hostingPlanName = SdkContext.RandomResourceName("hpRSAT", 24);
-            var webAppName = SdkContext.RandomResourceName("wnRSAT", 24);
-            var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
-
-            var parsedTemplate = JObject.Parse(armTemplateString);
-            parsedTemplate.SelectToken("parameters.hostingPlanName")["defaultValue"] = hostingPlanName;
-            parsedTemplate.SelectToken("parameters.webSiteName")["defaultValue"] = webAppName;
-            parsedTemplate.SelectToken("parameters.skuName")["defaultValue"] = "F1";
-            parsedTemplate.SelectToken("parameters.skuCapacity")["defaultValue"] = 1;
-
-            return parsedTemplate.ToString();
         }
     }
 }

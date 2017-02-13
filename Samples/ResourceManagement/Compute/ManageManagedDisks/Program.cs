@@ -384,7 +384,7 @@ namespace ManageManagedDisks
                     .Create();
 
             // De-provision the virtual machine
-            DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
+            Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
             Utilities.Log("Deallocate VM: " + linuxVM.Id);
             linuxVM.Deallocate();
             Utilities.Log("Deallocated VM: " + linuxVM.Id + "; state = " + linuxVM.PowerState);
@@ -416,7 +416,7 @@ namespace ManageManagedDisks
                     .Create();
 
             // De-provision the virtual machine
-            DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
+            Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
             Utilities.Log("Deallocate VM: " + linuxVM.Id);
             linuxVM.Deallocate();
             Utilities.Log("Deallocated VM: " + linuxVM.Id + "; state = " + linuxVM.PowerState);
@@ -425,30 +425,7 @@ namespace ManageManagedDisks
             Utilities.Log("Generalized VM: " + linuxVM.Id);
             return linuxVM;
         }
-
-        protected static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
-        {
-            try
-            {
-                using (var sshClient = new SshClient(host, port, userName, password))
-                {
-                    Utilities.Log("Trying to de-provision: " + host);
-                    sshClient.Connect();
-                    var commandToExecute = "sudo waagent -deprovision+user --force";
-                    using (var command = sshClient.CreateCommand(commandToExecute))
-                    {
-                        var commandOutput = command.Execute();
-                        Utilities.Log(commandOutput);
-                    }
-                    sshClient.Disconnect();
-                }
-            }
-            catch (Exception ex)
-            {
-                Utilities.Log(ex);
-            }
-        }
-
+        
         private static INetwork PrepareNetwork(IAzure azure, Region region, string rgName)
         {
             var vnetName = SdkContext.RandomResourceName("vnet", 24);

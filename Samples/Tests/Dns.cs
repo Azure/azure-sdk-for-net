@@ -8,12 +8,11 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Dns
+    public class Dns : Samples.Tests.TestBase
     {
         public Dns(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact(Skip = "TODO: Record test with pre-configured DNS")]
