@@ -8,16 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using DataLake;
-    using Management;
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
     using Newtonsoft.Json;
-    using Store;
-    using System.Linq;
 
     /// <summary>
     /// Data Lake Store error details information

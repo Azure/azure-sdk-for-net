@@ -8,18 +8,8 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using DataLake;
-    using Management;
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
     using Newtonsoft.Json;
-    using Rest;
     using Rest.Serialization;
-    using Store;
-    using System.Linq;
 
     /// <summary>
     /// Data Lake Store Trusted Identity Provider update parameters

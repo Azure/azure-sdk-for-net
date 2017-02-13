@@ -20,30 +20,27 @@
   },
 
   "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5, 4.0)"
   },
 
   "frameworks": {
     "net45": {
+      "buildOptions": {
+        "define": [ "NET45" ],
+        "debugType": "portable"
+      },
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)"
       }
     },
     "netstandard1.5": {
-      "imports": [ "dnxcore50" ],
-      "buildOptions": { "define": [ "PORTABLE" ] },
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "imports": ["dnxcore50"],
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.Net.Http": "4.1.0",
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Threading.Tasks": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
-        "System.Collections.Concurrent": "4.0.12",
-        "System.Threading.Thread": "4.0.0",
-        "System.IO.FileSystem": "4.0.1",
-        "System.IO": "4.1.0",
-        "System.Text.Encoding": "4.0.11",
-        "System.Runtime.Extensions": "4.1.0"
+        "NETStandard.Library": "1.6.1",
+        "System.Threading.Thread": "4.3.0"
       }
     }
   }

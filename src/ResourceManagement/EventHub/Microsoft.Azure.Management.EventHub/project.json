@@ -19,36 +19,36 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5, 4.0)"
   },
 
   "frameworks": {
     "net45": {
+      "buildOptions": {
+        "define": [ "NET45" ],
+        "debugType": "portable"
+      },
       "dependencies": {
       }
     },
     "netstandard1.5": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
       "imports": ["dnxcore50"],
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "System.Diagnostics.Debug": "4.0.11",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.Diagnostics.Tracing": "4.1.0",
-        "Microsoft.CSharp": "4.0.1",
-        "System.Threading.Thread": "4.0.0", 
-        "System.Threading.Tasks": "4.0.11",
-        "System.Threading.Timer": "4.0.1",
-        "System.Collections": "4.0.11",
-        "System.Linq": "4.1.0",
-        "System.Runtime": "4.1.0",
-        "System.Net.Http": "4.1.0",
-        "System.Runtime.Serialization.Primitives": "4.1.1"
+        "NETStandard.Library": "1.6.1"
       }
     },
     "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
       "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1"
+        "NETStandard.Library": "1.6.1"
       }
     }
   }

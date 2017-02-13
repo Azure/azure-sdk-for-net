@@ -8,13 +8,6 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
-    using Newtonsoft.Json;
-    using System.Linq;
-
     /// <summary>
     /// A WebHDFS exception thrown when an unexpected error occurs during an
     /// operation. Thrown when a 500 error response code is returned (Internal
