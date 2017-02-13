@@ -44,19 +44,23 @@ namespace TestFramework.Net45Tests
         }
 
         [Theory]
-        [InlineData("SubscriptionId=18b0dcf-550319fa5eac;" +
-                "AADTenant=72f988bf-2d7cd011db47;" +
+        [InlineData("SubscriptionId=<updateSubId>;" +
+                "AADTenant=dcfa120f-9293-4f06-b3d2-cf728bcabb10;" +
                 "HttpRecorderMode=Record;" +
-                "Environment=Prod;" +
+                "Environment=Custom;" +
                 "ResourceManagementUri=https://management.microsoftazure.de/;" +
                 "ServiceManagementUri=https://management.core.cloudapi.de/;" +
                 "GalleryUri=https://gallery.cloudapi.de/;" +
                 "GraphUri=https://graph.cloudapi.de/;" +
                 "AADAuthUri=https://login.microsoftonline.de/;" +
                 "IbizaPortalUri=http://portal.microsoftazure.de/;" +
-                "RdfePortalUri=https://management.core.cloudapi.de/")]
+                "RdfePortalUri=https://management.core.cloudapi.de/;" +
+                "GraphTokenAudienceUri=https://graph.cloudapi.de/;" +
+                "AADTokenAudienceUri=https://management.core.cloudapi.de/"
+            )]
         public void InteractiveLoginGermanCloud(string connStr)
         {
+            //"AADAuthUri=https://login.microsoftonline.de/;" +
             // Log in for this test case using your alias
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
             HttpMockServer.Mode = HttpRecorderMode.Record;

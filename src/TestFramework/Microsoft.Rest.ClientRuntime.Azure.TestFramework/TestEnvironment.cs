@@ -364,10 +364,17 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
                 if (subscriptionList.Any<SubscriptionInfo>())
                 {
-                    matchedSubscriptionId = subscriptionList.Where((sub) => sub.SubscriptionId.Equals(this.SubscriptionId, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().SubscriptionId;
-                    foreach (SubscriptionInfo subInfo in subscriptionList)
+                    var matchedSubs = subscriptionList.Where((sub) => sub.SubscriptionId.Equals(this.SubscriptionId, StringComparison.OrdinalIgnoreCase));
+                    if(matchedSubs.IsAny<SubscriptionInfo>())
                     {
-                        subs += subInfo.Id + ",";
+                        matchedSubscriptionId = matchedSubs.FirstOrDefault().SubscriptionId;
+                    }
+                    else
+                    {
+                        foreach (SubscriptionInfo subInfo in subscriptionList)
+                        {
+                            subs += subInfo.SubscriptionId + ",";
+                        }
                     }
                 }
 

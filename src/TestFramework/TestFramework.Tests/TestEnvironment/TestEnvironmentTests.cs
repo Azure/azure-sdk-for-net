@@ -20,7 +20,7 @@ namespace TestFramework.Tests.TestEnvironment
         [Fact]
         public void DefaultTenantInTestEnvironment()
         {
-            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=2c224e7e-57b-e71f4662e3a6;ServicePrincipal=4c9b80e8e4-7c2233383b4e;ServicePrincipalSecret=kzSj3+tSXIdRsX8mxuQe7yZY=;Environment=Prod");
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=2c224e7e-57b-4662e3a6;ServicePrincipal=4c9b80e8e4-73383b4e;ServicePrincipalSecret=kzSjRsX8uQe7yZY=;Environment=Prod");
             HttpMockServer.Mode = HttpRecorderMode.Playback;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
             string tenantId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];
