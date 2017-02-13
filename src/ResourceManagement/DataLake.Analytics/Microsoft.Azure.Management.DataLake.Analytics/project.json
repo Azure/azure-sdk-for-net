@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.0.1-preview",
   "description": "Provides Data Lake Analytics account, job and catalog management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 

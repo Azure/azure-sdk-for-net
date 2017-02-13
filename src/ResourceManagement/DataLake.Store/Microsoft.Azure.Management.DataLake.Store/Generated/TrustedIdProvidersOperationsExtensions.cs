@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the trusted
+            /// The name of the Data Lake Store account to add or replace the trusted
             /// identity provider.
             /// </param>
             /// <param name='trustedIdProviderName'>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// of providers in the account.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create the create the trusted identity provider.
+            /// Parameters supplied to create or replace the trusted identity provider.
             /// </param>
             public static TrustedIdProvider CreateOrUpdate(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters)
             {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the trusted
+            /// The name of the Data Lake Store account to add or replace the trusted
             /// identity provider.
             /// </param>
             /// <param name='trustedIdProviderName'>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// of providers in the account.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create the create the trusted identity provider.
+            /// Parameters supplied to create or replace the trusted identity provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -82,6 +82,64 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task<TrustedIdProvider> CreateOrUpdateAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the specified trusted identity provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account to which to update the trusted
+            /// identity provider.
+            /// </param>
+            /// <param name='trustedIdProviderName'>
+            /// The name of the trusted identity provider. This is used for differentiation
+            /// of providers in the account.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update the trusted identity provider.
+            /// </param>
+            public static TrustedIdProvider Update(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, UpdateTrustedIdProviderParameters parameters = default(UpdateTrustedIdProviderParameters))
+            {
+                return operations.UpdateAsync(resourceGroupName, accountName, trustedIdProviderName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the specified trusted identity provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account to which to update the trusted
+            /// identity provider.
+            /// </param>
+            /// <param name='trustedIdProviderName'>
+            /// The name of the trusted identity provider. This is used for differentiation
+            /// of providers in the account.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update the trusted identity provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TrustedIdProvider> UpdateAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, UpdateTrustedIdProviderParameters parameters = default(UpdateTrustedIdProviderParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -56,13 +56,18 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Possible values include: 'Consumption', 'Commitment_1TB',
         /// 'Commitment_10TB', 'Commitment_100TB', 'Commitment_500TB',
         /// 'Commitment_1PB', 'Commitment_5PB'</param>
-        public DataLakeStoreAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FirewallState? firewallState = default(FirewallState?), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), string defaultGroup = default(string), TierType? newTier = default(TierType?))
+        /// <param name="firewallAllowAzureIps">The current state of allowing
+        /// or disallowing IPs originating within Azure through the firewall.
+        /// If the firewall is disabled, this is not enforced. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        public DataLakeStoreAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FirewallState? firewallState = default(FirewallState?), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), string defaultGroup = default(string), TierType? newTier = default(TierType?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?))
         {
             Tags = tags;
             FirewallState = firewallState;
             TrustedIdProviderState = trustedIdProviderState;
             DefaultGroup = defaultGroup;
             NewTier = newTier;
+            FirewallAllowAzureIps = firewallAllowAzureIps;
         }
 
         /// <summary>
@@ -105,6 +110,15 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.newTier")]
         public TierType? NewTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of allowing or disallowing IPs
+        /// originating within Azure through the firewall. If the firewall is
+        /// disabled, this is not enforced. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallAllowAzureIps")]
+        public FirewallAllowAzureIpsState? FirewallAllowAzureIps { get; set; }
 
     }
 }

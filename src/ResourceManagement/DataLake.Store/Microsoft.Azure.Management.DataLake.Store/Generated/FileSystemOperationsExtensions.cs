@@ -331,7 +331,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             /// <param name='streamContents'>
             /// A list of Data Lake Store paths (starting with '/') of the source files.
-            /// Must be in the format: sources=&lt;comma separated list&gt;
+            /// Must be a comma-separated path list in the format:
+            /// sources=/file/path/1.txt,/file/path/2.txt,/file/path/lastfile.csv
             /// </param>
             /// <param name='deleteSourceDirectory'>
             /// Indicates that as an optimization instead of deleting each individual
@@ -365,7 +366,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             /// <param name='streamContents'>
             /// A list of Data Lake Store paths (starting with '/') of the source files.
-            /// Must be in the format: sources=&lt;comma separated list&gt;
+            /// Must be a comma-separated path list in the format:
+            /// sources=/file/path/1.txt,/file/path/2.txt,/file/path/lastfile.csv
             /// </param>
             /// <param name='deleteSourceDirectory'>
             /// Indicates that as an optimization instead of deleting each individual

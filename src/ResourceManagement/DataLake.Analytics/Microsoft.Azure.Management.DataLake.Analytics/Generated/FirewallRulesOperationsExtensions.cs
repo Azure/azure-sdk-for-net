@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DataLake.Store
+namespace Microsoft.Azure.Management.DataLake.Analytics
 {
     using Azure;
     using DataLake;
@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to add or replace the firewall
+            /// The name of the Data Lake Analytics account to add or replace the firewall
             /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
@@ -59,11 +59,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to add or replace the firewall
+            /// The name of the Data Lake Analytics account to add or replace the firewall
             /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
@@ -90,11 +90,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to update the firewall
+            /// The name of the Data Lake Analytics account to which to update the firewall
             /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
@@ -115,11 +115,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to update the firewall
+            /// The name of the Data Lake Analytics account to which to update the firewall
             /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
@@ -140,19 +140,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Deletes the specified firewall rule from the specified Data Lake Store
+            /// Deletes the specified firewall rule from the specified Data Lake Analytics
             /// account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the firewall
-            /// rule.
+            /// The name of the Data Lake Analytics account from which to delete the
+            /// firewall rule.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to delete.
@@ -163,19 +163,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Deletes the specified firewall rule from the specified Data Lake Store
+            /// Deletes the specified firewall rule from the specified Data Lake Analytics
             /// account
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the firewall
-            /// rule.
+            /// The name of the Data Lake Analytics account from which to delete the
+            /// firewall rule.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to delete.
@@ -189,17 +189,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
+            /// Gets the specified Data Lake Analytics firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
+            /// The name of the Data Lake Analytics account from which to get the firewall
             /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
@@ -211,17 +211,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
+            /// Gets the specified Data Lake Analytics firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
+            /// The name of the Data Lake Analytics account from which to get the firewall
             /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
@@ -239,18 +239,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+            /// Analytics account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
+            /// The name of the Data Lake Analytics account from which to get the firewall
             /// rules.
             /// </param>
             public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
@@ -259,18 +259,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+            /// Analytics account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
+            /// The name of the Azure resource group that contains the Data Lake Analytics
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
+            /// The name of the Data Lake Analytics account from which to get the firewall
             /// rules.
             /// </param>
             /// <param name='cancellationToken'>
@@ -285,8 +285,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+            /// Analytics account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -300,8 +300,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+            /// Analytics account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -322,5 +322,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
     }
 }
+
 
 

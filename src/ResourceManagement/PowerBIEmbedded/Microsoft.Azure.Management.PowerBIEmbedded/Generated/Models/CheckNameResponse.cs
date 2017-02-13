@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
 
         /// <summary>
         /// Gets or sets message indicating an unavailable name due to a
-        /// conflict or a description of the naming rules that are violated.
+        /// conflict, or a description of the naming rules that are violated.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

@@ -284,6 +284,52 @@ namespace DataLakeStore.Tests
         }
 
         [Fact]
+        public void DataLakeStoreFileSystemGetContentSummaryForFileAndFolder()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
+                        fileContentsToAdd.Length);
+                    CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        fileContentsToAdd);
+
+                    // get content summary for the root folder, which should contain the file and directory created
+                    // it should also have at least one more directory.
+                    var contentSummary = commonData.DataLakeStoreFileSystemClient.FileSystem.GetContentSummary(
+                        commonData.DataLakeStoreFileSystemAccountName,
+                        "/");
+                    Assert.True(contentSummary.ContentSummary.FileCount >= 1);
+                    Assert.True(contentSummary.ContentSummary.DirectoryCount >= 2);
+                    Assert.True(contentSummary.ContentSummary.Length >= fileContentsToAdd.Length);
+                    Assert.True(contentSummary.ContentSummary.SpaceConsumed >= fileContentsToAdd.Length);
+
+                    // get content summary for the folder
+                    contentSummary = commonData.DataLakeStoreFileSystemClient.FileSystem.GetContentSummary(
+                        commonData.DataLakeStoreFileSystemAccountName,
+                        folderToCreate);
+                    Assert.Equal(1, contentSummary.ContentSummary.FileCount);
+                    Assert.Equal(1, contentSummary.ContentSummary.DirectoryCount);
+                    Assert.Equal(fileContentsToAdd.Length, contentSummary.ContentSummary.Length);
+                    Assert.Equal(fileContentsToAdd.Length, contentSummary.ContentSummary.SpaceConsumed);
+
+                    // get the content summary for the file
+                    contentSummary = commonData.DataLakeStoreFileSystemClient.FileSystem.GetContentSummary(
+                        commonData.DataLakeStoreFileSystemAccountName,
+                        filePath);
+                    Assert.Equal(1, contentSummary.ContentSummary.FileCount);
+                    Assert.Equal(0, contentSummary.ContentSummary.DirectoryCount);
+                    Assert.Equal(fileContentsToAdd.Length, contentSummary.ContentSummary.Length);
+                    Assert.Equal(fileContentsToAdd.Length, contentSummary.ContentSummary.SpaceConsumed);
+                }
+            }
+        }
+
+        [Fact]
         public void DataLakeStoreFileSystemAppendToFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
