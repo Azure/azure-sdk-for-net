@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// features. Bit 0 is set to 1 indicates graph is enabled, or disabled
         /// if set to 0. Bit 1 is set to 1 indicates the hub is disabled, or
         /// enabled if set to 0.</param>
+        /// <param name="hubBillingInfo">Billing settings of the hub.</param>
         public Hub(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string apiEndpoint = default(string), string webEndpoint = default(string), string provisioningState = default(string), int? tenantFeatures = default(int?), HubBillingInfoFormat hubBillingInfo = default(HubBillingInfoFormat))
             : base(location, id, name, type, tags)
         {
@@ -82,6 +83,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public int? TenantFeatures { get; set; }
 
         /// <summary>
+        /// Gets or sets billing settings of the hub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hubBillingInfo")]
         public HubBillingInfoFormat HubBillingInfo { get; set; }

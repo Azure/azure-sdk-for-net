@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Initializes a new instance of the SalesforceConnectorProperties
         /// class.
         /// </summary>
+        /// <param name="usersetting">The user settings.</param>
         /// <param name="salesforcetables">The Salesforce tables.</param>
         public SalesforceConnectorProperties(SalesforceDiscoverSetting usersetting, IList<SalesforceTable> salesforcetables)
         {
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         }
 
         /// <summary>
+        /// Gets or sets the user settings.
         /// </summary>
         [JsonProperty(PropertyName = "usersetting")]
         public SalesforceDiscoverSetting Usersetting { get; set; }

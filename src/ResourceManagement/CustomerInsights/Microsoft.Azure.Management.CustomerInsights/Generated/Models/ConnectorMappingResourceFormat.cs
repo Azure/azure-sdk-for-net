@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// map to. Possible values include: 'None', 'Profile', 'Interaction',
         /// 'Relationship'</param>
         /// <param name="entityTypeName">The mapping entity name.</param>
+        /// <param name="mappingProperties">The properties of the
+        /// mapping.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -146,6 +148,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string DataFormatId { get; protected set; }
 
         /// <summary>
+        /// Gets or sets the properties of the mapping.
         /// </summary>
         [JsonProperty(PropertyName = "properties.mappingProperties")]
         public ConnectorMappingProperties MappingProperties { get; set; }

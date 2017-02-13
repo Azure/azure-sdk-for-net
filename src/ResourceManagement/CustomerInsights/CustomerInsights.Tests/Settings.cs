@@ -12,7 +12,5 @@ namespace CustomerInsights.Tests
         public const string HubName = "sdktestbn3";
 
         public const string Region = "centralus";
-
-        public const string ClientSettingsProviderServiceUri = "";
     }
 }

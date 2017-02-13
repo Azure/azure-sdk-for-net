@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Property/Properties which represent a unique id.
+    /// Property/Properties which represent a unique ID.
     /// </summary>
     public partial class StrongId
     {
@@ -30,8 +30,10 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <summary>
         /// Initializes a new instance of the StrongId class.
         /// </summary>
+        /// <param name="keyPropertyNames">The properties which make up the
+        /// unique ID.</param>
         /// <param name="strongIdName">The Name identifying the strong
-        /// Id.</param>
+        /// ID.</param>
         /// <param name="displayName">Localized display name.</param>
         /// <param name="description">Localized descriptions.</param>
         public StrongId(IList<string> keyPropertyNames, string strongIdName, IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>))
@@ -43,12 +45,13 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         }
 
         /// <summary>
+        /// Gets or sets the properties which make up the unique ID.
         /// </summary>
         [JsonProperty(PropertyName = "keyPropertyNames")]
         public IList<string> KeyPropertyNames { get; set; }
 
         /// <summary>
-        /// Gets or sets the Name identifying the strong Id.
+        /// Gets or sets the Name identifying the strong ID.
         /// </summary>
         [JsonProperty(PropertyName = "strongIdName")]
         public string StrongIdName { get; set; }
