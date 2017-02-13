@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
         }
 
         /// <summary>
-        /// Gets or sets name of the resource group that the Power BI
-        /// Workspace Collections will be migrated to.
+        /// Gets or sets name of the resource group the Power BI workspace
+        /// collections will be migrated to.
         /// </summary>
         [JsonProperty(PropertyName = "targetResourceGroup")]
         public string TargetResourceGroup { get; set; }
