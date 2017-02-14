@@ -146,7 +146,7 @@
 	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupCrud.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupDatabaseOperations.json">
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupDatabaseOperations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2JobAccountScenarioTest\JobAccountCRUDTest.json">
