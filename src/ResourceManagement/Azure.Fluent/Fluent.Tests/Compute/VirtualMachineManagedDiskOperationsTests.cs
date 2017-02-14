@@ -72,7 +72,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }
@@ -243,7 +247,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }
@@ -419,7 +427,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }
@@ -507,7 +519,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }
@@ -575,7 +591,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }
@@ -618,7 +638,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }

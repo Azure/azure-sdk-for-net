@@ -80,7 +80,11 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(GroupName);
+                    try
+                    { 
+                        resourceManager.ResourceGroups.DeleteByName(GroupName);
+                    }
+                    catch { }
                 }
             }
         }
@@ -184,13 +188,13 @@ namespace Fluent.Tests.Compute
                         Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
                     }
                 }
-                catch (Exception exception)
-                {
-                    Assert.True(false, exception.Message);
-                }
                 finally
                 {
-                    azure.ResourceGroups.DeleteByName(resourceGroupName);
+                    try
+                    { 
+                        azure.ResourceGroups.DeleteByName(resourceGroupName);
+                    }
+                    catch { }
                 }
             }
         }
