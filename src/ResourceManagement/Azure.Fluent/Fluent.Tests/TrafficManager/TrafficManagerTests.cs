@@ -254,7 +254,11 @@ namespace Azure.Tests.TrafficManager
                 }
                 finally
                 {
-                    azure.ResourceGroups.DeleteByName(groupName);
+                    try
+                    { 
+                        azure.ResourceGroups.DeleteByName(groupName);
+                    }
+                    catch { }
                 }
             }
         }

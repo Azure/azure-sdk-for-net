@@ -245,13 +245,13 @@ namespace Azure.Tests.Dns
 
                     azure.DnsZones.DeleteById(dnsZone.Id);
                 }
-                catch (Exception exception)
-                {
-                    Assert.True(false, exception.Message);
-                }
                 finally
                 {
-                    azure.ResourceGroups.DeleteByName(groupName);
+                    try
+                    { 
+                        azure.ResourceGroups.DeleteByName(groupName);
+                    }
+                    catch { }
                 }
             }
         }

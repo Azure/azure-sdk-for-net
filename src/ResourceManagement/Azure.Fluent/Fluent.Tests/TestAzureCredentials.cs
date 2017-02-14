@@ -26,7 +26,5 @@ namespace Azure.Tests
             }
             await base.ProcessHttpRequestAsync(request, cancellationToken);
         }
-
-
     }
 }
