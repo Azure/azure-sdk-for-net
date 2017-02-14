@@ -19,9 +19,7 @@
     <Compile Include="ScenarioTests\Sql2.JobAccountScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.SecurityAlertScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.ElasticPoolScenarioTests.cs" />
-    <Compile Include="ScenarioTests\Sql2.FailoverGroupScenarioTests.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="ScenarioTests\Sql2.FailoverGroupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.LocationCapabilitiesTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedIndexScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServerAdministratorScenarioTests.cs" />
