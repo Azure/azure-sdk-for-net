@@ -16,9 +16,9 @@
 namespace CustomerInsights.Tests.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.CustomerInsights.Models;
@@ -57,24 +57,7 @@ namespace CustomerInsights.Tests.Tests
 
                 var assignmentName = TestUtilities.GenerateName("assignmentName");
 
-                var rbacResourceFormat = new RoleAssignmentResourceFormat
-                                             {
-                                                 Role = RoleTypes.Admin,
-                                                 Principals =
-                                                     new[]
-                                                         {
-                                                             new AssignmentPrincipal
-                                                                 {
-                                                                     PrincipalType = "User",
-                                                                     PrincipalId = Guid.NewGuid().ToString("N")
-                                                                 },
-                                                             new AssignmentPrincipal
-                                                                 {
-                                                                     PrincipalType = "User",
-                                                                     PrincipalId = Guid.NewGuid().ToString("N")
-                                                                 }
-                                                         }
-                                             };
+                var rbacResourceFormat = Helpers.GetTestRoleAssignment(RoleTypes.Admin, 2);
                 var response = aciClient.RoleAssignments.CreateOrUpdate(
                     ResourceGroupName,
                     HubName,
@@ -101,19 +84,7 @@ namespace CustomerInsights.Tests.Tests
                 Assert.True(getRbacResource.Principals.Count == 2);
                 Assert.Equal(getRbacResource.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
 
-                var rbacResourceUpdateFormat = new RoleAssignmentResourceFormat
-                                                   {
-                                                       Role = RoleTypes.Admin,
-                                                       Principals =
-                                                           new[]
-                                                               {
-                                                                   new AssignmentPrincipal
-                                                                       {
-                                                                           PrincipalType = "User",
-                                                                           PrincipalId = Guid.NewGuid().ToString("N")
-                                                                       }
-                                                               }
-                                                   };
+                var rbacResourceUpdateFormat = Helpers.GetTestRoleAssignment(RoleTypes.Admin, 1);
                 var updateRbacresponse = aciClient.RoleAssignments.CreateOrUpdate(
                     ResourceGroupName,
                     HubName,
@@ -142,19 +113,7 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(getUpdateRbacResource1.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
                 Assert.True(getUpdateRbacResource1.Principals.Count == 1);
 
-                var rbacResourceUpdateFormat2 = new RoleAssignmentResourceFormat
-                                                    {
-                                                        Role = RoleTypes.Reader,
-                                                        Principals =
-                                                            new[]
-                                                                {
-                                                                    new AssignmentPrincipal
-                                                                        {
-                                                                            PrincipalType = "User",
-                                                                            PrincipalId = Guid.NewGuid().ToString("N")
-                                                                        }
-                                                                }
-                                                    };
+                var rbacResourceUpdateFormat2 = Helpers.GetTestRoleAssignment(RoleTypes.Reader, 1);
 
                 try
                 {
@@ -189,32 +148,8 @@ namespace CustomerInsights.Tests.Tests
                 var assignmentName1 = TestUtilities.GenerateName("assignmentName1");
                 var assignmentName2 = TestUtilities.GenerateName("assignmentName2");
 
-                var rbacResourceFormat1 = new RoleAssignmentResourceFormat
-                                              {
-                                                  Role = RoleTypes.Admin,
-                                                  Principals =
-                                                      new[]
-                                                          {
-                                                              new AssignmentPrincipal
-                                                                  {
-                                                                      PrincipalType = "User",
-                                                                      PrincipalId = Guid.NewGuid().ToString("N")
-                                                                  }
-                                                          }
-                                              };
-                var rbacResourceFormat2 = new RoleAssignmentResourceFormat
-                                              {
-                                                  Role = RoleTypes.Admin,
-                                                  Principals =
-                                                      new[]
-                                                          {
-                                                              new AssignmentPrincipal
-                                                                  {
-                                                                      PrincipalType = "User",
-                                                                      PrincipalId = Guid.NewGuid().ToString("N")
-                                                                  }
-                                                          }
-                                              };
+                var rbacResourceFormat1 = Helpers.GetTestRoleAssignment(RoleTypes.Admin, 1);
+                var rbacResourceFormat2 = Helpers.GetTestRoleAssignment(RoleTypes.Admin, 1);
 
                 aciClient.RoleAssignments.CreateOrUpdate(
                     ResourceGroupName,

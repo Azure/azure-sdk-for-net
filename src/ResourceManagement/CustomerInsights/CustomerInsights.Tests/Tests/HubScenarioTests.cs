@@ -15,10 +15,8 @@
 
 namespace CustomerInsights.Tests.Tests
 {
-    using System;
     using System.Linq;
     using System.Net;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.CustomerInsights.Models;

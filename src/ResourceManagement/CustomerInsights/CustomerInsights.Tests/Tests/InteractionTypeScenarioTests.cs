@@ -17,10 +17,8 @@ namespace CustomerInsights.Tests.Tests
 {
     using System;
     using System.Linq;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
-    using Microsoft.Azure.Management.CustomerInsights.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     using Xunit;
@@ -53,31 +51,7 @@ namespace CustomerInsights.Tests.Tests
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
                 var interactionName = TestUtilities.GenerateName("TestInteractionType");
-                var interactionResourceFormat = new InteractionResourceFormat
-                                                    {
-                                                        ApiEntitySetName = interactionName,
-                                                        PrimaryParticipantProfilePropertyName = "profile1",
-                                                        IdPropertyNames = new[] { interactionName },
-                                                        Fields =
-                                                            new[]
-                                                                {
-                                                                    new PropertyDefinition
-                                                                        {
-                                                                            FieldName = interactionName,
-                                                                            FieldType = "Edm.String",
-                                                                            IsArray = false,
-                                                                            IsRequired = true
-                                                                        },
-                                                                    new PropertyDefinition
-                                                                        {
-                                                                            FieldName = "profile1",
-                                                                            FieldType = "Edm.String"
-                                                                        }
-                                                                },
-                                                        SmallImage = "\\Images\\smallImage",
-                                                        MediumImage = "\\Images\\MediumImage",
-                                                        LargeImage = "\\Images\\LargeImage"
-                                                    };
+                var interactionResourceFormat = Helpers.GetTestInteraction(interactionName, "profile1");
 
                 //Create interaction and verify
                 var interactionResult = aciClient.Interactions.CreateOrUpdate(
@@ -116,60 +90,9 @@ namespace CustomerInsights.Tests.Tests
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
                 var interactionName1 = TestUtilities.GenerateName("TestInteractionType1");
-                var interactionResourceFormat1 = new InteractionResourceFormat
-                                                     {
-                                                         //EntityType = "Interaction",
-                                                         ApiEntitySetName = interactionName1,
-                                                         PrimaryParticipantProfilePropertyName = "profile1",
-                                                         IdPropertyNames = new[] { interactionName1 },
-                                                         Fields =
-                                                             new[]
-                                                                 {
-                                                                     new PropertyDefinition
-                                                                         {
-                                                                             FieldName = interactionName1,
-                                                                             FieldType = "Edm.String",
-                                                                             IsArray = false,
-                                                                             IsRequired = true
-                                                                         },
-                                                                     new PropertyDefinition
-                                                                         {
-                                                                             FieldName = "profile1",
-                                                                             FieldType = "Edm.String"
-                                                                         }
-                                                                 },
-                                                         SmallImage = "\\Images\\smallImage",
-                                                         MediumImage = "\\Images\\MediumImage",
-                                                         LargeImage = "\\Images\\LargeImage"
-                                                     };
+                var interactionResourceFormat1 = Helpers.GetTestInteraction(interactionName1, "profile1");
                 var interactionName2 = TestUtilities.GenerateName("TestInteractionType2");
-                var interactionResourceFormat2 = new InteractionResourceFormat
-                                                     {
-                                                         //EntityType = "Interaction",
-                                                         ApiEntitySetName = interactionName2,
-                                                         PrimaryParticipantProfilePropertyName = "profile2",
-                                                         IdPropertyNames = new[] { interactionName2 },
-                                                         SchemaItemTypeLink = "",
-                                                         Fields =
-                                                             new[]
-                                                                 {
-                                                                     new PropertyDefinition
-                                                                         {
-                                                                             FieldName = interactionName2,
-                                                                             FieldType = "Edm.String",
-                                                                             IsArray = false,
-                                                                             IsRequired = true
-                                                                         },
-                                                                     new PropertyDefinition
-                                                                         {
-                                                                             FieldName = "profile2",
-                                                                             FieldType = "Edm.String"
-                                                                         }
-                                                                 },
-                                                         SmallImage = "\\Images\\smallImage",
-                                                         MediumImage = "\\Images\\MediumImage",
-                                                         LargeImage = "\\Images\\LargeImage"
-                                                     };
+                var interactionResourceFormat2 = Helpers.GetTestInteraction(interactionName2, "profile2");
 
                 //Create interaction and verify
                 aciClient.Interactions.CreateOrUpdate(

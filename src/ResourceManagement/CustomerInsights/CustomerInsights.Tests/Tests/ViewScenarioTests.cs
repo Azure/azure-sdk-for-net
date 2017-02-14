@@ -16,11 +16,9 @@
 
 namespace CustomerInsights.Tests.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.CustomerInsights.Models;
@@ -97,7 +95,6 @@ namespace CustomerInsights.Tests.Tests
                                                   DisplayName = new Dictionary<string, string> { { "en", "some name" } },
                                                   Definition =
                                                       @"{""isProfileType"":false,""profileTypes"":[],""widgets"":[],""style"":[]}",
-                                                  //@"{""id"":"""",""name"":"""",""version"":"""",""sources"":[],""widgets"":[]}",
                                                   UserId = userId
                                               };
                 var viewResourceFormat2 = new ViewResourceFormat
@@ -105,7 +102,6 @@ namespace CustomerInsights.Tests.Tests
                                                   DisplayName = new Dictionary<string, string> { { "en", "some name" } },
                                                   Definition =
                                                       @"{""isProfileType"":false,""profileTypes"":[],""widgets"":[],""style"":[]}",
-                                                  //@"{""id"":"""",""name"":"""",""version"":"""",""sources"":[],""widgets"":[]}",
                                                   UserId = userId
                                               };
 
