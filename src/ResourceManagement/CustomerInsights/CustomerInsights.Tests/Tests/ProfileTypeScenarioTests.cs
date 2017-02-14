@@ -16,12 +16,9 @@
 namespace CustomerInsights.Tests.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
-    using Microsoft.Azure.Management.CustomerInsights.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     using Xunit;
@@ -55,77 +52,7 @@ namespace CustomerInsights.Tests.Tests
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
                 var profileName = TestUtilities.GenerateName("TestProfileType");
-                var profileResourceFormat = new ProfileResourceFormat
-                                                {
-                                                    ApiEntitySetName = profileName,
-                                                    Fields =
-                                                        new[]
-                                                            {
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "Id",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "ProfileId",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "LastName",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = profileName,
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "SavingAccountBalance",
-                                                                        FieldType = "Edm.Int32",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    }
-                                                            },
-                                                    StrongIds =
-                                                        new List<StrongId>
-                                                            {
-                                                                new StrongId
-                                                                    {
-                                                                        StrongIdName = "Id",
-                                                                        Description = null,
-                                                                        DisplayName = null,
-                                                                        KeyPropertyNames =
-                                                                            new List<string> { "Id", "SavingAccountBalance" }
-                                                                    },
-                                                                new StrongId
-                                                                    {
-                                                                        StrongIdName = "ProfileId",
-                                                                        Description = null,
-                                                                        DisplayName = null,
-                                                                        KeyPropertyNames =
-                                                                            new List<string> { "ProfileId", "LastName" }
-                                                                    }
-                                                            },
-                                                    DisplayName = null,
-                                                    Description = null,
-                                                    Attributes = null,
-                                                    SchemaItemTypeLink = "SchemaItemTypeLink",
-                                                    LocalizedAttributes = null,
-                                                    SmallImage = "\\Images\\smallImage",
-                                                    MediumImage = "\\Images\\MediumImage",
-                                                    LargeImage = "\\Images\\LargeImage"
-                                                };
+                var profileResourceFormat = Helpers.GetTestProfile(profileName);
 
                 //Create profile and verify
                 var profileResult = aciClient.Profiles.CreateOrUpdate(
@@ -162,146 +89,8 @@ namespace CustomerInsights.Tests.Tests
                 var profileName1 = TestUtilities.GenerateName("TestProfileType1");
                 var profileName2 = TestUtilities.GenerateName("TestProfileType2");
 
-                var profileResourceFormat1 = new ProfileResourceFormat
-                                                 {
-                                                     ApiEntitySetName = profileName1,
-                                                     Fields =
-                                                         new[]
-                                                             {
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "Id",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "ProfileId",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "LastName",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = profileName1,
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "FirstName",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     }
-                                                             },
-                                                     StrongIds =
-                                                         new List<StrongId>
-                                                             {
-                                                                 new StrongId
-                                                                     {
-                                                                         StrongIdName = "Id",
-                                                                         Description = null,
-                                                                         DisplayName = null,
-                                                                         KeyPropertyNames = new List<string> { "Id", "FirstName" }
-                                                                     },
-                                                                 new StrongId
-                                                                     {
-                                                                         StrongIdName = "ProfileId",
-                                                                         Description = null,
-                                                                         DisplayName = null,
-                                                                         KeyPropertyNames =
-                                                                             new List<string> { "ProfileId", "LastName" }
-                                                                     }
-                                                             },
-                                                     DisplayName = null,
-                                                     Description = null,
-                                                     Attributes = null,
-                                                     SchemaItemTypeLink = "SchemaItemTypeLink",
-                                                     LocalizedAttributes = null,
-                                                     SmallImage = "\\Images\\smallImage",
-                                                     MediumImage = "\\Images\\MediumImage",
-                                                     LargeImage = "\\Images\\LargeImage"
-                                                 };
-                var profileResourceFormat2 = new ProfileResourceFormat
-                                                 {
-                                                     ApiEntitySetName = profileName2,
-                                                     Fields =
-                                                         new[]
-                                                             {
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "Id",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "ProfileId",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "LastName",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = profileName2,
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     },
-                                                                 new PropertyDefinition
-                                                                     {
-                                                                         FieldName = "FirstName",
-                                                                         FieldType = "Edm.String",
-                                                                         IsArray = false,
-                                                                         IsRequired = true
-                                                                     }
-                                                             },
-                                                     StrongIds =
-                                                         new List<StrongId>
-                                                             {
-                                                                 new StrongId
-                                                                     {
-                                                                         StrongIdName = "Id",
-                                                                         Description = null,
-                                                                         DisplayName = null,
-                                                                         KeyPropertyNames = new List<string> { "Id", "FirstName" }
-                                                                     },
-                                                                 new StrongId
-                                                                     {
-                                                                         StrongIdName = "ProfileId",
-                                                                         Description = null,
-                                                                         DisplayName = null,
-                                                                         KeyPropertyNames =
-                                                                             new List<string> { "ProfileId", "LastName" }
-                                                                     }
-                                                             },
-                                                     DisplayName = null,
-                                                     Description = null,
-                                                     Attributes = null,
-                                                     SchemaItemTypeLink = "SchemaItemTypeLink",
-                                                     LocalizedAttributes = null,
-                                                     SmallImage = "\\Images\\smallImage",
-                                                     MediumImage = "\\Images\\MediumImage",
-                                                     LargeImage = "\\Images\\LargeImage"
-                                                 };
+                var profileResourceFormat1 = Helpers.GetTestProfile(profileName1);
+                var profileResourceFormat2 = Helpers.GetTestProfile(profileName2);
 
                 //Create profile and verify
                 aciClient.Profiles.CreateOrUpdate(ResourceGroupName, HubName, profileName1, profileResourceFormat1);

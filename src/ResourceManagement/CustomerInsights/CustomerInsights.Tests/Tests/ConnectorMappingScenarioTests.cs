@@ -16,7 +16,6 @@
 namespace CustomerInsights.Tests.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
 
@@ -55,49 +54,10 @@ namespace CustomerInsights.Tests.Tests
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
                 var interactionName = TestUtilities.GenerateName("TestInteractionType");
-                var interactionResourceFormat = new InteractionResourceFormat
-                                                    {
-                                                        ApiEntitySetName = interactionName,
-                                                        PrimaryParticipantProfilePropertyName = "profile1",
-                                                        IdPropertyNames = new[] { interactionName },
-                                                        Fields =
-                                                            new[]
-                                                                {
-                                                                    new PropertyDefinition
-                                                                        {
-                                                                            FieldName = interactionName,
-                                                                            FieldType = "Edm.String",
-                                                                            IsArray = false,
-                                                                            IsRequired = true
-                                                                        },
-                                                                    new PropertyDefinition
-                                                                        {
-                                                                            FieldName = "profile1",
-                                                                            FieldType = "Edm.String",
-                                                                            IsArray = false,
-                                                                            IsRequired = false
-                                                                        }
-                                                                },
-                                                        SmallImage = "\\Images\\smallImage",
-                                                        MediumImage = "\\Images\\MediumImage",
-                                                        LargeImage = "\\Images\\LargeImage"
-                                                    };
+                var interactionResourceFormat = Helpers.GetTestInteraction(interactionName, "profile1");
 
                 var connectorName = TestUtilities.GenerateName("testConnector");
-                var connectorResourceFormat = new ConnectorResourceFormat
-                                                  {
-                                                      DisplayName = connectorName,
-                                                      Description = "Test connector",
-                                                      ConnectorType = ConnectorTypes.AzureBlob,
-                                                      ConnectorProperties =
-                                                          new Dictionary<string, object>
-                                                              {
-                                                                      {
-                                                                          "connectionKeyVaultUrl",
-                                                                          $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
-                                                                      }
-                                                              }
-                                                  };
+                var connectorResourceFormat = Helpers.GetTestConnector(connectorName, "Test connector");
 
                 var connectorMappingName = TestUtilities.GenerateName("testMapping");
                 var connectorMappingResourceFormat = new ConnectorMappingResourceFormat
@@ -156,7 +116,7 @@ namespace CustomerInsights.Tests.Tests
                                                                      }
                                                          };
 
-                var interactionResult = aciClient.Interactions.CreateOrUpdate(
+                aciClient.Interactions.CreateOrUpdate(
                     ResourceGroupName,
                     HubName,
                     interactionName,

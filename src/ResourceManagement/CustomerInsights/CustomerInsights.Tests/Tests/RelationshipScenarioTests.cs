@@ -19,7 +19,6 @@ namespace CustomerInsights.Tests.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.CustomerInsights.Models;
@@ -57,77 +56,7 @@ namespace CustomerInsights.Tests.Tests
 
                 var profileName = TestUtilities.GenerateName("testProfile232");
                 var relationshipName = TestUtilities.GenerateName("testRelationship232");
-                var profileResourceFormat = new ProfileResourceFormat
-                                                {
-                                                    ApiEntitySetName = profileName,
-                                                    Fields =
-                                                        new[]
-                                                            {
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "Id",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "ProfileId",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "LastName",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = profileName,
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "SavingAccountBalance",
-                                                                        FieldType = "Edm.Int32",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    }
-                                                            },
-                                                    StrongIds =
-                                                        new List<StrongId>
-                                                            {
-                                                                new StrongId
-                                                                    {
-                                                                        StrongIdName = "Id",
-                                                                        Description = null,
-                                                                        DisplayName = null,
-                                                                        KeyPropertyNames =
-                                                                            new List<string> { "Id", "SavingAccountBalance" }
-                                                                    },
-                                                                new StrongId
-                                                                    {
-                                                                        StrongIdName = "ProfileId",
-                                                                        Description = null,
-                                                                        DisplayName = null,
-                                                                        KeyPropertyNames =
-                                                                            new List<string> { "ProfileId", "LastName" }
-                                                                    }
-                                                            },
-                                                    DisplayName = null,
-                                                    Description = null,
-                                                    Attributes = null,
-                                                    SchemaItemTypeLink = "SchemaItemTypeLink",
-                                                    LocalizedAttributes = null,
-                                                    SmallImage = "\\Images\\smallImage",
-                                                    MediumImage = "\\Images\\MediumImage",
-                                                    LargeImage = "\\Images\\LargeImage"
-                                                };
+                var profileResourceFormat = Helpers.GetTestProfile(profileName);
 
                 aciClient.Profiles.CreateOrUpdate(ResourceGroupName, HubName, profileName, profileResourceFormat);
 
@@ -146,7 +75,6 @@ namespace CustomerInsights.Tests.Tests
                                                                          { "en-us", "Relationship Description" }
                                                                  },
                                                          Cardinality = CardinalityTypes.OneToOne
-                                                         //Fields = new PropertyDefinition[] { }
                                                      };
 
                 var relationship = aciClient.Relationships.CreateOrUpdate(

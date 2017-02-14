@@ -19,7 +19,6 @@ namespace CustomerInsights.Tests.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.CustomerInsights.Models;
@@ -45,6 +44,28 @@ namespace CustomerInsights.Tests.Tests
         /// </summary>
         private static readonly string ResourceGroupName;
 
+        /// <summary>
+        ///     The test policy
+        /// </summary>
+        private readonly AuthorizationPolicyResourceFormat testPolicy = new AuthorizationPolicyResourceFormat
+                                                                            {
+                                                                                Permissions =
+                                                                                    new List<PermissionTypes?>
+                                                                                        {
+                                                                                            PermissionTypes.Read,
+                                                                                            PermissionTypes.Write,
+                                                                                            PermissionTypes.Manage
+                                                                                        },
+                                                                                PrimaryKey =
+                                                                                    Convert.ToBase64String(
+                                                                                        Encoding.UTF8.GetBytes(
+                                                                                            "primaryTestRead")),
+                                                                                SecondaryKey =
+                                                                                    Convert.ToBase64String(
+                                                                                        Encoding.UTF8.GetBytes(
+                                                                                            "secondaryTestRead"))
+                                                                            };
+
         [Fact]
         public void CreateAndReadAuthorizationPolicy()
         {
@@ -54,26 +75,11 @@ namespace CustomerInsights.Tests.Tests
 
                 var policyName = TestUtilities.GenerateName("testPolicy");
 
-                var policyResourceFormat = new AuthorizationPolicyResourceFormat
-                                               {
-                                                   Permissions =
-                                                       new List<PermissionTypes?>
-                                                           {
-                                                               PermissionTypes.Read,
-                                                               PermissionTypes.Write,
-                                                               PermissionTypes.Manage
-                                                           },
-                                                   PrimaryKey =
-                                                       Convert.ToBase64String(Encoding.UTF8.GetBytes("primaryTestRead")),
-                                                   SecondaryKey =
-                                                       Convert.ToBase64String(Encoding.UTF8.GetBytes("secondaryTestRead"))
-                                               };
-
                 var resultPolicy = aciClient.AuthorizationPolicies.CreateOrUpdate(
                     ResourceGroupName,
                     HubName,
                     policyName,
-                    policyResourceFormat);
+                    this.testPolicy);
 
                 Assert.Equal(policyName, resultPolicy.PolicyName);
                 Assert.Equal(resultPolicy.Name, HubName + "/" + policyName, StringComparer.OrdinalIgnoreCase);
@@ -104,46 +110,8 @@ namespace CustomerInsights.Tests.Tests
                 var policyName1 = TestUtilities.GenerateName("testPolicy");
                 var policyName2 = TestUtilities.GenerateName("testPolicy");
 
-                var policyResourceFormat1 = new AuthorizationPolicyResourceFormat
-                                                {
-                                                    Permissions =
-                                                        new List<PermissionTypes?>
-                                                            {
-                                                                PermissionTypes.Read,
-                                                                PermissionTypes.Write,
-                                                                PermissionTypes.Manage
-                                                            },
-                                                    PrimaryKey =
-                                                        Convert.ToBase64String(Encoding.UTF8.GetBytes("primaryTestRead1")),
-                                                    SecondaryKey =
-                                                        Convert.ToBase64String(Encoding.UTF8.GetBytes("secondaryTestRead1"))
-                                                };
-
-                var policyResourceFormat2 = new AuthorizationPolicyResourceFormat
-                                                {
-                                                    Permissions =
-                                                        new List<PermissionTypes?>
-                                                            {
-                                                                PermissionTypes.Read,
-                                                                PermissionTypes.Write,
-                                                                PermissionTypes.Manage
-                                                            },
-                                                    PrimaryKey =
-                                                        Convert.ToBase64String(Encoding.UTF8.GetBytes("primaryTestRead2")),
-                                                    SecondaryKey =
-                                                        Convert.ToBase64String(Encoding.UTF8.GetBytes("secondaryTestRead2"))
-                                                };
-
-                aciClient.AuthorizationPolicies.CreateOrUpdate(
-                    ResourceGroupName,
-                    HubName,
-                    policyName1,
-                    policyResourceFormat1);
-                aciClient.AuthorizationPolicies.CreateOrUpdate(
-                    ResourceGroupName,
-                    HubName,
-                    policyName2,
-                    policyResourceFormat2);
+                aciClient.AuthorizationPolicies.CreateOrUpdate(ResourceGroupName, HubName, policyName1, this.testPolicy);
+                aciClient.AuthorizationPolicies.CreateOrUpdate(ResourceGroupName, HubName, policyName2, this.testPolicy);
 
                 TestUtilities.Wait(1000);
 
@@ -165,26 +133,11 @@ namespace CustomerInsights.Tests.Tests
 
                 var policyName = TestUtilities.GenerateName("testPolicy");
 
-                var policyResourceFormat = new AuthorizationPolicyResourceFormat
-                                               {
-                                                   Permissions =
-                                                       new List<PermissionTypes?>
-                                                           {
-                                                               PermissionTypes.Read,
-                                                               PermissionTypes.Write,
-                                                               PermissionTypes.Manage
-                                                           },
-                                                   PrimaryKey =
-                                                       Convert.ToBase64String(Encoding.UTF8.GetBytes("primaryTestRead")),
-                                                   SecondaryKey =
-                                                       Convert.ToBase64String(Encoding.UTF8.GetBytes("secondaryTestRead"))
-                                               };
-
                 var resultPolicy = aciClient.AuthorizationPolicies.CreateOrUpdate(
                     ResourceGroupName,
                     HubName,
                     policyName,
-                    policyResourceFormat);
+                    this.testPolicy);
                 Assert.Equal(resultPolicy.Name, HubName + "/" + policyName);
                 Assert.Equal(resultPolicy.Type, "Microsoft.CustomerInsights/hubs/AuthorizationPolicies");
 
@@ -206,26 +159,11 @@ namespace CustomerInsights.Tests.Tests
 
                 var policyName = TestUtilities.GenerateName("testPolicy");
 
-                var policyResourceFormat = new AuthorizationPolicyResourceFormat
-                                               {
-                                                   Permissions =
-                                                       new List<PermissionTypes?>
-                                                           {
-                                                               PermissionTypes.Read,
-                                                               PermissionTypes.Write,
-                                                               PermissionTypes.Manage
-                                                           },
-                                                   PrimaryKey =
-                                                       Convert.ToBase64String(Encoding.UTF8.GetBytes("primaryTestRead")),
-                                                   SecondaryKey =
-                                                       Convert.ToBase64String(Encoding.UTF8.GetBytes("secondaryTestRead"))
-                                               };
-
                 var resultPolicy = aciClient.AuthorizationPolicies.CreateOrUpdate(
                     ResourceGroupName,
                     HubName,
                     policyName,
-                    policyResourceFormat);
+                    this.testPolicy);
                 Assert.Equal(resultPolicy.Name, HubName + "/" + policyName);
                 Assert.Equal(resultPolicy.Type, "Microsoft.CustomerInsights/hubs/AuthorizationPolicies");
                 var policyWithNewKey = aciClient.AuthorizationPolicies.RegenerateSecondaryKey(

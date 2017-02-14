@@ -16,13 +16,10 @@
 namespace CustomerInsights.Tests.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;
 
     using Microsoft.Azure.Management.CustomerInsights;
-    using Microsoft.Azure.Management.CustomerInsights.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     using Xunit;
@@ -56,20 +53,7 @@ namespace CustomerInsights.Tests.Tests
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
                 var connectorName = TestUtilities.GenerateName("testConnector");
-                var connectorResourceFormat = new ConnectorResourceFormat
-                                                  {
-                                                      DisplayName = connectorName,
-                                                      Description = "Test connector",
-                                                      ConnectorType = ConnectorTypes.AzureBlob,
-                                                      ConnectorProperties =
-                                                          new Dictionary<string, object>
-                                                              {
-                                                                      {
-                                                                          "connectionKeyVaultUrl",
-                                                                          $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
-                                                                      }
-                                                              }
-                                                  };
+                var connectorResourceFormat = Helpers.GetTestConnector(connectorName, "Test connector");
 
                 var createdConnector = aciClient.Connectors.CreateOrUpdate(
                     ResourceGroupName,
@@ -108,36 +92,10 @@ namespace CustomerInsights.Tests.Tests
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
                 var connectorName1 = "testConnector1";
-                var connectorResourceFormat1 = new ConnectorResourceFormat
-                                                   {
-                                                       DisplayName = connectorName1,
-                                                       Description = "Test connector 1",
-                                                       ConnectorType = ConnectorTypes.AzureBlob,
-                                                       ConnectorProperties =
-                                                           new Dictionary<string, object>
-                                                               {
-                                                                       {
-                                                                           "connectionKeyVaultUrl",
-                                                                           $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
-                                                                       }
-                                                               }
-                                                   };
+                var connectorResourceFormat1 = Helpers.GetTestConnector(connectorName1, "Test connector 1");
 
                 var connectorName2 = "testConnector2";
-                var connectorResourceFormat2 = new ConnectorResourceFormat
-                                                   {
-                                                       DisplayName = connectorName2,
-                                                       Description = "Test connector 2",
-                                                       ConnectorType = ConnectorTypes.AzureBlob,
-                                                       ConnectorProperties =
-                                                           new Dictionary<string, object>
-                                                               {
-                                                                       {
-                                                                           "connectionKeyVaultUrl",
-                                                                           $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
-                                                                       }
-                                                               }
-                                                   };
+                var connectorResourceFormat2 = Helpers.GetTestConnector(connectorName2, "Test connector 2");
 
                 aciClient.Connectors.CreateOrUpdate(
                     ResourceGroupName,

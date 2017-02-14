@@ -55,77 +55,7 @@ namespace CustomerInsights.Tests.Tests
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
                 var profileName = TestUtilities.GenerateName("testProfile232");
-                var profileResourceFormat = new ProfileResourceFormat
-                                                {
-                                                    ApiEntitySetName = profileName,
-                                                    Fields =
-                                                        new[]
-                                                            {
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "Id",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "ProfileId",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "LastName",
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = profileName,
-                                                                        FieldType = "Edm.String",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    },
-                                                                new PropertyDefinition
-                                                                    {
-                                                                        FieldName = "SavingAccountBalance",
-                                                                        FieldType = "Edm.Int32",
-                                                                        IsArray = false,
-                                                                        IsRequired = true
-                                                                    }
-                                                            },
-                                                    StrongIds =
-                                                        new List<StrongId>
-                                                            {
-                                                                new StrongId
-                                                                    {
-                                                                        StrongIdName = "Id",
-                                                                        Description = null,
-                                                                        DisplayName = null,
-                                                                        KeyPropertyNames =
-                                                                            new List<string> { "Id", "SavingAccountBalance" }
-                                                                    },
-                                                                new StrongId
-                                                                    {
-                                                                        StrongIdName = "ProfileId",
-                                                                        Description = null,
-                                                                        DisplayName = null,
-                                                                        KeyPropertyNames =
-                                                                            new List<string> { "ProfileId", "LastName" }
-                                                                    }
-                                                            },
-                                                    DisplayName = null,
-                                                    Description = null,
-                                                    Attributes = null,
-                                                    SchemaItemTypeLink = "SchemaItemTypeLink",
-                                                    LocalizedAttributes = null,
-                                                    SmallImage = "\\Images\\smallImage",
-                                                    MediumImage = "\\Images\\MediumImage",
-                                                    LargeImage = "\\Images\\LargeImage"
-                                                };
+                var profileResourceFormat = Helpers.GetTestProfile(profileName);
 
                 var kpiName = TestUtilities.GenerateName("kpiTest4545");
 
