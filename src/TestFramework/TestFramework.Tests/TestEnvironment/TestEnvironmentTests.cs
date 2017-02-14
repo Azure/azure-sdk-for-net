@@ -14,7 +14,7 @@ namespace TestFramework.Tests.TestEnvironment
         public void EmptyTestEnvironment()
         {
             TestEnvironment env = new TestEnvironment();
-            Assert.Equal<int>(4, env.EnvEndpoints.Count);
+            Assert.Equal<int>(5, env.EnvEndpoints.Count);
         }
 
         [Fact]
