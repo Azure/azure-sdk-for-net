@@ -50,7 +50,7 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<string>("", ibizaUri);
         }
 
-        [Fact]
+        [Theory]
         [InlineData("SubscriptionId=18b0dcf-550319fa5eac;" +
                 "AADTenant=72f988bf-2d7cd011db47;" +
                 "HttpRecorderMode=Playback;" +
