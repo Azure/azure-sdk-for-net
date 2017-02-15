@@ -50,8 +50,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vlanId">The VLAN ID.</param>
         /// <param name="microsoftPeeringConfig">The Microsoft peering
         /// configuration.</param>
-        /// <param name="routeFilter">The reference of the RouteFilter
-        /// resource.</param>
         /// <param name="stats">Gets peering stats.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
@@ -59,14 +57,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="gatewayManagerEtag">The GatewayManager Etag.</param>
         /// <param name="lastModifiedBy">Gets whether the provider or the
         /// customer last modified the peering.</param>
-        /// <param name="routeFilter">The reference of the RouteFilter
-        /// resource.</param>
         /// <param name="name">Gets name of the resource that is unique within
         /// a resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), RouteFilter routeFilter = default(RouteFilter), string name = default(string), string etag = default(string))
+        /// <param name="routeFilter">The reference of the RouteFilter
+        /// resource.</param>
+        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string), RouteFilter routeFilter = default(RouteFilter)) 
             : base(id)
         {
             PeeringType = peeringType;
@@ -80,14 +78,13 @@ namespace Microsoft.Azure.Management.Network.Models
             SharedKey = sharedKey;
             VlanId = vlanId;
             MicrosoftPeeringConfig = microsoftPeeringConfig;
-            RouteFilter = routeFilter;
             Stats = stats;
             ProvisioningState = provisioningState;
             GatewayManagerEtag = gatewayManagerEtag;
             LastModifiedBy = lastModifiedBy;
-            RouteFilter = routeFilter;
             Name = name;
             Etag = etag;
+            RouteFilter = routeFilter;
         }
 
         /// <summary>
@@ -161,12 +158,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the RouteFilter resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.routeFilter")]
-        public RouteFilter RouteFilter { get; set; }
-
-        /// <summary>
         /// Gets peering stats.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stats")]
@@ -193,12 +184,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string LastModifiedBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the RouteFilter resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.routeFilter")]
-        public RouteFilter RouteFilter { get; set; }
-
-        /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource.
         /// </summary>
@@ -211,6 +196,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; protected set; }
-
+        
+        /// <summary>
+        /// Gets or sets the reference of the RouteFilter resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeFilter")]
+        public RouteFilter RouteFilter { get; set; }
     }
 }
