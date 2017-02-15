@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The AS2 agreement protocol settings.
+    /// </summary>
     public partial class AS2ProtocolSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2ProtocolSettings class.
         /// </summary>
-        public AS2ProtocolSettings(AS2MessageConnectionSettings messageConnectionSettings = default(AS2MessageConnectionSettings), AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings = default(AS2AcknowledgementConnectionSettings), AS2MdnSettings mdnSettings = default(AS2MdnSettings), AS2SecuritySettings securitySettings = default(AS2SecuritySettings), AS2ValidationSettings validationSettings = default(AS2ValidationSettings), AS2EnvelopeSettings envelopeSettings = default(AS2EnvelopeSettings), AS2ErrorSettings errorSettings = default(AS2ErrorSettings))
+        public AS2ProtocolSettings(AS2MessageConnectionSettings messageConnectionSettings, AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings, AS2MdnSettings mdnSettings, AS2SecuritySettings securitySettings, AS2ValidationSettings validationSettings, AS2EnvelopeSettings envelopeSettings, AS2ErrorSettings errorSettings)
         {
             MessageConnectionSettings = messageConnectionSettings;
             AcknowledgementConnectionSettings = acknowledgementConnectionSettings;
@@ -79,5 +82,70 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "errorSettings")]
         public AS2ErrorSettings ErrorSettings { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MessageConnectionSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageConnectionSettings");
+            }
+            if (AcknowledgementConnectionSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AcknowledgementConnectionSettings");
+            }
+            if (MdnSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MdnSettings");
+            }
+            if (SecuritySettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SecuritySettings");
+            }
+            if (ValidationSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ValidationSettings");
+            }
+            if (EnvelopeSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EnvelopeSettings");
+            }
+            if (ErrorSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ErrorSettings");
+            }
+            if (this.MessageConnectionSettings != null)
+            {
+                this.MessageConnectionSettings.Validate();
+            }
+            if (this.AcknowledgementConnectionSettings != null)
+            {
+                this.AcknowledgementConnectionSettings.Validate();
+            }
+            if (this.MdnSettings != null)
+            {
+                this.MdnSettings.Validate();
+            }
+            if (this.SecuritySettings != null)
+            {
+                this.SecuritySettings.Validate();
+            }
+            if (this.ValidationSettings != null)
+            {
+                this.ValidationSettings.Validate();
+            }
+            if (this.EnvelopeSettings != null)
+            {
+                this.EnvelopeSettings.Validate();
+            }
+            if (this.ErrorSettings != null)
+            {
+                this.ErrorSettings.Validate();
+            }
+        }
     }
 }

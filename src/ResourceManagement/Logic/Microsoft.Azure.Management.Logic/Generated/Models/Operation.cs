@@ -16,35 +16,36 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class IntegrationAccountContentHash
+    /// <summary>
+    /// Logic REST API operation
+    /// </summary>
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountContentHash
-        /// class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public IntegrationAccountContentHash() { }
+        public Operation() { }
 
         /// <summary>
-        /// Initializes a new instance of the IntegrationAccountContentHash
-        /// class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public IntegrationAccountContentHash(string algorithm = default(string), string value = default(string))
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
-            Algorithm = algorithm;
-            Value = value;
+            Name = name;
+            Display = display;
         }
 
         /// <summary>
-        /// Gets or sets the conetnt hash algorithm.
+        /// Gets or sets operation name: {provider}/{resource}/{operation}
         /// </summary>
-        [JsonProperty(PropertyName = "algorithm")]
-        public string Algorithm { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the content hash value.
+        /// Gets or sets the object that represents the operation.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; set; }
 
     }
 }

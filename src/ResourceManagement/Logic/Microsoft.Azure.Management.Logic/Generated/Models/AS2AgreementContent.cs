@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account AS2 agreement content.
+    /// </summary>
     public partial class AS2AgreementContent
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2AgreementContent class.
         /// </summary>
-        public AS2AgreementContent(AS2OneWayAgreement receiveAgreement = default(AS2OneWayAgreement), AS2OneWayAgreement sendAgreement = default(AS2OneWayAgreement))
+        public AS2AgreementContent(AS2OneWayAgreement receiveAgreement, AS2OneWayAgreement sendAgreement)
         {
             ReceiveAgreement = receiveAgreement;
             SendAgreement = sendAgreement;
@@ -44,5 +47,30 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "sendAgreement")]
         public AS2OneWayAgreement SendAgreement { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ReceiveAgreement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReceiveAgreement");
+            }
+            if (SendAgreement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SendAgreement");
+            }
+            if (this.ReceiveAgreement != null)
+            {
+                this.ReceiveAgreement.Validate();
+            }
+            if (this.SendAgreement != null)
+            {
+                this.SendAgreement.Validate();
+            }
+        }
     }
 }

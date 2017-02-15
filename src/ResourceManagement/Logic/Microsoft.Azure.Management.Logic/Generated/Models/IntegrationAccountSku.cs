@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account sku.
+    /// </summary>
     public partial class IntegrationAccountSku
     {
         /// <summary>
@@ -26,17 +29,26 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountSku class.
         /// </summary>
-        public IntegrationAccountSku(SkuName? name = default(SkuName?))
+        public IntegrationAccountSku(IntegrationAccountSkuName name)
         {
             Name = name;
         }
 
         /// <summary>
         /// Gets or sets the sku name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
+        /// 'NotSpecified', 'Free', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName? Name { get; set; }
+        public IntegrationAccountSkuName Name { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

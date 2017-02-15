@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow run action filter.
+    /// </summary>
     public partial class WorkflowRunActionFilter
     {
         /// <summary>
@@ -32,10 +35,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the status of workflow run action.
-        /// Possible values include: 'NotSpecified', 'Paused', 'Running',
-        /// 'Waiting', 'Succeeded', 'Skipped', 'Suspended', 'Cancelled',
-        /// 'Failed', 'Faulted', 'TimedOut', 'Aborted', 'Ignored'
+        /// Gets or sets the status of workflow run action. Possible values
+        /// include: 'NotSpecified', 'Paused', 'Running', 'Waiting',
+        /// 'Succeeded', 'Skipped', 'Suspended', 'Cancelled', 'Failed',
+        /// 'Faulted', 'TimedOut', 'Aborted', 'Ignored'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public WorkflowStatus? Status { get; set; }

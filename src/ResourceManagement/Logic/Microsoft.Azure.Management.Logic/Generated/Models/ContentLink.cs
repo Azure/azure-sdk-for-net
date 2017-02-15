@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The content link.
+    /// </summary>
     public partial class ContentLink
     {
         /// <summary>
@@ -36,31 +39,31 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the content link URI.
+        /// Gets or sets the content link URI.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the content version.
+        /// Gets or sets the content version.
         /// </summary>
         [JsonProperty(PropertyName = "contentVersion")]
         public string ContentVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the content size.
+        /// Gets or sets the content size.
         /// </summary>
         [JsonProperty(PropertyName = "contentSize")]
         public long? ContentSize { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the content hash.
+        /// Gets or sets the content hash.
         /// </summary>
         [JsonProperty(PropertyName = "contentHash")]
         public ContentHash ContentHash { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the metadata.
+        /// Gets or sets the metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public object Metadata { get; set; }

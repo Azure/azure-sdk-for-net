@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Extension methods for IntegrationAccountMapsOperations.
+    /// Extension methods for PartnersOperations.
     /// </summary>
-    public static partial class IntegrationAccountMapsOperationsExtensions
+    public static partial class PartnersOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of integration account maps.
+            /// Gets a list of integration account partners.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IntegrationAccountMap> List(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountMapFilter> odataQuery = default(ODataQuery<IntegrationAccountMapFilter>))
+            public static IPage<IntegrationAccountPartner> ListByIntegrationAccounts(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountPartnerFilter> odataQuery = default(ODataQuery<IntegrationAccountPartnerFilter>))
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountMapsOperations)s).ListAsync(resourceGroupName, integrationAccountName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPartnersOperations)s).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of integration account maps.
+            /// Gets a list of integration account partners.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,16 +61,16 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountMap>> ListAsync(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountMapFilter> odataQuery = default(ODataQuery<IntegrationAccountMapFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountPartner>> ListByIntegrationAccountsAsync(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountPartnerFilter> odataQuery = default(ODataQuery<IntegrationAccountPartnerFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, integrationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsWithHttpMessagesAsync(resourceGroupName, integrationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets an integration account map.
+            /// Gets an integration account partner.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,16 +81,16 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
+            /// <param name='partnerName'>
+            /// The integration account partner name.
             /// </param>
-            public static IntegrationAccountMap Get(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName)
+            public static IntegrationAccountPartner Get(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountMapsOperations)s).GetAsync(resourceGroupName, integrationAccountName, mapName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPartnersOperations)s).GetAsync(resourceGroupName, integrationAccountName, partnerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets an integration account map.
+            /// Gets an integration account partner.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,22 +101,22 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
+            /// <param name='partnerName'>
+            /// The integration account partner name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountMap> GetAsync(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountPartner> GetAsync(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, integrationAccountName, mapName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, integrationAccountName, partnerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates or updates an integration account map.
+            /// Creates or updates an integration account partner.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,19 +127,19 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
+            /// <param name='partnerName'>
+            /// The integration account partner name.
             /// </param>
-            /// <param name='map'>
-            /// The integration account map.
+            /// <param name='partner'>
+            /// The integration account partner.
             /// </param>
-            public static IntegrationAccountMap CreateOrUpdate(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName, IntegrationAccountMap map)
+            public static IntegrationAccountPartner CreateOrUpdate(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName, IntegrationAccountPartner partner)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountMapsOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, mapName, map), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPartnersOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, partnerName, partner), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates an integration account map.
+            /// Creates or updates an integration account partner.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -150,25 +150,25 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
+            /// <param name='partnerName'>
+            /// The integration account partner name.
             /// </param>
-            /// <param name='map'>
-            /// The integration account map.
+            /// <param name='partner'>
+            /// The integration account partner.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountMap> CreateOrUpdateAsync(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName, IntegrationAccountMap map, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountPartner> CreateOrUpdateAsync(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName, IntegrationAccountPartner partner, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, integrationAccountName, mapName, map, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, integrationAccountName, partnerName, partner, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes an integration account map.
+            /// Deletes an integration account partner.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -179,16 +179,16 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
+            /// <param name='partnerName'>
+            /// The integration account partner name.
             /// </param>
-            public static void Delete(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName)
+            public static void Delete(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName)
             {
-                Task.Factory.StartNew(s => ((IIntegrationAccountMapsOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, mapName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IPartnersOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, partnerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes an integration account map.
+            /// Deletes an integration account partner.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -199,19 +199,19 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
+            /// <param name='partnerName'>
+            /// The integration account partner name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIntegrationAccountMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, mapName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, partnerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
-            /// Gets a list of integration account maps.
+            /// Gets a list of integration account partners.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -219,13 +219,13 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IntegrationAccountMap> ListNext(this IIntegrationAccountMapsOperations operations, string nextPageLink)
+            public static IPage<IntegrationAccountPartner> ListByIntegrationAccountsNext(this IPartnersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountMapsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPartnersOperations)s).ListByIntegrationAccountsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of integration account maps.
+            /// Gets a list of integration account partners.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,9 +236,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountMap>> ListNextAsync(this IIntegrationAccountMapsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountPartner>> ListByIntegrationAccountsNextAsync(this IPartnersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Extension methods for IntegrationAccountCertificatesOperations.
+    /// Extension methods for CertificatesOperations.
     /// </summary>
-    public static partial class IntegrationAccountCertificatesOperationsExtensions
+    public static partial class CertificatesOperationsExtensions
     {
             /// <summary>
             /// Gets a list of integration account certificates.
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='top'>
             /// The number of items to be included in the result.
             /// </param>
-            public static IPage<IntegrationAccountCertificate> List(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, int? top = default(int?))
+            public static IPage<IntegrationAccountCertificate> ListByIntegrationAccounts(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, int? top = default(int?))
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountCertificatesOperations)s).ListAsync(resourceGroupName, integrationAccountName, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICertificatesOperations)s).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,9 +60,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountCertificate>> ListAsync(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountCertificate>> ListByIntegrationAccountsAsync(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, integrationAccountName, top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsWithHttpMessagesAsync(resourceGroupName, integrationAccountName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='certificateName'>
             /// The integration account certificate name.
             /// </param>
-            public static IntegrationAccountCertificate Get(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName)
+            public static IntegrationAccountCertificate Get(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountCertificatesOperations)s).GetAsync(resourceGroupName, integrationAccountName, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICertificatesOperations)s).GetAsync(resourceGroupName, integrationAccountName, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountCertificate> GetAsync(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountCertificate> GetAsync(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, integrationAccountName, certificateName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -132,9 +132,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='certificate'>
             /// The integration account certificate.
             /// </param>
-            public static IntegrationAccountCertificate CreateOrUpdate(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, IntegrationAccountCertificate certificate)
+            public static IntegrationAccountCertificate CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, IntegrationAccountCertificate certificate)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountCertificatesOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, certificateName, certificate), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICertificatesOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, certificateName, certificate), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountCertificate> CreateOrUpdateAsync(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, IntegrationAccountCertificate certificate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountCertificate> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, IntegrationAccountCertificate certificate, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, integrationAccountName, certificateName, certificate, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -181,9 +181,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='certificateName'>
             /// The integration account certificate name.
             /// </param>
-            public static void Delete(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName)
+            public static void Delete(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName)
             {
-                Task.Factory.StartNew(s => ((IIntegrationAccountCertificatesOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ICertificatesOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIntegrationAccountCertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, certificateName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -218,9 +218,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IntegrationAccountCertificate> ListNext(this IIntegrationAccountCertificatesOperations operations, string nextPageLink)
+            public static IPage<IntegrationAccountCertificate> ListByIntegrationAccountsNext(this ICertificatesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountCertificatesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICertificatesOperations)s).ListByIntegrationAccountsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountCertificate>> ListNextAsync(this IIntegrationAccountCertificatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountCertificate>> ListByIntegrationAccountsNextAsync(this ICertificatesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

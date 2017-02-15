@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 agreement content.
+    /// </summary>
     public partial class X12AgreementContent
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12AgreementContent class.
         /// </summary>
-        public X12AgreementContent(X12OneWayAgreement receiveAgreement = default(X12OneWayAgreement), X12OneWayAgreement sendAgreement = default(X12OneWayAgreement))
+        public X12AgreementContent(X12OneWayAgreement receiveAgreement, X12OneWayAgreement sendAgreement)
         {
             ReceiveAgreement = receiveAgreement;
             SendAgreement = sendAgreement;
@@ -44,5 +47,30 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "sendAgreement")]
         public X12OneWayAgreement SendAgreement { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ReceiveAgreement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReceiveAgreement");
+            }
+            if (SendAgreement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SendAgreement");
+            }
+            if (this.ReceiveAgreement != null)
+            {
+                this.ReceiveAgreement.Validate();
+            }
+            if (this.SendAgreement != null)
+            {
+                this.SendAgreement.Validate();
+            }
+        }
     }
 }

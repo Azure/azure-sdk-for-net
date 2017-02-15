@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Extension methods for IntegrationAccountAgreementsOperations.
+    /// Extension methods for AgreementsOperations.
     /// </summary>
-    public static partial class IntegrationAccountAgreementsOperationsExtensions
+    public static partial class AgreementsOperationsExtensions
     {
             /// <summary>
             /// Gets a list of integration account agreements.
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IntegrationAccountAgreement> List(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountAgreementFilter> odataQuery = default(ODataQuery<IntegrationAccountAgreementFilter>))
+            public static IPage<IntegrationAccountAgreement> ListByIntegrationAccounts(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountAgreementFilter> odataQuery = default(ODataQuery<IntegrationAccountAgreementFilter>))
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountAgreementsOperations)s).ListAsync(resourceGroupName, integrationAccountName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAgreementsOperations)s).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -61,9 +61,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountAgreement>> ListAsync(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountAgreementFilter> odataQuery = default(ODataQuery<IntegrationAccountAgreementFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountAgreement>> ListByIntegrationAccountsAsync(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountAgreementFilter> odataQuery = default(ODataQuery<IntegrationAccountAgreementFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, integrationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsWithHttpMessagesAsync(resourceGroupName, integrationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='agreementName'>
             /// The integration account agreement name.
             /// </param>
-            public static IntegrationAccountAgreement Get(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName)
+            public static IntegrationAccountAgreement Get(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountAgreementsOperations)s).GetAsync(resourceGroupName, integrationAccountName, agreementName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAgreementsOperations)s).GetAsync(resourceGroupName, integrationAccountName, agreementName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountAgreement> GetAsync(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountAgreement> GetAsync(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, integrationAccountName, agreementName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -133,9 +133,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='agreement'>
             /// The integration account agreement.
             /// </param>
-            public static IntegrationAccountAgreement CreateOrUpdate(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, IntegrationAccountAgreement agreement)
+            public static IntegrationAccountAgreement CreateOrUpdate(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, IntegrationAccountAgreement agreement)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountAgreementsOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, agreementName, agreement), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAgreementsOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, agreementName, agreement), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountAgreement> CreateOrUpdateAsync(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, IntegrationAccountAgreement agreement, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountAgreement> CreateOrUpdateAsync(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, IntegrationAccountAgreement agreement, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, integrationAccountName, agreementName, agreement, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -182,9 +182,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='agreementName'>
             /// The integration account agreement name.
             /// </param>
-            public static void Delete(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName)
+            public static void Delete(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName)
             {
-                Task.Factory.StartNew(s => ((IIntegrationAccountAgreementsOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, agreementName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAgreementsOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, agreementName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIntegrationAccountAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAgreementsOperations operations, string resourceGroupName, string integrationAccountName, string agreementName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, agreementName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -219,9 +219,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IntegrationAccountAgreement> ListNext(this IIntegrationAccountAgreementsOperations operations, string nextPageLink)
+            public static IPage<IntegrationAccountAgreement> ListByIntegrationAccountsNext(this IAgreementsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountAgreementsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAgreementsOperations)s).ListByIntegrationAccountsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -236,9 +236,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountAgreement>> ListNextAsync(this IIntegrationAccountAgreementsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountAgreement>> ListByIntegrationAccountsNextAsync(this IAgreementsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

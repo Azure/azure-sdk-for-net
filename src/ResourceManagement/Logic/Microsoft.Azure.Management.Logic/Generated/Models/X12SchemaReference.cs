@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 schema reference.
+    /// </summary>
     public partial class X12SchemaReference
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12SchemaReference class.
         /// </summary>
-        public X12SchemaReference(string messageId = default(string), string senderApplicationId = default(string), string schemaVersion = default(string), string schemaName = default(string))
+        public X12SchemaReference(string messageId, string schemaVersion, string schemaName, string senderApplicationId = default(string))
         {
             MessageId = messageId;
             SenderApplicationId = senderApplicationId;
@@ -58,5 +61,26 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MessageId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageId");
+            }
+            if (SchemaVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaVersion");
+            }
+            if (SchemaName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaName");
+            }
+        }
     }
 }

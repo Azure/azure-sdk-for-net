@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// IntegrationAccountAgreementsOperations operations.
+    /// SchemasOperations operations.
     /// </summary>
-    public partial interface IIntegrationAccountAgreementsOperations
+    public partial interface ISchemasOperations
     {
         /// <summary>
-        /// Gets a list of integration account agreements.
+        /// Gets a list of integration account schemas.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IntegrationAccountAgreement>>> ListWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountAgreementFilter> odataQuery = default(ODataQuery<IntegrationAccountAgreementFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationAccountSchema>>> ListByIntegrationAccountsWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an integration account agreement.
+        /// Gets an integration account schema.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='agreementName'>
-        /// The integration account agreement name.
+        /// <param name='schemaName'>
+        /// The integration account schema name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,9 +78,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IntegrationAccountAgreement>> GetWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string agreementName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationAccountSchema>> GetWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string schemaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an integration account agreement.
+        /// Creates or updates an integration account schema.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='agreementName'>
-        /// The integration account agreement name.
+        /// <param name='schemaName'>
+        /// The integration account schema name.
         /// </param>
-        /// <param name='agreement'>
-        /// The integration account agreement.
+        /// <param name='schema'>
+        /// The integration account schema.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -109,9 +109,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IntegrationAccountAgreement>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string agreementName, IntegrationAccountAgreement agreement, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationAccountSchema>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string schemaName, IntegrationAccountSchema schema, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an integration account agreement.
+        /// Deletes an integration account schema.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='agreementName'>
-        /// The integration account agreement name.
+        /// <param name='schemaName'>
+        /// The integration account schema name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -134,9 +134,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string agreementName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, string schemaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of integration account agreements.
+        /// Gets a list of integration account schemas.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -156,6 +156,6 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IntegrationAccountAgreement>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationAccountSchema>>> ListByIntegrationAccountsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

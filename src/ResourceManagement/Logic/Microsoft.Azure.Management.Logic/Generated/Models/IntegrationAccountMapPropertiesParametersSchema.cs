@@ -16,26 +16,31 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class ListCallbackUrlParameters
+    /// <summary>
+    /// The parameters schema of integration account map.
+    /// </summary>
+    public partial class IntegrationAccountMapPropertiesParametersSchema
     {
         /// <summary>
-        /// Initializes a new instance of the ListCallbackUrlParameters class.
+        /// Initializes a new instance of the
+        /// IntegrationAccountMapPropertiesParametersSchema class.
         /// </summary>
-        public ListCallbackUrlParameters() { }
+        public IntegrationAccountMapPropertiesParametersSchema() { }
 
         /// <summary>
-        /// Initializes a new instance of the ListCallbackUrlParameters class.
+        /// Initializes a new instance of the
+        /// IntegrationAccountMapPropertiesParametersSchema class.
         /// </summary>
-        public ListCallbackUrlParameters(DateTime? notAfter = default(DateTime?))
+        public IntegrationAccountMapPropertiesParametersSchema(string refProperty = default(string))
         {
-            NotAfter = notAfter;
+            RefProperty = refProperty;
         }
 
         /// <summary>
-        /// Gets or sets the expiry time.
+        /// Gets or sets the reference name.
         /// </summary>
-        [JsonProperty(PropertyName = "NotAfter")]
-        public DateTime? NotAfter { get; set; }
+        [JsonProperty(PropertyName = "ref")]
+        public string RefProperty { get; set; }
 
     }
 }

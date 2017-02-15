@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact validation override settings.
+    /// </summary>
     public partial class EdifactValidationOverride
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactValidationOverride class.
         /// </summary>
-        public EdifactValidationOverride(string messageId = default(string), bool? enforceCharacterSet = default(bool?), bool? validateEDITypes = default(bool?), bool? validateXSDTypes = default(bool?), bool? allowLeadingAndTrailingSpacesAndZeroes = default(bool?), TrailingSeparatorPolicy? trailingSeparatorPolicy = default(TrailingSeparatorPolicy?), bool? trimLeadingAndTrailingSpacesAndZeroes = default(bool?))
+        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes)
         {
             MessageId = messageId;
             EnforceCharacterSet = enforceCharacterSet;
@@ -49,40 +52,53 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Set.
         /// </summary>
         [JsonProperty(PropertyName = "enforceCharacterSet")]
-        public bool? EnforceCharacterSet { get; set; }
+        public bool EnforceCharacterSet { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to validate EDI types.
         /// </summary>
         [JsonProperty(PropertyName = "validateEDITypes")]
-        public bool? ValidateEDITypes { get; set; }
+        public bool ValidateEDITypes { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to validate XSD types.
         /// </summary>
         [JsonProperty(PropertyName = "validateXSDTypes")]
-        public bool? ValidateXSDTypes { get; set; }
+        public bool ValidateXSDTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to allow leading and
         /// trailing spaces and zeroes.
         /// </summary>
         [JsonProperty(PropertyName = "allowLeadingAndTrailingSpacesAndZeroes")]
-        public bool? AllowLeadingAndTrailingSpacesAndZeroes { get; set; }
+        public bool AllowLeadingAndTrailingSpacesAndZeroes { get; set; }
 
         /// <summary>
         /// Gets or sets the trailing separator policy. Possible values
         /// include: 'NotSpecified', 'NotAllowed', 'Optional', 'Mandatory'
         /// </summary>
         [JsonProperty(PropertyName = "trailingSeparatorPolicy")]
-        public TrailingSeparatorPolicy? TrailingSeparatorPolicy { get; set; }
+        public TrailingSeparatorPolicy TrailingSeparatorPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to trim leading and
         /// trailing spaces and zeroes.
         /// </summary>
         [JsonProperty(PropertyName = "trimLeadingAndTrailingSpacesAndZeroes")]
-        public bool? TrimLeadingAndTrailingSpacesAndZeroes { get; set; }
+        public bool TrimLeadingAndTrailingSpacesAndZeroes { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MessageId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageId");
+            }
+        }
     }
 }

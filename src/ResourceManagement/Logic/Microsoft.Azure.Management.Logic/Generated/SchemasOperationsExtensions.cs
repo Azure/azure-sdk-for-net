@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Extension methods for IntegrationAccountSchemasOperations.
+    /// Extension methods for SchemasOperations.
     /// </summary>
-    public static partial class IntegrationAccountSchemasOperationsExtensions
+    public static partial class SchemasOperationsExtensions
     {
             /// <summary>
             /// Gets a list of integration account schemas.
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IntegrationAccountSchema> List(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>))
+            public static IPage<IntegrationAccountSchema> ListByIntegrationAccounts(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>))
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountSchemasOperations)s).ListAsync(resourceGroupName, integrationAccountName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISchemasOperations)s).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -61,9 +61,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountSchema>> ListAsync(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountSchema>> ListByIntegrationAccountsAsync(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilter> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, integrationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsWithHttpMessagesAsync(resourceGroupName, integrationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='schemaName'>
             /// The integration account schema name.
             /// </param>
-            public static IntegrationAccountSchema Get(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName)
+            public static IntegrationAccountSchema Get(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountSchemasOperations)s).GetAsync(resourceGroupName, integrationAccountName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISchemasOperations)s).GetAsync(resourceGroupName, integrationAccountName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountSchema> GetAsync(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountSchema> GetAsync(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, integrationAccountName, schemaName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -133,9 +133,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='schema'>
             /// The integration account schema.
             /// </param>
-            public static IntegrationAccountSchema CreateOrUpdate(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, IntegrationAccountSchema schema)
+            public static IntegrationAccountSchema CreateOrUpdate(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, IntegrationAccountSchema schema)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountSchemasOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, schemaName, schema), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISchemasOperations)s).CreateOrUpdateAsync(resourceGroupName, integrationAccountName, schemaName, schema), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationAccountSchema> CreateOrUpdateAsync(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, IntegrationAccountSchema schema, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountSchema> CreateOrUpdateAsync(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, IntegrationAccountSchema schema, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, integrationAccountName, schemaName, schema, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -182,9 +182,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='schemaName'>
             /// The integration account schema name.
             /// </param>
-            public static void Delete(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName)
+            public static void Delete(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName)
             {
-                Task.Factory.StartNew(s => ((IIntegrationAccountSchemasOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ISchemasOperations)s).DeleteAsync(resourceGroupName, integrationAccountName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIntegrationAccountSchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, schemaName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -219,9 +219,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IntegrationAccountSchema> ListNext(this IIntegrationAccountSchemasOperations operations, string nextPageLink)
+            public static IPage<IntegrationAccountSchema> ListByIntegrationAccountsNext(this ISchemasOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountSchemasOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISchemasOperations)s).ListByIntegrationAccountsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -236,9 +236,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IntegrationAccountSchema>> ListNextAsync(this IIntegrationAccountSchemasOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IntegrationAccountSchema>> ListByIntegrationAccountsNextAsync(this ISchemasOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByIntegrationAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

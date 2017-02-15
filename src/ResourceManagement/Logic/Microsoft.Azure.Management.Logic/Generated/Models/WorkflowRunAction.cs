@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow run action.
+    /// </summary>
     [JsonTransformation]
     public partial class WorkflowRunAction : SubResource
     {
@@ -84,7 +87,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string TrackingId { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the correlation properties.
+        /// Gets or sets the correlation properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlation")]
         public Correlation Correlation { get; set; }
