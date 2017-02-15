@@ -281,6 +281,142 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer to retrieve the status of.
+            /// </param>
+            public static BgpPeerStatusListResult GetBgpPeerStatus(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string))
+            {
+                return operations.GetBgpPeerStatusAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer to retrieve the status of.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BgpPeerStatusListResult> GetBgpPeerStatusAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBgpPeerStatusWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway has
+            /// learned, including routes learned from BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static GatewayRouteListResult GetLearnedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return operations.GetLearnedRoutesAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway has
+            /// learned, including routes learned from BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewayRouteListResult> GetLearnedRoutesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetLearnedRoutesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway is
+            /// advertising to the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer
+            /// </param>
+            public static GatewayRouteListResult GetAdvertisedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer)
+            {
+                return operations.GetAdvertisedRoutesAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway is
+            /// advertising to the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewayRouteListResult> GetAdvertisedRoutesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAdvertisedRoutesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a virtual network gateway in the specified resource
             /// group.
             /// </summary>
@@ -410,6 +546,142 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<VirtualNetworkGateway> BeginResetAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, gatewayVip, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer to retrieve the status of.
+            /// </param>
+            public static BgpPeerStatusListResult BeginGetBgpPeerStatus(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string))
+            {
+                return operations.BeginGetBgpPeerStatusAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer to retrieve the status of.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BgpPeerStatusListResult> BeginGetBgpPeerStatusAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetBgpPeerStatusWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway has
+            /// learned, including routes learned from BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static GatewayRouteListResult BeginGetLearnedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return operations.BeginGetLearnedRoutesAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway has
+            /// learned, including routes learned from BGP peers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewayRouteListResult> BeginGetLearnedRoutesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetLearnedRoutesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway is
+            /// advertising to the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer
+            /// </param>
+            public static GatewayRouteListResult BeginGetAdvertisedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer)
+            {
+                return operations.BeginGetAdvertisedRoutesAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation retrieves a list of routes the virtual network gateway is
+            /// advertising to the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='peer'>
+            /// The IP address of the peer
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewayRouteListResult> BeginGetAdvertisedRoutesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetAdvertisedRoutesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
