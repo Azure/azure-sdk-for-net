@@ -63,9 +63,9 @@ namespace TestFramework.Tests.TestEnvironment
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
             HttpMockServer.Mode = HttpRecorderMode.Playback;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
-            string resMgrUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.ResourceManagementUriKey];
-            string SvcMgrUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServiceManagementUriKey];
-            string ibizaUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.IbizaPortalUriKey];
+            string resMgrUri = env.Endpoints.ResourceManagementUri.AbsoluteUri;
+            string SvcMgrUri = env.Endpoints.ServiceManagementUri.AbsoluteUri;
+            string ibizaUri = env.Endpoints.IbizaPortalUri.AbsoluteUri;
 
             Assert.Equal<string>("https://brazilus.management.azure.com/", resMgrUri);
             Assert.Equal<string>("https://brazilus.management.azure.com/", SvcMgrUri);
