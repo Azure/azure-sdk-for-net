@@ -13,13 +13,15 @@ namespace Microsoft.Azure.Management.Network.Models
     using Network;
 
     /// <summary>
-    /// Defines values for NetworkOperationStatus.
+    /// Defines values for BgpPeerState.
     /// </summary>
-    public static class NetworkOperationStatus
+    public static class BgpPeerState
     {
-        public const string InProgress = "InProgress";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
+        public const string Unknown = "Unknown";
+        public const string Stopped = "Stopped";
+        public const string Idle = "Idle";
+        public const string Connecting = "Connecting";
+        public const string Connected = "Connected";
     }
 }
 

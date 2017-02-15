@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vlanId">The VLAN ID.</param>
         /// <param name="microsoftPeeringConfig">The Microsoft peering
         /// configuration.</param>
+        /// <param name="routeFilter">The reference of the RouteFilter
+        /// resource.</param>
         /// <param name="stats">Gets peering stats.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
@@ -62,9 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        /// <param name="routeFilter">The reference of the RouteFilter
-        /// resource.</param>
-        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string), RouteFilter routeFilter = default(RouteFilter))
+        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), RouteFilter routeFilter = default(RouteFilter), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PeeringType = peeringType;
@@ -78,13 +78,13 @@ namespace Microsoft.Azure.Management.Network.Models
             SharedKey = sharedKey;
             VlanId = vlanId;
             MicrosoftPeeringConfig = microsoftPeeringConfig;
+            RouteFilter = routeFilter;
             Stats = stats;
             ProvisioningState = provisioningState;
             GatewayManagerEtag = gatewayManagerEtag;
             LastModifiedBy = lastModifiedBy;
             Name = name;
             Etag = etag;
-            RouteFilter = routeFilter;
         }
 
         /// <summary>
@@ -158,6 +158,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
 
         /// <summary>
+        /// Gets or sets the reference of the RouteFilter resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeFilter")]
+        public RouteFilter RouteFilter { get; set; }
+
+        /// <summary>
         /// Gets peering stats.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stats")]
@@ -196,12 +202,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the reference of the RouteFilter resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "routeFilter")]
-        public RouteFilter RouteFilter { get; set; }
 
     }
 }
