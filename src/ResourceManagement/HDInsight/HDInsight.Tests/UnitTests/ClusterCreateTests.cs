@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Management.HDInsight;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Microsoft.Azure.Management.HDInsight.Models;
 using Newtonsoft.Json;
@@ -91,6 +92,25 @@ namespace HDInsight.Tests.UnitTests
         }
 
         [Fact]
+        public void TestCreateRserverDefaultNodeSizesValues()
+        {
+            var clusterCreateParams = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+            clusterCreateParams.ClusterType = "RServer";
+            clusterCreateParams.Version = "3.5";
+            clusterCreateParams.WorkerNodeSize = null;
+            clusterCreateParams.HeadNodeSize = null;
+
+            ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
+            var extendedParams = op.GetExtendedClusterCreateParameters("hdisdk-RServerClusterEdgeNodeDefaultTest", clusterCreateParams);
+
+            List<Role> roles = new List<Role>(extendedParams.Properties.ComputeProfile.Roles);
+            ValidateRole(roles, "headnode", "Standard_D12_v2");
+            ValidateRole(roles, "workernode", "Standard_D4_v2", clusterCreateParams.ClusterSizeInNodes);
+            ValidateRole(roles, "edgenode", "Standard_D4_v2", 1);
+            ValidateRole(roles, "zookeepernode", "Medium");
+        }
+
+        [Fact]
         public void TestCreateRserverEdgeNodeSpecified()
         {
             const string edgeNodeSizeToTest = "Standard_D12_v2";
@@ -104,23 +124,18 @@ namespace HDInsight.Tests.UnitTests
             var extendedParams = op.GetExtendedClusterCreateParameters("hdisdk-RServerClusterEdgeNodeSpecifiedTest", clusterCreateParams);
 
             List<Role> roles = new List<Role>(extendedParams.Properties.ComputeProfile.Roles);
-            Assert.True(roles.Exists(role => role.Name.Equals("edgenode", System.StringComparison.OrdinalIgnoreCase)));
-            Assert.True(roles.Exists(role => role.HardwareProfile.VmSize.Equals(edgeNodeSizeToTest, System.StringComparison.OrdinalIgnoreCase)));
+            ValidateRole(roles, "edgenode", edgeNodeSizeToTest, 1);
         }
 
-        [Fact]
-        public void TestCreateRserverEdgeNodeDefault()
+        private void ValidateRole(List<Role> roles, string roleName, string roleVmSize, int roleInstanceCount = -1)
         {
-            var clusterCreateParams = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
-            clusterCreateParams.ClusterType = "RServer";
-            clusterCreateParams.Version = "3.5";
+            var roleToValidate = roles.FirstOrDefault(r => r.Name.Equals(roleName, System.StringComparison.OrdinalIgnoreCase));
+            Assert.True(roleToValidate != null);
 
-            ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
-            var extendedParams = op.GetExtendedClusterCreateParameters("hdisdk-RServerClusterEdgeNodeDefaultTest", clusterCreateParams);
+            Assert.True(roleToValidate.HardwareProfile.VmSize.Equals(roleVmSize, System.StringComparison.OrdinalIgnoreCase));
 
-            List<Role> roles = new List<Role>(extendedParams.Properties.ComputeProfile.Roles);
-            Assert.True(roles.Exists(role => role.Name.Equals("edgenode", System.StringComparison.OrdinalIgnoreCase)));
-            Assert.True(roles.Exists(role => role.HardwareProfile.VmSize.Equals("Standard_D4_v2", System.StringComparison.OrdinalIgnoreCase)));
+            if (roleInstanceCount != -1)
+                Assert.True(roleToValidate.TargetInstanceCount == roleInstanceCount);
         }
     }
 }

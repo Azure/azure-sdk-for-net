@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.HDInsight
     /// </summary>
     internal partial class ClusterOperations : IServiceOperations<HDInsightManagementClient>, IClusterOperations
     {
-        private const string _userAgentString = "ARM SDK v2.0.2";
+        private const string _userAgentString = "ARM SDK v2.0.3";
 
         /// <summary>
         /// Initializes a new instance of the ClusterOperations class.
