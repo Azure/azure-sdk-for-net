@@ -1,5 +1,19 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
+### Changes in 2.0.1-preview
+- Integrate DataLake.StoreUploader functionality into this package.
+    - As of this release, the DataLake.StoreUploader package is deprecated and should not be used.
+    - This introduces four new top level methods for convenience and to help with logging:
+        - UploadFile
+        - UploadFolder
+        - DownloadFile
+        - DownloadFolder
+    - Added logic for smarter default values for thread count as the defaults. If the user does not pass in anything for PerFileThreadCount or ConcurrentFileCount they will be computed and, in most cases, give comparable performance to specifying the values.
+    - Added Patch support for firewall rules and trusted identity providers
+    - Added support for allowing/blocking Azure originating IP addresses through the firewall.
+    - Fixed a bug in GetContentSummary that was preventing it from returning results
+    - Minor documentation updates and corrections for methods and objects.
+
 ### Changes in 1.0.3
 - As the first official stable release of the `Microsoft.Azure.Management.DataLake.Store` package, changes between this version and the preview version are enumerated below. 
 	- All nested properties have been flattened down into their containing objects. For example: `myAccount.Properties.DefaultGroup` is now: `myAccount.DefaultGroup`

@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
+### Changes in 2.0.1-preview
+- Add support for firewall rule management in Data Lake Analytics
+- Remove minimum value requirements for Job parallelism. If a value < 1 is specified, it will use 1.
+- Address minor documentation issues for methods and objects.
+
 ### Changes in 2.0.0
 - As the first official stable release of the `Microsoft.Azure.Management.DataLake.Analytics` package, changes between this version and the preview version are enumerated below. 
 	- All nested properties have been flattened down into their containing objects. For example: `myAccount.Properties.DefaultDataLakeStoreAccount` is now: `myAccount.DefaultDataLakeStoreAccount`
