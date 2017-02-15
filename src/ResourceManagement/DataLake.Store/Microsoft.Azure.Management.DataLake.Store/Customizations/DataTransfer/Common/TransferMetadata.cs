@@ -6,10 +6,7 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
@@ -61,7 +58,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             this.EncodingCodePage = transferParameters.FileEncoding.CodePage;
 
             // we are taking the smaller number of segments between segment lengths of 256 and the segment growth logic.
-            // this protects us against agressive increase of thread count resulting in far more segments than
+            // this protects us against aggressive increase of thread count resulting in far more segments than
             // is reasonable for a given file size. We also ensure that each segment is at least 256mb in size.
             // This is the size that ensures we have the optimal storage creation in the store.
             var preliminarySegmentCount = (int)Math.Ceiling((double)this.FileLength / transferParameters.MaxSegementLength);

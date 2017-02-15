@@ -8,14 +8,8 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
     using Rest;
-    using System.Runtime;
     using System.Runtime.Serialization;
-    using System.Security;
 
     /// <summary>
     /// Exception thrown for an invalid response with AdlsError information.

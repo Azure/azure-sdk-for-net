@@ -8,13 +8,8 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    using Azure;
-    using Management;
-    using DataLake;
-    using Rest;
-    using Rest.Azure;
     using Models;
-    using System.Collections;
+    using Rest.Azure;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading;

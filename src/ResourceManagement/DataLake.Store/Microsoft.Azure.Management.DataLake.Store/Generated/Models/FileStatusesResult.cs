@@ -8,12 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
     using Newtonsoft.Json;
-    using System.Linq;
 
     /// <summary>
     /// Data Lake Store filesystem file status list information response.

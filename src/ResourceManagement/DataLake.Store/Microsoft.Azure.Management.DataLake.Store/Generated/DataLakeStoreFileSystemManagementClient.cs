@@ -8,19 +8,10 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    using Azure;
-    using Management;
-    using DataLake;
+    using Models;
     using Rest;
     using Rest.Azure;
     using Rest.Serialization;
-    using Models;
-    using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
 
     /// <summary>
     /// Creates an Azure Data Lake Store filesystem client.

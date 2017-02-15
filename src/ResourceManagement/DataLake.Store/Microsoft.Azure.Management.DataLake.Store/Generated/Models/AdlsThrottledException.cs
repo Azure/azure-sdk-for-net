@@ -8,13 +8,6 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
-    using Newtonsoft.Json;
-    using System.Linq;
-
     /// <summary>
     /// A WebHDFS exception thrown indicating that the request is being
     /// throttled. Reducing the number of requests or request size helps to

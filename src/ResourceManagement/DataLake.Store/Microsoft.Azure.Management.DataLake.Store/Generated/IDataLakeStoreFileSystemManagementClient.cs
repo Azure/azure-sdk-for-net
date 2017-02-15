@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    using Azure;
-    using Management;
-    using DataLake;
     using Rest;
-    using Rest.Azure;
-    using Models;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Creates an Azure Data Lake Store filesystem client.

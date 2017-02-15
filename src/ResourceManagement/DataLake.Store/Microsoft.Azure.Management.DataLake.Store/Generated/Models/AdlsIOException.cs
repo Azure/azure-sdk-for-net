@@ -8,13 +8,6 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
-    using Newtonsoft.Json;
-    using System.Linq;
-
     /// <summary>
     /// A WebHDFS exception thrown indicating there was an IO (read or write)
     /// error. Thrown when a 403 error response code is returned (forbidden).

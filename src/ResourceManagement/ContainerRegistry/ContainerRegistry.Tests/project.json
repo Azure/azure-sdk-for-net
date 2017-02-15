@@ -30,13 +30,14 @@
       "type": "platform",
       "version": "1.0.0"
     },
-    "Microsoft.Azure.Test.HttpRecorder": "[1.6.7-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.4.0-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.4,4.0.0)",
+    "NETStandard.Library": "1.6.1",
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.8,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.5.2,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
     "Microsoft.Azure.Management.ContainerRegistry": "1.0.0-preview",
     "Microsoft.Azure.Management.Storage": "[5.0.2-preview,6.0)",
-    "xunit": "2.2.0-beta2-build3300",
+    "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   }
 }

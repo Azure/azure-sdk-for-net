@@ -8,17 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Azure;
-    using DataLake;
-    using Management;
-    using Azure;
-    using Management;
-    using DataLake;
-    using Store;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using Store;
-    using System.Runtime;
     using System.Runtime.Serialization;
 
     /// <summary>
