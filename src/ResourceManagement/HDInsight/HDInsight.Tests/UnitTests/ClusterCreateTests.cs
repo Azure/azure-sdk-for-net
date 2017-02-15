@@ -89,5 +89,38 @@ namespace HDInsight.Tests.UnitTests
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].Name, "headnode");
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].TargetInstanceCount, 1);            
         }
+
+        [Fact]
+        public void TestCreateRserverEdgeNodeSpecified()
+        {
+            const string edgeNodeSizeToTest = "Standard_D12_v2";
+
+            var clusterCreateParams = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+            clusterCreateParams.ClusterType = "RServer";
+            clusterCreateParams.EdgeNodeSize = edgeNodeSizeToTest;
+            clusterCreateParams.Version = "3.5";
+
+            ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
+            var extendedParams = op.GetExtendedClusterCreateParameters("hdisdk-RServerClusterEdgeNodeSpecifiedTest", clusterCreateParams);
+
+            List<Role> roles = new List<Role>(extendedParams.Properties.ComputeProfile.Roles);
+            Assert.True(roles.Exists(role => role.Name.Equals("edgenode", System.StringComparison.OrdinalIgnoreCase)));
+            Assert.True(roles.Exists(role => role.HardwareProfile.VmSize.Equals(edgeNodeSizeToTest, System.StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [Fact]
+        public void TestCreateRserverEdgeNodeDefault()
+        {
+            var clusterCreateParams = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+            clusterCreateParams.ClusterType = "RServer";
+            clusterCreateParams.Version = "3.5";
+
+            ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
+            var extendedParams = op.GetExtendedClusterCreateParameters("hdisdk-RServerClusterEdgeNodeDefaultTest", clusterCreateParams);
+
+            List<Role> roles = new List<Role>(extendedParams.Properties.ComputeProfile.Roles);
+            Assert.True(roles.Exists(role => role.Name.Equals("edgenode", System.StringComparison.OrdinalIgnoreCase)));
+            Assert.True(roles.Exists(role => role.HardwareProfile.VmSize.Equals("Standard_D4_v2", System.StringComparison.OrdinalIgnoreCase)));
+        }
     }
 }
