@@ -31,7 +31,7 @@ namespace Sql2.Tests.ScenarioTests
     /// </summary>
     public class Sql2FailoverGroupScenarioTests : TestBase
     {
-        [Fact(Skip ="Hydra TestFramework Issue, cannot playback")]
+        [Fact]
         public void FailoverGroupCrud()
         {
             var handler = new BasicDelegatingHandler();
@@ -41,6 +41,8 @@ namespace Sql2.Tests.ScenarioTests
 
                 string failoverGroupName = TestUtilities.GenerateName("csm-sql-fgcrud1");
                 string failoverGroup2Name = TestUtilities.GenerateName("csm-sql-fgcrud2");
+                string serverName = TestUtilities.GenerateName("csm-sql-fgcrud-server");
+                string partnerServerName = TestUtilities.GenerateName("csm-sql-fgcrud-server");
 
                 // Create the resource group.
 
@@ -57,14 +59,12 @@ namespace Sql2.Tests.ScenarioTests
                     (sqlClient, resGroupName, server) =>
                     {
                             // Variables for partner server create
-                            string serverName = TestUtilities.GenerateName("csm-sql-fgcrud-server");
+
                             string serverLocation = "North Europe";
                             string adminLogin = "testlogin";
                             string adminPass = "Testp@ss";
                             string version = "12.0";
 
-                            //////////////////////////////////////////////////////////////////////
-                            string partnerServerName = TestUtilities.GenerateName("csm-sql-fgcrud-server");
                             // Create partner server for test.
                             var createServerResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, partnerServerName, new ServerCreateOrUpdateParameters()
                             {
@@ -180,7 +180,7 @@ namespace Sql2.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Hydra TestFramework Issue, cannot playback")]
+        [Fact]
         public void FailoverGroupDatabaseOperations()
         {
             var handler = new BasicDelegatingHandler();
@@ -190,6 +190,9 @@ namespace Sql2.Tests.ScenarioTests
                 context.Start();
 
                 string failoverGroupName = TestUtilities.GenerateName("csm-sql-fgdb");
+                string serverName = TestUtilities.GenerateName("csm-sql-fgdb-server");
+                var databaseName = TestUtilities.GenerateName("csm-sql-fgdb-db");
+                var database2Name = TestUtilities.GenerateName("csm-sql-fgdb-db");
 
                 Sql2ScenarioHelper.RunServerTestInEnvironment(
                     handler,
@@ -198,7 +201,6 @@ namespace Sql2.Tests.ScenarioTests
                     (sqlClient, resGroupName, server) =>
                     {
                         // Variables for partner server create
-                        string serverName = TestUtilities.GenerateName("csm-sql-fgdb-server");
                         string serverLocation = "North Europe";
                         string adminLogin = "testlogin";
                         string adminPass = "Testp@ss";
@@ -251,7 +253,6 @@ namespace Sql2.Tests.ScenarioTests
 
                         ////////////////////////////////////////////////////////////////////
                         // Create database
-                        var databaseName = TestUtilities.GenerateName("csm-sql-fgdb-db");
                         var db1 = sqlClient.Databases.CreateOrUpdate(resGroupName, server.Name, databaseName, new DatabaseCreateOrUpdateParameters()
                         {
                             Location = server.Location,
@@ -263,7 +264,6 @@ namespace Sql2.Tests.ScenarioTests
 
                         TestUtilities.ValidateOperationResponse(db1, HttpStatusCode.Created);
 
-                        var database2Name = TestUtilities.GenerateName("csm-sql-fgdb-db");
                         var db2 = sqlClient.Databases.CreateOrUpdate(resGroupName, server.Name, database2Name, new DatabaseCreateOrUpdateParameters()
                         {
                             Location = server.Location,
