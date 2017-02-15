@@ -180,7 +180,7 @@ namespace Sql2.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Hydra TestFramework Issue, cannot playback")
+        [Fact(Skip = "Hydra TestFramework Issue, cannot playback")]
         public void FailoverGroupDatabaseOperations()
         {
             var handler = new BasicDelegatingHandler();
