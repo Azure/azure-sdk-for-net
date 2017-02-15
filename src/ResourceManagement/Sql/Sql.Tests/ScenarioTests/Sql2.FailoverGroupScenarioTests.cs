@@ -31,7 +31,7 @@ namespace Sql2.Tests.ScenarioTests
     /// </summary>
     public class Sql2FailoverGroupScenarioTests : TestBase
     {
-        [Fact]
+        [Fact(Skip ="Hydra TestFramework Issue, cannot playback")]
         public void FailoverGroupCrud()
         {
             var handler = new BasicDelegatingHandler();
@@ -39,8 +39,8 @@ namespace Sql2.Tests.ScenarioTests
             {
                 context.Start();
 
-                string failoverGroupName = TestUtilities.GenerateName("csm-sql-fgcrud");
-                string failoverGroup2Name = TestUtilities.GenerateName("csm-sql-fgcrud");
+                string failoverGroupName = TestUtilities.GenerateName("csm-sql-fgcrud1");
+                string failoverGroup2Name = TestUtilities.GenerateName("csm-sql-fgcrud2");
 
                 // Create the resource group.
 
@@ -180,7 +180,7 @@ namespace Sql2.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Hydra TestFramework Issue, cannot playback")
         public void FailoverGroupDatabaseOperations()
         {
             var handler = new BasicDelegatingHandler();
