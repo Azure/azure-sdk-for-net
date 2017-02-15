@@ -264,12 +264,32 @@ namespace Microsoft.Rest.Azure.Authentication
             return await LoginWithPromptAsync(domain, clientSettings, serviceSettings, userId, cache, () => { return TaskScheduler.FromCurrentSynchronizationContext(); });
         }
 
+        /// <summary>
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
+        /// </summary>
+        /// <param name="domain">The domain to authenticate against.</param>
+        /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
+        /// <param name="serviceSettings">The settings for ad service, including endpoint and token audience</param>
+        /// <param name="taskScheduler">Scheduler needed to run the task</param>
+        /// <returns></returns>
         public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
             ActiveDirectoryServiceSettings serviceSettings, Func<TaskScheduler> taskScheduler)
         {
             return await LoginWithPromptAsync(domain, clientSettings, serviceSettings, UserIdentifier.AnyUser, TokenCache.DefaultShared, taskScheduler);
         }
 
+        /// <summary>
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
+        /// </summary>
+        /// <param name="domain">The domain to authenticate against.</param>
+        /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
+        /// <param name="serviceSettings">The settings for ad service, including endpoint and token audience</param>
+        /// <param name="userId">The userid of the desired credentials</param>
+        /// <param name="cache">The token cache to target during authentication.</param>
+        /// <param name="taskScheduler">Scheduler needed to run the task</param>
+        /// <returns></returns>
         public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
             ActiveDirectoryServiceSettings serviceSettings, UserIdentifier userId, TokenCache cache, Func<TaskScheduler> taskScheduler)
         {
