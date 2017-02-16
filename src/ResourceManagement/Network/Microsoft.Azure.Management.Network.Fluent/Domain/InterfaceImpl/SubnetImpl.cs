@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using System.Collections.Generic;
 
     internal partial class SubnetImpl 
     {
@@ -83,6 +84,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+        ISet<INicIpConfiguration> ISubnet.GetNetworkInterfaceIPConfigurations()
+        {
+            return this.GetNetworkInterfaceIPConfigurations();
+        }
+
+        int ISubnet.NetworkInterfaceIPConfigurationCount
+        {
+            get
+            {
+                return this.NetworkInterfaceIPConfigurationCount();
+            }
+        }
+
         /// <summary>
         /// Gets the resource ID of the network security group associated with this subnet, if any.
         /// </summary>
@@ -98,9 +112,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The network security group associated with this subnet, if any
         /// Note that this method will result in a call to Azure each time it is invoked.
         /// </return>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkSecurityGroup()
+        INetworkSecurityGroup ISubnet.GetNetworkSecurityGroup()
         {
-            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
+            return this.GetNetworkSecurityGroup() as INetworkSecurityGroup;
         }
 
         /// <summary>

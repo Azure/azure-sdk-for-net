@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// An immutable client-side representation of a subnet of a virtual network.
@@ -12,6 +13,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IWrapper<Models.SubnetInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.INetwork>
     {
+        /// <summary>Gets the network interface IP configurations that are associated with this subnet.
+        /// Note that this call may result in multiple calls to Azure to fetch all the referenced interfaces each time it is invoked.
+        /// </summary>
+        ISet<INicIpConfiguration> GetNetworkInterfaceIPConfigurations();
+
+        /// <summary>
+        /// Gets the number of network interface IP configurations associated with this subnet.
+        /// </summary>
+        int NetworkInterfaceIPConfigurationCount { get; }
+
         /// <summary>
         /// Gets the address space prefix, in CIDR notation, assigned to this subnet.
         /// </summary>
