@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using Resource.Fluent.Core;
     using System.Threading.Tasks;
+    using System;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroup
@@ -153,9 +154,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:606A3D349546DF27E3A091C321476658:37F2076EE667742BB4139B4AC27628F1
-        internal IList<string> NetworkInterfaceIds()
+        internal ISet<string> NetworkInterfaceIds()
         {
-            IList<string> ids = new List<string>();
+            ISet<string> ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             if (Inner.NetworkInterfaces != null)
             {
                 foreach (var inner in Inner.NetworkInterfaces)
