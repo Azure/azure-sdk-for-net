@@ -502,7 +502,7 @@ namespace Cdn.Tests.ScenarioTests
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // CheckUsage on subscription should return zero profiles
-                var subscriptionLevelUsages = cdnMgmtClient.CheckResourceUsage();
+                var subscriptionLevelUsages = cdnMgmtClient.ListResourceUsage();
                 Assert.Equal(1, subscriptionLevelUsages.Count());
 
                 var defaultUsage = subscriptionLevelUsages.First();
@@ -528,7 +528,7 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
-                subscriptionLevelUsages = cdnMgmtClient.CheckResourceUsage();
+                subscriptionLevelUsages = cdnMgmtClient.ListResourceUsage();
                 Assert.Equal(1, subscriptionLevelUsages.Count());
 
                 var usageAfterCreation = subscriptionLevelUsages.First();
