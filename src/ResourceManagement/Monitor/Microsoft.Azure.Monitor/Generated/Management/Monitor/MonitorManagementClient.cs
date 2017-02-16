@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor
+namespace Microsoft.Azure.Management.Insights
 {
     using System.Linq;
     using Microsoft.Rest;

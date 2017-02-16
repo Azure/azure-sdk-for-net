@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     using System.Linq;
 
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// A rule management event data source. The discriminator fields is always
     /// RuleManagementEventDataSource in this case.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Monitor.Models.RuleManagementEventDataSource")]
+    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")]
     public partial class RuleManagementEventDataSource : RuleDataSource
     {
         /// <summary>

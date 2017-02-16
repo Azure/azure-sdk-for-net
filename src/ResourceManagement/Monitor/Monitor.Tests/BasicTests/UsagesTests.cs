@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Monitor;
-using Microsoft.Azure.Monitor.Models;
+using Microsoft.Azure.Insights;
+using Microsoft.Azure.Insights.Models;
 using Xunit;
 using Newtonsoft.Json;
 

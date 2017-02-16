@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor
+namespace Microsoft.Azure.Management.Insights
 {
     using System.Linq;
     using Microsoft.Rest;
@@ -71,10 +71,6 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceUri");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             string apiVersion = "2015-07-01";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -92,7 +88,6 @@ namespace Microsoft.Azure.Management.Monitor
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/diagnosticSettings/service").ToString();
             _url = _url.Replace("{resourceUri}", System.Uri.EscapeDataString(resourceUri));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (apiVersion != null)
             {
@@ -262,10 +257,6 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 parameters.Validate();
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             string apiVersion = "2015-07-01";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -284,7 +275,6 @@ namespace Microsoft.Azure.Management.Monitor
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/diagnosticSettings/service").ToString();
             _url = _url.Replace("{resourceUri}", System.Uri.EscapeDataString(resourceUri));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (apiVersion != null)
             {

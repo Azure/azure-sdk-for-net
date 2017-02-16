@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Monitor.Models
+namespace Microsoft.Azure.Insights.Models
 {
     using System.Linq;
 

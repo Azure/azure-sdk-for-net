@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     using System.Linq;
 
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// A rule metric data source. The discriminator value is always
     /// RuleMetricDataSource in this case.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Monitor.Models.RuleMetricDataSource")]
+    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")]
     public partial class RuleMetricDataSource : RuleDataSource
     {
         /// <summary>

@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Monitor.Models
+namespace Microsoft.Azure.Insights.Models
 {
     using System.Linq;
 
@@ -30,12 +30,29 @@ namespace Microsoft.Azure.Monitor.Models
         /// 'Percent', 'MilliSeconds'</param>
         /// <param name="data">Array of data points representing the metric
         /// values.</param>
-        public Metric(LocalizableString name, Unit unit, System.Collections.Generic.IList<MetricValue> data)
+        /// <param name="id">the id, resourceId, of the metric.</param>
+        /// <param name="type">the resource type of the metric
+        /// resource.</param>
+        public Metric(LocalizableString name, Unit unit, System.Collections.Generic.IList<MetricValue> data, string id = default(string), string type = default(string))
         {
+            Id = id;
+            Type = type;
             Name = name;
             Unit = unit;
             Data = data;
         }
+
+        /// <summary>
+        /// Gets or sets the id, resourceId, of the metric.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource type of the metric resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the name and the display name of the metric, i.e. it

@@ -6,14 +6,14 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     using System.Linq;
 
     /// <summary>
     /// A rule condition based on a metric crossing a threshold.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Monitor.Models.ThresholdRuleCondition")]
+    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition")]
     public partial class ThresholdRuleCondition : RuleCondition
     {
         /// <summary>

@@ -6,14 +6,14 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     using System.Linq;
 
     /// <summary>
     /// A management event rule condition.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Monitor.Models.ManagementEventRuleCondition")]
+    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")]
     public partial class ManagementEventRuleCondition : RuleCondition
     {
         /// <summary>

@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Monitor.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     using System.Linq;
 
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// Specifies the action to post to service when the rule condition is
     /// evaluated. The discriminator is always RuleWebhookAction in this case.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Monitor.Models.RuleWebhookAction")]
+    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Management.Insights.Models.RuleWebhookAction")]
     public partial class RuleWebhookAction : RuleAction
     {
         /// <summary>
