@@ -13,7 +13,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ISupportsGettingById<IFluentResourceT>,
         ISupportsGettingByGroup<IFluentResourceT>,
         ISupportsDeletingByGroup,
-        IHasManager<ManagerT>
+        IHasManager<ManagerT>,
+        IHasInner<InnerCollectionT>
         where IFluentResourceT : class, IGroupableResource<ManagerT>
         where FluentResourceT : IFluentResourceT
         where ManagerT : IManagerBase
@@ -27,6 +28,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         protected InnerCollectionT InnerCollection { get; }
 
         public ManagerT Manager { get; }
+
+        public InnerCollectionT Inner
+        {
+            get
+            {
+                return InnerCollection;
+            }
+        }
 
         #region Implementation of ISupportsGettingByGroup interface
 

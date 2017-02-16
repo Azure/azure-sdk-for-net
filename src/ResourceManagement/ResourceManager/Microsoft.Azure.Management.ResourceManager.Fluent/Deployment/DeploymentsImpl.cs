@@ -28,6 +28,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             }
         }
 
+        public IDeploymentsOperations Inner
+        {
+            get
+            {
+                return client;
+            }
+        }
+
         internal DeploymentsImpl(IDeploymentsOperations client, IDeploymentOperationsOperations deploymentOperationsClient, IResourceManager resourceManager)
         {
             this.client = client;

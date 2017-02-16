@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using System;
 
     /// <summary>
     /// Implementation for VirtualMachineScaleSetVMs.
@@ -19,6 +20,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private VirtualMachineScaleSetImpl scaleSet;
         private IVirtualMachineScaleSetVMsOperations client;
         private IComputeManager computeManager;
+
+        public IComputeManager Manager
+        {
+            get
+            {
+                return computeManager;
+            }
+        }
+
+        public IVirtualMachineScaleSetVMsOperations Inner
+        {
+            get
+            {
+                return client;
+            }
+        }
+
         ///GENMHASH:2F547EF235083E7C24F2AAD75FCE9FFC:C140D4869BF21B82D034CCD0BC161B59
         internal VirtualMachineScaleSetVMsImpl(VirtualMachineScaleSetImpl scaleSet,
             IVirtualMachineScaleSetVMsOperations client,

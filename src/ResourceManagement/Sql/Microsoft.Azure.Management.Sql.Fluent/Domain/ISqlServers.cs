@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        IHasManager<ISqlManager>
+        IHasManager<ISqlManager>,
+        IHasInner<IServersOperations>
     {
     }
 }

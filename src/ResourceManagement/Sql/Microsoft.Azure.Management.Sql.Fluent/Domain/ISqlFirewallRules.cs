@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         ISupportsDeletingByParent,
-        IHasManager<ISqlManager>
+        IHasManager<ISqlManager>,
+        IHasInner<IServersOperations>
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group and SQLServer.

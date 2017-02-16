@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using Snapshot.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to managed snapshot management API in Azure.
@@ -17,7 +18,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
+        IHasManager<IComputeManager>,
+        IHasInner<ISnapshotsOperations>
     {
         /// <summary>
         /// Revoke access granted to a snapshot.

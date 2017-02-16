@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        IHasManager<IComputeManager>
+        IHasManager<IComputeManager>,
+        IHasInner<IVirtualMachineScaleSetsOperations>
     {
         /// <summary>
         /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set.

@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ISupportsGettingById<IStorageAccount>,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<IStorageAccount>,
-        IHasManager<IStorageManager>
+        IHasManager<IStorageManager>,
+        IHasInner<IStorageAccountsOperations>
     {
         /// <summary>
         /// Checks that account name is valid and is not in use.

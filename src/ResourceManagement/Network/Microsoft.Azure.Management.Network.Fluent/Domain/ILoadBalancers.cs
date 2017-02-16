@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IHasManager<INetworkManager>
+        IHasManager<INetworkManager>,
+        IHasInner<ILoadBalancersOperations>
     {
     }
 }

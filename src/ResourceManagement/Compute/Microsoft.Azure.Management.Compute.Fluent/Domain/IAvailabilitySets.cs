@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        IHasManager<IComputeManager>
+        IHasManager<IComputeManager>,
+        IHasInner<IAvailabilitySetsOperations>
     {
     }
 }

@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
-        IHasManager<INetworkManager>
+        IHasManager<INetworkManager>,
+        IHasInner<IPublicIPAddressesOperations>
     {
     }
 }

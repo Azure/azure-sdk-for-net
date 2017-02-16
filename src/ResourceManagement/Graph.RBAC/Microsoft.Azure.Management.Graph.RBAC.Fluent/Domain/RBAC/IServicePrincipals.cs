@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public interface IServicePrincipals  :
         // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>,
-        IHasManager<IGraphRbacManager>
+        IHasManager<IGraphRbacManager>,
+        IHasInner<IServicePrincipalsOperations>
     {
         /// <summary>
         /// Gets the information about a service principal.

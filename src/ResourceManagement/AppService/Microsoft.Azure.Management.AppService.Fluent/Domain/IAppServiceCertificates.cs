@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         ISupportsDeletingByGroup,
-        IHasManager<IAppServiceManager>
+        IHasManager<IAppServiceManager>,
+        IHasInner<ICertificatesOperations>
     {
     }
 }

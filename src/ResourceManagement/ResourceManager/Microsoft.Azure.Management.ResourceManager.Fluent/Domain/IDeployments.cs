@@ -20,7 +20,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         ISupportsGettingById<IDeployment>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        IHasManager<IResourceManager>
+        IHasManager<IResourceManager>,
+        IHasInner<IDeploymentsOperations>
     {
         /// <summary>
         /// Checks if a deployment exists in a resource group.

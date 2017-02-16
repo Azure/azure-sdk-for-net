@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using VirtualMachineCustomImage.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point for image management API.
@@ -16,7 +17,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
+        IHasManager<IComputeManager>,
+        IHasInner<IImagesOperations>
     {
     }
 }
