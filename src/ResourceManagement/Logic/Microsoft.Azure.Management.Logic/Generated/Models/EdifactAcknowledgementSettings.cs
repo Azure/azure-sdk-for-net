@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact agreement acknowledgement settings.
+    /// </summary>
     public partial class EdifactAcknowledgementSettings
     {
         /// <summary>
@@ -28,7 +31,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the EdifactAcknowledgementSettings
         /// class.
         /// </summary>
-        public EdifactAcknowledgementSettings(bool? needTechnicalAcknowledgement = default(bool?), bool? batchTechnicalAcknowledgements = default(bool?), bool? needFunctionalAcknowledgement = default(bool?), bool? batchFunctionalAcknowledgements = default(bool?), bool? needLoopForValidMessages = default(bool?), bool? sendSynchronousAcknowledgement = default(bool?), string acknowledgementControlNumberPrefix = default(string), string acknowledgementControlNumberSuffix = default(string), int? acknowledgementControlNumberLowerBound = default(int?), int? acknowledgementControlNumberUpperBound = default(int?), bool? rolloverAcknowledgementControlNumber = default(bool?))
+        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber, string acknowledgementControlNumberPrefix = default(string), string acknowledgementControlNumberSuffix = default(string))
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
             BatchTechnicalAcknowledgements = batchTechnicalAcknowledgements;
@@ -48,42 +51,42 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// acknowledgement is needed.
         /// </summary>
         [JsonProperty(PropertyName = "needTechnicalAcknowledgement")]
-        public bool? NeedTechnicalAcknowledgement { get; set; }
+        public bool NeedTechnicalAcknowledgement { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to batch the technical
         /// acknowledgements.
         /// </summary>
         [JsonProperty(PropertyName = "batchTechnicalAcknowledgements")]
-        public bool? BatchTechnicalAcknowledgements { get; set; }
+        public bool BatchTechnicalAcknowledgements { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether functional
         /// acknowledgement is needed.
         /// </summary>
         [JsonProperty(PropertyName = "needFunctionalAcknowledgement")]
-        public bool? NeedFunctionalAcknowledgement { get; set; }
+        public bool NeedFunctionalAcknowledgement { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to batch functional
         /// acknowledgements.
         /// </summary>
         [JsonProperty(PropertyName = "batchFunctionalAcknowledgements")]
-        public bool? BatchFunctionalAcknowledgements { get; set; }
+        public bool BatchFunctionalAcknowledgements { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether a loop is needed for
         /// valid messages.
         /// </summary>
         [JsonProperty(PropertyName = "needLoopForValidMessages")]
-        public bool? NeedLoopForValidMessages { get; set; }
+        public bool NeedLoopForValidMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to send synchronous
         /// acknowledgement.
         /// </summary>
         [JsonProperty(PropertyName = "sendSynchronousAcknowledgement")]
-        public bool? SendSynchronousAcknowledgement { get; set; }
+        public bool SendSynchronousAcknowledgement { get; set; }
 
         /// <summary>
         /// Gets or sets the acknowledgement control number prefix.
@@ -101,20 +104,30 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the acknowledgement control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "acknowledgementControlNumberLowerBound")]
-        public int? AcknowledgementControlNumberLowerBound { get; set; }
+        public int AcknowledgementControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the acknowledgement control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "acknowledgementControlNumberUpperBound")]
-        public int? AcknowledgementControlNumberUpperBound { get; set; }
+        public int AcknowledgementControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover
         /// acknowledgement control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverAcknowledgementControlNumber")]
-        public bool? RolloverAcknowledgementControlNumber { get; set; }
+        public bool RolloverAcknowledgementControlNumber { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The recurrence schedule.
+    /// </summary>
     public partial class RecurrenceSchedule
     {
         /// <summary>
@@ -36,31 +39,31 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the minutes.
+        /// Gets or sets the minutes.
         /// </summary>
         [JsonProperty(PropertyName = "minutes")]
         public IList<int?> Minutes { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the hours.
+        /// Gets or sets the hours.
         /// </summary>
         [JsonProperty(PropertyName = "hours")]
         public IList<int?> Hours { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the days of the week.
+        /// Gets or sets the days of the week.
         /// </summary>
         [JsonProperty(PropertyName = "weekDays")]
         public IList<DaysOfWeek?> WeekDays { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the month days.
+        /// Gets or sets the month days.
         /// </summary>
         [JsonProperty(PropertyName = "monthDays")]
         public IList<int?> MonthDays { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the monthly occurrences.
+        /// Gets or sets the monthly occurrences.
         /// </summary>
         [JsonProperty(PropertyName = "monthlyOccurrences")]
         public IList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; set; }

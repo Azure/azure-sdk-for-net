@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact agreement framing settings.
+    /// </summary>
     public partial class EdifactFramingSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactFramingSettings class.
         /// </summary>
-        public EdifactFramingSettings(string serviceCodeListDirectoryVersion = default(string), string characterEncoding = default(string), int? protocolVersion = default(int?), int? dataElementSeparator = default(int?), int? componentSeparator = default(int?), int? segmentTerminator = default(int?), int? releaseIndicator = default(int?), int? repetitionSeparator = default(int?), EdifactCharacterSet? characterSet = default(EdifactCharacterSet?), EdifactDecimalIndicator? decimalPointIndicator = default(EdifactDecimalIndicator?), SegmentTerminatorSuffix? segmentTerminatorSuffix = default(SegmentTerminatorSuffix?))
+        public EdifactFramingSettings(int protocolVersion, int dataElementSeparator, int componentSeparator, int segmentTerminator, int releaseIndicator, int repetitionSeparator, EdifactCharacterSet characterSet, EdifactDecimalIndicator decimalPointIndicator, SegmentTerminatorSuffix segmentTerminatorSuffix, string serviceCodeListDirectoryVersion = default(string), string characterEncoding = default(string))
         {
             ServiceCodeListDirectoryVersion = serviceCodeListDirectoryVersion;
             CharacterEncoding = characterEncoding;
@@ -57,37 +60,37 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the protocol version.
         /// </summary>
         [JsonProperty(PropertyName = "protocolVersion")]
-        public int? ProtocolVersion { get; set; }
+        public int ProtocolVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the data element separator.
         /// </summary>
         [JsonProperty(PropertyName = "dataElementSeparator")]
-        public int? DataElementSeparator { get; set; }
+        public int DataElementSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the component separator.
         /// </summary>
         [JsonProperty(PropertyName = "componentSeparator")]
-        public int? ComponentSeparator { get; set; }
+        public int ComponentSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator.
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminator")]
-        public int? SegmentTerminator { get; set; }
+        public int SegmentTerminator { get; set; }
 
         /// <summary>
         /// Gets or sets the release indicator.
         /// </summary>
         [JsonProperty(PropertyName = "releaseIndicator")]
-        public int? ReleaseIndicator { get; set; }
+        public int ReleaseIndicator { get; set; }
 
         /// <summary>
         /// Gets or sets the repetition separator.
         /// </summary>
         [JsonProperty(PropertyName = "repetitionSeparator")]
-        public int? RepetitionSeparator { get; set; }
+        public int RepetitionSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the EDIFACT frame setting characterSet. Possible
@@ -96,14 +99,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'UNOY', 'KECA'
         /// </summary>
         [JsonProperty(PropertyName = "characterSet")]
-        public EdifactCharacterSet? CharacterSet { get; set; }
+        public EdifactCharacterSet CharacterSet { get; set; }
 
         /// <summary>
         /// Gets or sets the EDIFACT frame setting decimal indicator. Possible
         /// values include: 'NotSpecified', 'Comma', 'Decimal'
         /// </summary>
         [JsonProperty(PropertyName = "decimalPointIndicator")]
-        public EdifactDecimalIndicator? DecimalPointIndicator { get; set; }
+        public EdifactDecimalIndicator DecimalPointIndicator { get; set; }
 
         /// <summary>
         /// Gets or sets the EDIFACT frame setting segment terminator suffix.
@@ -111,7 +114,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'CRLF'
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminatorSuffix")]
-        public SegmentTerminatorSuffix? SegmentTerminatorSuffix { get; set; }
+        public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

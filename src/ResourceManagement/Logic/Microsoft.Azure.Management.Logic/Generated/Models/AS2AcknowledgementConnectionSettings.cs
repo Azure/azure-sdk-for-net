@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The AS2 agreement acknowledegment connection settings.
+    /// </summary>
     public partial class AS2AcknowledgementConnectionSettings
     {
         /// <summary>
@@ -28,7 +31,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the
         /// AS2AcknowledgementConnectionSettings class.
         /// </summary>
-        public AS2AcknowledgementConnectionSettings(bool? ignoreCertificateNameMismatch = default(bool?), bool? supportHttpStatusCodeContinue = default(bool?), bool? keepHttpConnectionAlive = default(bool?), bool? unfoldHttpHeaders = default(bool?))
+        public AS2AcknowledgementConnectionSettings(bool ignoreCertificateNameMismatch, bool supportHttpStatusCodeContinue, bool keepHttpConnectionAlive, bool unfoldHttpHeaders)
         {
             IgnoreCertificateNameMismatch = ignoreCertificateNameMismatch;
             SupportHttpStatusCodeContinue = supportHttpStatusCodeContinue;
@@ -41,28 +44,38 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// certificate name.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCertificateNameMismatch")]
-        public bool? IgnoreCertificateNameMismatch { get; set; }
+        public bool IgnoreCertificateNameMismatch { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to support HTTP status
         /// code 'CONTINUE'.
         /// </summary>
         [JsonProperty(PropertyName = "supportHttpStatusCodeContinue")]
-        public bool? SupportHttpStatusCodeContinue { get; set; }
+        public bool SupportHttpStatusCodeContinue { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to keep the connection
         /// alive.
         /// </summary>
         [JsonProperty(PropertyName = "keepHttpConnectionAlive")]
-        public bool? KeepHttpConnectionAlive { get; set; }
+        public bool KeepHttpConnectionAlive { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to unfold the HTTP
         /// headers.
         /// </summary>
         [JsonProperty(PropertyName = "unfoldHttpHeaders")]
-        public bool? UnfoldHttpHeaders { get; set; }
+        public bool UnfoldHttpHeaders { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

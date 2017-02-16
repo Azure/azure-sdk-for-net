@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The correlation property.
+    /// </summary>
     public partial class Correlation
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the client tracking id.
+        /// Gets or sets the client tracking id.
         /// </summary>
         [JsonProperty(PropertyName = "clientTrackingId")]
         public string ClientTrackingId { get; set; }

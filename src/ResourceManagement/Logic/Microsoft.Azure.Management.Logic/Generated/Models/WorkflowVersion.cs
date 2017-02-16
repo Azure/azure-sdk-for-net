@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow version.
+    /// </summary>
     [JsonTransformation]
     public partial class WorkflowVersion : Resource
     {
@@ -54,9 +57,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         public DateTime? ChangedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the state. Possible values include:
-        /// 'NotSpecified', 'Completed', 'Enabled', 'Disabled', 'Deleted',
-        /// 'Suspended'
+        /// Gets or sets the state. Possible values include: 'NotSpecified',
+        /// 'Completed', 'Enabled', 'Disabled', 'Deleted', 'Suspended'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public WorkflowState? State { get; set; }
@@ -74,28 +76,41 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string AccessEndpoint { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the sku.
+        /// Gets or sets the sku.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the integration account.
+        /// Gets or sets the integration account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.integrationAccount")]
         public ResourceReference IntegrationAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the definition.
+        /// Gets or sets the definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.definition")]
         public object Definition { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the parameters.
+        /// Gets or sets the parameters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, WorkflowParameter> Parameters { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
+        }
     }
 }

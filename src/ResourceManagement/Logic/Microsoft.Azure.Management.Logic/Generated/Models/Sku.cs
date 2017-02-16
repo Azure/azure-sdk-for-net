@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The sku type.
+    /// </summary>
     public partial class Sku
     {
         /// <summary>
@@ -26,24 +29,33 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(SkuName? name = default(SkuName?), ResourceReference plan = default(ResourceReference))
+        public Sku(SkuName name, ResourceReference plan = default(ResourceReference))
         {
             Name = name;
             Plan = plan;
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
+        /// Gets or sets the name. Possible values include: 'NotSpecified',
+        /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName? Name { get; set; }
+        public SkuName Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the reference to plan.
+        /// Gets or sets the reference to plan.
         /// </summary>
         [JsonProperty(PropertyName = "plan")]
         public ResourceReference Plan { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

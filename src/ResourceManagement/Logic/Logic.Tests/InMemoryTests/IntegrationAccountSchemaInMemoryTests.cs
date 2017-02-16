@@ -44,8 +44,8 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(
-                () => client.IntegrationAccountSchemas.List(null, "IntegrationAccount"));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.List(ResourceGroupName,"IntegrationAccount"));
+                () => client.Schemas.ListByIntegrationAccounts(null, "IntegrationAccount"));
+            Assert.Throws<CloudException>(() => client.Schemas.ListByIntegrationAccounts(ResourceGroupName,"IntegrationAccount"));
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.SchemaList
             };
 
-            var result = client.IntegrationAccountSchemas.List(ResourceGroupName, "IntegrationAccount");
+            var result = client.Schemas.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -82,8 +82,8 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.ListNext(Constants.NextPageLink));
+            Assert.Throws<ValidationException>(() => client.Schemas.ListByIntegrationAccountsNext(null));
+            Assert.Throws<CloudException>(() => client.Schemas.ListByIntegrationAccountsNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.SchemaList
             };
 
-            var result = client.IntegrationAccountSchemas.ListNext(Constants.NextPageLink);
+            var result = client.Schemas.ListByIntegrationAccountsNext(Constants.NextPageLink);
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -120,11 +120,11 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.CreateOrUpdate(null, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.CreateOrUpdate(ResourceGroupName, null, "SchemaName", new IntegrationAccountSchema()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountSchema()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema()));
+            Assert.Throws<ValidationException>(() => client.Schemas.CreateOrUpdate(null, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema()));
+            Assert.Throws<ValidationException>(() => client.Schemas.CreateOrUpdate(ResourceGroupName, null, "SchemaName", new IntegrationAccountSchema()));
+            Assert.Throws<ValidationException>(() => client.Schemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountSchema()));
+            Assert.Throws<ValidationException>(() => client.Schemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", null));
+            Assert.Throws<CloudException>(() => client.Schemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema()));
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Schema
             };
 
-            var schema = client.IntegrationAccountSchemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema());
+            var schema = client.Schemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -161,7 +161,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Schema
             };
 
-            var schema = client.IntegrationAccountSchemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema());
+            var schema = client.Schemas.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "SchemaName", new IntegrationAccountSchema());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -182,10 +182,10 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NotFound
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.Delete(null, "IntegrationAccountName","SchemaName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.Delete(ResourceGroupName, null, "SchemaName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.Delete(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Delete(ResourceGroupName, "IntegrationAccountName","SchemaName"));
+            Assert.Throws<ValidationException>(() => client.Schemas.Delete(null, "IntegrationAccountName","SchemaName"));
+            Assert.Throws<ValidationException>(() => client.Schemas.Delete(ResourceGroupName, null, "SchemaName"));
+            Assert.Throws<ValidationException>(() => client.Schemas.Delete(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Schemas.Delete(ResourceGroupName, "IntegrationAccountName","SchemaName"));
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
-            client.IntegrationAccountSchemas.Delete(ResourceGroupName, "IntegrationAccountName", "SchemaName");
+            client.Schemas.Delete(ResourceGroupName, "IntegrationAccountName", "SchemaName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -217,7 +217,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NoContent
             };
 
-            client.IntegrationAccountSchemas.Delete(ResourceGroupName, "IntegrationAccountName","SchemaName");
+            client.Schemas.Delete(ResourceGroupName, "IntegrationAccountName","SchemaName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -236,10 +236,10 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.Get(null, "IntegrationAccountName", "SchemaName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.Get(ResourceGroupName, null, "SchemaName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountSchemas.Get(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(ResourceGroupName, "IntegrationAccountName", "SchemaName"));
+            Assert.Throws<ValidationException>(() => client.Schemas.Get(null, "IntegrationAccountName", "SchemaName"));
+            Assert.Throws<ValidationException>(() => client.Schemas.Get(ResourceGroupName, null, "SchemaName"));
+            Assert.Throws<ValidationException>(() => client.Schemas.Get(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Schemas.Get(ResourceGroupName, "IntegrationAccountName", "SchemaName"));
         }
 
         [Fact]
@@ -254,7 +254,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Schema
             };
 
-            var schema = client.IntegrationAccountSchemas.Get(ResourceGroupName, "IntegrationAccountName", "SchemaName");
+            var schema = client.Schemas.Get(ResourceGroupName, "IntegrationAccountName", "SchemaName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

@@ -16,8 +16,11 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account partner.
+    /// </summary>
     [JsonTransformation]
-    public partial class IntegrationAccountPartner : IntegrationAccountResource
+    public partial class IntegrationAccountPartner : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountPartner class.
@@ -27,7 +30,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountPartner class.
         /// </summary>
-        public IntegrationAccountPartner(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PartnerType? partnerType = default(PartnerType?), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), PartnerContent content = default(PartnerContent))
+        public IntegrationAccountPartner(PartnerType partnerType, PartnerContent content, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             PartnerType = partnerType;
@@ -42,7 +45,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'B2B'
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerType")]
-        public PartnerType? PartnerType { get; set; }
+        public PartnerType PartnerType { get; set; }
 
         /// <summary>
         /// Gets the created time.
@@ -68,5 +71,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "properties.content")]
         public PartnerContent Content { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Content == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Content");
+            }
+        }
     }
 }

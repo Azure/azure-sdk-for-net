@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Composite Swagger for Logic Management Client
+    /// REST API for Azure Logic Apps.
     /// </summary>
     public partial interface ILogicManagementClient : IDisposable
     {
@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.Logic
         /// The subscription id.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -102,29 +107,54 @@ namespace Microsoft.Azure.Management.Logic
         IIntegrationAccountsOperations IntegrationAccounts { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountSchemasOperations.
+        /// Gets the ISchemasOperations.
         /// </summary>
-        IIntegrationAccountSchemasOperations IntegrationAccountSchemas { get; }
+        ISchemasOperations Schemas { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountMapsOperations.
+        /// Gets the IMapsOperations.
         /// </summary>
-        IIntegrationAccountMapsOperations IntegrationAccountMaps { get; }
+        IMapsOperations Maps { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountPartnersOperations.
+        /// Gets the IPartnersOperations.
         /// </summary>
-        IIntegrationAccountPartnersOperations IntegrationAccountPartners { get; }
+        IPartnersOperations Partners { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountAgreementsOperations.
+        /// Gets the IAgreementsOperations.
         /// </summary>
-        IIntegrationAccountAgreementsOperations IntegrationAccountAgreements { get; }
+        IAgreementsOperations Agreements { get; }
 
         /// <summary>
-        /// Gets the IIntegrationAccountCertificatesOperations.
+        /// Gets the ICertificatesOperations.
         /// </summary>
-        IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; }
+        ICertificatesOperations Certificates { get; }
+
+            /// <summary>
+        /// Lists all of the available Logic REST API operations.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists all of the available Logic REST API operations.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

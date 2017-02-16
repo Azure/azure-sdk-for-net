@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The AS2 agreement mdn settings.
+    /// </summary>
     public partial class AS2MdnSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2MdnSettings class.
         /// </summary>
-        public AS2MdnSettings(bool? needMdn = default(bool?), bool? signMdn = default(bool?), bool? sendMdnAsynchronously = default(bool?), string receiptDeliveryUrl = default(string), string dispositionNotificationTo = default(string), bool? signOutboundMdnIfOptional = default(bool?), string mdnText = default(string), bool? sendInboundMdnToMessageBox = default(bool?), HashingAlgorithm? micHashingAlgorithm = default(HashingAlgorithm?))
+        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, HashingAlgorithm micHashingAlgorithm, string receiptDeliveryUrl = default(string), string dispositionNotificationTo = default(string), string mdnText = default(string))
         {
             NeedMdn = needMdn;
             SignMdn = signMdn;
@@ -43,21 +46,21 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to send or request a MDN.
         /// </summary>
         [JsonProperty(PropertyName = "needMdn")]
-        public bool? NeedMdn { get; set; }
+        public bool NeedMdn { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether the MDN needs to be
         /// signed or not.
         /// </summary>
         [JsonProperty(PropertyName = "signMdn")]
-        public bool? SignMdn { get; set; }
+        public bool SignMdn { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to send the asynchronous
         /// MDN.
         /// </summary>
         [JsonProperty(PropertyName = "sendMdnAsynchronously")]
-        public bool? SendMdnAsynchronously { get; set; }
+        public bool SendMdnAsynchronously { get; set; }
 
         /// <summary>
         /// Gets or sets the receipt delivery URL.
@@ -76,7 +79,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// if optional.
         /// </summary>
         [JsonProperty(PropertyName = "signOutboundMdnIfOptional")]
-        public bool? SignOutboundMdnIfOptional { get; set; }
+        public bool SignOutboundMdnIfOptional { get; set; }
 
         /// <summary>
         /// Gets or sets the MDN text.
@@ -89,14 +92,24 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// message box.
         /// </summary>
         [JsonProperty(PropertyName = "sendInboundMdnToMessageBox")]
-        public bool? SendInboundMdnToMessageBox { get; set; }
+        public bool SendInboundMdnToMessageBox { get; set; }
 
         /// <summary>
         /// Gets or sets the signing or hashing algorithm. Possible values
-        /// include: 'NotSpecified', 'None', 'SHA2256', 'SHA2384', 'SHA2512'
+        /// include: 'NotSpecified', 'None', 'MD5', 'SHA1', 'SHA2256',
+        /// 'SHA2384', 'SHA2512'
         /// </summary>
         [JsonProperty(PropertyName = "micHashingAlgorithm")]
-        public HashingAlgorithm? MicHashingAlgorithm { get; set; }
+        public HashingAlgorithm MicHashingAlgorithm { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

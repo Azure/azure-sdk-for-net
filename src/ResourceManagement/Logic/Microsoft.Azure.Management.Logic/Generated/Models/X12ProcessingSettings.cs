@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 processing settings.
+    /// </summary>
     public partial class X12ProcessingSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12ProcessingSettings class.
         /// </summary>
-        public X12ProcessingSettings(bool? maskSecurityInfo = default(bool?), bool? convertImpliedDecimal = default(bool?), bool? preserveInterchange = default(bool?), bool? suspendInterchangeOnError = default(bool?), bool? createEmptyXmlTagsForTrailingSeparators = default(bool?), bool? useDotAsDecimalSeparator = default(bool?))
+        public X12ProcessingSettings(bool maskSecurityInfo, bool convertImpliedDecimal, bool preserveInterchange, bool suspendInterchangeOnError, bool createEmptyXmlTagsForTrailingSeparators, bool useDotAsDecimalSeparator)
         {
             MaskSecurityInfo = maskSecurityInfo;
             ConvertImpliedDecimal = convertImpliedDecimal;
@@ -41,41 +44,51 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// information.
         /// </summary>
         [JsonProperty(PropertyName = "maskSecurityInfo")]
-        public bool? MaskSecurityInfo { get; set; }
+        public bool MaskSecurityInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to convert numerical
         /// type to implied decimal.
         /// </summary>
         [JsonProperty(PropertyName = "convertImpliedDecimal")]
-        public bool? ConvertImpliedDecimal { get; set; }
+        public bool ConvertImpliedDecimal { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to preserve interchange.
         /// </summary>
         [JsonProperty(PropertyName = "preserveInterchange")]
-        public bool? PreserveInterchange { get; set; }
+        public bool PreserveInterchange { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to suspend interchange
         /// on error.
         /// </summary>
         [JsonProperty(PropertyName = "suspendInterchangeOnError")]
-        public bool? SuspendInterchangeOnError { get; set; }
+        public bool SuspendInterchangeOnError { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to create empty xml tags
         /// for trailing separators.
         /// </summary>
         [JsonProperty(PropertyName = "createEmptyXmlTagsForTrailingSeparators")]
-        public bool? CreateEmptyXmlTagsForTrailingSeparators { get; set; }
+        public bool CreateEmptyXmlTagsForTrailingSeparators { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to use dot as decimal
         /// separator.
         /// </summary>
         [JsonProperty(PropertyName = "useDotAsDecimalSeparator")]
-        public bool? UseDotAsDecimalSeparator { get; set; }
+        public bool UseDotAsDecimalSeparator { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
@@ -57,7 +57,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountCertificateName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -82,8 +82,7 @@ namespace Test.Azure.Management.Logic
 
                 var certificateInstance = new IntegrationAccountCertificate
                 {
-                    Name = integrationAccountCertificateName,
-                    Location = "brazilsouth",                    
+                    Location = "brazilsouth",
                     PublicCertificate = Convert.ToBase64String(cert.RawData)
                 };
 
@@ -91,7 +90,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     certificateInstance
@@ -99,7 +98,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountCertificateName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -127,7 +126,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName);
                 certInstance.PublicCertificate = null;
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     certInstance
@@ -135,7 +134,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountCertificateName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -158,7 +157,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
@@ -169,7 +168,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Certificates.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountCertificateName));
             }
         }
@@ -190,24 +189,24 @@ namespace Test.Azure.Management.Logic
                 var client = this.GetIntegrationAccountClient(context);
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
                         integrationAccountName));
 
                 var certificate2 = CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                    integrationAccountName);                
+                    integrationAccountName);
 
-                client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName, certificate2);
 
-                var updatedCertificate = client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup,
+                var updatedCertificate = client.Certificates.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName);
 
-                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);                
+                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -229,7 +228,7 @@ namespace Test.Azure.Management.Logic
                 var client = this.GetIntegrationAccountClient(context);
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
@@ -237,7 +236,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                var getCertificate = client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup,
+                var getCertificate = client.Certificates.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName);
 
@@ -264,13 +263,13 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
                         integrationAccountName));
 
-                var certificates = client.IntegrationAccountCertificates.List(Constants.DefaultResourceGroup,
+                var certificates = client.Certificates.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
                     integrationAccountName);
 
                 Assert.True(certificates.Any());
@@ -296,7 +295,6 @@ namespace Test.Azure.Management.Logic
 
             var certificate = new IntegrationAccountCertificate
             {
-                Name = integrationAccountCertificateName,
                 Location = "brazilsouth",
                 Key = new KeyVaultKeyReference
                 {
@@ -305,10 +303,10 @@ namespace Test.Azure.Management.Logic
                     {
                         Id =
                             string.Format(CultureInfo.InvariantCulture,
-                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/IntegrationAccountVault",
+                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault",
                                 Constants.DefaultSubscription, Constants.DefaultResourceGroup)
                     },
-                    KeyVersion = "a71cf67368fc473f8d2a40cd8804ac85"
+                    KeyVersion = "87d9764197604449b9b8eb7bd8710868"
                 },
                 PublicCertificate = Convert.ToBase64String(cert.RawData)
             };

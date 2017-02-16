@@ -44,8 +44,8 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(
-                () => client.IntegrationAccountMaps.List(null, "IntegrationAccount",null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.List(ResourceGroupName, "IntegrationAccount"));
+                () => client.Maps.ListByIntegrationAccounts(null, "IntegrationAccount",null));
+            Assert.Throws<CloudException>(() => client.Maps.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.MapList
             };
 
-            var result = client.IntegrationAccountMaps.List(ResourceGroupName, "IntegrationAccount");
+            var result = client.Maps.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -82,8 +82,8 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.ListNext(Constants.NextPageLink));
+            Assert.Throws<ValidationException>(() => client.Maps.ListByIntegrationAccountsNext(null));
+            Assert.Throws<CloudException>(() => client.Maps.ListByIntegrationAccountsNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.MapList
             };
 
-            var result = client.IntegrationAccountMaps.ListNext(Constants.NextPageLink);
+            var result = client.Maps.ListByIntegrationAccountsNext(Constants.NextPageLink);
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -120,11 +120,11 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(null, "IntegrationAccountName", "MapName", new IntegrationAccountMap()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(ResourceGroupName, null, "MapName", new IntegrationAccountMap()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountMap()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", new IntegrationAccountMap()));
+            Assert.Throws<ValidationException>(() => client.Maps.CreateOrUpdate(null, "IntegrationAccountName", "MapName", new IntegrationAccountMap()));
+            Assert.Throws<ValidationException>(() => client.Maps.CreateOrUpdate(ResourceGroupName, null, "MapName", new IntegrationAccountMap()));
+            Assert.Throws<ValidationException>(() => client.Maps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountMap()));
+            Assert.Throws<ValidationException>(() => client.Maps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", null));
+            Assert.Throws<CloudException>(() => client.Maps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", new IntegrationAccountMap()));
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Map
             };
 
-            var map = client.IntegrationAccountMaps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", new IntegrationAccountMap());
+            var map = client.Maps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", new IntegrationAccountMap());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -161,7 +161,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Map
             };
 
-            var map = client.IntegrationAccountMaps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", new IntegrationAccountMap());
+            var map = client.Maps.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "MapName", new IntegrationAccountMap());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -182,10 +182,10 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NotFound
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Delete(null, "IntegrationAccountName","MapName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Delete(ResourceGroupName, null, "MapName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Delete(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Delete(ResourceGroupName, "IntegrationAccountName", "MapName"));
+            Assert.Throws<ValidationException>(() => client.Maps.Delete(null, "IntegrationAccountName","MapName"));
+            Assert.Throws<ValidationException>(() => client.Maps.Delete(ResourceGroupName, null, "MapName"));
+            Assert.Throws<ValidationException>(() => client.Maps.Delete(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Maps.Delete(ResourceGroupName, "IntegrationAccountName", "MapName"));
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
-            client.IntegrationAccountMaps.Delete(ResourceGroupName, "IntegrationAccountName", "MapName");
+            client.Maps.Delete(ResourceGroupName, "IntegrationAccountName", "MapName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -217,7 +217,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NoContent
             };
 
-            client.IntegrationAccountMaps.Delete(ResourceGroupName, "IntegrationAccountName","MapName");
+            client.Maps.Delete(ResourceGroupName, "IntegrationAccountName","MapName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -236,10 +236,10 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Get(null, "IntegrationAccountName", "MapName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Get(ResourceGroupName, null, "MapName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Get(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Get(ResourceGroupName, "IntegrationAccountName", "MapName"));
+            Assert.Throws<ValidationException>(() => client.Maps.Get(null, "IntegrationAccountName", "MapName"));
+            Assert.Throws<ValidationException>(() => client.Maps.Get(ResourceGroupName, null, "MapName"));
+            Assert.Throws<ValidationException>(() => client.Maps.Get(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Maps.Get(ResourceGroupName, "IntegrationAccountName", "MapName"));
         }
 
         [Fact]
@@ -254,7 +254,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Map
             };
 
-            var result = client.IntegrationAccountMaps.Get(ResourceGroupName, "IntegrationAccountName", "MapName");
+            var result = client.Maps.Get(ResourceGroupName, "IntegrationAccountName", "MapName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
