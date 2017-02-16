@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow output parameter.
+    /// </summary>
     public partial class WorkflowOutputParameter : WorkflowParameter
     {
         /// <summary>

@@ -642,11 +642,11 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition(null, "wfName", "2016-04-01-preview"));
-            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", null, "2016-04-01-preview"));
+            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition(null, "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
+            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", null, new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
             // The Assert is disabled due to the following bug: https://github.com/Azure/autorest/issues/1288.
             // Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", "2016-04-01-preview"));
+            Assert.Throws<CloudException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
         }
 
         [Fact]
@@ -661,7 +661,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Workflow
             };
 
-            client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", "2016-04-01-preview");
+            client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview"));
 
             // Validates requests.
             handler.Request.ValidateAuthorizationHeader();

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 agreement protocol settings.
+    /// </summary>
     public partial class X12ProtocolSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12ProtocolSettings class.
         /// </summary>
-        public X12ProtocolSettings(X12ValidationSettings validationSettings = default(X12ValidationSettings), X12FramingSettings framingSettings = default(X12FramingSettings), X12EnvelopeSettings envelopeSettings = default(X12EnvelopeSettings), X12AcknowledgementSettings acknowledgementSettings = default(X12AcknowledgementSettings), X12MessageFilter messageFilter = default(X12MessageFilter), X12SecuritySettings securitySettings = default(X12SecuritySettings), X12ProcessingSettings processingSettings = default(X12ProcessingSettings), IList<X12EnvelopeOverride> envelopeOverrides = default(IList<X12EnvelopeOverride>), IList<X12ValidationOverride> validationOverrides = default(IList<X12ValidationOverride>), IList<X12MessageIdentifier> messageFilterList = default(IList<X12MessageIdentifier>), IList<X12SchemaReference> schemaReferences = default(IList<X12SchemaReference>), IList<X12DelimiterOverrides> x12DelimiterOverrides = default(IList<X12DelimiterOverrides>))
+        public X12ProtocolSettings(X12ValidationSettings validationSettings, X12FramingSettings framingSettings, X12EnvelopeSettings envelopeSettings, X12AcknowledgementSettings acknowledgementSettings, X12MessageFilter messageFilter, X12SecuritySettings securitySettings, X12ProcessingSettings processingSettings, IList<X12SchemaReference> schemaReferences, IList<X12EnvelopeOverride> envelopeOverrides = default(IList<X12EnvelopeOverride>), IList<X12ValidationOverride> validationOverrides = default(IList<X12ValidationOverride>), IList<X12MessageIdentifier> messageFilterList = default(IList<X12MessageIdentifier>), IList<X12DelimiterOverrides> x12DelimiterOverrides = default(IList<X12DelimiterOverrides>))
         {
             ValidationSettings = validationSettings;
             FramingSettings = framingSettings;
@@ -114,5 +117,124 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "x12DelimiterOverrides")]
         public IList<X12DelimiterOverrides> X12DelimiterOverrides { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ValidationSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ValidationSettings");
+            }
+            if (FramingSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FramingSettings");
+            }
+            if (EnvelopeSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EnvelopeSettings");
+            }
+            if (AcknowledgementSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AcknowledgementSettings");
+            }
+            if (MessageFilter == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageFilter");
+            }
+            if (SecuritySettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SecuritySettings");
+            }
+            if (ProcessingSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProcessingSettings");
+            }
+            if (SchemaReferences == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaReferences");
+            }
+            if (this.ValidationSettings != null)
+            {
+                this.ValidationSettings.Validate();
+            }
+            if (this.FramingSettings != null)
+            {
+                this.FramingSettings.Validate();
+            }
+            if (this.EnvelopeSettings != null)
+            {
+                this.EnvelopeSettings.Validate();
+            }
+            if (this.AcknowledgementSettings != null)
+            {
+                this.AcknowledgementSettings.Validate();
+            }
+            if (this.MessageFilter != null)
+            {
+                this.MessageFilter.Validate();
+            }
+            if (this.SecuritySettings != null)
+            {
+                this.SecuritySettings.Validate();
+            }
+            if (this.ProcessingSettings != null)
+            {
+                this.ProcessingSettings.Validate();
+            }
+            if (this.EnvelopeOverrides != null)
+            {
+                foreach (var element in this.EnvelopeOverrides)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.ValidationOverrides != null)
+            {
+                foreach (var element1 in this.ValidationOverrides)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (this.MessageFilterList != null)
+            {
+                foreach (var element2 in this.MessageFilterList)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
+            }
+            if (this.SchemaReferences != null)
+            {
+                foreach (var element3 in this.SchemaReferences)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
+            }
+            if (this.X12DelimiterOverrides != null)
+            {
+                foreach (var element4 in this.X12DelimiterOverrides)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
+                    }
+                }
+            }
+        }
     }
 }

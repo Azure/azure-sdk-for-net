@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The AS2 agreement validation settings.
+    /// </summary>
     public partial class AS2ValidationSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2ValidationSettings class.
         /// </summary>
-        public AS2ValidationSettings(bool? overrideMessageProperties = default(bool?), bool? encryptMessage = default(bool?), bool? signMessage = default(bool?), bool? compressMessage = default(bool?), bool? checkDuplicateMessage = default(bool?), int? interchangeDuplicatesValidityDays = default(int?), bool? checkCertificateRevocationListOnSend = default(bool?), bool? checkCertificateRevocationListOnReceive = default(bool?), EncryptionAlgorithm? encryptionAlgorithm = default(EncryptionAlgorithm?))
+        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm)
         {
             OverrideMessageProperties = overrideMessageProperties;
             EncryptMessage = encryptMessage;
@@ -44,56 +47,56 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// message properties with those in agreement.
         /// </summary>
         [JsonProperty(PropertyName = "overrideMessageProperties")]
-        public bool? OverrideMessageProperties { get; set; }
+        public bool OverrideMessageProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether the message has to be
         /// encrypted.
         /// </summary>
         [JsonProperty(PropertyName = "encryptMessage")]
-        public bool? EncryptMessage { get; set; }
+        public bool EncryptMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether the message has to be
         /// signed.
         /// </summary>
         [JsonProperty(PropertyName = "signMessage")]
-        public bool? SignMessage { get; set; }
+        public bool SignMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether the message has to be
         /// compressed.
         /// </summary>
         [JsonProperty(PropertyName = "compressMessage")]
-        public bool? CompressMessage { get; set; }
+        public bool CompressMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to check for duplicate
         /// message.
         /// </summary>
         [JsonProperty(PropertyName = "checkDuplicateMessage")]
-        public bool? CheckDuplicateMessage { get; set; }
+        public bool CheckDuplicateMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the number of days to look back for duplicate
         /// interchange.
         /// </summary>
         [JsonProperty(PropertyName = "interchangeDuplicatesValidityDays")]
-        public int? InterchangeDuplicatesValidityDays { get; set; }
+        public int InterchangeDuplicatesValidityDays { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to check for certificate
         /// revocation list on send.
         /// </summary>
         [JsonProperty(PropertyName = "checkCertificateRevocationListOnSend")]
-        public bool? CheckCertificateRevocationListOnSend { get; set; }
+        public bool CheckCertificateRevocationListOnSend { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to check for certificate
         /// revocation list on receive.
         /// </summary>
         [JsonProperty(PropertyName = "checkCertificateRevocationListOnReceive")]
-        public bool? CheckCertificateRevocationListOnReceive { get; set; }
+        public bool CheckCertificateRevocationListOnReceive { get; set; }
 
         /// <summary>
         /// Gets or sets the encryption algorithm. Possible values include:
@@ -101,7 +104,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'AES256'
         /// </summary>
         [JsonProperty(PropertyName = "encryptionAlgorithm")]
-        public EncryptionAlgorithm? EncryptionAlgorithm { get; set; }
+        public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

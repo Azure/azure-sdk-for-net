@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 envelope override settings.
+    /// </summary>
     public partial class X12EnvelopeOverride
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12EnvelopeOverride class.
         /// </summary>
-        public X12EnvelopeOverride(string targetNamespace = default(string), string protocolVersion = default(string), string messageId = default(string), int? responsibleAgencyCode = default(int?), string headerVersion = default(string), string senderApplicationId = default(string), string receiverApplicationId = default(string), string functionalIdentifierCode = default(string), X12DateFormat? dateFormat = default(X12DateFormat?), X12TimeFormat? timeFormat = default(X12TimeFormat?))
+        public X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, X12DateFormat dateFormat, X12TimeFormat timeFormat, string functionalIdentifierCode = default(string))
         {
             TargetNamespace = targetNamespace;
             ProtocolVersion = protocolVersion;
@@ -65,7 +68,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the responsible agency code.
         /// </summary>
         [JsonProperty(PropertyName = "responsibleAgencyCode")]
-        public int? ResponsibleAgencyCode { get; set; }
+        public string ResponsibleAgencyCode { get; set; }
 
         /// <summary>
         /// Gets or sets the header version.
@@ -96,14 +99,51 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'CCYYMMDD', 'YYMMDD'
         /// </summary>
         [JsonProperty(PropertyName = "dateFormat")]
-        public X12DateFormat? DateFormat { get; set; }
+        public X12DateFormat DateFormat { get; set; }
 
         /// <summary>
         /// Gets or sets the time format. Possible values include:
         /// 'NotSpecified', 'HHMM', 'HHMMSS', 'HHMMSSdd', 'HHMMSSd'
         /// </summary>
         [JsonProperty(PropertyName = "timeFormat")]
-        public X12TimeFormat? TimeFormat { get; set; }
+        public X12TimeFormat TimeFormat { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetNamespace == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetNamespace");
+            }
+            if (ProtocolVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProtocolVersion");
+            }
+            if (MessageId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageId");
+            }
+            if (ResponsibleAgencyCode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ResponsibleAgencyCode");
+            }
+            if (HeaderVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "HeaderVersion");
+            }
+            if (SenderApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SenderApplicationId");
+            }
+            if (ReceiverApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReceiverApplicationId");
+            }
+        }
     }
 }

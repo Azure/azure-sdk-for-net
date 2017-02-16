@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow trigger recurrence.
+    /// </summary>
     public partial class WorkflowTriggerRecurrence
     {
         /// <summary>
@@ -37,7 +40,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the frequency. Possible values include:
+        /// Gets or sets the frequency. Possible values include:
         /// 'NotSpecified', 'Second', 'Minute', 'Hour', 'Day', 'Week',
         /// 'Month', 'Year'
         /// </summary>
@@ -45,31 +48,31 @@ namespace Microsoft.Azure.Management.Logic.Models
         public RecurrenceFrequency? Frequency { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the interval.
+        /// Gets or sets the interval.
         /// </summary>
         [JsonProperty(PropertyName = "interval")]
         public int? Interval { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the start time.
+        /// Gets or sets the start time.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the end time.
+        /// Gets or sets the end time.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the time zone.
+        /// Gets or sets the time zone.
         /// </summary>
         [JsonProperty(PropertyName = "timeZone")]
         public string TimeZone { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the recurrence schedule.
+        /// Gets or sets the recurrence schedule.
         /// </summary>
         [JsonProperty(PropertyName = "schedule")]
         public RecurrenceSchedule Schedule { get; set; }

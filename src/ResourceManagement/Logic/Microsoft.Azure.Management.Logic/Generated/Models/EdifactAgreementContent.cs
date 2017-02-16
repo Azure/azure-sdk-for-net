@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact agreement content.
+    /// </summary>
     public partial class EdifactAgreementContent
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactAgreementContent class.
         /// </summary>
-        public EdifactAgreementContent(EdifactOneWayAgreement receiveAgreement = default(EdifactOneWayAgreement), EdifactOneWayAgreement sendAgreement = default(EdifactOneWayAgreement))
+        public EdifactAgreementContent(EdifactOneWayAgreement receiveAgreement, EdifactOneWayAgreement sendAgreement)
         {
             ReceiveAgreement = receiveAgreement;
             SendAgreement = sendAgreement;
@@ -44,5 +47,30 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "sendAgreement")]
         public EdifactOneWayAgreement SendAgreement { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ReceiveAgreement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReceiveAgreement");
+            }
+            if (SendAgreement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SendAgreement");
+            }
+            if (this.ReceiveAgreement != null)
+            {
+                this.ReceiveAgreement.Validate();
+            }
+            if (this.SendAgreement != null)
+            {
+                this.SendAgreement.Validate();
+            }
+        }
     }
 }
