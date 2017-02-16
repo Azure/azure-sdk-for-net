@@ -102,6 +102,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.ProvisioningState, "Succeeded");
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal(result.BackupConfiguration.StorageAccount, AnalysisServicesTestUtilities.DefaultBakcupStorageAccount);
+            Assert.Equal(result.BackupConfiguration.BlobContainer, AnalysisServicesTestUtilities.DefaultBackupBlobContainer);
         }
 
         [Fact]
@@ -155,6 +157,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.ProvisioningState, "Succeeded");
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal(result.BackupConfiguration.StorageAccount, AnalysisServicesTestUtilities.DefaultBakcupStorageAccount);
+            Assert.Equal(result.BackupConfiguration.BlobContainer, AnalysisServicesTestUtilities.DefaultBackupBlobContainer);
         }
 
         [Fact]
