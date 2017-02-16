@@ -11,13 +11,6 @@ using Microsoft.Rest.ClientRuntime.Azure.Authentication.Properties;
 
 namespace Microsoft.Rest.Azure.Authentication
 {
-
-    public enum Foo
-    {
-        Bar,
-        Somestuff
-    }
-
     /// <summary>
     /// Provides tokens for Azure Active Directory Microsoft Id and Organization Id users.
     /// </summary>
