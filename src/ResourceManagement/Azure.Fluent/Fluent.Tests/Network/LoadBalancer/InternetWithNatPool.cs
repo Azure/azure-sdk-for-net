@@ -145,21 +145,36 @@ namespace Azure.Tests.Network.LoadBalancer
             resource = resource.Update()
                         .WithoutFrontend("default")
                         .WithoutBackend("default")
+                        .WithoutBackend("backend1")
                         .WithoutLoadBalancingRule("rule1")
                         .WithoutInboundNatPool("natpool1")
+                        .WithoutProbe("tcpProbe1")
+                        .WithoutProbe("httpProbe1")
                         .WithTag("tag1", "value1")
                         .WithTag("tag2", "value2")
                         .Apply();
+
+            resource.Refresh();
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
             // Verify frontends
             Assert.False(resource.Frontends.ContainsKey("default"));
+            Assert.Equal(1, resource.Frontends.Count);
+
+            // Verify probes
+            Assert.False(resource.HttpProbes.ContainsKey("httpProbe1"));
+            Assert.False(resource.HttpProbes.ContainsKey("tcpProbe1"));
+            Assert.Equal(0, resource.HttpProbes.Count);
+            Assert.Equal(0, resource.TcpProbes.Count);
 
             // Verify backends
             Assert.False(resource.Backends.ContainsKey("default"));
+            Assert.False(resource.Backends.ContainsKey("backend1"));
+            Assert.Equal(0, resource.Backends.Count);
 
             // Verify rules
             Assert.False(resource.LoadBalancingRules.ContainsKey("rule1"));
+            Assert.Equal(0, resource.LoadBalancingRules.Count);
 
             // Verify NAT pools
             Assert.False(resource.InboundNatPools.ContainsKey("natpool1"));

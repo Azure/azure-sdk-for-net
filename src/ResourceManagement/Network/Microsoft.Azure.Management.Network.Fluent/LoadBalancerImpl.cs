@@ -92,14 +92,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             // Reset and update probes
-            Inner.Probes = InnersFromWrappers<ProbeInner, ILoadBalancerHttpProbe>(httpProbes.Values);
-            Inner.Probes = InnersFromWrappers(tcpProbes.Values, Inner.Probes);
+            var innerProbes = InnersFromWrappers<ProbeInner, ILoadBalancerHttpProbe>(httpProbes.Values);
+            innerProbes = InnersFromWrappers(tcpProbes.Values, innerProbes);
+            if (innerProbes == null)
+            {
+                innerProbes = new List<ProbeInner>();
+            }
+            Inner.Probes = innerProbes;
 
             // Reset and update backends
-            Inner.BackendAddressPools = InnersFromWrappers<BackendAddressPoolInner, ILoadBalancerBackend>(backends.Values);
+            var innerBackends = InnersFromWrappers<BackendAddressPoolInner, ILoadBalancerBackend>(backends.Values);
+            if (null == innerBackends)
+            {
+                innerBackends = new List<BackendAddressPoolInner>();
+            }
+            Inner.BackendAddressPools = innerBackends;
 
             // Reset and update frontends
             Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
+            var innerFrontends = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
+            if (null == innerFrontends)
+            {
+                innerFrontends = new List<FrontendIPConfigurationInner>();
+            }
+            Inner.FrontendIPConfigurations = innerFrontends;
 
             // Reset and update inbound NAT rules
             var innerNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values);
