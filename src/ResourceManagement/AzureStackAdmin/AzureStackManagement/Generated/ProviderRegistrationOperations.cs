@@ -194,6 +194,8 @@ namespace Microsoft.AzureStack.Management
                         propertiesValue["providerLocation"] = parameters.ProviderRegistration.Properties.ProviderLocation;
                     }
                     
+                    propertiesValue["routingResourceManagerType"] = parameters.ProviderRegistration.Properties.RoutingResourceManagerType.ToString();
+                    
                     if (parameters.ProviderRegistration.Properties.Enabled != null)
                     {
                         propertiesValue["enabled"] = parameters.ProviderRegistration.Properties.Enabled.Value;
@@ -512,6 +514,13 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     string providerLocationInstance = ((string)providerLocationValue);
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
+                                }
+                                
+                                JToken routingResourceManagerTypeValue = propertiesValue2["routingResourceManagerType"];
+                                if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
+                                {
+                                    ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                    propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
                                 }
                                 
                                 JToken enabledValue = propertiesValue2["enabled"];
@@ -1140,6 +1149,13 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
+                                JToken routingResourceManagerTypeValue = propertiesValue["routingResourceManagerType"];
+                                if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
+                                {
+                                    ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                    propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
+                                }
+                                
                                 JToken enabledValue = propertiesValue["enabled"];
                                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                 {
@@ -1612,6 +1628,13 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             string providerLocationInstance = ((string)providerLocationValue);
                                             propertiesInstance.ProviderLocation = providerLocationInstance;
+                                        }
+                                        
+                                        JToken routingResourceManagerTypeValue = propertiesValue["routingResourceManagerType"];
+                                        if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                            propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
                                         }
                                         
                                         JToken enabledValue = propertiesValue["enabled"];
