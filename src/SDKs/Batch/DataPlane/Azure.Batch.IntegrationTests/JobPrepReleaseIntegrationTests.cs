@@ -367,6 +367,7 @@
                                     prepNotCompleted = false; // we see a JP has completed
 
                                     Assert.NotNull(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
+                                    Assert.Equal(TaskExecutionResult.Failure, jpStatus.JobPreparationTaskExecutionInformation.Result);
 
                                     // spew the failure
                                     this.OutputFailureInfo(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
@@ -489,6 +490,7 @@
                                     // now assert the failure info
                                     Assert.NotNull(prepAndReleaseStatus);
                                     Assert.NotNull(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
+                                    Assert.Equal(TaskExecutionResult.Failure, prepAndReleaseStatus.JobReleaseTaskExecutionInformation.Result);
 
                                     // spew the failure info
                                     this.OutputFailureInfo(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
@@ -830,10 +832,10 @@
 
         private void OutputFailureInfo(TaskFailureInformation failureInfo)
         {
-            this.testOutputHelper.WriteLine("JP Scheduling Error:");
-            this.testOutputHelper.WriteLine("    category: " + failureInfo.Category.ToString());
+            this.testOutputHelper.WriteLine("JP Failure Info:");
+            this.testOutputHelper.WriteLine("    category: " + failureInfo.Category);
             this.testOutputHelper.WriteLine("    code: " + failureInfo.Code);
-            this.testOutputHelper.WriteLine("    details:" + ((null == failureInfo) ? " <null>" : string.Empty));
+            this.testOutputHelper.WriteLine("    details:" + (null == failureInfo.Details ? " <null>" : string.Empty));
 
             if (null != failureInfo.Details)
             {

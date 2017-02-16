@@ -859,6 +859,42 @@
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task Job_CanAddJobWithJobManagerAndAllowLowPriorityTrue()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                {
+                    string jobId = "TestJobWithLowPriJobManager-" + TestUtilities.GetMyName();
+                    try
+                    {
+                        PoolInformation poolInfo = new PoolInformation()
+                        {
+                            PoolId = "Fake"
+                        };
+
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, poolInfo);
+                        unboundJob.JobManagerTask = new JobManagerTask("foo", "cmd /c echo hi")
+                        {
+                            AllowLowPriorityNode = true
+                        };
+                        await unboundJob.CommitAsync().ConfigureAwait(false);
+                        await unboundJob.RefreshAsync().ConfigureAwait(false);
+
+                        Assert.True(unboundJob.JobManagerTask.AllowLowPriorityNode);
+                    }
+                    finally
+                    {
+                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
+                    }
+                }
+            };
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
         private static async Task MutateJobAsync(string jobId, Func<CloudJob, Task> jobAction)
         {
             using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))

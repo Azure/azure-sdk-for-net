@@ -1034,7 +1034,6 @@
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
-
     }
 
     public class IntegrationCloudTaskTestsWithoutSharedPool

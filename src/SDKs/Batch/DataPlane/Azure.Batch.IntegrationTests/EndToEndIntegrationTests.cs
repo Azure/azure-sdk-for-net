@@ -253,36 +253,7 @@
                     {
                         this.testOutputHelper.WriteLine("Listing OS Versions:");
 
-                        /* bug 2384616 ListOsVersions hidden for wat 8
-
-                            // test ListOSVersion
-                            foreach (OSVersion curOSV in poolMgr.ListOSVersions())
-                            {
-                                this.testOutputHelper.WriteLine("Label: " + curOSV.Label);
-                                this.testOutputHelper.WriteLine("    Version: " + curOSV.Version);
-                                this.testOutputHelper.WriteLine("    Family: " + curOSV.Family);
-                                this.testOutputHelper.WriteLine("    FamilyLabel: " + curOSV.FamilyLabel);
-                                this.testOutputHelper.WriteLine("    isDefault: " + curOSV.IsDefault);
-                                this.testOutputHelper.WriteLine("    IsActive: " + curOSV.IsActive);
-
-                                string expDate;
-
-                                if (curOSV.ExpirationDate.HasValue)
-                                {
-                                    expDate = curOSV.ExpirationDate.Value.ToString();
-                                }
-                                else
-                                {
-                                    expDate = "<null/novalue>";
-                                }
-
-                                this.testOutputHelper.WriteLine("    ExpirationDate: " + expDate);
-                            }
-
-                            */
-
                         // create pool tests
-                        
 
                         // forget to set CloudServiceConfiguration on Create, get error
                         {
