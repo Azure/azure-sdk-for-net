@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// A Host name - SSL certificate binding definition.
     /// </summary>
     public interface IHostNameSslBinding  :
-        IWrapper<Models.HostNameSslState>,
+        IHasInner<Models.HostNameSslState>,
         IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
     {
         /// <summary>

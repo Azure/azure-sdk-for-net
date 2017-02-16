@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IResource,
         IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>,
-        IWrapper<Models.VirtualMachineScaleSetVMInner>
+        IHasInner<Models.VirtualMachineScaleSetVMInner>
     {
         /// <summary>
         /// Gets the time zone of the Windows virtual machine.

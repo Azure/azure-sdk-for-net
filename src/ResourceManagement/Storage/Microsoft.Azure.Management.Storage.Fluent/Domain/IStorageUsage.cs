@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// An immutable client-side representation of an Azure storage resource usage info object.
     /// </summary>
     public interface IStorageUsage  :
-        IWrapper<Management.Storage.Fluent.Models.UsageInner>
+        IHasInner<Management.Storage.Fluent.Models.UsageInner>
     {
         /// <returns>the unit of measurement. Possible values include: 'Count',</returns>
         /// <returns>'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'.</returns>

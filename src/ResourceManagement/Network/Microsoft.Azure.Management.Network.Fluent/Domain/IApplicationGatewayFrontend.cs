@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an application gateway frontend.
     /// </summary>
     public interface IApplicationGatewayFrontend  :
-        IWrapper<Models.ApplicationGatewayFrontendIPConfigurationInner>,
+        IHasInner<Models.ApplicationGatewayFrontendIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IHasPrivateIpAddress,
         IHasSubnet,

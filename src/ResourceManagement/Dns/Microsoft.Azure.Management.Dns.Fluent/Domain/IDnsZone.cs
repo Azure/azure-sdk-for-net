@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IDnsZone  :
         IGroupableResource<IDnsZoneManager>,
         IRefreshable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        IWrapper<ZoneInner>,
+        IHasInner<ZoneInner>,
         IUpdatable<DnsZone.Update.IUpdate>
     {
         /// <summary>

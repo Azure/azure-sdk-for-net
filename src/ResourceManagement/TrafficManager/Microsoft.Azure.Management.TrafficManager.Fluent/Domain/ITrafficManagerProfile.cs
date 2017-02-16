@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     public interface ITrafficManagerProfile  :
         IGroupableResource<ITrafficManager>,
         IRefreshable<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        IWrapper<ProfileInner>,
+        IHasInner<ProfileInner>,
         IUpdatable<TrafficManagerProfile.Update.IUpdate>
     {
         /// <summary>

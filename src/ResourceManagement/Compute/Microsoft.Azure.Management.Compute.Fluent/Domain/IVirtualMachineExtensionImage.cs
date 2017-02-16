@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Note: Azure virtual machine extension image is also referred as virtual machine extension handler.
     /// </summary>
     public interface IVirtualMachineExtensionImage  :
-        IWrapper<Models.VirtualMachineExtensionImageInner>
+        IHasInner<Models.VirtualMachineExtensionImageInner>
     {
         /// <summary>
         /// Gets the name of the publisher of the virtual machine extension image.

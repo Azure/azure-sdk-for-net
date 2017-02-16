@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     public interface IProvider  :
         IIndexable,
-        IWrapper<ProviderInner>
+        IHasInner<ProviderInner>
     {
         /// <returns>the namespace of the provider</returns>
         string Namespace { get; }

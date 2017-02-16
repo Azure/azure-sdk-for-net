@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An extension associated with a virtual machine scale set will be created from a VirtualMachineExtensionImage.
     /// </summary>
     public interface IVirtualMachineScaleSetExtension  :
-        IWrapper<Models.VirtualMachineScaleSetExtensionInner>,
+        IHasInner<Models.VirtualMachineScaleSetExtensionInner>,
         IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>
     {
         /// <summary>

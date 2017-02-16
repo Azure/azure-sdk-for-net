@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface INetwork  :
         IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
-        IWrapper<Models.VirtualNetworkInner>,
+        IHasInner<Models.VirtualNetworkInner>,
         IUpdatable<Network.Update.IUpdate>
     {
         /// <summary>

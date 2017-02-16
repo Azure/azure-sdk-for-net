@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         IGroupableResource<IRedisManager>,
         IRefreshable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
         IUpdatable<RedisCache.Update.IUpdate>,
-        IWrapper<Models.RedisResourceInner>
+        IHasInner<Models.RedisResourceInner>
     {
         /// <summary>
         /// Gets the subnetId value.

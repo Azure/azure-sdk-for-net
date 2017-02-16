@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an application gateway SSL certificate.
     /// </summary>
     public interface IApplicationGatewaySslCertificate  :
-        IWrapper<Models.ApplicationGatewaySslCertificateInner>,
+        IHasInner<Models.ApplicationGatewaySslCertificateInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
     {
         /// <summary>

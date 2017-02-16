@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL database's TransparentDataEncryptionActivity.
     /// </summary>
     public interface ITransparentDataEncryptionActivity  :
-        IWrapper<Models.TransparentDataEncryptionActivity>,
+        IHasInner<Models.TransparentDataEncryptionActivity>,
         IHasResourceGroup,
         IHasName,
         IHasId

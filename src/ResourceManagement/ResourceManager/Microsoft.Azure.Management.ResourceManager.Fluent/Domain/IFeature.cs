@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     public interface IFeature  :
         IIndexable,
-        IWrapper<FeatureResultInner>
+        IHasInner<FeatureResultInner>
     {
         /// <returns>the name of the feature</returns>
         string Name { get; }

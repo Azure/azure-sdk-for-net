@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IPublicIpAddress  :
         IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
-        IWrapper<Models.PublicIPAddressInner>,
+        IHasInner<Models.PublicIPAddressInner>,
         IUpdatable<PublicIpAddress.Update.IUpdate>
     {
         /// <summary>

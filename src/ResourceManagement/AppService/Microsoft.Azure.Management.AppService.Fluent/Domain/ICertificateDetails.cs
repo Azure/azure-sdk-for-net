@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure Web App.
     /// </summary>
     public interface ICertificateDetails  :
-        IWrapper<Models.CertificateDetailsInner>
+        IHasInner<Models.CertificateDetailsInner>
     {
         /// <summary>
         /// Gets Valid from.

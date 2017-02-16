@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
-    public class Wrapper<InnerT> : IWrapper<InnerT>
+    public class Wrapper<InnerT> : IHasInner<InnerT>
     {
         public Wrapper(InnerT inner)
         {

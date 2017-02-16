@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure domain legal agreement.
     /// </summary>
     public interface IDomainLegalAgreement  :
-        IWrapper<Models.TldLegalAgreement>
+        IHasInner<Models.TldLegalAgreement>
     {
         /// <summary>
         /// Gets agreement details.

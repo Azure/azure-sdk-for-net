@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IGroupableResource<IAppServiceManager>,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
         IUpdatable<AppServiceCertificateOrder.Update.IUpdate>,
-        IWrapper<Models.AppServiceCertificateOrderInner>
+        IHasInner<Models.AppServiceCertificateOrderInner>
     {
         /// <summary>
         /// Gets duration in years (must be between 1 and 3).

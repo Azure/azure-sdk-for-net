@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// A network security rule in a network security group.
     /// </summary>
     public interface INetworkSecurityRule  :
-        IWrapper<Models.SecurityRuleInner>,
+        IHasInner<Models.SecurityRuleInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>
     {
         /// <summary>

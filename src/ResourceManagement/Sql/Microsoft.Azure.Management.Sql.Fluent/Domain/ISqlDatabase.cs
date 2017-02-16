@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IIndependentChildResource<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
         IUpdatable<SqlDatabase.Update.IUpdate>,
-        IWrapper<Models.DatabaseInner>
+        IHasInner<Models.DatabaseInner>
     {
         /// <return>All the replication links associated with the database.</return>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Sql.Fluent.IReplicationLink> ListReplicationLinks();

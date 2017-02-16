@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         IGroupableResource<IBatchManager>,
         IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
         IUpdatable<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>,
-        IWrapper<Microsoft.Azure.Management.Batch.Fluent.Models.BatchAccountInner>
+        IHasInner<Microsoft.Azure.Management.Batch.Fluent.Models.BatchAccountInner>
     {
         /// <returns>the provisioned state of the resource. Possible values include:</returns>
         /// <returns>'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</returns>

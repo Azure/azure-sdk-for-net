@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface ILoadBalancer  :
         IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IWrapper<Models.LoadBalancerInner>,
+        IHasInner<Models.LoadBalancerInner>,
         IUpdatable<LoadBalancer.Update.IUpdate>,
         IHasLoadBalancingRules
     {

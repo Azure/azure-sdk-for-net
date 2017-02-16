@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         IGroupableResource<IStorageManager>,
         IRefreshable<IStorageAccount>,
         IUpdatable<StorageAccount.Update.IUpdate>,
-        IWrapper<Management.Storage.Fluent.Models.StorageAccountInner>
+        IHasInner<Management.Storage.Fluent.Models.StorageAccountInner>
     {
         /// <returns>the status indicating whether the primary and secondary location of</returns>
         /// <returns>the storage account is available or unavailable. Possible values include:</returns>

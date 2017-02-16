@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IAvailabilitySet  :
         IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        IWrapper<Models.AvailabilitySetInner>,
+        IHasInner<Models.AvailabilitySetInner>,
         IUpdatable<AvailabilitySet.Update.IUpdate>
     {
         /// <summary>

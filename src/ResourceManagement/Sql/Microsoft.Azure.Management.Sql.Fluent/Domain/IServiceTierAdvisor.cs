@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public interface IServiceTierAdvisor  :
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IServiceTierAdvisor>,
-        IWrapper<Models.ServiceTierAdvisorInner>,
+        IHasInner<Models.ServiceTierAdvisorInner>,
         IHasResourceGroup,
         IHasName,
         IHasId

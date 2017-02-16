@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public interface IReplicationLink  :
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IReplicationLink>,
-        IWrapper<Models.ReplicationLinkInner>,
+        IHasInner<Models.ReplicationLinkInner>,
         IHasResourceGroup,
         IHasName,
         IHasId

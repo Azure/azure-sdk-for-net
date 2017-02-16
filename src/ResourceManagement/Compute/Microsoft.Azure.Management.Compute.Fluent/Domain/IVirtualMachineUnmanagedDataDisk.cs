@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// A native data disk of a virtual machine.
     /// </summary>
     public interface IVirtualMachineUnmanagedDataDisk  :
-        IWrapper<Models.DataDisk>,
+        IHasInner<Models.DataDisk>,
         IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {
         /// <summary>

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// </summary>
     public interface IApplication  :
         IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplication,Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        IWrapper<Microsoft.Azure.Management.Batch.Fluent.Models.ApplicationInner>
+        IHasInner<Microsoft.Azure.Management.Batch.Fluent.Models.ApplicationInner>
     {
         /// <returns>the display name for application</returns>
         string DisplayName { get; }

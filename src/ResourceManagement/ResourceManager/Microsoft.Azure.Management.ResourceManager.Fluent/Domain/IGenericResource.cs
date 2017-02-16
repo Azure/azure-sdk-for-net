@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         IGroupableResource<IResourceManager>,
         IRefreshable<IGenericResource>,
         IUpdatable<GenericResource.Update.IWithApiVersion>,
-        IWrapper<GenericResourceInner>
+        IHasInner<GenericResourceInner>
     {
         /// <returns>the namespace of the resource provider</returns>
         string ResourceProviderNamespace { get; }

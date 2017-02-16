@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     public interface ICdnProfile  :
         IGroupableResource<ICdnManager>,
         IRefreshable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
-        IWrapper<Microsoft.Azure.Management.Cdn.Fluent.Models.ProfileInner>,
+        IHasInner<Microsoft.Azure.Management.Cdn.Fluent.Models.ProfileInner>,
         IUpdatable<CdnProfile.Update.IUpdate>
     {
         /// <summary>

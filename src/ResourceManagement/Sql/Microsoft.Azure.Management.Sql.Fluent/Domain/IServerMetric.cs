@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL ServerMetric.
     /// </summary>
     public interface IServerMetric  :
-        IWrapper<Models.ServerMetric>
+        IHasInner<Models.ServerMetric>
     {
         /// <summary>
         /// Gets the units of the metric.

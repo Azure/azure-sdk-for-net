@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         protected IList<InnerT> InnersFromWrappers<InnerT, IWrapperT>(
             ICollection<IWrapperT> wrappers,
-            IList<InnerT> inners) where IWrapperT : IWrapper<InnerT>
+            IList<InnerT> inners) where IWrapperT : IHasInner<InnerT>
             {
                 if (wrappers != null && wrappers.Count > 0)
             {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         protected IList<InnerT> InnersFromWrappers<InnerT, IWrapperT>(
-            ICollection<IWrapperT> wrappers) where IWrapperT : IWrapper<InnerT>
+            ICollection<IWrapperT> wrappers) where IWrapperT : IHasInner<InnerT>
         {
             return InnersFromWrappers<InnerT, IWrapperT>(wrappers, null);
         }

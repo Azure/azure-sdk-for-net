@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// An immutable client-side representation of an Azure AD user.
     /// </summary>
     public interface IUser  :
-        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Fluent.Models .UserInner>
+        IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.Models .UserInner>
     {
         /// <returns>Gets or sets object Id.</returns>
         string ObjectId { get; }

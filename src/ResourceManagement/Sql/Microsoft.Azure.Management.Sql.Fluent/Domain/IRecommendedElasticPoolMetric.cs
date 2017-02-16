@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Replication link.
     /// </summary>
     public interface IRecommendedElasticPoolMetric  :
-        IWrapper<Models.RecommendedElasticPoolMetric>
+        IHasInner<Models.RecommendedElasticPoolMetric>
     {
         /// <summary>
         /// Gets the size in gigabytes.

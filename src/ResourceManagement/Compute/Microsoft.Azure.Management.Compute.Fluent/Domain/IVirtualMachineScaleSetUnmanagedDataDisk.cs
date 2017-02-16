@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Describes definition and update stages of unmanaged data disk of a scale set.
     /// </summary>
     public interface IVirtualMachineScaleSetUnmanagedDataDisk  :
-        IWrapper<Models.VirtualMachineScaleSetDataDisk>,
+        IHasInner<Models.VirtualMachineScaleSetDataDisk>,
         IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>
     {
     }

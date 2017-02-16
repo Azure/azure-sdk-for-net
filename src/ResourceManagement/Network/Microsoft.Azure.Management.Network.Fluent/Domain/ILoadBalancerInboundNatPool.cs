@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasFrontend,
         IHasBackendPort,
         IHasProtocol<TransportProtocol>,
-        IWrapper<Models.InboundNatPoolInner>,
+        IHasInner<Models.InboundNatPoolInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
     {
         /// <summary>

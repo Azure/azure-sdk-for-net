@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// A web app source control in a web app.
     /// </summary>
     public interface IWebAppSourceControl  :
-        IWrapper<Models.SiteSourceControlInner>,
+        IHasInner<Models.SiteSourceControlInner>,
         IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
     {
         /// <summary>

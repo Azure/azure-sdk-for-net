@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     public interface ITenant  :
         IIndexable,
-        IWrapper<TenantIdDescription>
+        IHasInner<TenantIdDescription>
     {
         /// <returns>a UUID of the tenant</returns>
         string TenantId { get; }

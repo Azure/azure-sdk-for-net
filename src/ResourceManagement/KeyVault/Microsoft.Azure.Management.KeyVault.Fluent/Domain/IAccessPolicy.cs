@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     /// </summary>
     public interface IAccessPolicy  :
         IChildResource<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
-        IWrapper<Microsoft.Azure.Management.KeyVault.Fluent.Models.AccessPolicyEntry>
+        IHasInner<Microsoft.Azure.Management.KeyVault.Fluent.Models.AccessPolicyEntry>
     {
         /// <returns>The Azure Active Directory tenant ID that should be used for</returns>
         /// <returns>authenticating requests to the key vault.</returns>

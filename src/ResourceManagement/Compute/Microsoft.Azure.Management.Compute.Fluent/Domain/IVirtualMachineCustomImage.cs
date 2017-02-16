@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IVirtualMachineCustomImage  :
         IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
-        IWrapper<Models.ImageInner>
+        IHasInner<Models.ImageInner>
     {
         /// <summary>
         /// Gets operating system disk image in this image.

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a subnet of a virtual network.
     /// </summary>
     public interface ISubnet  :
-        IWrapper<Models.SubnetInner>,
+        IHasInner<Models.SubnetInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.INetwork>
     {
         /// <summary>Gets the network interface IP configurations that are associated with this subnet.

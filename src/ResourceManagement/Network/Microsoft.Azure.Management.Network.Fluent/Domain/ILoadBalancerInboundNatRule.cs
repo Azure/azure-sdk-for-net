@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasProtocol<TransportProtocol>,
         IHasFloatingIp,
         IHasFrontendPort,
-        IWrapper<Models.InboundNatRuleInner>,
+        IHasInner<Models.InboundNatRuleInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
     {
         /// <summary>

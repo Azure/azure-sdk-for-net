@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     public interface ISubscription :
         IIndexable,
-        IWrapper<SubscriptionInner>
+        IHasInner<SubscriptionInner>
     {
         /// <returns>the UUID of the subscription</returns>
         string SubscriptionId { get; }

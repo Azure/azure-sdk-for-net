@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface INicIpConfiguration  :
         INicIpConfigurationBase,
-        IWrapper<Models.NetworkInterfaceIPConfigurationInner>,
+        IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         IHasPrivateIpAddress,
         IHasPublicIpAddress,
