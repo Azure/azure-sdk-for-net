@@ -529,6 +529,326 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Begins the failover operation without data loss for the Azure SQL
+        /// Database Failover Group with the given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// Azure SQL Database Failover Group is hosted.
+        /// </param>
+        /// <param name='failoverGroupName'>
+        /// Required. The name of the Azure SQL Database Failover Group to be
+        /// failovered.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        public async Task<FailoverGroupForceFailoverResponse> BeginFailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (failoverGroupName == null)
+            {
+                throw new ArgumentNullException("failoverGroupName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("failoverGroupName", failoverGroupName);
+                TracingAdapter.Enter(invocationId, this, "BeginFailoverAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/failoverGroups/";
+            url = url + Uri.EscapeDataString(failoverGroupName);
+            url = url + "/failover";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    FailoverGroupForceFailoverResponse result = null;
+                    // Deserialize Response
+                    result = new FailoverGroupForceFailoverResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Begins the force failover operation without data loss for the Azure
+        /// SQL Database Failover Group with the given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// Azure SQL Database Failover Group is hosted.
+        /// </param>
+        /// <param name='failoverGroupName'>
+        /// Required. The name of the Azure SQL Database Failover Group to be
+        /// failovered.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        public async Task<FailoverGroupForceFailoverResponse> BeginForceFailoverAllowDataLossAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (failoverGroupName == null)
+            {
+                throw new ArgumentNullException("failoverGroupName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("failoverGroupName", failoverGroupName);
+                TracingAdapter.Enter(invocationId, this, "BeginForceFailoverAllowDataLossAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/failoverGroups/";
+            url = url + Uri.EscapeDataString(failoverGroupName);
+            url = url + "/forceFailoverAllowDataLoss";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    FailoverGroupForceFailoverResponse result = null;
+                    // Deserialize Response
+                    result = new FailoverGroupForceFailoverResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Begins adding databases to an existing Azure SQL Database Failover
         /// Group. To determine the status of the operation call
         /// GetFailoverGroupOperationStatus.
@@ -1223,10 +1543,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
         /// </returns>
-        public async Task<AzureOperationResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
+        public async Task<FailoverGroupFailovereResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1319,7 +1639,7 @@ namespace Microsoft.Azure.Management.Sql
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1331,9 +1651,9 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    FailoverGroupFailovereResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    result = new FailoverGroupFailovereResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1383,10 +1703,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
         /// </returns>
-        public async Task<AzureOperationResponse> ForceFailoverAllowDataLossAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
+        public async Task<FailoverGroupForceFailoverResponse> ForceFailoverAllowDataLossAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1479,7 +1799,7 @@ namespace Microsoft.Azure.Management.Sql
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1491,9 +1811,9 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    FailoverGroupForceFailoverResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    result = new FailoverGroupForceFailoverResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1807,6 +2127,305 @@ namespace Microsoft.Azure.Management.Sql
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Database Failover Group Failover
+        /// operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        public async Task<FailoverGroupFailovereResponse> GetFailoverGroupFailoverOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetFailoverGroupFailoverOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    FailoverGroupFailovereResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FailoverGroupFailovereResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                            
+                            FailoverGroup failoverGroupInstance = new FailoverGroup();
+                            result.FailoverGroup = failoverGroupInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                FailoverGroupProperties propertiesInstance = new FailoverGroupProperties();
+                                failoverGroupInstance.Properties = propertiesInstance;
+                                
+                                JToken readOnlyEndpointValue = propertiesValue["readOnlyEndpoint"];
+                                if (readOnlyEndpointValue != null && readOnlyEndpointValue.Type != JTokenType.Null)
+                                {
+                                    ReadOnlyEndpoint readOnlyEndpointInstance = new ReadOnlyEndpoint();
+                                    propertiesInstance.ReadOnlyEndpoint = readOnlyEndpointInstance;
+                                    
+                                    JToken failoverPolicyValue = readOnlyEndpointValue["failoverPolicy"];
+                                    if (failoverPolicyValue != null && failoverPolicyValue.Type != JTokenType.Null)
+                                    {
+                                        string failoverPolicyInstance = ((string)failoverPolicyValue);
+                                        readOnlyEndpointInstance.FailoverPolicy = failoverPolicyInstance;
+                                    }
+                                }
+                                
+                                JToken readWriteEndpointValue = propertiesValue["readWriteEndpoint"];
+                                if (readWriteEndpointValue != null && readWriteEndpointValue.Type != JTokenType.Null)
+                                {
+                                    ReadWriteEndpoint readWriteEndpointInstance = new ReadWriteEndpoint();
+                                    propertiesInstance.ReadWriteEndpoint = readWriteEndpointInstance;
+                                    
+                                    JToken failoverPolicyValue2 = readWriteEndpointValue["failoverPolicy"];
+                                    if (failoverPolicyValue2 != null && failoverPolicyValue2.Type != JTokenType.Null)
+                                    {
+                                        string failoverPolicyInstance2 = ((string)failoverPolicyValue2);
+                                        readWriteEndpointInstance.FailoverPolicy = failoverPolicyInstance2;
+                                    }
+                                    
+                                    JToken failoverWithDataLossGracePeriodMinutesValue = readWriteEndpointValue["failoverWithDataLossGracePeriodMinutes"];
+                                    if (failoverWithDataLossGracePeriodMinutesValue != null && failoverWithDataLossGracePeriodMinutesValue.Type != JTokenType.Null)
+                                    {
+                                        int failoverWithDataLossGracePeriodMinutesInstance = ((int)failoverWithDataLossGracePeriodMinutesValue);
+                                        readWriteEndpointInstance.FailoverWithDataLossGracePeriodMinutes = failoverWithDataLossGracePeriodMinutesInstance;
+                                    }
+                                }
+                                
+                                JToken replicationRoleValue = propertiesValue["replicationRole"];
+                                if (replicationRoleValue != null && replicationRoleValue.Type != JTokenType.Null)
+                                {
+                                    string replicationRoleInstance = ((string)replicationRoleValue);
+                                    propertiesInstance.ReplicationRole = replicationRoleInstance;
+                                }
+                                
+                                JToken replicationStateValue = propertiesValue["replicationState"];
+                                if (replicationStateValue != null && replicationStateValue.Type != JTokenType.Null)
+                                {
+                                    string replicationStateInstance = ((string)replicationStateValue);
+                                    propertiesInstance.ReplicationState = replicationStateInstance;
+                                }
+                                
+                                JToken partnerServersArray = propertiesValue["partnerServers"];
+                                if (partnerServersArray != null && partnerServersArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken partnerServersValue in ((JArray)partnerServersArray))
+                                    {
+                                        FailoverGroupPartnerServer failoverGroupPartnerServerInstance = new FailoverGroupPartnerServer();
+                                        propertiesInstance.PartnerServers.Add(failoverGroupPartnerServerInstance);
+                                        
+                                        JToken idValue = partnerServersValue["id"];
+                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        {
+                                            string idInstance = ((string)idValue);
+                                            failoverGroupPartnerServerInstance.Id = idInstance;
+                                        }
+                                        
+                                        JToken locationValue = partnerServersValue["location"];
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance = ((string)locationValue);
+                                            failoverGroupPartnerServerInstance.Location = locationInstance;
+                                        }
+                                        
+                                        JToken replicationRoleValue2 = partnerServersValue["replicationRole"];
+                                        if (replicationRoleValue2 != null && replicationRoleValue2.Type != JTokenType.Null)
+                                        {
+                                            string replicationRoleInstance2 = ((string)replicationRoleValue2);
+                                            failoverGroupPartnerServerInstance.ReplicationRole = replicationRoleInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken databasesArray = propertiesValue["databases"];
+                                if (databasesArray != null && databasesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken databasesValue in ((JArray)databasesArray))
+                                    {
+                                        propertiesInstance.Databases.Add(((string)databasesValue));
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            {
+                                string idInstance2 = ((string)idValue2);
+                                failoverGroupInstance.Id = idInstance2;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                failoverGroupInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                failoverGroupInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                failoverGroupInstance.Location = locationInstance2;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    failoverGroupInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)
@@ -2390,11 +3009,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
