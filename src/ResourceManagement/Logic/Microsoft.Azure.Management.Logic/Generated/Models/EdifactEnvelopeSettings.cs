@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact agreement envelope settings.
+    /// </summary>
     public partial class EdifactEnvelopeSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactEnvelopeSettings class.
         /// </summary>
-        public EdifactEnvelopeSettings(string groupAssociationAssignedCode = default(string), string communicationAgreementId = default(string), bool? applyDelimiterStringAdvice = default(bool?), bool? createGroupingSegments = default(bool?), bool? enableDefaultGroupHeaders = default(bool?), string recipientReferencePasswordValue = default(string), string recipientReferencePasswordQualifier = default(string), string applicationReferenceId = default(string), string processingPriorityCode = default(string), long? interchangeControlNumberLowerBound = default(long?), long? interchangeControlNumberUpperBound = default(long?), bool? rolloverInterchangeControlNumber = default(bool?), string interchangeControlNumberPrefix = default(string), string interchangeControlNumberSuffix = default(string), string senderReverseRoutingAddress = default(string), string receiverReverseRoutingAddress = default(string), string functionalGroupId = default(string), string groupControllingAgencyCode = default(string), string groupMessageVersion = default(string), string groupMessageRelease = default(string), long? groupControlNumberLowerBound = default(long?), long? groupControlNumberUpperBound = default(long?), bool? rolloverGroupControlNumber = default(bool?), string groupControlNumberPrefix = default(string), string groupControlNumberSuffix = default(string), string groupApplicationReceiverQualifier = default(string), string groupApplicationReceiverId = default(string), string groupApplicationSenderQualifier = default(string), string groupApplicationSenderId = default(string), string groupApplicationPassword = default(string), bool? overwriteExistingTransactionSetControlNumber = default(bool?), string transactionSetControlNumberPrefix = default(string), string transactionSetControlNumberSuffix = default(string), long? transactionSetControlNumberLowerBound = default(long?), long? transactionSetControlNumberUpperBound = default(long?), bool? rolloverTransactionSetControlNumber = default(bool?), bool? isTestInterchange = default(bool?), string senderInternalIdentification = default(string), string senderInternalSubIdentification = default(string), string receiverInternalIdentification = default(string), string receiverInternalSubIdentification = default(string))
+        public EdifactEnvelopeSettings(bool applyDelimiterStringAdvice, bool createGroupingSegments, bool enableDefaultGroupHeaders, long interchangeControlNumberLowerBound, long interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, long groupControlNumberLowerBound, long groupControlNumberUpperBound, bool rolloverGroupControlNumber, bool overwriteExistingTransactionSetControlNumber, long transactionSetControlNumberLowerBound, long transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool isTestInterchange, string groupAssociationAssignedCode = default(string), string communicationAgreementId = default(string), string recipientReferencePasswordValue = default(string), string recipientReferencePasswordQualifier = default(string), string applicationReferenceId = default(string), string processingPriorityCode = default(string), string interchangeControlNumberPrefix = default(string), string interchangeControlNumberSuffix = default(string), string senderReverseRoutingAddress = default(string), string receiverReverseRoutingAddress = default(string), string functionalGroupId = default(string), string groupControllingAgencyCode = default(string), string groupMessageVersion = default(string), string groupMessageRelease = default(string), string groupControlNumberPrefix = default(string), string groupControlNumberSuffix = default(string), string groupApplicationReceiverQualifier = default(string), string groupApplicationReceiverId = default(string), string groupApplicationSenderQualifier = default(string), string groupApplicationSenderId = default(string), string groupApplicationPassword = default(string), string transactionSetControlNumberPrefix = default(string), string transactionSetControlNumberSuffix = default(string), string senderInternalIdentification = default(string), string senderInternalSubIdentification = default(string), string receiverInternalIdentification = default(string), string receiverInternalSubIdentification = default(string))
         {
             GroupAssociationAssignedCode = groupAssociationAssignedCode;
             CommunicationAgreementId = communicationAgreementId;
@@ -88,21 +91,21 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// string advice.
         /// </summary>
         [JsonProperty(PropertyName = "applyDelimiterStringAdvice")]
-        public bool? ApplyDelimiterStringAdvice { get; set; }
+        public bool ApplyDelimiterStringAdvice { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to create grouping
         /// segments.
         /// </summary>
         [JsonProperty(PropertyName = "createGroupingSegments")]
-        public bool? CreateGroupingSegments { get; set; }
+        public bool CreateGroupingSegments { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable default group
         /// headers.
         /// </summary>
         [JsonProperty(PropertyName = "enableDefaultGroupHeaders")]
-        public bool? EnableDefaultGroupHeaders { get; set; }
+        public bool EnableDefaultGroupHeaders { get; set; }
 
         /// <summary>
         /// Gets or sets the recipient reference password value.
@@ -132,20 +135,20 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the interchange control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "interchangeControlNumberLowerBound")]
-        public long? InterchangeControlNumberLowerBound { get; set; }
+        public long InterchangeControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the interchange control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "interchangeControlNumberUpperBound")]
-        public long? InterchangeControlNumberUpperBound { get; set; }
+        public long InterchangeControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover interchange
         /// control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverInterchangeControlNumber")]
-        public bool? RolloverInterchangeControlNumber { get; set; }
+        public bool RolloverInterchangeControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the interchange control number prefix.
@@ -199,20 +202,20 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the group control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "groupControlNumberLowerBound")]
-        public long? GroupControlNumberLowerBound { get; set; }
+        public long GroupControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the group control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "groupControlNumberUpperBound")]
-        public long? GroupControlNumberUpperBound { get; set; }
+        public long GroupControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover group
         /// control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverGroupControlNumber")]
-        public bool? RolloverGroupControlNumber { get; set; }
+        public bool RolloverGroupControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the group control number prefix.
@@ -261,7 +264,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// transaction set control number.
         /// </summary>
         [JsonProperty(PropertyName = "overwriteExistingTransactionSetControlNumber")]
-        public bool? OverwriteExistingTransactionSetControlNumber { get; set; }
+        public bool OverwriteExistingTransactionSetControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the transaction set control number prefix.
@@ -279,27 +282,27 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the transaction set control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "transactionSetControlNumberLowerBound")]
-        public long? TransactionSetControlNumberLowerBound { get; set; }
+        public long TransactionSetControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the transaction set control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "transactionSetControlNumberUpperBound")]
-        public long? TransactionSetControlNumberUpperBound { get; set; }
+        public long TransactionSetControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover transaction
         /// set control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverTransactionSetControlNumber")]
-        public bool? RolloverTransactionSetControlNumber { get; set; }
+        public bool RolloverTransactionSetControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether the message is a test
         /// interchange.
         /// </summary>
         [JsonProperty(PropertyName = "isTestInterchange")]
-        public bool? IsTestInterchange { get; set; }
+        public bool IsTestInterchange { get; set; }
 
         /// <summary>
         /// Gets or sets the sender internal identification.
@@ -325,5 +328,15 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "receiverInternalSubIdentification")]
         public string ReceiverInternalSubIdentification { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

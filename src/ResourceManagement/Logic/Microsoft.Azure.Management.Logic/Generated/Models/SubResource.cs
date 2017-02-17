@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The sub resource type.
+    /// </summary>
     public partial class SubResource : IResource
     {
         /// <summary>
@@ -32,10 +35,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource id.
+        /// Gets the resource id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
     }
 }

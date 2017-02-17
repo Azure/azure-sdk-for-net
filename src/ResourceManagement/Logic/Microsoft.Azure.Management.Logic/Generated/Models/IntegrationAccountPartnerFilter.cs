@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account partner filter for odata query.
+    /// </summary>
     public partial class IntegrationAccountPartnerFilter
     {
         /// <summary>
@@ -28,7 +31,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the IntegrationAccountPartnerFilter
         /// class.
         /// </summary>
-        public IntegrationAccountPartnerFilter(PartnerType? partnerType = default(PartnerType?))
+        public IntegrationAccountPartnerFilter(PartnerType partnerType)
         {
             PartnerType = partnerType;
         }
@@ -38,7 +41,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Possible values include: 'NotSpecified', 'B2B'
         /// </summary>
         [JsonProperty(PropertyName = "partnerType")]
-        public PartnerType? PartnerType { get; set; }
+        public PartnerType PartnerType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 delimiter override settings.
+    /// </summary>
     public partial class X12DelimiterOverrides
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12DelimiterOverrides class.
         /// </summary>
-        public X12DelimiterOverrides(string protocolVersion = default(string), string messageId = default(string), int? dataElementSeparator = default(int?), int? componentSeparator = default(int?), int? segmentTerminator = default(int?), SegmentTerminatorSuffix? segmentTerminatorSuffix = default(SegmentTerminatorSuffix?), int? replaceCharacter = default(int?), bool? replaceSeparatorsInPayload = default(bool?), string targetNamespace = default(string))
+        public X12DelimiterOverrides(int dataElementSeparator, int componentSeparator, int segmentTerminator, SegmentTerminatorSuffix segmentTerminatorSuffix, int replaceCharacter, bool replaceSeparatorsInPayload, string protocolVersion = default(string), string messageId = default(string), string targetNamespace = default(string))
         {
             ProtocolVersion = protocolVersion;
             MessageId = messageId;
@@ -55,39 +58,39 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the data element separator.
         /// </summary>
         [JsonProperty(PropertyName = "dataElementSeparator")]
-        public int? DataElementSeparator { get; set; }
+        public int DataElementSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the component separator.
         /// </summary>
         [JsonProperty(PropertyName = "componentSeparator")]
-        public int? ComponentSeparator { get; set; }
+        public int ComponentSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator.
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminator")]
-        public int? SegmentTerminator { get; set; }
+        public int SegmentTerminator { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator suffix. Possible values
         /// include: 'NotSpecified', 'None', 'CR', 'LF', 'CRLF'
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminatorSuffix")]
-        public SegmentTerminatorSuffix? SegmentTerminatorSuffix { get; set; }
+        public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
 
         /// <summary>
         /// Gets or sets the replacement character.
         /// </summary>
         [JsonProperty(PropertyName = "replaceCharacter")]
-        public int? ReplaceCharacter { get; set; }
+        public int ReplaceCharacter { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to replace separators in
         /// payload.
         /// </summary>
         [JsonProperty(PropertyName = "replaceSeparatorsInPayload")]
-        public bool? ReplaceSeparatorsInPayload { get; set; }
+        public bool ReplaceSeparatorsInPayload { get; set; }
 
         /// <summary>
         /// Gets or sets the target namespace on which this delimiter settings
@@ -96,5 +99,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "targetNamespace")]
         public string TargetNamespace { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

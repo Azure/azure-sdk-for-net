@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account AS2 oneway agreement.
+    /// </summary>
     public partial class AS2OneWayAgreement
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2OneWayAgreement class.
         /// </summary>
-        public AS2OneWayAgreement(BusinessIdentity senderBusinessIdentity = default(BusinessIdentity), BusinessIdentity receiverBusinessIdentity = default(BusinessIdentity), AS2ProtocolSettings protocolSettings = default(AS2ProtocolSettings))
+        public AS2OneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, AS2ProtocolSettings protocolSettings)
         {
             SenderBusinessIdentity = senderBusinessIdentity;
             ReceiverBusinessIdentity = receiverBusinessIdentity;
@@ -51,5 +54,38 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "protocolSettings")]
         public AS2ProtocolSettings ProtocolSettings { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SenderBusinessIdentity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SenderBusinessIdentity");
+            }
+            if (ReceiverBusinessIdentity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReceiverBusinessIdentity");
+            }
+            if (ProtocolSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProtocolSettings");
+            }
+            if (this.SenderBusinessIdentity != null)
+            {
+                this.SenderBusinessIdentity.Validate();
+            }
+            if (this.ReceiverBusinessIdentity != null)
+            {
+                this.ReceiverBusinessIdentity.Validate();
+            }
+            if (this.ProtocolSettings != null)
+            {
+                this.ProtocolSettings.Validate();
+            }
+        }
     }
 }

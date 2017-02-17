@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 agreement security settings.
+    /// </summary>
     public partial class X12SecuritySettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12SecuritySettings class.
         /// </summary>
-        public X12SecuritySettings(string authorizationQualifier = default(string), string authorizationValue = default(string), string securityQualifier = default(string), string passwordValue = default(string))
+        public X12SecuritySettings(string authorizationQualifier, string securityQualifier, string authorizationValue = default(string), string passwordValue = default(string))
         {
             AuthorizationQualifier = authorizationQualifier;
             AuthorizationValue = authorizationValue;
@@ -58,5 +61,22 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "passwordValue")]
         public string PasswordValue { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AuthorizationQualifier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AuthorizationQualifier");
+            }
+            if (SecurityQualifier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SecurityQualifier");
+            }
+        }
     }
 }

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account agreement content.
+    /// </summary>
     public partial class AgreementContent
     {
         /// <summary>
@@ -51,5 +54,26 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "Edifact")]
         public EdifactAgreementContent Edifact { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.AS2 != null)
+            {
+                this.AS2.Validate();
+            }
+            if (this.X12 != null)
+            {
+                this.X12.Validate();
+            }
+            if (this.Edifact != null)
+            {
+                this.Edifact.Validate();
+            }
+        }
     }
 }

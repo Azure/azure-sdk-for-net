@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 message identifier.
+    /// </summary>
     public partial class X12MessageIdentifier
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12MessageIdentifier class.
         /// </summary>
-        public X12MessageIdentifier(string messageId = default(string))
+        public X12MessageIdentifier(string messageId)
         {
             MessageId = messageId;
         }
@@ -37,5 +40,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "messageId")]
         public string MessageId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MessageId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageId");
+            }
+        }
     }
 }

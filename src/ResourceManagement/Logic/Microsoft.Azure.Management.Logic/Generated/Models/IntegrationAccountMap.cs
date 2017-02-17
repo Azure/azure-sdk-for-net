@@ -16,8 +16,11 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account map.
+    /// </summary>
     [JsonTransformation]
-    public partial class IntegrationAccountMap : IntegrationAccountResource
+    public partial class IntegrationAccountMap : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
@@ -27,10 +30,11 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
         /// </summary>
-        public IntegrationAccountMap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MapType? mapType = default(MapType?), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink), object metadata = default(object))
+        public IntegrationAccountMap(MapType mapType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IntegrationAccountMapPropertiesParametersSchema parametersSchema = default(IntegrationAccountMapPropertiesParametersSchema), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), ContentLink contentLink = default(ContentLink), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             MapType = mapType;
+            ParametersSchema = parametersSchema;
             CreatedTime = createdTime;
             ChangedTime = changedTime;
             Content = content;
@@ -44,7 +48,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Xslt'
         /// </summary>
         [JsonProperty(PropertyName = "properties.mapType")]
-        public MapType? MapType { get; set; }
+        public MapType MapType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parameters schema of integration account map.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.parametersSchema")]
+        public IntegrationAccountMapPropertiesParametersSchema ParametersSchema { get; set; }
 
         /// <summary>
         /// Gets the created time.
@@ -74,7 +84,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets the content link.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentLink")]
-        public IntegrationAccountContentLink ContentLink { get; private set; }
+        public ContentLink ContentLink { get; private set; }
 
         /// <summary>
         /// Gets or sets the metadata.
@@ -82,5 +92,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "properties.metadata")]
         public object Metadata { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

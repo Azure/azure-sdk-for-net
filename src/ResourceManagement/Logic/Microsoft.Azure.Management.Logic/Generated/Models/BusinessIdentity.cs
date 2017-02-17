@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account partner's business identity.
+    /// </summary>
     public partial class BusinessIdentity
     {
         /// <summary>
@@ -26,23 +29,41 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the BusinessIdentity class.
         /// </summary>
-        public BusinessIdentity(string qualifier = default(string), string value = default(string))
+        public BusinessIdentity(string qualifier, string value)
         {
             Qualifier = qualifier;
             Value = value;
         }
 
         /// <summary>
-        /// Gets or sets the business identity qualifier.
+        /// Gets or sets the business identity qualifier e.g. as2identity, ZZ,
+        /// ZZZ, 31, 32
         /// </summary>
-        [JsonProperty(PropertyName = "Qualifier")]
+        [JsonProperty(PropertyName = "qualifier")]
         public string Qualifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the business identity value.
+        /// Gets or sets the user defined business identity value.
         /// </summary>
-        [JsonProperty(PropertyName = "Value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Qualifier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Qualifier");
+            }
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
+        }
     }
 }

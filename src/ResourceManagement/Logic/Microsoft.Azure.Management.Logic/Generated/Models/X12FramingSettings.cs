@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 agreement framing settings.
+    /// </summary>
     public partial class X12FramingSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12FramingSettings class.
         /// </summary>
-        public X12FramingSettings(int? dataElementSeparator = default(int?), int? componentSeparator = default(int?), bool? replaceSeparatorsInPayload = default(bool?), int? replaceCharacter = default(int?), int? segmentTerminator = default(int?), X12CharacterSet? characterSet = default(X12CharacterSet?), SegmentTerminatorSuffix? segmentTerminatorSuffix = default(SegmentTerminatorSuffix?))
+        public X12FramingSettings(int dataElementSeparator, int componentSeparator, bool replaceSeparatorsInPayload, int replaceCharacter, int segmentTerminator, X12CharacterSet characterSet, SegmentTerminatorSuffix segmentTerminatorSuffix)
         {
             DataElementSeparator = dataElementSeparator;
             ComponentSeparator = componentSeparator;
@@ -41,46 +44,55 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the data element separator.
         /// </summary>
         [JsonProperty(PropertyName = "dataElementSeparator")]
-        public int? DataElementSeparator { get; set; }
+        public int DataElementSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the component separator.
         /// </summary>
         [JsonProperty(PropertyName = "componentSeparator")]
-        public int? ComponentSeparator { get; set; }
+        public int ComponentSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to replace separators in
         /// payload.
         /// </summary>
         [JsonProperty(PropertyName = "replaceSeparatorsInPayload")]
-        public bool? ReplaceSeparatorsInPayload { get; set; }
+        public bool ReplaceSeparatorsInPayload { get; set; }
 
         /// <summary>
         /// Gets or sets the replacement character.
         /// </summary>
         [JsonProperty(PropertyName = "replaceCharacter")]
-        public int? ReplaceCharacter { get; set; }
+        public int ReplaceCharacter { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator.
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminator")]
-        public int? SegmentTerminator { get; set; }
+        public int SegmentTerminator { get; set; }
 
         /// <summary>
         /// Gets or sets the X12 character set. Possible values include:
         /// 'NotSpecified', 'Basic', 'Extended', 'UTF8'
         /// </summary>
         [JsonProperty(PropertyName = "characterSet")]
-        public X12CharacterSet? CharacterSet { get; set; }
+        public X12CharacterSet CharacterSet { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator suffix. Possible values
         /// include: 'NotSpecified', 'None', 'CR', 'LF', 'CRLF'
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminatorSuffix")]
-        public SegmentTerminatorSuffix? SegmentTerminatorSuffix { get; set; }
+        public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

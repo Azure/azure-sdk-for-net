@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'MicrosoftPeering'. Possible values include: 'AzurePublicPeering',
         /// 'AzurePrivatePeering', 'MicrosoftPeering'</param>
         /// <param name="state">The state of peering. Possible values are:
-        /// 'Disabled' and 'Enbaled'. Possible values include: 'Disabled',
+        /// 'Disabled' and 'Enabled'. Possible values include: 'Disabled',
         /// 'Enabled'</param>
         /// <param name="azureASN">The Azure ASN.</param>
         /// <param name="peerASN">The peer ASN.</param>
@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
+        /// <param name="routeFilter">The reference of the RouteFilter
+        /// resource.</param>
+        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string), RouteFilter routeFilter = default(RouteFilter)) 
             : base(id)
         {
             PeeringType = peeringType;
@@ -82,6 +84,7 @@ namespace Microsoft.Azure.Management.Network.Models
             LastModifiedBy = lastModifiedBy;
             Name = name;
             Etag = etag;
+            RouteFilter = routeFilter;
         }
 
         /// <summary>
@@ -95,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the state of peering. Possible values are: 'Disabled'
-        /// and 'Enbaled'. Possible values include: 'Disabled', 'Enabled'
+        /// and 'Enabled'. Possible values include: 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public string State { get; set; }
@@ -188,12 +191,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
-
+        public string Etag { get; protected set; }
+        
+        /// <summary>
+        /// Gets or sets the reference of the RouteFilter resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeFilter")]
+        public RouteFilter RouteFilter { get; set; }
     }
 }
-

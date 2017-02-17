@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The base resource type.
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>
@@ -36,31 +39,31 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource id.
+        /// Gets the resource id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets the resource name.
+        /// Gets gets the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets the resource type.
+        /// Gets gets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource location.
+        /// Gets or sets the resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource tags.
+        /// Gets or sets the resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

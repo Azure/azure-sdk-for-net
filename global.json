@@ -8,6 +8,7 @@
     "src/ResourceManagement/Cdn/Microsoft.Azure.Management.Cdn",
     "src/ResourceManagement/CognitiveServices/Microsoft.Azure.Management.CognitiveServices",
     "src/ResourceManagement/Compute/Microsoft.Azure.Management.Compute",
+    "src/ResourceManagement/CustomerInsights/Microsoft.Azure.Management.CustomerInsights",
     "src/ResourceManagement/DataLake.Analytics/Microsoft.Azure.Management.DataLake.Analytics",
     "src/ResourceManagement/DataLake.Store/Microsoft.Azure.Management.DataLake.Store",
     "src/ResourceManagement/DevTestLabs/Microsoft.Azure.Management.DevTestLabs",
