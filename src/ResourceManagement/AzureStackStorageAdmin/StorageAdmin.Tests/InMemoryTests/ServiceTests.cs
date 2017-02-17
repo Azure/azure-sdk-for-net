@@ -115,108 +115,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
         }
 
         [Fact]
-        public void PatchTableService()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.TableServiceGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-
-            var settings = new TableServiceWritableSettings
-            {
-                FrontEndCallbackThreadsCount = 100
-            };
-
-            var patchParam = new TableServicePatchParameters
-            {
-                TableService = new TableServiceRequest()
-                {
-                    Settings = settings
-                }
-            };
-
-            var result = client.TableService.Patch(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                patchParam);
-
-            // validate requestor
-            Assert.Equal(handler.Method.Method, "PATCH", StringComparer.OrdinalIgnoreCase);
-
-            var expectedUri = string.Format(
-                TableServiceUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId);
-
-            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
-
-            CompareExpectedResult(result.Resource.TableService);
-        }
-
-        [Fact]
-        public void PatchQueueService()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.QueueServiceGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-
-            var settings = new QueueServiceWritableSettings
-            {
-                FrontEndCallbackThreadsCount = 100
-            };
-
-            var patchParam = new QueueServicePatchParameters
-            {
-                QueueService = new QueueServiceRequest()
-                {
-                    Settings = settings
-                }
-            };
-
-            var result = client.QueueService.Patch(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                patchParam);
-
-            // validate requestor
-            Assert.Equal(handler.Method.Method, "PATCH", StringComparer.OrdinalIgnoreCase);
-
-            var expectedUri = string.Format(
-                QueueServiceUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId);
-
-            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
-
-            CompareExpectedResult(result.Resource.QueueService);
-        }
-
-        [Fact]
         public void GetBlobService()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -253,148 +151,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 
             CompareExpectedResult(result.Resource.BlobService);
         }
-
-        [Fact]
-        public void PatchBlobService()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.BlobServiceGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-
-            var settings = new BlobServiceWritableSettings
-            {
-                FrontEndCallbackThreadsCount = 100
-            };
-
-            var patchParam = new BlobServicePatchParameters
-            {
-                BlobService = new BlobServiceRequest()
-                {
-                    Settings = settings
-                }
-            };
-
-            var result = client.BlobService.Patch(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                patchParam);
-
-            // validate requestor
-            Assert.Equal(handler.Method.Method, "PATCH", StringComparer.OrdinalIgnoreCase);
-
-            var expectedUri = string.Format(
-                BlobServiceUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId);
-
-            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
-
-            CompareExpectedResult(result.Resource.BlobService);
-        }
-
-        [Fact]
-        public void GetManagementService()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.ManagementServiceGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-
-            var result = client.ManagementService.Get(Constants.ResourceGroupName, Constants.FarmId);
-
-            // validate requestor
-            Assert.Equal(handler.Method, HttpMethod.Get);
-
-            var expectedUri = string.Format(
-                ManagementServiceUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId);
-
-            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
-
-            // Validate headers 
-            Assert.Equal(HttpMethod.Get, handler.Method);
-
-            CompareExpectedResult(result.Resource.ManagementService);
-        }
-
-        [Fact]
-        public void PatchManagementService()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.ManagementServiceGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-
-            var settings = new ManagementServiceWritableSettings
-            {
-                WacAccountGcFullScanIntervalInSeconds = 100
-            };
-
-            var patchParam = new ManagementServicePatchParameters
-            {
-                ManagementService = new ManagementServiceRequest()
-                {
-                    Settings = settings
-                }
-            };
-
-            var result = client.ManagementService.Patch(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                patchParam);
-
-            // validate requestor
-            Assert.Equal(handler.Method.Method, "PATCH", StringComparer.OrdinalIgnoreCase);
-
-            var expectedUri = string.Format(
-                ManagementServiceUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId);
-
-            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
-
-            CompareExpectedResult(result.Resource.ManagementService);
-        }
-
-
+                
         private void CompareExpectedResult(TableServiceResponse result)
         {
             // Validate response 
@@ -448,8 +205,8 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             // Validate response 
             Assert.Equal("1.0", result.Version);
             Assert.Equal(HealthStatus.Healthy, result.HealthStatus);
-            Assert.Equal(10, result.Settings.BlobSvcContainerGcInterval);
-            Assert.Equal(10, result.Settings.BlobSvcShallowGcInterval);
+            Assert.Equal(10, result.Settings.BlobSvcContainerGcIntervalInMilliseconds);
+            Assert.Equal(10, result.Settings.BlobSvcShallowGcIntervalInMilliseconds);
             Assert.Equal(50, result.Settings.BlobSvcStreamMapMinContainerOccupancyPercent);
             Assert.Equal(1, result.Settings.FrontEndCallbackThreadsCount);
             Assert.Equal(10, result.Settings.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds);
@@ -467,24 +224,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold);
             Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds);
             Assert.Equal(false, result.Settings.FrontEndUseSlaTimeInAvailability);
-        }
-
-        private void CompareExpectedResult(ManagementServiceResponse result)
-        {
-            // Validate response 
-            Assert.Equal("1.0", result.Version);
-            Assert.Equal(HealthStatus.Healthy, result.HealthStatus);
-            Assert.Equal(1, result.Settings.WacAccountGcFullScanIntervalInSeconds);
-            Assert.Equal(1, result.Settings.WacContainerGcFullScanIntervalInSeconds);
-            Assert.Equal(1, result.Settings.WacGcWaitPeriodInMilliseconds);
-            Assert.Equal(1, result.Settings.WacHoldingPeriodInHours);
-            Assert.Equal(1000, result.Settings.WacMaxGcThreadNumber);
-            Assert.Equal(100, result.Settings.WacMaxCacheSize);
-            Assert.Equal(100, result.Settings.WacMaxConnections);
-            Assert.Equal("name1", result.Settings.HealthAccountName);
-            Assert.Equal("key1", result.Settings.HealthAccountKey);
-            Assert.Equal("name2", result.Settings.MetricsAccountName);
-            Assert.Equal("key2", result.Settings.MetricsAccountKey);
-        }
+        }        
     }
 }
