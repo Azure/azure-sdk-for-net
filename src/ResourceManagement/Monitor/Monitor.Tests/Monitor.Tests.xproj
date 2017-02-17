@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>2684f7eb-16b8-487e-a0ab-f4b3091c9197</ProjectGuid>
+    <ProjectGuid>5d973e4b-8222-41de-ac09-157e664b564d</ProjectGuid>
     <RootNamespace>Monitor.Tests</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
@@ -15,7 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    <Service Include="{0249eb33-a2c4-455a-8e93-2f1e1a595562}" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
