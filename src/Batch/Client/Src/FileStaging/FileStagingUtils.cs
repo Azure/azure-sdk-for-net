@@ -1,4 +1,18 @@
-﻿using System;
+﻿// Copyright (c) Microsoft and contributors.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,15 +56,15 @@ namespace Microsoft.Azure.Batch.FileStaging
             return bucketizedProviders;
         }
 
-        internal static async System.Threading.Tasks.Task StageFilesAsync(List<IFileStagingProvider> filesToStage, ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts)
+        internal static async Task StageFilesAsync(List<IFileStagingProvider> filesToStage, ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts)
         {
-            using (System.Threading.Tasks.Task asyncTask = StageFilesAsync(filesToStage, allFileStagingArtifacts, string.Empty))
+            using (Task asyncTask = StageFilesAsync(filesToStage, allFileStagingArtifacts, string.Empty))
             {
                 await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
             }
         }
 
-        internal static async System.Threading.Tasks.Task StageFilesAsync(List<IFileStagingProvider> filesToStage, ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts, string namingFragment)
+        internal static async Task StageFilesAsync(List<IFileStagingProvider> filesToStage, ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts, string namingFragment)
         {
             try
             {
@@ -116,7 +130,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                 // start tasks for each provider
 
                 // list of all running providers
-                List<System.Threading.Tasks.Task> runningProviders = new List<System.Threading.Tasks.Task>();
+                List<Task> runningProviders = new List<Task>();
 
                 // start a task for each FileStagingProvider
                 foreach (List<IFileStagingProvider> curProviderFilesToStage in bucketByProviders.Values)
@@ -124,7 +138,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                     Debug.Assert(curProviderFilesToStage.Count > 0);
 
                     IFileStagingProvider anyInstance = curProviderFilesToStage[0];  // had to be at least one to get here.
-                    System.Threading.Tasks.Task providerTask;  // this is the async task for this provider
+                    Task providerTask;  // this is the async task for this provider
                     IFileStagingArtifact stagingArtifact; // artifact for this provider
 
                     if (allFileStagingArtifacts.TryGetValue(anyInstance.GetType(), out stagingArtifact))  // register the staging artifact
@@ -143,9 +157,9 @@ namespace Microsoft.Azure.Batch.FileStaging
                 // the individual tasks were created above
                 // now a-wait for them all to finish
                 //
-                System.Threading.Tasks.Task[] runningArray = runningProviders.ToArray();
+                Task[] runningArray = runningProviders.ToArray();
 
-                System.Threading.Tasks.Task allRunningTasks = System.Threading.Tasks.Task.WhenAll(runningArray);
+                Task allRunningTasks = Task.WhenAll(runningArray);
 
                 // actual a-wait for all the providers
                 await allRunningTasks.ConfigureAwait(continueOnCapturedContext: false);
