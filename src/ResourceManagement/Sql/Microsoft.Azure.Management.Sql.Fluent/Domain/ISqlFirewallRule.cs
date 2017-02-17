@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IIndependentChild<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         IUpdatable<SqlFirewallRule.Update.IUpdate>,
-        IWrapper<Models.ServerFirewallRuleInner>
+        IHasInner<Models.ServerFirewallRuleInner>
     {
         /// <summary>
         /// Gets the end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.

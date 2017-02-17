@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface INetworkSecurityGroup  :
         IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        IWrapper<Models.NetworkSecurityGroupInner>,
+        IHasInner<Models.NetworkSecurityGroupInner>,
         IUpdatable<NetworkSecurityGroup.Update.IUpdate>,
         IHasAssociatedSubnets
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule> SecurityRules { get; }
 
         /// <summary>
-        /// Gets list of the ids of the network interfaces associated with this network security group.
+        /// Gets the ids of the network interfaces associated with this network security group.
         /// </summary>
-        System.Collections.Generic.IList<string> NetworkInterfaceIds { get; }
+        System.Collections.Generic.ISet<string> NetworkInterfaceIds { get; }
     }
 }

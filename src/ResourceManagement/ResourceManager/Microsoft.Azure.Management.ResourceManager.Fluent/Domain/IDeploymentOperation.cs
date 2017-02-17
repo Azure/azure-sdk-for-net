@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     public interface IDeploymentOperation  :
         IIndexable,
         IRefreshable<IDeploymentOperation>,
-        IWrapper<DeploymentOperationInner>
+        IHasInner<DeploymentOperationInner>
     {
         /// <returns>the deployment operation id</returns>
         string OperationId { get; }

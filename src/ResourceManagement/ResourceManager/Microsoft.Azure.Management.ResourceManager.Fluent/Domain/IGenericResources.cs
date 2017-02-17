@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         ISupportsGettingById<IGenericResource>,
         ISupportsCreating<GenericResource.Definition.IBlank>,
         ISupportsBatchCreation<IGenericResource>,
-        IHasManager<IResourceManager>
+        IHasManager<IResourceManager>,
+        IHasInner<IResourcesOperations>
     {
         /// <summary>
         /// Checks if a resource exists in a resource group.

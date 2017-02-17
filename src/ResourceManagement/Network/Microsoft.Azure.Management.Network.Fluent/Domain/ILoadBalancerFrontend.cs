@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a load balancer frontend.
     /// </summary>
     public interface ILoadBalancerFrontend  :
-        IWrapper<Models.FrontendIPConfigurationInner>,
+        IHasInner<Models.FrontendIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasLoadBalancingRules
     {

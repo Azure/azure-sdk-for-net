@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
-        IHasManager<IComputeManager>
+        IHasManager<IComputeManager>,
+        IHasInner<IVirtualMachinesOperations>
     {
         /// <summary>
         /// Gets available virtual machine sizes.

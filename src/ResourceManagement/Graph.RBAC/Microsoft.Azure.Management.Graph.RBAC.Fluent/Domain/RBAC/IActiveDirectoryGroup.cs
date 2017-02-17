@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// An immutable client-side representation of an Azure AD group.
     /// </summary>
     public interface IActiveDirectoryGroup  :
-        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Fluent.Models .ADGroupInner>
+        IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.Models .ADGroupInner>
     {
         /// <returns>object Id.</returns>
         string ObjectId { get; }

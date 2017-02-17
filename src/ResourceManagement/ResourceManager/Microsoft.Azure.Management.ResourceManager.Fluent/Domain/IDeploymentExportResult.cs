@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// An immutable client-side representation of an Azure deployment template export result.
     /// </summary>
     public interface IDeploymentExportResult  :
-        IWrapper<DeploymentExportResultInner>
+        IHasInner<DeploymentExportResultInner>
     {
         /// <returns>the template content</returns>
         object Template { get; }

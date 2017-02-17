@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        IHasManager<ITrafficManager>
+        IHasManager<ITrafficManager>,
+        IHasInner<IProfilesOperations>
     {
         /// <summary>
         /// Checks that the DNS name is valid for traffic manager profile and is not in use.

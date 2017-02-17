@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface ISnapshot  :
         IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
-        IWrapper<Models.SnapshotInner>,
+        IHasInner<Models.SnapshotInner>,
         IUpdatable<Snapshot.Update.IUpdate>
     {
         /// <summary>

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public interface IRecommendedElasticPool  :
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool>,
-        IWrapper<Models.RecommendedElasticPoolInner>,
+        IHasInner<Models.RecommendedElasticPoolInner>,
         IHasResourceGroup,
         IHasName,
         IHasId,

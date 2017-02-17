@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public interface ICdnEndpoint  :
         IExternalChildResource<Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint,Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
-        IWrapper<Microsoft.Azure.Management.Cdn.Fluent.Models.EndpointInner>
+        IHasInner<Microsoft.Azure.Management.Cdn.Fluent.Models.EndpointInner>
     {
         /// <summary>
         /// Gets endpoint host name.

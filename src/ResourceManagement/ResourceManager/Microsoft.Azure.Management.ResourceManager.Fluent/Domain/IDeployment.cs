@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     public interface IDeployment  :
         IRefreshable<IDeployment>,
         IUpdatable<IUpdate>,
-        IWrapper<DeploymentExtendedInner>
+        IHasInner<DeploymentExtendedInner>
     {
         /// <returns>the name of this deployment's resource group</returns>
         string ResourceGroupName { get; }

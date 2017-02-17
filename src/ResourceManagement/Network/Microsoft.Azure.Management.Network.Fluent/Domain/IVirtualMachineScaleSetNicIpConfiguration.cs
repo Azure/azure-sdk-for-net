@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IVirtualMachineScaleSetNicIpConfiguration  :
         INicIpConfigurationBase,
-        IWrapper<Models.NetworkInterfaceIPConfigurationInner>,
+        IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
         IHasPrivateIpAddress,
         IHasSubnet

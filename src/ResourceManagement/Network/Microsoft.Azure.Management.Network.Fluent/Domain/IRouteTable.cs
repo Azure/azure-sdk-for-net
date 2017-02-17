@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IRouteTable  :
         IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        IWrapper<Models.RouteTableInner>,
+        IHasInner<Models.RouteTableInner>,
         IUpdatable<RouteTable.Update.IUpdate>,
         IHasAssociatedSubnets
     {

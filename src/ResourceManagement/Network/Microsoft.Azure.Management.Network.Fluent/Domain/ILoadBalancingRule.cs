@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an HTTP load balancing rule.
     /// </summary>
     public interface ILoadBalancingRule  :
-        IWrapper<Models.LoadBalancingRuleInner>,
+        IHasInner<Models.LoadBalancingRuleInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasBackendPort,
         IHasFrontend,

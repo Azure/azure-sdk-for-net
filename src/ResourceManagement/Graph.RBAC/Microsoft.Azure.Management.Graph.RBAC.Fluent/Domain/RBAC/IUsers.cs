@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public interface IUsers  :
         // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>,
-        IHasManager<IGraphRbacManager>
+        IHasManager<IGraphRbacManager>,
+        IHasInner<IUsersOperations>
     {
         /// <summary>
         /// Gets the information about a user.

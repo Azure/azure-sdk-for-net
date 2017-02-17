@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Service Objective.
     /// </summary>
     public interface IServiceObjective  :
-        IWrapper<Models.ServiceObjectiveInner>,
+        IHasInner<Models.ServiceObjectiveInner>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IServiceObjective>,
         IHasResourceGroup,
         IHasName,

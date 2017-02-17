@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// An immutable client-side representation of an Azure AD service principal.
     /// </summary>
     public interface IServicePrincipal  :
-        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Fluent.Models .ServicePrincipalInner>
+        IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.Models .ServicePrincipalInner>
     {
         /// <returns>object Id.</returns>
         string ObjectId { get; }

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public class IndexableWrapper<InnerT> :
         Indexable,
-        IWrapper<InnerT>
+        IHasInner<InnerT>
 
     {
         protected IndexableWrapper(InnerT innerObject)

@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        IHasManager<INetworkManager>
+        IHasManager<INetworkManager>,
+        IHasInner<INetworkInterfacesOperations>
     {
         /// <summary>
         /// Gets a network interface associated with a virtual machine scale set instance.

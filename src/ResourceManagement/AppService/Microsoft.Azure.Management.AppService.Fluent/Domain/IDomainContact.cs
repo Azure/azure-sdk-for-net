@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// A domain contact definition.
     /// </summary>
     public interface IDomainContact  :
-        IWrapper<Models.Contact>,
+        IHasInner<Models.Contact>,
         IChildResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>
     {
         /// <summary>

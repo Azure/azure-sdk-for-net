@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IAppServiceCertificateKeyVaultBinding  :
         IIndependentChildResource<IAppServiceManager>,
-        IWrapper<Models.AppServiceCertificateInner>
+        IHasInner<Models.AppServiceCertificateInner>
     {
         /// <summary>
         /// Gets the status of the Key Vault secret.

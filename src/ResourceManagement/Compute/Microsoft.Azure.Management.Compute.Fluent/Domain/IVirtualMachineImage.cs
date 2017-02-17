@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine image.
     /// </summary>
     public interface IVirtualMachineImage  :
-        IWrapper<Models.VirtualMachineImageInner>
+        IHasInner<Models.VirtualMachineImageInner>
     {
         /// <summary>
         /// Gets the name of the virtual machine image offer this image is part of.

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IHasName,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         IUpdatable<AppServiceDomain.Update.IUpdate>,
-        IWrapper<Models.DomainInner>
+        IHasInner<Models.DomainInner>
     {
         /// <summary>
         /// Gets legal agreement consent.

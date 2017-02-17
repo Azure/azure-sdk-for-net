@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using Disk.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to managed disk management API in Azure.
@@ -17,7 +18,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IDisk>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
+        IHasInner<IDisksOperations>,
+        IHasManager<IComputeManager>
     {
         /// <summary>
         /// Revoke access granted to a disk.

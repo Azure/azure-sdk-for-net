@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an application gateway backend.
     /// </summary>
     public interface IApplicationGatewayBackend  :
-        IWrapper<Models.ApplicationGatewayBackendAddressPoolInner>,
+        IHasInner<Models.ApplicationGatewayBackendAddressPoolInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IHasBackendNics
     {

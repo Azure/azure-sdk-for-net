@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsGettingById<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsDeletingByGroup,
-        IHasManager<IKeyVaultManager>
+        IHasManager<IKeyVaultManager>,
+        IHasInner<IVaultsOperations>
     {
     }
 }

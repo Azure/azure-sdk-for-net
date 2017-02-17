@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
-    public interface IWrapper<T>
+    public interface IHasInner<T>
     {
         T Inner { get; }
     }

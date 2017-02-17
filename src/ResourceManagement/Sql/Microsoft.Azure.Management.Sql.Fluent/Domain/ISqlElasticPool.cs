@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IIndependentChildResource<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
         IUpdatable<SqlElasticPool.Update.IUpdate>,
-        IWrapper<Models.ElasticPoolInner>
+        IHasInner<Models.ElasticPoolInner>
     {
         /// <return>The information about elastic pool activities.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity> ListActivities();

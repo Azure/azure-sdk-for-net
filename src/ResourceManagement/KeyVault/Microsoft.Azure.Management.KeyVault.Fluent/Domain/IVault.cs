@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         IGroupableResource<IKeyVaultManager>,
         IRefreshable<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         IUpdatable<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update.IUpdate>,
-        IWrapper<Microsoft.Azure.Management.KeyVault.Fluent.Models.VaultInner>
+        IHasInner<Microsoft.Azure.Management.KeyVault.Fluent.Models.VaultInner>
     {
         /// <returns>the URI of the vault for performing operations on keys and secrets.</returns>
         string VaultUri { get; }

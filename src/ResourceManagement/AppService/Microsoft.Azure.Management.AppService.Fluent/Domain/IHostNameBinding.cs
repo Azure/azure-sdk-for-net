@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// A host name binding object.
     /// </summary>
     public interface IHostNameBinding  :
-        IWrapper<Models.HostNameBindingInner>,
+        IHasInner<Models.HostNameBindingInner>,
         IExternalChildResource<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding,Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>,
         IResource
     {

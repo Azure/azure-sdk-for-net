@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IHasName,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         IUpdatable<AppServicePlan.Update.IUpdate>,
-        IWrapper<Models.AppServicePlanInner>
+        IHasInner<Models.AppServicePlanInner>
     {
         /// <summary>
         /// Gets if apps assigned to this App Service Plan can be scaled independently.

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL database's Restore Point.
     /// </summary>
     public interface IRestorePoint  :
-        IWrapper<Models.RestorePointInner>,
+        IHasInner<Models.RestorePointInner>,
         IHasResourceGroup,
         IHasName,
         IHasId

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an application gateway IP configuration.
     /// </summary>
     public interface IApplicationGatewayIpConfiguration  :
-        IWrapper<Models.ApplicationGatewayIPConfigurationInner>,
+        IHasInner<Models.ApplicationGatewayIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
     {
         /// <return>

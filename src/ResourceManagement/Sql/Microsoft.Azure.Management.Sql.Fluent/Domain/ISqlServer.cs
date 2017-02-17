@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         IUpdatable<SqlServer.Update.IUpdate>,
         IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>,
-        IWrapper<Models.ServerInner>
+        IHasInner<Models.ServerInner>
     {
         /// <summary>
         /// Gets the administrator login user name for the SQL Server.

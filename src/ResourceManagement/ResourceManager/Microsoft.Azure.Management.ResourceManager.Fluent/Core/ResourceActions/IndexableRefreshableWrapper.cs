@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
 {
-    public abstract class IndexableRefreshableWrapper<IFluentResourceT, InnerResourceT> : IndexableRefreshable<IFluentResourceT>, IWrapper<InnerResourceT>
+    public abstract class IndexableRefreshableWrapper<IFluentResourceT, InnerResourceT> : IndexableRefreshable<IFluentResourceT>, IHasInner<InnerResourceT>
     {
         protected IndexableRefreshableWrapper(string name, InnerResourceT innerObject)
         {

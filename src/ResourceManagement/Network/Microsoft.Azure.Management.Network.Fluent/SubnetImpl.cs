@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for Subnet and its create and update interfaces.
@@ -22,6 +23,65 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95294A80FBE609A8A5735E8840009FC0:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner, parent)
         {
+        }
+
+        internal ISet<INicIpConfiguration> GetNetworkInterfaceIPConfigurations()
+        {
+            var ipConfigs = new HashSet<INicIpConfiguration>();
+            var nics = new Dictionary<string, INetworkInterface>();
+            var ipConfigRefs = Inner.IpConfigurations;
+            if (ipConfigRefs == null)
+            {
+                return ipConfigs;
+            }
+
+            foreach (var ipConfigRef in ipConfigRefs)
+            {
+                string nicID = ResourceUtils.ParentResourcePathFromResourceId(ipConfigRef.Id);
+                string ipConfigName = ResourceUtils.NameFromResourceId(ipConfigRef.Id);
+
+                // Check if NIC already cached
+                INetworkInterface nic;
+                if (!nics.TryGetValue(nicID.ToLower(), out nic))
+                {
+                    //  NIC not previously found, so ask Azure for it  
+                    nic = Parent.Manager.NetworkInterfaces.GetById(nicID);
+                }
+
+                if (nic == null)
+                {
+                    // NIC doesn't exist so ignore this bad reference  
+                    continue;
+                }
+
+                // Cache the NIC
+                nics[nic.Id.ToLower()] = nic;
+
+                // Get the IP config  
+                INicIpConfiguration ipConfig;
+                if (!nic.IpConfigurations.TryGetValue(ipConfigName, out ipConfig))
+                {
+                    // IP config not found, so ignore this bad reference  
+                    continue;
+                }
+
+                ipConfigs.Add(ipConfig);
+            }
+
+            return ipConfigs;
+        }
+
+        internal int NetworkInterfaceIPConfigurationCount()
+        {
+            var ipConfigRefs = this.Inner.IpConfigurations;
+            if (ipConfigRefs != null)
+            {
+                return ipConfigRefs.Count;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         ///GENMHASH:B9CBDB4C51BC9B92E1A239DE256FB5B6:8F0C59692A7F0EEB231DF5A0F980E52E

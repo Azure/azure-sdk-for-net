@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public interface IAppServiceCertificate  :
         IGroupableResource<IAppServiceManager>,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
-        IWrapper<Models.CertificateInner>
+        IHasInner<Models.CertificateInner>
     {
         /// <summary>
         /// Gets the pfx blob.

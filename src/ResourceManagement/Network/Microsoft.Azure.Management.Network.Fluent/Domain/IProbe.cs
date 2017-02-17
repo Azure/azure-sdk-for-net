@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a load balancing probe.
     /// </summary>
     public interface IProbe  :
-        IWrapper<Microsoft.Azure.Management.Network.Fluent.Models.ProbeInner>,
+        IHasInner<Microsoft.Azure.Management.Network.Fluent.Models.ProbeInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasLoadBalancingRules,
         IHasProtocol<string>

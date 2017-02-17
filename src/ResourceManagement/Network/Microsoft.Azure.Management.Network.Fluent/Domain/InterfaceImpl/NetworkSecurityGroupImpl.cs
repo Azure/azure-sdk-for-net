@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets list of the ids of the network interfaces associated with this network security group.
+        /// Gets the ids of the network interfaces associated with this network security group.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup.NetworkInterfaceIds
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup.NetworkInterfaceIds
         {
             get
             {
-                return this.NetworkInterfaceIds() as System.Collections.Generic.IList<string>;
+                return this.NetworkInterfaceIds() as System.Collections.Generic.ISet<string>;
             }
         }
 

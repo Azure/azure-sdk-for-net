@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IApplicationGateway  :
         IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IWrapper<Models.ApplicationGatewayInner>,
+        IHasInner<Models.ApplicationGatewayInner>,
         IUpdatable<ApplicationGateway.Update.IUpdate>,
         IHasSubnet,
         IHasPrivateIpAddress

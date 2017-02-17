@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a load balancer backend address pool.
     /// </summary>
     public interface ILoadBalancerBackend  :
-        IWrapper<Models.BackendAddressPoolInner>,
+        IHasInner<Models.BackendAddressPoolInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasLoadBalancingRules,
         IHasBackendNics

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IDisk  :
         IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
-        IWrapper<Models.DiskInner>,
+        IHasInner<Models.DiskInner>,
         IUpdatable<Disk.Update.IUpdate>
     {
         /// <summary>

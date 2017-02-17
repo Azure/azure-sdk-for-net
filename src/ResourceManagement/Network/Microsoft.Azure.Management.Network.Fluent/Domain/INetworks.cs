@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetwork>,
-        IHasManager<INetworkManager>
+        IHasManager<INetworkManager>,
+        IHasInner<IVirtualNetworksOperations>
     {
     }
 }

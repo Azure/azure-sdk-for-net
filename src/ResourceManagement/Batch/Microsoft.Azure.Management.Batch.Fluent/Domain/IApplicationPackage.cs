@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// </summary>
     public interface IApplicationPackage  :
         IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage,Microsoft.Azure.Management.Batch.Fluent.IApplication>,
-        IWrapper<Microsoft.Azure.Management.Batch.Fluent.Models.ApplicationPackageInner>
+        IHasInner<Microsoft.Azure.Management.Batch.Fluent.Models.ApplicationPackageInner>
     {
         /// <returns>the sate of the application package</returns>
         Microsoft.Azure.Management.Batch.Fluent.Models.PackageState State { get; }

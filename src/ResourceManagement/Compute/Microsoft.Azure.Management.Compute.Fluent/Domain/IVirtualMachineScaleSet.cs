@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IVirtualMachineScaleSet  :
         IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        IWrapper<Models.VirtualMachineScaleSetInner>,
+        IHasInner<Models.VirtualMachineScaleSetInner>,
         IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>
     {
         /// <summary>

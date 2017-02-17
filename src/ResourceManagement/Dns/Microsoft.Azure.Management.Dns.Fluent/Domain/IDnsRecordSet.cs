@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// </summary>
     public interface IDnsRecordSet  :
         IExternalChildResource<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet,Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        IWrapper<RecordSetInner>
+        IHasInner<RecordSetInner>
     {
         /// <summary>
         /// Gets TTL of the records in this record set.

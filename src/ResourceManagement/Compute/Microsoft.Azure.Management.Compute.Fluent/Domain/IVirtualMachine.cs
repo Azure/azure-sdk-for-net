@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IVirtualMachine  :
         IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
-        IWrapper<Models.VirtualMachineInner>,
+        IHasInner<Models.VirtualMachineInner>,
         IUpdatable<VirtualMachine.Update.IUpdate>,
         IHasNetworkInterfaces
     {

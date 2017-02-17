@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an application gateway's backend HTTP configuration.
     /// </summary>
     public interface IApplicationGatewayBackendHttpConfiguration  :
-        IWrapper<Models.ApplicationGatewayBackendHttpSettingsInner>,
+        IHasInner<Models.ApplicationGatewayBackendHttpSettingsInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IHasProtocol<Models.ApplicationGatewayProtocol>,
         IHasPort

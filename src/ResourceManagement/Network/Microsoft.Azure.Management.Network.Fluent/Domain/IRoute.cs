@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a route of a route table.
     /// </summary>
     public interface IRoute  :
-        IWrapper<Models.RouteInner>,
+        IHasInner<Models.RouteInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IRouteTable>
     {
         /// <summary>

@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ISupportsListingByParent<T, ParentT, ManagerT>,
         ISupportsDeletingById,
         ISupportsDeletingByParent,
-        IHasManager<ManagerT>
+        IHasManager<ManagerT>,
+        IHasInner<InnerCollectionT>
         where T : class, IHasId
         where ImplT : T
         where ParentT : IGroupableResource<ManagerT>
@@ -33,6 +34,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         protected InnerCollectionT innerCollection;
 
         public ManagerT Manager { get; private set; }
+
+        public InnerCollectionT Inner
+        {
+            get
+            {
+                return innerCollection;
+            }
+        }
 
         ///GENMHASH:ED07292865768A689F918C1B84A21178:E628E6DE6456B030DED192E940597C6E
         public IndependentChildrenImpl(InnerCollectionT innerCollection, ManagerT manager)

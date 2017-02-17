@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsDeletingByGroup,
-        IHasManager<IAppServiceManager>
+        IHasManager<IAppServiceManager>,
+        IHasInner<IWebAppsOperations>
     {
     }
 }

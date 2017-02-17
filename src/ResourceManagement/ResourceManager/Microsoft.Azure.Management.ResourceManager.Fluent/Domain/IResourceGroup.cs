@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         IIndexable,
         IResource,
         IRefreshable<IResourceGroup>,
-        IWrapper<ResourceGroupInner>,
+        IHasInner<ResourceGroupInner>,
         IUpdatable<IUpdate>
     {
         /// <returns>the name of the resource group</returns>

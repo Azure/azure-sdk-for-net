@@ -68,7 +68,7 @@ namespace Fluent.Tests.Network
 
                 // Confirm NIC association
                 Assert.Equal(1, nsg.NetworkInterfaceIds.Count);
-                Assert.Equal(nsg.NetworkInterfaceIds[0].ToLowerInvariant(), nic.Id.ToLowerInvariant());
+                Assert.True(nsg.NetworkInterfaceIds.Contains(nic.Id.ToLower()));
 
                 #endregion
 

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an extension associated with virtual machine.
     /// </summary>
     public interface IVirtualMachineExtensionBase  :
-        IWrapper<Models.VirtualMachineExtensionInner>
+        IHasInner<Models.VirtualMachineExtensionInner>
     {
         /// <summary>
         /// Gets the instance view of the virtual machine extension.
