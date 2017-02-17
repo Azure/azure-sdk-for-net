@@ -256,6 +256,84 @@ namespace Microsoft.Azure.Management.KeyVault
             }
 
             /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            public static void PurgeDeleted(this IVaultsOperations operations, string vaultName, string location)
+            {
+                Task.Factory.StartNew(s => ((IVaultsOperations)s).PurgeDeletedAsync(vaultName, location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeDeletedAsync(this IVaultsOperations operations, string vaultName, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.PurgeDeletedWithHttpMessagesAsync(vaultName, location, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            public static void BeginPurgeDeleted(this IVaultsOperations operations, string vaultName, string location)
+            {
+                Task.Factory.StartNew(s => ((IVaultsOperations)s).BeginPurgeDeletedAsync(vaultName, location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginPurgeDeletedAsync(this IVaultsOperations operations, string vaultName, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginPurgeDeletedWithHttpMessagesAsync(vaultName, location, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription.
             /// </summary>

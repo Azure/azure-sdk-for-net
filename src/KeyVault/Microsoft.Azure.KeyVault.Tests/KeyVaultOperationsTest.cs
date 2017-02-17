@@ -281,6 +281,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     //Trace.WriteLine("Verify generated key is as expected");
                     VerifyKeyAttributesAreEqual(attributes, createdKey.Attributes);
                     Assert.Equal(JsonWebKeyType.RsaHsm, createdKey.Key.Kty);
+                    Assert.NotNull(createdKey.Attributes.PurgeDisabled);
 
                     //Trace.WriteLine("Get the key");
                     var retrievedKey = client.GetKeyAsync(createdKey.Key.Kid).GetAwaiter().GetResult();
@@ -295,6 +296,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(deletedKey.Attributes, createdKey.Attributes);
                     VerifyWebKeysAreEqual(deletedKey.Key, createdKey.Key);
+                    Assert.NotNull(deletedKey.Attributes.PurgeDisabled);
 
                     if (_softDeleteEnabled)
                     {
@@ -325,6 +327,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var importedKey =
                     client.ImportKeyAsync(_vaultAddress, "ImportSoftKeyTest", keyBundle).GetAwaiter().GetResult();
+                Assert.NotNull(importedKey.Attributes.PurgeDisabled);
 
                 try
                 {
@@ -336,6 +339,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(importedKey.Attributes, retrievedKey.Attributes);
                     VerifyWebKeysAreEqual(importedKey.Key, retrievedKey.Key);
+                    Assert.NotNull(retrievedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
@@ -383,6 +387,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
                     updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
+                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
 
                     // Create a new version of the key
                     var newkeyVersion = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
@@ -400,6 +405,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
                     updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
+                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
@@ -451,6 +457,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyAttributesAreEqual(updatedKey.Attributes, createdKey.Attributes);
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, createdKey.Key.KeyOps);
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
+                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
@@ -507,6 +514,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyAttributesAreEqual(restoredDeletedKey.Attributes, createdKey.Attributes);
                     Assert.Equal(restoredDeletedKey.Key.Kty, createdKey.Key.Kty);
                     Assert.Equal(createdKey.Key.Kid, restoredDeletedKey.Key.Kid);
+                    Assert.NotNull(restoredDeletedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
@@ -707,6 +715,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(recoveredKey.Key.KeyOps, originalKey.Key.KeyOps);
                     Assert.Equal(keyName, recoveredKey.KeyIdentifier.Name);
                     Assert.Equal(originalKey.Key.Kid, recoveredKey.Key.Kid);
+                    Assert.NotNull(recoveredKey.Attributes.PurgeDisabled);
 
                     this.fixture.WaitOnKey(client, _vaultAddress, keyName);
 
@@ -715,6 +724,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(recoveredGetKey.Key.KeyOps, originalKey.Key.KeyOps);
                     Assert.Equal(keyName, recoveredGetKey.KeyIdentifier.Name);
                     Assert.Equal(originalKey.Key.Kid, recoveredGetKey.Key.Kid);
+                    Assert.NotNull(recoveredGetKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {

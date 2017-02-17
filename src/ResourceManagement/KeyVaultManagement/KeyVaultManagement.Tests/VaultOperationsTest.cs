@@ -3,15 +3,15 @@
 // license information.
 // 
 
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.Azure.Management.ResourceManager;
-using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace KeyVault.Management.Tests
 {
@@ -373,7 +373,14 @@ namespace KeyVault.Management.Tests
 
                 foreach (var v in deletedVaults)
                 {
-                    resourceIds.Remove(v.Properties.VaultId);
+                    var exists = resourceIds.Remove(v.Properties.VaultId);
+
+                    if (exists)
+                    {
+                        // Purge vault
+                        testBase.client.Vaults.PurgeDeleted(v.Name, testBase.location);
+                        Assert.Throws<CloudException>(() => testBase.client.Vaults.GetDeleted(v.Name, testBase.location));
+                    }
                 }
 
                 while (deletedVaults.NextPageLink != null)
@@ -382,15 +389,20 @@ namespace KeyVault.Management.Tests
                     Assert.NotNull(deletedVaults);
                     foreach (var v in deletedVaults)
                     {
-                        resourceIds.Remove(v.Id);
+                        var exists = resourceIds.Remove(v.Id);
+
+                        if (exists)
+                        {
+                            // Purge vault
+                            testBase.client.Vaults.PurgeDeleted(v.Name, testBase.location);
+                            Assert.Throws<CloudException>(() => testBase.client.Vaults.GetDeleted(v.Name, testBase.location));
+                        }
                     }
 
                     if (resourceIds.Count == 0)
                         break;
                 }
                 Assert.True(resourceIds.Count == 0);
-
-                // Purge ...
             }
         }
 

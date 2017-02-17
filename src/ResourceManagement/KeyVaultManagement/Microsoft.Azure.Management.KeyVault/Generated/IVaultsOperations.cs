@@ -168,6 +168,52 @@ namespace Microsoft.Azure.Management.KeyVault
         /// </exception>
         Task<AzureOperationResponse<DeletedVault>> GetDeletedWithHttpMessagesAsync(string vaultName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes the specified vault forever. aka Purges the deleted Azure
+        /// key vault.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the soft-deleted vault.
+        /// </param>
+        /// <param name='location'>
+        /// The location of the soft-deleted vault.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> PurgeDeletedWithHttpMessagesAsync(string vaultName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the specified vault forever. aka Purges the deleted Azure
+        /// key vault.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the soft-deleted vault.
+        /// </param>
+        /// <param name='location'>
+        /// The location of the soft-deleted vault.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginPurgeDeletedWithHttpMessagesAsync(string vaultName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The List operation gets information about the vaults associated
         /// with the subscription.
         /// </summary>
