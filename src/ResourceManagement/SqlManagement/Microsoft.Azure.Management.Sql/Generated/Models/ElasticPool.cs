@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Creating', 'Ready', 'Disabled'</param>
         /// <param name="edition">The edition of the Azure SQL Elastic Pool.
         /// Possible values include: 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="dtu">The total shared DTU for the SQL Azure Database
+        /// <param name="dtu">The total shared DTU for the Azure SQL Database
         /// Elastic Pool.</param>
-        /// <param name="databaseDtuMax">The maximum DTU any one SQL Azure
+        /// <param name="databaseDtuMax">The maximum DTU any one Azure SQL
         /// Database can consume.</param>
-        /// <param name="databaseDtuMin">The minimum DTU all SQL Azure
+        /// <param name="databaseDtuMin">The minimum DTU all Azure SQL
         /// Databases are guaranteed.</param>
-        /// <param name="storageMB">Gets storage limit for the SQL Azure
+        /// <param name="storageMB">Gets storage limit for the Azure SQL
         /// Database Elastic Pool in MB.</param>
         public ElasticPool(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.DateTime? creationDate = default(System.DateTime?), string state = default(string), string edition = default(string), int? dtu = default(int?), int? databaseDtuMax = default(int?), int? databaseDtuMin = default(int?), int? storageMB = default(int?))
             : base(location, name, id, type, tags)
@@ -63,42 +63,40 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
-        /// Gets the state of the Azure SQL Elastic Pool. Possible values
-        /// include: 'Creating', 'Ready', 'Disabled'
+        /// Gets the state of the Azure SQL Elastic Pool. Refer to the capabilities API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.state")]
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the edition of the Azure SQL Elastic Pool. Possible
-        /// values include: 'Basic', 'Standard', 'Premium'
+        /// Gets or sets the edition of the Azure SQL Elastic Pool. Refer to the capabilities API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.edition")]
         public string Edition { get; set; }
 
         /// <summary>
-        /// Gets or sets the total shared DTU for the SQL Azure Database
+        /// Gets or sets the total shared DTU for the Azure SQL Database
         /// Elastic Pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dtu")]
         public int? Dtu { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum DTU any one SQL Azure Database can
+        /// Gets or sets the maximum DTU any one Azure SQL Database can
         /// consume.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.databaseDtuMax")]
         public int? DatabaseDtuMax { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum DTU all SQL Azure Databases are
+        /// Gets or sets the minimum DTU all Azure SQL Databases are
         /// guaranteed.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.databaseDtuMin")]
         public int? DatabaseDtuMin { get; set; }
 
         /// <summary>
-        /// Gets storage limit for the SQL Azure Database Elastic Pool in MB.
+        /// Gets storage limit for the Azure SQL Database Elastic Pool in MB.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.storageMB")]
         public int? StorageMB { get; set; }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.Resources;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -37,11 +40,11 @@ namespace Sql.Tests
                 var db2Input = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
                     Location = server.Location,
-                    Collation = "SQL_Latin1_General_CP1_CI_AS",
-                    Edition = "Basic",
+                    Collation = SqlTestConstants.DefaultCollation,
+                    Edition = SqlTestConstants.DefaultDatabaseEdition,
                     MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
-                    RequestedServiceObjectiveName = "Basic",
-                    RequestedServiceObjectiveId = Guid.Parse("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"),
+                    RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
+                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Tags = tags,
                     CreateMode = "Default"
                 };
@@ -55,7 +58,7 @@ namespace Sql.Tests
                 var db3Input = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
                     Location = server.Location,
-                    RequestedServiceObjectiveId = Guid.Parse("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"),
+                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Tags = tags,
                 };
                 var db3 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db3Input);
@@ -68,7 +71,7 @@ namespace Sql.Tests
                 var db4Input = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
                     Location = server.Location,
-                    RequestedServiceObjectiveName = "Basic",
+                    RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
                     Tags = tags,
                 };
                 var db4 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db4Input);
@@ -81,7 +84,7 @@ namespace Sql.Tests
                 var db5Input = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
                     Location = server.Location,
-                    Edition = "Basic",
+                    Edition = SqlTestConstants.DefaultDatabaseEdition,
                     Tags = tags,
                 };
                 var db5 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db5Input);
@@ -115,11 +118,11 @@ namespace Sql.Tests
                 var dbInput = new Database()
                 {
                     Location = server.Location,
-                    Collation = "SQL_Latin1_General_CP1_CI_AS",
-                    Edition = "Basic",
+                    Collation = SqlTestConstants.DefaultCollation,
+                    Edition = SqlTestConstants.DefaultDatabaseEdition,
                     MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
-                    RequestedServiceObjectiveName = "Basic",
-                    RequestedServiceObjectiveId = Guid.Parse("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"),
+                    RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
+                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Tags = tags,
                 };
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
@@ -130,8 +133,8 @@ namespace Sql.Tests
                 //
                 var updateEditionAndSloInput = new Database()
                 {
-                    Edition = "Standard",
-                    RequestedServiceObjectiveName = "S0",
+                    Edition = DatabaseEditions.Standard,
+                    RequestedServiceObjectiveName = ServiceObjectiveName.S0,
                     Location = server.Location
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput);
@@ -141,8 +144,8 @@ namespace Sql.Tests
                 //
                 var updateEditionAndSloInput2 = new Database()
                 {
-                    Edition = "Basic",
-                    RequestedServiceObjectiveId = Guid.Parse("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"),
+                    Edition = SqlTestConstants.DefaultDatabaseEdition,
+                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Location = server.Location
                 };
                 var db3 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput2);
@@ -152,7 +155,7 @@ namespace Sql.Tests
                 //
                 var updateEditionInput = new Database()
                 {
-                    Edition = "Premium",
+                    Edition = DatabaseEditions.Premium,
                     Location = server.Location
                 };
                 var db4 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateEditionInput);
@@ -162,8 +165,8 @@ namespace Sql.Tests
                 //
                 var updateSloInput2 = new Database()
                 {
-                    RequestedServiceObjectiveName = "P2",
-                    RequestedServiceObjectiveId = Guid.Parse("a7d1b92d-c987-4375-b54d-2b1d0e0f5bb0"),
+                    RequestedServiceObjectiveName = ServiceObjectiveName.P2,
+                    RequestedServiceObjectiveId = ServiceObjectiveId.P2,
                     Location = server.Location
                 };
                 var db5 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateSloInput2);

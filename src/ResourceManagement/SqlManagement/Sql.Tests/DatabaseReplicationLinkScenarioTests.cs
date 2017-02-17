@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.Resources;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -57,7 +60,7 @@ namespace Sql.Tests
                 var dbInput2 = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
                     Location = v12Server2.Location,
-                    CreateMode = "OnlineSecondary",
+                    CreateMode = CreateMode.OnlineSecondary,
                     SourceDatabaseId = database.Id
                 };
                 var database2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, serverName2, databaseName, dbInput2);
@@ -120,7 +123,7 @@ namespace Sql.Tests
                 var dbInput2 = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
                     Location = v12Server2.Location,
-                    CreateMode = "OnlineSecondary",
+                    CreateMode = CreateMode.OnlineSecondary,
                     SourceDatabaseId = database.Id
                 };
                 var database2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, serverName2, databaseName, dbInput2);

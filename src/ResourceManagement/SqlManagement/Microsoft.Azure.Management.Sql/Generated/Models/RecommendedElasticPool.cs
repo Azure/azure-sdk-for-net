@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Recommended Elastic Pool. The ElasticPoolEditions enumeration
         /// contains all the valid editions. Possible values include:
         /// 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="dtu">The DTU for the SQL Azure Recommended Elastic
+        /// <param name="dtu">The DTU for the Azure SQL Recommended Elastic
         /// Pool.</param>
         /// <param name="databaseDtuMin">The minimum DTU for the
         /// database.</param>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string DatabaseEdition { get; private set; }
 
         /// <summary>
-        /// Gets or sets the DTU for the SQL Azure Recommended Elastic Pool.
+        /// Gets or sets the DTU for the Azure SQL Recommended Elastic Pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dtu")]
         public double? Dtu { get; set; }

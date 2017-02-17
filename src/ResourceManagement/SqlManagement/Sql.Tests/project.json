@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.0-preview",
 
   "buildOptions": {
     "delaySign": true,
@@ -26,7 +26,7 @@
     "Microsoft.Rest.ClientRuntime": "2.3.3",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Azure.Management.Sql": "1.0.0",
+    "Microsoft.Azure.Management.Sql": "1.0.0-preview",
     "Microsoft.Rest.ClientRuntime.Azure": "3.3.3",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview"
   }

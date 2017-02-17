@@ -173,8 +173,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the edition of the Azure SQL Database.  The
         /// DatabaseEditions enumeration contains all the valid editions.
-        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
-        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse'
+        /// Possible values include: Refer to the capabilities API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.edition")]
         public string Edition { get; set; }
@@ -182,8 +181,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the max size of the Azure SQL Database expressed in
         /// bytes. Note: Only the following sizes are supported (in addition
-        /// to limitations being placed on each edition): { 100 MB | 500 MB
-        /// |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
+        /// to limitations being placed on each edition): Refer to the capabilities API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
@@ -203,16 +201,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the Azure SQL Database. This is the Service Level Objective that
         /// is in the process of being applied to the Azure SQL Database.
         /// Once successfully updated, it will match the value of
-        /// serviceLevelObjective property. Possible values include: 'Basic',
-        /// 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3'
+        /// serviceLevelObjective property. Refer to the capabilities API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedServiceObjectiveName")]
         public string RequestedServiceObjectiveName { get; set; }
 
         /// <summary>
         /// Gets the current Service Level Objective of the Azure SQL
-        /// Database. Possible values include: 'Basic', 'S0', 'S1', 'S2',
-        /// 'S3', 'P1', 'P2', 'P3'
+        /// Database. Refer to the capabilities API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceLevelObjective")]
         public string ServiceLevelObjective { get; private set; }

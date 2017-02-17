@@ -22,5 +22,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string P1 = "P1";
         public const string P2 = "P2";
         public const string P3 = "P3";
+        public const string P4 = "P4";
+        public const string P6 = "P6";
+        public const string P11 = "P11";
+        public const string P15 = "P15";
     }
 }

@@ -19,10 +19,10 @@ using System.Resources;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyTitle("Microsoft Azure SQL Server Management Library")]
+[assembly: AssemblyTitle("Microsoft Azure SQL Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL.")]
-[assembly: AssemblyVersion("0.10.0.0")]
-[assembly: AssemblyFileVersion("0.51.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 
 

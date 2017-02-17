@@ -80,19 +80,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets the proposed index action. We suggest user to create missing
         /// index, drop unused index or to rebuild already existing index to
-        /// improve its performance. Possible values are 'Create', 'Drop',
-        /// 'Rebuild'. Possible values include: 'Create', 'Drop', 'Rebuild'
+        /// improve its performance.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.action")]
         public RecommendedIndexActions? Action { get; private set; }
 
         /// <summary>
-        /// Gets the state recommendation is in. Current options are:
-        /// 'Active', 'Pending', 'Executing', 'Verifying', 'Pending Revert',
-        /// 'Reverting', 'Reverted', 'Ignored', 'Expired', 'Blocked',
-        /// 'Success'. Possible values include: 'Active', 'Pending',
-        /// 'Executing', 'Verifying', 'Pending Revert', 'Reverting',
-        /// 'Reverted', 'Ignored', 'Expired', 'Blocked', 'Success'
+        /// Gets the state recommendation is in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.state")]
         public RecommendedIndexStates? State { get; private set; }

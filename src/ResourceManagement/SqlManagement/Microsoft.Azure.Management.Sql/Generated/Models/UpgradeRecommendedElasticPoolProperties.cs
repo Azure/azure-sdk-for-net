@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="includeAllDatabases">Gets or sets whether all
         /// databases to be put in the Azure SQL Recommended Elastic Pool
         /// being upgraded.</param>
-        public UpgradeRecommendedElasticPoolProperties(string name, TargetElasticPoolEditions edition, int? dtu = default(int?), int? storageMb = default(int?), int? databaseDtuMin = default(int?), int? databaseDtuMax = default(int?), System.Collections.Generic.IList<string> databaseCollection = default(System.Collections.Generic.IList<string>), bool? includeAllDatabases = default(bool?))
+        public UpgradeRecommendedElasticPoolProperties(string name, string edition, int? dtu = default(int?), int? storageMb = default(int?), int? databaseDtuMin = default(int?), int? databaseDtuMax = default(int?), System.Collections.Generic.IList<string> databaseCollection = default(System.Collections.Generic.IList<string>), bool? includeAllDatabases = default(bool?))
         {
             Name = name;
             Edition = edition;
@@ -66,11 +66,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the target edition for the Azure SQL Recommended
-        /// Elastic Pool being upgraded. Possible values include: 'Basic',
-        /// 'Standard', 'Premium'
+        /// Elastic Pool being upgraded. Possible values are enumerated in 
+        /// ElasticPoolEditions
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Edition")]
-        public TargetElasticPoolEditions Edition { get; set; }
+        public string Edition { get; set; }
 
         /// <summary>
         /// Gets or sets the DTU guarantee for the Azure SQL Recommended
