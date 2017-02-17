@@ -185,9 +185,9 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["serverKeyName"] = parameters.Properties.ServerKeyName;
                 }
                 
-                if (parameters.Properties.Type != null)
+                if (parameters.Properties.ServerKeyType != null)
                 {
-                    propertiesValue["type"] = parameters.Properties.Type;
+                    propertiesValue["serverKeyType"] = parameters.Properties.ServerKeyType;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -290,11 +290,11 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.ServerKeyName = serverKeyNameInstance;
                                 }
                                 
-                                JToken typeValue = propertiesValue2["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                JToken serverKeyTypeValue = propertiesValue2["serverKeyType"];
+                                if (serverKeyTypeValue != null && serverKeyTypeValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = ((string)typeValue);
-                                    propertiesInstance.Type = typeInstance;
+                                    string serverKeyTypeInstance = ((string)serverKeyTypeValue);
+                                    propertiesInstance.ServerKeyType = serverKeyTypeInstance;
                                 }
                                 
                                 JToken uriValue = propertiesValue2["uri"];
@@ -319,11 +319,11 @@ namespace Microsoft.Azure.Management.Sql
                                 encryptionProtectorInstance.Name = nameInstance;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                encryptionProtectorInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                encryptionProtectorInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
@@ -359,11 +359,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1109,11 +1109,11 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.ServerKeyName = serverKeyNameInstance;
                                 }
                                 
-                                JToken typeValue = propertiesValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                JToken serverKeyTypeValue = propertiesValue["serverKeyType"];
+                                if (serverKeyTypeValue != null && serverKeyTypeValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = ((string)typeValue);
-                                    propertiesInstance.Type = typeInstance;
+                                    string serverKeyTypeInstance = ((string)serverKeyTypeValue);
+                                    propertiesInstance.ServerKeyType = serverKeyTypeInstance;
                                 }
                                 
                                 JToken uriValue = propertiesValue["uri"];
@@ -1138,11 +1138,11 @@ namespace Microsoft.Azure.Management.Sql
                                 encryptionProtectorInstance.Name = nameInstance;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                encryptionProtectorInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                encryptionProtectorInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
@@ -1349,11 +1349,11 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.ServerKeyName = serverKeyNameInstance;
                                 }
                                 
-                                JToken typeValue = propertiesValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                JToken serverKeyTypeValue = propertiesValue["serverKeyType"];
+                                if (serverKeyTypeValue != null && serverKeyTypeValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = ((string)typeValue);
-                                    propertiesInstance.Type = typeInstance;
+                                    string serverKeyTypeInstance = ((string)serverKeyTypeValue);
+                                    propertiesInstance.ServerKeyType = serverKeyTypeInstance;
                                 }
                                 
                                 JToken uriValue = propertiesValue["uri"];
@@ -1378,11 +1378,11 @@ namespace Microsoft.Azure.Management.Sql
                                 encryptionProtectorInstance.Name = nameInstance;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                encryptionProtectorInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                encryptionProtectorInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
@@ -1830,11 +1830,11 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.ServerKeyName = serverKeyNameInstance;
                                         }
                                         
-                                        JToken typeValue = propertiesValue["type"];
-                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                        JToken serverKeyTypeValue = propertiesValue["serverKeyType"];
+                                        if (serverKeyTypeValue != null && serverKeyTypeValue.Type != JTokenType.Null)
                                         {
-                                            string typeInstance = ((string)typeValue);
-                                            propertiesInstance.Type = typeInstance;
+                                            string serverKeyTypeInstance = ((string)serverKeyTypeValue);
+                                            propertiesInstance.ServerKeyType = serverKeyTypeInstance;
                                         }
                                         
                                         JToken uriValue = propertiesValue["uri"];
@@ -1859,11 +1859,11 @@ namespace Microsoft.Azure.Management.Sql
                                         encryptionProtectorInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken typeValue2 = valueValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        encryptionProtectorInstance.Type = typeInstance2;
+                                        string typeInstance = ((string)typeValue);
+                                        encryptionProtectorInstance.Type = typeInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];

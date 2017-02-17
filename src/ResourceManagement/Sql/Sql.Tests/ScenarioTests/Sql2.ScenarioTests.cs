@@ -840,7 +840,7 @@ namespace Sql2.Tests.ScenarioTests
                     {
                         Properties = new ServerKeyCreateOrUpdateProperties()
                         {
-                            Type = ServerKeyType.AzureKeyVault,
+                            ServerKeyType = ServerKeyType.AzureKeyVault,
                             Uri = akvUri
                         }
                     });
@@ -861,7 +861,7 @@ namespace Sql2.Tests.ScenarioTests
                     var listResponse = sqlClient.ServerKey.List(resGroupName, serverName);
                     TestUtilities.ValidateOperationResponse(getResponse, HttpStatusCode.OK);
                     Assert.Equal(2, listResponse.ServerKeys.Count);
-                    VerifyServerKeyInformation(ServerKeyType.AzureKeyVault, serverKeyName, akvUri, listResponse.ServerKeys.Where(s => s.Properties.Type == ServerKeyType.AzureKeyVault).First());
+                    VerifyServerKeyInformation(ServerKeyType.AzureKeyVault, serverKeyName, akvUri, listResponse.ServerKeys.Where(s => s.Properties.ServerKeyType == ServerKeyType.AzureKeyVault).First());
                     //////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
@@ -975,7 +975,7 @@ namespace Sql2.Tests.ScenarioTests
                     {
                         Properties = new ServerKeyCreateOrUpdateProperties()
                         {
-                            Type = ServerKeyType.AzureKeyVault,
+                            ServerKeyType = ServerKeyType.AzureKeyVault,
                             Uri = akvUri
                         }
                     });
@@ -990,7 +990,7 @@ namespace Sql2.Tests.ScenarioTests
                     {
                         Properties = new EncryptionProtectorCreateOrUpdateProperties()
                         {
-                            Type = EncryptionProtectorType.AzureKeyVault,
+                            ServerKeyType = EncryptionProtectorType.AzureKeyVault,
                             ServerKeyName = serverKeyName
                         }
                     });
@@ -1040,7 +1040,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="protector">Actual encryption protector object</param>
         private static void VerifyEncryptionProtector(string type, string serverKeyName, EncryptionProtector protector)
         {
-            Assert.Equal(type, protector.Properties.Type);
+            Assert.Equal(type, protector.Properties.ServerKeyType);
             Assert.Equal(serverKeyName, protector.Properties.ServerKeyName);
         }
 
@@ -1053,7 +1053,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="serverKey">Actual server key object</param>
         private static void VerifyServerKeyInformation(string type, string serverKeyName, string uri, ServerKey serverKey)
         {
-            Assert.Equal(type, serverKey.Properties.Type);
+            Assert.Equal(type, serverKey.Properties.ServerKeyType);
             Assert.Equal(serverKeyName, serverKey.Name);
             Assert.Equal(uri, serverKey.Properties.Uri);
         }

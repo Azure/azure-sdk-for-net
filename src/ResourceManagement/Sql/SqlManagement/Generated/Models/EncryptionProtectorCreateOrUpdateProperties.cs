@@ -42,16 +42,16 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._serverKeyName = value; }
         }
         
-        private string _type;
+        private string _serverKeyType;
         
         /// <summary>
         /// Optional. Gets or sets the Azure Sql Database Transparent Data
         /// Encryption Encryption protector type.
         /// </summary>
-        public string Type
+        public string ServerKeyType
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._serverKeyType; }
+            set { this._serverKeyType = value; }
         }
         
         /// <summary>

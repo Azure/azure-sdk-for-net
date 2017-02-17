@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._serverKeyName = value; }
         }
         
-        private string _type;
+        private string _serverKeyType;
         
         /// <summary>
         /// Optional. The Transparent Data Encryption Encryption Protector Type
         /// </summary>
-        public string Type
+        public string ServerKeyType
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._serverKeyType; }
+            set { this._serverKeyType = value; }
         }
         
         private string _uri;
