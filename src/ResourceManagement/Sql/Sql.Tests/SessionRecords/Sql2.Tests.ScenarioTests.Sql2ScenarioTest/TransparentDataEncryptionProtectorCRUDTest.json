@@ -475,7 +475,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Sql/servers/encryptionProtector\",\r\n  \"kind\": \"servicemanaged\",\r\n  \"properties\": {\r\n    \"serverKeyName\": \"ServiceManaged\",\r\n    \"type\": \"ServiceManaged\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Sql/servers/encryptionProtector\",\r\n  \"kind\": \"servicemanaged\",\r\n  \"properties\": {\r\n    \"serverKeyName\": \"ServiceManaged\",\r\n    \"serverKeyType\": \"ServiceManaged\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "343"
@@ -526,7 +526,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Sql/servers/encryptionProtector\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyName\": \"akvtdekeyvault_key1\",\r\n    \"type\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Sql/servers/encryptionProtector\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyName\": \"akvtdekeyvault_key1\",\r\n    \"serverKeyType\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "436"
@@ -571,7 +571,7 @@
       "RequestUri": "/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/keys/akvtdekeyvault_key1?api-version=2015-05-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFhYzFjOTAtMmIyMi00MWFhLWE5ODMtNWI5M2MyYWZhMTcxL3Jlc291cmNlR3JvdXBzL2NzbS1yZy10ZGVha3ZjcnVkNjQ3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL3NlcnZlcnMvY3NtLXNxbC10ZGVha3ZjcnVkNzE5MS9rZXlzL2FrdnRkZWtleXZhdWx0X2tleTE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"type\": \"AzureKeyVault\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"serverKeyType\": \"AzureKeyVault\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -703,7 +703,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/keys/akvtdekeyvault_key1\",\r\n  \"name\": \"akvtdekeyvault_key1\",\r\n  \"type\": \"Microsoft.Sql/servers/keys\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"type\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n    \"creationDate\": \"2017-01-11T23:09:29.407Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/keys/akvtdekeyvault_key1\",\r\n  \"name\": \"akvtdekeyvault_key1\",\r\n  \"type\": \"Microsoft.Sql/servers/keys\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyType\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n    \"creationDate\": \"2017-01-11T23:09:29.407Z\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "518"
@@ -748,7 +748,7 @@
       "RequestUri": "/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current?api-version=2015-05-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFhYzFjOTAtMmIyMi00MWFhLWE5ODMtNWI5M2MyYWZhMTcxL3Jlc291cmNlR3JvdXBzL2NzbS1yZy10ZGVha3ZjcnVkNjQ3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL3NlcnZlcnMvY3NtLXNxbC10ZGVha3ZjcnVkNzE5MS9lbmNyeXB0aW9uUHJvdGVjdG9yL2N1cnJlbnQ/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverKeyName\": \"akvtdekeyvault_key1\",\r\n    \"type\": \"AzureKeyVault\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverKeyName\": \"akvtdekeyvault_key1\",\r\n    \"serverKeyType\": \"AzureKeyVault\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -880,7 +880,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Sql/servers/encryptionProtector\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyName\": \"akvtdekeyvault_key1\",\r\n    \"type\": \"AzureKeyVault\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud647/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud7191/encryptionProtector/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Sql/servers/encryptionProtector\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyName\": \"akvtdekeyvault_key1\",\r\n    \"serverKeyType\": \"AzureKeyVault\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "374"

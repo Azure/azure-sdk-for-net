@@ -358,7 +358,7 @@
       "RequestUri": "/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1?api-version=2015-05-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFhYzFjOTAtMmIyMi00MWFhLWE5ODMtNWI5M2MyYWZhMTcxL3Jlc291cmNlR3JvdXBzL2NzbS1yZy10ZGVha3ZjcnVkNDMxOS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtdGRlYWt2Y3J1ZDIzMC9rZXlzL2FrdnRkZWtleXZhdWx0X2tleTE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"type\": \"AzureKeyVault\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"serverKeyType\": \"AzureKeyVault\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -490,7 +490,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1\",\r\n  \"name\": \"akvtdekeyvault_key1\",\r\n  \"type\": \"Microsoft.Sql/servers/keys\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"type\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n    \"creationDate\": \"2017-01-11T22:24:53.007Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1\",\r\n  \"name\": \"akvtdekeyvault_key1\",\r\n  \"type\": \"Microsoft.Sql/servers/keys\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyType\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n    \"creationDate\": \"2017-01-11T22:24:53.007Z\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "518"
@@ -541,7 +541,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1\",\r\n  \"name\": \"akvtdekeyvault_key1\",\r\n  \"type\": \"Microsoft.Sql/servers/keys\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"type\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n    \"creationDate\": \"2017-01-11T22:24:53.007Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1\",\r\n  \"name\": \"akvtdekeyvault_key1\",\r\n  \"type\": \"Microsoft.Sql/servers/keys\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"azurekeyvault\",\r\n  \"properties\": {\r\n    \"serverKeyType\": \"AzureKeyVault\",\r\n    \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n    \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n    \"creationDate\": \"2017-01-11T22:24:53.007Z\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "518"
@@ -592,7 +592,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1\",\r\n      \"name\": \"akvtdekeyvault_key1\",\r\n      \"type\": \"Microsoft.Sql/servers/keys\",\r\n      \"location\": \"SouthEast Asia\",\r\n      \"kind\": \"azurekeyvault\",\r\n      \"properties\": {\r\n        \"type\": \"AzureKeyVault\",\r\n        \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n        \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n        \"creationDate\": \"2017-01-11T22:24:53.007Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/ServiceManaged\",\r\n      \"name\": \"ServiceManaged\",\r\n      \"type\": \"Microsoft.Sql/servers/keys\",\r\n      \"kind\": \"servicemanaged\",\r\n      \"properties\": {\r\n        \"type\": \"ServiceManaged\",\r\n        \"uri\": null,\r\n        \"thumbprint\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/akvtdekeyvault_key1\",\r\n      \"name\": \"akvtdekeyvault_key1\",\r\n      \"type\": \"Microsoft.Sql/servers/keys\",\r\n      \"location\": \"SouthEast Asia\",\r\n      \"kind\": \"azurekeyvault\",\r\n      \"properties\": {\r\n        \"serverKeyType\": \"AzureKeyVault\",\r\n        \"uri\": \"https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106\",\r\n        \"thumbprint\": \"8FD889928BFF1BC8A1B457FEFAECDEAD9E6FCF3D\",\r\n        \"creationDate\": \"2017-01-11T22:24:53.007Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0aac1c90-2b22-41aa-a983-5b93c2afa171/resourceGroups/csm-rg-tdeakvcrud4319/providers/Microsoft.Sql/servers/csm-sql-tdeakvcrud230/keys/ServiceManaged\",\r\n      \"name\": \"ServiceManaged\",\r\n      \"type\": \"Microsoft.Sql/servers/keys\",\r\n      \"kind\": \"servicemanaged\",\r\n      \"properties\": {\r\n        \"serverKeyType\": \"ServiceManaged\",\r\n        \"uri\": null,\r\n        \"thumbprint\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "854"

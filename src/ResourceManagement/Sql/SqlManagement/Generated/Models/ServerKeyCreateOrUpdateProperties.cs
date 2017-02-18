@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// </summary>
     public partial class ServerKeyCreateOrUpdateProperties
     {
-        private string _type;
+        private string _serverKeyType;
         
         /// <summary>
         /// Optional. The type of the Server Key Vault Key.
         /// </summary>
-        public string Type
+        public string ServerKeyType
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._serverKeyType; }
+            set { this._serverKeyType = value; }
         }
         
         private string _uri;

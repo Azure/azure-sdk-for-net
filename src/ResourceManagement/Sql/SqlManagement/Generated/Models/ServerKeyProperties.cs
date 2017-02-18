@@ -40,6 +40,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._creationDate = value; }
         }
         
+        private string _serverKeyType;
+        
+        /// <summary>
+        /// Optional. The type of the Server Key.
+        /// </summary>
+        public string ServerKeyType
+        {
+            get { return this._serverKeyType; }
+            set { this._serverKeyType = value; }
+        }
+        
         private string _thumbprint;
         
         /// <summary>
@@ -49,17 +60,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._thumbprint; }
             set { this._thumbprint = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. The type of the Server Key.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         private string _uri;
