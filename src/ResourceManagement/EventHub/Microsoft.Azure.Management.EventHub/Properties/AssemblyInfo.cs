@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft Azure EventHubs Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure EventHubs management functions for managing the Microsoft Azure EventHubs service.")]
+[assembly: AssemblyDescription("Provides developers with a library to create and manage all Azure Event Hubs resources.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.2.0")]
