@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             };
             AzureGermanCloud = new AzureEnvironment()
             {
-                AuthenticationEndpoint = "https://login-us.crosoftonlinmie.com/",
-                ResourceManagerEndpoint = "https://management.core.usgovcloudapi.net/",
-                ManagementEnpoint = "https://management.core.usgovcloudapi.net/",
+                AuthenticationEndpoint = "https://login.microsoftonline.de/",
+                ResourceManagerEndpoint = "https://management.microsoftazure.de/",
+                ManagementEnpoint = "https://portal.microsoftazure.de/",
                 GraphEndpoint = "https://graph.cloudapi.de/"
             };
         }
