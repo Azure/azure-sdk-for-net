@@ -54,6 +54,18 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._endpoints = value; }
         }
         
+        private bool _inGlobalLocation;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value indicating whether the resource type
+        /// is in global location.
+        /// </summary>
+        public bool InGlobalLocation
+        {
+            get { return this._inGlobalLocation; }
+            set { this._inGlobalLocation = value; }
+        }
+        
         private MarketplaceType _marketplaceType;
         
         /// <summary>
