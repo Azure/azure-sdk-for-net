@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact message filter for odata query.
+    /// </summary>
     public partial class EdifactMessageFilter
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactMessageFilter class.
         /// </summary>
-        public EdifactMessageFilter(MessageFilterType? messageFilterType = default(MessageFilterType?))
+        public EdifactMessageFilter(MessageFilterType messageFilterType)
         {
             MessageFilterType = messageFilterType;
         }
@@ -36,7 +39,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Include', 'Exclude'
         /// </summary>
         [JsonProperty(PropertyName = "messageFilterType")]
-        public MessageFilterType? MessageFilterType { get; set; }
+        public MessageFilterType MessageFilterType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

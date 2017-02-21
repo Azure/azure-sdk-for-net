@@ -28,6 +28,8 @@
     {
         public const string OSFamily = "4";
         public const string VMSize = "STANDARD_D1_v2";
+        public const string AdminUserAccountName = "BatchTestAdmin";
+        public const string NonAdminUserAccountName = "BatchTestNonAdmin";
 
         public CloudPool Pool { get; protected set; }
 

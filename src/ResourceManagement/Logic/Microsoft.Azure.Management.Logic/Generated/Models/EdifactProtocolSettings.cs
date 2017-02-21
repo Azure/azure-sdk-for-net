@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact agreement protocol settings.
+    /// </summary>
     public partial class EdifactProtocolSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactProtocolSettings class.
         /// </summary>
-        public EdifactProtocolSettings(EdifactValidationSettings validationSettings = default(EdifactValidationSettings), EdifactFramingSettings framingSettings = default(EdifactFramingSettings), EdifactEnvelopeSettings envelopeSettings = default(EdifactEnvelopeSettings), EdifactAcknowledgementSettings acknowledgementSettings = default(EdifactAcknowledgementSettings), EdifactMessageFilter messageFilter = default(EdifactMessageFilter), EdifactProcessingSettings processingSettings = default(EdifactProcessingSettings), IList<EdifactEnvelopeOverride> envelopeOverrides = default(IList<EdifactEnvelopeOverride>), IList<EdifactMessageIdentifier> messageFilterList = default(IList<EdifactMessageIdentifier>), IList<EdifactSchemaReference> schemaReferences = default(IList<EdifactSchemaReference>), IList<EdifactValidationOverride> validationOverrides = default(IList<EdifactValidationOverride>), IList<EdifactDelimiterOverride> edifactDelimiterOverrides = default(IList<EdifactDelimiterOverride>))
+        public EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IList<EdifactSchemaReference> schemaReferences, IList<EdifactEnvelopeOverride> envelopeOverrides = default(IList<EdifactEnvelopeOverride>), IList<EdifactMessageIdentifier> messageFilterList = default(IList<EdifactMessageIdentifier>), IList<EdifactValidationOverride> validationOverrides = default(IList<EdifactValidationOverride>), IList<EdifactDelimiterOverride> edifactDelimiterOverrides = default(IList<EdifactDelimiterOverride>))
         {
             ValidationSettings = validationSettings;
             FramingSettings = framingSettings;
@@ -107,5 +110,106 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "edifactDelimiterOverrides")]
         public IList<EdifactDelimiterOverride> EdifactDelimiterOverrides { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ValidationSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ValidationSettings");
+            }
+            if (FramingSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FramingSettings");
+            }
+            if (EnvelopeSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EnvelopeSettings");
+            }
+            if (AcknowledgementSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AcknowledgementSettings");
+            }
+            if (MessageFilter == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MessageFilter");
+            }
+            if (ProcessingSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProcessingSettings");
+            }
+            if (SchemaReferences == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SchemaReferences");
+            }
+            if (this.ValidationSettings != null)
+            {
+                this.ValidationSettings.Validate();
+            }
+            if (this.FramingSettings != null)
+            {
+                this.FramingSettings.Validate();
+            }
+            if (this.EnvelopeSettings != null)
+            {
+                this.EnvelopeSettings.Validate();
+            }
+            if (this.AcknowledgementSettings != null)
+            {
+                this.AcknowledgementSettings.Validate();
+            }
+            if (this.MessageFilter != null)
+            {
+                this.MessageFilter.Validate();
+            }
+            if (this.ProcessingSettings != null)
+            {
+                this.ProcessingSettings.Validate();
+            }
+            if (this.MessageFilterList != null)
+            {
+                foreach (var element in this.MessageFilterList)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.SchemaReferences != null)
+            {
+                foreach (var element1 in this.SchemaReferences)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (this.ValidationOverrides != null)
+            {
+                foreach (var element2 in this.ValidationOverrides)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
+            }
+            if (this.EdifactDelimiterOverrides != null)
+            {
+                foreach (var element3 in this.EdifactDelimiterOverrides)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
+            }
+        }
     }
 }

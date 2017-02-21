@@ -25,12 +25,12 @@ namespace Test.Azure.Management.Logic
         /// <summary>
         /// Test integration account name prefix
         /// </summary>
-        public const string IntegrationAccountPrefix = "IntegrationAccount";        
+        public const string IntegrationAccountPrefix = "IntegrationAccount";
 
         /// <summary>
         /// Default test subscription
         /// </summary>
-        public const string DefaultSubscription = "5250dd92-b580-46be-b327-e6596c8de196";
+        public const string DefaultSubscription = "f34b22a3-2202-4fb1-b040-1332bd928c84";
         
         /// <summary>
         /// Default test resource group

@@ -21,6 +21,7 @@
     using BatchTestCommon;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
+    using Microsoft.Rest.Azure;
     using Xunit;
 
     internal static class ApplicationIntegrationCommon
@@ -37,11 +38,11 @@
         {
             using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
             {
-                ListApplicationsResponse applicationSummaries =
-                    await mgmtClient.Applications.ListAsync(resourceGroupName, accountName, new ListApplicationsParameters()).ConfigureAwait(false);
+                IPage<Application> applicationSummaries =
+                    await mgmtClient.Application.ListAsync(resourceGroupName, accountName).ConfigureAwait(false);
 
                 bool testPackageAlreadyUploaded =
-                    applicationSummaries.Applications.Any(a => string.Equals(appPackageName, a.Id, StringComparison.OrdinalIgnoreCase));
+                    applicationSummaries.Any(a => string.Equals(appPackageName, a.Id, StringComparison.OrdinalIgnoreCase));
 
                 if (!testPackageAlreadyUploaded)
                 {
@@ -49,19 +50,19 @@
 
                     var addResponse =
                         await
-                        mgmtClient.Applications.AddApplicationPackageAsync(resourceGroupName, accountName, appPackageName, applicationVersion)
+                        mgmtClient.ApplicationPackage.CreateAsync(resourceGroupName, accountName, appPackageName, applicationVersion)
                                   .ConfigureAwait(false);
                     var storageUrl = addResponse.StorageUrl;
 
                     await TestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
 
                     await
-                        mgmtClient.Applications.ActivateApplicationPackageAsync(
+                        mgmtClient.ApplicationPackage.ActivateAsync(
                             resourceGroupName,
                             accountName,
                             appPackageName,
                             applicationVersion,
-                            new ActivateApplicationPackageParameters { Format = format }).ConfigureAwait(false);
+                            format).ConfigureAwait(false);
                 }
             }
         }
@@ -69,16 +70,9 @@
         {
             using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
             {
-                var deleteApplicationPackage =
-                    await
-                    mgmtClient.Applications.DeleteApplicationPackageAsync(resourceGroupName, accountName, applicationPackage, Version).ConfigureAwait(false);
+                await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, applicationPackage, Version).ConfigureAwait(false);
 
-                Assert.Equal(deleteApplicationPackage.StatusCode, HttpStatusCode.NoContent);
-
-                var deleteApplicationResponse =
-                    await mgmtClient.Applications.DeleteApplicationAsync(resourceGroupName, accountName, applicationPackage).ConfigureAwait(false);
-
-                Assert.Equal(deleteApplicationResponse.StatusCode, HttpStatusCode.NoContent);
+                await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, applicationPackage).ConfigureAwait(false);
             }
         }
     }

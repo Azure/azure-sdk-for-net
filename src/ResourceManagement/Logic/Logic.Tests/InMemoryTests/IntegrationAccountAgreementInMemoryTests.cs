@@ -44,8 +44,8 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(
-                () => client.IntegrationAccountAgreements.List(null, "IntegrationAccount"));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.List(ResourceGroupName, "IntegrationAccount"));
+                () => client.Agreements.ListByIntegrationAccounts(null, "IntegrationAccount"));
+            Assert.Throws<CloudException>(() => client.Agreements.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.AgreementList
             };
 
-            var result = client.IntegrationAccountAgreements.List(ResourceGroupName, "IntegrationAccount");
+            var result = client.Agreements.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -82,8 +82,8 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.ListNext(Constants.NextPageLink));
+            Assert.Throws<ValidationException>(() => client.Agreements.ListByIntegrationAccountsNext(null));
+            Assert.Throws<CloudException>(() => client.Agreements.ListByIntegrationAccountsNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.AgreementList
             };
 
-            var result = client.IntegrationAccountAgreements.ListNext(Constants.NextPageLink);
+            var result = client.Agreements.ListByIntegrationAccountsNext(Constants.NextPageLink);
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -120,11 +120,12 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.CreateOrUpdate(null, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.CreateOrUpdate(ResourceGroupName, null, "AgreementName", new IntegrationAccountAgreement()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountAgreement()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement()));
+            var agreeement = new IntegrationAccountAgreement(AgreementType.Edifact, "hostPartner", "guestPartner", new BusinessIdentity("a", "b"), new BusinessIdentity("a", "b"), new AgreementContent());
+            Assert.Throws<ValidationException>(() => client.Agreements.CreateOrUpdate(null, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement()));
+            Assert.Throws<ValidationException>(() => client.Agreements.CreateOrUpdate(ResourceGroupName, null, "AgreementName", new IntegrationAccountAgreement()));
+            Assert.Throws<ValidationException>(() => client.Agreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountAgreement()));
+            Assert.Throws<ValidationException>(() => client.Agreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", null));
+            Assert.Throws<CloudException>(() => client.Agreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", agreeement));
         }
 
         [Fact]
@@ -139,7 +140,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Agreement
             };
 
-            var result = client.IntegrationAccountAgreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement());
+            var result = client.Agreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement(AgreementType.Edifact, "hostPartner", "guestPartner", new BusinessIdentity("a", "b"), new BusinessIdentity("a", "b"), new AgreementContent()));
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -161,7 +162,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Agreement
             };
 
-            var result = client.IntegrationAccountAgreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement());
+            var result = client.Agreements.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "AgreementName", new IntegrationAccountAgreement(AgreementType.Edifact,"hostPartner", "guestPartner", new BusinessIdentity("a","b"),new BusinessIdentity("a","b"),new AgreementContent()));
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -182,10 +183,10 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NotFound
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.Delete(null, "IntegrationAccountName", "AgreementName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.Delete(ResourceGroupName, null, "AgreementName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.Delete(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Delete(ResourceGroupName, "IntegrationAccountName", "AgreementName"));
+            Assert.Throws<ValidationException>(() => client.Agreements.Delete(null, "IntegrationAccountName", "AgreementName"));
+            Assert.Throws<ValidationException>(() => client.Agreements.Delete(ResourceGroupName, null, "AgreementName"));
+            Assert.Throws<ValidationException>(() => client.Agreements.Delete(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Agreements.Delete(ResourceGroupName, "IntegrationAccountName", "AgreementName"));
         }
 
         [Fact]
@@ -199,7 +200,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
-            client.IntegrationAccountAgreements.Delete(ResourceGroupName, "IntegrationAccountName", "AgreementName");
+            client.Agreements.Delete(ResourceGroupName, "IntegrationAccountName", "AgreementName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -217,7 +218,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NoContent
             };
 
-            client.IntegrationAccountAgreements.Delete(ResourceGroupName, "IntegrationAccountName", "AgreementName");
+            client.Agreements.Delete(ResourceGroupName, "IntegrationAccountName", "AgreementName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -236,10 +237,10 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.Get(null, "IntegrationAccountName", "AgreementName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.Get(ResourceGroupName, null, "AgreementName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountAgreements.Get(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(ResourceGroupName, "IntegrationAccountName", "AgreementName"));
+            Assert.Throws<ValidationException>(() => client.Agreements.Get(null, "IntegrationAccountName", "AgreementName"));
+            Assert.Throws<ValidationException>(() => client.Agreements.Get(ResourceGroupName, null, "AgreementName"));
+            Assert.Throws<ValidationException>(() => client.Agreements.Get(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Agreements.Get(ResourceGroupName, "IntegrationAccountName", "AgreementName"));
         }
 
         [Fact]
@@ -254,7 +255,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Agreement
             };
 
-            var result = client.IntegrationAccountAgreements.Get(ResourceGroupName, "IntegrationAccountName", "AgreementName");
+            var result = client.Agreements.Get(ResourceGroupName, "IntegrationAccountName", "AgreementName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

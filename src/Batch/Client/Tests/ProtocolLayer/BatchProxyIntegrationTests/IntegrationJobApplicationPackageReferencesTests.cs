@@ -189,8 +189,8 @@
 
             Func<Task> cleanupTask = async () =>
                 {
-                    await mgmtClient.Applications.DeleteApplicationPackageAsync(resourceGroupName, accountName, AppPackageName, Version);
-                    await mgmtClient.Applications.DeleteApplicationAsync(resourceGroupName, accountName, AppPackageName);
+                    await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, AppPackageName, Version);
+                    await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, AppPackageName);
                 };
 
             Task.Run(cleanupTask).GetAwaiter().GetResult();

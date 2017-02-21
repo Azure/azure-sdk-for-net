@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<AffinityInformation> AffinityInformationProperty;
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
+            public readonly PropertyAccessor<AuthenticationTokenSettings> AuthenticationTokenSettingsProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<ComputeNodeInformation> ComputeNodeInformationProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
@@ -55,16 +56,17 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<Common.TaskState?> PreviousStateProperty;
             public readonly PropertyAccessor<DateTime?> PreviousStateTransitionTimeProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
-            public readonly PropertyAccessor<bool?> RunElevatedProperty;
             public readonly PropertyAccessor<Common.TaskState?> StateProperty;
             public readonly PropertyAccessor<DateTime?> StateTransitionTimeProperty;
             public readonly PropertyAccessor<TaskStatistics> StatisticsProperty;
             public readonly PropertyAccessor<string> UrlProperty;
+            public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.AffinityInformationProperty = this.CreatePropertyAccessor<AffinityInformation>("AffinityInformation", BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ComputeNodeInformationProperty = this.CreatePropertyAccessor<ComputeNodeInformation>("ComputeNodeInformation", BindingAccess.None);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
@@ -82,11 +84,11 @@ namespace Microsoft.Azure.Batch
                 this.PreviousStateProperty = this.CreatePropertyAccessor<Common.TaskState?>("PreviousState", BindingAccess.None);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor<bool?>("RunElevated", BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor<Common.TaskState?>("State", BindingAccess.None);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
                 this.StatisticsProperty = this.CreatePropertyAccessor<TaskStatistics>("Statistics", BindingAccess.None);
                 this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CloudTask protocolObject) : base(BindingState.Bound)
@@ -98,6 +100,10 @@ namespace Microsoft.Azure.Batch
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
                     "ApplicationPackageReferences",
+                    BindingAccess.Read);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o).Freeze()),
+                    "AuthenticationTokenSettings",
                     BindingAccess.Read);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
@@ -166,10 +172,6 @@ namespace Microsoft.Azure.Batch
                     ResourceFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.ResourceFiles),
                     "ResourceFiles",
                     BindingAccess.Read);
-                this.RunElevatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.RunElevated,
-                    "RunElevated",
-                    BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.State),
                     "State",
@@ -185,6 +187,10 @@ namespace Microsoft.Azure.Batch
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
                     "Url",
+                    BindingAccess.Read);
+                this.UserIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o).Freeze()),
+                    "UserIdentity",
                     BindingAccess.Read);
             }
         }
@@ -254,6 +260,22 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.ApplicationPackageReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<ApplicationPackageReference>.TransformEnumerableToConcurrentModifiableList(value);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the task can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with an authentication token which can be used to 
+        /// authenticate Batch service operations without requiring an account access key. The token is provided via the 
+        /// AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the task can carry out using the token 
+        /// depend on the settings. For example, a task can request job permissions in order to add other tasks to the job, 
+        /// or check the status of the job or of other tasks.
+        /// </remarks>
+        public AuthenticationTokenSettings AuthenticationTokenSettings
+        {
+            get { return this.propertyContainer.AuthenticationTokenSettingsProperty.Value; }
+            set { this.propertyContainer.AuthenticationTokenSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -431,15 +453,6 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
-        /// </summary>
-        public bool? RunElevated
-        {
-            get { return this.propertyContainer.RunElevatedProperty.Value; }
-            set { this.propertyContainer.RunElevatedProperty.Value = value; }
-        }
-
-        /// <summary>
         /// Gets the current state of the task.
         /// </summary>
         public Common.TaskState? State
@@ -475,6 +488,18 @@ namespace Microsoft.Azure.Batch
             get { return this.propertyContainer.UrlProperty.Value; }
         }
 
+        /// <summary>
+        /// Gets or sets the user identity under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to the task.
+        /// </remarks>
+        public UserIdentity UserIdentity
+        {
+            get { return this.propertyContainer.UserIdentityProperty.Value; }
+            set { this.propertyContainer.UserIdentityProperty.Value = value; }
+        }
+
         #endregion // CloudTask
 
         #region IPropertyMetadata
@@ -503,6 +528,7 @@ namespace Microsoft.Azure.Batch
             {
                 AffinityInfo = UtilitiesInternal.CreateObjectWithNullCheck(this.AffinityInformation, (o) => o.GetTransportObject()),
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
+                AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DependsOn = UtilitiesInternal.CreateObjectWithNullCheck(this.DependsOn, (o) => o.GetTransportObject()),
@@ -512,7 +538,7 @@ namespace Microsoft.Azure.Batch
                 Id = this.Id,
                 MultiInstanceSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.MultiInstanceSettings, (o) => o.GetTransportObject()),
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
-                RunElevated = this.RunElevated,
+                UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };
 
             return result;

@@ -16,8 +16,11 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account certificate.
+    /// </summary>
     [JsonTransformation]
-    public partial class IntegrationAccountCertificate : IntegrationAccountResource
+    public partial class IntegrationAccountCertificate : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountCertificate
@@ -69,5 +72,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "properties.publicCertificate")]
         public string PublicCertificate { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Key != null)
+            {
+                this.Key.Validate();
+            }
+        }
     }
 }

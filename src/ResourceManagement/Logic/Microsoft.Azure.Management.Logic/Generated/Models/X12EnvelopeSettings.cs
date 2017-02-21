@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 agreement envelope settings.
+    /// </summary>
     public partial class X12EnvelopeSettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12EnvelopeSettings class.
         /// </summary>
-        public X12EnvelopeSettings(int? controlStandardsId = default(int?), bool? useControlStandardsIdAsRepetitionCharacter = default(bool?), string senderApplicationId = default(string), string receiverApplicationId = default(string), string controlVersionNumber = default(string), int? interchangeControlNumberLowerBound = default(int?), int? interchangeControlNumberUpperBound = default(int?), bool? rolloverInterchangeControlNumber = default(bool?), bool? enableDefaultGroupHeaders = default(bool?), string functionalGroupId = default(string), int? groupControlNumberLowerBound = default(int?), int? groupControlNumberUpperBound = default(int?), bool? rolloverGroupControlNumber = default(bool?), string groupHeaderAgencyCode = default(string), string groupHeaderVersion = default(string), int? transactionSetControlNumberLowerBound = default(int?), int? transactionSetControlNumberUpperBound = default(int?), bool? rolloverTransactionSetControlNumber = default(bool?), string transactionSetControlNumberPrefix = default(string), string transactionSetControlNumberSuffix = default(string), bool? overwriteExistingTransactionSetControlNumber = default(bool?), X12DateFormat? groupHeaderDateFormat = default(X12DateFormat?), X12TimeFormat? groupHeaderTimeFormat = default(X12TimeFormat?), UsageIndicator? usageIndicator = default(UsageIndicator?))
+        public X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator, string functionalGroupId = default(string), string transactionSetControlNumberPrefix = default(string), string transactionSetControlNumberSuffix = default(string))
         {
             ControlStandardsId = controlStandardsId;
             UseControlStandardsIdAsRepetitionCharacter = useControlStandardsIdAsRepetitionCharacter;
@@ -58,14 +61,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the controls standards id.
         /// </summary>
         [JsonProperty(PropertyName = "controlStandardsId")]
-        public int? ControlStandardsId { get; set; }
+        public int ControlStandardsId { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to use control standards
         /// id as repetition character.
         /// </summary>
         [JsonProperty(PropertyName = "useControlStandardsIdAsRepetitionCharacter")]
-        public bool? UseControlStandardsIdAsRepetitionCharacter { get; set; }
+        public bool UseControlStandardsIdAsRepetitionCharacter { get; set; }
 
         /// <summary>
         /// Gets or sets the sender application id.
@@ -89,27 +92,27 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the interchange  control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "interchangeControlNumberLowerBound")]
-        public int? InterchangeControlNumberLowerBound { get; set; }
+        public int InterchangeControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the interchange  control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "interchangeControlNumberUpperBound")]
-        public int? InterchangeControlNumberUpperBound { get; set; }
+        public int InterchangeControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover interchange
         /// control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverInterchangeControlNumber")]
-        public bool? RolloverInterchangeControlNumber { get; set; }
+        public bool RolloverInterchangeControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable default group
         /// headers.
         /// </summary>
         [JsonProperty(PropertyName = "enableDefaultGroupHeaders")]
-        public bool? EnableDefaultGroupHeaders { get; set; }
+        public bool EnableDefaultGroupHeaders { get; set; }
 
         /// <summary>
         /// Gets or sets the functional group id.
@@ -121,20 +124,20 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the group control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "groupControlNumberLowerBound")]
-        public int? GroupControlNumberLowerBound { get; set; }
+        public int GroupControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the group control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "groupControlNumberUpperBound")]
-        public int? GroupControlNumberUpperBound { get; set; }
+        public int GroupControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover group
         /// control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverGroupControlNumber")]
-        public bool? RolloverGroupControlNumber { get; set; }
+        public bool RolloverGroupControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the group header agency code.
@@ -152,20 +155,20 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the transaction set control number lower bound.
         /// </summary>
         [JsonProperty(PropertyName = "transactionSetControlNumberLowerBound")]
-        public int? TransactionSetControlNumberLowerBound { get; set; }
+        public int TransactionSetControlNumberLowerBound { get; set; }
 
         /// <summary>
         /// Gets or sets the transaction set control number upper bound.
         /// </summary>
         [JsonProperty(PropertyName = "transactionSetControlNumberUpperBound")]
-        public int? TransactionSetControlNumberUpperBound { get; set; }
+        public int TransactionSetControlNumberUpperBound { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to rollover transaction
         /// set control number.
         /// </summary>
         [JsonProperty(PropertyName = "rolloverTransactionSetControlNumber")]
-        public bool? RolloverTransactionSetControlNumber { get; set; }
+        public bool RolloverTransactionSetControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the transaction set control number prefix.
@@ -184,28 +187,57 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// transaction set control number.
         /// </summary>
         [JsonProperty(PropertyName = "overwriteExistingTransactionSetControlNumber")]
-        public bool? OverwriteExistingTransactionSetControlNumber { get; set; }
+        public bool OverwriteExistingTransactionSetControlNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the group header date format. Possible values
         /// include: 'NotSpecified', 'CCYYMMDD', 'YYMMDD'
         /// </summary>
         [JsonProperty(PropertyName = "groupHeaderDateFormat")]
-        public X12DateFormat? GroupHeaderDateFormat { get; set; }
+        public X12DateFormat GroupHeaderDateFormat { get; set; }
 
         /// <summary>
         /// Gets or sets the group header time format. Possible values
         /// include: 'NotSpecified', 'HHMM', 'HHMMSS', 'HHMMSSdd', 'HHMMSSd'
         /// </summary>
         [JsonProperty(PropertyName = "groupHeaderTimeFormat")]
-        public X12TimeFormat? GroupHeaderTimeFormat { get; set; }
+        public X12TimeFormat GroupHeaderTimeFormat { get; set; }
 
         /// <summary>
         /// Gets or sets the usage indicator. Possible values include:
         /// 'NotSpecified', 'Test', 'Information', 'Production'
         /// </summary>
         [JsonProperty(PropertyName = "usageIndicator")]
-        public UsageIndicator? UsageIndicator { get; set; }
+        public UsageIndicator UsageIndicator { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SenderApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SenderApplicationId");
+            }
+            if (ReceiverApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReceiverApplicationId");
+            }
+            if (ControlVersionNumber == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ControlVersionNumber");
+            }
+            if (GroupHeaderAgencyCode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GroupHeaderAgencyCode");
+            }
+            if (GroupHeaderVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GroupHeaderVersion");
+            }
+        }
     }
 }

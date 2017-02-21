@@ -37,7 +37,7 @@
 
             if (hasDefaultVersion)
             {
-                await mgmtClient.Applications.UpdateApplicationAsync(
+                await mgmtClient.Application.UpdateAsync(
                         resourceGroupName,
                         accountName,
                         applicationId,
@@ -45,7 +45,7 @@
             }
             else
             {
-                await mgmtClient.Applications.UpdateApplicationAsync(
+                await mgmtClient.Application.UpdateAsync(
                         resourceGroupName,
                         accountName,
                         applicationId,
@@ -60,9 +60,9 @@
 
             using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
             {
-                ListApplicationsResponse applicationSummaries = await mgmtClient.Applications.ListAsync(resourceGroupName, accountName, new ListApplicationsParameters());
+                var applicationSummaries = await mgmtClient.Application.ListAsync(resourceGroupName, accountName);
 
-                bool testPackageAlreadyUploaded = applicationSummaries.Applications.Any(a =>
+                bool testPackageAlreadyUploaded = applicationSummaries.Any(a =>
                         string.Equals(appPackageName, a.Id, StringComparison.OrdinalIgnoreCase) &&
                         string.Equals(applicationVersion, a.DefaultVersion, StringComparison.OrdinalIgnoreCase));
 
@@ -79,13 +79,13 @@
 
             using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
             {
-                var addResponse = await mgmtClient.Applications.AddApplicationPackageAsync(resourceGroupName, accountName, appPackageName, applicationVersion).ConfigureAwait(false);
+                var addResponse = await mgmtClient.ApplicationPackage.CreateAsync(resourceGroupName, accountName, appPackageName, applicationVersion).ConfigureAwait(false);
 
                 var storageUrl = addResponse.StorageUrl;
 
                 await TestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
 
-                await mgmtClient.Applications.ActivateApplicationPackageAsync(resourceGroupName, accountName, appPackageName, applicationVersion, new ActivateApplicationPackageParameters { Format = format }).ConfigureAwait(false);
+                await mgmtClient.ApplicationPackage.ActivateAsync(resourceGroupName, accountName, appPackageName, applicationVersion, format).ConfigureAwait(false);
             }
         }
     }

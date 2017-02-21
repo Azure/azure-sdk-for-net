@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact delimiter override settings.
+    /// </summary>
     public partial class EdifactDelimiterOverride
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the EdifactDelimiterOverride class.
         /// </summary>
-        public EdifactDelimiterOverride(string messageId = default(string), string messageVersion = default(string), string messageRelease = default(string), int? dataElementSeparator = default(int?), int? componentSeparator = default(int?), int? segmentTerminator = default(int?), int? repetitionSeparator = default(int?), SegmentTerminatorSuffix? segmentTerminatorSuffix = default(SegmentTerminatorSuffix?), EdifactDecimalIndicator? decimalPointIndicator = default(EdifactDecimalIndicator?), int? releaseIndicator = default(int?), string messageAssociationAssignedCode = default(string), string targetNamespace = default(string))
+        public EdifactDelimiterOverride(int dataElementSeparator, int componentSeparator, int segmentTerminator, int repetitionSeparator, SegmentTerminatorSuffix segmentTerminatorSuffix, EdifactDecimalIndicator decimalPointIndicator, int releaseIndicator, string messageId = default(string), string messageVersion = default(string), string messageRelease = default(string), string messageAssociationAssignedCode = default(string), string targetNamespace = default(string))
         {
             MessageId = messageId;
             MessageVersion = messageVersion;
@@ -64,45 +67,45 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the data element separator.
         /// </summary>
         [JsonProperty(PropertyName = "dataElementSeparator")]
-        public int? DataElementSeparator { get; set; }
+        public int DataElementSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the component separator.
         /// </summary>
         [JsonProperty(PropertyName = "componentSeparator")]
-        public int? ComponentSeparator { get; set; }
+        public int ComponentSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator.
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminator")]
-        public int? SegmentTerminator { get; set; }
+        public int SegmentTerminator { get; set; }
 
         /// <summary>
         /// Gets or sets the repetition separator.
         /// </summary>
         [JsonProperty(PropertyName = "repetitionSeparator")]
-        public int? RepetitionSeparator { get; set; }
+        public int RepetitionSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the segment terminator suffix. Possible values
         /// include: 'NotSpecified', 'None', 'CR', 'LF', 'CRLF'
         /// </summary>
         [JsonProperty(PropertyName = "segmentTerminatorSuffix")]
-        public SegmentTerminatorSuffix? SegmentTerminatorSuffix { get; set; }
+        public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
 
         /// <summary>
         /// Gets or sets the decimal point indicator. Possible values include:
         /// 'NotSpecified', 'Comma', 'Decimal'
         /// </summary>
         [JsonProperty(PropertyName = "decimalPointIndicator")]
-        public EdifactDecimalIndicator? DecimalPointIndicator { get; set; }
+        public EdifactDecimalIndicator DecimalPointIndicator { get; set; }
 
         /// <summary>
         /// Gets or sets the release indicator.
         /// </summary>
         [JsonProperty(PropertyName = "releaseIndicator")]
-        public int? ReleaseIndicator { get; set; }
+        public int ReleaseIndicator { get; set; }
 
         /// <summary>
         /// Gets or sets the message association assigned code.
@@ -117,5 +120,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "targetNamespace")]
         public string TargetNamespace { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

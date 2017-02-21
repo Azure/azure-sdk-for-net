@@ -788,14 +788,14 @@ namespace Microsoft.Azure.Batch
         internal async System.Threading.Tasks.Task<NodeFile> GetNodeFileAsyncImpl(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             var getNodeFilePropertiesTask = await this.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByTask(
                 jobId, 
                 taskId, 
-                fileName, 
+                filePath, 
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
@@ -812,7 +812,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="jobId">The id of the job containing the task.</param>
         /// <param name="taskId">The id of the task.</param>
-        /// <param name="fileName">The name of the file to retrieve.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="NodeFile"/> representing the specified file.</returns>
@@ -820,14 +820,14 @@ namespace Microsoft.Azure.Batch
         public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(jobId, taskId, fileName, bhMgr, cancellationToken);
+            System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(jobId, taskId, filePath, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -837,17 +837,17 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="jobId">The id of the job containing the task.</param>
         /// <param name="taskId">The id of the task.</param>
-        /// <param name="fileName">The name of the file to retrieve.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="NodeFile"/> representing the specified file.</returns>
         /// <remarks>This is a blocking operation.  For a non-blocking equivalent, see <see cref="GetNodeFileAsync"/>.</remarks>
         public NodeFile GetNodeFile(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsync(jobId, taskId, fileName, additionalBehaviors))
+            using (System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsync(jobId, taskId, filePath, additionalBehaviors))
             {
                 NodeFile file = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
 
@@ -860,7 +860,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="jobId">The id of the job containing the task.</param>
         /// <param name="taskId">The id of the task.</param>
-        /// <param name="fileName">The name of the file to delete.</param>
+        /// <param name="filePath">The path of the file to delete.</param>
         /// <param name="recursive">
         /// If the file-path parameter represents a directory instead of a file, you can set the optional 
         /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false 
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Batch
         public async System.Threading.Tasks.Task DeleteNodeFileAsync(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -884,7 +884,7 @@ namespace Microsoft.Azure.Batch
             var asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(
                 jobId,
                 taskId, 
-                fileName, 
+                filePath, 
                 recursive,
                 bhMgr,
                 cancellationToken);
@@ -897,7 +897,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="jobId">The id of the job containing the task.</param>
         /// <param name="taskId">The id of the task.</param>
-        /// <param name="fileName">The name of the file to delete.</param>
+        /// <param name="filePath">The path of the file to delete.</param>
         /// <param name="recursive">
         /// If the file-path parameter represents a directory instead of a file, you can set the optional 
         /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false 
@@ -909,11 +909,11 @@ namespace Microsoft.Azure.Batch
         public void DeleteNodeFile(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task asyncTask = this.DeleteNodeFileAsync(jobId, taskId, fileName, recursive, additionalBehaviors))
+            using (System.Threading.Tasks.Task asyncTask = this.DeleteNodeFileAsync(jobId, taskId, filePath, recursive, additionalBehaviors))
             {
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }
@@ -1052,14 +1052,14 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>The aggregated job statistics.</returns>
         /// <remarks>The get statistics operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<JobStatistics> GetAllJobsLifetimeStatisticsAsync(
+        public async System.Threading.Tasks.Task<JobStatistics> GetAllLifetimeStatisticsAsync(
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllJobsLifetimeStatisticsHeaders>> asyncTask = 
+            System.Threading.Tasks.Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask = 
                 this.ParentBatchClient.ProtocolLayer.GetAllJobLifetimeStats(
                     bhMgr,
                     cancellationToken);
@@ -1077,10 +1077,10 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>The aggregated job statistics.</returns>
-        /// <remarks>This is a blocking operation; for a non-blocking equivalent, see <see cref="GetAllJobsLifetimeStatisticsAsync(IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</remarks>
-        public JobStatistics GetAllJobsLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        /// <remarks>This is a blocking operation; for a non-blocking equivalent, see <see cref="GetAllLifetimeStatisticsAsync(IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</remarks>
+        public JobStatistics GetAllLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task<JobStatistics> asyncTask = this.GetAllJobsLifetimeStatisticsAsync(additionalBehaviors))
+            using (System.Threading.Tasks.Task<JobStatistics> asyncTask = this.GetAllLifetimeStatisticsAsync(additionalBehaviors))
             {
                 JobStatistics statistics = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
 

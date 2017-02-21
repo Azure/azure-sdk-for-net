@@ -214,7 +214,7 @@
                         {
                             requestInformation = new RequestInformation()
                             {
-                                ClientRequestId = this.ExtractClientRequestId()
+                                ClientRequestId = this.Options.ClientRequestId
                             };
                         }
 
@@ -278,19 +278,6 @@
         }
 
         /// <summary>
-        /// Extracts the client request ID from the options.
-        /// </summary>
-        /// <returns>The client request ID GUID or null if there wasn't one.</returns>
-        private Guid? ExtractClientRequestId()
-        {
-            Guid? result = string.IsNullOrEmpty(this.Options.ClientRequestId)
-                ? default(Guid?)
-                : Guid.Parse(this.Options.ClientRequestId);
-
-            return result;
-        }
-
-        /// <summary>
         /// Executes the specified function with a cancellation token which is a composite token for the <see cref="IBatchRequest.Timeout"/>
         /// and the <see cref="IBatchRequest.CancellationToken"/>.
         /// </summary>
@@ -316,11 +303,11 @@
             if (this.ClientRequestIdProvider == null)
             {
                 Guid clientRequestId = Guid.NewGuid();
-                this.Options.ClientRequestId = clientRequestId.ToString();
+                this.Options.ClientRequestId = clientRequestId;
             }
             else
             {
-                this.Options.ClientRequestId = this.ClientRequestIdProvider.GenerateClientRequestIdFunc(this).ToString();
+                this.Options.ClientRequestId = this.ClientRequestIdProvider.GenerateClientRequestIdFunc(this);
             }
         }
     }

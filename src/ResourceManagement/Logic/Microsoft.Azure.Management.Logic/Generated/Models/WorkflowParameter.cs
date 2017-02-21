@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow parameters.
+    /// </summary>
     public partial class WorkflowParameter
     {
         /// <summary>
@@ -35,27 +38,27 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the type. Possible values include:
-        /// 'NotSpecified', 'String', 'SecureString', 'Int', 'Float', 'Bool',
-        /// 'Array', 'Object', 'SecureObject'
+        /// Gets or sets the type. Possible values include: 'NotSpecified',
+        /// 'String', 'SecureString', 'Int', 'Float', 'Bool', 'Array',
+        /// 'Object', 'SecureObject'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ParameterType? Type { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the value.
+        /// Gets or sets the value.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public object Value { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the metadata.
+        /// Gets or sets the metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public object Metadata { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the description.
+        /// Gets or sets the description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

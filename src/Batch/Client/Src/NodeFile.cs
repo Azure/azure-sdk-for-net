@@ -76,7 +76,19 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the name of the file.
         /// </summary>
+        [Obsolete("Obsolete as of 02/2017. Use Path instead.")]
         public string Name
+        {
+            get
+            {
+                return this.fileItemBox.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the path of the file.
+        /// </summary>
+        public string Path
         {
             get
             {
@@ -111,18 +123,20 @@ namespace Microsoft.Azure.Batch
         /// Begins asynchronous call to return the contents of the file as a string.
         /// </summary>
         /// <param name="encoding">The encoding used to interpret the file data. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">The file byte range to retrieve. If null, the entire file is retrieved.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
         public async Task<string> ReadAsStringAsync(
-            Encoding encoding = null, 
+            Encoding encoding = null,
+            GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using(Stream streamToUse = new MemoryStream())
             {
                 // get the data
-                System.Threading.Tasks.Task asyncTask = CopyToStreamAsync(streamToUse, additionalBehaviors, cancellationToken);
+                System.Threading.Tasks.Task asyncTask = CopyToStreamAsync(streamToUse, byteRange, additionalBehaviors, cancellationToken);
 
                 // wait for completion
                 await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -140,11 +154,12 @@ namespace Microsoft.Azure.Batch
         /// Blocking call to return the contents of the file as a string.
         /// </summary>
         /// <param name="encoding">The encoding used to interpret the file data. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">The file byte range to retrieve. If null, the entire file is retrieved.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <returns>A string containing the contents of the file.</returns>
-        public string ReadAsString(Encoding encoding = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public string ReadAsString(Encoding encoding = null, GetFileRequestByteRange byteRange = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (Task<string> asyncTask = ReadAsStringAsync(encoding, additionalBehaviors))
+            using (Task<string> asyncTask = ReadAsStringAsync(encoding, byteRange, additionalBehaviors))
             {
                 string readAsString = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
 
@@ -157,19 +172,24 @@ namespace Microsoft.Azure.Batch
         /// Begins an asynchronous call to copy the contents of the file into the given Stream.
         /// </summary>
         /// <param name="stream">The stream into which the contents of the file are copied.</param>
+        /// <param name="byteRange">The file byte range to retrieve. If null, the entire file is retrieved.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public abstract Task CopyToStreamAsync(Stream stream, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task CopyToStreamAsync(Stream stream,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Blocking call to copy the contents of the file into the given Stream.
         /// </summary>
         /// <param name="stream">The stream into which the contents of the file are copied.</param>
+        /// <param name="byteRange">The file byte range to retrieve. If null, the entire file is retrieved.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        public virtual void CopyToStream(Stream stream, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public virtual void CopyToStream(Stream stream, GetFileRequestByteRange byteRange = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (Task asyncTask = CopyToStreamAsync(stream, additionalBehaviors))
+            using (Task asyncTask = CopyToStreamAsync(stream, byteRange, additionalBehaviors))
             {
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }

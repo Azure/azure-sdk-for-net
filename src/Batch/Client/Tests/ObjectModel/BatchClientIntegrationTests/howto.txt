@@ -12,5 +12,7 @@
         8. MABOM_BatchAccountSubscriptionId
         9. MABOM_BatchManagementEndpoint
         10.MABOM_BatchAccountResourceGroupName
+        11.MABOM_AzureAuthenticationClientId the client id of your AAD app
+        12.MABOM_AzureAuthenticationClientSecret the key of your AAD app
 
 You can use the SetupBatchIntegrationTestEnvironment script in the Batch root directory to set these up automatically.

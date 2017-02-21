@@ -56,7 +56,7 @@
                         using (var mgmtClient = TestCommon.OpenBatchManagementClient())
                         {
                             // Give the application a display name
-                            await mgmtClient.Applications.UpdateApplicationAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters
+                            await mgmtClient.Application.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters
                             {
                                 AllowUpdates = true,
                                 DefaultVersion = ApplicationIntegrationCommon.Version,
@@ -77,7 +77,7 @@
                             Assert.Equal(getApplicationSummary.Versions.Count(), applicationSummary.Versions.Count());
                             Assert.Equal(getApplicationSummary.DisplayName, applicationSummary.DisplayName);
 
-                            var appPackage = await mgmtClient.Applications.GetApplicationPackageAsync(
+                            var appPackage = await mgmtClient.ApplicationPackage.GetAsync(
                                     TestCommon.Configuration.BatchAccountResourceGroup,
                                     accountName,
                                     ApplicationId,
@@ -87,10 +87,10 @@
                             Assert.Equal(ApplicationIntegrationCommon.Version, appPackage.Version);
                             Assert.Equal(ApplicationId, appPackage.Id);
 
-                            var getApplication = await mgmtClient.Applications.GetApplicationAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId).ConfigureAwait(false);
+                            var application = await mgmtClient.Application.GetAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId).ConfigureAwait(false);
 
-                            Assert.Equal(ApplicationIntegrationCommon.Version, getApplication.Application.DefaultVersion);
-                            Assert.Equal(ApplicationId, getApplication.Application.Id);
+                            Assert.Equal(ApplicationIntegrationCommon.Version, application.DefaultVersion);
+                            Assert.Equal(ApplicationId, application.Id);
 
                             await AssertPoolWasCreatedWithApplicationReferences(client, poolId, ApplicationId).ConfigureAwait(false);
                         }

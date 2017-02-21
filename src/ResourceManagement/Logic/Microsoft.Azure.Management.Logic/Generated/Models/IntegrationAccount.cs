@@ -16,7 +16,10 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class IntegrationAccount : IntegrationAccountResource
+    /// <summary>
+    /// The integration account.
+    /// </summary>
+    public partial class IntegrationAccount : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccount class.
@@ -45,5 +48,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "sku")]
         public IntegrationAccountSku Sku { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
+        }
     }
 }

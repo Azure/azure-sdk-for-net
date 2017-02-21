@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Logic
             }
 
             /// <summary>
-            /// Lists the integration account callback URL.
+            /// Gets the integration account callback URL.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -277,16 +277,16 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='notAfter'>
-            /// The expiry time.
+            /// <param name='parameters'>
+            /// The callback URL parameters.
             /// </param>
-            public static CallbackUrl ListCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, DateTime? notAfter = default(DateTime?))
+            public static CallbackUrl GetCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IIntegrationAccountsOperations)s).ListCallbackUrlAsync(resourceGroupName, integrationAccountName, notAfter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIntegrationAccountsOperations)s).GetCallbackUrlAsync(resourceGroupName, integrationAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the integration account callback URL.
+            /// Gets the integration account callback URL.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -297,15 +297,15 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            /// <param name='notAfter'>
-            /// The expiry time.
+            /// <param name='parameters'>
+            /// The callback URL parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CallbackUrl> ListCallbackUrlAsync(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, DateTime? notAfter = default(DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CallbackUrl> GetCallbackUrlAsync(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListCallbackUrlWithHttpMessagesAsync(resourceGroupName, integrationAccountName, notAfter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCallbackUrlWithHttpMessagesAsync(resourceGroupName, integrationAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

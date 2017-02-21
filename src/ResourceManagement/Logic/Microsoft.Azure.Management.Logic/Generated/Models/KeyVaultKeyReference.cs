@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The reference to the key vault key.
+    /// </summary>
     public partial class KeyVaultKeyReference
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultKeyReference class.
         /// </summary>
-        public KeyVaultKeyReference(KeyVaultKeyReferenceKeyVault keyVault = default(KeyVaultKeyReferenceKeyVault), string keyName = default(string), string keyVersion = default(string))
+        public KeyVaultKeyReference(KeyVaultKeyReferenceKeyVault keyVault, string keyName, string keyVersion = default(string))
         {
             KeyVault = keyVault;
             KeyName = keyName;
@@ -51,5 +54,22 @@ namespace Microsoft.Azure.Management.Logic.Models
         [JsonProperty(PropertyName = "keyVersion")]
         public string KeyVersion { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeyVault == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVault");
+            }
+            if (KeyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
+            }
+        }
     }
 }

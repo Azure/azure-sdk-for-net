@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Batch
             }
 
             // now we have all files, send off to file staging machine
-            System.Threading.Tasks.Task fileStagingTask = FileStagingLinkedSources.StageFilesAsync(allFiles, allFileStagingArtifacts);
+            System.Threading.Tasks.Task fileStagingTask = FileStagingUtils.StageFilesAsync(allFiles, allFileStagingArtifacts);
 
             // wait for file staging async task
             await fileStagingTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -338,13 +338,13 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the specified <see cref="NodeFile"/> from the <see cref="CloudTask"/>'s directory on its compute node.
         /// </summary>
-        /// <param name="fileName">The name of the file to retrieve.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="NodeFile"/> representing the specified file.</returns>
         /// <remarks>The get file operation runs asynchronously.</remarks>
         public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
-            string fileName,
+            string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             //make the call
-            System.Threading.Tasks.Task<NodeFile> asyncTask = this.parentBatchClient.JobOperations.GetNodeFileAsyncImpl(this.parentJobId, this.Id, fileName, bhMgr, cancellationToken);
+            System.Threading.Tasks.Task<NodeFile> asyncTask = this.parentBatchClient.JobOperations.GetNodeFileAsyncImpl(this.parentJobId, this.Id, filePath, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -363,13 +363,13 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the specified <see cref="NodeFile"/> from the <see cref="CloudTask"/>'s directory on its compute node.
         /// </summary>
-        /// <param name="fileName">The name of the file to retrieve.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="NodeFile"/> representing the specified file.</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetNodeFileAsync"/>.</remarks>
-        public NodeFile GetNodeFile(string fileName, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public NodeFile GetNodeFile(string filePath, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsync(fileName, additionalBehaviors))
+            using (System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsync(filePath, additionalBehaviors))
             {
                 NodeFile file = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
 

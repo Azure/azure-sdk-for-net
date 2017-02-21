@@ -352,12 +352,12 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='targetSchemaVersion'>
-            /// The target schema version.
+            /// <param name='parameters'>
+            /// Parameters for generating an upgraded definition.
             /// </param>
-            public static object GenerateUpgradedDefinition(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, string targetSchemaVersion = default(string))
+            public static object GenerateUpgradedDefinition(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, GenerateUpgradedDefinitionParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IWorkflowsOperations)s).GenerateUpgradedDefinitionAsync(resourceGroupName, workflowName, targetSchemaVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IWorkflowsOperations)s).GenerateUpgradedDefinitionAsync(resourceGroupName, workflowName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -372,15 +372,15 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='targetSchemaVersion'>
-            /// The target schema version.
+            /// <param name='parameters'>
+            /// Parameters for generating an upgraded definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GenerateUpgradedDefinitionAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, string targetSchemaVersion = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GenerateUpgradedDefinitionAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, GenerateUpgradedDefinitionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GenerateUpgradedDefinitionWithHttpMessagesAsync(resourceGroupName, workflowName, targetSchemaVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GenerateUpgradedDefinitionWithHttpMessagesAsync(resourceGroupName, workflowName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

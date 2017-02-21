@@ -22,6 +22,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         NotSpecified,
         [EnumMember(Value = "None")]
         None,
+        [EnumMember(Value = "MD5")]
+        MD5,
+        [EnumMember(Value = "SHA1")]
+        SHA1,
         [EnumMember(Value = "SHA2256")]
         SHA2256,
         [EnumMember(Value = "SHA2384")]

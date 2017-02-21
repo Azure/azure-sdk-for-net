@@ -226,8 +226,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='workflowName'>
         /// The workflow name.
         /// </param>
-        /// <param name='targetSchemaVersion'>
-        /// The target schema version.
+        /// <param name='parameters'>
+        /// Parameters for generating an upgraded definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> GenerateUpgradedDefinitionWithHttpMessagesAsync(string resourceGroupName, string workflowName, string targetSchemaVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GenerateUpgradedDefinitionWithHttpMessagesAsync(string resourceGroupName, string workflowName, GenerateUpgradedDefinitionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Validates the workflow definition.
         /// </summary>

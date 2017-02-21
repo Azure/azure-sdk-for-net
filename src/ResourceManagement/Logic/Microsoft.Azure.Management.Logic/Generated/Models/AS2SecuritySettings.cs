@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The AS2 agreement security settings.
+    /// </summary>
     public partial class AS2SecuritySettings
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the AS2SecuritySettings class.
         /// </summary>
-        public AS2SecuritySettings(bool? overrideGroupSigningCertificate = default(bool?), string signingCertificateName = default(string), string encryptionCertificateName = default(string), bool? enableNrrForInboundEncodedMessages = default(bool?), bool? enableNrrForInboundDecodedMessages = default(bool?), bool? enableNrrForOutboundMdn = default(bool?), bool? enableNrrForOutboundEncodedMessages = default(bool?), bool? enableNrrForOutboundDecodedMessages = default(bool?), bool? enableNrrForInboundMdn = default(bool?))
+        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn, string signingCertificateName = default(string), string encryptionCertificateName = default(string))
         {
             OverrideGroupSigningCertificate = overrideGroupSigningCertificate;
             SigningCertificateName = signingCertificateName;
@@ -43,7 +46,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to send or request a MDN.
         /// </summary>
         [JsonProperty(PropertyName = "overrideGroupSigningCertificate")]
-        public bool? OverrideGroupSigningCertificate { get; set; }
+        public bool OverrideGroupSigningCertificate { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the signing certificate.
@@ -62,42 +65,52 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// inbound encoded messages.
         /// </summary>
         [JsonProperty(PropertyName = "enableNrrForInboundEncodedMessages")]
-        public bool? EnableNrrForInboundEncodedMessages { get; set; }
+        public bool EnableNrrForInboundEncodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// inbound decoded messages.
         /// </summary>
         [JsonProperty(PropertyName = "enableNrrForInboundDecodedMessages")]
-        public bool? EnableNrrForInboundDecodedMessages { get; set; }
+        public bool EnableNrrForInboundDecodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// outbound MDN.
         /// </summary>
         [JsonProperty(PropertyName = "enableNrrForOutboundMdn")]
-        public bool? EnableNrrForOutboundMdn { get; set; }
+        public bool EnableNrrForOutboundMdn { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// outbound encoded messages.
         /// </summary>
         [JsonProperty(PropertyName = "enableNrrForOutboundEncodedMessages")]
-        public bool? EnableNrrForOutboundEncodedMessages { get; set; }
+        public bool EnableNrrForOutboundEncodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// outbound decoded messages.
         /// </summary>
         [JsonProperty(PropertyName = "enableNrrForOutboundDecodedMessages")]
-        public bool? EnableNrrForOutboundDecodedMessages { get; set; }
+        public bool EnableNrrForOutboundDecodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// inbound MDN.
         /// </summary>
         [JsonProperty(PropertyName = "enableNrrForInboundMdn")]
-        public bool? EnableNrrForInboundMdn { get; set; }
+        public bool EnableNrrForInboundMdn { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

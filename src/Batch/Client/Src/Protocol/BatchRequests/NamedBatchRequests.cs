@@ -524,8 +524,8 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the FileGetNodeFilePropertiesFromTask operation.
     /// </summary>
     public class FileGetNodeFilePropertiesFromTaskBatchRequest : Protocol.BatchRequest<
-        FileGetNodeFilePropertiesFromTaskOptions,
-        AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromTaskHeaders>>
+        FileGetPropertiesFromTaskOptions,
+        AzureOperationHeaderResponse<FileGetPropertiesFromTaskHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileGetNodeFilePropertiesFromTaskBatchRequest" /> class.
@@ -584,8 +584,8 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the FileGetNodeFilePropertiesFromComputeNode operation.
     /// </summary>
     public class FileGetNodeFilePropertiesFromComputeNodeBatchRequest : Protocol.BatchRequest<
-        FileGetNodeFilePropertiesFromComputeNodeOptions,
-        AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromComputeNodeHeaders>>
+        FileGetPropertiesFromComputeNodeOptions,
+        AzureOperationHeaderResponse<FileGetPropertiesFromComputeNodeHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileGetNodeFilePropertiesFromComputeNodeBatchRequest" /> class.
@@ -689,8 +689,8 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the JobGetAllJobsLifetimeStatistics operation.
     /// </summary>
     public class JobGetAllJobsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
-        JobGetAllJobsLifetimeStatisticsOptions,
-        AzureOperationResponse<JobStatistics, JobGetAllJobsLifetimeStatisticsHeaders>>
+        JobGetAllLifetimeStatisticsOptions,
+        AzureOperationResponse<JobStatistics, JobGetAllLifetimeStatisticsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobGetAllJobsLifetimeStatisticsBatchRequest" /> class.
@@ -1215,8 +1215,8 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the PoolListPoolUsageMetrics operation.
     /// </summary>
     public class PoolListPoolUsageMetricsBatchRequest : Protocol.BatchRequest<
-        PoolListPoolUsageMetricsOptions,
-        AzureOperationResponse<IPage<PoolUsageMetrics>, PoolListPoolUsageMetricsHeaders>>
+        PoolListUsageMetricsOptions,
+        AzureOperationResponse<IPage<PoolUsageMetrics>, PoolListUsageMetricsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolListPoolUsageMetricsBatchRequest" /> class.
@@ -1234,8 +1234,8 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the PoolGetAllPoolsLifetimeStatistics operation.
     /// </summary>
     public class PoolGetAllPoolsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
-        PoolGetAllPoolsLifetimeStatisticsOptions,
-        AzureOperationResponse<PoolStatistics, PoolGetAllPoolsLifetimeStatisticsHeaders>>
+        PoolGetAllLifetimeStatisticsOptions,
+        AzureOperationResponse<PoolStatistics, PoolGetAllLifetimeStatisticsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolGetAllPoolsLifetimeStatisticsBatchRequest" /> class.
@@ -1543,8 +1543,8 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the PoolListPoolUsageMetricsNext operation.
     /// </summary>
     public class PoolListPoolUsageMetricsNextBatchRequest : Protocol.BatchRequest<
-        PoolListPoolUsageMetricsNextOptions,
-        AzureOperationResponse<IPage<PoolUsageMetrics>, PoolListPoolUsageMetricsHeaders>>
+        PoolListUsageMetricsNextOptions,
+        AzureOperationResponse<IPage<PoolUsageMetrics>, PoolListUsageMetricsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolListPoolUsageMetricsNextBatchRequest" /> class.

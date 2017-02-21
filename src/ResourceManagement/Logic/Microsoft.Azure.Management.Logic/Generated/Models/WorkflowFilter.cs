@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow filter.
+    /// </summary>
     public partial class WorkflowFilter
     {
         /// <summary>
@@ -32,9 +35,9 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the state of workflows. Possible values
-        /// include: 'NotSpecified', 'Completed', 'Enabled', 'Disabled',
-        /// 'Deleted', 'Suspended'
+        /// Gets or sets the state of workflows. Possible values include:
+        /// 'NotSpecified', 'Completed', 'Enabled', 'Disabled', 'Deleted',
+        /// 'Suspended'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public WorkflowState? State { get; set; }

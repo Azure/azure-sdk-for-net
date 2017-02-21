@@ -60,7 +60,7 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountSchemaName,
                     CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
 
@@ -68,11 +68,11 @@ namespace Test.Azure.Management.Logic
                 //Assert.Equal(schema.TargetNamespace, this.SchemaTargetNamespace);
                 Assert.NotNull(schema.ContentLink.Uri);
 
-                client.IntegrationAccountSchemas.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Schemas.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountSchemaName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Schemas.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountSchemaName));
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -94,7 +94,7 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountSchemaName,
                     CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
 
@@ -105,7 +105,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Schemas.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountSchemaName));
             }
         }
@@ -125,17 +125,16 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountSchemaName,
                     CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
 
-                var updatedSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var updatedSchema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountSchemaName, new IntegrationAccountSchema
                     {
                         ContentType = "application/xml",
                         Location = Constants.DefaultLocation,
-                        Name = integrationAccountSchemaName,
                         SchemaType = SchemaType.Xml,
                         Content = this.SchemaContent
                     });
@@ -163,18 +162,18 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountSchemaName,
                     CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
 
                 Assert.Equal(schema.Name, integrationAccountSchemaName);
                 //Assert.Equal(schema.TargetNamespace, this.SchemaTargetNamespace);
 
-                var getSchema = client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup,
+                var getSchema = client.Schemas.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountSchemaName);
 
-                Assert.Equal(schema.Name, getSchema.Name);                
+                Assert.Equal(schema.Name, getSchema.Name);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -197,11 +196,11 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var createdSchema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountSchemaName,
                     CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
 
-                var schemas = client.IntegrationAccountSchemas.List(Constants.DefaultResourceGroup,
+                var schemas = client.Schemas.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
                     integrationAccountName);
 
                 Assert.True(schemas.Any());
@@ -227,9 +226,8 @@ namespace Test.Azure.Management.Logic
             {
                 ContentType = "application/xml",
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountSchemaName,
                 Tags = tags,
-                SchemaType = SchemaType.Xml,                
+                SchemaType = SchemaType.Xml,
                 Content = this.SchemaContent,
                 Metadata = integrationAccountSchemaName
             };

@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadFromFileAsync(sourcePath, FileMode.Open, cancellationToken);
+            await blob.UploadFromFileAsync(sourcePath, cancellationToken);
         }
 
         // Uploads text to blob storage.

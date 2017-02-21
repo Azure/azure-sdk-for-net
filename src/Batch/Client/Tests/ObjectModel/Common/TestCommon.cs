@@ -27,6 +27,7 @@
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Rest;
     using System.Text;
     using Microsoft.WindowsAzure.Storage.Blob;
 
@@ -55,6 +56,15 @@
             public const string StorageAccountResourceGroupEnvironmentSettingName = "MABOM_StorageAccountResourceGroupName";
 
             // Required only for Microsoft pre-production test environments
+
+            // The client Id from the Azure Active Directory, this is used for connecting to the management api.
+            public const string AzureAuthenticationClientIdEnvironmentSettingName = "MABOM_AzureAuthenticationClientId";
+
+            // The client key from the Azure Active Directory app. 
+            public const string AzureAuthenticationClientSecretEnvironmentSettingName = "MABOM_AzureAuthenticationClientSecret";
+
+            public const string BatchAuthorityUrlEnvironmentSettingName = "MABOM_BatchAuthorityUrl";
+
             public const string BatchTRPCertificateThumbprintEnvironmentSettingName = "MABOM_BatchTRPCertificateThumbprint";
 
             //Should be a string like so: header1=value1;header2=value2;...
@@ -83,7 +93,13 @@
 
             public readonly Func<string> BatchTRPCertificateThumbprint = () => GetEnvironmentVariableOrThrow(BatchTRPCertificateThumbprintEnvironmentSettingName);
 
+            public readonly string AzureAuthenticationClientId = GetEnvironmentVariableOrThrow(AzureAuthenticationClientIdEnvironmentSettingName);
+
+            public readonly string AzureAuthenticationClientSecret = GetEnvironmentVariableOrThrow(AzureAuthenticationClientSecretEnvironmentSettingName);
+
             public readonly IReadOnlyDictionary<string, string> BatchTRPExtraHeaders = ParseHeaderEnvironmentVariable(BatchTRPExtraHeadersEnvironmentSettingName);
+
+            public readonly string BatchAuthorityUrl = GetEnvironmentVariableOrDefault(BatchAuthorityUrlEnvironmentSettingName, "https://login.microsoftonline.com/microsoft.onmicrosoft.com");
 
             private static IReadOnlyDictionary<string, string> ParseHeaderEnvironmentVariable(string environmentSettingName)
             {
@@ -110,6 +126,16 @@
                 return result;
             }
 
+            private static string GetEnvironmentVariableOrDefault(string environmentSettingName, string defaultValue)
+            {
+                string result = Environment.GetEnvironmentVariable(environmentSettingName);
+                if (string.IsNullOrEmpty(result))
+                {
+                    return defaultValue;
+                }
+
+                return result;
+            }
         }
 
         private static readonly Lazy<TestConfiguration> configurationInstance = new Lazy<TestConfiguration>(() => new TestConfiguration());
@@ -121,27 +147,32 @@
 
         public static BatchManagementClient OpenBatchManagementClient()
         {
-            SubscriptionCloudCredentials subscriptionCloudCredentials;
+            ServiceClientCredentials credentials;
 
             if (IsManagementUrlAValidProductionURL())
             {
-                subscriptionCloudCredentials = GetBatchProductionTokenCloudCredentials();
+                string accessToken = GetAuthenticationToken("https://management.core.windows.net/");
+                credentials = new TokenCredentials(accessToken);
             }
             else
             {
-                subscriptionCloudCredentials = GetBatchTestTenantCloudCredentials();
+                credentials = GetBatchTestTenantCloudCredentials();
             }
 
             string managementUrl = Configuration.BatchManagementUrl;
 
-            var managementClient = new BatchManagementClient(subscriptionCloudCredentials, new Uri(managementUrl));
+            var managementClient = new BatchManagementClient(credentials)
+            {
+                BaseUri = new Uri(managementUrl),
+                SubscriptionId = Configuration.BatchSubscription
+            };
 
             //Add the extra headers as specified in the configuration
             foreach (KeyValuePair<string, string> extraHeader in Configuration.BatchTRPExtraHeaders)
             {
                 managementClient.HttpClient.DefaultRequestHeaders.Add(extraHeader.Key, extraHeader.Value);
             }
-            
+
             return managementClient;
         }
 
@@ -150,19 +181,25 @@
             return new[] { "https://management.azure.com" }.Any(x => Configuration.BatchManagementUrl.StartsWith(x, StringComparison.OrdinalIgnoreCase));
         }
 
-        private static TokenCloudCredentials GetBatchProductionTokenCloudCredentials()
+        public static string GetAuthenticationToken(string resource)
         {
-            var authContext = new AuthenticationContext("https://login.microsoftonline.com/microsoft.onmicrosoft.com");
+            var authContext = new AuthenticationContext(Configuration.BatchAuthorityUrl);
 
-            var result = authContext.AcquireToken(
-                "https://management.core.windows.net/", // AAD Resource
-                "da91983f-249d-4c14-8a93-b9c24d6efacc", // AAD client id
-                new Uri("http://localhost")); // redirect url
+            var authResult = authContext.AcquireToken(resource, new ClientCredential(Configuration.AzureAuthenticationClientId, Configuration.AzureAuthenticationClientSecret));
 
-            return new TokenCloudCredentials(Configuration.BatchSubscription, result.AccessToken);
+            return authResult.AccessToken;
         }
 
-        private static CertificateCloudCredentials GetBatchTestTenantCloudCredentials()
+        public static async Task<string> GetAuthenticationTokenAsync(string resource)
+        {
+            var authContext = new AuthenticationContext(Configuration.BatchAuthorityUrl);
+
+            var authResult = await authContext.AcquireTokenAsync(resource, new ClientCredential(Configuration.AzureAuthenticationClientId, Configuration.AzureAuthenticationClientSecret));
+
+            return authResult.AccessToken;
+        }
+
+        private static CertificateCredentials GetBatchTestTenantCloudCredentials()
         {
             X509Certificate2 certificate2 = null;
             X509Store store = null;
@@ -195,8 +232,7 @@
                 }
             }
 
-            string subscriptionsId = Configuration.BatchSubscription;
-            return new CertificateCloudCredentials(subscriptionsId, certificate2);
+            return new CertificateCredentials(certificate2);
         }
 
         public static async Task EnableAutoStorageAsync()
@@ -219,8 +255,8 @@
                         };
 
                 //If the account doesn't already have auto storage enabled, enable it
-                BatchAccountGetResponse getAccountResponse = await managementClient.Accounts.GetAsync(Configuration.BatchAccountResourceGroup, Configuration.BatchAccountName);
-                if (getAccountResponse.Resource.Properties.AutoStorage == null)
+                BatchAccount batchAccount = await managementClient.BatchAccount.GetAsync(Configuration.BatchAccountResourceGroup, Configuration.BatchAccountName);
+                if (batchAccount.AutoStorage == null)
                 {
                     const string classicStorageAccountGroup = "Microsoft.ClassicStorage";
                     const string storageAccountGroup = "Microsoft.Storage";
@@ -231,18 +267,15 @@
                     string storageAccountFullResourceId = string.Format(resourceFormatString, storageAccountGroup);
 
                     var updateParameters = new BatchAccountUpdateParameters()
+                    {
+                        AutoStorage = new AutoStorageBaseProperties
                         {
-                            Properties = new AccountBaseProperties
-                                {
-                                    AutoStorage = new AutoStorageBaseProperties
-                                        {
-                                            StorageAccountId = classicStorageAccountFullResourceId
-                                        }
-                                }
-                        };
+                            StorageAccountId = classicStorageAccountFullResourceId
+                        }
+                    };
                     try
                     {
-                        await managementClient.Accounts.UpdateAsync(Configuration.BatchAccountResourceGroup, Configuration.BatchAccountName, updateParameters);
+                        await managementClient.BatchAccount.UpdateAsync(Configuration.BatchAccountResourceGroup, Configuration.BatchAccountName, updateParameters);
                     }
                     catch (Exception e) when (e.Message.Contains("The specified storage account could not be found"))
                     {
@@ -250,12 +283,12 @@
                         //the exception.
                     }
 
-                    updateParameters.Properties.AutoStorage.StorageAccountId = storageAccountFullResourceId;
-                    await managementClient.Accounts.UpdateAsync(Configuration.BatchAccountResourceGroup, Configuration.BatchAccountName, updateParameters);
+                    updateParameters.AutoStorage.StorageAccountId = storageAccountFullResourceId;
+                    await managementClient.BatchAccount.UpdateAsync(Configuration.BatchAccountResourceGroup, Configuration.BatchAccountName, updateParameters);
                 }
             }
         }
-        
+
         public static async Task UploadTestApplicationAsync(string storageUrl)
         {
             CloudBlockBlob blob = new CloudBlockBlob(new Uri(storageUrl));

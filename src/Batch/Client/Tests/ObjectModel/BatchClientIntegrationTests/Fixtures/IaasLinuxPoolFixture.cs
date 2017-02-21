@@ -21,11 +21,40 @@
     using Microsoft.Azure.Batch;
     using Xunit;
 
+    public struct IaasPoolProvisioningDetails
+    {
+        public IaasPoolProvisioningDetails(ImageReference imageReference, NodeAgentSku nodeAgentSku)
+        {
+            this.ImageReference = imageReference;
+            this.NodeAgentSku = nodeAgentSku;
+        }
+
+        public ImageReference ImageReference { get; }
+        public NodeAgentSku NodeAgentSku { get; }
+    }
+
     public class IaasLinuxPoolFixture : PoolFixture
     {
         public IaasLinuxPoolFixture() : base(TestUtilities.GetMyName() + "-pooltest-linux")
         {
             this.Pool = this.CreatePool();
+        }
+
+        public static IaasPoolProvisioningDetails GetUbuntuImageDetails(BatchClient client)
+        {
+            List<NodeAgentSku> nodeAgentSkus = client.PoolOperations.ListNodeAgentSkus().ToList();
+
+            Func<ImageReference, bool> ubuntuImageScanner = imageRef =>
+                imageRef.Publisher == "Canonical" &&
+                imageRef.Offer == "UbuntuServer" &&
+                imageRef.Sku.Contains("14.04");
+
+            NodeAgentSku ubuntuSku =
+                nodeAgentSkus.First(sku => sku.VerifiedImageReferences.FirstOrDefault(ubuntuImageScanner) != null);
+
+            ImageReference imageReference = ubuntuSku.VerifiedImageReferences.First(ubuntuImageScanner);
+
+            return new IaasPoolProvisioningDetails(imageReference, ubuntuSku);
         }
 
         protected CloudPool CreatePool()
@@ -35,21 +64,11 @@
             // gotta create a new pool
             if (currentPool == null)
             {
-                List<NodeAgentSku> nodeAgentSkus = this.client.PoolOperations.ListNodeAgentSkus().ToList();
-
-                Func<ImageReference, bool> ubuntuImageScanner = imageRef => 
-                    imageRef.Publisher == "Canonical" && 
-                    imageRef.Offer == "UbuntuServer" && 
-                    imageRef.Sku.Contains("14.04");
-
-                NodeAgentSku ubuntuSku =
-                    nodeAgentSkus.First(sku => sku.VerifiedImageReferences.FirstOrDefault(ubuntuImageScanner) != null);
-
-                ImageReference imageReference = ubuntuSku.VerifiedImageReferences.First(ubuntuImageScanner);
+                var ubuntuImageDetails = GetUbuntuImageDetails(this.client);
 
                 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
-                    imageReference: imageReference,
-                    nodeAgentSkuId: ubuntuSku.Id);
+                    ubuntuImageDetails.ImageReference,
+                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSku.Id);
 
                 currentPool = this.client.PoolOperations.CreatePool(
                     poolId: this.PoolId,

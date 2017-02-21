@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow run.
+    /// </summary>
     [JsonTransformation]
     public partial class WorkflowRun : SubResource
     {
@@ -85,7 +88,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string CorrelationId { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the run correlation.
+        /// Gets or sets the run correlation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlation")]
         public Correlation Correlation { get; set; }

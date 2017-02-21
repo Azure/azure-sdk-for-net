@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The B2B partner content.
+    /// </summary>
     public partial class B2BPartnerContent
     {
         /// <summary>
