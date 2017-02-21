@@ -13,24 +13,24 @@
 // limitations under the License.
 //
 
+
+
 namespace IotHub.Tests.Helpers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
-    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.IotHub;
-    using Microsoft.Azure.Management.IotHub.Models;
     using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Test.HttpRecorder;
 
     public class IotHubTestUtilities
     {
         public static string DefaultLocation = "WestUS";
         public static string DefaultIotHubName = "DotNetHub";
+        public static string DefaultUpdateIotHubName = "UpdateDotNetHub";
         public static string DefaultResourceGroupName = "DotNetHubRG";
+        public static string DefaultUpdateResourceGroupName = "UpdateDotNetHubRG";
         public static string EventsEndpointName = "events";
         public static IotHubClient GetIotHubClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
@@ -40,6 +40,26 @@ namespace IotHub.Tests.Helpers
             }
 
             return context.GetServiceClient<IotHubClient>(handlers: handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+        }
+
+        public static EventHubManagementClient GetEhClient(MockContext context, RecordedDelegatingHandler handler = null)
+        {
+            if (handler != null)
+            {
+                handler.IsPassThrough = true;
+            }
+
+            return context.GetServiceClient<EventHubManagementClient>(handlers: handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+        }
+
+        public static ServiceBusManagementClient GetSbClient(MockContext context, RecordedDelegatingHandler handler = null)
+        {
+            if (handler != null)
+            {
+                handler.IsPassThrough = true;
+            }
+
+            return context.GetServiceClient<ServiceBusManagementClient>(handlers: handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)

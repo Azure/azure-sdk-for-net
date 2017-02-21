@@ -34,6 +34,8 @@
     "Microsoft.Azure.Management.IotHub": "[1.0.0,2.0.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
     "xunit": "2.2.0-beta2-build3300",
-    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Azure.Management.EventHub": "0.0.1-preview",
+    "Microsoft.Azure.Management.ServiceBus": "0.0.2-preview"
   },
 }

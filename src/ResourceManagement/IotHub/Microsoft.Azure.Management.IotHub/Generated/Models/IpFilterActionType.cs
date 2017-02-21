@@ -7,16 +7,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for IotHubScaleType.
+    /// Defines values for IpFilterActionType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum IotHubScaleType
+    public enum IpFilterActionType
     {
-        [EnumMember(Value = "Automatic")]
-        Automatic,
-        [EnumMember(Value = "Manual")]
-        Manual,
-        [EnumMember(Value = "None")]
-        None
+        [EnumMember(Value = "Accept")]
+        Accept,
+        [EnumMember(Value = "Reject")]
+        Reject
     }
 }
