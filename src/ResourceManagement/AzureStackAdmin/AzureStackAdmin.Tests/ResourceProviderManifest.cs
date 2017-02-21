@@ -59,6 +59,7 @@ namespace AzureStackAdmin.Tests
                                 'name': 'hostingservers',
                                 'routingType': 'Default',
                                 'resourceDeletionPolicy': 'NotSpecified',
+                                'inGlobalLocation': true,
                                 'endpoints': [
                                     {
                                         'apiVersions': [
@@ -100,9 +101,10 @@ namespace AzureStackAdmin.Tests
             Assert.Equal(new TimeSpan(0, 0, 0), result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Timeout);
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Enabled);
             Assert.Equal(RoutingType.Default, result.ProviderRegistration.Properties.ResourceTypes[0].RoutingType);
+            Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].InGlobalLocation);
             Assert.Equal(ResourceDeletionPolicy.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].ResourceDeletionPolicy);
             Assert.Equal(MarketplaceType.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].MarketplaceType);
-            // Assert.Equal(ProvisioningState.Succeeded, result.ProviderRegistration.Properties.ProvisioningState);
+            Assert.Equal("Succeeded", result.ProviderRegistration.Properties.ProvisioningState);
         }
 
         [Fact]
@@ -132,6 +134,7 @@ namespace AzureStackAdmin.Tests
                                 'name': 'hostingservers',
                                 'routingType': 'Default',
                                 'resourceDeletionPolicy': 'NotSpecified',
+                                'inGlobalLocation': true,
                                 'endpoints': [
                                     {
                                         'apiVersions': [
@@ -177,6 +180,7 @@ namespace AzureStackAdmin.Tests
                                                              {
                                                                  Name = "hostingservers",
                                                                  RoutingType = RoutingType.Default,
+                                                                 InGlobalLocation = true,
                                                                  Endpoints = new ResourceProviderEndpoint[]
                                                                              {
                                                                                  new ResourceProviderEndpoint()
@@ -211,6 +215,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal(new TimeSpan(0, 0, 0), result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Timeout);
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Enabled);
             Assert.Equal(RoutingType.Default, result.ProviderRegistration.Properties.ResourceTypes[0].RoutingType);
+            Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].InGlobalLocation);
             Assert.Equal(ResourceDeletionPolicy.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].ResourceDeletionPolicy);
             Assert.Equal(MarketplaceType.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].MarketplaceType);
         }
