@@ -141,13 +141,13 @@ namespace Batch.FileStaging.Tests
 
                     foreach (NodeFile curFile in myCompletedTask.ListNodeFiles(recursive: true))
                     {
-                        this.testOutputHelper.WriteLine("    Filename: " + curFile.Name);
+                        this.testOutputHelper.WriteLine("    File path: " + curFile.Path);
                     }
 
                     var files = myCompletedTask.ListNodeFiles(recursive: true).ToList();
 
                     // confirm the files are there
-                    Assert.True(files.Any(file => file.Name.Contains("localWords.txt")), "mising file: localWords.txt");
+                    Assert.True(files.Any(file => file.Path.Contains("localWords.txt")), "missing file: localWords.txt");
                 }
                 finally
                 {
