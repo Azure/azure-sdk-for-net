@@ -40,12 +40,12 @@
             string handcraftedEnumNamespace = arbitraryHandcraftedEnum.Namespace;
 
             //Gather all handcoded enumerations
-            List<Type> enumTypes = arbitraryHandcraftedEnum.Assembly.GetTypes().Where(t => t.IsEnum && t.Namespace == handcraftedEnumNamespace).ToList();
+            List<Type> enumTypes = arbitraryHandcraftedEnum.Assembly.GetTypes().Where(t => t.IsEnum && t.Namespace == handcraftedEnumNamespace).OrderBy(t => t.FullName).ToList();
 
             //Gather all codegenerated enums
             Type arbitraryGeneratedEnum = typeof(Protocol.Models.JobState);
             string generatedEnumNamespace = arbitraryGeneratedEnum.Namespace;
-            List<Type> generatedEnumTypes = arbitraryGeneratedEnum.Assembly.GetTypes().Where(t => t.IsEnum && t.Namespace == generatedEnumNamespace).ToList();
+            List<Type> generatedEnumTypes = arbitraryGeneratedEnum.Assembly.GetTypes().Where(t => t.IsEnum && t.Namespace == generatedEnumNamespace).OrderBy(t => t.FullName).ToList();
 
             this.testOutputHelper.WriteLine("Generated types: ");
             foreach (Type generatedEnumType in generatedEnumTypes)
@@ -76,8 +76,8 @@
                 IEnumerable<string> generatedEnumNames = Enum.GetNames(generatedEnumType).Select(s => s.ToLower());
                 IEnumerable<string> handcraftedEnumNames = Enum.GetNames(handcraftedEnumType).Select(s => s.ToLower());
 
-                //Certificate visibility is a bit special so we have a special case for it
-                if (handcraftedEnumType.Name == "CertificateVisibility")
+                // Flags enums are a bit special so we have to have a special case for them
+                if (handcraftedEnumType.Name == nameof(CertificateVisibility) || handcraftedEnumType.Name == nameof(AccessScope))
                 {
                     handcraftedEnumNames = handcraftedEnumNames.Where(item => item != "none");
                 }

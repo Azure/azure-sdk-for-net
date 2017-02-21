@@ -519,10 +519,10 @@
                         //Check that the property is correctly set on each compute node
                         Assert.NotNull(computeNode.StartTask);
 
-
                         Assert.Equal(poolStartTask.CommandLine, computeNode.StartTask.CommandLine);
                         Assert.Equal(poolStartTask.MaxTaskRetryCount, computeNode.StartTask.MaxTaskRetryCount);
-                        Assert.Equal(poolStartTask.RunElevated, computeNode.StartTask.RunElevated);
+                        Assert.Null(poolStartTask.UserIdentity);
+                        Assert.Null(computeNode.StartTask.UserIdentity);
                         Assert.Equal(poolStartTask.WaitForSuccess, computeNode.StartTask.WaitForSuccess);
 
                         if (poolStartTask.EnvironmentSettings != null)
@@ -556,7 +556,7 @@
 
                         TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.CommandLine = "Test"; });
                         TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.MaxTaskRetryCount = 5; });
-                        TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.RunElevated = false; });
+                        TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.UserIdentity = new UserIdentity("foo"); });
                         TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.WaitForSuccess = true; });
                         TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.EnvironmentSettings = new List<EnvironmentSetting>(); });
 

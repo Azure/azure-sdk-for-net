@@ -264,7 +264,7 @@
         {
             List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
                 {
-                    Protocol.Models.CertificateVisibility.Starttask,
+                    Protocol.Models.CertificateVisibility.StartTask,
                     null
                 };
 
@@ -278,7 +278,7 @@
         {
             List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
                 {
-                    Protocol.Models.CertificateVisibility.Starttask
+                    Protocol.Models.CertificateVisibility.StartTask
                 };
             CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
             Assert.Equal(CertificateVisibility.StartTask, visibilityEnum);
@@ -290,12 +290,12 @@
         {
             List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
                 {
-                    Protocol.Models.CertificateVisibility.Starttask,
-                    Protocol.Models.CertificateVisibility.Remoteuser,
+                    Protocol.Models.CertificateVisibility.StartTask,
+                    Protocol.Models.CertificateVisibility.RemoteUser,
                     Protocol.Models.CertificateVisibility.Task,
                 };
             CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
-            
+
             Assert.NotNull(visibilityEnum);
             Assert.True(visibilityEnum.Value.HasFlag(CertificateVisibility.StartTask));
             Assert.True(visibilityEnum.Value.HasFlag(CertificateVisibility.RemoteUser));
@@ -318,7 +318,7 @@
             const CertificateVisibility visibility = CertificateVisibility.StartTask | CertificateVisibility.Task;
             var visibilityList = UtilitiesInternal.CertificateVisibilityToList(visibility);
             Assert.Equal(2, visibilityList.Count());
-            Assert.Contains(Protocol.Models.CertificateVisibility.Starttask, visibilityList);
+            Assert.Contains(Protocol.Models.CertificateVisibility.StartTask, visibilityList);
             Assert.Contains(Protocol.Models.CertificateVisibility.Task, visibilityList);
         }
 

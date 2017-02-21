@@ -37,12 +37,14 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<ImageReference> ImageReferenceProperty;
             public readonly PropertyAccessor<string> NodeAgentSkuIdProperty;
+            public readonly PropertyAccessor<OSDisk> OSDiskProperty;
             public readonly PropertyAccessor<WindowsConfiguration> WindowsConfigurationProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>("ImageReference", BindingAccess.Read | BindingAccess.Write);
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>("NodeAgentSkuId", BindingAccess.Read | BindingAccess.Write);
+                this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>("OSDisk", BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>("WindowsConfiguration", BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -55,6 +57,10 @@ namespace Microsoft.Azure.Batch
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor(
                     protocolObject.NodeAgentSKUId,
                     "NodeAgentSkuId",
+                    BindingAccess.Read | BindingAccess.Write);
+                this.OSDiskProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.OsDisk, o => new OSDisk(o)),
+                    "OSDisk",
                     BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsConfiguration, o => new WindowsConfiguration(o)),
@@ -70,18 +76,21 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineConfiguration"/> class.
         /// </summary>
-        /// <param name='imageReference'>A reference to the Azure Virtual Machines Marketplace image to use.</param>
         /// <param name='nodeAgentSkuId'>The SKU of Batch Node Agent to be provisioned on the compute node.</param>
+        /// <param name='imageReference'>A reference to the Azure Virtual Machines Marketplace image to use.</param>
+        /// <param name='osDisk'>A reference to the OS disk image to use.</param>
         /// <param name='windowsConfiguration'>Windows operating system settings on the virtual machine. This property must not be specified if the ImageReference 
         /// property specifies a Linux OS image.</param>
         public VirtualMachineConfiguration(
-            ImageReference imageReference,
             string nodeAgentSkuId,
+            ImageReference imageReference = default(ImageReference),
+            OSDisk osDisk = default(OSDisk),
             WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
             this.propertyContainer = new PropertyContainer();
-            this.ImageReference = imageReference;
             this.NodeAgentSkuId = nodeAgentSkuId;
+            this.ImageReference = imageReference;
+            this.OSDisk = osDisk;
             this.WindowsConfiguration = windowsConfiguration;
         }
 
@@ -97,6 +106,9 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace image to use.
         /// </summary>
+        /// <remarks>
+        /// This property and <see cref="OSDisk"/> are mutually exclusive and one of the properties must be specified.
+        /// </remarks>
         public ImageReference ImageReference
         {
             get { return this.propertyContainer.ImageReferenceProperty.Value; }
@@ -115,6 +127,20 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.NodeAgentSkuIdProperty.Value; }
             set { this.propertyContainer.NodeAgentSkuIdProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a reference to the OS disk image to use.
+        /// </summary>
+        /// <remarks>
+        /// This property can be specified only if the Batch account was created with its poolAllocationMode property set 
+        /// to 'UserSubscription'. This property and <see cref="ImageReference"/> are mutually exclusive and one of the properties 
+        /// must be specified.
+        /// </remarks>
+        public OSDisk OSDisk
+        {
+            get { return this.propertyContainer.OSDiskProperty.Value; }
+            set { this.propertyContainer.OSDiskProperty.Value = value; }
         }
 
         /// <summary>
@@ -155,6 +181,7 @@ namespace Microsoft.Azure.Batch
             {
                 ImageReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageReference, (o) => o.GetTransportObject()),
                 NodeAgentSKUId = this.NodeAgentSkuId,
+                OsDisk = UtilitiesInternal.CreateObjectWithNullCheck(this.OSDisk, (o) => o.GetTransportObject()),
                 WindowsConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.WindowsConfiguration, (o) => o.GetTransportObject()),
             };
 

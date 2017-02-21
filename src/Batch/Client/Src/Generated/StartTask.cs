@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<int?> MaxTaskRetryCountProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
-            public readonly PropertyAccessor<bool?> RunElevatedProperty;
+            public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
             public readonly PropertyAccessor<bool?> WaitForSuccessProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Batch
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
                 this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>("MaxTaskRetryCount", BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor<bool?>("RunElevated", BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
                 this.WaitForSuccessProperty = this.CreatePropertyAccessor<bool?>("WaitForSuccess", BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -71,9 +71,9 @@ namespace Microsoft.Azure.Batch
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
                     "ResourceFiles",
                     BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.RunElevated,
-                    "RunElevated",
+                this.UserIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
+                    "UserIdentity",
                     BindingAccess.Read | BindingAccess.Write);
                 this.WaitForSuccessProperty = this.CreatePropertyAccessor(
                     protocolObject.WaitForSuccess,
@@ -155,12 +155,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
+        /// Gets or sets the user identity under which the task runs.
         /// </summary>
-        public bool? RunElevated
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to the task.
+        /// </remarks>
+        public UserIdentity UserIdentity
         {
-            get { return this.propertyContainer.RunElevatedProperty.Value; }
-            set { this.propertyContainer.RunElevatedProperty.Value = value; }
+            get { return this.propertyContainer.UserIdentityProperty.Value; }
+            set { this.propertyContainer.UserIdentityProperty.Value = value; }
         }
 
         /// <summary>
@@ -206,7 +209,7 @@ namespace Microsoft.Azure.Batch
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 MaxTaskRetryCount = this.MaxTaskRetryCount,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
-                RunElevated = this.RunElevated,
+                UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
                 WaitForSuccess = this.WaitForSuccess,
             };
 

@@ -1,0 +1,60 @@
+{
+  "Name": "UserAccount",
+  "ProtocolName": "Models.UserAccount",
+  "Comment": "Properties used to create a user on an Azure Batch node.",
+  "IsConstructorPublic": true,
+  "IsUsedInCollections": true,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Name",
+        "SummaryComment": "The name of the user account.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "Common.ElevationLevel?",
+        "Name": "ElevationLevel",
+        "SummaryComment": "The elevation level of the user account.",
+        "RemarksComment": "If omitted, the default is <see cref=\"Common.ElevationLevel.NonAdmin\"/>",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional"
+      },
+      "Value": {
+        "Type": "Models.ElevationLevel?",
+        "Name": "ElevationLevel"
+      }
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Password",
+        "SummaryComment": "The password for the user account.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "SshPrivateKey",
+        "SummaryComment": "The SSH private key for the user account.",
+        "RemarksComment": "The SSH private key establishes password-less SSH between nodes in a Linux pool when the pool's <see cref=\"CloudPool.InterComputeNodeCommunicationEnabled\"/> property is true. This property will be ignored in a Windows pool.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional"
+      },
+      "Value": null
+    }
+  ]
+}

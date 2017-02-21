@@ -1540,14 +1540,14 @@ namespace Microsoft.Azure.Batch
         internal async System.Threading.Tasks.Task<NodeFile> GetNodeFileAsyncImpl(
             string poolId,
             string computeNodeId,
-            string fileName,
+            string filePath,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             var getNodeFilePropertiesTask = await this.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByNode(
                 poolId, 
                 computeNodeId, 
-                fileName, 
+                filePath, 
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
          
@@ -1564,7 +1564,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool that contains the compute node.</param>
         /// <param name="computeNodeId">The id of the compute node.</param>
-        /// <param name="fileName">The name of the file to retrieve.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="NodeFile"/> containing information about the file, and which can be used to download the file (see <see cref="NodeFile.CopyToStreamAsync"/>).</returns>
@@ -1572,7 +1572,7 @@ namespace Microsoft.Azure.Batch
         public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
             string poolId, 
             string computeNodeId,
-            string fileName, 
+            string filePath, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1582,7 +1582,7 @@ namespace Microsoft.Azure.Batch
             System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(
                 poolId, 
                 computeNodeId, 
-                fileName,
+                filePath,
                 bhMgr,
                 cancellationToken);
 
@@ -1594,14 +1594,14 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool that contains the compute node.</param>
         /// <param name="computeNodeId">The id of the compute node.</param>
-        /// <param name="fileName">The name of the file to retrieve.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="NodeFile"/> containing information about the file, and which can be used to download the file (see <see cref="NodeFile.CopyToStream"/>).</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetNodeFileAsync"/>.</remarks>
-        public NodeFile GetNodeFile(string poolId, string computeNodeId, string fileName,
+        public NodeFile GetNodeFile(string poolId, string computeNodeId, string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsync(poolId, computeNodeId, fileName, additionalBehaviors))
+            using (System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsync(poolId, computeNodeId, filePath, additionalBehaviors))
             {
                 return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }
@@ -1666,7 +1666,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool that contains the compute node.</param>
         /// <param name="computeNodeId">The id of the compute node.</param>
-        /// <param name="fileName">The name of the file to delete.</param>
+        /// <param name="filePath">The path of the file to delete.</param>
         /// <param name="recursive">
         /// If the file-path parameter represents a directory instead of a file, you can set the optional 
         /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false 
@@ -1679,7 +1679,7 @@ namespace Microsoft.Azure.Batch
         public System.Threading.Tasks.Task DeleteNodeFileAsync(
             string poolId, 
             string computeNodeId, 
-            string fileName,
+            string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -1690,7 +1690,7 @@ namespace Microsoft.Azure.Batch
             System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteNodeFileByNode(
                 poolId,
                 computeNodeId, 
-                fileName, 
+                filePath, 
                 recursive,
                 bhMgr,
                 cancellationToken);
@@ -1703,7 +1703,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool that contains the compute node.</param>
         /// <param name="computeNodeId">The id of the compute node.</param>
-        /// <param name="fileName">The name of the file to delete.</param>
+        /// <param name="filePath">The path of the file to delete.</param>
         /// <param name="recursive">
         /// If the file-path parameter represents a directory instead of a file, you can set the optional 
         /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false 
@@ -1714,11 +1714,11 @@ namespace Microsoft.Azure.Batch
         public void DeleteNodeFile(
             string poolId, 
             string computeNodeId, 
-            string fileName,
+            string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task asyncTask = this.DeleteNodeFileAsync(poolId, computeNodeId, fileName, recursive, additionalBehaviors))
+            using (System.Threading.Tasks.Task asyncTask = this.DeleteNodeFileAsync(poolId, computeNodeId, filePath, recursive, additionalBehaviors))
             {
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }
@@ -1726,19 +1726,19 @@ namespace Microsoft.Azure.Batch
 
 
         /// <summary>
-        /// Gets lifetime summary statistics for all of the pools in the current account.  
+        /// Gets lifetime summary statistics for all of the pools in the current account.
         /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>The aggregated pool statistics.</returns>
         /// <remarks>The get statistics operation runs asynchronously.</remarks>
-        public async System.Threading.Tasks.Task<PoolStatistics> GetAllPoolsLifetimeStatisticsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<PoolStatistics> GetAllLifetimeStatisticsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllPoolsLifetimeStatisticsHeaders>> asyncTask = 
+            System.Threading.Tasks.Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> asyncTask = 
                 this.ParentBatchClient.ProtocolLayer.GetAllPoolLifetimeStats(bhMgr, cancellationToken);
 
             var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -1754,10 +1754,10 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>The aggregated pool statistics.</returns>
-        /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetAllPoolsLifetimeStatisticsAsync"/>.</remarks>
-        public PoolStatistics GetAllPoolsLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetAllLifetimeStatisticsAsync"/>.</remarks>
+        public PoolStatistics GetAllLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (System.Threading.Tasks.Task<PoolStatistics> asyncTask = this.GetAllPoolsLifetimeStatisticsAsync(additionalBehaviors))
+            using (System.Threading.Tasks.Task<PoolStatistics> asyncTask = this.GetAllLifetimeStatisticsAsync(additionalBehaviors))
             {
                 PoolStatistics statistics = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
 

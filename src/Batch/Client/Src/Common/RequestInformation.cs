@@ -23,16 +23,6 @@
     public class RequestInformation
     {
         /// <summary>
-        /// Gets or sets the Azure Error information which contains detailed metadata around 
-        /// the specific error encountered.
-        /// </summary>
-        [Obsolete("Obselete after 2/2016, use the BatchError property instead")]
-        public BatchError AzureError
-        {
-            get { return this.BatchError; }
-        }
-
-        /// <summary>
         /// Gets or sets the Batch Error information which contains detailed metadata around 
         /// the specific error encountered.
         /// </summary>

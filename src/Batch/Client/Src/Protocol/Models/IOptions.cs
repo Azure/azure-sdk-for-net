@@ -1,5 +1,7 @@
 ﻿namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using System;
+
     /// <summary>
     /// Optional arguments applicable to all service requests.
     /// </summary>
@@ -10,7 +12,7 @@
         /// decoration such as curly braces e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        string ClientRequestId { get; set; }
+        Guid? ClientRequestId { get; set; }
 
         /// <summary>
         /// Specifies if the server should return the client-request-id

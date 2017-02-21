@@ -428,7 +428,7 @@
                             NodeFile stdoutFile = null;
 
                             // find stdout
-                            listStd.ForEach(x => { if (x.Name.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { stdoutFile = x; } });
+                            listStd.ForEach(x => { if (x.Path.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { stdoutFile = x; } });
 
                             // save pre-refresh props
                             FileProperties saveFilProps = stdoutFile.Properties;
@@ -438,7 +438,7 @@
 
                             NodeFile againViaList = null;
 
-                            new List<NodeFile>(task.ListNodeFiles()).ForEach(x => { if (x.Name.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { againViaList = x; } });
+                            new List<NodeFile>(task.ListNodeFiles()).ForEach(x => { if (x.Path.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { againViaList = x; } });
 
                             //"Bug1719609ODATADetailLevel: sometimes this can fail.  check out CreateTime"
                             //This fails due to different time formats used in the header vs in the body of a request.  Since we expect that this will basically never pass
