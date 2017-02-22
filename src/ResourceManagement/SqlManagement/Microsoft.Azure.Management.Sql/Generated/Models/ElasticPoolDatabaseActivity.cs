@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="databaseName">The database name.</param>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// service objective if available.</param>
         /// <param name="requestedServiceObjective">The name of the requested
         /// service objective if available.</param>
-        /// <param name="serverName">The name of the Azure SQL Server the
+        /// <param name="serverName">The name of the Azure SQL server the
         /// Elastic Pool is in.</param>
         /// <param name="startTime">The time the operation started (ISO8601
         /// format).</param>
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string RequestedServiceObjective { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
+        /// Gets the name of the Azure SQL server the Elastic Pool is in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serverName")]
         public string ServerName { get; private set; }

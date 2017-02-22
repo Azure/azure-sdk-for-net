@@ -10,18 +10,15 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for DatabaseEditions.
+    /// Defines values for TargetDatabaseEditions.
     /// </summary>
-    public static class DatabaseEditions
+    public static class TargetDatabaseEditions
     {
-        public const string Web = "Web";
-        public const string Business = "Business";
         public const string Basic = "Basic";
         public const string Standard = "Standard";
         public const string Premium = "Premium";
         public const string Free = "Free";
         public const string Stretch = "Stretch";
         public const string DataWarehouse = "DataWarehouse";
-        public const string System = "System";
     }
 }

@@ -26,21 +26,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="action">The proposed index action. We suggest user to
-        /// create missing index, drop unused index or to rebuild already
-        /// existing index to improve its performance. Possible values are
-        /// 'Create', 'Drop', 'Rebuild'. Possible values include: 'Create',
+        /// <param name="action">The proposed index action. You can create a
+        /// missing index, drop an unused index, or rebuild an existing index
+        /// to improve its performance. Possible values include: 'Create',
         /// 'Drop', 'Rebuild'</param>
-        /// <param name="state">The state recommendation is in. Current
-        /// options are: 'Active', 'Pending', 'Executing', 'Verifying',
+        /// <param name="state">The current recommendation state. Possible
+        /// values include: 'Active', 'Pending', 'Executing', 'Verifying',
         /// 'Pending Revert', 'Reverting', 'Reverted', 'Ignored', 'Expired',
-        /// 'Blocked', 'Success'. Possible values include: 'Active',
-        /// 'Pending', 'Executing', 'Verifying', 'Pending Revert',
-        /// 'Reverting', 'Reverted', 'Ignored', 'Expired', 'Blocked',
-        /// 'Success'</param>
+        /// 'Blocked', 'Success'</param>
         /// <param name="created">The UTC datetime showing when this resource
         /// was created (ISO8601 format).</param>
         /// <param name="lastModified">The UTC datetime of when was this
@@ -78,15 +74,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the proposed index action. We suggest user to create missing
-        /// index, drop unused index or to rebuild already existing index to
-        /// improve its performance.
+        /// Gets the proposed index action. You can create a missing index,
+        /// drop an unused index, or rebuild an existing index to improve its
+        /// performance. Possible values include: 'Create', 'Drop', 'Rebuild'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.action")]
         public RecommendedIndexActions? Action { get; private set; }
 
         /// <summary>
-        /// Gets the state recommendation is in.
+        /// Gets the current recommendation state. Possible values include:
+        /// 'Active', 'Pending', 'Executing', 'Verifying', 'Pending Revert',
+        /// 'Reverting', 'Reverted', 'Ignored', 'Expired', 'Blocked',
+        /// 'Success'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.state")]
         public RecommendedIndexStates? State { get; private set; }

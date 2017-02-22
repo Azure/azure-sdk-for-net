@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="restorePointType">The restore point type of the Azure
-        /// SQL Database restore point. Possible values include: 'DISCRETE',
+        /// SQL database restore point. Possible values include: 'DISCRETE',
         /// 'CONTINUOUS'</param>
         /// <param name="restorePointCreationDate">Restore point creation time
         /// (ISO8601 format). Populated when restorePointType = CONTINUOUS.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the restore point type of the Azure SQL Database restore
+        /// Gets the restore point type of the Azure SQL database restore
         /// point. Possible values include: 'DISCRETE', 'CONTINUOUS'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.restorePointType")]

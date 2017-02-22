@@ -24,16 +24,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL Server Firewall Rule.
+            /// The name of the Azure SQL server firewall rule.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for createing or updating a firewall rule.
+            /// The required parameters for creating or updating a firewall rule.
             /// </param>
             public static ServerFirewallRule CreateOrUpdateFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName, ServerFirewallRule parameters)
             {
@@ -47,16 +48,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL Server Firewall Rule.
+            /// The name of the Azure SQL server firewall rule.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for createing or updating a firewall rule.
+            /// The required parameters for creating or updating a firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -76,13 +78,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL Server Firewall Rule.
+            /// The name of the Azure SQL server firewall rule.
             /// </param>
             public static void DeleteFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
             {
@@ -96,13 +99,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL Server Firewall Rule.
+            /// The name of the Azure SQL server firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -119,13 +123,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL Server Firewall Rule.
+            /// The name of the Azure SQL server firewall rule.
             /// </param>
             public static ServerFirewallRule GetFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
             {
@@ -139,13 +144,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL Server Firewall Rule.
+            /// The name of the Azure SQL server firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -165,10 +171,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ServerFirewallRule> ListFirewallRules(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -182,10 +189,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -199,7 +207,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Returns information about an Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,7 +218,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Returns information about an Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,19 +235,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new Azure SQL Server.
+            /// Creates or updates a new Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for createing or updating a server.
+            /// The required parameters for creating or updating a server.
             /// </param>
             public static Server CreateOrUpdate(this IServersOperations operations, string resourceGroupName, string serverName, Server parameters)
             {
@@ -247,19 +256,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new Azure SQL Server.
+            /// Creates or updates a new Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for createing or updating a server.
+            /// The required parameters for creating or updating a server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -273,16 +283,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Deletes a SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             public static void Delete(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -290,16 +301,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Deletes a SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -310,16 +322,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Gets information about an Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             public static Server GetByResourceGroup(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -327,16 +340,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Gets information about an Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -350,13 +364,14 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Returns information about an Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             public static System.Collections.Generic.IEnumerable<Server> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
             {
@@ -364,13 +379,14 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Server.
+            /// Returns information about an Azure SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -384,179 +400,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Cancel a pending upgrade for the Azure SQL Server.
+            /// Returns information about Azure SQL server usage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            public static void CancelUpgrade(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).CancelUpgradeAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Cancel a pending upgrade for the Azure SQL Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task CancelUpgradeAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.CancelUpgradeWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Returns information about Upgrade status of an Azure SQL Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            public static ServerUpgradeGetResult GetUpgrade(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).GetUpgradeAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns information about Upgrade status of an Azure SQL Server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<ServerUpgradeGetResult> GetUpgradeAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.GetUpgradeWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Start an Azure SQL Server Upgrade.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for the Azure SQL Server Upgrade.
-            /// </param>
-            public static void StartUpgrade(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpgradeStartParameters parameters)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).StartUpgradeAsync(resourceGroupName, serverName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Start an Azure SQL Server Upgrade.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for the Azure SQL Server Upgrade.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task StartUpgradeAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpgradeStartParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.StartUpgradeWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Start an Azure SQL Server Upgrade.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for the Azure SQL Server Upgrade.
-            /// </param>
-            public static void BeginStartUpgrade(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpgradeStartParameters parameters)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginStartUpgradeAsync(resourceGroupName, serverName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Start an Azure SQL Server Upgrade.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for the Azure SQL Server Upgrade.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task BeginStartUpgradeAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpgradeStartParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.BeginStartUpgradeWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Returns information about Azure SQL Server usage.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ServerMetric> ListUsages(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -564,16 +418,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Server usage.
+            /// Returns information about Azure SQL server usage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -587,16 +442,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Database Service Objective.
+            /// Gets information about an Azure SQL database Service Objective.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='serviceObjectiveName'>
             /// The name of the service objective to retrieve.
@@ -607,16 +463,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Database Service Objective.
+            /// Gets information about an Azure SQL database Service Objective.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='serviceObjectiveName'>
             /// The name of the service objective to retrieve.
@@ -633,16 +490,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Database Service Objectives.
+            /// Returns information about Azure SQL database Service Objectives.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ServiceObjective> ListServiceObjectives(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -650,16 +508,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Database Service Objectives.
+            /// Returns information about Azure SQL database Service Objectives.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

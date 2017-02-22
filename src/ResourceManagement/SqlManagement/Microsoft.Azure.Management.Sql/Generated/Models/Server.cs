@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Server.
+    /// Represents an Azure SQL server.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class Server : Resource
@@ -26,9 +26,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="kind">Kind of sql server.  This is metadata used for
+        /// the Azure portal experience.</param>
         /// <param name="fullyQualifiedDomainName">The fully qualified domain
         /// name of the server.</param>
         /// <param name="version">The version of the server. Possible values
@@ -38,14 +40,36 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// (and is required for creation).</param>
         /// <param name="administratorLoginPassword">The administrator login
         /// password (required for server creation).</param>
-        public Server(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string fullyQualifiedDomainName = default(string), string version = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string))
+        /// <param name="externalAdministratorSid">The ID of the Active Azure
+        /// Directory object with admin permissions on this server.  Legacy
+        /// parameter, always null.  To check for Active Directory admin,
+        /// query .../servers/{serverName}/administrators.</param>
+        /// <param name="externalAdministratorLogin">The display name of the
+        /// Azure Active Directory object with admin permissions on this
+        /// server.  Legacy parameter, always null.  To check for Active
+        /// Directory admin, query
+        /// .../servers/{serverName}/administrators</param>
+        /// <param name="state">The state of the server. Possible values
+        /// include: 'Ready', 'Disabled'</param>
+        public Server(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string kind = default(string), string fullyQualifiedDomainName = default(string), string version = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), System.Guid? externalAdministratorSid = default(System.Guid?), string externalAdministratorLogin = default(string), ServerState? state = default(ServerState?))
             : base(location, name, id, type, tags)
         {
+            Kind = kind;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             Version = version;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
+            ExternalAdministratorSid = externalAdministratorSid;
+            ExternalAdministratorLogin = externalAdministratorLogin;
+            State = state;
         }
+
+        /// <summary>
+        /// Gets or sets kind of sql server.  This is metadata used for the
+        /// Azure portal experience.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
 
         /// <summary>
         /// Gets the fully qualified domain name of the server.
@@ -74,6 +98,31 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
+
+        /// <summary>
+        /// Gets the ID of the Active Azure Directory object with admin
+        /// permissions on this server.  Legacy parameter, always null.  To
+        /// check for Active Directory admin, query
+        /// .../servers/{serverName}/administrators.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.externalAdministratorSid")]
+        public System.Guid? ExternalAdministratorSid { get; private set; }
+
+        /// <summary>
+        /// Gets the display name of the Azure Active Directory object with
+        /// admin permissions on this server.  Legacy parameter, always null.
+        /// To check for Active Directory admin, query
+        /// .../servers/{serverName}/administrators
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.externalAdministratorLogin")]
+        public string ExternalAdministratorLogin { get; private set; }
+
+        /// <summary>
+        /// Gets the state of the server. Possible values include: 'Ready',
+        /// 'Disabled'
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.state")]
+        public ServerState? State { get; private set; }
 
         /// <summary>
         /// Validate the object.

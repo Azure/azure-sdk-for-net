@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database Replication Link.
+    /// Represents an Azure SQL database replication link.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ReplicationLink : SqlSubResource
@@ -25,30 +25,41 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ReplicationLink class.
         /// </summary>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="partnerServer">The name of the Azure SQL Server
+        /// <param name="id">The resource ID.</param>
+        /// <param name="location">Location of the server that contains this
+        /// firewall rule.</param>
+        /// <param name="type">Type of resource this is.</param>
+        /// <param name="isTerminationAllowed">Legacy value indicating whether
+        /// termination is allowed.  Currently always returns true.</param>
+        /// <param name="replicationMode">Replication mode of this replication
+        /// link.</param>
+        /// <param name="partnerServer">The name of the Azure SQL server
         /// hosting the partner Azure SQL Database.</param>
         /// <param name="partnerDatabase">The name of the partner Azure SQL
         /// Database.</param>
         /// <param name="partnerLocation">The Azure Region of the partner
         /// Azure SQL Database.</param>
-        /// <param name="role">The role of the Azure SQL Database in the
+        /// <param name="role">The role of the Azure SQL database in the
         /// replication link. Possible values include: 'Primary',
         /// 'Secondary', 'NonReadableSecondary', 'Source', 'Copy'</param>
         /// <param name="partnerRole">The role of the partner Azure SQL
         /// Database in the replication link. Possible values include:
         /// 'Primary', 'Secondary', 'NonReadableSecondary', 'Source',
         /// 'Copy'</param>
-        /// <param name="startTime">The start time for the replication link
-        /// (ISO8601 format).</param>
+        /// <param name="startTime">The start time for the replication
+        /// link.</param>
         /// <param name="percentComplete">The percentage of seeding complete
         /// for the replication link.</param>
         /// <param name="replicationState">The replication state for the
         /// replication link. Possible values include: 'PENDING', 'SEEDING',
         /// 'CATCH_UP', 'SUSPENDED'</param>
-        public ReplicationLink(string name = default(string), string id = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), System.DateTime? startTime = default(System.DateTime?), string percentComplete = default(string), string replicationState = default(string))
+        public ReplicationLink(string name = default(string), string id = default(string), string location = default(string), string type = default(string), bool? isTerminationAllowed = default(bool?), string replicationMode = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string))
             : base(name, id)
         {
+            Location = location;
+            Type = type;
+            IsTerminationAllowed = isTerminationAllowed;
+            ReplicationMode = replicationMode;
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
             PartnerLocation = partnerLocation;
@@ -60,7 +71,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the name of the Azure SQL Server hosting the partner Azure
+        /// Gets location of the server that contains this firewall rule.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
+
+        /// <summary>
+        /// Gets type of resource this is.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets legacy value indicating whether termination is allowed.
+        /// Currently always returns true.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.isTerminationAllowed")]
+        public bool? IsTerminationAllowed { get; private set; }
+
+        /// <summary>
+        /// Gets replication mode of this replication link.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.replicationMode")]
+        public string ReplicationMode { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the Azure SQL server hosting the partner Azure
         /// SQL Database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.partnerServer")]
@@ -79,7 +115,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string PartnerLocation { get; private set; }
 
         /// <summary>
-        /// Gets the role of the Azure SQL Database in the replication link.
+        /// Gets the role of the Azure SQL database in the replication link.
         /// Possible values include: 'Primary', 'Secondary',
         /// 'NonReadableSecondary', 'Source', 'Copy'
         /// </summary>
@@ -95,7 +131,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ReplicationRole? PartnerRole { get; private set; }
 
         /// <summary>
-        /// Gets the start time for the replication link (ISO8601 format).
+        /// Gets the start time for the replication link.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.startTime")]
         public System.DateTime? StartTime { get; private set; }
@@ -104,7 +140,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the percentage of seeding complete for the replication link.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.percentComplete")]
-        public string PercentComplete { get; private set; }
+        public int? PercentComplete { get; private set; }
 
         /// <summary>
         /// Gets the replication state for the replication link. Possible

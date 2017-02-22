@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="columnType">The type of Azure SQL Database table

@@ -26,13 +26,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the RecommendedDatabaseProperties
         /// class.
         /// </summary>
-        /// <param name="name">The name of the Azure SQL Database being
+        /// <param name="name">The name of the Azure SQL database being
         /// upgraded.</param>
         /// <param name="targetEdition">The target edition for the Azure SQL
-        /// Database being upgraded. Possible values include: 'Basic',
+        /// database being upgraded. Possible values include: 'Basic',
         /// 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse'</param>
         /// <param name="targetServiceLevelObjective">The target Service Level
-        /// Objective for the Azure SQL Database being upgraded.</param>
+        /// Objective for the Azure SQL database being upgraded.</param>
         public RecommendedDatabaseProperties(string name = default(string), string targetEdition = default(string), string targetServiceLevelObjective = default(string))
         {
             Name = name;
@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of the Azure SQL Database being upgraded.
+        /// Gets or sets the name of the Azure SQL database being upgraded.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the target edition for the Azure SQL Database being
+        /// Gets or sets the target edition for the Azure SQL database being
         /// upgraded. Possible values include: 'Basic', 'Standard',
         /// 'Premium', 'Free', 'Stretch', 'DataWarehouse'
         /// </summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the target Service Level Objective for the Azure SQL
-        /// Database being upgraded.
+        /// database being upgraded.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "TargetServiceLevelObjective")]
         public string TargetServiceLevelObjective { get; set; }

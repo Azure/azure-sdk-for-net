@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// TransparentDataEncryptionActivity class.
         /// </summary>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="status">The status of the Azure SQL Database.
+        /// <param name="id">The resource ID.</param>
+        /// <param name="status">The status of the Azure SQL database.
         /// Possible values include: 'Encrypting', 'Decrypting'</param>
         /// <param name="percentComplete">The percent complete of the
         /// transparent data encryption scan for a Azure SQL Database.</param>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the status of the Azure SQL Database. Possible values
+        /// Gets the status of the Azure SQL database. Possible values
         /// include: 'Encrypting', 'Decrypting'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]

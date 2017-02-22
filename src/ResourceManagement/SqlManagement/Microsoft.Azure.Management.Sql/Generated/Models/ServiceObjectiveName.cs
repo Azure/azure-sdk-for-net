@@ -26,5 +26,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string P6 = "P6";
         public const string P11 = "P11";
         public const string P15 = "P15";
+        public const string System = "System";
+        public const string System1 = "System1";
+        public const string System2 = "System2";
+        public const string System3 = "System3";
+        public const string System4 = "System4";
     }
 }

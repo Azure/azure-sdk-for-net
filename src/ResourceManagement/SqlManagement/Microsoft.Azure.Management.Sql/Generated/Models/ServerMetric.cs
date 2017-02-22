@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents Azure SQL Server metrics.
+    /// Represents Azure SQL server metrics.
     /// </summary>
     public partial class ServerMetric
     {
@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerMetric class.
         /// </summary>
+        /// <param name="name">Name of the server usage metric.</param>
         /// <param name="resourceName">The name of the resource.</param>
         /// <param name="displayName">The metric display name.</param>
         /// <param name="currentValue">The current value of the metric.</param>
@@ -30,8 +31,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="unit">The units of the metric.</param>
         /// <param name="nextResetTime">The next reset time for the metric
         /// (ISO8601 format).</param>
-        public ServerMetric(string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
+        public ServerMetric(string name = default(string), string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
         {
+            Name = name;
             ResourceName = resourceName;
             DisplayName = displayName;
             CurrentValue = currentValue;
@@ -39,6 +41,12 @@ namespace Microsoft.Azure.Management.Sql.Models
             Unit = unit;
             NextResetTime = nextResetTime;
         }
+
+        /// <summary>
+        /// Gets name of the server usage metric.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the name of the resource.

@@ -26,55 +26,63 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="kind">Kind of database.  This is metadata used for
+        /// the Azure portal experience.</param>
         /// <param name="collation">The collation of the Azure SQL
-        /// Database.</param>
+        /// database.</param>
         /// <param name="creationDate">The creation date of the Azure SQL
-        /// Database (ISO8601 format).</param>
+        /// database (ISO8601 format).</param>
         /// <param name="containmentState">The containment state of the Azure
-        /// SQL Database.</param>
+        /// SQL database.</param>
         /// <param name="currentServiceObjectiveId">The current Service Level
-        /// Objective Id of the Azure SQL Database. This is the Id of the
+        /// Objective ID of the Azure SQL database. This is the ID of the
         /// Service Level Objective that is currently active.</param>
-        /// <param name="databaseId">The Id of the Azure SQL Database.</param>
+        /// <param name="databaseId">The ID of the Azure SQL database.</param>
         /// <param name="earliestRestoreDate">The recovery period start date
-        /// of the Azure SQL Database. This records the start date and time
+        /// of the Azure SQL database. This records the start date and time
         /// when recovery is available for this Azure SQL Database (ISO8601
         /// format).</param>
         /// <param name="createMode">Specifies the type of database to create.
         /// Possible values include: 'Copy', 'Default',
         /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
         /// 'Recovery', 'Restore'</param>
-        /// <param name="sourceDatabaseId">Conditional.  Specifies the
-        /// resource Id of the source database.  If createMode is not set to
-        /// Default, then this value must be specified.</param>
-        /// <param name="edition">The edition of the Azure SQL Database.  The
+        /// <param name="sourceDatabaseId">Conditional. Specifies the resource
+        /// ID of the source database. If createMode is not set to Default,
+        /// then this value must be specified. The name of the source
+        /// database must be the same. NOTE: Collation, Edition, and
+        /// MaxSizeBytes must remain the same while the link is active.
+        /// Values specified for these parameters will be ignored.</param>
+        /// <param name="edition">The edition of the Azure SQL database. The
         /// DatabaseEditions enumeration contains all the valid editions.
         /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
-        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse'</param>
-        /// <param name="maxSizeBytes">The max size of the Azure SQL Database
+        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System'</param>
+        /// <param name="maxSizeBytes">The max size of the Azure SQL database
         /// expressed in bytes. Note: Only the following sizes are supported
         /// (in addition to limitations being placed on each edition): { 100
         /// MB | 500 MB |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200
         /// GB … 500 GB }</param>
         /// <param name="requestedServiceObjectiveId">The configured Service
-        /// Level Objective Id of the Azure SQL Database. This is the Service
+        /// Level Objective ID of the Azure SQL database. This is the Service
         /// Level Objective that is in the process of being applied to the
-        /// Azure SQL Database.  Once successfully updated, it will match the
+        /// Azure SQL database. Once successfully updated, it will match the
         /// value of currentServiceObjectiveId property.</param>
         /// <param name="requestedServiceObjectiveName">The name of the
-        /// configured Service Level Objective of the Azure SQL Database.
+        /// configured Service Level Objective of the Azure SQL database.
         /// This is the Service Level Objective that is in the process of
-        /// being applied to the Azure SQL Database.  Once successfully
+        /// being applied to the Azure SQL database. Once successfully
         /// updated, it will match the value of serviceLevelObjective
         /// property. Possible values include: 'Basic', 'S0', 'S1', 'S2',
-        /// 'S3', 'P1', 'P2', 'P3'</param>
+        /// 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
+        /// 'System1', 'System2', 'System3', 'System4'</param>
         /// <param name="serviceLevelObjective">The current Service Level
-        /// Objective of the Azure SQL Database. Possible values include:
-        /// 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3'</param>
-        /// <param name="status">The status of the Azure SQL Database.</param>
+        /// Objective of the Azure SQL database. Possible values include:
+        /// 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6',
+        /// 'P11', 'P15', 'System', 'System1', 'System2', 'System3',
+        /// 'System4'</param>
+        /// <param name="status">The status of the Azure SQL database.</param>
         /// <param name="elasticPoolName">The name of the Azure SQL Elastic
         /// Pool the database is in.</param>
         /// <param name="defaultSecondaryLocation">The default secondary
@@ -88,9 +96,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// encryption info for this database.</param>
         /// <param name="recommendedIndex">The recommended indices for this
         /// database.</param>
-        public Database(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), System.Collections.Generic.IList<ServiceTierAdvisor> serviceTierAdvisors = default(System.Collections.Generic.IList<ServiceTierAdvisor>), UpgradeHint upgradeHint = default(UpgradeHint), System.Collections.Generic.IList<Schema> schemas = default(System.Collections.Generic.IList<Schema>), System.Collections.Generic.IList<TransparentDataEncryption> transparentDataEncryption = default(System.Collections.Generic.IList<TransparentDataEncryption>), System.Collections.Generic.IList<RecommendedIndex> recommendedIndex = default(System.Collections.Generic.IList<RecommendedIndex>))
+        /// <param name="failoverGroupId">The id indicating the failover group
+        /// containing this database.</param>
+        /// <param name="readScale">Conditional.  If the database is a
+        /// geo-secondary, readScale indicates whether read-only connections
+        /// are allowed to this database or not. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="sampleName">Indicates the name of the sample schema
+        /// that was applied to this database.</param>
+        public Database(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), System.Collections.Generic.IList<ServiceTierAdvisor> serviceTierAdvisors = default(System.Collections.Generic.IList<ServiceTierAdvisor>), UpgradeHint upgradeHint = default(UpgradeHint), System.Collections.Generic.IList<Schema> schemas = default(System.Collections.Generic.IList<Schema>), System.Collections.Generic.IList<TransparentDataEncryption> transparentDataEncryption = default(System.Collections.Generic.IList<TransparentDataEncryption>), System.Collections.Generic.IList<RecommendedIndex> recommendedIndex = default(System.Collections.Generic.IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
             : base(location, name, id, type, tags)
         {
+            Kind = kind;
             Collation = collation;
             CreationDate = creationDate;
             ContainmentState = containmentState;
@@ -112,42 +129,52 @@ namespace Microsoft.Azure.Management.Sql.Models
             Schemas = schemas;
             TransparentDataEncryption = transparentDataEncryption;
             RecommendedIndex = recommendedIndex;
+            FailoverGroupId = failoverGroupId;
+            ReadScale = readScale;
+            SampleName = sampleName;
         }
 
         /// <summary>
-        /// Gets or sets the collation of the Azure SQL Database.
+        /// Gets or sets kind of database.  This is metadata used for the
+        /// Azure portal experience.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collation of the Azure SQL database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.collation")]
         public string Collation { get; set; }
 
         /// <summary>
-        /// Gets the creation date of the Azure SQL Database (ISO8601 format).
+        /// Gets the creation date of the Azure SQL database (ISO8601 format).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.creationDate")]
         public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
-        /// Gets the containment state of the Azure SQL Database.
+        /// Gets the containment state of the Azure SQL database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.containmentState")]
         public long? ContainmentState { get; private set; }
 
         /// <summary>
-        /// Gets the current Service Level Objective Id of the Azure SQL
-        /// Database. This is the Id of the Service Level Objective that is
+        /// Gets the current Service Level Objective ID of the Azure SQL
+        /// database. This is the ID of the Service Level Objective that is
         /// currently active.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.currentServiceObjectiveId")]
         public System.Guid? CurrentServiceObjectiveId { get; private set; }
 
         /// <summary>
-        /// Gets the Id of the Azure SQL Database.
+        /// Gets the ID of the Azure SQL database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.databaseId")]
         public string DatabaseId { get; private set; }
 
         /// <summary>
-        /// Gets the recovery period start date of the Azure SQL Database.
+        /// Gets the recovery period start date of the Azure SQL database.
         /// This records the start date and time when recovery is available
         /// for this Azure SQL Database (ISO8601 format).
         /// </summary>
@@ -163,33 +190,38 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string CreateMode { get; set; }
 
         /// <summary>
-        /// Gets or sets conditional.  Specifies the resource Id of the source
-        /// database.  If createMode is not set to Default, then this value
-        /// must be specified.
+        /// Gets or sets conditional. Specifies the resource ID of the source
+        /// database. If createMode is not set to Default, then this value
+        /// must be specified. The name of the source database must be the
+        /// same. NOTE: Collation, Edition, and MaxSizeBytes must remain the
+        /// same while the link is active. Values specified for these
+        /// parameters will be ignored.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sourceDatabaseId")]
         public string SourceDatabaseId { get; set; }
 
         /// <summary>
-        /// Gets or sets the edition of the Azure SQL Database.  The
+        /// Gets or sets the edition of the Azure SQL database. The
         /// DatabaseEditions enumeration contains all the valid editions.
-        /// Possible values include: Refer to the capabilities API
+        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
+        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.edition")]
         public string Edition { get; set; }
 
         /// <summary>
-        /// Gets or sets the max size of the Azure SQL Database expressed in
+        /// Gets or sets the max size of the Azure SQL database expressed in
         /// bytes. Note: Only the following sizes are supported (in addition
-        /// to limitations being placed on each edition): Refer to the capabilities API
+        /// to limitations being placed on each edition): { 100 MB | 500 MB
+        /// |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
 
         /// <summary>
-        /// Gets or sets the configured Service Level Objective Id of the
-        /// Azure SQL Database. This is the Service Level Objective that is
-        /// in the process of being applied to the Azure SQL Database.  Once
+        /// Gets or sets the configured Service Level Objective ID of the
+        /// Azure SQL database. This is the Service Level Objective that is
+        /// in the process of being applied to the Azure SQL database. Once
         /// successfully updated, it will match the value of
         /// currentServiceObjectiveId property.
         /// </summary>
@@ -198,23 +230,27 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the name of the configured Service Level Objective of
-        /// the Azure SQL Database. This is the Service Level Objective that
-        /// is in the process of being applied to the Azure SQL Database.
+        /// the Azure SQL database. This is the Service Level Objective that
+        /// is in the process of being applied to the Azure SQL database.
         /// Once successfully updated, it will match the value of
-        /// serviceLevelObjective property. Refer to the capabilities API
+        /// serviceLevelObjective property. Possible values include: 'Basic',
+        /// 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11',
+        /// 'P15', 'System', 'System1', 'System2', 'System3', 'System4'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedServiceObjectiveName")]
         public string RequestedServiceObjectiveName { get; set; }
 
         /// <summary>
         /// Gets the current Service Level Objective of the Azure SQL
-        /// Database. Refer to the capabilities API
+        /// database. Possible values include: 'Basic', 'S0', 'S1', 'S2',
+        /// 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
+        /// 'System1', 'System2', 'System3', 'System4'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceLevelObjective")]
         public string ServiceLevelObjective { get; private set; }
 
         /// <summary>
-        /// Gets the status of the Azure SQL Database.
+        /// Gets the status of the Azure SQL database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -264,6 +300,28 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.Collections.Generic.IList<RecommendedIndex> RecommendedIndex { get; private set; }
 
         /// <summary>
+        /// Gets the id indicating the failover group containing this database.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.failoverGroupId")]
+        public System.Guid? FailoverGroupId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets conditional.  If the database is a geo-secondary,
+        /// readScale indicates whether read-only connections are allowed to
+        /// this database or not. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.readScale")]
+        public ReadScale? ReadScale { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the name of the sample schema that was
+        /// applied to this database.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sampleName")]
+        public string SampleName { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -272,10 +330,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.UpgradeHint != null)
-            {
-                this.UpgradeHint.Validate();
-            }
             if (this.Schemas != null)
             {
                 foreach (var element in this.Schemas)

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents a Slo Usage Metric.
     /// </summary>
-    public partial class SloUsageMetric : Resource
+    public partial class SloUsageMetric
     {
         /// <summary>
         /// Initializes a new instance of the SloUsageMetric class.
@@ -23,20 +23,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the SloUsageMetric class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="serviceLevelObjective">The serviceLevelObjective for
         /// SLO usage metric. Possible values include: 'Basic', 'S0', 'S1',
-        /// 'S2', 'S3', 'P1', 'P2', 'P3'</param>
+        /// 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
+        /// 'System1', 'System2', 'System3', 'System4'</param>
         /// <param name="serviceLevelObjectiveId">The serviceLevelObjectiveId
         /// for SLO usage metric.</param>
         /// <param name="inRangeTimeRatio">Gets or sets inRangeTimeRatio for
         /// SLO usage metric.</param>
-        public SloUsageMetric(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string serviceLevelObjective = default(string), System.Guid? serviceLevelObjectiveId = default(System.Guid?), double? inRangeTimeRatio = default(double?))
-            : base(location, name, id, type, tags)
+        public SloUsageMetric(string serviceLevelObjective = default(string), System.Guid? serviceLevelObjectiveId = default(System.Guid?), double? inRangeTimeRatio = default(double?))
         {
             ServiceLevelObjective = serviceLevelObjective;
             ServiceLevelObjectiveId = serviceLevelObjectiveId;
@@ -46,7 +41,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the serviceLevelObjective for SLO usage metric.
         /// Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1',
-        /// 'P2', 'P3'
+        /// 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'System1',
+        /// 'System2', 'System3', 'System4'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "serviceLevelObjective")]
         public string ServiceLevelObjective { get; set; }
@@ -63,15 +59,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "inRangeTimeRatio")]
         public double? InRangeTimeRatio { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

@@ -26,14 +26,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="databaseEdition">The edition of the Azure SQL
         /// Recommended Elastic Pool. The ElasticPoolEditions enumeration
         /// contains all the valid editions. Possible values include:
         /// 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="dtu">The DTU for the Azure SQL Recommended Elastic
+        /// <param name="dtu">The DTU for the Azure Sql Recommended Elastic
         /// Pool.</param>
         /// <param name="databaseDtuMin">The minimum DTU for the
         /// database.</param>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string DatabaseEdition { get; private set; }
 
         /// <summary>
-        /// Gets or sets the DTU for the Azure SQL Recommended Elastic Pool.
+        /// Gets or sets the DTU for the Azure Sql Recommended Elastic Pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dtu")]
         public double? Dtu { get; set; }

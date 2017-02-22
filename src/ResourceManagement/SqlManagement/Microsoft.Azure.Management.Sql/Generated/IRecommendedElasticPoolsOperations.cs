@@ -17,13 +17,15 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IRecommendedElasticPoolsOperations
     {
         /// <summary>
-        /// Returns information about an Azure SQL Recommended Elastic Pool.
+        /// Gets information about an Azure SQL Recommended Elastic Pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
         /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
@@ -45,20 +47,22 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RecommendedElasticPool>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string recommendedElasticPoolName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about an Azure SQL Database inside of an Azure
+        /// Gets information about an Azure SQL database inside of an Azure
         /// SQL Recommended Elastic Pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be retrieved.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Database to be retrieved.
+        /// The name of the Azure SQL database to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,10 +84,12 @@ namespace Microsoft.Azure.Management.Sql
         /// Returns information about Azure SQL Recommended Elastic Pools.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -102,14 +108,16 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<RecommendedElasticPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about an Azure SQL Database inside of an Azure
+        /// Returns information about an Azure SQL database inside of an Azure
         /// SQL Recommended Elastic Pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
         /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
@@ -134,10 +142,12 @@ namespace Microsoft.Azure.Management.Sql
         /// Returns information about an recommended elastic pool metrics.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
         /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.

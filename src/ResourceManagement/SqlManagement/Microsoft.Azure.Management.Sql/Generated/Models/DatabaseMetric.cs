@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents Azure SQL Database metrics.
     /// </summary>
-    public partial class DatabaseMetric
+    public partial class DatabaseMetric : SqlSubResource
     {
         /// <summary>
         /// Initializes a new instance of the DatabaseMetric class.
@@ -23,6 +23,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseMetric class.
         /// </summary>
+        /// <param name="name">Resource name</param>
+        /// <param name="id">The resource ID.</param>
         /// <param name="resourceName">The name of the resource.</param>
         /// <param name="displayName">The metric display name.</param>
         /// <param name="currentValue">The current value of the metric.</param>
@@ -30,7 +32,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="unit">The units of the metric.</param>
         /// <param name="nextResetTime">The next reset time for the metric
         /// (ISO8601 format).</param>
-        public DatabaseMetric(string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
+        public DatabaseMetric(string name = default(string), string id = default(string), string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
+            : base(name, id)
         {
             ResourceName = resourceName;
             DisplayName = displayName;

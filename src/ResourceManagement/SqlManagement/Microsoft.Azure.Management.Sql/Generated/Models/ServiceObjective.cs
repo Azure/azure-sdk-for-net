@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ServiceObjective class.
         /// </summary>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">The resource ID.</param>
         /// <param name="serviceObjectiveName">The name for the service
         /// objective.</param>
         /// <param name="isDefault">Gets whether the service level objective

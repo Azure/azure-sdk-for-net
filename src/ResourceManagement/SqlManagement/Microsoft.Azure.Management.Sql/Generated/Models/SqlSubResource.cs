@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the SqlSubResource class.
         /// </summary>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">The resource ID.</param>
         public SqlSubResource(string name = default(string), string id = default(string))
         {
             Name = name;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets the resource ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }

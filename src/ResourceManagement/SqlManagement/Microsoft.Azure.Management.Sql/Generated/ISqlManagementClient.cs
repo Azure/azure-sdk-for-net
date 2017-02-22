@@ -13,7 +13,10 @@ namespace Microsoft.Azure.Management.Sql
     using Models;
 
     /// <summary>
-    /// Composite Swagger for Azure Sql Database Client
+    /// The Azure SQL Database management API provides a RESTful set of web
+    /// services that interact with Azure SQL Database services to manage
+    /// your databases. The API enables you to create, retrieve, update, and
+    /// delete databases.
     /// </summary>
     public partial interface ISqlManagementClient : System.IDisposable
     {
@@ -38,7 +41,7 @@ namespace Microsoft.Azure.Management.Sql
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The subscription id that identifies an Azure subscription.
+        /// The subscription ID that identifies an Azure subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 

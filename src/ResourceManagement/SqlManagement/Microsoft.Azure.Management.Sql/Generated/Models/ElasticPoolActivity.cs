@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="endTime">The time the operation finished (ISO8601
@@ -50,12 +50,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="requestedStorageLimitInGB">The requested storage
         /// limit for the pool in GB if available.</param>
         /// <param name="elasticPoolName">The name of the Elastic Pool.</param>
-        /// <param name="serverName">The name of the Azure SQL Server the
+        /// <param name="serverName">The name of the Azure SQL server the
         /// Elastic Pool is in.</param>
         /// <param name="startTime">The time the operation started (ISO8601
         /// format).</param>
         /// <param name="state">The current state of the operation.</param>
-        public ElasticPoolActivity(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.DateTime? endTime = default(System.DateTime?), int? errorCode = default(int?), string errorMessage = default(string), int? errorSeverity = default(int?), string operation = default(string), string operationId = default(string), int? percentComplete = default(int?), int? requestedDatabaseDtuMax = default(int?), int? requestedDatabaseDtuMin = default(int?), int? requestedDtu = default(int?), string requestedElasticPoolName = default(string), long? requestedStorageLimitInGB = default(long?), string elasticPoolName = default(string), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string))
+        /// <param name="requestedStorageLimitInMB">The requested storage
+        /// limit in MB.</param>
+        /// <param name="requestedDatabaseDtuGuarantee">The requested per
+        /// Database DTU guarantee.</param>
+        /// <param name="requestedDatabaseDtuCap">The requested per Database
+        /// DTU cap.</param>
+        /// <param name="requestedDtuGuarantee">The requested DTU
+        /// guarantee.</param>
+        public ElasticPoolActivity(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.DateTime? endTime = default(System.DateTime?), int? errorCode = default(int?), string errorMessage = default(string), int? errorSeverity = default(int?), string operation = default(string), string operationId = default(string), int? percentComplete = default(int?), int? requestedDatabaseDtuMax = default(int?), int? requestedDatabaseDtuMin = default(int?), int? requestedDtu = default(int?), string requestedElasticPoolName = default(string), long? requestedStorageLimitInGB = default(long?), string elasticPoolName = default(string), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? requestedStorageLimitInMB = default(int?), int? requestedDatabaseDtuGuarantee = default(int?), int? requestedDatabaseDtuCap = default(int?), int? requestedDtuGuarantee = default(int?))
             : base(location, name, id, type, tags)
         {
             EndTime = endTime;
@@ -74,6 +82,10 @@ namespace Microsoft.Azure.Management.Sql.Models
             ServerName = serverName;
             StartTime = startTime;
             State = state;
+            RequestedStorageLimitInMB = requestedStorageLimitInMB;
+            RequestedDatabaseDtuGuarantee = requestedDatabaseDtuGuarantee;
+            RequestedDatabaseDtuCap = requestedDatabaseDtuCap;
+            RequestedDtuGuarantee = requestedDtuGuarantee;
         }
 
         /// <summary>
@@ -155,7 +167,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string ElasticPoolName { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
+        /// Gets the name of the Azure SQL server the Elastic Pool is in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serverName")]
         public string ServerName { get; private set; }
@@ -171,6 +183,30 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.state")]
         public string State { get; private set; }
+
+        /// <summary>
+        /// Gets the requested storage limit in MB.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedStorageLimitInMB")]
+        public int? RequestedStorageLimitInMB { get; private set; }
+
+        /// <summary>
+        /// Gets the requested per Database DTU guarantee.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedDatabaseDtuGuarantee")]
+        public int? RequestedDatabaseDtuGuarantee { get; private set; }
+
+        /// <summary>
+        /// Gets the requested per Database DTU cap.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedDatabaseDtuCap")]
+        public int? RequestedDatabaseDtuCap { get; private set; }
+
+        /// <summary>
+        /// Gets the requested DTU guarantee.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedDtuGuarantee")]
+        public int? RequestedDtuGuarantee { get; private set; }
 
         /// <summary>
         /// Validate the object.

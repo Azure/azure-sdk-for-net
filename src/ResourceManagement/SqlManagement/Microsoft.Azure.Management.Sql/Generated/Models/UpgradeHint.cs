@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents a Upgrade Hint.
     /// </summary>
-    public partial class UpgradeHint : Resource
+    public partial class UpgradeHint
     {
         /// <summary>
         /// Initializes a new instance of the UpgradeHint class.
@@ -23,19 +23,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the UpgradeHint class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param
         /// name="targetServiceLevelObjective">TargetServiceLevelObjective
         /// for upgrade hint.</param>
         /// <param
         /// name="targetServiceLevelObjectiveId">TargetServiceLevelObjectiveId
         /// for upgrade hint.</param>
-        public UpgradeHint(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string targetServiceLevelObjective = default(string), System.Guid? targetServiceLevelObjectiveId = default(System.Guid?))
-            : base(location, name, id, type, tags)
+        public UpgradeHint(string targetServiceLevelObjective = default(string), System.Guid? targetServiceLevelObjectiveId = default(System.Guid?))
         {
             TargetServiceLevelObjective = targetServiceLevelObjective;
             TargetServiceLevelObjectiveId = targetServiceLevelObjectiveId;
@@ -53,15 +47,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "targetServiceLevelObjectiveId")]
         public System.Guid? TargetServiceLevelObjectiveId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

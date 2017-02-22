@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Server Firewall Rule.
+    /// Represents an Azure SQL server firewall rule.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ServerFirewallRule : SqlSubResource
@@ -25,20 +25,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ServerFirewallRule class.
         /// </summary>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">The resource ID.</param>
         /// <param name="kind">Kind of server that contains this firewall
         /// rule.</param>
         /// <param name="location">Location of the server that contains this
         /// firewall rule.</param>
+        /// <param name="type">Type of resource this is.</param>
         /// <param name="startIpAddress">The start IP address of the Azure SQL
-        /// Database Server Firewall Rule. Must be IPv4 format.</param>
+        /// server firewall rule. Must be IPv4 format.</param>
         /// <param name="endIpAddress">The end IP address of the Azure SQL
-        /// Database Server Firewall Rule. Must be IPv4 format.</param>
-        public ServerFirewallRule(string name = default(string), string id = default(string), string kind = default(string), string location = default(string), string startIpAddress = default(string), string endIpAddress = default(string))
+        /// server firewall rule. Must be IPv4 format.</param>
+        public ServerFirewallRule(string name = default(string), string id = default(string), string kind = default(string), string location = default(string), string type = default(string), string startIpAddress = default(string), string endIpAddress = default(string))
             : base(name, id)
         {
             Kind = kind;
             Location = location;
+            Type = type;
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
         }
@@ -56,15 +58,21 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Location { get; private set; }
 
         /// <summary>
-        /// Gets or sets the start IP address of the Azure SQL Database Server
-        /// Firewall Rule. Must be IPv4 format.
+        /// Gets type of resource this is.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the start IP address of the Azure SQL server firewall
+        /// rule. Must be IPv4 format.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.startIpAddress")]
         public string StartIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the end IP address of the Azure SQL Database Server
-        /// Firewall Rule. Must be IPv4 format.
+        /// Gets or sets the end IP address of the Azure SQL server firewall
+        /// rule. Must be IPv4 format.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }

@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="dateTime">The time of metric (ISO8601 format).</param>
         /// <param name="dtu">Gets or sets the DTUs (Database Transaction
-        /// Units).  See
-        /// https://azure.microsoft.com/en-us/documentation/articles/sql-database-what-is-a-dtu/</param>
+        /// Units). See
+        /// https://azure.microsoft.com/documentation/articles/sql-database-what-is-a-dtu/</param>
         /// <param name="sizeGB">Gets or sets size in gigabytes.</param>
         public RecommendedElasticPoolMetric(System.DateTime? dateTime = default(System.DateTime?), double? dtu = default(double?), double? sizeGB = default(double?))
         {
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.DateTime? DateTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the DTUs (Database Transaction Units).  See
-        /// https://azure.microsoft.com/en-us/documentation/articles/sql-database-what-is-a-dtu/
+        /// Gets or sets the DTUs (Database Transaction Units). See
+        /// https://azure.microsoft.com/documentation/articles/sql-database-what-is-a-dtu/
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dtu")]
         public double? Dtu { get; set; }

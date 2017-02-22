@@ -46,17 +46,18 @@ namespace Microsoft.Azure.Management.Sql
         /// elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
         /// created).
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for createing or updating an Elastic Pool.
+        /// The required parameters for creating or updating an Elastic Pool.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,17 +80,18 @@ namespace Microsoft.Azure.Management.Sql
         /// elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
         /// created).
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for createing or updating an Elastic Pool.
+        /// The required parameters for creating or updating an Elastic Pool.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -303,24 +305,6 @@ namespace Microsoft.Azure.Management.Sql
                     throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            // Deserialize Response
-            if ((int)_statusCode == 202)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ElasticPool>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (Newtonsoft.Json.JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
             if (_shouldTrace)
             {
                 Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
@@ -332,10 +316,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Deletes the Azure SQL elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be deleted.
@@ -498,13 +483,14 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about an Azure SQL elastic pool.
+        /// Gets information about an Azure SQL elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be retrieved.
@@ -699,10 +685,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Returns information about Azure SQL elastic pools.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -888,10 +875,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Returns information about Azure SQL elastic pool activities.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool for which to get the current
@@ -1087,14 +1075,15 @@ namespace Microsoft.Azure.Management.Sql
         /// Returns information about activity on Azure SQL databases inside of an
         /// Azure SQL elastic pool.
         /// </summary>
-        /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool.
-        /// </param>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
+        /// </param>
+        /// <param name='elasticPoolName'>
+        /// The name of the Azure SQL Elastic Pool.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1114,12 +1103,8 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ElasticPoolDatabaseActivity>>> ListDatabaseActivityWithHttpMessagesAsync(string elasticPoolName, string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ElasticPoolDatabaseActivity>>> ListDatabaseActivityWithHttpMessagesAsync(string resourceGroupName, string serverName, string elasticPoolName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (elasticPoolName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "elasticPoolName");
-            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1132,6 +1117,10 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
             }
+            if (elasticPoolName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "elasticPoolName");
+            }
             string apiVersion = "2014-04-01";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -1140,20 +1129,20 @@ namespace Microsoft.Azure.Management.Sql
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("elasticPoolName", elasticPoolName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("elasticPoolName", elasticPoolName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListDatabaseActivity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolDatabaseActivity").ToString();
-            _url = _url.Replace("{elasticPoolName}", System.Uri.EscapeDataString(elasticPoolName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
+            _url = _url.Replace("{elasticPoolName}", System.Uri.EscapeDataString(elasticPoolName));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (apiVersion != null)
             {
@@ -1283,20 +1272,21 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about an Azure SQL database inside of an Azure SQL
+        /// Gets information about an Azure SQL database inside of an Azure SQL
         /// elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be retrieved.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Database to be retrieved.
+        /// The name of the Azure SQL database to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1495,10 +1485,11 @@ namespace Microsoft.Azure.Management.Sql
         /// elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the resource belongs.
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Server
+        /// The name of the Azure SQL server.
         /// </param>
         /// <param name='elasticPoolName'>
         /// The name of the Azure SQL Elastic Pool to be retrieved.

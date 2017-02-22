@@ -18,23 +18,25 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
-            /// Deletes the Azure SQL Database Replication Link with the given id.
+            /// Deletes the Azure SQL database replication link with the given ID. Cannot
+            /// be done during failover.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// dropped.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be deleted.
+            /// The ID of the replication link to be deleted.
             /// </param>
             public static void DeleteReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -42,23 +44,25 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the Azure SQL Database Replication Link with the given id.
+            /// Deletes the Azure SQL database replication link with the given ID. Cannot
+            /// be done during failover.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// dropped.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be deleted.
+            /// The ID of the replication link to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -69,22 +73,23 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Database Replication Link.
+            /// Gets information about an Azure SQL database replication link.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to get the link for.
+            /// The name of the Azure SQL database to get the link for.
             /// </param>
             /// <param name='linkId'>
-            /// The replication link id to be retrieved.
+            /// The replication link ID to be retrieved.
             /// </param>
             public static ReplicationLink GetReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -92,22 +97,23 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Database Replication Link.
+            /// Gets information about an Azure SQL database replication link.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to get the link for.
+            /// The name of the Azure SQL database to get the link for.
             /// </param>
             /// <param name='linkId'>
-            /// The replication link id to be retrieved.
+            /// The replication link ID to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -121,23 +127,24 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// Failover the Azure SQL database replication link with the given ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             public static void FailoverReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -145,23 +152,24 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// Failover the Azure SQL database replication link with the given ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -172,23 +180,24 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// Failover the Azure SQL database replication link with the given ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             public static void BeginFailoverReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -196,23 +205,24 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// Failover the Azure SQL database replication link with the given ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -223,24 +233,25 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// Force failover the Azure SQL database replication link with the given ID
             /// which may result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             public static void FailoverReplicationLinkAllowDataLoss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -248,24 +259,25 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// Force failover the Azure SQL database replication link with the given ID
             /// which may result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -276,24 +288,25 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// Force failover the Azure SQL database replication link with the given ID
             /// which may result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             public static void BeginFailoverReplicationLinkAllowDataLoss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -301,24 +314,25 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// Force failover the Azure SQL database replication link with the given ID
             /// which may result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database that has the replication link to be
+            /// The name of the Azure SQL database that has the replication link to be
             /// failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The id of the replication link to be failed over.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -329,19 +343,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Database Replication Links.
+            /// Gets information about Azure SQL database replication links.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to retrieve links for.
+            /// The name of the Azure SQL database to retrieve links for.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ReplicationLink> ListReplicationLinks(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
@@ -349,19 +364,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Database Replication Links.
+            /// Gets information about Azure SQL database replication links.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to retrieve links for.
+            /// The name of the Azure SQL database to retrieve links for.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -381,10 +397,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to pause.
@@ -401,10 +418,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to pause.
@@ -424,10 +442,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to pause.
@@ -444,10 +463,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to pause.
@@ -467,10 +487,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to resume.
@@ -487,10 +508,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to resume.
@@ -510,10 +532,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to resume.
@@ -530,10 +553,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the Azure SQL Data Warehouse database to resume.
@@ -553,13 +577,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database from which to retrieve available
+            /// The name of the Azure SQL database from which to retrieve available
             /// restore points.
             /// </param>
             public static System.Collections.Generic.IEnumerable<RestorePoint> ListRestorePoints(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
@@ -574,13 +599,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database from which to retrieve available
+            /// The name of the Azure SQL database from which to retrieve available
             /// restore points.
             /// </param>
             /// <param name='cancellationToken'>
@@ -596,20 +622,21 @@ namespace Microsoft.Azure.Management.Sql
 
             /// <summary>
             /// Creates a new Azure SQL database or updates an existing Azure SQL
-            /// database.  Location is a required property in the request body and it
-            /// must be the same as the location of the Sql Server.
+            /// database. Location is a required property in the request body, and it
+            /// must be the same as the location of the SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be operated on (Updated or created).
+            /// The name of the Azure SQL database to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a database.
@@ -621,20 +648,21 @@ namespace Microsoft.Azure.Management.Sql
 
             /// <summary>
             /// Creates a new Azure SQL database or updates an existing Azure SQL
-            /// database.  Location is a required property in the request body and it
-            /// must be the same as the location of the Sql Server.
+            /// database. Location is a required property in the request body, and it
+            /// must be the same as the location of the SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be operated on (Updated or created).
+            /// The name of the Azure SQL database to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a database.
@@ -652,20 +680,21 @@ namespace Microsoft.Azure.Management.Sql
 
             /// <summary>
             /// Creates a new Azure SQL database or updates an existing Azure SQL
-            /// database.  Location is a required property in the request body and it
-            /// must be the same as the location of the Sql Server.
+            /// database. Location is a required property in the request body, and it
+            /// must be the same as the location of the SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be operated on (Updated or created).
+            /// The name of the Azure SQL database to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a database.
@@ -677,20 +706,21 @@ namespace Microsoft.Azure.Management.Sql
 
             /// <summary>
             /// Creates a new Azure SQL database or updates an existing Azure SQL
-            /// database.  Location is a required property in the request body and it
-            /// must be the same as the location of the Sql Server.
+            /// database. Location is a required property in the request body, and it
+            /// must be the same as the location of the SQL server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be operated on (Updated or created).
+            /// The name of the Azure SQL database to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a database.
@@ -713,13 +743,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be deleted.
+            /// The name of the Azure SQL database to be deleted.
             /// </param>
             public static void Delete(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
@@ -733,13 +764,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be deleted.
+            /// The name of the Azure SQL database to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -750,19 +782,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL database.
+            /// Gets information about an Azure SQL database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be retrieved.
+            /// The name of the Azure SQL database to be retrieved.
             /// </param>
             /// <param name='expand'>
             /// The comma separated list of child objects to expand in the response.
@@ -775,19 +808,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL database.
+            /// Gets information about an Azure SQL database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database to be retrieved.
+            /// The name of the Azure SQL database to be retrieved.
             /// </param>
             /// <param name='expand'>
             /// The comma separated list of child objects to expand in the response.
@@ -806,16 +840,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Database.
+            /// Returns information about an Azure SQL database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
             {
@@ -823,16 +858,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL Database.
+            /// Returns information about an Azure SQL database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -846,19 +882,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Database usages.
+            /// Returns information about Azure SQL database usages.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database.
+            /// The name of the Azure SQL database.
             /// </param>
             public static System.Collections.Generic.IEnumerable<DatabaseMetric> ListUsages(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
@@ -866,19 +903,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Database usages.
+            /// Returns information about Azure SQL database usages.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database.
+            /// The name of the Azure SQL database.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -892,16 +930,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about a service tier advisor.
+            /// Gets information about a service tier advisor.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of database.
@@ -915,16 +954,17 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about a service tier advisor.
+            /// Gets information about a service tier advisor.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of database.
@@ -950,10 +990,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of database.
@@ -970,10 +1011,11 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
             /// The name of database.
@@ -997,13 +1039,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database for which setting the Transparent Data
+            /// The name of the Azure SQL database for which setting the Transparent Data
             /// Encryption applies.
             /// </param>
             /// <param name='parameters'>
@@ -1023,13 +1066,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database for which setting the Transparent Data
+            /// The name of the Azure SQL database for which setting the Transparent Data
             /// Encryption applies.
             /// </param>
             /// <param name='parameters'>
@@ -1048,19 +1092,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns an Azure SQL Database Transparent Data Encryption Response.
+            /// Gets an Azure SQL Database Transparent Data Encryption Response.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database for which the Transparent Data
+            /// The name of the Azure SQL database for which the Transparent Data
             /// Encryption applies.
             /// </param>
             public static TransparentDataEncryption GetTransparentDataEncryptionConfiguration(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
@@ -1069,19 +1114,20 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns an Azure SQL Database Transparent Data Encryption Response.
+            /// Gets an Azure SQL Database Transparent Data Encryption Response.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database for which the Transparent Data
+            /// The name of the Azure SQL database for which the Transparent Data
             /// Encryption applies.
             /// </param>
             /// <param name='cancellationToken'>
@@ -1103,13 +1149,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database for which the Transparent Data
+            /// The name of the Azure SQL database for which the Transparent Data
             /// Encryption applies.
             /// </param>
             public static System.Collections.Generic.IEnumerable<TransparentDataEncryptionActivity> ListTransparentDataEncryptionActivity(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
@@ -1125,13 +1172,14 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the resource belongs.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL Server
+            /// The name of the Azure SQL server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL Database for which the Transparent Data
+            /// The name of the Azure SQL database for which the Transparent Data
             /// Encryption applies.
             /// </param>
             /// <param name='cancellationToken'>
