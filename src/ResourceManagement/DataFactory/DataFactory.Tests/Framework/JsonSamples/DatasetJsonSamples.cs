@@ -834,5 +834,37 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string FileTableWithUseBinaryTransfer = @"
+{
+    name: ""FileTableWithUseBinaryTransfer"",
+    properties:
+    {
+        type: ""FileShare"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties:
+        {
+            folderPath: ""Root\\MyFolder"",
+            fileName: ""TestFileName"",
+            useBinaryTransfer: false,
+            format:
+            {
+                type: ""TextFormat"",
+                columnDelimiter: "","",
+                rowDelimiter: "";"",
+                escapeChar: ""#"",
+                nullValue: ""\\N"",
+                encodingName: ""utf-8""
+            }
+        },
+        availability:
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+            style: ""StartOfInterval""     
+        }
+    }
+}";
     }
 }

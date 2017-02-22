@@ -691,5 +691,28 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string FtpServerLinkedService = @"
+{
+    name: ""FtpServerLinkedService"",
+    properties:
+    {
+        type: ""FtpServer"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            host : ""fakeserver.com"", 
+            port : 999,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            gatewayName : ""fakegw"",
+            encryptedCredential : ""fakecred"",
+            enableSsl : false,
+            enableServerCertificateValidation : false
+        }
+    }
+}";
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="Customizations\Models\LinkedServices\AzureSearchLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureStorageSasLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\FtpServerLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HttpLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesCassandraLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesMongoDbLinkedService.cs" />

@@ -52,5 +52,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The data compression method used on files.
         /// </summary>
         public Compression Compression { get; set; }
+
+        /// <summary>
+        /// Optional. Can only be used when accociated Linked Service is <see cref="FtpServerLinkedService"/>.
+        /// If true, data representation during transmission from FTP server is in Binary mode.
+        /// If false, data representation during transmission from FTP server is in ASCII mode.
+        /// Default value is true.
+        /// </summary>
+        public bool? UseBinaryTransfer { get; set; }
     }
 }
