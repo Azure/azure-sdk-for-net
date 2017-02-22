@@ -30,11 +30,12 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// resource.</param>
         /// <param name="tags">Key-value pairs of additional provisioning
         /// properties.</param>
-        public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators))
+        public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), BackupConfiguration backupConfiguration = default(BackupConfiguration))
         {
             Sku = sku;
             Tags = tags;
             AsAdministrators = asAdministrators;
+            BackupConfiguration = backupConfiguration;
         }
 
         /// <summary>
@@ -55,6 +56,11 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public ServerAdministrators AsAdministrators { get; set; }
 
         /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backupConfiguration")]
+        public BackupConfiguration BackupConfiguration { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -65,6 +71,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
             if (this.Sku != null)
             {
                 this.Sku.Validate();
+            }
+            if (this.BackupConfiguration != null)
+            {
+                this.BackupConfiguration.Validate();
             }
         }
     }
