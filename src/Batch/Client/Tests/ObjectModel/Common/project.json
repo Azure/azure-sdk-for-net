@@ -10,10 +10,13 @@
   },
 
   "buildOptions": {
+    "warningsAsErrors": true,
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../../../tools/MSSharedLibKey.snk"
   },
   "frameworks": {
     "net45": {
-      "buildOptions": { "warningsAsErrors": true },
       "dependencies": {
       },
       "frameworkAssemblies": {
@@ -23,7 +26,6 @@
     "netstandard1.5": {
       "imports": [ "dnxcore50", "portable-net451+win8" ],
       "buildOptions": {
-        "warningsAsErrors": false,
         "define": [ "PORTABLE" ]
       },
       "dependencies": {

@@ -8,7 +8,12 @@
     "projectUrl": "",
     "licenseUrl": ""
   },
-
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../../../tools/MSSharedLibKey.snk"
+  },
 
   "testRunner": "xunit",
   "frameworks": {
