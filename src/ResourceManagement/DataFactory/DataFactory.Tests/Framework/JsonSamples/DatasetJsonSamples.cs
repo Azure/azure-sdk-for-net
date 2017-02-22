@@ -742,5 +742,43 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }";
 
+        [JsonSample]
+        public const string HttpTable = @"
+{ 
+    name: ""HttpTable"", 
+    properties: { 
+        type: ""Http"", 
+        linkedServiceName: ""fake ls"",
+        typeProperties: { 
+            relativeUrl: ""/{PartitionKey}.txt"",
+            requestMethod: ""Post"",
+            requestBody: ""fake body"",
+            additionalHeaders: ""fakeheader1: fake value 1\r\nfakeheader2: fake value 2\r\n"",
+            partitionedBy:
+            [
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+            ],
+            format:
+            {
+                type: ""TextFormat"",
+                columnDelimiter: "","",
+                rowDelimiter: "";"",
+                escapeChar: ""#"",
+                nullValue: ""\\N"",
+                encodingName: ""utf-8""
+            },
+            compression:
+            {
+                type: ""Deflate"",
+                level: ""Fastest""
+            }  
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: 1
+        } 
+    }
+}
+";
     }
 }

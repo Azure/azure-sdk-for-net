@@ -591,5 +591,24 @@ namespace DataFactory.Tests.Framework.JsonSamples
         description: ""test description""
     }
 }";
+
+        [JsonSample]
+        public const string HttpLinkedService = @"
+{
+    name: ""HttpLinkedService"",
+    properties:
+    {
+        type: ""Http"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            url : ""https://localhost/"",          
+            username: ""fakeusername"",
+            password : ""fakepassword"",
+            enableServerCertificateValidation : true
+        }
+    }
+}";
     }
 }
