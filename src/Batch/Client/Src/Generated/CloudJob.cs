@@ -357,6 +357,10 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the action the Batch service should take when any task in the job fails.
         /// </summary>
+        /// <remarks>
+        /// A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, 
+        /// or if it had a scheduling error.
+        /// </remarks>
         public Common.OnTaskFailure? OnTaskFailure
         {
             get { return this.propertyContainer.OnTaskFailureProperty.Value; }

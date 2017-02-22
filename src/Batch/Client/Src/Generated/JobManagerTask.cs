@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
+            public readonly PropertyAccessor<AuthenticationTokenSettings> AuthenticationTokenSettingsProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
@@ -43,12 +44,13 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<bool?> KillJobOnCompletionProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
-            public readonly PropertyAccessor<bool?> RunElevatedProperty;
             public readonly PropertyAccessor<bool?> RunExclusiveProperty;
+            public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
@@ -56,16 +58,20 @@ namespace Microsoft.Azure.Batch
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>("KillJobOnCompletion", BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor<bool?>("RunElevated", BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>("RunExclusive", BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
             {
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
-                    ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
+                    ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
                     "ApplicationPackageReferences",
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o)),
+                    "AuthenticationTokenSettings",
+                    BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
                     "CommandLine",
@@ -94,13 +100,13 @@ namespace Microsoft.Azure.Batch
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
                     "ResourceFiles",
                     BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.RunElevated,
-                    "RunElevated",
-                    BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor(
                     protocolObject.RunExclusive,
                     "RunExclusive",
+                    BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
+                    "UserIdentity",
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -143,6 +149,22 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.ApplicationPackageReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<ApplicationPackageReference>.TransformEnumerableToConcurrentModifiableList(value);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the task can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with an authentication token which can be used to 
+        /// authenticate Batch service operations without requiring an account access key. The token is provided via the 
+        /// AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the task can carry out using the token 
+        /// depend on the settings. For example, a task can request job permissions in order to add other tasks to the job, 
+        /// or check the status of the job or of other tasks.
+        /// </remarks>
+        public AuthenticationTokenSettings AuthenticationTokenSettings
+        {
+            get { return this.propertyContainer.AuthenticationTokenSettingsProperty.Value; }
+            set { this.propertyContainer.AuthenticationTokenSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -222,21 +244,24 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
-        /// </summary>
-        public bool? RunElevated
-        {
-            get { return this.propertyContainer.RunElevatedProperty.Value; }
-            set { this.propertyContainer.RunElevatedProperty.Value = value; }
-        }
-
-        /// <summary>
         /// Gets or sets whether the Job Manager task requires exclusive use of the compute node where it runs.
         /// </summary>
         public bool? RunExclusive
         {
             get { return this.propertyContainer.RunExclusiveProperty.Value; }
             set { this.propertyContainer.RunExclusiveProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the user identity under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to the task.
+        /// </remarks>
+        public UserIdentity UserIdentity
+        {
+            get { return this.propertyContainer.UserIdentityProperty.Value; }
+            set { this.propertyContainer.UserIdentityProperty.Value = value; }
         }
 
         #endregion // JobManagerTask
@@ -266,6 +291,7 @@ namespace Microsoft.Azure.Batch
             Models.JobManagerTask result = new Models.JobManagerTask()
             {
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
+                AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
@@ -273,8 +299,8 @@ namespace Microsoft.Azure.Batch
                 Id = this.Id,
                 KillJobOnCompletion = this.KillJobOnCompletion,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
-                RunElevated = this.RunElevated,
                 RunExclusive = this.RunExclusive,
+                UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };
 
             return result;

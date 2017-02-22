@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 4.0.0
+- Added option to create a Batch account which allocates pool nodes in the user's subscription. This is done with `PoolAllocationMode = UserSubscription`. When using this mode, a `KeyVaultReference` must also be supplied.
+- Changed classes which appear only in responses to be immutable.
+- This version targets REST API version 2017-01-01.
+
 ### Changes in 3.0.0
 - Renamed `AccountResource` to `BatchAccount`.
 - Renamed `AccountOperations` to `BatchAccountOperations`. The `IBatchManagementClient.Account` property was also renamed to `IBatchManagementClient.BatchAccount`.

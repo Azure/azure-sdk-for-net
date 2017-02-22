@@ -1,0 +1,37 @@
+{
+  "Name": "OSDisk",
+  "ProtocolName": "Models.OSDisk",
+  "Comment": "A reference to an OS disk image.",
+  "IsConstructorPublic": true,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "IEnumerable<string>",
+        "Name": "ImageUris",
+        "SummaryComment": "The collection of Virtual Hard Disk (VHD) URIs.",
+        "RemarksComment": "All the VHDs must be identical and must reside in an Azure Storage account within the same subscription and same region as the Batch account. For best performance, it is recommended that each VHD resides in a separate Azure Storage account. Each VHD can serve upto 20 Windows compute nodes or 40 Linux compute nodes. You must supply enough VHD URIs to satisfy the 'targetDedicated' property of the pool. If you do not supply enough VHD URIs, the pool will partially allocate compute nodes, and a resize error will occur.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "Common.CachingType?",
+        "Name": "Caching",
+        "SummaryComment": "The type of caching to enable for the OS disk.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": {
+        "Type": "Models.CachingType?",
+        "Name": "Caching"
+      }
+    }
+  ]
+}

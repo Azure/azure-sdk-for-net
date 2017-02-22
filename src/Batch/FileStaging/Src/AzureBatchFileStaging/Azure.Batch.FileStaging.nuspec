@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Azure.Batch.FileStaging</id>
+    <version>$version$</version>
+    <title>Microsoft Azure Batch File Staging</title>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
+
+Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
+
+For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
+
+API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</description>
+    <summary>Resource file staging support for the Microsoft Azure Batch service.</summary>
+    <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="WindowsAzure.Storage" version="8.0.1" />
+        <dependency id="Azure.Batch" version="6.0.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.FileStaging.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.FileStaging.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.FileStaging.xml" target="lib\net45" />
+  </files>
+</package>

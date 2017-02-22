@@ -35,15 +35,21 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<Common.DependencyAction?> DependencyActionProperty;
             public readonly PropertyAccessor<Common.JobAction?> JobActionProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.DependencyActionProperty = this.CreatePropertyAccessor<Common.DependencyAction?>("DependencyAction", BindingAccess.Read | BindingAccess.Write);
                 this.JobActionProperty = this.CreatePropertyAccessor<Common.JobAction?>("JobAction", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ExitOptions protocolObject) : base(BindingState.Bound)
             {
+                this.DependencyActionProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.DependencyAction, Common.DependencyAction>(protocolObject.DependencyAction),
+                    "DependencyAction",
+                    BindingAccess.Read);
                 this.JobActionProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.JobAction, Common.JobAction>(protocolObject.JobAction),
                     "JobAction",
@@ -71,6 +77,20 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region ExitOptions
+
+        /// <summary>
+        /// Gets or sets an action that the Batch service should take on tasks that depend on this task.
+        /// </summary>
+        /// <remarks>
+        /// The default is <see cref="Common.DependencyAction.Satisfy"/> for exit code 0, and <see cref="Common.DependencyAction.Block"/> 
+        /// for all other exit conditions. If the job's <see cref="CloudJob.UsesTaskDependencies"/> is false, you cannot 
+        /// add a task with this property set.
+        /// </remarks>
+        public Common.DependencyAction? DependencyAction
+        {
+            get { return this.propertyContainer.DependencyActionProperty.Value; }
+            set { this.propertyContainer.DependencyActionProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets an action to take on the job containing the task, if the task completes with the given exit condition 
@@ -108,6 +128,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.ExitOptions result = new Models.ExitOptions()
             {
+                DependencyAction = UtilitiesInternal.MapNullableEnum<Common.DependencyAction, Models.DependencyAction>(this.DependencyAction),
                 JobAction = UtilitiesInternal.MapNullableEnum<Common.JobAction, Models.JobAction>(this.JobAction),
             };
 

@@ -188,6 +188,20 @@
         },
         {
           "Key": {
+            "Type": "IList<UserAccount>",
+            "Name": "UserAccounts",
+            "SummaryComment": "The list of user accounts to be created on each node in the pool.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.UserAccount>",
+            "Name": "UserAccounts"
+          }
+        },
+        {
+          "Key": {
             "Type": "VirtualMachineConfiguration",
             "Name": "VirtualMachineConfiguration",
             "SummaryComment": "The <see cref=\"VirtualMachineConfiguration\"/> of the pool.",

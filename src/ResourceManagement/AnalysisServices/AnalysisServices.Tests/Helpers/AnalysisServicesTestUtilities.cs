@@ -57,6 +57,12 @@ namespace AnalysisServices.Tests.Helpers
             "aztest1@stabletest.ccsctp.net"
         };
 
+        public static string DefaultBakcupStorageAccount = "FT_Permanent_Group_A/stabletestbackupsa";
+
+        public static string DefaultBackupBlobContainer = "backups";
+
+        public static BackupConfiguration DefaultBackupConfiguration = new BackupConfiguration("FT_Permanent_Group_A/stabletestbackupsa", "backups", Environment.GetEnvironmentVariable("AAS_DEFAULT_BACKUP_STORAGE_ACCESS_KEY"));
+
         public static string GetDefaultCreatedResponse(string provisioningState, string state)
         {
             string responseFormat = @"{{
@@ -74,6 +80,10 @@ namespace AnalysisServices.Tests.Helpers
                                 'serverFullName':'asazure://wcus.asazure-int.windows.net/{2}',
                                 'asAdministrators':{{
                                 'members':{8}
+                                }},
+                                'backupConfiguration':{{
+                                'storageAccount':'{9}',
+                                'blobContainer':'{10}'
                                 }}
                             }}
                             }}";
@@ -90,7 +100,9 @@ namespace AnalysisServices.Tests.Helpers
                 tags,
                 provisioningState,
                 state,
-                admins);
+                admins,
+                DefaultBakcupStorageAccount,
+                DefaultBackupBlobContainer);
         }
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -107,7 +119,8 @@ namespace AnalysisServices.Tests.Helpers
                 Location = DefaultLocation,
                 Tags = DefaultTags,
                 Sku = DefaultSku,
-                AsAdministrators = new ServerAdministrators(DefaultAdministrators)
+                AsAdministrators = new ServerAdministrators(DefaultAdministrators),
+                BackupConfiguration = DefaultBackupConfiguration
             };
 
             return defaultServer;

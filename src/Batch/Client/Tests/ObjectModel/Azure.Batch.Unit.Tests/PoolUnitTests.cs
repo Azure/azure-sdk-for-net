@@ -103,14 +103,14 @@ namespace Azure.Batch.Unit.Tests
                                                     {
                                                         new Models.CertificateReference
                                                             {
-                                                                StoreLocation = Models.CertificateStoreLocation.Currentuser,
+                                                                StoreLocation = Models.CertificateStoreLocation.CurrentUser,
                                                                 StoreName = "My",
                                                                 Thumbprint = string.Empty,
                                                                 ThumbprintAlgorithm = "sha1",
                                                                 Visibility = new List<Models.CertificateVisibility?>()
                                                                     {
-                                                                        Models.CertificateVisibility.Remoteuser,
-                                                                        Models.CertificateVisibility.Starttask,
+                                                                        Models.CertificateVisibility.RemoteUser,
+                                                                        Models.CertificateVisibility.StartTask,
                                                                         Models.CertificateVisibility.Task
                                                                     }
                                                             }
@@ -235,7 +235,8 @@ namespace Azure.Batch.Unit.Tests
                                     CommandLine = "-start",
                                     EnvironmentSettings = new[] { new Models.EnvironmentSetting { Name = "windows", Value = "foo" } },
                                     MaxTaskRetryCount = 3,
-                                    RunElevated = false,
+                                    UserIdentity = new Protocol.Models.UserIdentity(
+                                        autoUser: new Protocol.Models.AutoUserSpecification(elevationLevel: Protocol.Models.ElevationLevel.NonAdmin)),
                                     WaitForSuccess = false
                                 };
 
@@ -266,7 +267,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(pool.StartTask.EnvironmentSettings.FirstOrDefault().Name, "windows");
                 Assert.Equal(pool.StartTask.EnvironmentSettings.FirstOrDefault().Value, "foo");
                 Assert.Equal(pool.StartTask.MaxTaskRetryCount, 3);
-                Assert.Equal(pool.StartTask.RunElevated, false);
+                Assert.Equal(pool.StartTask.UserIdentity.AutoUser.ElevationLevel, ElevationLevel.NonAdmin);
                 Assert.Equal(pool.StartTask.WaitForSuccess, false);
             }
         }

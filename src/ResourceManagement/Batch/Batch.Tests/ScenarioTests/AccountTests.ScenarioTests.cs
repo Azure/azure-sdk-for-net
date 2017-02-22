@@ -92,5 +92,84 @@ namespace Batch.Tests.ScenarioTests
                 }
             }
         }
+
+        [Fact]
+        public async Task BatchAccountCanCreateWithBYOSEnabled()
+        {
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
+            {
+                string resourceGroupName = TestUtilities.GenerateName();
+                string batchAccountName = TestUtilities.GenerateName();
+                string keyvaultName = TestUtilities.GenerateName();
+                ResourceGroup group = new ResourceGroup(this.Location);
+                await this.ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
+
+                try
+                {
+                    //Register with keyvault just in case we haven't already
+                    await this.ResourceManagementClient.Providers.RegisterWithHttpMessagesAsync("Microsoft.KeyVault");
+
+                    var result = await this.ResourceManagementClient.Resources.CreateOrUpdateWithHttpMessagesAsync(
+                        resourceGroupName,
+                        "Microsoft.KeyVault",
+                        "",
+                        "vaults",
+                        keyvaultName,
+                        "2015-06-01",
+                        new GenericResource(this.Location)
+                        {
+                            Properties = new Dictionary<string, object>
+                            {
+                                {"tenantId", "72f988bf-86f1-41af-91ab-2d7cd011db47"},
+                                {"sku", new Dictionary<string, object>{{"family", "A"}, {"name", "standard"}}},
+                                {"accessPolicies", new []
+                                    {
+                                        new Dictionary<string, object>
+                                        {
+                                            {"objectId", "f520d84c-3fd3-4cc8-88d4-2ed25b00d27a"},
+                                            {"tenantId", "72f988bf-86f1-41af-91ab-2d7cd011db47"},
+                                            {"permissions", new Dictionary<string, object>
+                                                {
+                                                    {"secrets", new [] { "All" }},
+                                                    {"keys", new [] { "All" }},
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {"enabledForDeployment", true},
+                                {"enabledForTemplateDeployment", true},
+                                {"enabledForDiskEncryption", true}
+                            }
+                        });
+
+                    var keyVaultReferenceId =
+                        $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{keyvaultName}";
+                    var keyVaultReferenceUrl = ((Newtonsoft.Json.Linq.JObject)result.Body.Properties)["vaultUri"] + "/";
+                    // Create an account
+                    BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(
+                        this.Location,
+                        poolAllocationMode: PoolAllocationMode.UserSubscription,
+                        keyVaultReference: new KeyVaultReference(
+                            keyVaultReferenceId,
+                            keyVaultReferenceUrl));
+
+                    await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
+
+                    // Get the account and verify some properties
+                    BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
+                    Assert.Equal(batchAccountName, batchAccount.Name);
+                    Assert.True(batchAccount.CoreQuota > 0);
+                    Assert.Equal(PoolAllocationMode.UserSubscription, batchAccount.PoolAllocationMode);
+                    Assert.Equal(keyVaultReferenceId, batchAccount.KeyVaultReference.Id);
+                    Assert.Equal(keyVaultReferenceUrl, batchAccount.KeyVaultReference.Url);
+                }
+                finally
+                {
+                    await this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
+                }
+            }
+        }
+
     }
 }
