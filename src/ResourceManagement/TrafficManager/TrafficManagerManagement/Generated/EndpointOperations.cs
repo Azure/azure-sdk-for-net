@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -251,6 +251,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                     if (parameters.Endpoint.Properties.MinChildEndpoints != null)
                     {
                         propertiesValue["minChildEndpoints"] = parameters.Endpoint.Properties.MinChildEndpoints.Value;
+                    }
+                    
+                    if (parameters.Endpoint.Properties.GeoMapping != null)
+                    {
+                        JArray geoMappingArray = new JArray();
+                        foreach (string geoMappingItem in parameters.Endpoint.Properties.GeoMapping)
+                        {
+                            geoMappingArray.Add(geoMappingItem);
+                        }
+                        propertiesValue["geoMapping"] = geoMappingArray;
                     }
                 }
                 
@@ -383,6 +393,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                 propertiesInstance.MinChildEndpoints = minChildEndpointsInstance;
                             }
+                            
+                            JToken geoMappingArray2 = propertiesValue2["geoMapping"];
+                            if (geoMappingArray2 != null && geoMappingArray2.Type != JTokenType.Null)
+                            {
+                                propertiesInstance.GeoMapping = new System.Collections.Generic.List<string>();
+                                foreach (JToken geoMappingValue in ((JArray)geoMappingArray2))
+                                {
+                                    propertiesInstance.GeoMapping.Add(((string)geoMappingValue));
+                                }
+                            }
                         }
                     }
                     
@@ -490,7 +510,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -655,7 +675,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -812,6 +832,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                 propertiesInstance.MinChildEndpoints = minChildEndpointsInstance;
                             }
+                            
+                            JToken geoMappingArray = propertiesValue["geoMapping"];
+                            if (geoMappingArray != null && geoMappingArray.Type != JTokenType.Null)
+                            {
+                                propertiesInstance.GeoMapping = new System.Collections.Generic.List<string>();
+                                foreach (JToken geoMappingValue in ((JArray)geoMappingArray))
+                                {
+                                    propertiesInstance.GeoMapping.Add(((string)geoMappingValue));
+                                }
+                            }
                         }
                     }
                     
@@ -935,7 +965,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1032,6 +1062,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                     if (parameters.Endpoint.Properties.MinChildEndpoints != null)
                     {
                         propertiesValue["minChildEndpoints"] = parameters.Endpoint.Properties.MinChildEndpoints.Value;
+                    }
+                    
+                    if (parameters.Endpoint.Properties.GeoMapping != null)
+                    {
+                        JArray geoMappingArray = new JArray();
+                        foreach (string geoMappingItem in parameters.Endpoint.Properties.GeoMapping)
+                        {
+                            geoMappingArray.Add(geoMappingItem);
+                        }
+                        propertiesValue["geoMapping"] = geoMappingArray;
                     }
                 }
                 
@@ -1163,6 +1203,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                             {
                                 uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                 propertiesInstance.MinChildEndpoints = minChildEndpointsInstance;
+                            }
+                            
+                            JToken geoMappingArray2 = propertiesValue2["geoMapping"];
+                            if (geoMappingArray2 != null && geoMappingArray2.Type != JTokenType.Null)
+                            {
+                                propertiesInstance.GeoMapping = new System.Collections.Generic.List<string>();
+                                foreach (JToken geoMappingValue in ((JArray)geoMappingArray2))
+                                {
+                                    propertiesInstance.GeoMapping.Add(((string)geoMappingValue));
+                                }
                             }
                         }
                     }

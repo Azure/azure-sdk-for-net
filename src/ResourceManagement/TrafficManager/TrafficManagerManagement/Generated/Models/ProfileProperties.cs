@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// <summary>
         /// Optional. Gets or sets the traffic routing method of the Traffic
         /// Manager profile.  Possible values are 'Performance', 'Weighted',
-        /// or 'Priority'.
+        /// 'Priority', or 'Geographic'.
         /// </summary>
         public string TrafficRoutingMethod
         {
