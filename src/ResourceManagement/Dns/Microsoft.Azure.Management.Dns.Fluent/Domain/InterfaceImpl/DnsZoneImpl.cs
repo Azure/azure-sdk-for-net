@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>The record set containing Soa (start of authority) record associated with this Dns zone.</return>
+        /// <return>The record set containing Soa (start of authority) record associated with this DNS zone.</return>
         Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet Microsoft.Azure.Management.Dns.Fluent.IDnsZone.GetSoaRecordSet()
         {
             return this.GetSoaRecordSet() as Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet;
@@ -149,17 +149,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Srv record set in the Dns zone.
+        /// Removes a Srv record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Srv record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutSrvRecordSet(string name)
         {
             return this.WithoutSrvRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies definition of a Srv record set to be attached to the Dns zone.
+        /// Specifies definition of a Srv record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">The name of the Srv record set.</param>
         /// <return>The stage representing configuration for the Srv record set.</return>
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of an A record set to be attached to the Dns zone.
+        /// Specifies definition of an A record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
         /// <return>The stage representing configuration for the A record set.</return>
@@ -179,18 +179,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Cname record set to be attached to the Dns zone.
+        /// Specifies definition of a Cname record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Cname record set.</param>
         /// <param name="alias">The Cname record alias.</param>
-        /// <return>The next stage of Dns zone definition.</return>
+        /// <return>The next stage of DNS zone definition.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithCnameRecordSet(string name, string alias)
         {
             return this.WithCnameRecordSet(name, alias) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Ptr record set in this Dns zone.
+        /// Begins the description of an update of an existing Ptr record set in this DNS zone.
         /// </summary>
         /// <param name="name">Name of the Ptr record set.</param>
         /// <return>The stage representing configuration for the Ptr record set.</return>
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a MX record set to be attached to the Dns zone.
+        /// Specifies definition of a MX record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the MX record set.</param>
         /// <return>The stage representing configuration for the MX record set.</return>
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing A record set in this Dns zone.
+        /// Begins the description of an update of an existing A record set in this DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
         /// <return>The stage representing configuration for the A record set.</return>
@@ -220,37 +220,37 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a MX record set in the Dns zone.
+        /// Removes a MX record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the MX record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutMXRecordSet(string name)
         {
             return this.WithoutMXRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Removes a Cname record set in the Dns zone.
+        /// Removes a Cname record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Cname record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutCnameRecordSet(string name)
         {
             return this.WithoutCnameRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Removes a Ptr record set in the Dns zone.
+        /// Removes a Ptr record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutPtrRecordSet(string name)
         {
             return this.WithoutPtrRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing MX record set in this Dns zone.
+        /// Begins the description of an update of an existing MX record set in this DNS zone.
         /// </summary>
         /// <param name="name">Name of the MX record set.</param>
         /// <return>The stage representing configuration for the MX record set.</return>
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Txt record set in this Dns zone.
+        /// Begins the description of an update of an existing Txt record set in this DNS zone.
         /// </summary>
         /// <param name="name">The name of the Txt record set.</param>
         /// <return>The stage representing configuration for the Txt record set.</return>
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Ptr record set to be attached to the Dns zone.
+        /// Specifies definition of a Ptr record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Ptr record set.</param>
         /// <return>The stage representing configuration for the Ptr record set.</return>
@@ -280,27 +280,27 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Aaaa record set in the Dns zone.
+        /// Removes a Aaaa record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutAaaaRecordSet(string name)
         {
             return this.WithoutAaaaRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Removes a Txt record set in the Dns zone.
+        /// Removes a Txt record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Txt record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutTxtRecordSet(string name)
         {
             return this.WithoutTxtRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies definition of an NS record set to be attached to the Dns zone.
+        /// Specifies definition of an NS record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the NS record set.</param>
         /// <return>The stage representing configuration for the NS record set.</return>
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets Begins the description of an update of the Soa record in this Dns zone.
+        /// Gets Begins the description of an update of the Soa record in this DNS zone.
         /// </summary>
         /// <summary>
         /// Gets the stage representing configuration for the Txt record set.
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Txt record set to be attached to the Dns zone.
+        /// Specifies definition of a Txt record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">The name of the Txt record set.</param>
         /// <return>The stage representing configuration for the Txt record set.</return>
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set to be attached to the Dns zone.
+        /// Specifies definition of an Aaaa record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the Aaaa record set.</param>
         /// <return>The stage representing configuration for the Aaaa record set.</return>
@@ -371,17 +371,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a A record set in the Dns zone.
+        /// Removes a A record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutARecordSet(string name)
         {
             return this.WithoutARecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Aaaa record set in this Dns zone.
+        /// Begins the description of an update of an existing Aaaa record set in this DNS zone.
         /// </summary>
         /// <param name="name">Name of the Aaaa record set.</param>
         /// <return>The stage representing configuration for the Aaaa record set.</return>
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="name">Name of the Cname record set.</param>
         /// <param name="alias">The Cname record alias.</param>
-        /// <return>The next stage of Dns zone definition.</return>
+        /// <return>The next stage of DNS zone definition.</return>
         DnsZone.Definition.IWithCreate DnsZone.Definition.IWithRecordSet.WithCnameRecordSet(string name, string alias)
         {
             return this.WithCnameRecordSet(name, alias) as DnsZone.Definition.IWithCreate;

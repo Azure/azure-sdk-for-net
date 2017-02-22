@@ -78,7 +78,7 @@ namespace Azure.Tests.Dns
                     .WithTag("b", "bb")
                     .Create();
 
-                    // Check Dns zone properties
+                    // Check DNS zone properties
                     Assert.True(dnsZone.Name.StartsWith(topLevelDomain));
                     Assert.True(dnsZone.NameServers.Count() > 0); // Default '@' name servers
                     Assert.True(dnsZone.Tags.Count == 2);

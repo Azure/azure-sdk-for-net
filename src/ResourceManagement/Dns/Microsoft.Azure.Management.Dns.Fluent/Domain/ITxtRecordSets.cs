@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to Txt record sets in a Dns zone.
+    /// Entry point to Txt record sets in a DNS zone.
     /// </summary>
     public interface ITxtRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet>,

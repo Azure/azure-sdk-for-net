@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
 
     /// <summary>
     /// The final stage of the DNS zone record set definition.
-    /// At this stage, any remaining optional settings can be specified, or the Dns zone record set
+    /// At this stage, any remaining optional settings can be specified, or the DNS zone record set
     /// definition can be attached to the parent traffic manager profile definition using DnsRecordSet.DefinitionStages.WithAttach.attach().
     /// </summary>
     /// <typeparam name="Parent">The return type of DnsRecordSet.DefinitionStages.WithAttach.attach().</typeparam>

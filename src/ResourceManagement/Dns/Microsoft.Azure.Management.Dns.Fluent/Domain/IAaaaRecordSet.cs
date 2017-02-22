@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a Aaaa (IPv6) record set in Azure Dns Zone.
+    /// An immutable client-side representation of a Aaaa (IPv6) record set in Azure DNS Zone.
     /// </summary>
     public interface IAaaaRecordSet  :
         IDnsRecordSet

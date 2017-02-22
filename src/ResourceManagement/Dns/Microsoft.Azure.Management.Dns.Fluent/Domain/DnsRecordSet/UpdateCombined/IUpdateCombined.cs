@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCombined
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet;
 
     /// <summary>
-    /// The entirety of a record sets update as a part of parent Dns zone update.
+    /// The entirety of a record sets update as a part of parent DNS zone update.
     /// </summary>
     public interface IUpdateCombined  :
         IUpdateARecordSet,

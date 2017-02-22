@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update;
 
     /// <summary>
-    /// The entirety of an Aaaa record set update as a part of parent Dns zone update.
+    /// The entirety of an AAAA record set update as a part of parent DNS zone update.
     /// </summary>
     public interface IUpdateAaaaRecordSet  :
         IWithAaaaRecordIPv6Address,

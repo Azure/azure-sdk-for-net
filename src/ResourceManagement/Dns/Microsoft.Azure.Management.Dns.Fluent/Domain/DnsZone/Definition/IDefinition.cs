@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition;
 
     /// <summary>
-    /// The entirety of the Dns zone definition.
+    /// The entirety of the DNS zone definition.
     /// </summary>
     public interface IDefinition  :
         IBlank,
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     }
 
     /// <summary>
-    /// The stage of the Dns zone definition allowing to specify the resource group.
+    /// The stage of the DNS zone definition allowing to specify the resource group.
     /// </summary>
     public interface IBlank  :
         IWithGroupAndRegion<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate>
@@ -37,15 +37,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     }
 
     /// <summary>
-    /// The stage of the Dns zone definition allowing to specify record set.
+    /// The stage of the DNS zone definition allowing to specify record set.
     /// </summary>
     public interface IWithRecordSet 
     {
         /// <summary>
-        /// Specifies definition of a Ptr record set.
+        /// Specifies definition of a PTR record set.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IPtrRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefinePtrRecordSet(string name);
 
         /// <summary>
@@ -91,11 +91,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IARecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineARecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Cname record set.
+        /// Specifies definition of a CName record set.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <param name="alias">The Cname record alias.</param>
-        /// <return>The next stage of Dns zone definition.</return>
+        /// <param name="name">Name of the CName record set.</param>
+        /// <param name="alias">The CName record alias.</param>
+        /// <return>The next stage of DNS zone definition.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate WithCnameRecordSet(string name, string alias);
     }
 }

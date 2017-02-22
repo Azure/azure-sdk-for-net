@@ -169,8 +169,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The final stage of the Dns zone record set definition.
-    /// At this stage, any remaining optional settings can be specified, or the Dns zone record set
+    /// The final stage of the DNS zone record set definition.
+    /// At this stage, any remaining optional settings can be specified, or the DNS zone record set
     /// definition can be attached to the parent traffic manager profile definition
     /// using DnsRecordSet.UpdateDefinitionStages.WithAttach.attach().
     /// </summary>
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The entirety of a Dns zone record set definition as a part of parent update.
+    /// The entirety of a DNS zone record set definition as a part of parent update.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :

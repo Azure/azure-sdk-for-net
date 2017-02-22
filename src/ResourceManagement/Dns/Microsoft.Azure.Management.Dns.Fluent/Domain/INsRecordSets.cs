@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to NS record sets in a Dns zone.
+    /// Entry point to NS record sets in a DNS zone.
     /// </summary>
     public interface INSRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.INSRecordSet>,

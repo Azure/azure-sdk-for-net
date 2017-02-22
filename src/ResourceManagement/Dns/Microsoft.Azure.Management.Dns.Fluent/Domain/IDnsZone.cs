@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.IARecordSets ARecordSets { get; }
 
-        /// <return>The record set containing Soa (start of authority) record associated with this Dns zone.</return>
+        /// <return>The record set containing Soa (start of authority) record associated with this DNS zone.</return>
         Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet GetSoaRecordSet();
 
         /// <summary>

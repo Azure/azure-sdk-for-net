@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The set of configurations that can be updated for Dns record set irrespective of their type RecordType.
+    /// The set of configurations that can be updated for DNS record set irrespective of their type RecordType.
     /// </summary>
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate>,

@@ -88,7 +88,7 @@ namespace ManageDns
                 //============================================================
                 // Creates a CName record and bind it with the web app
 
-                // Step 1: Adds CName Dns record to root DNS zone that specify web app host domain as an
+                // Step 1: Adds CName DNS record to root DNS zone that specify web app host domain as an
                 // alias for www.[customDomainName]
 
                 Utilities.Log("Updating DNS zone by adding a CName record...");
@@ -224,7 +224,7 @@ namespace ManageDns
                 Utilities.Log("Virtual machine created");
 
                 //============================================================
-                // Update child Dns zone by adding a A record pointing to virtual machine IPv4 address
+                // Update child DNS zone by adding a A record pointing to virtual machine IPv4 address
 
                 var vm2PublicIpAddress = virtualMachine2.GetPrimaryPublicIPAddress();
                 Utilities.Log("Updating child DNS zone " + partnerSubDomainName + "...");
@@ -247,7 +247,7 @@ namespace ManageDns
                 Utilities.Print(rootDnsZone);
 
                 //============================================================
-                // Deletes the Dns zone
+                // Deletes the DNS zone
 
                 Utilities.Log("Deleting child DNS zone " + partnersDnsZone.Name + "...");
                 azure.DnsZones.DeleteById(partnersDnsZone.Id);
