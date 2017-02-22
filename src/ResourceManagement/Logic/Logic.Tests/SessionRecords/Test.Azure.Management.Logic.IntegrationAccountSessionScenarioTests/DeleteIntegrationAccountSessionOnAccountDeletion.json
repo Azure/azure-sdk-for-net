@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9811?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTgxMT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3685?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MzY4NT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "91"
         ],
         "x-ms-client-request-id": [
-          "d9ea285b-6ad4-4b0d-ab19-06b0074291dc"
+          "311fc1da-1658-4d5a-abae-112bf3cf09ac"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.1"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9811\",\r\n  \"name\": \"IntegrationAccount9811\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3685\",\r\n  \"name\": \"IntegrationAccount3685\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts\",\r\n  \"location\": \"westus\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "290"
@@ -38,53 +38,53 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 04 Feb 2017 00:59:27 GMT"
+          "Sat, 25 Feb 2017 00:59:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:67ec0660-dd5a-4c25-98d7-b04bf09330eb"
+          "westus:852d59c0-f54b-4ec4-af3a-2d52b9fb33ea"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1182"
         ],
         "x-ms-correlation-request-id": [
-          "2d2ad241-a629-4341-8da4-a3bf6c0f2a9f"
+          "c10c26b9-4483-4851-9c53-87af919a4953"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170204T005928Z:2d2ad241-a629-4341-8da4-a3bf6c0f2a9f"
+          "WESTUS2:20170225T005939Z:c10c26b9-4483-4851-9c53-87af919a4953"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9811/sessions/IntegrationAccountSession1692?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTgxMS9zZXNzaW9ucy9JbnRlZ3JhdGlvbkFjY291bnRTZXNzaW9uMTY5Mj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3685/sessions/IntegrationAccountSession7201?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MzY4NS9zZXNzaW9ucy9JbnRlZ3JhdGlvbkFjY291bnRTZXNzaW9uNzIwMT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"content\": \"123\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"IntegrationAccountSession\": \"IntegrationAccountSession1692\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"content\": \"123\"\r\n  },\r\n  \"tags\": {\r\n    \"IntegrationAccountSession\": \"IntegrationAccountSession7201\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "160"
+          "135"
         ],
         "x-ms-client-request-id": [
-          "e5f960a9-5bc2-47a9-8f7e-57a2b060760d"
+          "84e7d073-d499-4cc4-81c5-ed7820b985f5"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.1"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"createdTime\": \"2017-02-04T00:59:28.4608095Z\",\r\n    \"changedTime\": \"2017-02-04T00:59:28.4608095Z\",\r\n    \"content\": \"123\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9811/sessions/IntegrationAccountSession1692\",\r\n  \"name\": \"IntegrationAccountSession1692\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/sessions\",\r\n  \"etag\": \"\\\"08587154369170167581\\\"\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"createdTime\": \"2017-02-25T00:59:40.3854014Z\",\r\n    \"changedTime\": \"2017-02-25T00:59:40.3854014Z\",\r\n    \"content\": \"123\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3685/sessions/IntegrationAccountSession7201\",\r\n  \"name\": \"IntegrationAccountSession7201\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/sessions\",\r\n  \"etag\": \"\\\"08587136225050921625\\\"\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "438"
@@ -99,47 +99,47 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 04 Feb 2017 00:59:27 GMT"
+          "Sat, 25 Feb 2017 00:59:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"08587154369170167581\""
+          "\"08587136225050921625\""
         ],
         "x-ms-request-id": [
-          "westus:b4231fd2-a11f-4c5a-9acf-d160d933f354"
+          "westus:604f7aba-0c3d-4c33-8a5f-9b41270ce1bb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1181"
         ],
         "x-ms-correlation-request-id": [
-          "c03d9014-4c7e-4910-a438-6fa528c62af2"
+          "d2473c51-d65b-428b-b6ff-ae4c47bd52de"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170204T005928Z:c03d9014-4c7e-4910-a438-6fa528c62af2"
+          "WESTUS2:20170225T005940Z:d2473c51-d65b-428b-b6ff-ae4c47bd52de"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9811?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTgxMT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3685?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MzY4NT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3fafe0e6-4c7d-42b8-a8fb-9b8f5a7c762a"
+          "96ce80b8-737d-46c7-902c-fee0b27bf172"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.1"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
       "ResponseBody": "",
@@ -154,47 +154,47 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 04 Feb 2017 00:59:28 GMT"
+          "Sat, 25 Feb 2017 00:59:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:6f692466-f9be-4f2e-a426-b956c2a49b65"
+          "westus:6669127c-5784-4a7b-8e78-f2773b39be72"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1180"
         ],
         "x-ms-correlation-request-id": [
-          "cc08c729-6dca-401b-961e-09e45d3ed46c"
+          "e2d36a88-20d3-42a6-872a-868bbd7590b3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170204T005929Z:cc08c729-6dca-401b-961e-09e45d3ed46c"
+          "WESTUS2:20170225T005941Z:e2d36a88-20d3-42a6-872a-868bbd7590b3"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9811/sessions/IntegrationAccountSession1692?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTgxMS9zZXNzaW9ucy9JbnRlZ3JhdGlvbkFjY291bnRTZXNzaW9uMTY5Mj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3685/sessions/IntegrationAccountSession7201?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MzY4NS9zZXNzaW9ucy9JbnRlZ3JhdGlvbkFjY291bnRTZXNzaW9uNzIwMT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0f9d20eb-a92b-4499-8c72-7bef83ad9af6"
+          "fcfc717c-d9d3-433b-be54-349d6c582449"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.1"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Logic/integrationAccounts/IntegrationAccount9811' under resource group 'flowrg' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Logic/integrationAccounts/IntegrationAccount3685' under resource group 'flowrg' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "168"
@@ -209,7 +209,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 04 Feb 2017 00:59:28 GMT"
+          "Sat, 25 Feb 2017 00:59:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -218,13 +218,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "8a3e00f6-a517-44c0-83ea-987905f72d30"
+          "266a954d-f32c-4a1a-8ea3-fedf5a2cdf59"
         ],
         "x-ms-correlation-request-id": [
-          "8a3e00f6-a517-44c0-83ea-987905f72d30"
+          "266a954d-f32c-4a1a-8ea3-fedf5a2cdf59"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170204T005929Z:8a3e00f6-a517-44c0-83ea-987905f72d30"
+          "WESTUS2:20170225T005941Z:266a954d-f32c-4a1a-8ea3-fedf5a2cdf59"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -235,8 +235,8 @@
   ],
   "Names": {
     "DeleteIntegrationAccountSessionOnAccountDeletion": [
-      "IntegrationAccount9811",
-      "IntegrationAccountSession1692"
+      "IntegrationAccount3685",
+      "IntegrationAccountSession7201"
     ]
   },
   "Variables": {

@@ -262,12 +262,6 @@ namespace Test.Azure.Management.Logic
             var handler = new RecordedDelegatingHandler();
             var client = this.CreateIntegrationAccountClient(handler);
 
-            handler.Response = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent(string.Empty)
-            };
-
             Assert.Throws<ValidationException>(() => client.Sessions.Get(
                 resourceGroupName: null,
                 integrationAccountName: "IntegrationAccountName",
@@ -280,10 +274,6 @@ namespace Test.Azure.Management.Logic
                 resourceGroupName: ResourceGroupName,
                 integrationAccountName: "IntegrationAccountName",
                 sessionName: null));
-            Assert.Throws<CloudException>(() => client.Sessions.Get(
-                resourceGroupName: ResourceGroupName,
-                integrationAccountName: "IntegrationAccountName",
-                sessionName: "SessionName"));
         }
 
         [Fact]
@@ -306,7 +296,7 @@ namespace Test.Azure.Management.Logic
             handler.Request.ValidateAuthorizationHeader();
             handler.Request.ValidateMethod(HttpMethod.Get);
 
-            this.ValidateSession(result);
+            this.ValidateSession(result as IntegrationAccountSession);
         }
 
         private void ValidateSessionList(IPage<IntegrationAccountSession> result)
