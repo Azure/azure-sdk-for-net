@@ -44,7 +44,7 @@ namespace Billing.Tests.ScenarioTests
                 Assert.NotNull(invoices.First().DownloadUrl);
                 var invoice = invoices.First();
                 Assert.False(string.IsNullOrWhiteSpace(invoice.DownloadUrl.Url));
-                Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue && invoice.DownloadUrl.ExpiryTime > DateTime.UtcNow);
+                Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Billing.Tests.ScenarioTests
                 var invoice = billingMgmtClient.Invoices.GetLatest();
                 Assert.NotNull(invoice);
                 Assert.False(string.IsNullOrWhiteSpace(invoice.DownloadUrl.Url));
-                Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue && invoice.DownloadUrl.ExpiryTime > DateTime.UtcNow);
+                Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Billing.Tests.ScenarioTests
                 Assert.NotNull(invoice);
                 Assert.Equal(InvoiceName, invoice.Name);
                 Assert.False(string.IsNullOrWhiteSpace(invoice.DownloadUrl.Url));
-                Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue && invoice.DownloadUrl.ExpiryTime > DateTime.UtcNow);
+                Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue);
             }
         }
 
