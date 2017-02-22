@@ -40,11 +40,5 @@
     "WindowsAzure.Storage": "8.0.1",
     "Microsoft.Azure.Management.Batch": "3.0.0",
     "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8"
-  },
-  "scripts": {
-    "postcompile": [
-      "dotnet pack --no-build --configuration %compile:Configuration%",
-      "nuget add bin\\Debug\\Common.1.0.0.nupkg -Source ..\\..\\..\\LocalNuget -NonInteractive"
-    ]
   }
 }

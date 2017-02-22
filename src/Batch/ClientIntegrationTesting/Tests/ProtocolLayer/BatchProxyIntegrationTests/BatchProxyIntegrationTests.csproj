@@ -16,14 +16,6 @@
   <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <ItemGroup>
-    <Reference Include="Azure.Batch, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\Packages\Azure.Batch.6.0.0\lib\net45\Azure.Batch.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\Packages\Common.1.0.0\lib\net45\Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Azure.Management.Batch, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Batch.3.0.0\lib\net45\Microsoft.Azure.Management.Batch.dll</HintPath>
       <Private>True</Private>
@@ -41,11 +33,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.13.8.999, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\Packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.13.8.999, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\Packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -101,28 +93,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\..\Src\Azure.Batch\Batch.xproj">
+    <ProjectReference Include="..\..\..\Src\Azure.Batch\Batch.csproj">
       <Project>{3328FBBF-9C20-4775-B367-856C09DC13BF}</Project>
       <Name>Batch</Name>
-    </ProjectReference>-->
-    <!--<ProjectReference Include="..\..\ObjectModel\Common\BatchTestCommon.csproj">
+    </ProjectReference>
+    <ProjectReference Include="..\..\ObjectModel\Common\BatchTestCommon.csproj">
       <Project>{b697759f-6ef9-4142-8bd3-d78bf18c678e}</Project>
       <Name>BatchTestCommon</Name>
-    </ProjectReference>-->
+    </ProjectReference>
     <ProjectReference Include="..\..\ObjectModel\IntegrationTestCommon\IntegrationTestCommon.csproj">
       <Project>{71f7cd84-d760-425f-823b-def2eaae5dc1}</Project>
       <Name>IntegrationTestCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="$(LibrarySourceFolder)\Batch\Client\Tests\ProtocolLayer\BatchProxyIntegrationTests\app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationPackageCommon.cs" />
-    <Compile Include="IntegrationJobApplicationPackageReferencesTests.cs" />
-    <Compile Include="IntegrationPoolApplicationPackageReferencesTests.cs" />
-    <Compile Include="TestUtilities.cs" />
+    <Compile Include="$(LibrarySourceFolder)\Batch\Client\Tests\ProtocolLayer\BatchProxyIntegrationTests\**\*.cs" Exclude="$(LibrarySourceFolder)\Batch\Client\Tests\ProtocolLayer\BatchProxyIntegrationTests\obj\**\*">
+      <Link>%(RecursiveDir)\%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

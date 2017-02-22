@@ -43,11 +43,5 @@
         "System.Threading.Tasks": "4.3.0"
       }
     }
-  },
-  "scripts": {
-    "postcompile": [
-      "dotnet pack --no-build --configuration %compile:Configuration%",
-      "nuget add bin\\Debug\\Azure.Batch.6.0.0.nupkg -Source ..\\..\\LocalNuget -NonInteractive"
-    ]
   }
 }
