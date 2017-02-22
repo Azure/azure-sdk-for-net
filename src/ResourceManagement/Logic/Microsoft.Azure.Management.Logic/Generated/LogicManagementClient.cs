@@ -138,6 +138,11 @@ namespace Microsoft.Azure.Management.Logic
         public virtual ICertificatesOperations Certificates { get; private set; }
 
         /// <summary>
+        /// Gets the ISessionsOperations.
+        /// </summary>
+        public virtual ISessionsOperations Sessions { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the LogicManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -350,6 +355,7 @@ namespace Microsoft.Azure.Management.Logic
             this.Partners = new PartnersOperations(this);
             this.Agreements = new AgreementsOperations(this);
             this.Certificates = new CertificatesOperations(this);
+            this.Sessions = new SessionsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-06-01";
             this.AcceptLanguage = "en-US";

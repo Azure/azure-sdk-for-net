@@ -131,6 +131,11 @@ namespace Microsoft.Azure.Management.Logic
         /// </summary>
         ICertificatesOperations Certificates { get; }
 
+        /// <summary>
+        /// Gets the ISessionsOperations.
+        /// </summary>
+        ISessionsOperations Sessions { get; }
+
             /// <summary>
         /// Lists all of the available Logic REST API operations.
         /// </summary>
