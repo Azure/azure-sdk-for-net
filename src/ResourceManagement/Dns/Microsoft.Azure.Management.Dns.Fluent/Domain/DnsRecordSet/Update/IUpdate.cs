@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet;
@@ -111,25 +111,25 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Mx record set definition allowing to add or remove Mx record.
+    /// The stage of the MX record set definition allowing to add or remove MX record.
     /// </summary>
-    public interface IWithMxRecordMailExchange 
+    public interface IWithMXRecordMailExchange 
     {
         /// <summary>
-        /// Removes Mx record with the provided mail exchange server and priority from this record set.
+        /// Removes MX record with the provided mail exchange server and priority from this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet WithoutMailExchange(string mailExchangeHostName, int priority);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet WithoutMailExchange(string mailExchangeHostName, int priority);
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet WithMailExchange(string mailExchangeHostName, int priority);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet WithMailExchange(string mailExchangeHostName, int priority);
     }
 
     /// <summary>

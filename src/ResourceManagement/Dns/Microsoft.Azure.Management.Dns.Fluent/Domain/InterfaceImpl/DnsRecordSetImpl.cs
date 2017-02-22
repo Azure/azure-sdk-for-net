@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="ipv4Address">The Ipv4 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithARecordIpv4AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithARecordIpv4Address<DnsZone.Update.IUpdate>.WithIpv4Address(string ipv4Address)
+        DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithARecordIPv4Address<DnsZone.Update.IUpdate>.WithIpv4Address(string ipv4Address)
         {
-            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateDefinition.IWithARecordIpv4AddressOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
@@ -280,25 +280,25 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet DnsRecordSet.Update.IWithMxRecordMailExchange.WithMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet DnsRecordSet.Update.IWithMXRecordMailExchange.WithMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet;
+            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet;
         }
 
         /// <summary>
-        /// Removes Mx record with the provided mail exchange server and priority from this record set.
+        /// Removes MX record with the provided mail exchange server and priority from this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet DnsRecordSet.Update.IWithMxRecordMailExchange.WithoutMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet DnsRecordSet.Update.IWithMXRecordMailExchange.WithoutMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithoutMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet;
+            return this.WithoutMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet;
         }
 
         /// <summary>
@@ -365,25 +365,25 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchange<DnsZone.Update.IUpdate>.WithMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchange<DnsZone.Update.IUpdate>.WithMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.Definition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithMxRecordMailExchange<DnsZone.Definition.IWithCreate>.WithMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.Definition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithMXRecordMailExchange<DnsZone.Definition.IWithCreate>.WithMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.Definition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.Definition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -466,9 +466,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6Address<DnsZone.Update.IUpdate>.WithIpv6Address(string ipv6Address)
+        DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6Address<DnsZone.Update.IUpdate>.WithIpv6Address(string ipv6Address)
         {
-            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6AddressOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>

@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         System.Collections.Generic.IList<string> NameServers { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Mx (mail exchange) records.
+        /// Gets entry point to manage record sets in this zone containing MX (mail exchange) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets MxRecordSets { get; }
+        Microsoft.Azure.Management.Dns.Fluent.IMXRecordSets MXRecordSets { get; }
 
         /// <summary>
         /// Gets the maximum number of record sets that can be created in this zone.

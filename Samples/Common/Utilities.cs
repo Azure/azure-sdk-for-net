@@ -1246,7 +1246,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tCanonical name: ").Append(cnameRecordSet.CanonicalName);
             }
 
-            var mxRecordSets = dnsZone.MxRecordSets.List();
+            var mxRecordSets = dnsZone.MXRecordSets.List();
             builder.Append("\n\tMX Record sets:");
             foreach (var mxRecordSet in mxRecordSets)
             {

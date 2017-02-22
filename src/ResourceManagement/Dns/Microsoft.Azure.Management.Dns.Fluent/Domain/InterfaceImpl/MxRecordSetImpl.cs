@@ -5,12 +5,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System.Collections.Generic;
 
-    internal partial class MxRecordSetImpl 
+    internal partial class MXRecordSetImpl 
     {
         /// <summary>
-        /// Gets the Mx records in this record set.
+        /// Gets the MX records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<MxRecord> Microsoft.Azure.Management.Dns.Fluent.IMxRecordSet.Records
+        System.Collections.Generic.IList<MxRecord> Microsoft.Azure.Management.Dns.Fluent.IMXRecordSet.Records
         {
             get
             {

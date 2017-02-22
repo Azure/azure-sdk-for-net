@@ -40,7 +40,7 @@ namespace Azure.Tests.Dns
                         .WithIPv6Address("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
                         .WithIPv6Address("2002:0db9:85a4:0000:0000:8a2e:0371:7335")
                         .Attach()
-                    .DefineMxRecordSet("email")
+                    .DefineMXRecordSet("email")
                         .WithMailExchange("mail.contoso-mail-exchange1.com", 1)
                         .WithMailExchange("mail.contoso-mail-exchange2.com", 2)
                         .WithMetadata("mxa", "mxaa")
@@ -104,7 +104,7 @@ namespace Azure.Tests.Dns
                     Assert.True(aaaaRecordSets[0].IPv6Addresses.Count() == 2);
 
                     // Check MX records
-                    var mxRecordSets = dnsZone.MxRecordSets.List();
+                    var mxRecordSets = dnsZone.MXRecordSets.List();
                     Assert.True(mxRecordSets.Count() == 1);
                     var mxRecordSet = mxRecordSets[0];
                     Assert.NotNull(mxRecordSet);
@@ -159,7 +159,7 @@ namespace Azure.Tests.Dns
                             .WithNegativeResponseCachingTimeToLiveInSeconds(600)
                             .WithTimeToLive(7200)
                             .Parent()
-                        .DefineMxRecordSet("email-internal")
+                        .DefineMXRecordSet("email-internal")
                             .WithMailExchange("mail.contoso-mail-exchange1.com", 1)
                             .WithMailExchange("mail.contoso-mail-exchange2.com", 2)
                             .Attach()
@@ -223,11 +223,11 @@ namespace Azure.Tests.Dns
                     Assert.True(soaRecordSet.TimeToLive == 7200);
 
                     // Check MX records
-                    mxRecordSets = dnsZone.MxRecordSets.List();
+                    mxRecordSets = dnsZone.MXRecordSets.List();
                     Assert.True(mxRecordSets.Count() == 2);
 
                     dnsZone.Update()
-                            .UpdateMxRecordSet("email")
+                            .UpdateMXRecordSet("email")
                                 .WithoutMailExchange("mail.contoso-mail-exchange2.com", 2)
                                 .WithoutMetadata("mxa")
                                 .WithMetadata("mxc", "mxcc")
@@ -238,7 +238,7 @@ namespace Azure.Tests.Dns
 
                     Assert.True(dnsZone.Tags.Count() == 3);
                     // Check "mail" MX record
-                    mxRecordSet = dnsZone.MxRecordSets.GetByName("email");
+                    mxRecordSet = dnsZone.MXRecordSets.GetByName("email");
                     Assert.True(mxRecordSet.Records.Count() == 1);
                     Assert.True(mxRecordSet.Metadata.Count() == 3);
                     Assert.True(mxRecordSet.Records[0].Exchange.StartsWith("mail.contoso-mail-exchange1.com"));

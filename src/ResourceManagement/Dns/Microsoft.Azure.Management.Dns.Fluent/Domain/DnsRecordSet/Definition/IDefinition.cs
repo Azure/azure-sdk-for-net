@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the Mx record set definition allowing to add additional Mx records or attach the record set
+    /// The stage of the MX record set definition allowing to add additional MX records or attach the record set
     /// to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithMxRecordMailExchangeOrAttachable<ParentT>  :
-        IWithMxRecordMailExchange<ParentT>,
+    public interface IWithMXRecordMailExchangeOrAttachable<ParentT>  :
+        IWithMXRecordMailExchange<ParentT>,
         IWithAttach<ParentT>
     {
     }
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
         IAaaaRecordSetBlank<ParentT>,
         IWithAaaaRecordIPv6Address<ParentT>,
         IWithAaaaRecordIPv6AddressOrAttachable<ParentT>,
-        IMxRecordSetBlank<ParentT>,
-        IWithMxRecordMailExchange<ParentT>,
-        IWithMxRecordMailExchangeOrAttachable<ParentT>,
+        IMXRecordSetBlank<ParentT>,
+        IWithMXRecordMailExchange<ParentT>,
+        IWithMXRecordMailExchangeOrAttachable<ParentT>,
         INsRecordSetBlank<ParentT>,
         IWithNsRecordNameServer<ParentT>,
         IWithNsRecordNameServerOrAttachable<ParentT>,
@@ -154,18 +154,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the Mx record set definition allowing to add first Mx record.
+    /// The stage of the MX record set definition allowing to add first MX record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithMxRecordMailExchange<ParentT> 
+    public interface IWithMXRecordMailExchange<ParentT> 
     {
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMxRecordMailExchangeOrAttachable<ParentT> WithMailExchange(string mailExchangeHostName, int priority);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMXRecordMailExchangeOrAttachable<ParentT> WithMailExchange(string mailExchangeHostName, int priority);
     }
 
     /// <summary>
@@ -267,11 +267,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The first stage of a Mx record definition.
+    /// The first stage of a MX record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IMxRecordSetBlank<ParentT>  :
-        IWithMxRecordMailExchange<ParentT>
+    public interface IMXRecordSetBlank<ParentT>  :
+        IWithMXRecordMailExchange<ParentT>
     {
     }
 

@@ -5,22 +5,22 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
     /// <summary>
-    /// The stage of the Mx record set definition allowing to add additional Mx records or attach the record set
+    /// The stage of the MX record set definition allowing to add additional MX records or attach the record set
     /// to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithMxRecordMailExchangeOrAttachable<ParentT>  :
-        IWithMxRecordMailExchange<ParentT>,
+    public interface IWithMXRecordMailExchangeOrAttachable<ParentT>  :
+        IWithMXRecordMailExchange<ParentT>,
         IWithAttach<ParentT>
     {
     }
 
     /// <summary>
-    /// The first stage of a Mx record definition.
+    /// The first stage of a MX record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IMxRecordSetBlank<ParentT>  :
-        IWithMxRecordMailExchange<ParentT>
+    public interface IMXRecordSetBlank<ParentT>  :
+        IWithMXRecordMailExchange<ParentT>
     {
     }
 
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithARecordIpv4AddressOrAttachable<ParentT>  :
-        IWithARecordIpv4Address<ParentT>,
+    public interface IWithARecordIPv4AddressOrAttachable<ParentT>  :
+        IWithARecordIPv4Address<ParentT>,
         IWithAttach<ParentT>
     {
     }
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// The stage of the Aaaa record set definition allowing to add first Aaaa record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAaaaRecordIpv6Address<ParentT> 
+    public interface IWithAaaaRecordIPv6Address<ParentT> 
     {
         /// <summary>
         /// Creates an Aaaa record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6AddressOrAttachable<ParentT> WithIpv6Address(string ipv6Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<ParentT> WithIpv6Address(string ipv6Address);
     }
 
     /// <summary>
@@ -127,14 +127,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// The stage of the A record set definition allowing to add first A record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithARecordIpv4Address<ParentT> 
+    public interface IWithARecordIPv4Address<ParentT> 
     {
         /// <summary>
         /// Creates an A record with the provided Ipv4 address in this record set.
         /// </summary>
         /// <param name="ipv4Address">The Ipv4 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithARecordIpv4AddressOrAttachable<ParentT> WithIpv4Address(string ipv4Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<ParentT> WithIpv4Address(string ipv4Address);
     }
 
     /// <summary>
@@ -142,8 +142,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAaaaRecordIpv6AddressOrAttachable<ParentT>  :
-        IWithAaaaRecordIpv6Address<ParentT>,
+    public interface IWithAaaaRecordIPv6AddressOrAttachable<ParentT>  :
+        IWithAaaaRecordIPv6Address<ParentT>,
         IWithAttach<ParentT>
     {
     }
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IARecordSetBlank<ParentT>  :
-        IWithARecordIpv4Address<ParentT>
+        IWithARecordIPv4Address<ParentT>
     {
     }
 
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IAaaaRecordSetBlank<ParentT>  :
-        IWithAaaaRecordIpv6Address<ParentT>
+        IWithAaaaRecordIPv6Address<ParentT>
     {
     }
 
@@ -212,14 +212,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         IARecordSetBlank<ParentT>,
-        IWithARecordIpv4Address<ParentT>,
-        IWithARecordIpv4AddressOrAttachable<ParentT>,
+        IWithARecordIPv4Address<ParentT>,
+        IWithARecordIPv4AddressOrAttachable<ParentT>,
         IAaaaRecordSetBlank<ParentT>,
-        IWithAaaaRecordIpv6Address<ParentT>,
-        IWithAaaaRecordIpv6AddressOrAttachable<ParentT>,
-        IMxRecordSetBlank<ParentT>,
-        IWithMxRecordMailExchange<ParentT>,
-        IWithMxRecordMailExchangeOrAttachable<ParentT>,
+        IWithAaaaRecordIPv6Address<ParentT>,
+        IWithAaaaRecordIPv6AddressOrAttachable<ParentT>,
+        IMXRecordSetBlank<ParentT>,
+        IWithMXRecordMailExchange<ParentT>,
+        IWithMXRecordMailExchangeOrAttachable<ParentT>,
         INsRecordSetBlank<ParentT>,
         IWithNsRecordNameServer<ParentT>,
         IWithNsRecordNameServerOrAttachable<ParentT>,
@@ -255,22 +255,22 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Mx record set definition allowing to add first Mx record.
+    /// The stage of the MX record set definition allowing to add first MX record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithMxRecordMailExchange<ParentT> 
+    public interface IWithMXRecordMailExchange<ParentT> 
     {
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchangeOrAttachable<ParentT> WithMailExchange(string mailExchangeHostName, int priority);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchangeOrAttachable<ParentT> WithMailExchange(string mailExchangeHostName, int priority);
     }
 
     /// <summary>
-    /// The stage of the record set definition allowing to specify Ttl for the records in this record set.
+    /// The stage of the record set definition allowing to specify TTL for the records in this record set.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithTtl<ParentT> 

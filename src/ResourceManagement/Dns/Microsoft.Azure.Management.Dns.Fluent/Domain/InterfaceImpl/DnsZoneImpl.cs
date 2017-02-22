@@ -138,13 +138,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Mx (mail exchange) records.
+        /// Gets entry point to manage record sets in this zone containing MX (mail exchange) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.MxRecordSets
+        Microsoft.Azure.Management.Dns.Fluent.IMXRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.MXRecordSets
         {
             get
             {
-                return this.MxRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets;
+                return this.MXRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IMXRecordSets;
             }
         }
 
@@ -200,13 +200,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Mx record set to be attached to the Dns zone.
+        /// Specifies definition of a MX record set to be attached to the Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        DnsRecordSet.UpdateDefinition.IMxRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        DnsRecordSet.UpdateDefinition.IMXRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineMXRecordSet(string name)
         {
-            return this.DefineMxRecordSet(name) as DnsRecordSet.UpdateDefinition.IMxRecordSetBlank<DnsZone.Update.IUpdate>;
+            return this.DefineMXRecordSet(name) as DnsRecordSet.UpdateDefinition.IMXRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
@@ -220,13 +220,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Mx record set in the Dns zone.
+        /// Removes a MX record set in the Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
+        /// <param name="name">Name of the MX record set.</param>
         /// <return>The next stage of Dns zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutMxRecordSet(string name)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutMXRecordSet(string name)
         {
-            return this.WithoutMxRecordSet(name) as DnsZone.Update.IUpdate;
+            return this.WithoutMXRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
@@ -250,13 +250,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Mx record set in this Dns zone.
+        /// Begins the description of an update of an existing MX record set in this Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet DnsZone.Update.IWithRecordSet.UpdateMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet DnsZone.Update.IWithRecordSet.UpdateMXRecordSet(string name)
         {
-            return this.UpdateMxRecordSet(name) as DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet;
+            return this.UpdateMXRecordSet(name) as DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet;
         }
 
         /// <summary>
@@ -422,13 +422,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Mx record set.
+        /// Specifies definition of a MX record set.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        DnsRecordSet.Definition.IMxRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        DnsRecordSet.Definition.IMXRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineMXRecordSet(string name)
         {
-            return this.DefineMxRecordSet(name) as DnsRecordSet.Definition.IMxRecordSetBlank<DnsZone.Definition.IWithCreate>;
+            return this.DefineMXRecordSet(name) as DnsRecordSet.Definition.IMXRecordSetBlank<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>

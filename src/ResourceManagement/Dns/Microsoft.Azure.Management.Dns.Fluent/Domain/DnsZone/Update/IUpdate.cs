@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord;
@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet UpdateSrvRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Mx record set to be attached to the Dns zone.
+        /// Specifies definition of a MX record set to be attached to the Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IMxRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineMxRecordSet(string name);
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IMXRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineMXRecordSet(string name);
 
         /// <summary>
         /// Specifies definition of a Srv record set to be attached to the Dns zone.
@@ -121,11 +121,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.INsRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineNsRecordSet(string name);
 
         /// <summary>
-        /// Begins the description of an update of an existing Mx record set in this Dns zone.
+        /// Begins the description of an update of an existing MX record set in this Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet UpdateMxRecordSet(string name);
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet UpdateMXRecordSet(string name);
 
         /// <summary>
         /// Removes a Srv record set in the Dns zone.
@@ -163,11 +163,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutARecordSet(string name);
 
         /// <summary>
-        /// Removes a Mx record set in the Dns zone.
+        /// Removes a MX record set in the Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
+        /// <param name="name">Name of the MX record set.</param>
         /// <return>The next stage of Dns zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutMxRecordSet(string name);
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutMXRecordSet(string name);
 
         /// <summary>
         /// Removes a Txt record set in the Dns zone.

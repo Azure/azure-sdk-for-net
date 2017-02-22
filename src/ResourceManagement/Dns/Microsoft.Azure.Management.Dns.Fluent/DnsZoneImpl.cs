@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         private IARecordSets aRecordSets;
         private IAaaaRecordSets aaaaRecordSets;
         private ICnameRecordSets cnameRecordSets;
-        private IMxRecordSets mxRecordSets;
+        private IMXRecordSets mxRecordSets;
         private INsRecordSets nsRecordSets;
         private IPtrRecordSets ptrRecordSets;
         private ISrvRecordSets srvRecordSets;
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             this.aRecordSets = new ARecordSetsImpl(this, this.recordSetsClient);
             this.aaaaRecordSets = new AaaaRecordSetsImpl(this, this.recordSetsClient);
             this.cnameRecordSets = new CnameRecordSetsImpl(this, this.recordSetsClient);
-            this.mxRecordSets = new MxRecordSetsImpl(this, this.recordSetsClient);
+            this.mxRecordSets = new MXRecordSetsImpl(this, this.recordSetsClient);
             this.nsRecordSets = new NsRecordSetsImpl(this, this.recordSetsClient);
             this.ptrRecordSets = new PtrRecordSetsImpl(this, this.recordSetsClient);
             this.srvRecordSets = new SrvRecordSetsImpl(this, this.recordSetsClient);
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:8F3B63282E3A22D23CA9B093FA6A44F8:20E3842CCAFDF776C20B1023B1BA21C4
-        public DnsRecordSetImpl UpdateMxRecordSet(string name)
+        public DnsRecordSetImpl UpdateMXRecordSet(string name)
         {
-            return recordSetsImpl.UpdateMxRecordSet(name);
+            return recordSetsImpl.UpdateMXRecordSet(name);
         }
 
         ///GENMHASH:6A236BC9874C63721A7695A7FE9A4C18:8E60906622FD55B055D5983DD550D216
@@ -185,9 +185,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:54D2D45FDDD815CD9CB65600866E9EB0:6462A500BE7F66FC6CFF8010C7DFB6C1
-        public DnsZoneImpl WithoutMxRecordSet(string name)
+        public DnsZoneImpl WithoutMXRecordSet(string name)
         {
-            recordSetsImpl.WithoutMxRecordSet(name);
+            recordSetsImpl.WithoutMXRecordSet(name);
             return this;
         }
 
@@ -214,9 +214,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:766D91058115C559BE5B14A9C7056073:45786BE7DC1F8A260526EC385F813C1B
-        public DnsRecordSetImpl DefineMxRecordSet(string name)
+        public DnsRecordSetImpl DefineMXRecordSet(string name)
         {
-            return recordSetsImpl.DefineMxRecordSet(name);
+            return recordSetsImpl.DefineMXRecordSet(name);
         }
 
         ///GENMHASH:132875C15861A92E60F93E154E091602:F70AB38B6FDE85737888182B48E6B611
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:9346CB4D0F5C719EB9C7E3A3AE77D732:CF958FACD1F19347590706D6D905C707
-        public IMxRecordSets MxRecordSets()
+        public IMXRecordSets MXRecordSets()
         {
             return this.mxRecordSets;
         }

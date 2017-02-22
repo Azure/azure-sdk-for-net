@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IPtrRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefinePtrRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Mx record set.
+        /// Specifies definition of a MX record set.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IMxRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineMxRecordSet(string name);
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IMXRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineMXRecordSet(string name);
 
         /// <summary>
         /// Specifies definition of an Ns record set.
