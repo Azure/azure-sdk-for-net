@@ -213,25 +213,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify private IP address within a virtual network subnet.
     /// </summary>
-    public interface IWithPrivateIp 
+    public interface IWithPrivateIP 
     {
         /// <summary>
         /// Enables dynamic private IP address allocation within the specified existing virtual network subnet for
         /// virtual machine's primary network interface.
         /// </summary>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPublicIpAddress WithPrimaryPrivateIpAddressDynamic();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPublicIPAddress WithPrimaryPrivateIPAddressDynamic();
 
         /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network subnet to the
         /// virtual machine's primary network interface.
         /// </summary>
-        /// <param name="staticPrivateIpAddress">
+        /// <param name="staticPrivateIPAddress">
         /// The static IP address within the specified subnet to assign to
         /// the network interface.
         /// </param>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPublicIpAddress WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPublicIPAddress WithPrimaryPrivateIPAddressStatic(string staticPrivateIPAddress);
     }
 
     /// <summary>
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIp WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIP WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the virtual machine's primary network interface.
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIp WithNewPrimaryNetwork(string addressSpace);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIP WithNewPrimaryNetwork(string addressSpace);
     }
 
     /// <summary>
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// <summary>
     /// The stage of the virtual machine definition allowing to associate public IP address with it's primary network interface.
     /// </summary>
-    public interface IWithPublicIpAddress 
+    public interface IWithPublicIPAddress 
     {
         /// <summary>
         /// Create a new public IP address to associate with virtual machine primary network interface, based on the
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
@@ -483,20 +483,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithNewPrimaryPublicIpAddress(string leafDnsLabel);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithNewPrimaryPublicIPAddress(string leafDnsLabel);
 
         /// <summary>
         /// Specifies that no public IP needs to be associated with virtual machine.
         /// </summary>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithoutPrimaryPublicIpAddress();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithoutPrimaryPublicIPAddress();
 
         /// <summary>
         /// Associates an existing public IP address with the virtual machine's primary network interface.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
     }
 
     /// <summary>
@@ -592,7 +592,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="name">The subnet name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIp WithSubnet(string name);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIP WithSubnet(string name);
     }
 
     /// <summary>

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets list of DNS server IP addresses associated with this virtual network.
         /// </summary>
-        System.Collections.Generic.IList<string> DnsServerIps { get; }
+        System.Collections.Generic.IList<string> DnsServerIPs { get; }
 
         /// <summary>
         /// Gets subnets of this virtual network as a map indexed by subnet name

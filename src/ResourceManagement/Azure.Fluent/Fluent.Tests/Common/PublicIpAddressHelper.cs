@@ -11,21 +11,21 @@ using System.Threading.Tasks;
 
 namespace Azure.Tests.Common
 {
-    public static class PublicIpAddressHelper
+    public static class PublicIPAddressHelper
     {
-        public static void PrintPIP(IPublicIpAddress resource)
+        public static void PrintPIP(IPublicIPAddress resource)
         {
             var info = new StringBuilder().Append("Public IP Address: ").Append(resource.Id)
                     .Append("\n\tName: ").Append(resource.Name)
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.Region)
                     .Append("\n\tTags: ").Append(resource.Tags)
-                    .Append("\n\tIP Address: ").Append(resource.IpAddress)
+                    .Append("\n\tIP Address: ").Append(resource.IPAddress)
                     .Append("\n\tLeaf domain label: ").Append(resource.LeafDomainLabel)
                     .Append("\n\tFQDN: ").Append(resource.Fqdn)
                     .Append("\n\tReverse FQDN: ").Append(resource.ReverseFqdn)
                     .Append("\n\tIdle timeout (minutes): ").Append(resource.IdleTimeoutInMinutes)
-                    .Append("\n\tIP allocation method: ").Append(resource.IpAllocationMethod)
+                    .Append("\n\tIP allocation method: ").Append(resource.IPAllocationMethod)
                     .Append("\n\tIP version: ").Append(resource.Version);
 
             // Show the associated load balancer if any
@@ -46,10 +46,10 @@ namespace Azure.Tests.Common
             info.Append("\n\tNetwork interface association: ");
             if (resource.HasAssignedNetworkInterface)
             {
-                var nicIp = resource.GetAssignedNetworkInterfaceIpConfiguration();
-                var nic = nicIp.Parent;
+                var nicIP = resource.GetAssignedNetworkInterfaceIPConfiguration();
+                var nic = nicIP.Parent;
                 info.Append("\n\t\tNetwork interface ID: ").Append(nic.Id)
-                    .Append("\n\t\tIP config name: ").Append(nicIp.Name);
+                    .Append("\n\t\tIP config name: ").Append(nicIP.Name);
             }
             else
             {

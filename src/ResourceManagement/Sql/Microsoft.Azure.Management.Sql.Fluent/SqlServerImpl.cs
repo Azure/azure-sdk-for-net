@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.firewallRuleCreatableMap.Remove(firewallRuleName);
 
             this.firewallRuleCreatableMap.Add(firewallRuleName,
-                this.FirewallRules().Define(firewallRuleName).WithIpAddressRange(startIpAddress, endIpAddress));
+                this.FirewallRules().Define(firewallRuleName).WithIPAddressRange(startIpAddress, endIpAddress));
             return this;
         }
 

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public class NetworkManager : ManagerBase, INetworkManager
     {
         private NetworkManagementClient networkManagementClient;
-        private PublicIpAddressesImpl publicIpAddresses;
+        private PublicIPAddressesImpl publicIPAddresses;
         private NetworkInterfacesImpl networkInterfaces;
         private NetworkSecurityGroupsImpl networkSecurityGroups;
         private NetworksImpl networks;
@@ -121,16 +121,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// return entry point to public IP address management
         /// </summary>
-        public IPublicIpAddresses PublicIpAddresses
+        public IPublicIPAddresses PublicIPAddresses
         {
             get
             {
-                if (publicIpAddresses == null)
+                if (publicIPAddresses == null)
                 {
-                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient, this);
+                    publicIPAddresses = new PublicIPAddressesImpl(networkManagementClient, this);
                 }
 
-                return publicIpAddresses;
+                return publicIPAddresses;
             }
         }
 
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// return entry point to public IP address management
         /// </summary>
-        IPublicIpAddresses PublicIpAddresses { get; }
+        IPublicIPAddresses PublicIPAddresses { get; }
 
         /// <summary>
         /// return entry point to network interface management

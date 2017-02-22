@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet
     /// The entirety of an A record set update as a part of parent Dns zone update.
     /// </summary>
     public interface IUpdateARecordSet  :
-        IWithARecordIpv4Address,
+        IWithARecordIPv4Address,
         IUpdate
     {
     }

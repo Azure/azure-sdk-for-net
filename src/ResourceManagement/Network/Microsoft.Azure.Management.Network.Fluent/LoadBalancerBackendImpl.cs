@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:1FC649C97657147238976F3B54524F58:1DE7E24B5141F230DDAD34D53E6C0E04
-        internal IDictionary<string, string> BackendNicIpConfigurationNames()
+        internal IDictionary<string, string> BackendNicIPConfigurationNames()
         {
             // This assumes a NIC can only have one IP config associated with the backend of an LB,
             // which is correct at the time of this implementation and seems unlikely to ever change
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal ISet<string> GetVirtualMachineIds ()
         {
             ISet<string> vmIds = new HashSet<string>();
-            IDictionary<string, string> nicConfigs = BackendNicIpConfigurationNames();
+            IDictionary<string, string> nicConfigs = BackendNicIPConfigurationNames();
             if (nicConfigs != null)
             {
                 foreach (string nicId in nicConfigs.Keys)

@@ -46,8 +46,8 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets", "myTest._pfx")))
                     .WithSslCertificatePassword("Abc123")
                     .ToBackendHttpPort(8080)
-                    .ToBackendIpAddress("11.1.1.1")
-                    .ToBackendIpAddress("11.1.1.2")
+                    .ToBackendIPAddress("11.1.1.1")
+                    .ToBackendIPAddress("11.1.1.2")
                     .Attach()
                 .Create();
 
@@ -93,8 +93,8 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(rule.BackendPort, 8080);
             Assert.Equal(rule.BackendAddresses.Count, 2);
             Assert.NotNull(rule.Backend);
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.1"));
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.2"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.1"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.2"));
 
             // Verify certificates
             Assert.Equal(appGateway.SslCertificates.Count, 1);
@@ -107,13 +107,13 @@ namespace Azure.Tests.Network.ApplicationGateway
             resource.Update()
                 .WithInstanceCount(2)
                 .WithSize(ApplicationGatewaySkuName.StandardMedium)
-                .WithoutBackendIpAddress("11.1.1.1")
+                .WithoutBackendIPAddress("11.1.1.1")
                 .DefineListener("listener2")
                     .WithPublicFrontend()
                     .WithFrontendPort(80)
                     .Attach()
                 .DefineBackend("backend2")
-                    .WithIpAddress("11.1.1.3")
+                    .WithIPAddress("11.1.1.3")
                     .Attach()
                 .DefineBackendHttpConfiguration("config2")
                     .WithCookieBasedAffinity()
@@ -155,7 +155,7 @@ namespace Azure.Tests.Network.ApplicationGateway
             IApplicationGatewayBackend backend = resource.Backends["backend2"];
             Assert.NotNull(backend);
             Assert.Equal(backend.Addresses.Count, 1);
-            Assert.True(backend.ContainsIpAddress("11.1.1.3"));
+            Assert.True(backend.ContainsIPAddress("11.1.1.3"));
 
             // Verify HTTP configs
             Assert.Equal(resource.BackendHttpConfigurations.Count, 2);

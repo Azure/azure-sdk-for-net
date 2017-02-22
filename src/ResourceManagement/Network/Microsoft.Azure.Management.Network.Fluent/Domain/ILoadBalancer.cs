@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets resource IDs of the public IP addresses assigned to the frontends of this load balancer.
         /// </summary>
-        System.Collections.Generic.IList<string> PublicIpAddressIds { get; }
+        System.Collections.Generic.IList<string> PublicIPAddressIds { get; }
 
         /// <summary>
         /// Gets HTTP probes of this load balancer, indexed by the name.

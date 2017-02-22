@@ -2,15 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update
 {
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of a public frontend update allowing to specify an existing public IP address.
     /// </summary>
-    public interface IWithPublicIpAddress  :
-        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>
+    public interface IWithPublicIPAddress  :
+        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>
     {
     }
 
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.U
     /// </summary>
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
-        IWithPublicIpAddress
+        IWithPublicIPAddress
     {
     }
 }

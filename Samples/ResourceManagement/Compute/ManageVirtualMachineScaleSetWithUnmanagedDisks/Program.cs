@@ -72,7 +72,7 @@ namespace ManageVirtualMachineScaleSetWithUnmanagedDisks
                 // Create a public IP address
                 Utilities.Log("Creating a public IP address...");
 
-                var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName)
+                var publicIpAddress = azure.PublicIPAddresses.Define(publicIpName)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpName)
@@ -80,7 +80,7 @@ namespace ManageVirtualMachineScaleSetWithUnmanagedDisks
 
                 Utilities.Log("Created a public IP address");
                 // Print the IPAddress details
-                Utilities.PrintIpAddress(publicIpAddress);
+                Utilities.PrintIPAddress(publicIpAddress);
 
                 //=============================================================
                 // Create an Internet facing load balancer with
@@ -111,7 +111,7 @@ namespace ManageVirtualMachineScaleSetWithUnmanagedDisks
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePublicFrontend(frontendName)
-                            .WithExistingPublicIpAddress(publicIpAddress)
+                            .WithExistingPublicIPAddress(publicIpAddress)
                             .Attach()
                         // Add two backend one per rule
                         .DefineBackend(backendPoolName1)

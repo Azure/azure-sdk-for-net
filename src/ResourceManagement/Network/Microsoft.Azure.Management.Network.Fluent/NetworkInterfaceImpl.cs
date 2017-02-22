@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         // the name of the network interface.
         private string nicName;
         // reference to the primary ip configuration.
-        private NicIpConfigurationImpl nicPrimaryIpConfiguration;
+        private NicIPConfigurationImpl nicPrimaryIPConfiguration;
         // references to all ip configuration.
-        private IDictionary<string, INicIpConfiguration> nicIpConfigurations;
+        private IDictionary<string, INicIPConfiguration> nicIPConfigurations;
         // unique key of a creatable network security group to be associated with the network interface.
         private string creatableNetworkSecurityGroupKey;
         // reference to an network security group to be associated with the network interface.
@@ -64,14 +64,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:3FAB18211D6DAAAEF5CA426426D16F0C:D3E6D518478DF49EC6C53F1D88A60E52
         internal NetworkInterfaceImpl WithNewPrimaryNetwork(ICreatable<INetwork> creatable)
         {
-            PrimaryIpConfiguration().WithNewNetwork(creatable);
+            PrimaryIPConfiguration().WithNewNetwork(creatable);
             return this;
         }
 
         ///GENMHASH:0994141806BE37BB879E10A9CBFBE5DD:A423F6A8178D9D4AD5FFBD89D474E9F5
         internal NetworkInterfaceImpl WithNewPrimaryNetwork(string name, string addressSpaceCidr)
         {
-            PrimaryIpConfiguration().WithNewNetwork(name, addressSpaceCidr);
+            PrimaryIPConfiguration().WithNewNetwork(name, addressSpaceCidr);
             return this;
         }
 
@@ -86,49 +86,49 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C8A4DDE66256242DF61087375BF710B0:78F3FE05E98D67CD9C4262D01BCC8B46
         internal NetworkInterfaceImpl WithNewPrimaryNetwork(string addressSpaceCidr)
         {
-            PrimaryIpConfiguration().WithNewNetwork(addressSpaceCidr);
+            PrimaryIPConfiguration().WithNewNetwork(addressSpaceCidr);
             return this;
         }
 
         ///GENMHASH:EE2847D8AC43E9B7C3BFB967F80560D4:750FFABBA4314035DF1B70FBF6EC576B
         internal NetworkInterfaceImpl WithExistingPrimaryNetwork(INetwork network)
         {
-            PrimaryIpConfiguration().WithExistingNetwork(network);
+            PrimaryIPConfiguration().WithExistingNetwork(network);
             return this;
         }
 
         ///GENMHASH:12E96FEFBC60AB582A0B69EBEEFD1E59:E859048650F24046830CC24E348A0001
-        internal NetworkInterfaceImpl WithNewPrimaryPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
+        internal NetworkInterfaceImpl WithNewPrimaryPublicIPAddress(ICreatable<IPublicIPAddress> creatable)
         {
-            PrimaryIpConfiguration().WithNewPublicIpAddress(creatable);
+            PrimaryIPConfiguration().WithNewPublicIPAddress(creatable);
             return this;
         }
 
         ///GENMHASH:5C816AA86EABCE4D1E9AA2582BB7D4FC:52D3C12B3F2D793FE3DD69A9E175AF71
-        internal NetworkInterfaceImpl WithNewPrimaryPublicIpAddress()
+        internal NetworkInterfaceImpl WithNewPrimaryPublicIPAddress()
         {
-            PrimaryIpConfiguration().WithNewPublicIpAddress();
+            PrimaryIPConfiguration().WithNewPublicIPAddress();
             return this;
         }
 
         ///GENMHASH:BA50EF0AC88D5405DFE18FCE26A595B2:9BD8717AEF47F0B40F0C49540F01A1B2
-        internal NetworkInterfaceImpl WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        internal NetworkInterfaceImpl WithNewPrimaryPublicIPAddress(string leafDnsLabel)
         {
-            PrimaryIpConfiguration().WithNewPublicIpAddress(leafDnsLabel);
+            PrimaryIPConfiguration().WithNewPublicIPAddress(leafDnsLabel);
             return this;
         }
 
         ///GENMHASH:D36B69B83A3C752672806F0242C22209:03C9A45B7DD0369F04FBC19AD645F622
         internal NetworkInterfaceImpl WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
         {
-            PrimaryIpConfiguration().WithExistingLoadBalancerBackend(loadBalancer, backendName);
+            PrimaryIPConfiguration().WithExistingLoadBalancerBackend(loadBalancer, backendName);
             return this;
         }
 
         ///GENMHASH:03CBA85933E5B90121E4F4AE70F457EE:C90E3AF2D1A6D3B28206FAB8C529424C
         internal NetworkInterfaceImpl WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
         {
-            PrimaryIpConfiguration().WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName);
+            PrimaryIPConfiguration().WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName);
             return this;
         }
 
@@ -136,9 +136,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal IUpdate WithoutLoadBalancerBackends()
         {
             ///GENMHASH:8535B0E23E6704558262509B5A55B45D:CE76D91B778968B2CC0465313DF6F3F6
-            foreach (var ipConfig in IpConfigurations().Values)
+            foreach (var ipConfig in IPConfigurations().Values)
             {
-                UpdateIpConfiguration(ipConfig.Name)
+                UpdateIPConfiguration(ipConfig.Name)
                    .WithoutLoadBalancerBackends();
             }
 
@@ -148,9 +148,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:8B463B99540F7AFAB4F1D7B5D595864D:B5571258C8DD77A073FC3863C188426E
         internal IUpdate WithoutLoadBalancerInboundNatRules()
         {
-            foreach (var ipConfig in IpConfigurations().Values)
+            foreach (var ipConfig in IPConfigurations().Values)
             {
-                UpdateIpConfiguration(ipConfig.Name)
+                UpdateIPConfiguration(ipConfig.Name)
                     .WithoutLoadBalancerInboundNatRules();
             }
 
@@ -158,30 +158,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:D0AB91F51DBDFA04880ED371AD9E48EE:42B9E6B3BAA44EA33B4EAF5ED78B85FA
-        internal NetworkInterfaceImpl WithoutPrimaryPublicIpAddress()
+        internal NetworkInterfaceImpl WithoutPrimaryPublicIPAddress()
         {
-            PrimaryIpConfiguration().WithoutPublicIpAddress();
+            PrimaryIPConfiguration().WithoutPublicIPAddress();
             return this;
         }
 
         ///GENMHASH:2B7C2F1E86A359473717299AD4D4DCBA:F737496F62EBDB341B8A5449D37F2184
-        internal NetworkInterfaceImpl WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        internal NetworkInterfaceImpl WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            PrimaryIpConfiguration().WithExistingPublicIpAddress(publicIpAddress);
+            PrimaryIPConfiguration().WithExistingPublicIPAddress(publicIPAddress);
             return this;
         }
 
         ///GENMHASH:022FCEBED3C6606D834C45EAD65C0D6F:AB5111B32426DE6983DC4B6CA0F1EBD7
-        internal NetworkInterfaceImpl WithPrimaryPrivateIpAddressDynamic()
+        internal NetworkInterfaceImpl WithPrimaryPrivateIPAddressDynamic()
         {
-            PrimaryIpConfiguration().WithPrivateIpAddressDynamic();
+            PrimaryIPConfiguration().WithPrivateIPAddressDynamic();
             return this;
         }
 
         ///GENMHASH:655D6F837286729FEB47BD78B3EB9A08:282F12C5EC57C36AEED5D73EE80CCA21
-        internal NetworkInterfaceImpl WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        internal NetworkInterfaceImpl WithPrimaryPrivateIPAddressStatic(string staticPrivateIPAddress)
         {
-            PrimaryIpConfiguration().WithPrivateIpAddressStatic(staticPrivateIpAddress);
+            PrimaryIPConfiguration().WithPrivateIPAddressStatic(staticPrivateIPAddress);
             return this;
         }
 
@@ -212,33 +212,33 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:A04F7DC458E3AAEECFC1B7ED7A839D25:D89F8C33F0F7212B41798D8320402C53
-        internal NicIpConfigurationImpl DefineSecondaryIpConfiguration(string name)
+        internal NicIPConfigurationImpl DefineSecondaryIPConfiguration(string name)
         {
-            return PrepareNewNicIpConfiguration(name);
+            return PrepareNewNicIPConfiguration(name);
         }
 
         ///GENMHASH:405FE49F57EE4AB4C0F91D84030D1DDA:29B7D63ED2C33F842B340E1808C46918
-        internal NicIpConfigurationImpl UpdateIpConfiguration(string name)
+        internal NicIPConfigurationImpl UpdateIPConfiguration(string name)
         {
-            return (NicIpConfigurationImpl)nicIpConfigurations[name];
+            return (NicIPConfigurationImpl)nicIPConfigurations[name];
         }
 
         ///GENMHASH:54C012D1DF6347D810187D83D172084B:BC7B9CE4DF8F5CF674BD242D689847EB
-        internal NetworkInterfaceImpl WithIpForwarding()
+        internal NetworkInterfaceImpl WithIPForwarding()
         {
             Inner.EnableIPForwarding = true;
             return this;
         }
 
         ///GENMHASH:A3E0AFFD41A48AADA625D444BDC4B639:B533E6AC21591D01AE3A4444FFF05CC7
-        internal NetworkInterfaceImpl WithoutIpConfiguration(string name)
+        internal NetworkInterfaceImpl WithoutIPConfiguration(string name)
         {
-            nicIpConfigurations.Remove(name);
+            nicIPConfigurations.Remove(name);
             return this;
         }
 
         ///GENMHASH:4BD72D8B5B6B7BE1DC4C51859392E53D:2E1455D3F01711104A5EEA9DD0BD0D37
-        internal NetworkInterfaceImpl WithoutIpForwarding()
+        internal NetworkInterfaceImpl WithoutIPForwarding()
         {
             Inner.EnableIPForwarding = false;
             return this;
@@ -247,28 +247,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C46E686F6BFED9BDC32DE6EB942E24F4:81A5EA74AB5B9AA1B34EEF4EA62E2D96
         internal NetworkInterfaceImpl WithDnsServer(string ipAddress)
         {
-            DnsServerIps.Add(ipAddress);
+            DnsServerIPs.Add(ipAddress);
             return this;
         }
 
         ///GENMHASH:BE22C0B9325B4C1589049D401C88C656:BAEDCA14BB8BD16A981A0ACC904CC1DF
         internal NetworkInterfaceImpl WithoutDnsServer(string ipAddress)
         {
-            DnsServerIps.Remove(ipAddress);
+            DnsServerIPs.Remove(ipAddress);
             return this;
         }
 
         ///GENMHASH:B5D0BEC334A2545AEB57083EF9E7D3D8:5F53E33DB28637049C670A13BBF9EB02
         internal NetworkInterfaceImpl WithAzureDnsServer()
         {
-            DnsServerIps.Clear();
+            DnsServerIPs.Clear();
             return this;
         }
 
         ///GENMHASH:0FBBECB150CBC82F165D8BA614AB135A:3BE65638D99459AEB33D964ACC8FE7C3
         internal NetworkInterfaceImpl WithSubnet(string name)
         {
-            PrimaryIpConfiguration().WithSubnet(name);
+            PrimaryIPConfiguration().WithSubnet(name);
             return this;
         }
 
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:B067E306CF42399044F34EA78189F196:8574363DCCF2F083DA5ADD2B4079AAAA
-        internal bool IsIpForwardingEnabled()
+        internal bool IsIPForwardingEnabled()
         {
             return (Inner.EnableIPForwarding.HasValue) ? Inner.EnableIPForwarding.Value : false;
         }
@@ -330,24 +330,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:B1AD13DA0902D51846B309BF1324B456:6B6A10392C3993A13073D7558F87E5B2
         internal IList<string> DnsServers()
         {
-            return DnsServerIps;
+            return DnsServerIPs;
         }
 
         ///GENMHASH:BABDA7E43134C76FA5F4A73696B36B74:3380FF133D1D152807CFB1362566EA86
-        internal string PrimaryPrivateIp()
+        internal string PrimaryPrivateIP()
         {
-            return PrimaryIpConfiguration().PrivateIpAddress();
+            return PrimaryIPConfiguration().PrivateIPAddress();
         }
 
         ///GENMHASH:7553B8041F1BC45ED58133F4644155F7:2044126CDE4657E10D6C6D7C5D923AFF
-        internal IPAllocationMethod PrimaryPrivateIpAllocationMethod()
+        internal IPAllocationMethod PrimaryPrivateIPAllocationMethod()
         {
-            return PrimaryIpConfiguration().PrivateIpAllocationMethod();
+            return PrimaryIPConfiguration().PrivateIPAllocationMethod();
         }
 
-        internal IDictionary<string, INicIpConfiguration> IpConfigurations()
+        internal IDictionary<string, INicIPConfiguration> IPConfigurations()
         {
-            return nicIpConfigurations;
+            return nicIPConfigurations;
         }
 
         ///GENMHASH:A9777D8010E6AF7B603113E49858FE75:0A1C32015C3FE7888D450702542868EA
@@ -372,17 +372,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <returns>the primary IP configuration of the network interface</returns>
 
         ///GENMHASH:3112993FF79864659400569FD226EA9E:267DFA5CED90051075D45C55F7FC0ABD
-        internal NicIpConfigurationImpl PrimaryIpConfiguration()
+        internal NicIPConfigurationImpl PrimaryIPConfiguration()
         {
-            if (nicPrimaryIpConfiguration != null)
+            if (nicPrimaryIPConfiguration != null)
             {
-                return nicPrimaryIpConfiguration;
+                return nicPrimaryIPConfiguration;
             }
 
             if (IsInCreateMode)
             {
-                nicPrimaryIpConfiguration = PrepareNewNicIpConfiguration("primary");
-                WithIpConfiguration(nicPrimaryIpConfiguration);
+                nicPrimaryIPConfiguration = PrepareNewNicIPConfiguration("primary");
+                WithIPConfiguration(nicPrimaryIPConfiguration);
             }
             else
             {
@@ -391,16 +391,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 // when Azure support multiple IP configurations then there will be a flag in
                 // the IPConfiguration or a property in the network interface to identify the
                 // primary so below logic will be changed.
-                nicPrimaryIpConfiguration = (NicIpConfigurationImpl)new List<INicIpConfiguration>(
-                    nicIpConfigurations.Values)[0];
+                nicPrimaryIPConfiguration = (NicIPConfigurationImpl)new List<INicIPConfiguration>(
+                    nicIPConfigurations.Values)[0];
             }
-            return nicPrimaryIpConfiguration;
+            return nicPrimaryIPConfiguration;
         }
 
         /// <returns>the list of DNS server IPs from the DNS settings</returns>
 
         ///GENMHASH:08B7E1E5C1AFE7A46CE9F049D5CDA430:C8A1E211AE92B97C661E3D7541994267
-        private IList<string> DnsServerIps
+        private IList<string> DnsServerIPs
         {
             get
             {
@@ -417,42 +417,42 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:B8B4529F45579E69075A666EABB488A7
         override protected void InitializeChildrenFromInner()
         {
-            nicIpConfigurations = new Dictionary<string, INicIpConfiguration>();
+            nicIPConfigurations = new Dictionary<string, INicIPConfiguration>();
             IList<NetworkInterfaceIPConfigurationInner> inners = Inner.IpConfigurations;
             if (inners != null)
             {
                 foreach (NetworkInterfaceIPConfigurationInner inner in inners)
                 {
-                    NicIpConfigurationImpl nicIpConfiguration = new NicIpConfigurationImpl(inner, this, Manager, false);
-                    nicIpConfigurations.Add(nicIpConfiguration.Name(), nicIpConfiguration);
+                    NicIPConfigurationImpl nicIPConfiguration = new NicIPConfigurationImpl(inner, this, Manager, false);
+                    nicIPConfigurations.Add(nicIPConfiguration.Name(), nicIPConfiguration);
                 }
             }
         }
 
         /// <summary>
-        /// Gets a new IP configuration child resource NicIpConfiguration wrapping NetworkInterfaceIPConfigurationInner.
+        /// Gets a new IP configuration child resource NicIPConfiguration wrapping NetworkInterfaceIPConfigurationInner.
         /// </summary>
         /// <param name="name">name the name for the new ip configuration</param>
-        /// <returns>NicIpConfiguration</returns>
+        /// <returns>NicIPConfiguration</returns>
 
         ///GENMHASH:C2E275E9E7942CEA349C5BB45AC39F3F:680A69F57A8E292A1C8AEE72C51E4DAA
-        private NicIpConfigurationImpl PrepareNewNicIpConfiguration(string name)
+        private NicIPConfigurationImpl PrepareNewNicIPConfiguration(string name)
         {
-            NicIpConfigurationImpl nicIpConfiguration = NicIpConfigurationImpl.PrepareNicIpConfiguration(name, this, Manager);
-            return nicIpConfiguration;
+            NicIPConfigurationImpl nicIPConfiguration = NicIPConfigurationImpl.PrepareNicIPConfiguration(name, this, Manager);
+            return nicIPConfiguration;
         }
 
         ///GENMHASH:7F6A7E961EA5A11F2B8013E54123A7D0:76DD4E65A95BB0B5F96BE7271C9649BA
         private void ClearCachedRelatedResources()
         {
             networkSecurityGroup = null;
-            nicPrimaryIpConfiguration = null;
+            nicPrimaryIPConfiguration = null;
         }
 
         ///GENMHASH:67AE4BFF598410C6FA5B8B8386E40191:5FF05143CFAD88667A0F427BE8477F86
-        internal NetworkInterfaceImpl WithIpConfiguration(NicIpConfigurationImpl nicIpConfiguration)
+        internal NetworkInterfaceImpl WithIPConfiguration(NicIPConfigurationImpl nicIPConfiguration)
         {
-            nicIpConfigurations.Add(nicIpConfiguration.Name(), nicIpConfiguration);
+            nicIPConfigurations.Add(nicIPConfiguration.Name(), nicIPConfiguration);
             return this;
         }
 
@@ -507,11 +507,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Manager.NetworkSecurityGroups.GetById(networkSecurityGroup.Id).Inner;
             }
 
-            NicIpConfigurationImpl.EnsureConfigurations(new List<INicIpConfiguration>(nicIpConfigurations.Values));
+            NicIPConfigurationImpl.EnsureConfigurations(new List<INicIPConfiguration>(nicIPConfigurations.Values));
 
             // Reset and update IP configs
             Inner.IpConfigurations =
-                InnersFromWrappers<NetworkInterfaceIPConfigurationInner, INicIpConfiguration>(nicIpConfigurations.Values);
+                InnersFromWrappers<NetworkInterfaceIPConfigurationInner, INicIPConfiguration>(nicIPConfigurations.Values);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <summary>
         /// Gets the Ipv4 addresses of A records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.IARecordSet.Ipv4Addresses
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.IARecordSet.IPv4Addresses
         {
             get
             {

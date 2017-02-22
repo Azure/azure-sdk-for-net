@@ -93,21 +93,21 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     /// <summary>
     /// The stage of the A record set update allowing to add or remove A record.
     /// </summary>
-    public interface IWithARecordIpv4Address 
+    public interface IWithARecordIPv4Address 
     {
         /// <summary>
-        /// Removes the A record with the provided Ipv4 address from the record set.
+        /// Removes the A record with the provided IPv4 address from the record set.
         /// </summary>
-        /// <param name="ipv4Address">The Ipv4 address.</param>
+        /// <param name="ipv4Address">The IPv4 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithoutIpv4Address(string ipv4Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithoutIPv4Address(string ipv4Address);
 
         /// <summary>
-        /// Creates an A record with the provided Ipv4 address in the record set.
+        /// Creates an A record with the provided IPv4 address in the record set.
         /// </summary>
-        /// <param name="ipv4Address">The Ipv4 address.</param>
+        /// <param name="ipv4Address">The IPv4 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithIpv4Address(string ipv4Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithIPv4Address(string ipv4Address);
     }
 
     /// <summary>
@@ -218,21 +218,21 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     /// <summary>
     /// The stage of the Aaaa record set update allowing to add or remove Aaaa record.
     /// </summary>
-    public interface IWithAaaaRecordIpv6Address 
+    public interface IWithAaaaRecordIPv6Address 
     {
         /// <summary>
-        /// Removes an Aaaa record with the provided Ipv6 address from this record set.
+        /// Removes an Aaaa record with the provided IPv6 address from this record set.
         /// </summary>
-        /// <param name="ipv6Address">The Ipv6 address.</param>
+        /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIpv6Address(string ipv6Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIPv6Address(string ipv6Address);
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an Aaaa record with the provided IPv6 address in this record set.
         /// </summary>
-        /// <param name="ipv6Address">The Ipv6 address.</param>
+        /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithIpv6Address(string ipv6Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithIPv6Address(string ipv6Address);
     }
 
     /// <summary>

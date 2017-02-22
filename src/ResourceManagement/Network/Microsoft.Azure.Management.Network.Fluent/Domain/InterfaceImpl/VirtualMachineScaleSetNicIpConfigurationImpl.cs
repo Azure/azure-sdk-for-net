@@ -10,10 +10,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Linq;
     using System.Threading.Tasks;
 
-    internal partial class VirtualMachineScaleSetNicIpConfigurationImpl
+    internal partial class VirtualMachineScaleSetNicIPConfigurationImpl
     {
 
-        bool INicIpConfigurationBase.IsPrimary
+        bool INicIPConfigurationBase.IsPrimary
         {
             get
             {
@@ -29,27 +29,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        string IHasPrivateIpAddress.PrivateIpAddress
+        string IHasPrivateIPAddress.PrivateIPAddress
         {
             get
             {
-                return this.PrivateIpAddress();
+                return this.PrivateIPAddress();
             }
         }
 
-        IPVersion INicIpConfigurationBase.PrivateIpAddressVersion
+        IPVersion INicIPConfigurationBase.PrivateIPAddressVersion
         {
             get
             {
-                return this.PrivateIpAddressVersion();
+                return this.PrivateIPAddressVersion();
             }
         }
 
-        IPAllocationMethod IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PrivateIpAllocationMethod();
+                return this.PrivateIPAllocationMethod();
             }
         }
 
@@ -61,17 +61,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        INetwork INicIpConfigurationBase.GetNetwork()
+        INetwork INicIPConfigurationBase.GetNetwork()
         {
             return this.GetNetwork();
         }
 
-        IList<ILoadBalancerBackend> INicIpConfigurationBase.ListAssociatedLoadBalancerBackends()
+        IList<ILoadBalancerBackend> INicIPConfigurationBase.ListAssociatedLoadBalancerBackends()
         {
             return this.ListAssociatedLoadBalancerBackends();
         }
 
-        IList<ILoadBalancerInboundNatRule> INicIpConfigurationBase.ListAssociatedLoadBalancerInboundNatRules()
+        IList<ILoadBalancerInboundNatRule> INicIPConfigurationBase.ListAssociatedLoadBalancerInboundNatRules()
         {
             return this.ListAssociatedLoadBalancerInboundNatRules();
         }

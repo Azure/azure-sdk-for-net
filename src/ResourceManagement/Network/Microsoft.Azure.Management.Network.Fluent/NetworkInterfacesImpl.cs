@@ -35,9 +35,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5EB6AEDDDF3C96B5ADB951CBAA0B5837
         override protected NetworkInterfaceImpl WrapModel(string name)
         {
-            NetworkInterfaceInner inner = new NetworkInterfaceInner();
-            inner.IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>();
-            inner.DnsSettings = new NetworkInterfaceDnsSettings();
+            NetworkInterfaceInner inner = new NetworkInterfaceInner()
+            {
+                IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>(),
+                DnsSettings = new NetworkInterfaceDnsSettings()
+            };
             return new NetworkInterfaceImpl(name, inner, InnerCollection, Manager);
         }
 

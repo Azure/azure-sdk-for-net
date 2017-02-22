@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
 {
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
     /// <summary>
     /// The stage of a load balancing rule update allowing to enable the floating IP functionality.
     /// </summary>
-    public interface IWithFloatingIp  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate>
+    public interface IWithFloatingIP  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate>
     {
     }
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFrontend,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithProtocol,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithBackendPort,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFloatingIp,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFloatingIP,
         IWithIdleTimeoutInMinutes,
         IWithLoadDistribution
     {

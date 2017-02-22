@@ -28,16 +28,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Actions
 
         ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
-        public IPublicIpAddress GetPublicIpAddress()
+        public IPublicIPAddress GetPublicIPAddress()
         {
-            string pipId = PublicIpAddressId();
+            string pipId = PublicIPAddressId();
             if (pipId == null)
             {
                 return null;
             }
             else
             {
-                return Parent.Manager.PublicIpAddresses.GetById(pipId);
+                return Parent.Manager.PublicIPAddresses.GetById(pipId);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:E2FB3C470570EB032EC48D6BFD6A7AFF
-        public string PublicIpAddressId()
+        public string PublicIPAddressId()
         {
             if (Inner.PublicIPAddress != null)
             {
@@ -122,13 +122,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:516B6A004CB15A757AC222DE49CEC6EC
-        public string PrivateIpAddress()
+        public string PrivateIPAddress()
         {
             return Inner.PrivateIPAddress;
         }
 
         ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:925E8594616C741FD699EF2269B3D731
-        public IPAllocationMethod PrivateIpAllocationMethod()
+        public IPAllocationMethod PrivateIPAllocationMethod()
         {
             return IPAllocationMethod.Parse(Inner.PrivateIPAllocationMethod);
         }
@@ -153,18 +153,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.Subnet = subnetRef;
 
             // Ensure this frontend is not public
-            WithoutPublicIpAddress();
+            WithoutPublicIPAddress();
             return this;
         }
 
         ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:ACEAB57753CC554AC2DC8CB1B88AC346
-        public ApplicationGatewayFrontendImpl WithExistingPublicIpAddress(IPublicIpAddress pip)
+        public ApplicationGatewayFrontendImpl WithExistingPublicIPAddress(IPublicIPAddress pip)
         {
-            return WithExistingPublicIpAddress(pip.Id);
+            return WithExistingPublicIPAddress(pip.Id);
         }
 
         ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:5185A4691911407C18CF3290890D0252
-        public ApplicationGatewayFrontendImpl WithExistingPublicIpAddress(string resourceId)
+        public ApplicationGatewayFrontendImpl WithExistingPublicIPAddress(string resourceId)
         {
             var pipRef = new SubResource()
             {
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:EA98B464B10BD645EE3B0689825B43B8:381025C979BFBD1E8A2299FD1136F281
-        public ApplicationGatewayFrontendImpl WithPrivateIpAddressDynamic()
+        public ApplicationGatewayFrontendImpl WithPrivateIPAddressDynamic()
         {
             Inner.PrivateIPAddress = null;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:6CDEF6BE4432158ED3F8917E000EAD56:9952D5FC5D28D16082887464EAAE7D3C
-        public ApplicationGatewayFrontendImpl WithPrivateIpAddressStatic(string ipAddress)
+        public ApplicationGatewayFrontendImpl WithPrivateIPAddressStatic(string ipAddress)
         {
             Inner.PrivateIPAddress = ipAddress;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static.ToString();
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:1B49C92CBA9BDBBF9FBFD26544224384:2AADFAA8967336A82263A3FD701F270A
-        public ApplicationGatewayFrontendImpl WithoutPublicIpAddress()
+        public ApplicationGatewayFrontendImpl WithoutPublicIPAddress()
         {
             Inner.PublicIPAddress = null;
             return this;

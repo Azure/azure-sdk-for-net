@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IList<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
-        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
+        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIP nicDefinitionWithPrivateIP;
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3FAB18211D6DAAAEF5CA426426D16F0C:AD7170076BCB5437E69B77AC63B3373E
         public VirtualMachineImpl WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
-            this.nicDefinitionWithPrivateIp = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
+            this.nicDefinitionWithPrivateIP = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithNewPrimaryNetwork(creatable);
             return this;
         }
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C8A4DDE66256242DF61087375BF710B0:BE10050EE1789706DD7774B3C47BE916
         public VirtualMachineImpl WithNewPrimaryNetwork(string addressSpace)
         {
-            this.nicDefinitionWithPrivateIp = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
+            this.nicDefinitionWithPrivateIP = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithNewPrimaryNetwork(addressSpace);
             return this;
         }
@@ -195,59 +195,59 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0FBBECB150CBC82F165D8BA614AB135A:D0002A3AE79C25026E85606A72066F48
         public VirtualMachineImpl WithSubnet(string name)
         {
-            this.nicDefinitionWithPrivateIp = this.nicDefinitionWithSubnet
+            this.nicDefinitionWithPrivateIP = this.nicDefinitionWithSubnet
                 .WithSubnet(name);
             return this;
         }
 
         ///GENMHASH:022FCEBED3C6606D834C45EAD65C0D6F:29E2281B1650F8D65A367942B42B75EF
-        public VirtualMachineImpl WithPrimaryPrivateIpAddressDynamic()
+        public VirtualMachineImpl WithPrimaryPrivateIPAddressDynamic()
         {
-            this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIp
-                .WithPrimaryPrivateIpAddressDynamic();
+            this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIP
+                .WithPrimaryPrivateIPAddressDynamic();
             return this;
         }
 
         ///GENMHASH:655D6F837286729FEB47BD78B3EB9A08:D2502E1AE46296B5C8F75C71F9B84C27
-        public VirtualMachineImpl WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        public VirtualMachineImpl WithPrimaryPrivateIPAddressStatic(string staticPrivateIPAddress)
         {
-            this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIp
-                .WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress);
+            this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIP
+                .WithPrimaryPrivateIPAddressStatic(staticPrivateIPAddress);
             return this;
         }
 
         ///GENMHASH:12E96FEFBC60AB582A0B69EBEEFD1E59:C1EAF0B5EE0258D48F9956AEFBA1EA2D
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        public VirtualMachineImpl WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
             var nicCreatable = this.nicDefinitionWithCreate
-                .WithNewPrimaryPublicIpAddress(creatable);
+                .WithNewPrimaryPublicIPAddress(creatable);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
             this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
         ///GENMHASH:BA50EF0AC88D5405DFE18FCE26A595B2:027C20A1A590AAED2CC3F40647663D8B
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        public VirtualMachineImpl WithNewPrimaryPublicIPAddress(string leafDnsLabel)
         {
             var nicCreatable = this.nicDefinitionWithCreate
-                .WithNewPrimaryPublicIpAddress(leafDnsLabel);
+                .WithNewPrimaryPublicIPAddress(leafDnsLabel);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
             this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
         ///GENMHASH:2B7C2F1E86A359473717299AD4D4DCBA:2EE2D29B7C228132508D27F040A79175
-        public VirtualMachineImpl WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        public VirtualMachineImpl WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
             var nicCreatable = this.nicDefinitionWithCreate
-                .WithExistingPrimaryPublicIpAddress(publicIpAddress);
+                .WithExistingPrimaryPublicIPAddress(publicIPAddress);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
             this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
         ///GENMHASH:D0AB91F51DBDFA04880ED371AD9E48EE:8727C9A4820EB72700E55883936D2638
-        public VirtualMachineImpl WithoutPrimaryPublicIpAddress()
+        public VirtualMachineImpl WithoutPrimaryPublicIPAddress()
         {
             var nicCreatable = this.nicDefinitionWithCreate;
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public VirtualMachineImpl WithNewPrimaryNetworkInterface(string name, string publicDnsNameLabel)
         {
             var definitionCreatable = PrepareNetworkInterface(name)
-                .WithNewPrimaryPublicIpAddress(publicDnsNameLabel);
+                .WithNewPrimaryPublicIPAddress(publicDnsNameLabel);
             return WithNewPrimaryNetworkInterface(definitionCreatable);
         }
 
@@ -1251,15 +1251,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:D3ADA5DC7B5CC9C5BD29AC1110C61014:EC93403D80CE55A8079C6FDA3D5DE566
-        public IPublicIpAddress GetPrimaryPublicIpAddress()
+        public IPublicIPAddress GetPrimaryPublicIPAddress()
         {
-            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetPublicIpAddress();
+            return this.GetPrimaryNetworkInterface().PrimaryIPConfiguration.GetPublicIPAddress();
         }
 
         ///GENMHASH:5977CC2F7355BB73CD32528805FEDA4D:8A6DCD2F68FE8ED005BB9933A0E74217
-        public string GetPrimaryPublicIpAddressId()
+        public string GetPrimaryPublicIPAddressId()
         {
-            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration.PublicIpAddressId;
+            return this.GetPrimaryNetworkInterface().PrimaryIPConfiguration.PublicIPAddressId;
         }
 
         ///GENMHASH:606A3D349546DF27E3A091C321476658:DC63C44DC2A2862C6AC14F711DCB1EFA
@@ -1861,7 +1861,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:E972A9EA7BC4745B11D042E506C9EC88:67C9F7C47AB1078BBDB948EE068D0EDC
-        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIpAddress PrepareNetworkInterface(string name)
+        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIPAddress PrepareNetworkInterface(string name)
         {
             Network.Fluent.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
                 .Define(name)
@@ -1877,7 +1877,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
             return definitionWithNetwork
                 .WithNewPrimaryNetwork("vnet" + name)
-                .WithPrimaryPrivateIpAddressDynamic();
+                .WithPrimaryPrivateIPAddressDynamic();
         }
 
         ///GENMHASH:528DB7AD001AA15B5C463269BA0A948C:86593E909D0CD3E320C19512D2A5F96A

@@ -26,9 +26,9 @@ namespace Azure.Tests.Common
         public string LoadBalancerName { get; private set; }
 
         // Create PIPs for the LB
-        public  IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
+        public  IEnumerable<IPublicIPAddress> EnsurePIPs(IPublicIPAddresses pips)
         {
-            var creatablePips = new List<ICreatable<IPublicIpAddress>>();
+            var creatablePips = new List<ICreatable<IPublicIPAddress>>();
             for (int i = 0; i < PipNames.Length; i++)
             {
                 creatablePips.Add(pips.Define(PipNames[i])
@@ -75,8 +75,8 @@ namespace Azure.Tests.Common
                     .WithExistingResourceGroup(GroupName)
                     .WithExistingPrimaryNetwork(network)
                     .WithSubnet(network.Subnets.Values.First().Name)
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithoutPrimaryPublicIpAddress()
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithoutPrimaryPublicIPAddress()
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer14_04_Lts)
                     .WithRootUsername(userName)
                     .WithRootPassword("Abcdef.123456")
@@ -104,8 +104,8 @@ namespace Azure.Tests.Common
 
             // Show public IP addresses
             info.Append("\n\tPublic IP address IDs: ")
-                .Append(resource.PublicIpAddressIds.Count);
-            foreach (string pipId in resource.PublicIpAddressIds)
+                .Append(resource.PublicIPAddressIds.Count);
+            foreach (string pipId in resource.PublicIPAddressIds)
             {
                 info.AppendLine("\n\t\tPIP id: ").Append(pipId);
             }
@@ -156,7 +156,7 @@ namespace Azure.Tests.Common
             {
                 info.Append("\n\t\tLB rule name: ").Append(rule.Name)
                     .Append("\n\t\t\tProtocol: ").Append(rule.Protocol)
-                    .Append("\n\t\t\tFloating IP enabled? ").Append(rule.FloatingIpEnabled)
+                    .Append("\n\t\t\tFloating IP enabled? ").Append(rule.FloatingIPEnabled)
                     .Append("\n\t\t\tIdle timeout in minutes: ").Append(rule.IdleTimeoutInMinutes)
                     .Append("\n\t\t\tLoad distribution method: ").Append(rule.LoadDistribution);
 
@@ -207,14 +207,14 @@ namespace Azure.Tests.Common
                     .Append("\n\t\t\tInternet facing: ").Append(frontend.IsPublic);
                 if (frontend.IsPublic)
                 {
-                    info.Append("\n\t\t\tPublic IP Address ID: ").Append(((ILoadBalancerPublicFrontend)frontend).PublicIpAddressId);
+                    info.Append("\n\t\t\tPublic IP Address ID: ").Append(((ILoadBalancerPublicFrontend)frontend).PublicIPAddressId);
                 }
                 else
                 {
                     info.Append("\n\t\t\tVirtual network ID: ").Append(((ILoadBalancerPrivateFrontend)frontend).NetworkId)
                         .Append("\n\t\t\tSubnet name: ").Append(((ILoadBalancerPrivateFrontend)frontend).SubnetName)
-                        .Append("\n\t\t\tPrivate IP address: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIpAddress)
-                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIpAllocationMethod);
+                        .Append("\n\t\t\tPrivate IP address: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIPAddress)
+                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIPAllocationMethod);
                 }
 
                 // Inbound NAT pool references
@@ -253,8 +253,8 @@ namespace Azure.Tests.Common
                     .Append("\n\t\t\tFrontend port: ").Append(natRule.FrontendPort)
                     .Append("\n\t\t\tBackend port: ").Append(natRule.BackendPort)
                     .Append("\n\t\t\tBackend NIC ID: ").Append(natRule.BackendNetworkInterfaceId)
-                    .Append("\n\t\t\tBackend NIC IP config name: ").Append(natRule.BackendNicIpConfigurationName)
-                    .Append("\n\t\t\tFloating IP? ").Append(natRule.FloatingIpEnabled)
+                    .Append("\n\t\t\tBackend NIC IP config name: ").Append(natRule.BackendNicIPConfigurationName)
+                    .Append("\n\t\t\tFloating IP? ").Append(natRule.FloatingIPEnabled)
                     .Append("\n\t\t\tIdle timeout in minutes: ").Append(natRule.IdleTimeoutInMinutes);
             }
 
@@ -282,8 +282,8 @@ namespace Azure.Tests.Common
 
                 // Show assigned backend NICs
                 info.Append("\n\t\t\tReferenced NICs: ")
-                    .Append(backend.BackendNicIpConfigurationNames.Count);
-                foreach (var entry in backend.BackendNicIpConfigurationNames)
+                    .Append(backend.BackendNicIPConfigurationNames.Count);
+                foreach (var entry in backend.BackendNicIPConfigurationNames)
                 {
                     info.Append("\n\t\t\t\tNIC ID: ").Append(entry.Key)
                         .Append(" - IP Config: ").Append(entry.Value);

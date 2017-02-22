@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:08B7E1E5C1AFE7A46CE9F049D5CDA430:6FEBAF2F043487BFE65A5D9D04AA1315
-        internal IList<string> DnsServerIps()
+        internal IList<string> DnsServerIPs()
         {
             if (Inner.DhcpOptions == null)
                 return new List<string>();

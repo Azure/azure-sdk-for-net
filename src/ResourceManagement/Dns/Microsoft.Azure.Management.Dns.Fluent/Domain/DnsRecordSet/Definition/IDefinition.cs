@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithARecordIpv4AddressOrAttachable<ParentT>  :
-        IWithARecordIpv4Address<ParentT>,
+    public interface IWithARecordIPv4AddressOrAttachable<ParentT>  :
+        IWithARecordIPv4Address<ParentT>,
         IWithAttach<ParentT>
     {
     }
@@ -19,28 +19,28 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the A record set definition allowing to add first A record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithARecordIpv4Address<ParentT> 
+    public interface IWithARecordIPv4Address<ParentT> 
     {
         /// <summary>
-        /// Creates an A record with the provided Ipv4 address in this record set.
+        /// Creates an A record with the provided IPv4 address in this record set.
         /// </summary>
-        /// <param name="ipv4Address">The Ipv4 address.</param>
+        /// <param name="ipv4Address">The IPv4 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithARecordIpv4AddressOrAttachable<ParentT> WithIpv4Address(string ipv4Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<ParentT> WithIPv4Address(string ipv4Address);
     }
 
     /// <summary>
     /// The stage of the Aaaa record set definition allowing to add first Aaaa record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAaaaRecordIpv6Address<ParentT> 
+    public interface IWithAaaaRecordIPv6Address<ParentT> 
     {
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an Aaaa record with the provided IPv6 address in this record set.
         /// </summary>
-        /// <param name="ipv6Address">The Ipv6 address.</param>
+        /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAaaaRecordIpv6AddressOrAttachable<ParentT> WithIpv6Address(string ipv6Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<ParentT> WithIPv6Address(string ipv6Address);
     }
 
     /// <summary>
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IARecordSetBlank<ParentT>,
-        IWithARecordIpv4Address<ParentT>,
-        IWithARecordIpv4AddressOrAttachable<ParentT>,
+        IWithARecordIPv4Address<ParentT>,
+        IWithARecordIPv4AddressOrAttachable<ParentT>,
         IAaaaRecordSetBlank<ParentT>,
-        IWithAaaaRecordIpv6Address<ParentT>,
-        IWithAaaaRecordIpv6AddressOrAttachable<ParentT>,
+        IWithAaaaRecordIPv6Address<ParentT>,
+        IWithAaaaRecordIPv6AddressOrAttachable<ParentT>,
         IMxRecordSetBlank<ParentT>,
         IWithMxRecordMailExchange<ParentT>,
         IWithMxRecordMailExchangeOrAttachable<ParentT>,
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IAaaaRecordSetBlank<ParentT>  :
-        IWithAaaaRecordIpv6Address<ParentT>
+        IWithAaaaRecordIPv6Address<ParentT>
     {
     }
 
@@ -132,8 +132,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAaaaRecordIpv6AddressOrAttachable<ParentT>  :
-        IWithAaaaRecordIpv6Address<ParentT>,
+    public interface IWithAaaaRecordIPv6AddressOrAttachable<ParentT>  :
+        IWithAaaaRecordIPv6Address<ParentT>,
         IWithAttach<ParentT>
     {
     }
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IARecordSetBlank<ParentT>  :
-        IWithARecordIpv4Address<ParentT>
+        IWithARecordIPv4Address<ParentT>
     {
     }
 

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ISet<INicIpConfiguration> ISubnet.GetNetworkInterfaceIPConfigurations()
+        ISet<INicIPConfiguration> ISubnet.GetNetworkInterfaceIPConfigurations()
         {
             return this.GetNetworkInterfaceIPConfigurations();
         }

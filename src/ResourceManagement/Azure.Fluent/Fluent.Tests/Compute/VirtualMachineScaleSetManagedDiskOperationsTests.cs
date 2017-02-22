@@ -108,7 +108,7 @@ namespace Fluent.Tests.Compute
             {
                 var userName = "tirekicker";
                 var password = "12NewPA$$w0rd!";
-                var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 10);
+                var publicIPDnsLabel = SdkContext.RandomResourceName("pip", 10);
                 var customImageName = SdkContext.RandomResourceName("img", 10);
                 var vmssName = SdkContext.RandomResourceName("vmss", 10);
                 var resourceManager = TestHelper.CreateRollupClient();
@@ -126,8 +126,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                             .WithRootUsername(userName)
                             .WithRootPassword(password)
@@ -145,7 +145,7 @@ namespace Fluent.Tests.Compute
 
                     Assert.NotNull(vm);
 
-                    TestHelper.DeprovisionAgentInLinuxVM(vm.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
+                    TestHelper.DeprovisionAgentInLinuxVM(vm.GetPrimaryPublicIPAddress().Fqdn, 22, userName, password);
                     vm.Deallocate();
                     vm.Generalize();
 

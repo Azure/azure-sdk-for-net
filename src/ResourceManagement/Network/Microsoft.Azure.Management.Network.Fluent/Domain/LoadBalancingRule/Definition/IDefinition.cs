@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// The stage of a load balancing rule definition allowing to enable the floating IP functionality.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT>>
+    public interface IWithFloatingIP<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT>>
     {
     }
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFloatingIP<ParentT>,
         IWithIdleTimeoutInMinutes<ParentT>,
         IWithLoadDistribution<ParentT>
     {

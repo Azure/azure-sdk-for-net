@@ -127,8 +127,8 @@ namespace ManageDns
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("empip-", 20))
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(SdkContext.RandomResourceName("empip-", 20))
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
@@ -139,11 +139,11 @@ namespace ManageDns
                 //============================================================
                 // Update DNS zone by adding a A record in root DNS zone pointing to virtual machine IPv4 address
 
-                var vm1PublicIpAddress = virtualMachine1.GetPrimaryPublicIpAddress();
+                var vm1PublicIpAddress = virtualMachine1.GetPrimaryPublicIPAddress();
                 Utilities.Log("Updating root DNS zone " + CustomDomainName + "...");
                 rootDnsZone = rootDnsZone.Update()
                         .DefineARecordSet("employees")
-                            .WithIpv4Address(vm1PublicIpAddress.IpAddress)
+                            .WithIpv4Address(vm1PublicIpAddress.IPAddress)
                             .Attach()
                         .Apply();
                 Utilities.Log("Updated root DNS zone " + rootDnsZone.Name);
@@ -169,7 +169,7 @@ namespace ManageDns
                 foreach (var aRecordSet in aRecordSets)
                 {
                     Utilities.Log("Name: " + aRecordSet.Name);
-                    foreach (var ipv4Address in aRecordSet.Ipv4Addresses)
+                    foreach (var ipv4Address in aRecordSet.IPv4Addresses)
                     {
                         Utilities.Log("  " + ipv4Address);
                     }
@@ -214,8 +214,8 @@ namespace ManageDns
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("ptnerpip-", 20))
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(SdkContext.RandomResourceName("ptnerpip-", 20))
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
@@ -226,11 +226,11 @@ namespace ManageDns
                 //============================================================
                 // Update child Dns zone by adding a A record pointing to virtual machine IPv4 address
 
-                var vm2PublicIpAddress = virtualMachine2.GetPrimaryPublicIpAddress();
+                var vm2PublicIpAddress = virtualMachine2.GetPrimaryPublicIPAddress();
                 Utilities.Log("Updating child DNS zone " + partnerSubDomainName + "...");
                 partnersDnsZone = partnersDnsZone.Update()
                         .DefineARecordSet("@")
-                            .WithIpv4Address(vm2PublicIpAddress.IpAddress)
+                            .WithIpv4Address(vm2PublicIpAddress.IPAddress)
                             .Attach()
                         .Apply();
                 Utilities.Log("Updated child DNS zone " + partnersDnsZone.Name);

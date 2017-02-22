@@ -20,14 +20,14 @@ namespace Azure.Tests.Network.LoadBalancer
     /// </summary>
     public class InternetWithNatPool : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
-        private IPublicIpAddresses pips;
+        private IPublicIPAddresses pips;
         private IVirtualMachines vms;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
         public InternetWithNatPool(
-                IPublicIpAddresses pips,
+                IPublicIPAddresses pips,
                 IVirtualMachines vms,
                 INetworks networks,
                 IAvailabilitySets availabilitySets,
@@ -58,9 +58,9 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
 
                         // Frontends
-                        .WithExistingPublicIpAddress(existingPips.ElementAt(0))
+                        .WithExistingPublicIPAddress(existingPips.ElementAt(0))
                         .DefinePublicFrontend("frontend1")
-                            .WithExistingPublicIpAddress(existingPips.ElementAt(1))
+                            .WithExistingPublicIPAddress(existingPips.ElementAt(1))
                             .Attach()
 
                         // Backends

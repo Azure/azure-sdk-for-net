@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.De
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT> WithIpAddress(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT> WithIPAddress(string ipAddress);
 
         /// <summary>
         /// Adds the specified existing fully qualified domain name (FQDN) to the backend.

@@ -32,13 +32,13 @@ namespace Azure.Tests.Dns
                     IDnsZone dnsZone = azure.DnsZones.Define(topLevelDomain)
                     .WithNewResourceGroup(groupName, region)
                     .DefineARecordSet("www")
-                        .WithIpv4Address("23.96.104.40")
-                        .WithIpv4Address("24.97.105.41")
+                        .WithIPv4Address("23.96.104.40")
+                        .WithIPv4Address("24.97.105.41")
                         .WithTimeToLive(7200) // Overwrite default 3600 seconds
                         .Attach()
                     .DefineAaaaRecordSet("www")
-                        .WithIpv6Address("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
-                        .WithIpv6Address("2002:0db9:85a4:0000:0000:8a2e:0371:7335")
+                        .WithIPv6Address("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
+                        .WithIPv6Address("2002:0db9:85a4:0000:0000:8a2e:0371:7335")
                         .Attach()
                     .DefineMxRecordSet("email")
                         .WithMailExchange("mail.contoso-mail-exchange1.com", 1)
@@ -101,7 +101,7 @@ namespace Azure.Tests.Dns
                     var aaaaRecordSets = dnsZone.AaaaRecordSets.List();
                     Assert.True(aaaaRecordSets.Count() == 1);
                     Assert.True(aaaaRecordSets[0].Name.StartsWith("www"));
-                    Assert.True(aaaaRecordSets[0].Ipv6Addresses.Count() == 2);
+                    Assert.True(aaaaRecordSets[0].IPv6Addresses.Count() == 2);
 
                     // Check MX records
                     var mxRecordSets = dnsZone.MxRecordSets.List();
@@ -148,8 +148,8 @@ namespace Azure.Tests.Dns
                             .WithNameServer("ns4-06.azure-dns.info")
                             .Parent()
                         .UpdateARecordSet("www")
-                            .WithoutIpv4Address("23.96.104.40")
-                            .WithIpv4Address("23.96.104.42")
+                            .WithoutIPv4Address("23.96.104.40")
+                            .WithIPv4Address("23.96.104.42")
                             .Parent()
                         .UpdateSrvRecordSet("_sip._tcp")
                             .WithoutRecord("bigbox.contoso-service.com", 5060, 10, 60)
@@ -198,8 +198,8 @@ namespace Azure.Tests.Dns
                     aRecordSets = dnsZone.ARecordSets.List();
                     Assert.Equal(1, aRecordSets.Count());
                     var aRecordSet = aRecordSets[0];
-                    Assert.Equal(2, aRecordSet.Ipv4Addresses.Count());
-                    foreach (var ipV4Address in aRecordSet.Ipv4Addresses)
+                    Assert.Equal(2, aRecordSet.IPv4Addresses.Count());
+                    foreach (var ipV4Address in aRecordSet.IPv4Addresses)
                     {
                         Assert.False(ipV4Address.StartsWith("23.96.104.40"));
                     }

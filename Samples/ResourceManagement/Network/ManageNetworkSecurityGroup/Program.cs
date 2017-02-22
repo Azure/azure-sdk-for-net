@@ -35,7 +35,7 @@ namespace ManageNetworkSecurityGroup
             string vnetName = SdkContext.RandomResourceName("vnet", 24);
             string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
             string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
-            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
+            string publicIPAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
             string frontEndVMName = SdkContext.RandomResourceName("fevm", 24);
             string backEndVMName = SdkContext.RandomResourceName("bevm", 24);
 
@@ -146,9 +146,9 @@ namespace ManageNetworkSecurityGroup
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(publicIpAddressLeafDNS1)
-                        .WithIpForwarding()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(publicIPAddressLeafDNS1)
+                        .WithIPForwarding()
                         .WithExistingNetworkSecurityGroup(frontEndNSG)
                         .Create();
 
@@ -167,7 +167,7 @@ namespace ManageNetworkSecurityGroup
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
-                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithPrimaryPrivateIPAddressDynamic()
                         .WithExistingNetworkSecurityGroup(backEndNSG)
                         .Create();
 

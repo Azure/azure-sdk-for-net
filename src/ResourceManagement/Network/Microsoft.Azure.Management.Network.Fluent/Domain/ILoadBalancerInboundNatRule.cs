@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasFrontend,
         IHasBackendPort,
         IHasProtocol<TransportProtocol>,
-        IHasFloatingIp,
+        IHasFloatingIP,
         IHasFrontendPort,
         IHasInner<Models.InboundNatRuleInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
@@ -30,6 +30,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the IP configuration within the network interface associated with this NAT rule.
         /// </summary>
-        string BackendNicIpConfigurationName { get; }
+        string BackendNicIPConfigurationName { get; }
     }
 }

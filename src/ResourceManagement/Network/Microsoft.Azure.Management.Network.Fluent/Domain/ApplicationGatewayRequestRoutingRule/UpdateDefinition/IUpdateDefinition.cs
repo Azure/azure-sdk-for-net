@@ -101,8 +101,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
         /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings using
         /// {.
         /// </summary>
-        /// <code>WithExistingPublicIpAddress(...)} or {.</code>
-        /// <code>WithNewPublicIpAddress(...)}.</code>
+        /// <code>WithExistingPublicIPAddress(...)} or {.</code>
+        /// <code>WithNewPublicIPAddress(...)}.</code>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontendPort<ParentT> FromPublicFrontend();
     }
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddressOrAttach<ParentT> ToBackendIpAddress(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddressOrAttach<ParentT> ToBackendIPAddress(string ipAddress);
 
         /// <summary>
         /// Adds an FQDN (fully qualified domain name) to the backend associated with this rule.

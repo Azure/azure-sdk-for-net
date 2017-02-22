@@ -94,8 +94,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithLinuxCustomImage(image.Id)
                             .WithRootUsername("javauser")
                             .WithRootPassword("12NewPA$$w0rd!")
@@ -193,8 +193,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithLatestLinuxImage("Canonical", "UbuntuServer", "14.04.2-LTS")
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -317,15 +317,15 @@ namespace Fluent.Tests.Compute
             var uname = "javauser";
             var password = "12NewPA$$w0rd!";
             KnownLinuxVirtualMachineImage linuxImage = KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts;
-            var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 20);
+            var publicIPDnsLabel = SdkContext.RandomResourceName("pip", 20);
 
             var virtualMachine = computeManager.VirtualMachines
                     .Define(vmName)
                     .WithRegion(Location)
                     .WithNewResourceGroup(rgName)
                     .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                     .WithPopularLinuxImage(linuxImage)
                     .WithRootUsername(uname)
                     .WithRootPassword(password)
@@ -343,7 +343,7 @@ namespace Fluent.Tests.Compute
                     .WithOSDiskCaching(CachingTypes.ReadWrite)
                     .Create();
             //
-            TestHelper.DeprovisionAgentInLinuxVM(virtualMachine.GetPrimaryPublicIpAddress().Fqdn, 22, uname, password);
+            TestHelper.DeprovisionAgentInLinuxVM(virtualMachine.GetPrimaryPublicIPAddress().Fqdn, 22, uname, password);
             virtualMachine.Deallocate();
             virtualMachine.Generalize();
             return virtualMachine;

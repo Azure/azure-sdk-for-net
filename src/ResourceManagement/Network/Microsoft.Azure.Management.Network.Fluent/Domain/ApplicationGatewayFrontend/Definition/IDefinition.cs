@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
 {
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// should be available at within the selected subnet.
     /// </summary>
     /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
-    public interface IWithPrivateIp<ParentT>  :
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
+    public interface IWithPrivateIP<ParentT>  :
+        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
     {
     }
 
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// the application gateway available at as Internet-facing.
     /// </summary>
     /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
-    public interface IWithPublicIpAddress<ParentT>  :
-        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
+    public interface IWithPublicIPAddress<ParentT>  :
+        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
     {
     }
 
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        IWithPublicIpAddress<ParentT>
+        IWithPublicIPAddress<ParentT>
     {
     }
 
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     public interface IWithAttach<ParentT>  :
         IInDefinitionAlt<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithSubnet<ParentT>,
-        IWithPrivateIp<ParentT>
+        IWithPrivateIP<ParentT>
     {
     }
 }

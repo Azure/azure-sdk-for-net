@@ -46,11 +46,10 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "Network")]
-        public void ManageIpAddressTest()
-        {
-            RunSampleAsTest(
+        public void ManageIPAddressTest()
+        {            RunSampleAsTest(
                 this.GetType().FullName,
-                ManageIpAddress.Program.RunSample);
+                ManageIPAddress.Program.RunSample);
         }
 
         [Fact]

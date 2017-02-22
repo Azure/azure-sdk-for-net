@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
     using Models;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFloatingIP<ParentT>,
         IWithIdleTimeoutInMinutes<ParentT>,
         IWithLoadDistribution<ParentT>
     {
@@ -115,8 +115,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// The stage of a load balancing rule definition allowing to enable the floating IP functionality.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+    public interface IWithFloatingIP<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.UpdateDefinition.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
 

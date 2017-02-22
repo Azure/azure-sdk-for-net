@@ -28,7 +28,7 @@ namespace Fluent.Tests.Compute
             string vnet1BackEndSubnetNsgName = "backendnsg";
             string frontEndVMName = SdkContext.RandomResourceName("fevm", 24);
             string backEndVMName = SdkContext.RandomResourceName("bevm", 24);
-            string publicIpAddressLeafDNSForFrontEndVM = SdkContext.RandomResourceName("pip1", 24);
+            string publicIPAddressLeafDNSForFrontEndVM = SdkContext.RandomResourceName("pip1", 24);
 
             INetworkManager manager = TestHelper.CreateNetworkManager();
 

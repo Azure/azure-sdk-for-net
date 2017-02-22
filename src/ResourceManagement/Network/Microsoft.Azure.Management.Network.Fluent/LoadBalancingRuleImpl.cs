@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:45270A04ADC0E66DC30D125EAFB21FCA:7680AC472EE8EF19A209F24A5D2933FC
-        internal bool FloatingIpEnabled()
+        internal bool FloatingIPEnabled()
         {
             return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
         }
@@ -125,22 +125,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:3014A102DFC74C0A4BD328894DA72021:2B4C4FEA610F44C48737D2BD835C9215
-        internal LoadBalancingRuleImpl WithFloatingIp (bool enable)
+        internal LoadBalancingRuleImpl WithFloatingIP (bool enable)
         {
             Inner.EnableFloatingIP = enable;
             return this;
         }
 
         ///GENMHASH:B978A0452A50E17A6A319C98FF5CF3CB:4A97EF9CEF1AFD699FE25D0550B11E65
-        internal LoadBalancingRuleImpl WithFloatingIpEnabled ()
+        internal LoadBalancingRuleImpl WithFloatingIPEnabled ()
         {
-            return WithFloatingIp(true);
+            return WithFloatingIP(true);
         }
 
         ///GENMHASH:AEF33425EF146B710C33427451DF23D6:47CF63204E86A1051FFDA5F21A6961B2
-        internal LoadBalancingRuleImpl WithFloatingIpDisabled ()
+        internal LoadBalancingRuleImpl WithFloatingIPDisabled ()
         {
-            return WithFloatingIp(false);
+            return WithFloatingIP(false);
         }
 
         ///GENMHASH:475A4755B19EB893208FCC08E7664C5B:8E47A7551FAA8958BCB5314D0E665506

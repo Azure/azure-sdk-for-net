@@ -2,22 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using PublicIpAddress.Definition;
+    using PublicIPAddress.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to public IP address management.
     /// </summary>
-    public interface IPublicIpAddresses  :
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
-        ISupportsCreating<PublicIpAddress.Definition.IBlank>,
+    public interface IPublicIPAddresses  :
+        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        ISupportsCreating<PublicIPAddress.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
-        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
+        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         IHasManager<INetworkManager>,
         IHasInner<IPublicIPAddressesOperations>
     {

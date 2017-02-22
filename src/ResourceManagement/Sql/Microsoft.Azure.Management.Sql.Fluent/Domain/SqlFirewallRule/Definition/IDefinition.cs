@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        IWithIpAddress,
-        IWithIpAddressRange,
+        IWithIPAddress,
+        IWithIPAddressRange,
         IWithCreate
     {
     }
@@ -20,36 +20,36 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition
     /// The first stage of the SQL Server definition.
     /// </summary>
     public interface IBlank  :
-        IWithIpAddressRange,
-        IWithIpAddress
+        IWithIPAddressRange,
+        IWithIPAddress
     {
     }
 
     /// <summary>
     /// The SQL Firewall Rule definition to set the starting IP Address for the server.
     /// </summary>
-    public interface IWithIpAddressRange 
+    public interface IWithIPAddressRange 
     {
         /// <summary>
         /// Sets the starting IP address of SQL server's firewall rule.
         /// </summary>
-        /// <param name="startIpAddress">Starting IP address in IPv4 format.</param>
-        /// <param name="endIpAddress">Starting IP address in IPv4 format.</param>
+        /// <param name="startIPAddress">Starting IP address in IPv4 format.</param>
+        /// <param name="endIPAddress">Starting IP address in IPv4 format.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IWithCreate WithIpAddressRange(string startIpAddress, string endIpAddress);
+        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IWithCreate WithIPAddressRange(string startIPAddress, string endIPAddress);
     }
 
     /// <summary>
     /// The SQL Firewall Rule definition to set the starting IP Address for the server.
     /// </summary>
-    public interface IWithIpAddress 
+    public interface IWithIPAddress 
     {
         /// <summary>
         /// Sets the ending IP address of SQL server's firewall rule.
         /// </summary>
         /// <param name="ipAddress">IP address in IPv4 format.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IWithCreate WithIpAddress(string ipAddress);
+        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IWithCreate WithIPAddress(string ipAddress);
     }
 
     /// <summary>

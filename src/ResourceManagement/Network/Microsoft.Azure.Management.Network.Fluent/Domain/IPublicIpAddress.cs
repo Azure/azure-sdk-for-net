@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using PublicIpAddress.Update;
+    using PublicIPAddress.Update;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
@@ -10,11 +10,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Public IP address.
     /// </summary>
-    public interface IPublicIpAddress  :
+    public interface IPublicIPAddress  :
         IGroupableResource<INetworkManager>,
-        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
+        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         IHasInner<Models.PublicIPAddressInner>,
-        IUpdatable<PublicIpAddress.Update.IUpdate>
+        IUpdatable<PublicIPAddress.Update.IUpdate>
     {
         /// <summary>
         /// Gets the assigned reverse FQDN, if any.
@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the assigned IP address.
         /// </summary>
-        string IpAddress { get; }
+        string IPAddress { get; }
 
         /// <summary>
         /// Gets the IP address allocation method (Static/Dynamic).
         /// </summary>
-        string IpAllocationMethod { get; }
+        string IPAllocationMethod { get; }
 
         /// <summary>
         /// Gets the idle connection timeout setting (in minutes).
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string LeafDomainLabel { get; }
 
         /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
-        Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration();
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration GetAssignedNetworkInterfaceIPConfiguration();
 
         /// <return>The load balancer public frontend that this public IP address is assigned to.</return>
         Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend();

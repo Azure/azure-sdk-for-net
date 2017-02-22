@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets a map of names of the IP configurations of network interfaces assigned to this backend,
         /// indexed by their NIC's resource id.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Network.Fluent.IHasBackendNics.BackendNicIpConfigurationNames
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Network.Fluent.IHasBackendNics.BackendNicIPConfigurationNames
         {
             get
             {
-                return this.BackendNicIpConfigurationNames() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+                return this.BackendNicIPConfigurationNames() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 

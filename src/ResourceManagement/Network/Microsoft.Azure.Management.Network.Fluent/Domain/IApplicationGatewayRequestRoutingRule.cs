@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IApplicationGatewayRequestRoutingRule  :
         IHasInner<Models.ApplicationGatewayRequestRoutingRuleInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IHasPublicIpAddress,
+        IHasPublicIPAddress,
         IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>,
         IHasFrontendPort,
         IHasBackendPort,

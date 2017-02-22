@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGatewayFrontend.Update;
     using ApplicationGatewayFrontend.UpdateDefinition;
     using Models;
-    using HasPrivateIpAddress.Definition;
-    using HasPrivateIpAddress.UpdateDefinition;
-    using HasPublicIpAddress.Definition;
-    using HasPublicIpAddress.UpdateDefinition;
-    using HasPublicIpAddress.Update;
+    using HasPrivateIPAddress.Definition;
+    using HasPrivateIPAddress.UpdateDefinition;
+    using HasPublicIPAddress.Definition;
+    using HasPublicIPAddress.UpdateDefinition;
+    using HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition;
@@ -69,19 +69,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.GetPublicIpAddress()
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
         {
-            return this.GetPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress;
+            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
         }
 
         /// <summary>
         /// Gets the resource ID of the associated public IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.PublicIpAddressId
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
         {
             get
             {
-                return this.PublicIpAddressId();
+                return this.PublicIPAddressId();
             }
         }
 
@@ -111,9 +111,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithPrivateIpAddressDynamic()
+        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithPrivateIPAddressDynamic() as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -121,18 +121,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithPrivateIpAddressStatic(string ipAddress)
+        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPrivateIpAddress.Definition.IWithPrivateIpAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithPrivateIpAddressDynamic()
+        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
+            return this.WithPrivateIPAddressDynamic() as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
         }
 
         /// <summary>
@@ -140,9 +140,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPrivateIpAddress.Definition.IWithPrivateIpAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithPrivateIpAddressStatic(string ipAddress)
+        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
         }
 
         /// <summary>
@@ -170,33 +170,33 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the private IP address associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAddress
+        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
         {
             get
             {
-                return this.PrivateIpAddress();
+                return this.PrivateIPAddress();
             }
         }
 
         /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PrivateIpAllocationMethod();
+                return this.PrivateIPAllocationMethod();
             }
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -204,28 +204,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingPublicIpAddress(string resourceId)
+        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithExistingPublicIPAddress(resourceId) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
         /// Removes the existing reference to a public IP address.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        ApplicationGatewayFrontend.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.Update.IUpdate>.WithoutPublicIpAddress()
+        ApplicationGatewayFrontend.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.Update.IUpdate>.WithoutPublicIPAddress()
         {
-            return this.WithoutPublicIpAddress() as ApplicationGatewayFrontend.Update.IUpdate;
+            return this.WithoutPublicIPAddress() as ApplicationGatewayFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGatewayFrontend.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        ApplicationGatewayFrontend.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.Update.IUpdate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as ApplicationGatewayFrontend.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as ApplicationGatewayFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -233,19 +233,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId)
+        ApplicationGatewayFrontend.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.Update.IUpdate>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as ApplicationGatewayFrontend.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(resourceId) as ApplicationGatewayFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
         }
 
         /// <summary>
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingPublicIpAddress(string resourceId)
+        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
+            return this.WithExistingPublicIPAddress(resourceId) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 
-namespace ManageIpAddress
+namespace ManageIPAddress
 {
     public class Program
     {
@@ -26,10 +26,10 @@ namespace ManageIpAddress
          */
         public static void RunSample(IAzure azure)
         {
-            string publicIpAddressName1 = SdkContext.RandomResourceName("pip1", 20);
-            string publicIpAddressName2 = SdkContext.RandomResourceName("pip2", 20);
-            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 20);
-            string publicIpAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 20);
+            string publicIPAddressName1 = SdkContext.RandomResourceName("pip1", 20);
+            string publicIPAddressName2 = SdkContext.RandomResourceName("pip2", 20);
+            string publicIPAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 20);
+            string publicIPAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 20);
             string vmName = SdkContext.RandomResourceName("vm", 8);
             string rgName = SdkContext.RandomResourceName("rgNEMP", 24);
 
@@ -42,15 +42,15 @@ namespace ManageIpAddress
 
                 Utilities.Log("Creating a public IP address...");
 
-                var publicIpAddress = azure.PublicIpAddresses.Define(publicIpAddressName1)
+                var publicIPAddress = azure.PublicIPAddresses.Define(publicIPAddressName1)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
-                        .WithLeafDomainLabel(publicIpAddressLeafDNS1)
+                        .WithLeafDomainLabel(publicIPAddressLeafDNS1)
                         .Create();
 
                 Utilities.Log("Created a public IP address");
                 // Print public IP address details
-                Utilities.PrintIpAddress(publicIpAddress);
+                Utilities.PrintIPAddress(publicIPAddress);
 
                 // Use the pre-created public IP for the new VM
 
@@ -62,8 +62,8 @@ namespace ManageIpAddress
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithExistingPrimaryPublicIpAddress(publicIpAddress)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithExistingPrimaryPublicIPAddress(publicIPAddress)
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername(UserName)
                         .WithAdminPassword(Password)
@@ -81,17 +81,17 @@ namespace ManageIpAddress
 
                 Utilities.Log("Public IP address associated with the VM's primary NIC [After create]");
                 // Print the public IP address details
-                Utilities.PrintIpAddress(vm.GetPrimaryPublicIpAddress());
+                Utilities.PrintIPAddress(vm.GetPrimaryPublicIPAddress());
 
                 //============================================================
                 // Assign a new public IP address for the VM
 
                 // Define a new public IP address
 
-                var publicIpAddress2 = azure.PublicIpAddresses.Define(publicIpAddressName2)
+                var publicIPAddress2 = azure.PublicIPAddresses.Define(publicIPAddressName2)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
-                        .WithLeafDomainLabel(publicIpAddressLeafDNS2)
+                        .WithLeafDomainLabel(publicIPAddressLeafDNS2)
                         .Create();
 
                 // Update VM's primary NIC to use the new public IP address
@@ -100,7 +100,7 @@ namespace ManageIpAddress
 
                 var primaryNetworkInterface = vm.GetPrimaryNetworkInterface();
                 primaryNetworkInterface.Update()
-                        .WithExistingPrimaryPublicIpAddress(publicIpAddress2)
+                        .WithExistingPrimaryPublicIPAddress(publicIPAddress2)
                         .Apply();
 
                 //============================================================
@@ -109,7 +109,7 @@ namespace ManageIpAddress
                 // Get the associated public IP address for a virtual machine
                 Utilities.Log("Public IP address associated with the VM's primary NIC [After Update]");
                 vm.Refresh();
-                Utilities.PrintIpAddress(vm.GetPrimaryPublicIpAddress());
+                Utilities.PrintIPAddress(vm.GetPrimaryPublicIPAddress());
 
                 //============================================================
                 // Remove public IP associated with the VM
@@ -117,9 +117,9 @@ namespace ManageIpAddress
                 Utilities.Log("Removing public IP address associated with the VM");
                 vm.Refresh();
                 primaryNetworkInterface = vm.GetPrimaryNetworkInterface();
-                publicIpAddress = primaryNetworkInterface.PrimaryIpConfiguration.GetPublicIpAddress();
+                publicIPAddress = primaryNetworkInterface.PrimaryIPConfiguration.GetPublicIPAddress();
                 primaryNetworkInterface.Update()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithoutPrimaryPublicIPAddress()
                         .Apply();
 
                 Utilities.Log("Removed public IP address associated with the VM");
@@ -127,7 +127,7 @@ namespace ManageIpAddress
                 //============================================================
                 // Delete the public ip
                 Utilities.Log("Deleting the public IP address");
-                azure.PublicIpAddresses.DeleteById(publicIpAddress.Id);
+                azure.PublicIPAddresses.DeleteById(publicIPAddress.Id);
                 Utilities.Log("Deleted the public IP address");
             }
             finally

@@ -29,8 +29,8 @@ namespace ManageNetworkInterface
             string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
             string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
             string networkInterfaceName3 = SdkContext.RandomResourceName("nic3", 24);
-            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
-            string publicIpAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 24);
+            string publicIPAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
+            string publicIPAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 24);
             // TODO adjust the length of vm name from 8 to 24
             string vmName = SdkContext.RandomResourceName("vm", 8);
             string rgName = SdkContext.RandomResourceName("rgNEMI", 24);
@@ -71,9 +71,9 @@ namespace ManageNetworkInterface
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(publicIpAddressLeafDNS1)
-                        .WithIpForwarding()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(publicIPAddressLeafDNS1)
+                        .WithIPForwarding()
                         .Create();
 
                 Utilities.Log("Created network interface 1");
@@ -85,7 +85,7 @@ namespace ManageNetworkInterface
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Mid-tier")
-                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithPrimaryPrivateIPAddressDynamic()
                         .Create();
 
                 Utilities.Log("Created network interface 2");
@@ -98,7 +98,7 @@ namespace ManageNetworkInterface
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
-                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithPrimaryPrivateIPAddressDynamic()
                         .Create();
 
                 Utilities.Log("Created network interface 3");
@@ -133,7 +133,7 @@ namespace ManageNetworkInterface
                 // Configure a network interface
                 Utilities.Log("Updating the first network interface");
                 networkInterface1.Update()
-                        .WithNewPrimaryPublicIpAddress(publicIpAddressLeafDNS2)
+                        .WithNewPrimaryPublicIPAddress(publicIPAddressLeafDNS2)
                         .Apply();
 
                 Utilities.Log("Updated the first network interface");

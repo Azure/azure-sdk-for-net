@@ -31,6 +31,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>True if the specified IP address is referenced by this backend, else false.</return>
-        bool ContainsIpAddress(string ipAddress);
+        bool ContainsIPAddress(string ipAddress);
     }
 }

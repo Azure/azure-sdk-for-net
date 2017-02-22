@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>Gets the network interface IP configurations that are associated with this subnet.
         /// Note that this call may result in multiple calls to Azure to fetch all the referenced interfaces each time it is invoked.
         /// </summary>
-        ISet<INicIpConfiguration> GetNetworkInterfaceIPConfigurations();
+        ISet<INicIPConfiguration> GetNetworkInterfaceIPConfigurations();
 
         /// <summary>
         /// Gets the number of network interface IP configurations associated with this subnet.

@@ -110,11 +110,11 @@ namespace Microsoft.Azure.Management.Fluent
         }
 
         /// <returns>entry point to managing public IP addresses</returns>
-        public IPublicIpAddresses PublicIpAddresses
+        public IPublicIPAddresses PublicIPAddresses
         {
             get
             {
-                return networkManager.PublicIpAddresses;
+                return networkManager.PublicIPAddresses;
             }
         }
 
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         INetworkSecurityGroups NetworkSecurityGroups { get; }
 
-        IPublicIpAddresses PublicIpAddresses { get; }
+        IPublicIPAddresses PublicIPAddresses { get; }
 
         INetworkInterfaces NetworkInterfaces { get; }
 

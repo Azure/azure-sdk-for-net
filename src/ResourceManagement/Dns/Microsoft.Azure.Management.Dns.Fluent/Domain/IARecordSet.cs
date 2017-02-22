@@ -5,14 +5,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a A (Ipv4) record set in Azure Dns Zone.
+    /// An immutable client-side representation of a A (IPv4) record set in Azure Dns Zone.
     /// </summary>
     public interface IARecordSet  :
         IDnsRecordSet
     {
         /// <summary>
-        /// Gets the Ipv4 addresses of A records in this record set.
+        /// Gets the IPv4 addresses of A records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<string> Ipv4Addresses { get; }
+        System.Collections.Generic.IList<string> IPv4Addresses { get; }
     }
 }

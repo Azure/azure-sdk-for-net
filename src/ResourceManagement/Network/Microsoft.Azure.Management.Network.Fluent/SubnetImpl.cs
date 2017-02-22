@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        internal ISet<INicIpConfiguration> GetNetworkInterfaceIPConfigurations()
+        internal ISet<INicIPConfiguration> GetNetworkInterfaceIPConfigurations()
         {
-            var ipConfigs = new HashSet<INicIpConfiguration>();
+            var ipConfigs = new HashSet<INicIPConfiguration>();
             var nics = new Dictionary<string, INetworkInterface>();
             var ipConfigRefs = Inner.IpConfigurations;
             if (ipConfigRefs == null)
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 nics[nic.Id.ToLower()] = nic;
 
                 // Get the IP config  
-                INicIpConfiguration ipConfig;
-                if (!nic.IpConfigurations.TryGetValue(ipConfigName, out ipConfig))
+                INicIPConfiguration ipConfig;
+                if (!nic.IPConfigurations.TryGetValue(ipConfigName, out ipConfig))
                 {
                     // IP config not found, so ignore this bad reference  
                     continue;

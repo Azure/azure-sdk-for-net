@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
         /// </summary>
-        bool IsIpForwardingEnabled { get; }
+        bool IsIPForwardingEnabled { get; }
 
         /// <summary>
         /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
         /// primary IP configuration.
         /// </summary>
-        IPAllocationMethod PrimaryPrivateIpAllocationMethod { get; }
+        IPAllocationMethod PrimaryPrivateIPAllocationMethod { get; }
 
         /// <summary>
         /// Gets the internal domain name suffix.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the private IP addresses.
         /// </summary>
-        string PrimaryPrivateIp { get; }
+        string PrimaryPrivateIP { get; }
 
         /// <summary>
         /// Gets the network security group resource id associated with this network interface.

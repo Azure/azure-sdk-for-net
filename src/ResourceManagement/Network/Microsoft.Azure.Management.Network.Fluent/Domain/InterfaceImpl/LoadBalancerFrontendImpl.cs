@@ -11,12 +11,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using LoadBalancerPublicFrontend.Update;
     using LoadBalancerPublicFrontend.UpdateDefinition;
     using Models;
-    using HasPrivateIpAddress.Definition;
-    using HasPrivateIpAddress.UpdateDefinition;
-    using HasPrivateIpAddress.Update;
-    using HasPublicIpAddress.Definition;
-    using HasPublicIpAddress.UpdateDefinition;
-    using HasPublicIpAddress.Update;
+    using HasPrivateIPAddress.Definition;
+    using HasPrivateIPAddress.UpdateDefinition;
+    using HasPrivateIPAddress.Update;
+    using HasPublicIPAddress.Definition;
+    using HasPublicIPAddress.UpdateDefinition;
+    using HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
@@ -49,18 +49,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the resource ID of the associated public IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.PublicIpAddressId
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
         {
             get
             {
-                return this.PublicIpAddressId();
+                return this.PublicIPAddressId();
             }
         }
 
         /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.GetPublicIpAddress()
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
         {
-            return this.GetPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress;
+            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
         }
 
         /// <summary>
@@ -97,18 +97,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithPrivateIpAddressStatic(string ipAddress)
+        LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithPrivateIpAddressDynamic()
+        LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithPrivateIPAddressDynamic() as LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -116,18 +116,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> HasPrivateIpAddress.Definition.IWithPrivateIpAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIpAddressStatic(string ipAddress)
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> HasPrivateIpAddress.Definition.IWithPrivateIpAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIpAddressDynamic()
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+            return this.WithPrivateIPAddressDynamic() as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
@@ -135,39 +135,39 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerPrivateFrontend.Update.IUpdate HasPrivateIpAddress.Update.IWithPrivateIpAddress<LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIpAddressStatic(string ipAddress)
+        LoadBalancerPrivateFrontend.Update.IUpdate HasPrivateIPAddress.Update.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Update.IUpdate;
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        LoadBalancerPrivateFrontend.Update.IUpdate HasPrivateIpAddress.Update.IWithPrivateIpAddress<LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIpAddressDynamic()
+        LoadBalancerPrivateFrontend.Update.IUpdate HasPrivateIPAddress.Update.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as LoadBalancerPrivateFrontend.Update.IUpdate;
+            return this.WithPrivateIPAddressDynamic() as LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Gets the private IP address associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAddress
+        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
         {
             get
             {
-                return this.PrivateIpAddress();
+                return this.PrivateIPAddress();
             }
         }
 
         /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PrivateIpAllocationMethod();
+                return this.PrivateIPAllocationMethod();
             }
         }
 
@@ -196,11 +196,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend> HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
@@ -208,28 +208,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend> HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIpAddress(string resourceId)
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
         /// Removes the existing reference to a public IP address.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        LoadBalancerPublicFrontend.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.Update.IUpdate>.WithoutPublicIpAddress()
+        LoadBalancerPublicFrontend.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Update.IUpdate>.WithoutPublicIPAddress()
         {
-            return this.WithoutPublicIpAddress() as LoadBalancerPublicFrontend.Update.IUpdate;
+            return this.WithoutPublicIPAddress() as LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerPublicFrontend.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        LoadBalancerPublicFrontend.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Update.IUpdate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as LoadBalancerPublicFrontend.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -237,19 +237,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId)
+        LoadBalancerPublicFrontend.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Update.IUpdate>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as LoadBalancerPublicFrontend.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -257,9 +257,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithExistingPublicIpAddress(string resourceId)
+        LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>

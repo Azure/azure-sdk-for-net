@@ -134,7 +134,7 @@ namespace ManageInternalLoadBalancer
                         .WithExistingResourceGroup(rgName)
                         .DefinePrivateFrontend(privateFrontEndName)
                             .WithExistingSubnet(network, "Back-end")
-                            .WithPrivateIpAddressStatic("172.16.3.5")
+                            .WithPrivateIPAddressStatic("172.16.3.5")
                             .Attach()
                         // Add one backend - one per rule
                         .DefineBackend(backendPoolName3)
@@ -200,7 +200,7 @@ namespace ManageInternalLoadBalancer
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
-                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithPrimaryPrivateIPAddressDynamic()
                         .WithExistingLoadBalancerBackend(loadBalancer3, backendPoolName3)
                         .WithExistingLoadBalancerInboundNatRule(loadBalancer3, NatRule6000to22forVM3)
                         .WithExistingLoadBalancerInboundNatRule(loadBalancer3, NatRule6001to23forVM3);
@@ -212,7 +212,7 @@ namespace ManageInternalLoadBalancer
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
-                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithPrimaryPrivateIPAddressDynamic()
                         .WithExistingLoadBalancerBackend(loadBalancer3, backendPoolName3)
                         .WithExistingLoadBalancerInboundNatRule(loadBalancer3, NatRule6002to22forVM4)
                         .WithExistingLoadBalancerInboundNatRule(loadBalancer3, NatRule6003to23forVM4);
@@ -336,7 +336,7 @@ namespace ManageInternalLoadBalancer
                         .WithExistingResourceGroup(rgName)
                         .DefinePrivateFrontend(privateFrontEndName)
                             .WithExistingSubnet(network, "Back-end")
-                            .WithPrivateIpAddressStatic("172.16.3.15")
+                            .WithPrivateIPAddressStatic("172.16.3.15")
                             .Attach()
                         
                         // Add one backend - one per rule

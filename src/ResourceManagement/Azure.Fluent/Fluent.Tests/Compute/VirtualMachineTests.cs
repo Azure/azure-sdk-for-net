@@ -41,8 +41,8 @@ namespace Fluent.Tests.Compute
                         .WithRegion(Location)
                         .WithNewResourceGroup(GroupName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012Datacenter)
                         .WithAdminUsername("Foo12")
                         .WithAdminPassword("BaR@12!Foo")
@@ -96,7 +96,7 @@ namespace Fluent.Tests.Compute
             {
                 var resourceGroupName = TestUtilities.GenerateName("rgvmtest-");
                 var vmNamePrefix = "vmz";
-                var publicIpNamePrefix = TestUtilities.GenerateName("pip-");
+                var publicIPNamePrefix = TestUtilities.GenerateName("pip-");
                 var networkNamePrefix = TestUtilities.GenerateName("vnet-");
 
                 var region = Region.USEast;
@@ -115,7 +115,7 @@ namespace Fluent.Tests.Compute
                         .WithNewResourceGroup(resourceGroupCreatable);
 
                     var networkCreatableKeys = new List<string>();
-                    var publicIpCreatableKeys = new List<string>();
+                    var publicIPCreatableKeys = new List<string>();
                     var virtualMachineCreatables = new List<ICreatable<IVirtualMachine>>();
                     for (int i = 0; i < count; i++)
                     {
@@ -126,19 +126,19 @@ namespace Fluent.Tests.Compute
                                 .WithAddressSpace("10.0.0.0/28");
                         networkCreatableKeys.Add(networkCreatable.Key);
 
-                        var publicIpAddressCreatable = azure.PublicIpAddresses
-                                .Define($"{publicIpNamePrefix}-{i}")
+                        var publicIPAddressCreatable = azure.PublicIPAddresses
+                                .Define($"{publicIPNamePrefix}-{i}")
                                 .WithRegion(region)
                                 .WithNewResourceGroup(resourceGroupCreatable);
-                        publicIpCreatableKeys.Add(publicIpAddressCreatable.Key);
+                        publicIPCreatableKeys.Add(publicIPAddressCreatable.Key);
 
                         var virtualMachineCreatable = azure.VirtualMachines
                                 .Define($"{vmNamePrefix}-{i}")
                                 .WithRegion(region)
                                 .WithNewResourceGroup(resourceGroupCreatable)
                                 .WithNewPrimaryNetwork(networkCreatable)
-                                .WithPrimaryPrivateIpAddressDynamic()
-                                .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
+                                .WithPrimaryPrivateIPAddressDynamic()
+                                .WithNewPrimaryPublicIPAddress(publicIPAddressCreatable)
                                 .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                                 .WithRootUsername("tirekicker")
                                 .WithRootPassword("BaR@12!#")
@@ -175,17 +175,17 @@ namespace Fluent.Tests.Compute
                         Assert.True(networkNames.Contains(createdNetwork.Name));
                     }
 
-                    HashSet<string> publicIpAddressNames = new HashSet<string>();
+                    HashSet<string> publicIPAddressNames = new HashSet<string>();
                     for (int i = 0; i < count; i++)
                     {
-                        publicIpAddressNames.Add($"{publicIpNamePrefix}-{i}");
+                        publicIPAddressNames.Add($"{publicIPNamePrefix}-{i}");
                     }
 
-                    foreach (string publicIpCreatableKey in publicIpCreatableKeys)
+                    foreach (string publicIPCreatableKey in publicIPCreatableKeys)
                     {
-                        var createdPublicIpAddress = (IPublicIpAddress)createdVirtualMachines.CreatedRelatedResource(publicIpCreatableKey);
-                        Assert.NotNull(createdPublicIpAddress);
-                        Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
+                        var createdPublicIPAddress = (IPublicIPAddress)createdVirtualMachines.CreatedRelatedResource(publicIPCreatableKey);
+                        Assert.NotNull(createdPublicIPAddress);
+                        Assert.True(publicIPAddressNames.Contains(createdPublicIPAddress.Name));
                     }
                 }
                 finally
@@ -207,24 +207,24 @@ namespace Fluent.Tests.Compute
                 var vmName = TestUtilities.GenerateName("vm");
                 var username = "testuser";
                 var password = "12NewPA$$w0rd!";
-                var publicIpDnsLabel = TestUtilities.GenerateName("abc");
+                var publicIPDnsLabel = TestUtilities.GenerateName("abc");
                 var region = Region.USEast;
                 var cloudInitEncodedString = Convert.ToBase64String(Encoding.ASCII.GetBytes("#cloud-config\r\npackages:\r\n - pwgen"));
 
                 var azure = TestHelper.CreateRollupClient();
 
-                var publicIpAddress = azure.PublicIpAddresses.Define(publicIpDnsLabel)
+                var publicIPAddress = azure.PublicIPAddresses.Define(publicIPDnsLabel)
                     .WithRegion(region)
                     .WithNewResourceGroup()
-                    .WithLeafDomainLabel(publicIpDnsLabel)
+                    .WithLeafDomainLabel(publicIPDnsLabel)
                     .Create();
 
                 var virtualMachine = azure.VirtualMachines.Define(vmName)
                     .WithRegion(region)
-                    .WithExistingResourceGroup(publicIpAddress.ResourceGroupName)
+                    .WithExistingResourceGroup(publicIPAddress.ResourceGroupName)
                     .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithExistingPrimaryPublicIpAddress(publicIpAddress)
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithExistingPrimaryPublicIPAddress(publicIPAddress)
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername(username)
                     .WithRootPassword(password)
@@ -232,13 +232,13 @@ namespace Fluent.Tests.Compute
                     .WithCustomData(cloudInitEncodedString)
                     .Create();
 
-                publicIpAddress.Refresh();
-                Assert.True(publicIpAddress.HasAssignedNetworkInterface);
-                Assert.NotNull(publicIpAddress.Fqdn);
+                publicIPAddress.Refresh();
+                Assert.True(publicIPAddress.HasAssignedNetworkInterface);
+                Assert.NotNull(publicIPAddress.Fqdn);
 
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
-                    using (var sshClient = new SshClient(publicIpAddress.Fqdn, 22, username, password))
+                    using (var sshClient = new SshClient(publicIPAddress.Fqdn, 22, username, password))
                     {
                         sshClient.Connect();
                         var commandToExecute = "pwgen;";
@@ -262,7 +262,7 @@ namespace Fluent.Tests.Compute
                 var vmName = TestUtilities.GenerateName("vm");
                 var username = "testuser";
                 var password = "12NewPA$$w0rd!";
-                var publicIpDnsLabel = TestUtilities.GenerateName("abc");
+                var publicIPDnsLabel = TestUtilities.GenerateName("abc");
                 var region = Region.USEast;
 
                 var azure = TestHelper.CreateRollupClient();
@@ -272,20 +272,20 @@ namespace Fluent.Tests.Compute
                         .WithRegion(region)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(username)
                         .WithRootPassword(password)
                         .WithUnmanagedDisks()
                         .Create();
 
-                    var publicIpAddress = virtualMachine.GetPrimaryPublicIpAddress();
-                    Assert.NotNull(publicIpAddress.Fqdn);
+                    var publicIPAddress = virtualMachine.GetPrimaryPublicIPAddress();
+                    Assert.NotNull(publicIPAddress.Fqdn);
 
                     if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                     {
-                        using (var sshClient = new SshClient(publicIpAddress.Fqdn, 22, username, password))
+                        using (var sshClient = new SshClient(publicIPAddress.Fqdn, 22, username, password))
                         {
                             sshClient.Connect();
                             sshClient.Disconnect();

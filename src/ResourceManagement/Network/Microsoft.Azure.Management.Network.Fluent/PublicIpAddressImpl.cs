@@ -10,25 +10,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core;
 
     /// <summary>
-    /// Implementation for PublicIpAddress.
+    /// Implementation for PublicIPAddress.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzSW1wbA==
-    internal partial class PublicIpAddressImpl :
-        GroupableResource<IPublicIpAddress,
+    internal partial class PublicIPAddressImpl :
+        GroupableResource<IPublicIPAddress,
             PublicIPAddressInner,
-            PublicIpAddressImpl,
+            PublicIPAddressImpl,
             INetworkManager,
-            PublicIpAddress.Definition.IWithGroup,
-            PublicIpAddress.Definition.IWithCreate,
-            PublicIpAddress.Definition.IWithCreate,
-            PublicIpAddress.Update.IUpdate>,
-        IPublicIpAddress,
-        PublicIpAddress.Definition.IDefinition,
-        PublicIpAddress.Update.IUpdate
+            PublicIPAddress.Definition.IWithGroup,
+            PublicIPAddress.Definition.IWithCreate,
+            PublicIPAddress.Definition.IWithCreate,
+            PublicIPAddress.Update.IUpdate>,
+        IPublicIPAddress,
+        PublicIPAddress.Definition.IDefinition,
+        PublicIPAddress.Update.IUpdate
     {
         private IPublicIPAddressesOperations client;
         ///GENMHASH:A0911D017083345CFF1600AF047515EF:A09FFAE271F481C05A45DEAA5B766366
-        internal PublicIpAddressImpl(
+        internal PublicIPAddressImpl(
             string name,
             PublicIPAddressInner innerModel,
             IPublicIPAddressesOperations client,
@@ -38,49 +38,49 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0268D4A22C553236F2D086625BC961C0:99F3B859668CAC9A1F4A84E29AE2E9C5
-        internal PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
+        internal PublicIPAddressImpl WithIdleTimeoutInMinutes(int minutes)
         {
             Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
         ///GENMHASH:0CD165038F68A3526E6D9EB01A127EC0:5DAA827087A429B57970263E396335D1
-        internal PublicIpAddressImpl WithStaticIp()
+        internal PublicIPAddressImpl WithStaticIP()
         {
 
-            Inner.PublicIPAllocationMethod = IPAllocationMethod.Static.ToString();
+            Inner.PublicIPAllocationMethod = Models.IPAllocationMethod.Static.ToString();
             return this;
         }
 
         ///GENMHASH:8E7AD9E07B7DB377EA99B37CAD1C93C0:6F94222AD7A6FAA5BDB1F4A8C2336D54
-        internal PublicIpAddressImpl WithDynamicIp()
+        internal PublicIPAddressImpl WithDynamicIP()
         {
-            Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
+            Inner.PublicIPAllocationMethod = Models.IPAllocationMethod.Dynamic.ToString();
             return this;
         }
 
         ///GENMHASH:4FD71958F542A872CEE597B1CEA332F8:AB2BC7CCCA80EFA2219ABEAE56789805
-        internal PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
+        internal PublicIPAddressImpl WithLeafDomainLabel(string dnsName)
         {
             Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
         }
 
         ///GENMHASH:D0C9704935325DA53D3E18EA383CD798:3A3B2F00929ADB2E5CB95C1ABC9DB961
-        internal PublicIpAddressImpl WithoutLeafDomainLabel()
+        internal PublicIPAddressImpl WithoutLeafDomainLabel()
         {
             return WithLeafDomainLabel(null);
         }
 
         ///GENMHASH:0A9A497E14DD1A2758E52AC9D42D71E4:D54DE8ED5EB6D0455BCE0CD34D01FF08
-        internal PublicIpAddressImpl WithReverseFqdn(string reverseFqdn)
+        internal PublicIPAddressImpl WithReverseFqdn(string reverseFqdn)
         {
             Inner.DnsSettings.ReverseFqdn = reverseFqdn.ToLower();
             return this;
         }
 
         ///GENMHASH:CC17160998D6B4E37C903F79D511BFF8:41B40BEF775E8DC82AB66ADC6601D69B
-        internal PublicIpAddressImpl WithoutReverseFqdn()
+        internal PublicIPAddressImpl WithoutReverseFqdn()
         {
             return WithReverseFqdn(null);
         }
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7248510394946B110C799F104E023F9D:00D88D2717A616B24525A5934BEBB4F1
-        internal string IpAllocationMethod()
+        internal string IPAllocationMethod()
         {
             return Inner.PublicIPAllocationMethod;
         }
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:EB9638E8F65D17F5F594E27D773A247D:1F3289A2A9DF010E78AD3BD5B49AA422
-        internal string IpAddress()
+        internal string IPAddress()
         {
             return Inner.IpAddress;
         }
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:98A779206BCFA2972058346E46E12590
-        override public async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        override public async Task<IPublicIPAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             PublicIPAddressDnsSettings dnsSettings = Inner.DnsSettings;
             if (dnsSettings != null)
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:46083B525E2D28949C602FA14CD8C6BB
-        public override IPublicIpAddress Refresh()
+        public override IPublicIPAddress Refresh()
         {
             var response = client.Get(ResourceGroupName, Inner.Name);
             SetInner(response);
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:1DE7D105C62AE4172B59AD39FB7ED47D:71FB3A052B839706E2B1CB9C30A82790
-        internal INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
+        internal INicIPConfiguration GetAssignedNetworkInterfaceIPConfiguration()
         {
             if (HasAssignedNetworkInterface())
             {
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 string parentId = ResourceUtils.ParentResourcePathFromResourceId(refId);
                 INetworkInterface nic = Manager.NetworkInterfaces.GetById(parentId);
                 string childName = ResourceUtils.NameFromResourceId(refId);
-                return nic.IpConfigurations[childName];
+                return nic.IPConfigurations[childName];
             }
             else
             {

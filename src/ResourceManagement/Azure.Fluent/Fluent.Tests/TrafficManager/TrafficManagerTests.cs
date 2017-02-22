@@ -74,7 +74,7 @@ namespace Azure.Tests.TrafficManager
 
                     // Creates a public ip to be used as an Azure endpoint
                     //
-                    var publicIpAddress = azure.PublicIpAddresses.Define(pipName)
+                    var publicIpAddress = azure.PublicIPAddresses.Define(pipName)
                             .WithRegion(region)
                             .WithNewResourceGroup(rgCreatable)
                             .WithLeafDomainLabel(pipDnsLabel)

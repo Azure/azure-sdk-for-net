@@ -112,10 +112,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.IsInCreateMode)
             {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                RemoveAllBackendAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, defaultPrimaryIpConfig);
-                AssociateBackEndsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIPConfig = this.PrimaryNicDefaultIPConfiguration();
+                RemoveAllBackendAssociationFromIPConfiguration(this.primaryInternetFacingLoadBalancer, defaultPrimaryIPConfig);
+                AssociateBackEndsToIPConfiguration(this.primaryInternetFacingLoadBalancer.Id,
+                        defaultPrimaryIPConfig,
                         backendNames);
             }
             else
@@ -132,10 +132,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:99E12A9D1F6C67E6350163C75A02C0CF:EB015A0D5BB20773EED2BA22F09DBFE4
-        private static void RemoveLoadBalancerAssociationFromIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        private static void RemoveLoadBalancerAssociationFromIPConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
-            RemoveAllBackendAssociationFromIpConfiguration(loadBalancer, ipConfig);
-            RemoveAllInboundNatPoolAssociationFromIpConfiguration(loadBalancer, ipConfig);
+            RemoveAllBackendAssociationFromIPConfiguration(loadBalancer, ipConfig);
+            RemoveAllInboundNatPoolAssociationFromIPConfiguration(loadBalancer, ipConfig);
         }
 
         ///GENMHASH:0B86CB1DFA370E0EF503AA943BA12699:72153688799C022C061CCB2A43E36DC0
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C8D0FD360C8F8A611F6F85F99CDE83D0:C73CD8C0F99ACCAB4E6C5579E1D974E4
-        private static void RemoveAllInboundNatPoolAssociationFromIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        private static void RemoveAllInboundNatPoolAssociationFromIPConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             List<SubResource> toRemove = new List<SubResource>();
             foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
@@ -212,11 +212,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.IsInCreateMode)
             {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                        defaultPrimaryIpConfig);
-                AssociateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIPConfig = this.PrimaryNicDefaultIPConfiguration();
+                RemoveAllInboundNatPoolAssociationFromIPConfiguration(this.primaryInternetFacingLoadBalancer,
+                        defaultPrimaryIPConfig);
+                AssociateInboundNatPoolsToIPConfiguration(this.primaryInternetFacingLoadBalancer.Id,
+                        defaultPrimaryIPConfig,
                         natPoolNames);
             }
             else
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:6E6D232E3678D03B3716EA09F0ADD0A9:660BA6BD38564D432FD56906D5F71954
-        private static void RemoveBackendsFromIpConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] backendNames)
+        private static void RemoveBackendsFromIPConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] backendNames)
         {
             List<SubResource> toRemove = new List<SubResource>();
             foreach (string backendName in backendNames)
@@ -404,12 +404,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:85147EF10797D4C57F7D765BDFEAE89E:65DEB6D772EFEFA23B2E9C18CCAB48DC
-        public IList<string> PrimaryPublicIpAddressIds()
+        public IList<string> PrimaryPublicIPAddressIds()
         {
             ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
             if (loadBalancer != null)
             {
-                return loadBalancer.PublicIpAddressIds;
+                return loadBalancer.PublicIPAddressIds;
             }
             return new List<string>();
         }
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
-                return GetInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
+                return GetInboundNatPoolsAssociatedWithIPConfiguration(this.primaryInternalLoadBalancer,
                         PrimaryNicDefaultIPConfiguration());
             }
             return new Dictionary<string, ILoadBalancerInboundNatPool>();
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:5357697C243DBDD2060BF2C164461C10:CCFD65A9998AF06471C50E7F44A70A67
         public VirtualMachineScaleSetImpl WithExistingPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
         {
-            if (loadBalancer.PublicIpAddressIds.Count == 0)
+            if (loadBalancer.PublicIPAddressIds.Count == 0)
             {
                 throw new ArgumentException("Parameter loadBalancer must be an internet facing load balancer");
             }
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (this.IsInCreateMode)
             {
                 this.primaryInternetFacingLoadBalancer = loadBalancer;
-                AssociateLoadBalancerToIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                AssociateLoadBalancerToIPConfiguration(this.primaryInternetFacingLoadBalancer,
                         this.PrimaryNicDefaultIPConfiguration());
             }
             else
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             ILoadBalancer loadBalancer1 = this.networkManager
                 .LoadBalancers
                 .GetById(firstLoadBalancerId);
-            if (loadBalancer1.PublicIpAddressIds != null && loadBalancer1.PublicIpAddressIds.Count > 0)
+            if (loadBalancer1.PublicIPAddressIds != null && loadBalancer1.PublicIPAddressIds.Count > 0)
             {
                 this.primaryInternetFacingLoadBalancer = loadBalancer1;
             }
@@ -578,7 +578,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             ILoadBalancer loadBalancer2 = this.networkManager
             .LoadBalancers
             .GetById(secondLoadBalancerId);
-            if (loadBalancer2.PublicIpAddressIds != null && loadBalancer2.PublicIpAddressIds.Count > 0)
+            if (loadBalancer2.PublicIPAddressIds != null && loadBalancer2.PublicIPAddressIds.Count > 0)
             {
                 this.primaryInternetFacingLoadBalancer = loadBalancer2;
             }
@@ -597,7 +597,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:801A53D3DABA33CC92425D2203FD9242:023B6E0293C3EE52841DA58E9038A4E6
-        private static IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> GetInboundNatPoolsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        private static IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> GetInboundNatPoolsAssociatedWithIPConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             String loadBalancerId = loadBalancer.Id;
             Dictionary<string, ILoadBalancerInboundNatPool> attachedInboundNatPools = new Dictionary<string, ILoadBalancerInboundNatPool>();
@@ -626,7 +626,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:AD16DA08B5E002AC14DA8E4DF1A29686:7CAC61F59FB870FA1BA64452A78CD17B
-        private static void RemoveAllBackendAssociationFromIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        private static void RemoveAllBackendAssociationFromIPConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             List<SubResource> toRemove = new List<SubResource>();
             foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:27AD431A042600C45C4C0CA529477319:47186F09CC543669168F4089A11F6E5E
-        private static void AssociateInboundNATPoolsToIpConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] inboundNatPools)
+        private static void AssociateInboundNatPoolsToIPConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] inboundNatPools)
         {
             List<SubResource> inboundNatPoolSubResourcesToAssociate = new List<SubResource>();
             foreach (string inboundNatPool in inboundNatPools)
@@ -674,7 +674,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:5DCF4E29F6EA4E300D272317D5090075:2CECE7F3DC203120ADD63663E7930758
-        private static void RemoveInboundNatPoolsFromIpConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] inboundNatPoolNames)
+        private static void RemoveInboundNatPoolsFromIPConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] inboundNatPoolNames)
         {
             List<SubResource> toRemove = new List<SubResource>();
             foreach (string natPoolName in inboundNatPoolNames)
@@ -772,7 +772,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F074773AE211BBEB7F46B598EA72155B:7704FB8C0D7ED4D767CE8138EA441588
         public VirtualMachineScaleSetImpl WithExistingPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
         {
-            if (loadBalancer.PublicIpAddressIds.Count != 0)
+            if (loadBalancer.PublicIPAddressIds.Count != 0)
             {
                 throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
             }
@@ -802,7 +802,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
 
                 this.primaryInternalLoadBalancer = loadBalancer;
-                AssociateLoadBalancerToIpConfiguration(this.primaryInternalLoadBalancer,
+                AssociateLoadBalancerToIPConfiguration(this.primaryInternalLoadBalancer,
                         this.PrimaryNicDefaultIPConfiguration());
             }
             else
@@ -883,7 +883,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
-                return GetInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                return GetInboundNatPoolsAssociatedWithIPConfiguration(this.primaryInternetFacingLoadBalancer,
                         PrimaryNicDefaultIPConfiguration());
             }
             return new Dictionary<string, ILoadBalancerInboundNatPool>();
@@ -901,11 +901,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.IsInCreateMode)
             {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = PrimaryNicDefaultIPConfiguration();
-                RemoveAllBackendAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
-                        defaultPrimaryIpConfig);
-                AssociateBackEndsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIPConfig = PrimaryNicDefaultIPConfiguration();
+                RemoveAllBackendAssociationFromIPConfiguration(this.primaryInternalLoadBalancer,
+                        defaultPrimaryIPConfig);
+                AssociateBackEndsToIPConfiguration(this.primaryInternalLoadBalancer.Id,
+                        defaultPrimaryIPConfig,
                         backendNames);
             }
             else
@@ -1001,7 +1001,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:2582ED197AB392F5EC837F6BC8FE2FF0:29B4432F98CD641D0280C31D00CAFB2D
-        private void SetPrimaryIpConfigurationBackendsAndInboundNatPools()
+        private void SetPrimaryIPConfigurationBackendsAndInboundNatPools()
         {
             if (this.IsInCreateMode)
             {
@@ -1010,42 +1010,42 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
             this.LoadCurrentPrimaryLoadBalancersIfAvailable();
 
-            VirtualMachineScaleSetIPConfigurationInner primaryIpConfig = PrimaryNicDefaultIPConfiguration();
+            VirtualMachineScaleSetIPConfigurationInner primaryIPConfig = PrimaryNicDefaultIPConfiguration();
             if (this.primaryInternetFacingLoadBalancer != null)
             {
-                RemoveBackendsFromIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
+                RemoveBackendsFromIPConfiguration(this.primaryInternetFacingLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternetFacingLBBackendsToRemoveOnUpdate.ToArray());
 
-                AssociateBackEndsToIpConfiguration(primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
+                AssociateBackEndsToIPConfiguration(primaryInternetFacingLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternetFacingLBBackendsToAddOnUpdate.ToArray());
 
-                RemoveInboundNatPoolsFromIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
+                RemoveInboundNatPoolsFromIPConfiguration(this.primaryInternetFacingLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate.ToArray());
 
-                AssociateInboundNATPoolsToIpConfiguration(primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
+                AssociateInboundNatPoolsToIPConfiguration(primaryInternetFacingLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.ToArray());
             }
 
             if (this.primaryInternalLoadBalancer != null)
             {
-                RemoveBackendsFromIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
+                RemoveBackendsFromIPConfiguration(this.primaryInternalLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternalLBBackendsToRemoveOnUpdate.ToArray());
 
-                AssociateBackEndsToIpConfiguration(primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
+                AssociateBackEndsToIPConfiguration(primaryInternalLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternalLBBackendsToAddOnUpdate.ToArray());
 
-                RemoveInboundNatPoolsFromIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
+                RemoveInboundNatPoolsFromIPConfiguration(this.primaryInternalLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternalLBInboundNatPoolsToRemoveOnUpdate.ToArray());
 
-                AssociateInboundNATPoolsToIpConfiguration(primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
+                AssociateInboundNatPoolsToIPConfiguration(primaryInternalLoadBalancer.Id,
+                        primaryIPConfig,
                         this.primaryInternalLBInboundNatPoolsToAddOnUpdate.ToArray());
             }
 
@@ -1053,7 +1053,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternetFacingLoadBalancer != null)
                 {
-                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIPConfiguration(this.primaryInternetFacingLoadBalancer, primaryIPConfig);
                 }
             }
 
@@ -1061,7 +1061,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternalLoadBalancer != null)
                 {
-                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIPConfiguration(this.primaryInternalLoadBalancer, primaryIPConfig);
                 }
             }
 
@@ -1069,21 +1069,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternetFacingLoadBalancer != null)
                 {
-                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIPConfiguration(this.primaryInternetFacingLoadBalancer, primaryIPConfig);
                 }
-                AssociateLoadBalancerToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
+                AssociateLoadBalancerToIPConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIPConfig);
                 if (this.primaryInternetFacingLBBackendsToAddOnUpdate.Count > 0)
                 {
-                    RemoveAllBackendAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    AssociateBackEndsToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
+                    RemoveAllBackendAssociationFromIPConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIPConfig);
+                    AssociateBackEndsToIPConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
+                            primaryIPConfig,
                             this.primaryInternetFacingLBBackendsToAddOnUpdate.ToArray());
                 }
                 if (this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.Count > 0)
                 {
-                    RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    AssociateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
+                    RemoveAllInboundNatPoolAssociationFromIPConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIPConfig);
+                    AssociateInboundNatPoolsToIPConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
+                            primaryIPConfig,
                             this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.ToArray());
                 }
             }
@@ -1092,22 +1092,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternalLoadBalancer != null)
                 {
-                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIPConfiguration(this.primaryInternalLoadBalancer, primaryIPConfig);
                 }
-                AssociateLoadBalancerToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
+                AssociateLoadBalancerToIPConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIPConfig);
                 if (this.primaryInternalLBBackendsToAddOnUpdate.Count > 0)
                 {
-                    RemoveAllBackendAssociationFromIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    AssociateBackEndsToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
+                    RemoveAllBackendAssociationFromIPConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIPConfig);
+                    AssociateBackEndsToIPConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
+                            primaryIPConfig,
                             this.primaryInternalLBBackendsToAddOnUpdate.ToArray());
                 }
 
                 if (this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Count > 0)
                 {
-                    RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    AssociateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
+                    RemoveAllInboundNatPoolAssociationFromIPConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIPConfig);
+                    AssociateInboundNatPoolsToIPConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
+                            primaryIPConfig,
                             this.primaryInternalLBInboundNatPoolsToAddOnUpdate.ToArray());
                 }
             }
@@ -1255,7 +1255,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
-                return GetBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                return GetBackendsAssociatedWithIPConfiguration(this.primaryInternetFacingLoadBalancer,
                         PrimaryNicDefaultIPConfiguration());
             }
             return new Dictionary<string, ILoadBalancerBackend>();
@@ -1308,7 +1308,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:864D8E4C8CD2E86906490FEDA8FB3F2B:8DBC7BDC302D2B4665D3623CB5CE6F9B
-        private static IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> GetBackendsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        private static IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> GetBackendsAssociatedWithIPConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             string loadBalancerId = loadBalancer.Id;
             Dictionary<string, ILoadBalancerBackend> attachedBackends = new Dictionary<string, ILoadBalancerBackend>();
@@ -1338,11 +1338,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.IsInCreateMode)
             {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
-                        defaultPrimaryIpConfig);
-                AssociateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIPConfig = this.PrimaryNicDefaultIPConfiguration();
+                RemoveAllInboundNatPoolAssociationFromIPConfiguration(this.primaryInternalLoadBalancer,
+                        defaultPrimaryIPConfig);
+                AssociateInboundNatPoolsToIPConfiguration(this.primaryInternalLoadBalancer.Id,
+                        defaultPrimaryIPConfig,
                         natPoolNames);
             }
             else
@@ -1466,7 +1466,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:8EC66BEFDF0AB45D9707306C2856E7C8:31CFCE6190972DAB49A6CC439CE9500F
-        private void SetPrimaryIpConfigurationSubnet()
+        private void SetPrimaryIPConfigurationSubnet()
         {
             if (this.IsInUpdateMode())
             {
@@ -1689,7 +1689,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
-                return GetBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
+                return GetBackendsAssociatedWithIPConfiguration(this.primaryInternalLoadBalancer,
                         PrimaryNicDefaultIPConfiguration());
             }
             return new Dictionary<string, ILoadBalancerBackend>();
@@ -1865,7 +1865,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7AD7A06F139BA844A9B0CC9596C66F00:6CC5B2412B485510418552D419E955F9
-        private static void AssociateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
+        private static void AssociateLoadBalancerToIPConfiguration(ILoadBalancer loadBalancer,
                                                                    VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             var backends = loadBalancer.Backends.Values;
@@ -1878,7 +1878,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 i++;
             }
 
-            AssociateBackEndsToIpConfiguration(loadBalancer.Id,
+            AssociateBackEndsToIPConfiguration(loadBalancer.Id,
                     ipConfig,
                     backendNames);
 
@@ -1891,7 +1891,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 i++;
             }
 
-            AssociateInboundNATPoolsToIpConfiguration(loadBalancer.Id,
+            AssociateInboundNatPoolsToIPConfiguration(loadBalancer.Id,
                     ipConfig,
                     natPoolNames);
         }
@@ -1904,8 +1904,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.SetOSProfileDefaults();
                 this.SetOSDiskDefault();
             }
-            this.SetPrimaryIpConfigurationSubnet();
-            this.SetPrimaryIpConfigurationBackendsAndInboundNatPools();
+            this.SetPrimaryIPConfigurationSubnet();
+            this.SetPrimaryIPConfigurationBackendsAndInboundNatPools();
             if (IsManagedDiskEnabled())
             {
                 this.managedDataDisks.SetDataDisksDefaults();
@@ -2075,7 +2075,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C4918DA109F597102F1B013B0137F3A2:671581C8F41182347B219436B693EB8A
-        private static void AssociateBackEndsToIpConfiguration(string loadBalancerId,
+        private static void AssociateBackEndsToIPConfiguration(string loadBalancerId,
                                                         VirtualMachineScaleSetIPConfigurationInner ipConfig,
                                                         params string[] backendNames)
         {

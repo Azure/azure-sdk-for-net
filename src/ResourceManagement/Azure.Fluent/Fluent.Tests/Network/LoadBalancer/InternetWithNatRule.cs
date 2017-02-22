@@ -19,14 +19,14 @@ namespace Azure.Tests.Network.LoadBalancer
     /// </summary>
     public class InternetWithNatRule : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
-        private IPublicIpAddresses pips;
+        private IPublicIPAddresses pips;
         private IVirtualMachines vms;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
         public InternetWithNatRule(
-                IPublicIpAddresses pips,
+                IPublicIPAddresses pips,
                 IVirtualMachines vms,
                 INetworks networks,
                 IAvailabilitySets availabilitySets,
@@ -61,7 +61,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
                         // Frontends
                         .DefinePublicFrontend("frontend1")
-                            .WithExistingPublicIpAddress(existingPips.ElementAt(0))
+                            .WithExistingPublicIPAddress(existingPips.ElementAt(0))
                             .Attach()
 
                         // Backends
@@ -106,16 +106,16 @@ namespace Azure.Tests.Network.LoadBalancer
                 .WithExistingLoadBalancerInboundNatRule(lb, "natrule1")
                 .Apply();
             NetworkInterfaceHelper.PrintNic(nic1);
-            Assert.True(nic1.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().ElementAt(0)
+            Assert.True(nic1.PrimaryIPConfiguration.ListAssociatedLoadBalancerBackends().ElementAt(0)
                             .Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
-            Assert.True(nic1.PrimaryIpConfiguration.ListAssociatedLoadBalancerInboundNatRules().ElementAt(0)
+            Assert.True(nic1.PrimaryIPConfiguration.ListAssociatedLoadBalancerInboundNatRules().ElementAt(0)
                             .Name.Equals("natrule1", StringComparison.OrdinalIgnoreCase));
 
             nic2.Update()
                 .WithExistingLoadBalancerBackend(lb, "backend1")
                 .Apply();
             NetworkInterfaceHelper.PrintNic(nic2);
-            Assert.True(nic2.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().ElementAt(0)
+            Assert.True(nic2.PrimaryIPConfiguration.ListAssociatedLoadBalancerBackends().ElementAt(0)
                             .Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
 
             // Verify frontends
@@ -125,7 +125,7 @@ namespace Azure.Tests.Network.LoadBalancer
             existingPips.ElementAt(0).Refresh();
             Assert.True(existingPips.ElementAt(0).GetAssignedLoadBalancerFrontend()
                                     .Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
-            PublicIpAddressHelper.PrintPIP(existingPips.ElementAt(0).Refresh());
+            PublicIPAddressHelper.PrintPIP(existingPips.ElementAt(0).Refresh());
 
             // Verify backends
             Assert.True(lb.Backends.ContainsKey("backend1"));
@@ -161,7 +161,7 @@ namespace Azure.Tests.Network.LoadBalancer
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
             var nics = new List<INetworkInterface>();
-            foreach (string nicId in resource.Backends["backend1"].BackendNicIpConfigurationNames.Keys)
+            foreach (string nicId in resource.Backends["backend1"].BackendNicIPConfigurationNames.Keys)
             {
                 nics.Add(networks.Manager.NetworkInterfaces.GetById(nicId));
             }
@@ -173,19 +173,19 @@ namespace Azure.Tests.Network.LoadBalancer
                 .WithoutLoadBalancerBackends()
                 .WithoutLoadBalancerInboundNatRules()
                 .Apply();
-            Assert.Equal(nic1.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().Count, 0);
+            Assert.Equal(nic1.PrimaryIPConfiguration.ListAssociatedLoadBalancerBackends().Count, 0);
 
             nic2.Update()
                     .WithoutLoadBalancerBackends()
                     .WithoutLoadBalancerInboundNatRules()
                     .Apply();
-            Assert.Equal(nic2.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().Count, 0);
+            Assert.Equal(nic2.PrimaryIPConfiguration.ListAssociatedLoadBalancerBackends().Count, 0);
 
             // Update the load balancer
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             resource = resource.Update()
                         .UpdateInternetFrontend("frontend1")
-                            .WithExistingPublicIpAddress(existingPips.ElementAt(1))
+                            .WithExistingPublicIPAddress(existingPips.ElementAt(1))
                             .Parent()
                         .WithoutFrontend("default")
                         .WithoutBackend("default")
@@ -201,7 +201,7 @@ namespace Azure.Tests.Network.LoadBalancer
             var frontend = resource.Frontends["frontend1"];
             Assert.True(frontend.IsPublic);
             var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
-            Assert.True(existingPips.ElementAt(1).Id.Equals(publicFrontend.PublicIpAddressId, StringComparison.OrdinalIgnoreCase));
+            Assert.True(existingPips.ElementAt(1).Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
 
             return resource;
         }

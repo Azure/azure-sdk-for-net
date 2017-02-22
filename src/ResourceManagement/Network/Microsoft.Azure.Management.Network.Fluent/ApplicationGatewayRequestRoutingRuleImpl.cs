@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:A76BF54E2AEEF72945445A32066CB6F8:3FFB9E2FDF9813C8FCE41F3D46BEF1C9
-        public ApplicationGatewayRequestRoutingRuleImpl ToBackendIpAddress(string ipAddress)
+        public ApplicationGatewayRequestRoutingRuleImpl ToBackendIPAddress(string ipAddress)
         {
-            Parent.UpdateBackend(EnsureBackend().Name()).WithIpAddress(ipAddress);
+            Parent.UpdateBackend(EnsureBackend().Name()).WithIPAddress(ipAddress);
             return this;
         }
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 if (associateWithPublicFrontend != null && associateWithPublicFrontend.Value)
                 {
                     listenerByPort.WithPublicFrontend();
-                    Parent.WithNewPublicIpAddress();
+                    Parent.WithNewPublicIPAddress();
                 }
                 else if (associateWithPublicFrontend != null && !associateWithPublicFrontend.Value)
                 {
@@ -244,10 +244,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:2FC479C4D2313B66C41985D62871D669
-        public string PublicIpAddressId()
+        public string PublicIPAddressId()
         {
             var listener = Listener();
-            return (listener != null) ? listener.PublicIpAddressId() : null;
+            return (listener != null) ? listener.PublicIPAddressId() : null;
         }
 
         ///GENMHASH:A80C3FC8655E547C3392C10C546FFF39:4178B96D859F693DD4C685D2EA97E3C1
@@ -393,10 +393,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:377296039E5241FB1B02988EFB811F77:E4198EDA1A3BA7FDFDD084C7D92465A7
-        public IPublicIpAddress GetPublicIpAddress()
+        public IPublicIPAddress GetPublicIPAddress()
         {
-            string pipId = PublicIpAddressId();
-            return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
+            string pipId = PublicIPAddressId();
+            return (pipId != null) ? Parent.Manager.PublicIPAddresses.GetById(pipId) : null;
         }
 
         #endregion

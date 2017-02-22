@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP address of the next hop.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IRoute.NextHopIpAddress
+        string Microsoft.Azure.Management.Network.Fluent.IRoute.NextHopIPAddress
         {
             get
             {
-                return this.NextHopIpAddress();
+                return this.NextHopIPAddress();
             }
         }
 

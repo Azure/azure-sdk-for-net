@@ -31,9 +31,9 @@ namespace Azure.Tests.Common
         }
 
         // Create VNet for the LB
-        public IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
+        public IEnumerable<IPublicIPAddress> EnsurePIPs(IPublicIPAddresses pips)
         {
-            var creatablePips = new List<ICreatable<IPublicIpAddress>>();
+            var creatablePips = new List<ICreatable<IPublicIPAddress>>();
             for (int i = 0; i < PipNames.Length; i++)
             {
                 creatablePips.Add(pips.Define(PipNames[i])
@@ -58,11 +58,11 @@ namespace Azure.Tests.Common
                     .Append("\n\tSSL policy: ").Append(resource.SslPolicy)
                     .Append("\n\tInternet-facing? ").Append(resource.IsPublic)
                     .Append("\n\tInternal? ").Append(resource.IsPrivate)
-                    .Append("\n\tDefault private IP address: ").Append(resource.PrivateIpAddress)
-                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIpAllocationMethod);
+                    .Append("\n\tDefault private IP address: ").Append(resource.PrivateIPAddress)
+                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod);
 
             // Show IP configs
-            var ipConfigs = resource.IpConfigurations;
+            var ipConfigs = resource.IPConfigurations;
             info.Append("\n\tIP configurations: ").Append(ipConfigs.Count);
             foreach (var ipConfig in ipConfigs.Values)
             {
@@ -82,14 +82,14 @@ namespace Azure.Tests.Common
                 if (frontend.IsPublic)
                 {
                     // Show public frontend info
-                    info.Append("\n\t\t\tPublic IP address ID: ").Append(frontend.PublicIpAddressId);
+                    info.Append("\n\t\t\tPublic IP address ID: ").Append(frontend.PublicIPAddressId);
                 }
 
                 if (frontend.IsPrivate)
                 {
                     // Show private frontend info
-                    info.Append("\n\t\t\tPrivate IP address: ").Append(frontend.PrivateIpAddress)
-                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(frontend.PrivateIpAllocationMethod)
+                    info.Append("\n\t\t\tPrivate IP address: ").Append(frontend.PrivateIPAddress)
+                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(frontend.PrivateIPAllocationMethod)
                         .Append("\n\t\t\tSubnet name: ").Append(frontend.SubnetName)
                         .Append("\n\t\t\tVirtual network ID: ").Append(frontend.NetworkId);
                 }
@@ -101,7 +101,7 @@ namespace Azure.Tests.Common
             foreach (var backend in backends.Values)
             {
                 info.Append("\n\t\tName: ").Append(backend.Name)
-                    .Append("\n\t\t\tAssociated NIC IP configuration IDs: ").Append(backend.BackendNicIpConfigurationNames.Keys.ToString());
+                    .Append("\n\t\t\tAssociated NIC IP configuration IDs: ").Append(backend.BackendNicIPConfigurationNames.Keys.ToString());
 
                 // Show addresses
                 var addresses = backend.Addresses;
@@ -159,7 +159,7 @@ namespace Azure.Tests.Common
             {
                 info.Append("\n\t\tName: ").Append(rule.Name)
                     .Append("\n\t\t\tType: ").Append(rule.RuleType.ToString())
-                    .Append("\n\t\t\tPublic IP address ID: ").Append(rule.PublicIpAddressId)
+                    .Append("\n\t\t\tPublic IP address ID: ").Append(rule.PublicIPAddressId)
                     .Append("\n\t\t\tHost name: ").Append(rule.HostName)
                     .Append("\n\t\t\tServer name indication required? ").Append(rule.RequiresServerNameIndication)
                     .Append("\n\t\t\tFrontend port: ").Append(rule.FrontendPort)

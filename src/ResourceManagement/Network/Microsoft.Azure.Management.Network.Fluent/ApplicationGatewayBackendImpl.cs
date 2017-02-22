@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:1FC649C97657147238976F3B54524F58:B74483DFB822D3E7D17AE4E2E8CAE6E0
-        public IReadOnlyDictionary<string, string> BackendNicIpConfigurationNames()
+        public IReadOnlyDictionary<string, string> BackendNicIPConfigurationNames()
         {
             // This assumes a NIC can only have one IP config associated with the backend of an app gateway,
             // which is correct at the time of this implementation and seems unlikely to ever change
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:DA671E788D7745DDD7A0AEE413BB02F2:436637A06A9B4E6B2B3F2BA7F6A702C2
-        public bool ContainsIpAddress(string ipAddress)
+        public bool ContainsIPAddress(string ipAddress)
         {
             if (ipAddress != null)
             {
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:040FE6797829F09ECF75BDE559FBA5FC:C147FF55BA09CE955B0C5E32B1198058
-        public ApplicationGatewayBackendImpl WithIpAddress(string ipAddress)
+        public ApplicationGatewayBackendImpl WithIPAddress(string ipAddress)
         {
             if (ipAddress == null)
             {
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:1EEC75E693F98EC473E92A76B0687A98:C8F2C3635877B7B266960E3BBBF0BC73
-        public ApplicationGatewayBackendImpl WithoutIpAddress(string ipAddress)
+        public ApplicationGatewayBackendImpl WithoutIPAddress(string ipAddress)
         {
             if (ipAddress == null)
             {
@@ -189,8 +189,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             var addresses = EnsureAddresses();
             for (int i = 0; i < addresses.Count; i++)
             {
-                string curIpAddress = addresses[i].IpAddress;
-                if (curIpAddress != null && curIpAddress.ToLower().Equals(ipAddress.ToLower()))
+                string curIPAddress = addresses[i].IpAddress;
+                if (curIPAddress != null && curIPAddress.ToLower().Equals(ipAddress.ToLower()))
                 {
                     addresses.RemoveAt(i);
                     break;

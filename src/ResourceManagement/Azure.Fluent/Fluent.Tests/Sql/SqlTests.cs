@@ -242,27 +242,27 @@ namespace Azure.Tests.Sql
             var firewalls = sqlServer.FirewallRules.List();
             Assert.Equal(3, firewalls.Count());
 
-            var startIpAddress = 0;
-            var endIpAddress = 0;
+            var startIPAddress = 0;
+            var endIPAddress = 0;
 
             foreach (ISqlFirewallRule firewall in firewalls)
             {
                 if (!StringComparer.OrdinalIgnoreCase.Equals(firewall.Name, SqlFirewallRuleName))
                 {
-                    Assert.Equal(firewall.StartIpAddress, StartIPAddress);
-                    if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIpAddress, StartIPAddress))
+                    Assert.Equal(firewall.StartIPAddress, StartIPAddress);
+                    if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIPAddress, StartIPAddress))
                     {
-                        startIpAddress++;
+                        startIPAddress++;
                     }
-                    else if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIpAddress, EndIPAddress))
+                    else if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIPAddress, EndIPAddress))
                     {
-                        endIpAddress++;
+                        endIPAddress++;
                     }
                 }
             }
 
-            Assert.Equal(startIpAddress, 1);
-            Assert.Equal(endIpAddress, 1);
+            Assert.Equal(startIPAddress, 1);
+            Assert.Equal(endIPAddress, 1);
 
             Assert.NotNull(sqlServer.Databases.Get(database2Name));
             Assert.NotNull(sqlServer.Databases.Get(database1InEPName));
@@ -753,7 +753,7 @@ namespace Azure.Tests.Sql
 
                 var sqlFirewallRule = sqlServer.FirewallRules
                         .Define(SqlFirewallRuleName)
-                        .WithIpAddressRange(StartIPAddress, EndIPAddress)
+                        .WithIPAddressRange(StartIPAddress, EndIPAddress)
                         .Create();
 
                 ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
@@ -762,15 +762,15 @@ namespace Azure.Tests.Sql
                 var secondFirewallRuleName = "secondFireWallRule";
                 var secondFirewallRule = sqlServer.FirewallRules
                         .Define(secondFirewallRuleName)
-                        .WithIpAddress(StartIPAddress)
+                        .WithIPAddress(StartIPAddress)
                         .Create();
 
                 secondFirewallRule = sqlServer.FirewallRules.Get(secondFirewallRuleName);
 
                 Assert.NotNull(secondFirewallRule);
-                Assert.Equal(StartIPAddress, secondFirewallRule.EndIpAddress);
+                Assert.Equal(StartIPAddress, secondFirewallRule.EndIPAddress);
 
-                secondFirewallRule = secondFirewallRule.Update().WithEndIpAddress(EndIPAddress).Apply();
+                secondFirewallRule = secondFirewallRule.Update().WithEndIPAddress(EndIPAddress).Apply();
 
                 ValidateSqlFirewallRule(secondFirewallRule, secondFirewallRuleName);
                 sqlServer.FirewallRules.Delete(secondFirewallRuleName);
@@ -782,9 +782,9 @@ namespace Azure.Tests.Sql
 
                 // Update
                 // Making start and end IP address same.
-                sqlFirewallRule.Update().WithEndIpAddress(StartIPAddress).Apply();
+                sqlFirewallRule.Update().WithEndIPAddress(StartIPAddress).Apply();
                 sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
-                Assert.Equal(sqlFirewallRule.EndIpAddress, StartIPAddress);
+                Assert.Equal(sqlFirewallRule.EndIPAddress, StartIPAddress);
 
                 // List
                 ValidateListSqlFirewallRule(sqlServer.FirewallRules.List());
@@ -865,8 +865,8 @@ namespace Azure.Tests.Sql
             Assert.NotNull(sqlFirewallRule);
             Assert.Equal(firewallName, sqlFirewallRule.Name);
             Assert.Equal(SqlServerName, sqlFirewallRule.SqlServerName);
-            Assert.Equal(StartIPAddress, sqlFirewallRule.StartIpAddress);
-            Assert.Equal(EndIPAddress, sqlFirewallRule.EndIpAddress);
+            Assert.Equal(StartIPAddress, sqlFirewallRule.StartIPAddress);
+            Assert.Equal(EndIPAddress, sqlFirewallRule.EndIPAddress);
             Assert.Equal(GroupName, sqlFirewallRule.ResourceGroupName);
             Assert.Equal(SqlServerName, sqlFirewallRule.SqlServerName);
             Assert.Equal(Region.USCentral, sqlFirewallRule.Region);
