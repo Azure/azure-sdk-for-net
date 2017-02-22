@@ -667,5 +667,29 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string SftpLinkedService = @"
+{
+    name: ""SftpLinkedService"",
+    properties:
+    {
+        type: ""Sftp"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""SshPublicKey"",
+            host : ""fakeserver.com"", 
+            port : 234,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            privateKeyPath : ""fake file path"",
+            privateKeyContent : ""fake base64string"",
+            passPhrase : ""fake password"",
+            skipHostKeyValidation : false,
+            hostKeyFingerprint : ""fake finger print""
+        }
+    }
+}";
     }
 }
