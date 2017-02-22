@@ -29,5 +29,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Anonymous authentication type.
         /// </summary>
         public const string Anonymous = "Anonymous";
+
+        /// <summary>
+        /// Windows authentication type.
+        /// </summary>
+        public const string Windows = "Windows";
+
+        /// <summary>
+        /// OAuth authentication type.
+        /// </summary>
+        public const string OAuth = "OAuth";
     }
 }

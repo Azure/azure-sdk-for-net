@@ -44,6 +44,36 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string Password { get; set; }
 
         /// <summary>
+        /// Optional. The on-premises gateway name for Windows authentication.
+        /// </summary>
+        public string GatewayName { get; set; }
+
+        /// <summary>
+        /// Optional. The encrypted credential for Windows authentication.
+        /// </summary>
+        public string EncryptedCredential { get; set; }
+
+        /// <summary>
+        /// Optional. The OAuth authorization that may be used by ADF to access
+        /// resources on your behalf. Each authorization is unique and may
+        /// only be used once.
+        /// </summary>
+        public string Authorization { get; set; }
+
+        /// <summary>
+        /// Optional. The OAuth session ID from the OAuth authorization session.
+        /// Each session ID is unique and may only be used once.
+        /// </summary>
+        public string SessionId { get; set; }
+
+        /// <summary>
+        /// Optional. The OAuth authorized credential that may be used by ADF to access
+        /// resources on your behalf. Each authorization is unique and may
+        /// only be used once.
+        /// </summary>
+        public string AuthorizedCredential { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ODataLinkedService"/> class.
         /// </summary>
         public ODataLinkedService()

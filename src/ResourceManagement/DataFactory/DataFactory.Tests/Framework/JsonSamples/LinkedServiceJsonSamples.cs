@@ -611,5 +611,44 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string ODataV2LinkedService = @"
+{
+    name: ""LinkedService-OData"",
+    properties:
+    {
+        type: ""OData"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            url : ""http://localhost/webhdfs/v1/"", 
+            username: ""admin"",
+            password : ""fakepassword"",
+            gatewayName : ""fakegatewayName"",
+            encryptedCredential : ""fakeencryptedCredential"",
+            authorization : ""fakeauthorization"",
+            sessionId : ""fakesessionId""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string ODataLinkedServiceForOAuth = @"
+{
+    name: ""LinkedService-OData"",
+    properties:
+    {
+        type: ""OData"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""OAuth"",
+            url : ""http://localhost/webhdfs/v1/"", 
+            authorizedCredential: ""sfSDFGsfgaSDfASDFAs2345tsgfASDF==""
+        }
+    }
+}";
     }
 }
