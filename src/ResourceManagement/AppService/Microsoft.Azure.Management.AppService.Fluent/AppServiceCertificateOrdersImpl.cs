@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
+        ///GENMHASH:D505D44BBE5A66C92A4176DBA1DD5891:68BABEE90E833AD1BFA7F46A8C19127A
         public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var appServiceCertificateOrderInner = await InnerCollection.GetAsync(resourceGroupName, name);

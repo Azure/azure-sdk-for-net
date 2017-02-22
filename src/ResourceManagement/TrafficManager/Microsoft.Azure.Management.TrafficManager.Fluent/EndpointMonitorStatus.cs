@@ -6,7 +6,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     /// <summary>
     /// Traffic manager profile endpoint monitor statuses.
-    /// </summary>    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkVuZHBvaW50TW9uaXRvclN0YXR1cw==
+    /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkVuZHBvaW50TW9uaXRvclN0YXR1cw==
     public partial class EndpointMonitorStatus : ExpandableStringEnum<EndpointMonitorStatus>
     {
         public static readonly EndpointMonitorStatus Inactive = Parse("Inactive");

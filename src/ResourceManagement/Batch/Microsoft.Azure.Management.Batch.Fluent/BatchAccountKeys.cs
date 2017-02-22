@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
     /// <summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmJhdGNoLkJhdGNoQWNjb3VudEtleXM=
     /// This class represents the access keys for the batch account.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmJhdGNoLkJhdGNoQWNjb3VudEtleXM=
 
     public partial class BatchAccountKeys
     {
