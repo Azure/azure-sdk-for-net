@@ -472,7 +472,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         {
             userName: ""admin"",
             password : ""fakepassword"",
-            securityToken: ""fakeToken""
+            securityToken: ""fakeToken"",
+            environmentUrl: ""fakeurl.salesforce.com""
         }
     }
 }";
