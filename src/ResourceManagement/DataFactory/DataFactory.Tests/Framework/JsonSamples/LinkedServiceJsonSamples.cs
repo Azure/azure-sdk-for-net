@@ -570,5 +570,26 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureDataLakeStoreLinkedServiceWithServicePrincipal = @"
+{
+    name: ""LinkedService_AzureDataLakeStore"",
+    properties:
+    {
+        type: ""AzureDataLakeStore"",
+        typeProperties:
+        {
+            servicePrincipalId: ""myServicePrincipalId"",
+            servicePrincipalKey: ""myServicePrincipalKey"",
+            tenant: ""myTenant"",
+            dataLakeStoreUri : ""https://account.azuredatalake.net/webhdfs/v1"",
+            accountName : ""account"",
+            subscriptionId: ""subId"",
+            resourceGroupName:  ""resourceGroup""
+        },
+        description: ""test description""
+    }
+}";
     }
 }
