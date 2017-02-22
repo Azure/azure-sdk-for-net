@@ -38,6 +38,7 @@
     <Compile Include="Customizations\Models\Datasets\AmazonS3Dataset.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureSearchIndexDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\Compression\ZipDeflateCompression.cs" />
     <Compile Include="Customizations\Models\Datasets\MongoDbCollectionDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\OnPremisesCassandraTableDataset.cs" />

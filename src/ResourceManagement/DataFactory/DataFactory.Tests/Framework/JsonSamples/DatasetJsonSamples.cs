@@ -677,7 +677,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             },
             compression:
             {
-                type: ""Deflate"",
+                type: ""ZipDeflate"",
                 level: ""Fastest""
             }
         }, 
