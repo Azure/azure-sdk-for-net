@@ -16,6 +16,8 @@
     <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLUpdateResourceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\AzureSearchIndexSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\AzureSearchIndexWriteBehavior.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\CassandraSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\CassandraSourceReadConsistencyLevel.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\MongoDbSource.cs" />
@@ -35,6 +37,7 @@
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AmazonS3Dataset.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\AzureSearchIndexDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\MongoDbCollectionDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\OnPremisesCassandraTableDataset.cs" />
@@ -48,6 +51,7 @@
     <Compile Include="Customizations\Models\LinkedServices\AwsAccessKeyLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureSearchLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureStorageSasLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesCassandraLinkedService.cs" />

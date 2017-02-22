@@ -688,5 +688,29 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureSearchIndexDataset = @"
+{ 
+    name: ""TestAzureSearchIndex"", 
+    properties: { 
+        type: ""AzureSearchIndex"", 
+        linkedServiceName: ""fake ls"",
+        structure:
+        [
+            { 
+                name: ""Key"", 
+                type: ""String"" 
+            }
+        ],
+        typeProperties: { 
+            indexName: ""fake index""
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: 1
+        } 
+    }
+}";
     }
 }
