@@ -42,6 +42,7 @@
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\OnPremisesCassandraTableDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\OrcFormat.cs" />
+    <Compile Include="Customizations\Models\Datasets\StorageFormats\ParquetFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\WebTableDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormatFilePattern.cs" />

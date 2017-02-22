@@ -712,5 +712,35 @@ namespace DataFactory.Tests.Framework.JsonSamples
         } 
     }
 }";
+        [JsonSample]
+        public const string AmazonS3DatasetForParquet = @"
+{
+    name: ""AmazonS3DatasetforParquet"",
+    properties:
+    {
+        type: ""AmazonS3"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties: { 
+            bucketName: ""sample bucket"",
+            key: ""sample key"",
+            prefix: ""sample prefix"",
+            version: ""sample version"",
+            format:{
+                type:""ParquetFormat""
+            },
+            compression:
+            {
+                type: ""Deflate"",
+                level: ""Fastest""
+            }
+        }, 
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}";
+
     }
 }
