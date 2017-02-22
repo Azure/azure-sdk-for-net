@@ -46,7 +46,7 @@ namespace Azure.Tests.Dns
                         .WithMetadata("mxa", "mxaa")
                         .WithMetadata("mxb", "mxbb")
                         .Attach()
-                    .DefineNsRecordSet("partners")
+                    .DefineNSRecordSet("partners")
                         .WithNameServer("ns1-05.azure-dns.com")
                         .WithNameServer("ns2-05.azure-dns.net")
                         .WithNameServer("ns3-05.azure-dns.org")
@@ -120,7 +120,7 @@ namespace Azure.Tests.Dns
                     }
 
                     // Check NS records
-                    var nsRecordSets = dnsZone.NsRecordSets.List();
+                    var nsRecordSets = dnsZone.NSRecordSets.List();
                     Assert.True(nsRecordSets.Count() == 2); // One created above with name 'partners' + the default '@'
 
                     // Check TXT records
@@ -143,7 +143,7 @@ namespace Azure.Tests.Dns
                         .WithoutTxtRecordSet("www")
                         .WithoutCnameRecordSet("userguide")
                         .WithCnameRecordSet("help", "doc.contoso.com")
-                        .UpdateNsRecordSet("partners")
+                        .UpdateNSRecordSet("partners")
                             .WithoutNameServer("ns4-05.azure-dns.info")
                             .WithNameServer("ns4-06.azure-dns.info")
                             .Parent()
@@ -179,7 +179,7 @@ namespace Azure.Tests.Dns
                     }
 
                     // Check NS records
-                    nsRecordSets = dnsZone.NsRecordSets.List();
+                    nsRecordSets = dnsZone.NSRecordSets.List();
                     Assert.True(nsRecordSets.Count() == 2); // One created above with name 'partners' + the default '@'
                     foreach (var nsRecordSet in nsRecordSets)
                     {

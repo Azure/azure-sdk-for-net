@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
@@ -143,23 +143,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Ns record set definition allowing to add or remove a Ns record.
+    /// The stage of the NS record set definition allowing to add or remove a NS record.
     /// </summary>
-    public interface IWithNsRecordNameServer 
+    public interface IWithNSRecordNameServer 
     {
         /// <summary>
-        /// Rmoves a Ns record with the provided name server from this record set.
+        /// Rmoves a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet WithoutNameServer(string nameServerHostName);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithoutNameServer(string nameServerHostName);
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet WithNameServer(string nameServerHostName);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithNameServer(string nameServerHostName);
     }
 
     /// <summary>

@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet;
@@ -114,11 +114,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet UpdateTxtRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of an Ns record set to be attached to the Dns zone.
+        /// Specifies definition of an NS record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.INsRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineNsRecordSet(string name);
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.INSRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineNSRecordSet(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing MX record set in this Dns zone.
@@ -156,14 +156,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.ITxtRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineTxtRecordSet(string name);
 
         /// <summary>
-        /// Removes a A record set in the Dns zone.
+        /// Removes a A record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
         /// <return>The next stage of Dns zone update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutARecordSet(string name);
 
         /// <summary>
-        /// Removes a MX record set in the Dns zone.
+        /// Removes a MX record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the MX record set.</param>
         /// <return>The next stage of Dns zone update.</return>
@@ -177,18 +177,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutTxtRecordSet(string name);
 
         /// <summary>
-        /// Begins the description of an update of an existing Ns record set in this Dns zone.
+        /// Begins the description of an update of an existing NS record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet UpdateNsRecordSet(string name);
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet UpdateNSRecordSet(string name);
 
         /// <summary>
-        /// Removes a Ns record set in the Dns zone.
+        /// Removes a NS record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutNsRecordSet(string name);
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutNSRecordSet(string name);
     }
 
     /// <summary>

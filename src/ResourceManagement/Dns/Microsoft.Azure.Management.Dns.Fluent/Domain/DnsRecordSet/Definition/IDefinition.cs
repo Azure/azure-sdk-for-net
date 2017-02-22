@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The entirety of a Dns zone record set definition as a part of parent definition.
+    /// The entirety of a DNS zone record set definition as a part of parent definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
     public interface IDefinition<ParentT>  :
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
         IMXRecordSetBlank<ParentT>,
         IWithMXRecordMailExchange<ParentT>,
         IWithMXRecordMailExchangeOrAttachable<ParentT>,
-        INsRecordSetBlank<ParentT>,
-        IWithNsRecordNameServer<ParentT>,
-        IWithNsRecordNameServerOrAttachable<ParentT>,
+        INSRecordSetBlank<ParentT>,
+        IWithNSRecordNameServer<ParentT>,
+        IWithNSRecordNameServerOrAttachable<ParentT>,
         IPtrRecordSetBlank<ParentT>,
         IWithPtrRecordTargetDomainName<ParentT>,
         IWithPtrRecordTargetDomainNameOrAttachable<ParentT>,
@@ -117,12 +117,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the Ns record set definition allowing to add additional Ns records or
+    /// The stage of the NS record set definition allowing to add additional NS records or
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithNsRecordNameServerOrAttachable<ParentT>  :
-        IWithNsRecordNameServer<ParentT>,
+    public interface IWithNSRecordNameServerOrAttachable<ParentT>  :
+        IWithNSRecordNameServer<ParentT>,
         IWithAttach<ParentT>
     {
     }
@@ -200,16 +200,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The first stage of a Ns record definition.
+    /// The first stage of a NS record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface INsRecordSetBlank<ParentT>  :
-        IWithNsRecordNameServer<ParentT>
+    public interface INSRecordSetBlank<ParentT>  :
+        IWithNSRecordNameServer<ParentT>
     {
     }
 
     /// <summary>
-    /// The final stage of the Dns zone record set definition.
+    /// The final stage of the DNS zone record set definition.
     /// At this stage, any remaining optional settings can be specified, or the Dns zone record set
     /// definition can be attached to the parent traffic manager profile definition using DnsRecordSet.DefinitionStages.WithAttach.attach().
     /// </summary>
@@ -253,17 +253,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the Ns record set definition allowing to add a Ns record.
+    /// The stage of the NS record set definition allowing to add a NS record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithNsRecordNameServer<ParentT> 
+    public interface IWithNSRecordNameServer<ParentT> 
     {
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithNsRecordNameServerOrAttachable<ParentT> WithNameServer(string nameServerHostName);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithNSRecordNameServerOrAttachable<ParentT> WithNameServer(string nameServerHostName);
     }
 
     /// <summary>

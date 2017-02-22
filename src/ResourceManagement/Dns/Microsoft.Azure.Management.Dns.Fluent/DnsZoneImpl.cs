@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         private IAaaaRecordSets aaaaRecordSets;
         private ICnameRecordSets cnameRecordSets;
         private IMXRecordSets mxRecordSets;
-        private INsRecordSets nsRecordSets;
+        private INSRecordSets nsRecordSets;
         private IPtrRecordSets ptrRecordSets;
         private ISrvRecordSets srvRecordSets;
         private ITxtRecordSets txtRecordSets;
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             this.aaaaRecordSets = new AaaaRecordSetsImpl(this, this.recordSetsClient);
             this.cnameRecordSets = new CnameRecordSetsImpl(this, this.recordSetsClient);
             this.mxRecordSets = new MXRecordSetsImpl(this, this.recordSetsClient);
-            this.nsRecordSets = new NsRecordSetsImpl(this, this.recordSetsClient);
+            this.nsRecordSets = new NSRecordSetsImpl(this, this.recordSetsClient);
             this.ptrRecordSets = new PtrRecordSetsImpl(this, this.recordSetsClient);
             this.srvRecordSets = new SrvRecordSetsImpl(this, this.recordSetsClient);
             this.txtRecordSets = new TxtRecordSetsImpl(this, this.recordSetsClient);
@@ -123,9 +123,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:3BE07D98F4ADC1B06829114EA2606ED4:3C28045E01B03B7494D3302D6A7D064D
-        public DnsRecordSetImpl DefineNsRecordSet(string name)
+        public DnsRecordSetImpl DefineNSRecordSet(string name)
         {
-            return recordSetsImpl.DefineNsRecordSet(name);
+            return recordSetsImpl.DefineNSRecordSet(name);
         }
 
         ///GENMHASH:8F3B63282E3A22D23CA9B093FA6A44F8:20E3842CCAFDF776C20B1023B1BA21C4
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:87C6576F7C5A41E12DA61251590634AA:6B2F5F529555C811DA244F0261C7F42C
-        public INsRecordSets NsRecordSets()
+        public INSRecordSets NSRecordSets()
         {
             return this.nsRecordSets;
         }
@@ -296,15 +296,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:329EC651435AC8A74D3A1349985D55EE:F2A93F30A698AE9ED05A108FF9F65CFB
-        public DnsRecordSetImpl UpdateNsRecordSet(string name)
+        public DnsRecordSetImpl UpdateNSRecordSet(string name)
         {
-            return recordSetsImpl.UpdateNsRecordSet(name);
+            return recordSetsImpl.UpdateNSRecordSet(name);
         }
 
         ///GENMHASH:DBFF1C1D58718301508DC884197E6B5A:0944E077B82EF0CBECB458CFBCC47DDA
-        public DnsZoneImpl WithoutNsRecordSet(string name)
+        public DnsZoneImpl WithoutNSRecordSet(string name)
         {
-            recordSetsImpl.WithoutNsRecordSet(name);
+            recordSetsImpl.WithoutNSRecordSet(name);
             return this;
         }
     }

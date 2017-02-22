@@ -1263,7 +1263,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            var nsRecordSets = dnsZone.NsRecordSets.List();
+            var nsRecordSets = dnsZone.NSRecordSets.List();
             builder.Append("\n\tNS Record sets:");
             foreach (var nsRecordSet in nsRecordSets)
             {

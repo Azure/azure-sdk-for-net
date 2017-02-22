@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCombined
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet;
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCombined
         IUpdateAaaaRecordSet,
         IUpdatePtrRecordSet,
         IUpdateMXRecordSet,
-        IUpdateNsRecordSet,
+        IUpdateNSRecordSet,
         IUpdateSrvRecordSet,
         IUpdateTxtRecordSet,
         IUpdateSoaRecord,

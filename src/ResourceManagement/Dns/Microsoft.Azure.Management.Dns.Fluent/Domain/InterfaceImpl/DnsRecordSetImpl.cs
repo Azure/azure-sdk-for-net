@@ -19,23 +19,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     internal abstract partial class DnsRecordSetImpl 
     {
         /// <summary>
-        /// Rmoves a Ns record with the provided name server from this record set.
+        /// Rmoves a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet DnsRecordSet.Update.IWithNsRecordNameServer.WithoutNameServer(string nameServerHostName)
+        DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet DnsRecordSet.Update.IWithNSRecordNameServer.WithoutNameServer(string nameServerHostName)
         {
-            return this.WithoutNameServer(nameServerHostName) as DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet;
+            return this.WithoutNameServer(nameServerHostName) as DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet;
         }
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet DnsRecordSet.Update.IWithNsRecordNameServer.WithNameServer(string nameServerHostName)
+        DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet DnsRecordSet.Update.IWithNSRecordNameServer.WithNameServer(string nameServerHostName)
         {
-            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet;
+            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet;
         }
 
         /// <summary>
@@ -260,23 +260,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithNsRecordNameServerOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithNsRecordNameServer<DnsZone.Update.IUpdate>.WithNameServer(string nameServerHostName)
+        DnsRecordSet.UpdateDefinition.IWithNSRecordNameServerOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithNSRecordNameServer<DnsZone.Update.IUpdate>.WithNameServer(string nameServerHostName)
         {
-            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateDefinition.IWithNsRecordNameServerOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateDefinition.IWithNSRecordNameServerOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.Definition.IWithNsRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithNsRecordNameServer<DnsZone.Definition.IWithCreate>.WithNameServer(string nameServerHostName)
+        DnsRecordSet.Definition.IWithNSRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithNSRecordNameServer<DnsZone.Definition.IWithCreate>.WithNameServer(string nameServerHostName)
         {
-            return this.WithNameServer(nameServerHostName) as DnsRecordSet.Definition.IWithNsRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithNameServer(nameServerHostName) as DnsRecordSet.Definition.IWithNSRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>

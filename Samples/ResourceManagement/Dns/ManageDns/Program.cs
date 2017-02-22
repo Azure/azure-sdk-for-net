@@ -193,7 +193,7 @@ namespace ManageDns
                 Utilities.Log("Updating root DNS zone " + rootDnsZone + "...");
                 var nsRecordStage = rootDnsZone
                         .Update()
-                        .DefineNsRecordSet("partners")
+                        .DefineNSRecordSet("partners")
                         .WithNameServer(partnersDnsZone.NameServers[0]);
                 for (int i = 1; i < partnersDnsZone.NameServers.Count(); i++)
                 {

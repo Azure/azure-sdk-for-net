@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSets AaaaRecordSets { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ns (name server) records.
+        /// Gets entry point to manage record sets in this zone containing NS (name server) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.INsRecordSets NsRecordSets { get; }
+        Microsoft.Azure.Management.Dns.Fluent.INSRecordSets NSRecordSets { get; }
 
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing Ptr (pointer) records.

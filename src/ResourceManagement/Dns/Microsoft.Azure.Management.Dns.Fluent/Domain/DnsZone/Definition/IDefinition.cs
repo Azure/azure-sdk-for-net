@@ -56,11 +56,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IMXRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineMXRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of an Ns record set.
+        /// Specifies definition of an NS record set.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.INsRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineNsRecordSet(string name);
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.INSRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineNSRecordSet(string name);
 
         /// <summary>
         /// Specifies definition of a Srv record set.

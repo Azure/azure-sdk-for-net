@@ -66,13 +66,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ns (name server) records.
+        /// Gets entry point to manage record sets in this zone containing NS (name server) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.INsRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NsRecordSets
+        Microsoft.Azure.Management.Dns.Fluent.INSRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NSRecordSets
         {
             get
             {
-                return this.NsRecordSets() as Microsoft.Azure.Management.Dns.Fluent.INsRecordSets;
+                return this.NSRecordSets() as Microsoft.Azure.Management.Dns.Fluent.INSRecordSets;
             }
         }
 
@@ -300,13 +300,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of an Ns record set to be attached to the Dns zone.
+        /// Specifies definition of an NS record set to be attached to the Dns zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        DnsRecordSet.UpdateDefinition.INsRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        DnsRecordSet.UpdateDefinition.INSRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineNSRecordSet(string name)
         {
-            return this.DefineNsRecordSet(name) as DnsRecordSet.UpdateDefinition.INsRecordSetBlank<DnsZone.Update.IUpdate>;
+            return this.DefineNSRecordSet(name) as DnsRecordSet.UpdateDefinition.INSRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Srv record set in this Dns zone.
+        /// Begins the description of an update of an existing Srv record set in this DNS zone.
         /// </summary>
         /// <param name="name">The name of the Srv record set.</param>
         /// <return>The stage representing configuration for the Srv record set.</return>
@@ -331,13 +331,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Ns record set in the Dns zone.
+        /// Removes a NS record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutNSRecordSet(string name)
         {
-            return this.WithoutNsRecordSet(name) as DnsZone.Update.IUpdate;
+            return this.WithoutNSRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
@@ -351,13 +351,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Ns record set in this Dns zone.
+        /// Begins the description of an update of an existing NS record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet DnsZone.Update.IWithRecordSet.UpdateNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet DnsZone.Update.IWithRecordSet.UpdateNSRecordSet(string name)
         {
-            return this.UpdateNsRecordSet(name) as DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet;
+            return this.UpdateNSRecordSet(name) as DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet;
         }
 
         /// <summary>
@@ -442,13 +442,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of an Ns record set.
+        /// Specifies definition of an NS record set.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        DnsRecordSet.Definition.INsRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        DnsRecordSet.Definition.INSRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineNSRecordSet(string name)
         {
-            return this.DefineNsRecordSet(name) as DnsRecordSet.Definition.INsRecordSetBlank<DnsZone.Definition.IWithCreate>;
+            return this.DefineNSRecordSet(name) as DnsRecordSet.Definition.INSRecordSetBlank<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
