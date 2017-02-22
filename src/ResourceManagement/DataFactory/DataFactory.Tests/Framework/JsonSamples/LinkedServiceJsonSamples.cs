@@ -650,5 +650,22 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string OnPremisesOracleLinkedServiceWithODBCDriver = @"
+{
+    name: ""LinkedService-OnPremisesOracleDB"",
+    properties:
+    {
+        type: ""OnPremisesOracle"",
+        typeProperties: {
+            driverType: ""Microsoft"",
+            connectionString: ""MyConnectionString"",
+            gatewayName: ""CherryAgent-01"",
+            userName: ""MyUserName"",
+            password: ""MyPassword""
+        }
+    }
+}";
     }
 }
