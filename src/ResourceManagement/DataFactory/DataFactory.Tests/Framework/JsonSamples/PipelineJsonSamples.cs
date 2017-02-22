@@ -1625,5 +1625,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string CopyActivityWithExecutionLocation = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from File to Blob"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""FileSystemSource"",
+                        recursive: true
+                    },
+                    sink: 
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    },
+                    executionLocation: ""West US""
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawFileSource""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""BlobSink""
+                    }
+                ]                
+            }
+        ]
+    }
+}
+";
     }
 }
