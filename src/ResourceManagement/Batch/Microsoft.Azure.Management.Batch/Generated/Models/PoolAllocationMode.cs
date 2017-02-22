@@ -17,15 +17,15 @@ namespace Microsoft.Azure.Management.Batch.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccountKeyType.
+    /// Defines values for PoolAllocationMode.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum AccountKeyType
+    public enum PoolAllocationMode
     {
-        [EnumMember(Value = "Primary")]
-        Primary,
-        [EnumMember(Value = "Secondary")]
-        Secondary
+        [EnumMember(Value = "BatchService")]
+        BatchService,
+        [EnumMember(Value = "UserSubscription")]
+        UserSubscription
     }
 }
 
