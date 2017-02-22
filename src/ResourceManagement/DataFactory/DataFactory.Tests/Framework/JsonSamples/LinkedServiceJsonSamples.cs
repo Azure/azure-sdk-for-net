@@ -534,5 +534,25 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureMLLinkedServiceARMJson = @"
+{
+    name: ""Test-ML-LinkedService"",
+    properties:
+    {
+        type: ""AzureML"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            mlEndpoint:""https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs"",
+            apiKey:""jOeOfV4/ujgUvU5DB5cC+poDvHmHE/g=="",
+            updateResourceEndpoint: ""https://management.azure.com/subscriptions/da1d7b9a-a759-41c8-bb73-093a1818e03a/resourceGroups/Default-MachineLearning-SouthCentralUS/providers/Microsoft.MachineLearning/webServices/ARMbasedTrainingForADFTipTests?api-version=2016-05-01-preview"",
+            servicePrincipalId: ""fe273844-c808-40b8-ad85-94a46f737731"",
+            servicePrincipalKey: ""zWa0EEBGlenHRTp2FjtZOspK/WMA2tQ08c8U+gZRBlw="",
+            tenant: ""microsoft.com""
+        }
+    }
+}";
     }
 }
