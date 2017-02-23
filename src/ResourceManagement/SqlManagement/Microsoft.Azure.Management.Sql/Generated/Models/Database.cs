@@ -149,11 +149,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets or sets kind of database.  This is metadata used for the
-        /// Azure portal experience.
+        /// Gets kind of database.  This is metadata used for the Azure portal
+        /// experience.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
+        public string Kind { get; private set; }
 
         /// <summary>
         /// Gets or sets the collation of the Azure SQL database. If

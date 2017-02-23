@@ -24,6 +24,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerFirewallRule class.
         /// </summary>
+        /// <param name="startIpAddress">The start IP address of the Azure SQL
+        /// server firewall rule. Must be IPv4 format. Use value '0.0.0.0' to
+        /// represent all Azure-internal IP addresses.</param>
+        /// <param name="endIpAddress">The end IP address of the Azure SQL
+        /// server firewall rule. Must be IPv4 format. Must be greater than
+        /// or equal to startIpAddress. Use value '0.0.0.0' to represent all
+        /// Azure-internal IP addresses.</param>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="kind">Kind of server that contains this firewall
@@ -31,11 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="location">Location of the server that contains this
         /// firewall rule.</param>
         /// <param name="type">Type of resource this is.</param>
-        /// <param name="startIpAddress">The start IP address of the Azure SQL
-        /// server firewall rule. Must be IPv4 format.</param>
-        /// <param name="endIpAddress">The end IP address of the Azure SQL
-        /// server firewall rule. Must be IPv4 format.</param>
-        public ServerFirewallRule(string name = default(string), string id = default(string), string kind = default(string), string location = default(string), string type = default(string), string startIpAddress = default(string), string endIpAddress = default(string))
+        public ServerFirewallRule(string startIpAddress, string endIpAddress, string name = default(string), string id = default(string), string kind = default(string), string location = default(string), string type = default(string))
             : base(name, id)
         {
             Kind = kind;
@@ -65,17 +68,37 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the start IP address of the Azure SQL server firewall
-        /// rule. Must be IPv4 format.
+        /// rule. Must be IPv4 format. Use value '0.0.0.0' to represent all
+        /// Azure-internal IP addresses.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.startIpAddress")]
         public string StartIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the end IP address of the Azure SQL server firewall
-        /// rule. Must be IPv4 format.
+        /// rule. Must be IPv4 format. Must be greater than or equal to
+        /// startIpAddress. Use value '0.0.0.0' to represent all
+        /// Azure-internal IP addresses.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (StartIpAddress == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "StartIpAddress");
+            }
+            if (EndIpAddress == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "EndIpAddress");
+            }
+        }
     }
 }

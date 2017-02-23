@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of the Azure SQL database being upgraded.
+        /// Gets the name of the Azure SQL database being upgraded.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or sets the target edition for the Azure SQL database being

@@ -97,6 +97,10 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             string apiVersion = "2014-04-01";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
