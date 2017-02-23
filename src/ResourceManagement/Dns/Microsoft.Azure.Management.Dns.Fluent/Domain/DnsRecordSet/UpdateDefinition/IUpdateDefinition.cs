@@ -62,13 +62,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Aaaa record set definition allowing to add first Aaaa record.
+    /// The stage of the AAAA record set definition allowing to add first AAAA record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithAaaaRecordIPv6Address<ParentT> 
     {
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Aaaa record set definition allowing to add additional A records or
+    /// The stage of the AAAA record set definition allowing to add additional AAAA records or
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The first stage of a Aaaa record definition.
+    /// The first stage of a AAAA record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IAaaaRecordSetBlank<ParentT>  :

@@ -93,16 +93,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord UpdateSoaRecord();
 
         /// <summary>
-        /// Begins the description of an update of an existing Aaaa record set in this DNS zone.
+        /// Begins the description of an update of an existing AAAA record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet UpdateAaaaRecordSet(string name);
 
         /// <summary>
-        /// Removes a Aaaa record set in the DNS zone.
+        /// Removes a AAAA record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
+        /// <param name="name">Name of the AAAA record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutAaaaRecordSet(string name);
 
@@ -142,10 +142,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutCNameRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set to be attached to the DNS zone.
+        /// Specifies definition of an AAAA record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineAaaaRecordSet(string name);
 
         /// <summary>

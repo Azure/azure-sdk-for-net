@@ -280,9 +280,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Aaaa record set in the DNS zone.
+        /// Removes a AAAA record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
+        /// <param name="name">Name of the AAAA record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutAaaaRecordSet(string name)
         {
@@ -361,10 +361,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set to be attached to the DNS zone.
+        /// Specifies definition of an AAAA record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineAaaaRecordSet(string name)
         {
             return this.DefineAaaaRecordSet(name) as DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<DnsZone.Update.IUpdate>;
@@ -381,10 +381,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Aaaa record set in this DNS zone.
+        /// Begins the description of an update of an existing AAAA record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsZone.Update.IWithRecordSet.UpdateAaaaRecordSet(string name)
         {
             return this.UpdateAaaaRecordSet(name) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
@@ -462,10 +462,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set.
+        /// Specifies definition of an AAAA record set.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         DnsRecordSet.Definition.IAaaaRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineAaaaRecordSet(string name)
         {
             return this.DefineAaaaRecordSet(name) as DnsRecordSet.Definition.IAaaaRecordSetBlank<DnsZone.Definition.IWithCreate>;

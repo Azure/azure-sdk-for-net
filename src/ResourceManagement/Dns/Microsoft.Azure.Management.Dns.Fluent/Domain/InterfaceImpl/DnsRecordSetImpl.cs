@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set update.</return>
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes an Aaaa record with the provided Ipv6 address from this record set.
+        /// Removes an AAAA record with the provided Ipv6 address from this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set update.</return>
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -472,7 +472,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>

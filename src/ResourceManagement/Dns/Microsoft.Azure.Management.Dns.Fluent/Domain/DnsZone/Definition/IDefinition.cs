@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.ISrvRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineSrvRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set.
+        /// Specifies definition of an AAAA record set.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IAaaaRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineAaaaRecordSet(string name);
 
         /// <summary>

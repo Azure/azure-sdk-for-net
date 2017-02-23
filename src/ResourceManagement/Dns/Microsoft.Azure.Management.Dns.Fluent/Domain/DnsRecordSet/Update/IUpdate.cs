@@ -216,19 +216,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Aaaa record set update allowing to add or remove Aaaa record.
+    /// The stage of the AAAA record set update allowing to add or remove AAAA record.
     /// </summary>
     public interface IWithAaaaRecordIPv6Address 
     {
         /// <summary>
-        /// Removes an Aaaa record with the provided IPv6 address from this record set.
+        /// Removes an AAAA record with the provided IPv6 address from this record set.
         /// </summary>
         /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIPv6Address(string ipv6Address);
 
         /// <summary>
-        /// Creates an Aaaa record with the provided IPv6 address in this record set.
+        /// Creates an AAAA record with the provided IPv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set update.</return>
