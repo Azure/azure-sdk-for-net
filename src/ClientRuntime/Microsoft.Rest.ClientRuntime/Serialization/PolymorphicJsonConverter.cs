@@ -36,7 +36,10 @@ namespace Microsoft.Rest.Serialization
                 string typeName = type.Name;
                 if (type.GetCustomAttributes<JsonObjectAttribute>().Any())
                 {
-                    typeName = type.GetCustomAttribute<JsonObjectAttribute>().Id;
+                    // if the derived type json object attribute is same as that of the base then it is an inherited property
+                    // hence ignore it and return the derived type as the name of the derived type class itself
+                    var derivedTypeId = type.GetCustomAttribute<JsonObjectAttribute>().Id;
+                    typeName = (derivedTypeId == baseType.GetTypeInfo().GetCustomAttribute<JsonObjectAttribute>().Id) ? type.Name : derivedTypeId;
                 }
                 if (typeName != null && typeName.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {

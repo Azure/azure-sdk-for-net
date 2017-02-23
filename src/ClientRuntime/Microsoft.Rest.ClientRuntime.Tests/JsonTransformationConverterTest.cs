@@ -6,6 +6,7 @@ using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
 using Xunit;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Tests.Resources.PolymorphicJsonConverterTest;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.Test
 {
@@ -353,6 +354,28 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 }";
             var newJson = JsonConvert.SerializeObject(deserializedResource, deserializeSettings);
             Assert.Equal(expectedSerializedJson, newJson);
-        }        
+        }
+
+        [Fact]
+        public void TestPolymorphicJsonDeserializer()
+        {
+            var testJson = @"{
+                                ""speed"": 100,
+                                ""name"": ""Chester"",
+                                ""PetType"":""Horse""
+                             }";
+            var deserializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Pet>("PetType"));
+            var pet = SafeJsonConvert.DeserializeObject<Pet>(testJson, deserializeSettings);
+            Assert.Equal(pet.GetType().ToString(), "Microsoft.Rest.ClientRuntime.Tests.Resources.PolymorphicJsonConverterTest.Horse");
+
+        }
+
     }
 }
