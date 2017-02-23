@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing CName (canonical name) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets CnameRecordSets { get; }
+        Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets CNameRecordSets { get; }
 
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing Srv (service) records.

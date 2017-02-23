@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the CName record set definition allowing to add or remove Cname record.
+    /// The stage of the CName record set definition allowing to add or remove CNAME record.
     /// </summary>
     public interface IWithPtrRecordTargetDomainName 
     {

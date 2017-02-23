@@ -90,11 +90,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing CName (canonical name) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.CnameRecordSets
+        Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.CNameRecordSets
         {
             get
             {
-                return this.CnameRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets;
+                return this.CNameRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets;
             }
         }
 
@@ -179,14 +179,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Cname record set to be attached to the DNS zone.
+        /// Specifies definition of a CNAME record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <param name="alias">The Cname record alias.</param>
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <param name="alias">The CNAME record alias.</param>
         /// <return>The next stage of DNS zone definition.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithCnameRecordSet(string name, string alias)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithCNameRecordSet(string name, string alias)
         {
-            return this.WithCnameRecordSet(name, alias) as DnsZone.Update.IUpdate;
+            return this.WithCNameRecordSet(name, alias) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
@@ -230,13 +230,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Cname record set in the DNS zone.
+        /// Removes a CNAME record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
+        /// <param name="name">Name of the CNAME record set.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutCnameRecordSet(string name)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutCNameRecordSet(string name)
         {
-            return this.WithoutCnameRecordSet(name) as DnsZone.Update.IUpdate;
+            return this.WithoutCNameRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
@@ -411,14 +411,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Cname record set.
+        /// Specifies definition of a CNAME record set.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <param name="alias">The Cname record alias.</param>
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <param name="alias">The CNAME record alias.</param>
         /// <return>The next stage of DNS zone definition.</return>
-        DnsZone.Definition.IWithCreate DnsZone.Definition.IWithRecordSet.WithCnameRecordSet(string name, string alias)
+        DnsZone.Definition.IWithCreate DnsZone.Definition.IWithRecordSet.WithCNameRecordSet(string name, string alias)
         {
-            return this.WithCnameRecordSet(name, alias) as DnsZone.Definition.IWithCreate;
+            return this.WithCNameRecordSet(name, alias) as DnsZone.Definition.IWithCreate;
         }
 
         /// <summary>

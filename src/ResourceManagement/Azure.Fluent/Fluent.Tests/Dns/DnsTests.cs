@@ -72,8 +72,8 @@ namespace Azure.Tests.Dns
                         .WithTargetDomainName("www.contoso.com")
                         .WithTargetDomainName("mail.contoso.com")
                         .Attach()
-                    .WithCnameRecordSet("documents", "doc.contoso.com")
-                    .WithCnameRecordSet("userguide", "doc.contoso.com")
+                    .WithCNameRecordSet("documents", "doc.contoso.com")
+                    .WithCNameRecordSet("userguide", "doc.contoso.com")
                     .WithTag("a", "aa")
                     .WithTag("b", "bb")
                     .Create();
@@ -136,13 +136,13 @@ namespace Azure.Tests.Dns
                     Assert.True(ptrRecordSets.Count() == 2);
 
                     // Check CNAME records
-                    var cnameRecordSets = dnsZone.CnameRecordSets.List();
+                    var cnameRecordSets = dnsZone.CNameRecordSets.List();
                     Assert.True(cnameRecordSets.Count() == 2);
 
                     dnsZone.Update()
                         .WithoutTxtRecordSet("www")
-                        .WithoutCnameRecordSet("userguide")
-                        .WithCnameRecordSet("help", "doc.contoso.com")
+                        .WithoutCNameRecordSet("userguide")
+                        .WithCNameRecordSet("help", "doc.contoso.com")
                         .UpdateNSRecordSet("partners")
                             .WithoutNameServer("ns4-05.azure-dns.info")
                             .WithNameServer("ns4-06.azure-dns.info")
@@ -170,7 +170,7 @@ namespace Azure.Tests.Dns
                     Assert.Equal(1, txtRecordSets.Count());
 
                     // Check CNAME records
-                    cnameRecordSets = dnsZone.CnameRecordSets.List();
+                    cnameRecordSets = dnsZone.CNameRecordSets.List();
                     Assert.Equal(2, cnameRecordSets.Count());
                     foreach (var cnameRecordSet in cnameRecordSets)
                     {

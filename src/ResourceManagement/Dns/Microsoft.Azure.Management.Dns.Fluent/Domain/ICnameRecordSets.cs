@@ -5,11 +5,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to Cname record sets in a DNS zone.
+    /// Entry point to CNAME record sets in a DNS zone.
     /// </summary>
-    public interface ICnameRecordSets  :
-        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>
+    public interface ICNameRecordSets  :
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSet>
     {
     }
 }

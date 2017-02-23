@@ -70,12 +70,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IARecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineARecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Cname record set to be attached to the DNS zone.
+        /// Specifies definition of a CNAME record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <param name="alias">The Cname record alias.</param>
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <param name="alias">The CNAME record alias.</param>
         /// <return>The next stage of DNS zone definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithCnameRecordSet(string name, string alias);
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithCNameRecordSet(string name, string alias);
 
         /// <summary>
         /// Removes a PTR record set in the DNS zone.
@@ -135,11 +135,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutSrvRecordSet(string name);
 
         /// <summary>
-        /// Removes a Cname record set in the DNS zone.
+        /// Removes a CNAME record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
+        /// <param name="name">Name of the CNAME record set.</param>
         /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutCnameRecordSet(string name);
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutCNameRecordSet(string name);
 
         /// <summary>
         /// Specifies definition of an Aaaa record set to be attached to the DNS zone.

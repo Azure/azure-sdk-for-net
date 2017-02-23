@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         private IRecordSetsOperations recordSetsClient;
         private IARecordSets aRecordSets;
         private IAaaaRecordSets aaaaRecordSets;
-        private ICnameRecordSets cnameRecordSets;
+        private ICNameRecordSets cnameRecordSets;
         private IMXRecordSets mxRecordSets;
         private INSRecordSets nsRecordSets;
         private IPtrRecordSets ptrRecordSets;
@@ -71,9 +71,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:59991185F1E4DCE6CD53407115062A4D:E56D214B54EED0F5CA056506698B3A2B
-        public DnsZoneImpl WithCnameRecordSet(string name, string alias)
+        public DnsZoneImpl WithCNameRecordSet(string name, string alias)
         {
-            recordSetsImpl.WithCnameRecordSet(name, alias);
+            recordSetsImpl.WithCNameRecordSet(name, alias);
             return this;
         }
 
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             this.aRecordSets = new ARecordSetsImpl(this, this.recordSetsClient);
             this.aaaaRecordSets = new AaaaRecordSetsImpl(this, this.recordSetsClient);
-            this.cnameRecordSets = new CnameRecordSetsImpl(this, this.recordSetsClient);
+            this.cnameRecordSets = new CNameRecordSetsImpl(this, this.recordSetsClient);
             this.mxRecordSets = new MXRecordSetsImpl(this, this.recordSetsClient);
             this.nsRecordSets = new NSRecordSetsImpl(this, this.recordSetsClient);
             this.ptrRecordSets = new PtrRecordSetsImpl(this, this.recordSetsClient);
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:3EECA7B78CDBF9708E3E2E13E2122004:31CB15D3EB20E8486D2995C3637E584B
-        public ICnameRecordSets CnameRecordSets()
+        public ICNameRecordSets CNameRecordSets()
         {
             return this.cnameRecordSets;
         }
@@ -270,9 +270,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:EDF384FBE686F4A04431E3BC18889398:B6C34FCD3D80CE6399DBF488AC70440F
-        public DnsZoneImpl WithoutCnameRecordSet(string name)
+        public DnsZoneImpl WithoutCNameRecordSet(string name)
         {
-            recordSetsImpl.WithoutCnameRecordSet(name);
+            recordSetsImpl.WithoutCNameRecordSet(name);
             return this;
         }
 

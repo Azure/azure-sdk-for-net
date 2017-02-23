@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// <summary>
     /// An immutable client-side representation of a CName (canonical name) record set in Azure DNS Zone.
     /// </summary>
-    public interface ICnameRecordSet  :
+    public interface ICNameRecordSet  :
         IDnsRecordSet
     {
         /// <summary>

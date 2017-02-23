@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:59991185F1E4DCE6CD53407115062A4D:722C71889B2C1576A4C5173BBA782847
-        internal void WithCnameRecordSet(string name, string alias)
+        internal void WithCNameRecordSet(string name, string alias)
         {
-            CnameRecordSetImpl recordSet = CnameRecordSetImpl.NewRecordSet(name, this.Parent, this.client);
+            CNameRecordSetImpl recordSet = CNameRecordSetImpl.NewRecordSet(name, this.Parent, this.client);
             recordSet.Inner.CnameRecord.Cname = alias;
             this.SetDefaults(base.PrepareDefine(recordSet.WithTimeToLive(defaultTtlInSeconds)));
         }
@@ -155,9 +155,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:EDF384FBE686F4A04431E3BC18889398:18768AB27F01069942917D1C1419E5B1
-        internal void WithoutCnameRecordSet(string name)
+        internal void WithoutCNameRecordSet(string name)
         {
-            base.PrepareRemove(CnameRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
+            base.PrepareRemove(CNameRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
         }
 
         ///GENMHASH:307087E2D68C3C7331CD91AE28C42489:A544C4DB97263ACD321136702E297EB8

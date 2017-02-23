@@ -96,6 +96,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         /// <param name="name">Name of the CName record set.</param>
         /// <param name="alias">The CName record alias.</param>
         /// <return>The next stage of DNS zone definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate WithCnameRecordSet(string name, string alias);
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate WithCNameRecordSet(string name, string alias);
     }
 }

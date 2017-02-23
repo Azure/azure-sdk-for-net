@@ -1236,7 +1236,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            var cnameRecordSets = dnsZone.CnameRecordSets.List();
+            var cnameRecordSets = dnsZone.CNameRecordSets.List();
             builder.Append("\n\tCNAME Record sets:");
             foreach (var cnameRecordSet in cnameRecordSets)
             {

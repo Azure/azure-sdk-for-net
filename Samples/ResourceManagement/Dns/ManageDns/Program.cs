@@ -93,7 +93,7 @@ namespace ManageDns
 
                 Utilities.Log("Updating DNS zone by adding a CName record...");
                 rootDnsZone = rootDnsZone.Update()
-                        .WithCnameRecordSet("www", webApp.DefaultHostName)
+                        .WithCNameRecordSet("www", webApp.DefaultHostName)
                         .Apply();
                 Utilities.Log("DNS zone updated");
                 Utilities.Print(rootDnsZone);
@@ -153,7 +153,7 @@ namespace ManageDns
                 //
                 Utilities.Log("Getting CName record set in the root DNS zone " + CustomDomainName + "...");
                 var cnameRecordSets = rootDnsZone
-                        .CnameRecordSets
+                        .CNameRecordSets
                         .List();
 
                 foreach (var cnameRecordSet in cnameRecordSets)

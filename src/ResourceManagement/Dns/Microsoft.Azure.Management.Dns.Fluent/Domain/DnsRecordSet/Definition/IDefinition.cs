@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the PTR record set definition allowing to add first Cname record.
+    /// The stage of the PTR record set definition allowing to add first CNAME record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithPtrRecordTargetDomainName<ParentT> 
