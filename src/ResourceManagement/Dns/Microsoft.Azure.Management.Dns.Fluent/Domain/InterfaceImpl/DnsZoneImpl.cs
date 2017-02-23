@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ptr (pointer) records.
+        /// Gets entry point to manage record sets in this zone containing PTR (pointer) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.PtrRecordSets
         {
@@ -190,10 +190,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Ptr record set in this DNS zone.
+        /// Begins the description of an update of an existing PTR record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet DnsZone.Update.IWithRecordSet.UpdatePtrRecordSet(string name)
         {
             return this.UpdatePtrRecordSet(name) as DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet;
@@ -240,9 +240,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Ptr record set in the DNS zone.
+        /// Removes a PTR record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
+        /// <param name="name">Name of the PTR record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutPtrRecordSet(string name)
         {
@@ -270,10 +270,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Ptr record set to be attached to the DNS zone.
+        /// Specifies definition of a PTR record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         DnsRecordSet.UpdateDefinition.IPtrRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefinePtrRecordSet(string name)
         {
             return this.DefinePtrRecordSet(name) as DnsRecordSet.UpdateDefinition.IPtrRecordSetBlank<DnsZone.Update.IUpdate>;
@@ -432,10 +432,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Ptr record set.
+        /// Specifies definition of a PTR record set.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         DnsRecordSet.Definition.IPtrRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefinePtrRecordSet(string name)
         {
             return this.DefinePtrRecordSet(name) as DnsRecordSet.Definition.IPtrRecordSetBlank<DnsZone.Definition.IWithCreate>;

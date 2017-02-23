@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The first stage of a Ptr record definition.
+    /// The first stage of a PTR record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IPtrRecordSetBlank<ParentT>  :
@@ -284,13 +284,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Ptr record set definition allowing to add first Cname record.
+    /// The stage of the PTR record set definition allowing to add first Cname record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithPtrRecordTargetDomainName<ParentT> 
     {
         /// <summary>
-        /// Creates a Ptr record with the provided target domain name in this record set.
+        /// Creates a PTR record with the provided target domain name in this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Ptr record set definition allowing to add additional Ptr records or
+    /// The stage of the PTR record set definition allowing to add additional PTR records or
     /// attach the record set to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>

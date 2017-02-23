@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         Microsoft.Azure.Management.Dns.Fluent.INSRecordSets NSRecordSets { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ptr (pointer) records.
+        /// Gets entry point to manage record sets in this zone containing PTR (pointer) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSets PtrRecordSets { get; }
 

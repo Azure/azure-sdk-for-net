@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         /// <summary>
         /// Specifies definition of a PTR record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IPtrRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefinePtrRecordSet(string name);
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         /// <summary>
         /// Begins the description of an update of an existing PTR record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet UpdatePtrRecordSet(string name);
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithCnameRecordSet(string name, string alias);
 
         /// <summary>
-        /// Removes a Ptr record set in the DNS zone.
+        /// Removes a PTR record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
+        /// <param name="name">Name of the PTR record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutPtrRecordSet(string name);
 

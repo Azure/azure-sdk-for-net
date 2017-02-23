@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Ptr record with the provided target domain name in this record set.
+        /// Creates a PTR record with the provided target domain name in this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Ptr record with the provided target domain name in this record set.
+        /// Creates a PTR record with the provided target domain name in this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set definition.</return>
