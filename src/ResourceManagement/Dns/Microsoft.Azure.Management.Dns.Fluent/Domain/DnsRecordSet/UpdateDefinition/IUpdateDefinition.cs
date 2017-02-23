@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Srv record definition allowing to add first service record.
+    /// The stage of the SRV record definition allowing to add first service record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithSrvRecordEntry<ParentT> 
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The first stage of a Srv record definition.
+    /// The first stage of a SRV record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface ISrvRecordSetBlank<ParentT>  :
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Srv record definition allowing to add first Txt record.
+    /// The stage of the SRV record definition allowing to add first Txt record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithTxtRecordTextValue<ParentT> 
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
-    /// The stage of the Srv record set definition allowing to add additional Srv records or attach the record set
+    /// The stage of the SRV record set definition allowing to add additional SRV records or attach the record set
     /// to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>

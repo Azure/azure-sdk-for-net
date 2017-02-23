@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets CNameRecordSets { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Srv (service) records.
+        /// Gets entry point to manage record sets in this zone containing SRV (service) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets SrvRecordSets { get; }
 

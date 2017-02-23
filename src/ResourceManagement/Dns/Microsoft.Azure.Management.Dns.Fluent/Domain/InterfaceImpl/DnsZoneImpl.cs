@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Srv (service) records.
+        /// Gets entry point to manage record sets in this zone containing SRV (service) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.SrvRecordSets
         {
@@ -149,9 +149,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Srv record set in the DNS zone.
+        /// Removes a SRV record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Srv record set.</param>
+        /// <param name="name">Name of the SRV record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutSrvRecordSet(string name)
         {
@@ -159,10 +159,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Srv record set to be attached to the DNS zone.
+        /// Specifies definition of a SRV record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         DnsRecordSet.UpdateDefinition.ISrvRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineSrvRecordSet(string name)
         {
             return this.DefineSrvRecordSet(name) as DnsRecordSet.UpdateDefinition.ISrvRecordSetBlank<DnsZone.Update.IUpdate>;
@@ -321,10 +321,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Srv record set in this DNS zone.
+        /// Begins the description of an update of an existing SRV record set in this DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet DnsZone.Update.IWithRecordSet.UpdateSrvRecordSet(string name)
         {
             return this.UpdateSrvRecordSet(name) as DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet;
@@ -391,10 +391,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Srv record set.
+        /// Specifies definition of a SRV record set.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         DnsRecordSet.Definition.ISrvRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineSrvRecordSet(string name)
         {
             return this.DefineSrvRecordSet(name) as DnsRecordSet.Definition.ISrvRecordSetBlank<DnsZone.Definition.IWithCreate>;

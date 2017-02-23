@@ -63,10 +63,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.INSRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineNSRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Srv record set.
+        /// Specifies definition of a SRV record set.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.ISrvRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineSrvRecordSet(string name);
 
         /// <summary>

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to Srv record sets in a DNS zone.
+    /// Entry point to SRV record sets in a DNS zone.
     /// </summary>
     public interface ISrvRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>,

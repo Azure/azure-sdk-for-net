@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Srv record definition allowing to add or remove service record.
+    /// The stage of the SRV record definition allowing to add or remove service record.
     /// </summary>
     public interface IWithSrvRecordEntry 
     {
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Srv record definition allowing to add or remove Txt record.
+    /// The stage of the SRV record definition allowing to add or remove Txt record.
     /// </summary>
     public interface IWithTxtRecordTextValue 
     {
