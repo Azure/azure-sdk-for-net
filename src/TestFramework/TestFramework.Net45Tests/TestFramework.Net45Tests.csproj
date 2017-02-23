@@ -61,7 +61,6 @@
       <HintPath>$(SrcDir)\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\bin\$(Configuration)\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <HintPath>$(SrcDir)\ClientRuntime\Microsoft.Rest.ClientRuntime\bin\$(Configuration)\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>

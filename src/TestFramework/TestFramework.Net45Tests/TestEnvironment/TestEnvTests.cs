@@ -10,10 +10,10 @@ namespace TestFramework.Net45Tests
 
     public class TestEnvTests
     {
-        [Theory]
-        [InlineData("AADTenant=04081b9f-c8b4-424b-86b9-ce44721c2b23;UserName=azpowershellpartner;Environment=Prod")]
+        [Theory(/*Skip = "Interactive Tests, needs to be run manually"*/)]
+        [InlineData("AADTenant=04081b9f-c8b4-424b-86b9-ce44721c2b23")]
         [InlineData("AADTenant=04081b9f-c8b4-424b-86b9-ce44721c2b23;SubscriptionId=None;Environment=Prod")]
-        public void InteractiveLoginUsingAzPowershellpartner(string connStr)
+        public void InteractiveLoginForCSP(string connStr)
         {
             // Use this test case to set connection string without username and password, which will prompt you to enter UserName and password
             // verify if the test environment has non empty username
@@ -31,7 +31,7 @@ namespace TestFramework.Net45Tests
         }
 
 
-        [Theory]
+        [Theory(Skip = "Interactive Tests, needs to be run manually")]
         [InlineData("AADTenant=04081b9f-c8b4-424b-86b9-ce44721c2b23;SubscriptionId=6b085460-5f21-477e-ba44-1035046e9101;Environment=Prod")]
         public void InteractiveLoginKnownUserName(string connStr)
         {
@@ -45,7 +45,23 @@ namespace TestFramework.Net45Tests
         }
 
         // Please update the connection string with the right information and then run the test
-        [Theory]
+        [Theory(Skip = "Interactive Tests, needs to be run manually")]
+        [InlineData("SubscriptionId=<updateSubId>;" +
+                "AADTenant=dcfa120f-9293-4f06-b3d2-cf728bcabb10;" +
+                "HttpRecorderMode=Record;" +
+                "Environment=Custom;" +
+                "ResourceManagementUri=https://management.microsoftazure.de/;" +
+                "ServiceManagementUri=https://management.core.cloudapi.de/;" +
+                "GalleryUri=https://gallery.cloudapi.de/;" +
+                "GraphUri=https://graph.cloudapi.de/;" +
+                "AADAuthUri=https://login.microsoftonline.de/;" +
+                "IbizaPortalUri=http://portal.microsoftazure.de/;" +
+                "RdfePortalUri=https://management.core.cloudapi.de/;" +
+                "GraphTokenAudienceUri=https://graph.cloudapi.de/;" +
+                "AADTokenAudienceUri=https://management.core.cloudapi.de/"
+            )]
+
+
         [InlineData("SubscriptionId=<updateSubId>;" +
                 "AADTenant=dcfa120f-9293-4f06-b3d2-cf728bcabb10;" +
                 "HttpRecorderMode=Record;" +
