@@ -32,21 +32,21 @@ namespace Azure.Tests.Dns
                     IDnsZone dnsZone = azure.DnsZones.Define(topLevelDomain)
                     .WithNewResourceGroup(groupName, region)
                     .DefineARecordSet("www")
-                        .WithIpv4Address("23.96.104.40")
-                        .WithIpv4Address("24.97.105.41")
+                        .WithIPv4Address("23.96.104.40")
+                        .WithIPv4Address("24.97.105.41")
                         .WithTimeToLive(7200) // Overwrite default 3600 seconds
                         .Attach()
                     .DefineAaaaRecordSet("www")
-                        .WithIpv6Address("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
-                        .WithIpv6Address("2002:0db9:85a4:0000:0000:8a2e:0371:7335")
+                        .WithIPv6Address("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
+                        .WithIPv6Address("2002:0db9:85a4:0000:0000:8a2e:0371:7335")
                         .Attach()
-                    .DefineMxRecordSet("email")
+                    .DefineMXRecordSet("email")
                         .WithMailExchange("mail.contoso-mail-exchange1.com", 1)
                         .WithMailExchange("mail.contoso-mail-exchange2.com", 2)
                         .WithMetadata("mxa", "mxaa")
                         .WithMetadata("mxb", "mxbb")
                         .Attach()
-                    .DefineNsRecordSet("partners")
+                    .DefineNSRecordSet("partners")
                         .WithNameServer("ns1-05.azure-dns.com")
                         .WithNameServer("ns2-05.azure-dns.net")
                         .WithNameServer("ns3-05.azure-dns.org")
@@ -72,13 +72,13 @@ namespace Azure.Tests.Dns
                         .WithTargetDomainName("www.contoso.com")
                         .WithTargetDomainName("mail.contoso.com")
                         .Attach()
-                    .WithCnameRecordSet("documents", "doc.contoso.com")
-                    .WithCnameRecordSet("userguide", "doc.contoso.com")
+                    .WithCNameRecordSet("documents", "doc.contoso.com")
+                    .WithCNameRecordSet("userguide", "doc.contoso.com")
                     .WithTag("a", "aa")
                     .WithTag("b", "bb")
                     .Create();
 
-                    // Check Dns zone properties
+                    // Check DNS zone properties
                     Assert.True(dnsZone.Name.StartsWith(topLevelDomain));
                     Assert.True(dnsZone.NameServers.Count() > 0); // Default '@' name servers
                     Assert.True(dnsZone.Tags.Count == 2);
@@ -101,10 +101,10 @@ namespace Azure.Tests.Dns
                     var aaaaRecordSets = dnsZone.AaaaRecordSets.List();
                     Assert.True(aaaaRecordSets.Count() == 1);
                     Assert.True(aaaaRecordSets[0].Name.StartsWith("www"));
-                    Assert.True(aaaaRecordSets[0].Ipv6Addresses.Count() == 2);
+                    Assert.True(aaaaRecordSets[0].IPv6Addresses.Count() == 2);
 
                     // Check MX records
-                    var mxRecordSets = dnsZone.MxRecordSets.List();
+                    var mxRecordSets = dnsZone.MXRecordSets.List();
                     Assert.True(mxRecordSets.Count() == 1);
                     var mxRecordSet = mxRecordSets[0];
                     Assert.NotNull(mxRecordSet);
@@ -120,7 +120,7 @@ namespace Azure.Tests.Dns
                     }
 
                     // Check NS records
-                    var nsRecordSets = dnsZone.NsRecordSets.List();
+                    var nsRecordSets = dnsZone.NSRecordSets.List();
                     Assert.True(nsRecordSets.Count() == 2); // One created above with name 'partners' + the default '@'
 
                     // Check TXT records
@@ -136,20 +136,20 @@ namespace Azure.Tests.Dns
                     Assert.True(ptrRecordSets.Count() == 2);
 
                     // Check CNAME records
-                    var cnameRecordSets = dnsZone.CnameRecordSets.List();
+                    var cnameRecordSets = dnsZone.CNameRecordSets.List();
                     Assert.True(cnameRecordSets.Count() == 2);
 
                     dnsZone.Update()
                         .WithoutTxtRecordSet("www")
-                        .WithoutCnameRecordSet("userguide")
-                        .WithCnameRecordSet("help", "doc.contoso.com")
-                        .UpdateNsRecordSet("partners")
+                        .WithoutCNameRecordSet("userguide")
+                        .WithCNameRecordSet("help", "doc.contoso.com")
+                        .UpdateNSRecordSet("partners")
                             .WithoutNameServer("ns4-05.azure-dns.info")
                             .WithNameServer("ns4-06.azure-dns.info")
                             .Parent()
                         .UpdateARecordSet("www")
-                            .WithoutIpv4Address("23.96.104.40")
-                            .WithIpv4Address("23.96.104.42")
+                            .WithoutIPv4Address("23.96.104.40")
+                            .WithIPv4Address("23.96.104.42")
                             .Parent()
                         .UpdateSrvRecordSet("_sip._tcp")
                             .WithoutRecord("bigbox.contoso-service.com", 5060, 10, 60)
@@ -159,7 +159,7 @@ namespace Azure.Tests.Dns
                             .WithNegativeResponseCachingTimeToLiveInSeconds(600)
                             .WithTimeToLive(7200)
                             .Parent()
-                        .DefineMxRecordSet("email-internal")
+                        .DefineMXRecordSet("email-internal")
                             .WithMailExchange("mail.contoso-mail-exchange1.com", 1)
                             .WithMailExchange("mail.contoso-mail-exchange2.com", 2)
                             .Attach()
@@ -170,7 +170,7 @@ namespace Azure.Tests.Dns
                     Assert.Equal(1, txtRecordSets.Count());
 
                     // Check CNAME records
-                    cnameRecordSets = dnsZone.CnameRecordSets.List();
+                    cnameRecordSets = dnsZone.CNameRecordSets.List();
                     Assert.Equal(2, cnameRecordSets.Count());
                     foreach (var cnameRecordSet in cnameRecordSets)
                     {
@@ -179,7 +179,7 @@ namespace Azure.Tests.Dns
                     }
 
                     // Check NS records
-                    nsRecordSets = dnsZone.NsRecordSets.List();
+                    nsRecordSets = dnsZone.NSRecordSets.List();
                     Assert.True(nsRecordSets.Count() == 2); // One created above with name 'partners' + the default '@'
                     foreach (var nsRecordSet in nsRecordSets)
                     {
@@ -198,8 +198,8 @@ namespace Azure.Tests.Dns
                     aRecordSets = dnsZone.ARecordSets.List();
                     Assert.Equal(1, aRecordSets.Count());
                     var aRecordSet = aRecordSets[0];
-                    Assert.Equal(2, aRecordSet.Ipv4Addresses.Count());
-                    foreach (var ipV4Address in aRecordSet.Ipv4Addresses)
+                    Assert.Equal(2, aRecordSet.IPv4Addresses.Count());
+                    foreach (var ipV4Address in aRecordSet.IPv4Addresses)
                     {
                         Assert.False(ipV4Address.StartsWith("23.96.104.40"));
                     }
@@ -223,11 +223,11 @@ namespace Azure.Tests.Dns
                     Assert.True(soaRecordSet.TimeToLive == 7200);
 
                     // Check MX records
-                    mxRecordSets = dnsZone.MxRecordSets.List();
+                    mxRecordSets = dnsZone.MXRecordSets.List();
                     Assert.True(mxRecordSets.Count() == 2);
 
                     dnsZone.Update()
-                            .UpdateMxRecordSet("email")
+                            .UpdateMXRecordSet("email")
                                 .WithoutMailExchange("mail.contoso-mail-exchange2.com", 2)
                                 .WithoutMetadata("mxa")
                                 .WithMetadata("mxc", "mxcc")
@@ -238,7 +238,7 @@ namespace Azure.Tests.Dns
 
                     Assert.True(dnsZone.Tags.Count() == 3);
                     // Check "mail" MX record
-                    mxRecordSet = dnsZone.MxRecordSets.GetByName("email");
+                    mxRecordSet = dnsZone.MXRecordSets.GetByName("email");
                     Assert.True(mxRecordSet.Records.Count() == 1);
                     Assert.True(mxRecordSet.Metadata.Count() == 3);
                     Assert.True(mxRecordSet.Records[0].Exchange.StartsWith("mail.contoso-mail-exchange1.com"));

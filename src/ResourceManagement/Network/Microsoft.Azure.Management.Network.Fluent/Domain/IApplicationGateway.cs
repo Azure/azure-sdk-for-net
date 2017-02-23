@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasInner<Models.ApplicationGatewayInner>,
         IUpdatable<ApplicationGateway.Update.IUpdate>,
         IHasSubnet,
-        IHasPrivateIpAddress
+        IHasPrivateIPAddress
     {
         /// <summary>
         /// Gets frontend IP configurations, indexed by name.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets IP configurations of this application gateway, indexed by name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration> IpConfigurations { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> IPConfigurations { get; }
 
         /// <summary>
         /// Gets the size of the application gateway.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration DefaultIpConfiguration { get; }
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration DefaultIPConfiguration { get; }
 
         /// <summary>
         /// Gets number of instances.

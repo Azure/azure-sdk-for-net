@@ -5,11 +5,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An interface representing a model's ability to have floating IP support.
     /// </summary>
-    public interface IHasFloatingIp 
+    public interface IHasFloatingIP 
     {
         /// <summary>
         /// Gets the state of the floating IP enablement.
         /// </summary>
-        bool FloatingIpEnabled { get; }
+        bool FloatingIPEnabled { get; }
     }
 }

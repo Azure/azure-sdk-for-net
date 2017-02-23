@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGateway.Definition;
     using ApplicationGateway.Update;
     using Models;
-    using HasPrivateIpAddress.Definition;
-    using HasPublicIpAddress.Definition;
-    using HasPublicIpAddress.Update;
+    using HasPrivateIPAddress.Definition;
+    using HasPublicIPAddress.Definition;
+    using HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update;
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithBackend.WithoutBackendIpAddress(string ipAddress)
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithBackend.WithoutBackendIPAddress(string ipAddress)
         {
-            return this.WithoutBackendIpAddress(ipAddress) as ApplicationGateway.Update.IUpdate;
+            return this.WithoutBackendIPAddress(ipAddress) as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Definition.IWithCreate HasPrivateIpAddress.Definition.IWithPrivateIpAddress<ApplicationGateway.Definition.IWithCreate>.WithPrivateIpAddressDynamic()
+        ApplicationGateway.Definition.IWithCreate HasPrivateIPAddress.Definition.IWithPrivateIPAddress<ApplicationGateway.Definition.IWithCreate>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as ApplicationGateway.Definition.IWithCreate;
+            return this.WithPrivateIPAddressDynamic() as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Definition.IWithCreate HasPrivateIpAddress.Definition.IWithPrivateIpAddress<ApplicationGateway.Definition.IWithCreate>.WithPrivateIpAddressStatic(string ipAddress)
+        ApplicationGateway.Definition.IWithCreate HasPrivateIPAddress.Definition.IWithPrivateIPAddress<ApplicationGateway.Definition.IWithCreate>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as ApplicationGateway.Definition.IWithCreate;
+            return this.WithPrivateIPAddressStatic(ipAddress) as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -204,9 +204,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Begins the update of the default IP configuration i.e. the only one IP configuration that exists, assuming only one exists.
         /// </summary>
         /// <return>The first stage of an IP configuration update.</return>
-        ApplicationGatewayIpConfiguration.Update.IUpdate ApplicationGateway.Update.IWithIpConfig.UpdateDefaultIpConfiguration()
+        ApplicationGatewayIPConfiguration.Update.IUpdate ApplicationGateway.Update.IWithIPConfig.UpdateDefaultIPConfiguration()
         {
-            return this.UpdateDefaultIpConfiguration() as ApplicationGatewayIpConfiguration.Update.IUpdate;
+            return this.UpdateDefaultIPConfiguration() as ApplicationGatewayIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -214,20 +214,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipConfigurationName">The name of an existing IP configuration.</param>
         /// <return>The first stage of an IP configuration update.</return>
-        ApplicationGatewayIpConfiguration.Update.IUpdate ApplicationGateway.Update.IWithIpConfig.UpdateIpConfiguration(string ipConfigurationName)
+        ApplicationGatewayIPConfiguration.Update.IUpdate ApplicationGateway.Update.IWithIPConfig.UpdateIPConfiguration(string ipConfigurationName)
         {
-            return this.UpdateIpConfiguration(ipConfigurationName) as ApplicationGatewayIpConfiguration.Update.IUpdate;
+            return this.UpdateIPConfiguration(ipConfigurationName) as ApplicationGatewayIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
         /// Begins the definition of the default IP configuration.
-        /// If a default IP configuration already exists, it will be this is equivalent to {.
+        /// If a default IP configuration already exists, it will be this is equivalent to <code>UpdateDefaultIPConfiguration()}.</code>.
         /// </summary>
-        /// <code>UpdateDefaultIpConfiguration()}.</code>
+        /// 
         /// <return>The first stage of an IP configuration update.</return>
-        ApplicationGatewayIpConfiguration.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate> ApplicationGateway.Update.IWithIpConfig.DefineDefaultIpConfiguration()
+        ApplicationGatewayIPConfiguration.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate> ApplicationGateway.Update.IWithIPConfig.DefineDefaultIPConfiguration()
         {
-            return this.DefineDefaultIpConfiguration() as ApplicationGatewayIpConfiguration.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate>;
+            return this.DefineDefaultIPConfiguration() as ApplicationGatewayIPConfiguration.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -237,30 +237,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipConfigurationName">The name of the IP configuration to remove.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithIpConfig.WithoutIpConfiguration(string ipConfigurationName)
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithIPConfig.WithoutIPConfiguration(string ipConfigurationName)
         {
-            return this.WithoutIpConfiguration(ipConfigurationName) as ApplicationGateway.Update.IUpdate;
+            return this.WithoutIPConfiguration(ipConfigurationName) as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PrivateIpAllocationMethod();
+                return this.PrivateIPAllocationMethod();
             }
         }
 
         /// <summary>
         /// Gets the private IP address associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAddress
+        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
         {
             get
             {
-                return this.PrivateIpAddress();
+                return this.PrivateIPAddress();
             }
         }
 
@@ -376,11 +376,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets IP configurations of this application gateway, indexed by name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.IpConfigurations
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.IPConfigurations
         {
             get
             {
-                return this.IpConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration>;
+                return this.IPConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration>;
             }
         }
 
@@ -409,11 +409,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.DefaultIpConfiguration
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.DefaultIPConfiguration
         {
             get
             {
-                return this.DefaultIpConfiguration() as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration;
+                return this.DefaultIPConfiguration() as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration;
             }
         }
 
@@ -518,9 +518,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Update.IUpdate HasPublicIpAddress.Update.IWithNewPublicIpAddressNoDnsLabel<ApplicationGateway.Update.IUpdate>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        ApplicationGateway.Update.IUpdate HasPublicIPAddress.Update.IWithNewPublicIPAddressNoDnsLabel<ApplicationGateway.Update.IUpdate>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as ApplicationGateway.Update.IUpdate;
+            return this.WithNewPublicIPAddress(creatable) as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
@@ -528,9 +528,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Update.IUpdate HasPublicIpAddress.Update.IWithNewPublicIpAddressNoDnsLabel<ApplicationGateway.Update.IUpdate>.WithNewPublicIpAddress()
+        ApplicationGateway.Update.IUpdate HasPublicIPAddress.Update.IWithNewPublicIPAddressNoDnsLabel<ApplicationGateway.Update.IUpdate>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as ApplicationGateway.Update.IUpdate;
+            return this.WithNewPublicIPAddress() as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
@@ -538,9 +538,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Definition.IWithCreate HasPublicIpAddress.Definition.IWithNewPublicIpAddressNoDnsLabel<ApplicationGateway.Definition.IWithCreate>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        ApplicationGateway.Definition.IWithCreate HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<ApplicationGateway.Definition.IWithCreate>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as ApplicationGateway.Definition.IWithCreate;
+            return this.WithNewPublicIPAddress(creatable) as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -548,9 +548,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Definition.IWithCreate HasPublicIpAddress.Definition.IWithNewPublicIpAddressNoDnsLabel<ApplicationGateway.Definition.IWithCreate>.WithNewPublicIpAddress()
+        ApplicationGateway.Definition.IWithCreate HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<ApplicationGateway.Definition.IWithCreate>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as ApplicationGateway.Definition.IWithCreate;
+            return this.WithNewPublicIPAddress() as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -650,19 +650,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Removes the existing reference to a public IP address.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        ApplicationGateway.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<ApplicationGateway.Update.IUpdate>.WithoutPublicIpAddress()
+        ApplicationGateway.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ApplicationGateway.Update.IUpdate>.WithoutPublicIPAddress()
         {
-            return this.WithoutPublicIpAddress() as ApplicationGateway.Update.IUpdate;
+            return this.WithoutPublicIPAddress() as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGateway.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<ApplicationGateway.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        ApplicationGateway.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ApplicationGateway.Update.IUpdate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as ApplicationGateway.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
@@ -670,19 +670,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<ApplicationGateway.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId)
+        ApplicationGateway.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ApplicationGateway.Update.IUpdate>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as ApplicationGateway.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(resourceId) as ApplicationGateway.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Definition.IWithCreate HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<ApplicationGateway.Definition.IWithCreate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        ApplicationGateway.Definition.IWithCreate HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<ApplicationGateway.Definition.IWithCreate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as ApplicationGateway.Definition.IWithCreate;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -690,9 +690,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGateway.Definition.IWithCreate HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<ApplicationGateway.Definition.IWithCreate>.WithExistingPublicIpAddress(string resourceId)
+        ApplicationGateway.Definition.IWithCreate HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<ApplicationGateway.Definition.IWithCreate>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as ApplicationGateway.Definition.IWithCreate;
+            return this.WithExistingPublicIPAddress(resourceId) as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>

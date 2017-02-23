@@ -8,35 +8,35 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Update
     /// <summary>
     /// The SQL Firewall Rule definition to set the starting IP Address for the server.
     /// </summary>
-    public interface IWithStartIpAddress 
+    public interface IWithStartIPAddress 
     {
         /// <summary>
         /// Sets the starting IP address of SQL server's firewall rule.
         /// </summary>
-        /// <param name="startIpAddress">Start IP address in IPv4 format.</param>
+        /// <param name="startIPAddress">Start IP address in IPv4 format.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Update.IUpdate WithStartIpAddress(string startIpAddress);
+        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Update.IUpdate WithStartIPAddress(string startIPAddress);
     }
 
     /// <summary>
     /// The SQL Firewall Rule definition to set the starting IP Address for the server.
     /// </summary>
-    public interface IWithEndIpAddress 
+    public interface IWithEndIPAddress 
     {
         /// <summary>
         /// Sets the ending IP address of SQL server's firewall rule.
         /// </summary>
-        /// <param name="endIpAddress">End IP address in IPv4 format.</param>
+        /// <param name="endIPAddress">End IP address in IPv4 format.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Update.IUpdate WithEndIpAddress(string endIpAddress);
+        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Update.IUpdate WithEndIPAddress(string endIPAddress);
     }
 
     /// <summary>
     /// The template for a SqlFirewallRule update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IWithEndIpAddress,
-        IWithStartIpAddress,
+        IWithEndIPAddress,
+        IWithStartIPAddress,
         IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>
     {
     }

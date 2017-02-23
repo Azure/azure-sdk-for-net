@@ -3,14 +3,14 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
 
     /// <summary>
     /// The first stage of a public frontend definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
-        IWithPublicIpAddress<ParentT>
+        IWithPublicIPAddress<ParentT>
     {
     }
 
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.U
     /// The stage of a public frontend definition allowing to specify an existing public IP address.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
-    public interface IWithPublicIpAddress<ParentT>  :
-        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+    public interface IWithPublicIPAddress<ParentT>  :
+        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
 
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.U
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        IWithPublicIpAddress<ParentT>
+        IWithPublicIPAddress<ParentT>
     {
     }
 }

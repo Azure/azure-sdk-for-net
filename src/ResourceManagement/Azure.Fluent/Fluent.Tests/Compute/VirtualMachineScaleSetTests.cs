@@ -78,11 +78,11 @@ namespace Fluent.Tests.Compute
                         .Attach()
                         .Create();
 
-                IList<string> publicIpAddressIds = virtualMachineScaleSet.PrimaryPublicIpAddressIds;
-                IPublicIpAddress publicIpAddress = azure.PublicIpAddresses
-                        .GetById(publicIpAddressIds[0]);
+                IList<string> publicIPAddressIds = virtualMachineScaleSet.PrimaryPublicIPAddressIds;
+                IPublicIPAddress publicIPAddress = azure.PublicIPAddresses
+                        .GetById(publicIPAddressIds[0]);
 
-                string fqdn = publicIpAddress.Fqdn;
+                string fqdn = publicIPAddress.Fqdn;
                 Assert.NotNull(fqdn);
 
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
@@ -166,7 +166,7 @@ namespace Fluent.Tests.Compute
                     Assert.NotNull(nic.MacAddress);
                     Assert.NotNull(nic.DnsServers);
                     Assert.NotNull(nic.AppliedDnsServers);
-                    var ipConfigs = nic.IpConfigurations;
+                    var ipConfigs = nic.IPConfigurations;
                     Assert.Equal(ipConfigs.Count(), 1);
                     foreach (var ipConfig in ipConfigs.Values)
                     {
@@ -174,9 +174,9 @@ namespace Fluent.Tests.Compute
                         Assert.True(ipConfig.IsPrimary);
                         Assert.NotNull(ipConfig.SubnetName);
                         Assert.True(string.Compare(primaryNetwork.Id, ipConfig.NetworkId, true) == 0);
-                        Assert.NotNull(ipConfig.PrivateIpAddress);
-                        Assert.NotNull(ipConfig.PrivateIpAddressVersion);
-                        Assert.NotNull(ipConfig.PrivateIpAllocationMethod);
+                        Assert.NotNull(ipConfig.PrivateIPAddress);
+                        Assert.NotNull(ipConfig.PrivateIPAddressVersion);
+                        Assert.NotNull(ipConfig.PrivateIPAllocationMethod);
                         var lbBackends = ipConfig.ListAssociatedLoadBalancerBackends();
                         // VMSS is created with a internet facing LB with two Backend pools so there will be two
                         // backends in ip-config as well
@@ -253,14 +253,14 @@ namespace Fluent.Tests.Compute
                 Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends().Count() == 2);
                 Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools().Count() == 2);
             
-                // Check NIC + IpConfig after update
+                // Check NIC + IPConfig after update
                 //
                 nics = virtualMachineScaleSet.ListNetworkInterfaces();
                 nicCount = 0;
                 foreach (var nic in nics)
                 {
                     nicCount++;
-                    var ipConfigs = nic.IpConfigurations;
+                    var ipConfigs = nic.IPConfigurations;
                     Assert.Equal(ipConfigs.Count, 1);
                     foreach (var ipConfig in ipConfigs.Values)
                     {
@@ -365,18 +365,18 @@ namespace Fluent.Tests.Compute
         private ILoadBalancer CreateInternetFacingLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id, [CallerMemberName] string methodName = "testframework_failed")
         {
             string loadBalancerName = TestUtilities.GenerateName("extlb" + id + "-", methodName);
-            string publicIpName = "pip-" + loadBalancerName;
+            string publicIPName = "pip-" + loadBalancerName;
             string frontendName = loadBalancerName + "-FE1";
             string backendPoolName1 = loadBalancerName + "-BAP1";
             string backendPoolName2 = loadBalancerName + "-BAP2";
             string natPoolName1 = loadBalancerName + "-INP1";
             string natPoolName2 = loadBalancerName + "-INP2";
 
-            IPublicIpAddress publicIpAddress = azure.PublicIpAddresses
-                .Define(publicIpName)
+            IPublicIPAddress publicIPAddress = azure.PublicIPAddresses
+                .Define(publicIPName)
                 .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
-                .WithLeafDomainLabel(publicIpName)
+                .WithLeafDomainLabel(publicIPName)
                 .Create();
 
             ILoadBalancer loadBalancer = azure.LoadBalancers
@@ -384,7 +384,7 @@ namespace Fluent.Tests.Compute
                 .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
                 .DefinePublicFrontend(frontendName)
-                .WithExistingPublicIpAddress(publicIpAddress)
+                .WithExistingPublicIPAddress(publicIPAddress)
                 .Attach()
                 // Add two backend one per rule
                 .DefineBackend(backendPoolName1)
@@ -430,7 +430,7 @@ namespace Fluent.Tests.Compute
 
             loadBalancer = azure.LoadBalancers.GetByGroup(resourceGroup.Name, loadBalancerName);
 
-            Assert.True(loadBalancer.PublicIpAddressIds.Count() == 1);
+            Assert.True(loadBalancer.PublicIPAddressIds.Count() == 1);
             Assert.Equal(loadBalancer.HttpProbes.Count(), 2);
             ILoadBalancerHttpProbe httpProbe = null;
             Assert.True(loadBalancer.HttpProbes.TryGetValue("httpProbe", out httpProbe));
@@ -508,7 +508,7 @@ namespace Fluent.Tests.Compute
 
             loadBalancer = azure.LoadBalancers.GetByGroup(resourceGroup.Name, loadBalancerName);
 
-            Assert.Equal(loadBalancer.PublicIpAddressIds.Count(), 0);
+            Assert.Equal(loadBalancer.PublicIPAddressIds.Count(), 0);
             Assert.Equal(loadBalancer.Backends.Count(), 2);
             ILoadBalancerBackend backend1 = null;
             Assert.True(loadBalancer.Backends.TryGetValue(backendPoolName1, out backend1));
@@ -532,16 +532,16 @@ namespace Fluent.Tests.Compute
             [CallerMemberName] string methodName = "testframework_failed")
         {
             string loadBalancerName = TestUtilities.GenerateName("extlb" + id + "-", methodName);
-            string publicIpName = "pip-" + loadBalancerName;
+            string publicIPName = "pip-" + loadBalancerName;
             string frontendName = loadBalancerName + "-FE1";
             string backendPoolName = loadBalancerName + "-BAP1";
             string natPoolName = loadBalancerName + "-INP1";
 
-            var publicIpAddress = azure.PublicIpAddresses
-                .Define(publicIpName)
+            var publicIPAddress = azure.PublicIPAddresses
+                .Define(publicIPName)
                 .WithRegion(location)
                 .WithExistingResourceGroup(resourceGroup)
-                .WithLeafDomainLabel(publicIpName)
+                .WithLeafDomainLabel(publicIPName)
                 .Create();
 
             var loadBalancer = azure.LoadBalancers
@@ -549,7 +549,7 @@ namespace Fluent.Tests.Compute
                 .WithRegion(location)
                 .WithExistingResourceGroup(resourceGroup)
                 .DefinePublicFrontend(frontendName)
-                    .WithExistingPublicIpAddress(publicIpAddress)
+                    .WithExistingPublicIPAddress(publicIPAddress)
                 .Attach()
                 .DefineBackend(backendPoolName)
                 .Attach()
@@ -574,7 +574,7 @@ namespace Fluent.Tests.Compute
 
             loadBalancer = azure.LoadBalancers.GetByGroup(resourceGroup.Name, loadBalancerName);
 
-            Assert.True(loadBalancer.PublicIpAddressIds.Count() == 1);
+            Assert.True(loadBalancer.PublicIPAddressIds.Count() == 1);
             var httpProbe = loadBalancer.HttpProbes.FirstOrDefault();
             Assert.NotNull(httpProbe);
             var rule = httpProbe.Value.LoadBalancingRules.FirstOrDefault();

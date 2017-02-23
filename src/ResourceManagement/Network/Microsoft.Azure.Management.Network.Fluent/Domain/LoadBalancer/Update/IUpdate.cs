@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
     using Models;
 
     /// <summary>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     /// The stage of a load balancer update allowing to define, remove or edit Internet-facing frontends.
     /// </summary>
     public interface IWithInternetFrontend  :
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithPublicIpAddress
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithPublicIPAddress
     {
         /// <summary>
         /// Begins the update of a load balancer frontend.
@@ -298,8 +298,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     /// <summary>
     /// The stage of a load balancer update allowing to add a public IP address as the default public frontend.
     /// </summary>
-    public interface IWithPublicIpAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition.IWithPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>
+    public interface IWithPublicIPAddress  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>
     {
     }
 }

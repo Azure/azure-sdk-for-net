@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:C735AF0BF8BEB3EB5BC91A83ED36EC28:C4C5BAB467876CDE1C62F1319F9D3626
-        public string NextHopIpAddress()
+        public string NextHopIPAddress()
         {
             return Inner.NextHopIpAddress;
         }

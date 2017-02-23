@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfigur
     /// </summary>
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Definition.IWithSubnet<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithSubnet<ParentT>
     {
     }
 
@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfigur
     /// </summary>
     /// <typeparam name="Parent">The stage of the application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Specifies an existing subnet the application gateway should be part of and get its private IP address from.
         /// </summary>
         /// <param name="subnet">An existing subnet.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Definition.IWithAttach<ParentT> WithExistingSubnet(ISubnet subnet);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithAttach<ParentT> WithExistingSubnet(ISubnet subnet);
 
         /// <summary>
         /// Specifies an existing subnet the application gateway should be part of and get its private IP address from.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfigur
         /// <param name="network">An existing virtual network.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Definition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfigur
     /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Definition.IWithSubnet<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithSubnet<ParentT>,
         IWithAttach<ParentT>
     {
     }

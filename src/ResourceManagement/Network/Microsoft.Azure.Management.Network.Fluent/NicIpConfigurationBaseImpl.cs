@@ -15,14 +15,14 @@ namespace Microsoft.Azure.Management.Fluent.Network
     /// <typeparam name="ParentImplT">Parent implementation.</typeparam>
     /// <typeparam name="IParentT">Parent interface.</typeparam>
 
-    internal partial class NicIpConfigurationBaseImpl<ParentImplT, IParentT> : 
+    internal partial class NicIPConfigurationBaseImpl<ParentImplT, IParentT> : 
         ChildResource<NetworkInterfaceIPConfigurationInner, ParentImplT, IParentT>
         where ParentImplT : IParentT
     {
         private INetworkManager networkManager;
 
         ///GENMHASH:32B027E501B0113C8198D01455D7FCE0:56B3D14E72AB91FEE453D95A27DD8E6C
-        internal NicIpConfigurationBaseImpl(
+        internal NicIPConfigurationBaseImpl(
             NetworkInterfaceIPConfigurationInner inner,
             ParentImplT parent,
             INetworkManager networkManager) : base(inner, parent)
@@ -47,19 +47,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         }
 
         ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:FF8C06269C32F184B39DCFD10D8279BF
-        internal string PrivateIpAddress()
+        internal string PrivateIPAddress()
         {
             return Inner.PrivateIPAddress;
         }
 
         ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:2C25BDFE4E41DBF371885298367C4492
-        internal IPAllocationMethod PrivateIpAllocationMethod()
+        internal IPAllocationMethod PrivateIPAllocationMethod()
         {
             return IPAllocationMethod.Parse(Inner.PrivateIPAllocationMethod);
         }
 
         ///GENMHASH:EE78F7961283D288F33B68D99551BF42:2998B7C29D7594E92074D408F4F66760
-        internal IPVersion PrivateIpAddressVersion()
+        internal IPVersion PrivateIPAddressVersion()
         {
             return IPVersion.Parse(Inner.PrivateIPAddressVersion);
         }

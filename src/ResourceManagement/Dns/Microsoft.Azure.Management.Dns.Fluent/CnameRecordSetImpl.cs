@@ -6,12 +6,12 @@ using System;
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     /// <summary>
-    /// Implementation of CnameRecordSet.
+    /// Implementation of CNameRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5DbmFtZVJlY29yZFNldEltcGw=
-    internal partial class CnameRecordSetImpl :
+    internal partial class CNameRecordSetImpl :
         DnsRecordSetImpl,
-        ICnameRecordSet
+        ICNameRecordSet
     {
 
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:AF11C8A7E2B299112E3CED7714F622A7
@@ -21,14 +21,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:E5A5F4A2DE55AF67359951B8714E8E37:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  CnameRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  CNameRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:D5B3BC12D1EBABAB93ACF0C43C024873
-        internal static CnameRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static CNameRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
         {
-             return new CnameRecordSetImpl(parent,
+             return new CNameRecordSetImpl(parent,
              new RecordSetInner {
                 Name = name,
                 Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.CNAME),

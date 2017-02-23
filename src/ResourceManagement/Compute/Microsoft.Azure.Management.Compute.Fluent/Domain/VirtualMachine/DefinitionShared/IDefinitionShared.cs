@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionSha
         IWithGroup,
         IWithNetwork,
         IWithSubnet,
-        IWithPrivateIp,
-        IWithPublicIpAddress,
+        IWithPrivateIP,
+        IWithPublicIPAddress,
         IWithPrimaryNetworkInterface,
         IWithOS,
         IWithCreate

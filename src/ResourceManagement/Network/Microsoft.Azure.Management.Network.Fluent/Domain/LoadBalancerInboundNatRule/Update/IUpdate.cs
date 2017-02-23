@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// <summary>
     /// The stage of an inbound NAT rule update allowing to specify whether floating IP should be enabled.
     /// </summary>
-    public interface IWithFloatingIp  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>
+    public interface IWithFloatingIP  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>
     {
     }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithBackendPort,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFloatingIp,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFloatingIP,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFrontend,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFrontendPort,
         IWithIdleTimeout,

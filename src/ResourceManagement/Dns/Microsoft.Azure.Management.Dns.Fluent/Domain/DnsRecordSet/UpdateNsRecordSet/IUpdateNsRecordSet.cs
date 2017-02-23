@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet
+namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet
 {
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update;
 
     /// <summary>
-    /// The entirety of a Ns record set update as a part of parent Dns zone update.
+    /// The entirety of a NS record set update as a part of parent DNS zone update.
     /// </summary>
-    public interface IUpdateNsRecordSet  :
-        IWithNsRecordNameServer,
+    public interface IUpdateNSRecordSet  :
+        IWithNSRecordNameServer,
         IUpdate
     {
     }

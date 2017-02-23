@@ -49,7 +49,7 @@ namespace Azure.Tests
                 var azure = TestHelper.CreateRollupClient();
                 new Network.ApplicationGateway.PrivateComplex(
                     azure.Networks,
-                    azure.PublicIpAddresses)
+                    azure.PublicIPAddresses)
                     .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
             }
         }
@@ -61,7 +61,7 @@ namespace Azure.Tests
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.ApplicationGateway.PublicComplex(azure.PublicIpAddresses)
+                new Network.ApplicationGateway.PublicComplex(azure.PublicIPAddresses)
                     .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
             }
         }
@@ -74,7 +74,7 @@ namespace Azure.Tests
                 var azure = TestHelper.CreateRollupClient();
 
                 new Network.LoadBalancer.InternetWithNatRule(
-                    azure.PublicIpAddresses,
+                    azure.PublicIPAddresses,
                     azure.VirtualMachines,
                     azure.Networks,
                     azure.AvailabilitySets)
@@ -90,7 +90,7 @@ namespace Azure.Tests
                 var azure = TestHelper.CreateRollupClient();
 
                 new Network.LoadBalancer.InternetWithNatPool(
-                    azure.PublicIpAddresses,
+                    azure.PublicIPAddresses,
                     azure.VirtualMachines,
                     azure.Networks,
                     azure.AvailabilitySets)
@@ -106,7 +106,7 @@ namespace Azure.Tests
                 var azure = TestHelper.CreateRollupClient();
 
                 new Network.LoadBalancer.InternetMinimal(
-                    azure.PublicIpAddresses,
+                    azure.PublicIPAddresses,
                     azure.VirtualMachines,
                     azure.Networks,
                     azure.AvailabilitySets)

@@ -5,10 +5,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Srv record definition allowing to add or remove service record.
+    /// The stage of the SRV record definition allowing to add or remove service record.
     /// </summary>
     public interface IWithSrvRecordEntry 
     {
@@ -93,47 +93,47 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     /// <summary>
     /// The stage of the A record set update allowing to add or remove A record.
     /// </summary>
-    public interface IWithARecordIpv4Address 
+    public interface IWithARecordIPv4Address 
     {
         /// <summary>
-        /// Removes the A record with the provided Ipv4 address from the record set.
+        /// Removes the A record with the provided IPv4 address from the record set.
         /// </summary>
-        /// <param name="ipv4Address">The Ipv4 address.</param>
+        /// <param name="ipv4Address">The IPv4 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithoutIpv4Address(string ipv4Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithoutIPv4Address(string ipv4Address);
 
         /// <summary>
-        /// Creates an A record with the provided Ipv4 address in the record set.
+        /// Creates an A record with the provided IPv4 address in the record set.
         /// </summary>
-        /// <param name="ipv4Address">The Ipv4 address.</param>
+        /// <param name="ipv4Address">The IPv4 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithIpv4Address(string ipv4Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithIPv4Address(string ipv4Address);
     }
 
     /// <summary>
-    /// The stage of the Mx record set definition allowing to add or remove Mx record.
+    /// The stage of the MX record set definition allowing to add or remove MX record.
     /// </summary>
-    public interface IWithMxRecordMailExchange 
+    public interface IWithMXRecordMailExchange 
     {
         /// <summary>
-        /// Removes Mx record with the provided mail exchange server and priority from this record set.
+        /// Removes MX record with the provided mail exchange server and priority from this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet WithoutMailExchange(string mailExchangeHostName, int priority);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet WithoutMailExchange(string mailExchangeHostName, int priority);
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet WithMailExchange(string mailExchangeHostName, int priority);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet WithMailExchange(string mailExchangeHostName, int priority);
     }
 
     /// <summary>
-    /// The set of configurations that can be updated for Dns record set irrespective of their type RecordType.
+    /// The set of configurations that can be updated for DNS record set irrespective of their type RecordType.
     /// </summary>
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate>,
@@ -143,27 +143,27 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Ns record set definition allowing to add or remove a Ns record.
+    /// The stage of the NS record set definition allowing to add or remove a NS record.
     /// </summary>
-    public interface IWithNsRecordNameServer 
+    public interface IWithNSRecordNameServer 
     {
         /// <summary>
-        /// Rmoves a Ns record with the provided name server from this record set.
+        /// Rmoves a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet WithoutNameServer(string nameServerHostName);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithoutNameServer(string nameServerHostName);
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet WithNameServer(string nameServerHostName);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithNameServer(string nameServerHostName);
     }
 
     /// <summary>
-    /// The stage of the CName record set definition allowing to add or remove Cname record.
+    /// The stage of the CName record set definition allowing to add or remove CNAME record.
     /// </summary>
     public interface IWithPtrRecordTargetDomainName 
     {
@@ -183,19 +183,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Srv record definition allowing to add or remove Txt record.
+    /// The stage of the SRV record definition allowing to add or remove TXT record.
     /// </summary>
     public interface IWithTxtRecordTextValue 
     {
         /// <summary>
-        /// Removes a Txt record with the given text from this record set.
+        /// Removes a TXT record with the given text from this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet WithoutText(string text);
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
@@ -216,23 +216,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the Aaaa record set update allowing to add or remove Aaaa record.
+    /// The stage of the AAAA record set update allowing to add or remove AAAA record.
     /// </summary>
-    public interface IWithAaaaRecordIpv6Address 
+    public interface IWithAaaaRecordIPv6Address 
     {
         /// <summary>
-        /// Removes an Aaaa record with the provided Ipv6 address from this record set.
+        /// Removes an AAAA record with the provided IPv6 address from this record set.
         /// </summary>
-        /// <param name="ipv6Address">The Ipv6 address.</param>
+        /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIpv6Address(string ipv6Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIPv6Address(string ipv6Address);
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided IPv6 address in this record set.
         /// </summary>
-        /// <param name="ipv6Address">The Ipv6 address.</param>
+        /// <param name="ipv6Address">The IPv6 address.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithIpv6Address(string ipv6Address);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithIPv6Address(string ipv6Address);
     }
 
     /// <summary>

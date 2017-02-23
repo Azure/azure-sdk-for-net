@@ -18,14 +18,14 @@ namespace Azure.Tests.Network.LoadBalancer
     /// </summary>
     public class InternetMinimal : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
-        private IPublicIpAddresses pips;
+        private IPublicIPAddresses pips;
         private IVirtualMachines vms;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
         private IAvailabilitySets availabilitySets;
 
         public InternetMinimal(
-                IPublicIpAddresses pips,
+                IPublicIPAddresses pips,
                 IVirtualMachines vms,
                 INetworks networks,
                 IAvailabilitySets availabilitySets,
@@ -55,7 +55,7 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
                         
                         // Frontend (default)
-                        .WithExistingPublicIpAddress(existingPips.ElementAt(0))
+                        .WithExistingPublicIPAddress(existingPips.ElementAt(0))
                         
                         // Backend (default)
                         .WithExistingVirtualMachines(existingVMs.ToArray())
@@ -74,7 +74,7 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.True("default".Equals(frontend.LoadBalancingRules.Values.First().Name, StringComparison.OrdinalIgnoreCase));
             Assert.True(frontend.IsPublic);
             var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
-            Assert.True(existingPips.First().Id.Equals(publicFrontend.PublicIpAddressId, StringComparison.OrdinalIgnoreCase));
+            Assert.True(existingPips.First().Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
 
             // Verify TCP probes
             Assert.True(lb.TcpProbes.ContainsKey("default"));
@@ -105,10 +105,10 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.Equal(1, lb.Backends.Count);
             var backend = lb.Backends["default"];
             Assert.NotNull(backend);
-            Assert.Equal(2, backend.BackendNicIpConfigurationNames.Count);
+            Assert.Equal(2, backend.BackendNicIPConfigurationNames.Count);
             foreach (var vm in existingVMs)
             {
-                Assert.True(backend.BackendNicIpConfigurationNames.ContainsKey(vm.PrimaryNetworkInterfaceId));
+                Assert.True(backend.BackendNicIPConfigurationNames.ContainsKey(vm.PrimaryNetworkInterfaceId));
             }
 
             return lb;
@@ -120,7 +120,7 @@ namespace Azure.Tests.Network.LoadBalancer
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var pip = existingPips.ElementAt(1);
             resource = resource.Update()
-                    .WithExistingPublicIpAddress(pip)
+                    .WithExistingPublicIPAddress(pip)
                     .UpdateTcpProbe("default")
                         .WithPort(22)
                         .Parent()
@@ -153,7 +153,7 @@ namespace Azure.Tests.Network.LoadBalancer
             var frontend = resource.Frontends["default"];
             Assert.True(frontend.IsPublic);
             var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
-            Assert.True(pip.Id.Equals(publicFrontend.PublicIpAddressId, StringComparison.OrdinalIgnoreCase));
+            Assert.True(pip.Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
             Assert.Equal(2, publicFrontend.LoadBalancingRules.Count);
 
             // Verify probes

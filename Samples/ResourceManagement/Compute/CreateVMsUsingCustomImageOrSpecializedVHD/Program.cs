@@ -53,8 +53,8 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(publicIpDnsLabel)
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(UserName)
                         .WithRootPassword(Password)
@@ -74,7 +74,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.PrintVirtualMachine(linuxVM);
 
                 // De-provision the virtual machine
-                Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, UserName, Password);
+                Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIPAddress().Fqdn, 22, UserName, Password);
 
                 //=============================================================
                 // Deallocate the virtual machine
@@ -116,8 +116,8 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithStoredLinuxImage(capturedImageUri) // Note: A Generalized Image can also be an uploaded VHD prepared from an on-premise generalized VM.
                         .WithRootUsername(UserName)
                         .WithRootPassword(Password)
@@ -147,8 +147,8 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithSpecializedOsUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux) // New user credentials cannot be specified
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)         // when attaching a specialized VHD
                         .Create();

@@ -4,12 +4,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using System.Collections.Generic;
 
-    internal partial class NsRecordSetImpl 
+    internal partial class NSRecordSetImpl 
     {
         /// <summary>
-        /// Gets the name server names of Ns (name server) records in this record set.
+        /// Gets the name server names of NS (name server) records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.INsRecordSet.NameServers
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.INSRecordSet.NameServers
         {
             get
             {

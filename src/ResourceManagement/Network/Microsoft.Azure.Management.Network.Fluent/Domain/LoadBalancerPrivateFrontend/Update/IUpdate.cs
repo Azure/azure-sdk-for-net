@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent;
 
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
         IWithSubnet,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>
+        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>
     {
     }
 

@@ -5,13 +5,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of an Ns (name server) record set in Azure Dns Zone.
+    /// An immutable client-side representation of an NS (name server) record set in Azure DNS Zone.
     /// </summary>
-    public interface INsRecordSet  :
+    public interface INSRecordSet  :
         IDnsRecordSet
     {
         /// <summary>
-        /// Gets the name server names of Ns (name server) records in this record set.
+        /// Gets the name server names of NS (name server) records in this record set.
         /// </summary>
         System.Collections.Generic.IList<string> NameServers { get; }
     }

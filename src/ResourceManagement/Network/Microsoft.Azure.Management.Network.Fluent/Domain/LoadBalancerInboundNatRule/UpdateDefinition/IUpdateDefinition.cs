@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition
 {
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition;
@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// The stage of an inbound NAT rule definition allowing to specify whether floating IP should be enabled.
     /// </summary>
     /// <typeparam name="Parent">The parent load balancer type.</typeparam>
-    public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+    public interface IWithFloatingIP<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.UpdateDefinition.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
 
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithBackendPort<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFloatingIP<ParentT>,
         IWithIdleTimeout<ParentT>
     {
     }

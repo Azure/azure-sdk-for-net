@@ -9,19 +9,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class VirtualMachineScaleSetNetworkInterfaceImpl
     {
 
-        IReadOnlyDictionary<string, IVirtualMachineScaleSetNicIpConfiguration> Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface.IpConfigurations
+        IReadOnlyDictionary<string, IVirtualMachineScaleSetNicIPConfiguration> Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface.IPConfigurations
         {
             get
             {
-                return this.IpConfigurations();
+                return this.IPConfigurations();
             }
         }
 
-        IVirtualMachineScaleSetNicIpConfiguration Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface.PrimaryIpConfiguration
+        IVirtualMachineScaleSetNicIPConfiguration Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface.PrimaryIPConfiguration
         {
             get
             {
-                return this.PrimaryIpConfiguration();
+                return this.PrimaryIPConfiguration();
             }
         }
 
@@ -57,19 +57,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIpForwardingEnabled
+        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIPForwardingEnabled
         {
             get
             {
-                return this.IsIpForwardingEnabled();
+                return this.IsIPForwardingEnabled();
             }
         }
 
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIPAllocationMethod
         {
             get
             {
-                return this.PrimaryPrivateIpAllocationMethod();
+                return this.PrimaryPrivateIPAllocationMethod();
             }
         }
 
@@ -97,11 +97,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIp
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIP
         {
             get
             {
-                return this.PrimaryPrivateIp();
+                return this.PrimaryPrivateIP();
             }
         }
 

@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
 
     /// <summary>
     /// The final stage of network interface IP configuration.
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithPublicIpAddress<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithPublicIPAddress<ParentT>,
         IWithLoadBalancer<ParentT>
     {
     }
@@ -26,15 +26,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
     /// within a virtual network subnet.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
-    public interface IWithPrivateIp<ParentT>  :
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithAttach<ParentT>>
+    public interface IWithPrivateIP<ParentT>  :
+        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Specifies the IP version for the private IP address.
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithAttach<ParentT> WithPrivateIpVersion(string ipVersion);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithAttach<ParentT> WithPrivateIPVersion(string ipVersion);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithPrivateIP<ParentT> WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithNewNetwork(string name, string addressSpace);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithPrivateIP<ParentT> WithNewNetwork(string name, string addressSpace);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -70,14 +70,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithNewNetwork(string addressSpace);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithPrivateIP<ParentT> WithNewNetwork(string addressSpace);
 
         /// <summary>
         /// Associate an existing virtual network with the network interface IP configuration.
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithSubnet<ParentT> WithExistingNetwork(INetwork network);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithSubnet<ParentT> WithExistingNetwork(INetwork network);
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="name">The subnet name.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithSubnet(string name);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithPrivateIP<ParentT> WithSubnet(string name);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="backendName">The name of an existing backend on that load balancer.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithAttach<ParentT> WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithAttach<ParentT> WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
         /// Specifies the load balancer inbound NAT rule to associate this IP configuration with.
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithAttach<ParentT> WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithAttach<ParentT> WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
     }
 
     /// <summary>
@@ -123,8 +123,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
     /// a public IP address.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
-    public interface IWithPublicIpAddress<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition.IWithPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IWithAttach<ParentT>>
+    public interface IWithPublicIPAddress<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IWithAttach<ParentT>>
     {
     }
 
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definitio
         IWithAttach<ParentT>,
         IWithNetwork<ParentT>,
         IWithSubnet<ParentT>,
-        IWithPrivateIp<ParentT>
+        IWithPrivateIP<ParentT>
     {
     }
 }

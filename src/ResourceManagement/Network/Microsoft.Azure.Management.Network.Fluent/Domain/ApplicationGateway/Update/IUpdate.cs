@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
 
     /// <summary>
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutBackendIpAddress(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutBackendIPAddress(string ipAddress);
 
         /// <summary>
         /// Removes the specified backend.
@@ -98,9 +98,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         IWithInstanceCount,
         IWithBackend,
         IWithBackendHttpConfig,
-        IWithIpConfig,
+        IWithIPConfig,
         IWithFrontend,
-        IWithPublicIpAddress,
+        IWithPublicIPAddress,
         IWithFrontendPort,
         IWithSslCert,
         IWithListener,
@@ -286,8 +286,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// <summary>
     /// The stage of an application gateway update allowing to specify a public IP address for the public frontend.
     /// </summary>
-    public interface IWithPublicIpAddress  :
-        IWithPublicIpAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
+    public interface IWithPublicIPAddress  :
+        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
     {
     }
 
@@ -341,22 +341,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// <summary>
     /// The stage of an application gateway update allowing to modify IP configurations.
     /// </summary>
-    public interface IWithIpConfig 
+    public interface IWithIPConfig 
     {
         /// <summary>
         /// Begins the definition of the default IP configuration.
-        /// If a default IP configuration already exists, it will be this is equivalent to {.
+        /// If a default IP configuration already exists, it will be this is equivalent to <code>UpdateDefaultIPConfiguration()</code>.
         /// </summary>
-        /// <code>UpdateDefaultIpConfiguration()}.</code>
         /// <return>The first stage of an IP configuration update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate> DefineDefaultIpConfiguration();
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate> DefineDefaultIPConfiguration();
 
         /// <summary>
         /// Begins the update of an existing IP configuration.
         /// </summary>
         /// <param name="ipConfigurationName">The name of an existing IP configuration.</param>
         /// <return>The first stage of an IP configuration update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Update.IUpdate UpdateIpConfiguration(string ipConfigurationName);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update.IUpdate UpdateIPConfiguration(string ipConfigurationName);
 
         /// <summary>
         /// Removes the specified IP configuration.
@@ -365,13 +364,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         /// </summary>
         /// <param name="ipConfigurationName">The name of the IP configuration to remove.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutIpConfiguration(string ipConfigurationName);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutIPConfiguration(string ipConfigurationName);
 
         /// <summary>
         /// Begins the update of the default IP configuration i.e. the only one IP configuration that exists, assuming only one exists.
         /// </summary>
         /// <return>The first stage of an IP configuration update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Update.IUpdate UpdateDefaultIpConfiguration();
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update.IUpdate UpdateDefaultIPConfiguration();
     }
 
     /// <summary>

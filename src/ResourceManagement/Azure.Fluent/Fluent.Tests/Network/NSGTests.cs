@@ -56,7 +56,7 @@ namespace Fluent.Tests.Network
                         .WithRegion(nsg.Region)
                         .WithExistingResourceGroup(nsg.ResourceGroupName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithPrimaryPrivateIPAddressDynamic()
                         .WithExistingNetworkSecurityGroup(nsg)
                         .Create();
 

@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackend.Definition.IWithAddress<ApplicationGateway.Definition.IWithCreate>.WithIpAddress(string ipAddress)
+        ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackend.Definition.IWithAddress<ApplicationGateway.Definition.IWithCreate>.WithIPAddress(string ipAddress)
         {
-            return this.WithIpAddress(ipAddress) as ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+            return this.WithIPAddress(ipAddress) as ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackend.UpdateDefinition.IWithAddress<ApplicationGateway.Update.IUpdate>.WithIpAddress(string ipAddress)
+        ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackend.UpdateDefinition.IWithAddress<ApplicationGateway.Update.IUpdate>.WithIPAddress(string ipAddress)
         {
-            return this.WithIpAddress(ipAddress) as ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithIPAddress(ipAddress) as ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithoutIpAddress(string ipAddress)
+        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithoutIPAddress(string ipAddress)
         {
-            return this.WithoutIpAddress(ipAddress) as ApplicationGatewayBackend.Update.IUpdate;
+            return this.WithoutIPAddress(ipAddress) as ApplicationGatewayBackend.Update.IUpdate;
         }
 
         /// <summary>
@@ -122,20 +122,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithIpAddress(string ipAddress)
+        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithIPAddress(string ipAddress)
         {
-            return this.WithIpAddress(ipAddress) as ApplicationGatewayBackend.Update.IUpdate;
+            return this.WithIPAddress(ipAddress) as ApplicationGatewayBackend.Update.IUpdate;
         }
 
         /// <summary>
         /// Gets a map of names of the IP configurations of network interfaces assigned to this backend,
         /// indexed by their NIC's resource id.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Network.Fluent.IHasBackendNics.BackendNicIpConfigurationNames
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Network.Fluent.IHasBackendNics.BackendNicIPConfigurationNames
         {
             get
             {
-                return this.BackendNicIpConfigurationNames() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+                return this.BackendNicIPConfigurationNames() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 
@@ -165,9 +165,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>True if the specified IP address is referenced by this backend, else false.</return>
-        bool Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.ContainsIpAddress(string ipAddress)
+        bool Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.ContainsIPAddress(string ipAddress)
         {
-            return this.ContainsIpAddress(ipAddress);
+            return this.ContainsIPAddress(ipAddress);
         }
 
         /// <summary>

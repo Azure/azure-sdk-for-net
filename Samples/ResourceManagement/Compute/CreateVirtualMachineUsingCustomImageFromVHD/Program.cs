@@ -56,8 +56,8 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
                         .WithRegion(region)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(publicIpDnsLabel)
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(userName)
                         .WithRootPassword(password)
@@ -89,7 +89,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
                 Utilities.PrintVirtualMachine(linuxVM);
 
                 // De-provision the virtual machine
-                Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
+                Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIPAddress().Fqdn, 22, userName, password);
 
                 //=============================================================
                 // Deallocate the virtual machine
@@ -145,8 +145,8 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithLinuxCustomImage(virtualMachineCustomImage.Id)
                         .WithRootUsername(userName)
                         .WithRootPassword(password)
@@ -164,8 +164,8 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithLinuxCustomImage(virtualMachineCustomImage.Id)
                         .WithRootUsername(userName)
                         .WithRootPassword(password)

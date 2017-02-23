@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface ILoadBalancerPublicFrontend  :
         ILoadBalancerFrontend,
-        IHasPublicIpAddress
+        IHasPublicIPAddress
     {
     }
 }

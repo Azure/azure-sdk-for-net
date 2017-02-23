@@ -66,18 +66,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ns (name server) records.
+        /// Gets entry point to manage record sets in this zone containing NS (name server) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.INsRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NsRecordSets
+        Microsoft.Azure.Management.Dns.Fluent.INSRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NSRecordSets
         {
             get
             {
-                return this.NsRecordSets() as Microsoft.Azure.Management.Dns.Fluent.INsRecordSets;
+                return this.NSRecordSets() as Microsoft.Azure.Management.Dns.Fluent.INSRecordSets;
             }
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Srv (service) records.
+        /// Gets entry point to manage record sets in this zone containing SRV (service) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.SrvRecordSets
         {
@@ -90,16 +90,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing CName (canonical name) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.CnameRecordSets
+        Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.CNameRecordSets
         {
             get
             {
-                return this.CnameRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets;
+                return this.CNameRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets;
             }
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Txt (text) records.
+        /// Gets entry point to manage record sets in this zone containing TXT (text) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.TxtRecordSets
         {
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ptr (pointer) records.
+        /// Gets entry point to manage record sets in this zone containing PTR (pointer) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.PtrRecordSets
         {
@@ -131,45 +131,45 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>The record set containing Soa (start of authority) record associated with this Dns zone.</return>
+        /// <return>The record set containing Soa (start of authority) record associated with this DNS zone.</return>
         Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet Microsoft.Azure.Management.Dns.Fluent.IDnsZone.GetSoaRecordSet()
         {
             return this.GetSoaRecordSet() as Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet;
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Mx (mail exchange) records.
+        /// Gets entry point to manage record sets in this zone containing MX (mail exchange) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.MxRecordSets
+        Microsoft.Azure.Management.Dns.Fluent.IMXRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.MXRecordSets
         {
             get
             {
-                return this.MxRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets;
+                return this.MXRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IMXRecordSets;
             }
         }
 
         /// <summary>
-        /// Removes a Srv record set in the Dns zone.
+        /// Removes a SRV record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Srv record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <param name="name">Name of the SRV record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutSrvRecordSet(string name)
         {
             return this.WithoutSrvRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies definition of a Srv record set to be attached to the Dns zone.
+        /// Specifies definition of a SRV record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         DnsRecordSet.UpdateDefinition.ISrvRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineSrvRecordSet(string name)
         {
             return this.DefineSrvRecordSet(name) as DnsRecordSet.UpdateDefinition.ISrvRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Specifies definition of an A record set to be attached to the Dns zone.
+        /// Specifies definition of an A record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
         /// <return>The stage representing configuration for the A record set.</return>
@@ -179,38 +179,38 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Cname record set to be attached to the Dns zone.
+        /// Specifies definition of a CNAME record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <param name="alias">The Cname record alias.</param>
-        /// <return>The next stage of Dns zone definition.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithCnameRecordSet(string name, string alias)
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <param name="alias">The CNAME record alias.</param>
+        /// <return>The next stage of DNS zone definition.</return>
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithCNameRecordSet(string name, string alias)
         {
-            return this.WithCnameRecordSet(name, alias) as DnsZone.Update.IUpdate;
+            return this.WithCNameRecordSet(name, alias) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Ptr record set in this Dns zone.
+        /// Begins the description of an update of an existing PTR record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet DnsZone.Update.IWithRecordSet.UpdatePtrRecordSet(string name)
         {
             return this.UpdatePtrRecordSet(name) as DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet;
         }
 
         /// <summary>
-        /// Specifies definition of a Mx record set to be attached to the Dns zone.
+        /// Specifies definition of a MX record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        DnsRecordSet.UpdateDefinition.IMxRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        DnsRecordSet.UpdateDefinition.IMXRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineMXRecordSet(string name)
         {
-            return this.DefineMxRecordSet(name) as DnsRecordSet.UpdateDefinition.IMxRecordSetBlank<DnsZone.Update.IUpdate>;
+            return this.DefineMXRecordSet(name) as DnsRecordSet.UpdateDefinition.IMXRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing A record set in this Dns zone.
+        /// Begins the description of an update of an existing A record set in this DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
         /// <return>The stage representing configuration for the A record set.</return>
@@ -220,100 +220,100 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Mx record set in the Dns zone.
+        /// Removes a MX record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutMXRecordSet(string name)
         {
-            return this.WithoutMxRecordSet(name) as DnsZone.Update.IUpdate;
+            return this.WithoutMXRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Removes a Cname record set in the Dns zone.
+        /// Removes a CNAME record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutCnameRecordSet(string name)
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutCNameRecordSet(string name)
         {
-            return this.WithoutCnameRecordSet(name) as DnsZone.Update.IUpdate;
+            return this.WithoutCNameRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Removes a Ptr record set in the Dns zone.
+        /// Removes a PTR record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutPtrRecordSet(string name)
         {
             return this.WithoutPtrRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Mx record set in this Dns zone.
+        /// Begins the description of an update of an existing MX record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet DnsZone.Update.IWithRecordSet.UpdateMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet DnsZone.Update.IWithRecordSet.UpdateMXRecordSet(string name)
         {
-            return this.UpdateMxRecordSet(name) as DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet;
+            return this.UpdateMXRecordSet(name) as DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Txt record set in this Dns zone.
+        /// Begins the description of an update of an existing TXT record set in this DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet DnsZone.Update.IWithRecordSet.UpdateTxtRecordSet(string name)
         {
             return this.UpdateTxtRecordSet(name) as DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet;
         }
 
         /// <summary>
-        /// Specifies definition of a Ptr record set to be attached to the Dns zone.
+        /// Specifies definition of a PTR record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         DnsRecordSet.UpdateDefinition.IPtrRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefinePtrRecordSet(string name)
         {
             return this.DefinePtrRecordSet(name) as DnsRecordSet.UpdateDefinition.IPtrRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Removes a Aaaa record set in the Dns zone.
+        /// Removes a AAAA record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutAaaaRecordSet(string name)
         {
             return this.WithoutAaaaRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Removes a Txt record set in the Dns zone.
+        /// Removes a TXT record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Txt record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <param name="name">Name of the TXT record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutTxtRecordSet(string name)
         {
             return this.WithoutTxtRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies definition of an Ns record set to be attached to the Dns zone.
+        /// Specifies definition of an NS record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        DnsRecordSet.UpdateDefinition.INsRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        DnsRecordSet.UpdateDefinition.INSRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineNSRecordSet(string name)
         {
-            return this.DefineNsRecordSet(name) as DnsRecordSet.UpdateDefinition.INsRecordSetBlank<DnsZone.Update.IUpdate>;
+            return this.DefineNSRecordSet(name) as DnsRecordSet.UpdateDefinition.INSRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Gets Begins the description of an update of the Soa record in this Dns zone.
+        /// Gets Begins the description of an update of the Soa record in this DNS zone.
         /// </summary>
         /// <summary>
-        /// Gets the stage representing configuration for the Txt record set.
+        /// Gets the stage representing configuration for the TXT record set.
         /// </summary>
         DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord DnsZone.Update.IWithRecordSet.UpdateSoaRecord()
         {
@@ -321,80 +321,80 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Srv record set in this Dns zone.
+        /// Begins the description of an update of an existing SRV record set in this DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet DnsZone.Update.IWithRecordSet.UpdateSrvRecordSet(string name)
         {
             return this.UpdateSrvRecordSet(name) as DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet;
         }
 
         /// <summary>
-        /// Removes a Ns record set in the Dns zone.
+        /// Removes a NS record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutNSRecordSet(string name)
         {
-            return this.WithoutNsRecordSet(name) as DnsZone.Update.IUpdate;
+            return this.WithoutNSRecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies definition of a Txt record set to be attached to the Dns zone.
+        /// Specifies definition of a TXT record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.UpdateDefinition.ITxtRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineTxtRecordSet(string name)
         {
             return this.DefineTxtRecordSet(name) as DnsRecordSet.UpdateDefinition.ITxtRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Ns record set in this Dns zone.
+        /// Begins the description of an update of an existing NS record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet DnsZone.Update.IWithRecordSet.UpdateNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet DnsZone.Update.IWithRecordSet.UpdateNSRecordSet(string name)
         {
-            return this.UpdateNsRecordSet(name) as DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet;
+            return this.UpdateNSRecordSet(name) as DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet;
         }
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set to be attached to the Dns zone.
+        /// Specifies definition of an AAAA record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineAaaaRecordSet(string name)
         {
             return this.DefineAaaaRecordSet(name) as DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Removes a A record set in the Dns zone.
+        /// Removes a A record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the A record set.</param>
-        /// <return>The next stage of Dns zone update.</return>
+        /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutARecordSet(string name)
         {
             return this.WithoutARecordSet(name) as DnsZone.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Aaaa record set in this Dns zone.
+        /// Begins the description of an update of an existing AAAA record set in this DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsZone.Update.IWithRecordSet.UpdateAaaaRecordSet(string name)
         {
             return this.UpdateAaaaRecordSet(name) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
         }
 
         /// <summary>
-        /// Specifies definition of a Srv record set.
+        /// Specifies definition of a SRV record set.
         /// </summary>
-        /// <param name="name">The name of the Srv record set.</param>
-        /// <return>The stage representing configuration for the Srv record set.</return>
+        /// <param name="name">The name of the SRV record set.</param>
+        /// <return>The stage representing configuration for the SRV record set.</return>
         DnsRecordSet.Definition.ISrvRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineSrvRecordSet(string name)
         {
             return this.DefineSrvRecordSet(name) as DnsRecordSet.Definition.ISrvRecordSetBlank<DnsZone.Definition.IWithCreate>;
@@ -411,61 +411,61 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Cname record set.
+        /// Specifies definition of a CNAME record set.
         /// </summary>
-        /// <param name="name">Name of the Cname record set.</param>
-        /// <param name="alias">The Cname record alias.</param>
-        /// <return>The next stage of Dns zone definition.</return>
-        DnsZone.Definition.IWithCreate DnsZone.Definition.IWithRecordSet.WithCnameRecordSet(string name, string alias)
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <param name="alias">The CNAME record alias.</param>
+        /// <return>The next stage of DNS zone definition.</return>
+        DnsZone.Definition.IWithCreate DnsZone.Definition.IWithRecordSet.WithCNameRecordSet(string name, string alias)
         {
-            return this.WithCnameRecordSet(name, alias) as DnsZone.Definition.IWithCreate;
+            return this.WithCNameRecordSet(name, alias) as DnsZone.Definition.IWithCreate;
         }
 
         /// <summary>
-        /// Specifies definition of a Mx record set.
+        /// Specifies definition of a MX record set.
         /// </summary>
-        /// <param name="name">Name of the Mx record set.</param>
-        /// <return>The stage representing configuration for the Mx record set.</return>
-        DnsRecordSet.Definition.IMxRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineMxRecordSet(string name)
+        /// <param name="name">Name of the MX record set.</param>
+        /// <return>The stage representing configuration for the MX record set.</return>
+        DnsRecordSet.Definition.IMXRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineMXRecordSet(string name)
         {
-            return this.DefineMxRecordSet(name) as DnsRecordSet.Definition.IMxRecordSetBlank<DnsZone.Definition.IWithCreate>;
+            return this.DefineMXRecordSet(name) as DnsRecordSet.Definition.IMXRecordSetBlank<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
-        /// Specifies definition of a Ptr record set.
+        /// Specifies definition of a PTR record set.
         /// </summary>
-        /// <param name="name">Name of the Ptr record set.</param>
-        /// <return>The stage representing configuration for the Ptr record set.</return>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
         DnsRecordSet.Definition.IPtrRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefinePtrRecordSet(string name)
         {
             return this.DefinePtrRecordSet(name) as DnsRecordSet.Definition.IPtrRecordSetBlank<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
-        /// Specifies definition of an Ns record set.
+        /// Specifies definition of an NS record set.
         /// </summary>
-        /// <param name="name">Name of the Ns record set.</param>
-        /// <return>The stage representing configuration for the Ns record set.</return>
-        DnsRecordSet.Definition.INsRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineNsRecordSet(string name)
+        /// <param name="name">Name of the NS record set.</param>
+        /// <return>The stage representing configuration for the NS record set.</return>
+        DnsRecordSet.Definition.INSRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineNSRecordSet(string name)
         {
-            return this.DefineNsRecordSet(name) as DnsRecordSet.Definition.INsRecordSetBlank<DnsZone.Definition.IWithCreate>;
+            return this.DefineNSRecordSet(name) as DnsRecordSet.Definition.INSRecordSetBlank<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
-        /// Specifies definition of a Txt record set.
+        /// Specifies definition of a TXT record set.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.Definition.ITxtRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineTxtRecordSet(string name)
         {
             return this.DefineTxtRecordSet(name) as DnsRecordSet.Definition.ITxtRecordSetBlank<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
-        /// Specifies definition of an Aaaa record set.
+        /// Specifies definition of an AAAA record set.
         /// </summary>
-        /// <param name="name">Name of the Aaaa record set.</param>
-        /// <return>The stage representing configuration for the Aaaa record set.</return>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <return>The stage representing configuration for the AAAA record set.</return>
         DnsRecordSet.Definition.IAaaaRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineAaaaRecordSet(string name)
         {
             return this.DefineAaaaRecordSet(name) as DnsRecordSet.Definition.IAaaaRecordSetBlank<DnsZone.Definition.IWithCreate>;

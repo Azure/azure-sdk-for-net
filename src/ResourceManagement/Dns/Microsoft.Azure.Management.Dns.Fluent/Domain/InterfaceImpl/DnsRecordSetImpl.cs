@@ -19,23 +19,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     internal abstract partial class DnsRecordSetImpl 
     {
         /// <summary>
-        /// Rmoves a Ns record with the provided name server from this record set.
+        /// Rmoves a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet DnsRecordSet.Update.IWithNsRecordNameServer.WithoutNameServer(string nameServerHostName)
+        DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet DnsRecordSet.Update.IWithNSRecordNameServer.WithoutNameServer(string nameServerHostName)
         {
-            return this.WithoutNameServer(nameServerHostName) as DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet;
+            return this.WithoutNameServer(nameServerHostName) as DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet;
         }
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet DnsRecordSet.Update.IWithNsRecordNameServer.WithNameServer(string nameServerHostName)
+        DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet DnsRecordSet.Update.IWithNSRecordNameServer.WithNameServer(string nameServerHostName)
         {
-            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateNsRecordSet.IUpdateNsRecordSet;
+            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Txt record with the given text from this record set.
+        /// Removes a TXT record with the given text from this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
@@ -126,27 +126,27 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsRecordSet.Update.IWithAaaaRecordIpv6Address.WithIpv6Address(string ipv6Address)
+        DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsRecordSet.Update.IWithAaaaRecordIPv6Address.WithIPv6Address(string ipv6Address)
         {
             return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
         }
 
         /// <summary>
-        /// Removes an Aaaa record with the provided Ipv6 address from this record set.
+        /// Removes an AAAA record with the provided Ipv6 address from this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsRecordSet.Update.IWithAaaaRecordIpv6Address.WithoutIpv6Address(string ipv6Address)
+        DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsRecordSet.Update.IWithAaaaRecordIPv6Address.WithoutIPv6Address(string ipv6Address)
         {
             return this.WithoutIpv6Address(ipv6Address) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
         }
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="ipv4Address">The Ipv4 address.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateARecordSet.IUpdateARecordSet DnsRecordSet.Update.IWithARecordIpv4Address.WithoutIpv4Address(string ipv4Address)
+        DnsRecordSet.UpdateARecordSet.IUpdateARecordSet DnsRecordSet.Update.IWithARecordIPv4Address.WithoutIPv4Address(string ipv4Address)
         {
             return this.WithoutIpv4Address(ipv4Address) as DnsRecordSet.UpdateARecordSet.IUpdateARecordSet;
         }
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="ipv4Address">The Ipv4 address.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateARecordSet.IUpdateARecordSet DnsRecordSet.Update.IWithARecordIpv4Address.WithIpv4Address(string ipv4Address)
+        DnsRecordSet.UpdateARecordSet.IUpdateARecordSet DnsRecordSet.Update.IWithARecordIPv4Address.WithIPv4Address(string ipv4Address)
         {
             return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateARecordSet.IUpdateARecordSet;
         }
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="ipv4Address">The Ipv4 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithARecordIpv4AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithARecordIpv4Address<DnsZone.Update.IUpdate>.WithIpv4Address(string ipv4Address)
+        DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithARecordIPv4Address<DnsZone.Update.IUpdate>.WithIpv4Address(string ipv4Address)
         {
-            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateDefinition.IWithARecordIpv4AddressOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
@@ -245,9 +245,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="ipv4Address">The Ipv4 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.Definition.IWithARecordIpv4AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithARecordIpv4Address<DnsZone.Definition.IWithCreate>.WithIpv4Address(string ipv4Address)
+        DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithARecordIPv4Address<DnsZone.Definition.IWithCreate>.WithIPv4Address(string ipv4Address)
         {
-            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.Definition.IWithARecordIpv4AddressOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -260,45 +260,45 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithNsRecordNameServerOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithNsRecordNameServer<DnsZone.Update.IUpdate>.WithNameServer(string nameServerHostName)
+        DnsRecordSet.UpdateDefinition.IWithNSRecordNameServerOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithNSRecordNameServer<DnsZone.Update.IUpdate>.WithNameServer(string nameServerHostName)
         {
-            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateDefinition.IWithNsRecordNameServerOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithNameServer(nameServerHostName) as DnsRecordSet.UpdateDefinition.IWithNSRecordNameServerOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Creates a Ns record with the provided name server in this record set.
+        /// Creates a NS record with the provided name server in this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.Definition.IWithNsRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithNsRecordNameServer<DnsZone.Definition.IWithCreate>.WithNameServer(string nameServerHostName)
+        DnsRecordSet.Definition.IWithNSRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithNSRecordNameServer<DnsZone.Definition.IWithCreate>.WithNameServer(string nameServerHostName)
         {
-            return this.WithNameServer(nameServerHostName) as DnsRecordSet.Definition.IWithNsRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithNameServer(nameServerHostName) as DnsRecordSet.Definition.IWithNSRecordNameServerOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet DnsRecordSet.Update.IWithMxRecordMailExchange.WithMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet DnsRecordSet.Update.IWithMXRecordMailExchange.WithMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet;
+            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet;
         }
 
         /// <summary>
-        /// Removes Mx record with the provided mail exchange server and priority from this record set.
+        /// Removes MX record with the provided mail exchange server and priority from this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet DnsRecordSet.Update.IWithMxRecordMailExchange.WithoutMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet DnsRecordSet.Update.IWithMXRecordMailExchange.WithoutMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithoutMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMxRecordSet.IUpdateMxRecordSet;
+            return this.WithoutMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet;
         }
 
         /// <summary>
@@ -365,25 +365,25 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchange<DnsZone.Update.IUpdate>.WithMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchange<DnsZone.Update.IUpdate>.WithMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateDefinition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Creates and assigns priority to a Mx record with the provided mail exchange server in this record set.
+        /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
         /// <param name="priority">The priority for the mail exchange host, lower the value higher the priority.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.Definition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithMxRecordMailExchange<DnsZone.Definition.IWithCreate>.WithMailExchange(string mailExchangeHostName, int priority)
+        DnsRecordSet.Definition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithMXRecordMailExchange<DnsZone.Definition.IWithCreate>.WithMailExchange(string mailExchangeHostName, int priority)
         {
-            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.Definition.IWithMxRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithMailExchange(mailExchangeHostName, priority) as DnsRecordSet.Definition.IWithMXRecordMailExchangeOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Ptr record with the provided target domain name in this record set.
+        /// Creates a PTR record with the provided target domain name in this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Ptr record with the provided target domain name in this record set.
+        /// Creates a PTR record with the provided target domain name in this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -462,23 +462,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6Address<DnsZone.Update.IUpdate>.WithIpv6Address(string ipv6Address)
+        DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6Address<DnsZone.Update.IUpdate>.WithIpv6Address(string ipv6Address)
         {
-            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateDefinition.IWithAaaaRecordIpv6AddressOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Creates an Aaaa record with the provided Ipv6 address in this record set.
+        /// Creates an AAAA record with the provided Ipv6 address in this record set.
         /// </summary>
         /// <param name="ipv6Address">The Ipv6 address.</param>
         /// <return>The next stage of the record set definition.</return>
-        DnsRecordSet.Definition.IWithAaaaRecordIpv6AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithAaaaRecordIpv6Address<DnsZone.Definition.IWithCreate>.WithIpv6Address(string ipv6Address)
+        DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithAaaaRecordIPv6Address<DnsZone.Definition.IWithCreate>.WithIPv6Address(string ipv6Address)
         {
-            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.Definition.IWithAaaaRecordIpv6AddressOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>

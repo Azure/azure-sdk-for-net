@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// The base ip configuration shared across ip configurations in regular and virtual machine scale set
     /// network interface.
     /// </summary>
-    public interface INicIpConfigurationBase 
+    public interface INicIPConfigurationBase 
     {
         /// <summary>
         /// Gets true if this is the primary ip configuration.
@@ -28,6 +28,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
-        IPVersion PrivateIpAddressVersion { get; }
+        IPVersion PrivateIPAddressVersion { get; }
     }
 }

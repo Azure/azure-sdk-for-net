@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     /// The stage of a load balancer definition describing the nature of the frontend of the load balancer: internal or Internet-facing.
     /// </summary>
     public interface IWithFrontend  :
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
         IWithPublicFrontend,
         IWithPrivateFrontend
     {
@@ -218,8 +218,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     /// The stage of a load balancer definition allowing to add a public IP address as the default public frontend.
     /// </summary>
     /// <typeparam name="Return">The next stage of the definition.</typeparam>
-    public interface IWithPublicIpAddress<ReturnT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition.IWithPublicIpAddress<ReturnT>
+    public interface IWithPublicIPAddress<ReturnT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithPublicIPAddress<ReturnT>
     {
     }
 

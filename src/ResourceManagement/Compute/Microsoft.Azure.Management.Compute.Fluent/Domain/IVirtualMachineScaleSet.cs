@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets IOException the IO exception.
         /// </summary>
-        System.Collections.Generic.IList<string> PrimaryPublicIpAddressIds { get; }
+        System.Collections.Generic.IList<string> PrimaryPublicIPAddressIds { get; }
 
         /// <summary>
         /// Gets the storage profile.

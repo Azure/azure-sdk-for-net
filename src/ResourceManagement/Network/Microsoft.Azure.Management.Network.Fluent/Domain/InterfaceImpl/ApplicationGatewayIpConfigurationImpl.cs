@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using ApplicationGateway.Definition;
     using ApplicationGateway.Update;
-    using ApplicationGatewayIpConfiguration.Definition;
-    using ApplicationGatewayIpConfiguration.Update;
-    using ApplicationGatewayIpConfiguration.UpdateDefinition;
+    using ApplicationGatewayIPConfiguration.Definition;
+    using ApplicationGatewayIPConfiguration.Update;
+    using ApplicationGatewayIPConfiguration.UpdateDefinition;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
-    internal partial class ApplicationGatewayIpConfigurationImpl 
+    internal partial class ApplicationGatewayIPConfigurationImpl 
     {
         /// <summary>
         /// Assigns the specified subnet to this resource.
@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update.IWithSubnet<ApplicationGatewayIpConfiguration.Update.IUpdate>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        ApplicationGatewayIPConfiguration.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update.IWithSubnet<ApplicationGatewayIPConfiguration.Update.IUpdate>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
-            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayIpConfiguration.Update.IUpdate;
+            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
-            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
-            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="subnet">An existing subnet.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGatewayIpConfiguration.Update.IUpdate ApplicationGatewayIpConfiguration.Update.IWithSubnet.WithExistingSubnet(ISubnet subnet)
+        ApplicationGatewayIPConfiguration.Update.IUpdate ApplicationGatewayIPConfiguration.Update.IWithSubnet.WithExistingSubnet(ISubnet subnet)
         {
-            return this.WithExistingSubnet(subnet) as ApplicationGatewayIpConfiguration.Update.IUpdate;
+            return this.WithExistingSubnet(subnet) as ApplicationGatewayIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">An existing virtual network.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
         /// <return>The next stage of the update.</return>
-        ApplicationGatewayIpConfiguration.Update.IUpdate ApplicationGatewayIpConfiguration.Update.IWithSubnet.WithExistingSubnet(INetwork network, string subnetName)
+        ApplicationGatewayIPConfiguration.Update.IUpdate ApplicationGatewayIPConfiguration.Update.IWithSubnet.WithExistingSubnet(INetwork network, string subnetName)
         {
-            return this.WithExistingSubnet(network, subnetName) as ApplicationGatewayIpConfiguration.Update.IUpdate;
+            return this.WithExistingSubnet(network, subnetName) as ApplicationGatewayIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="subnet">An existing subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayIpConfiguration.Definition.IWithSubnet<ApplicationGateway.Definition.IWithCreate>.WithExistingSubnet(ISubnet subnet)
+        ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayIPConfiguration.Definition.IWithSubnet<ApplicationGateway.Definition.IWithCreate>.WithExistingSubnet(ISubnet subnet)
         {
-            return this.WithExistingSubnet(subnet) as ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+            return this.WithExistingSubnet(subnet) as ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">An existing virtual network.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayIpConfiguration.Definition.IWithSubnet<ApplicationGateway.Definition.IWithCreate>.WithExistingSubnet(INetwork network, string subnetName)
+        ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayIPConfiguration.Definition.IWithSubnet<ApplicationGateway.Definition.IWithCreate>.WithExistingSubnet(INetwork network, string subnetName)
         {
-            return this.WithExistingSubnet(network, subnetName) as ApplicationGatewayIpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+            return this.WithExistingSubnet(network, subnetName) as ApplicationGatewayIPConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="subnet">An existing subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayIpConfiguration.UpdateDefinition.IWithSubnet<ApplicationGateway.Update.IUpdate>.WithExistingSubnet(ISubnet subnet)
+        ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ApplicationGateway.Update.IUpdate>.WithExistingSubnet(ISubnet subnet)
         {
-            return this.WithExistingSubnet(subnet) as ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithExistingSubnet(subnet) as ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -128,16 +128,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">An existing virtual network.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayIpConfiguration.UpdateDefinition.IWithSubnet<ApplicationGateway.Update.IUpdate>.WithExistingSubnet(INetwork network, string subnetName)
+        ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ApplicationGateway.Update.IUpdate>.WithExistingSubnet(INetwork network, string subnetName)
         {
-            return this.WithExistingSubnet(network, subnetName) as ApplicationGatewayIpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithExistingSubnet(network, subnetName) as ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <return>
         /// The subnet the application gateway is in
         /// Note, this results in a separate call to Azure.
         /// </return>
-        Microsoft.Azure.Management.Network.Fluent.ISubnet Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration.GetSubnet()
+        Microsoft.Azure.Management.Network.Fluent.ISubnet Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration.GetSubnet()
         {
             return this.GetSubnet() as Microsoft.Azure.Management.Network.Fluent.ISubnet;
         }
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the subnet the application gateway is in.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration.SubnetName
+        string Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration.SubnetName
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the resource ID of the virtual network the application gateway is in.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIpConfiguration.NetworkId
+        string Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration.NetworkId
         {
             get
             {

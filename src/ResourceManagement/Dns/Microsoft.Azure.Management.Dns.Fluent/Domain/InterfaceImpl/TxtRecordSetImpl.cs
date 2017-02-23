@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     internal partial class TxtRecordSetImpl 
     {
         /// <summary>
-        /// Gets the Txt records in this record set.
+        /// Gets the TXT records in this record set.
         /// </summary>
         System.Collections.Generic.IList<TxtRecord> Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet.Records
         {

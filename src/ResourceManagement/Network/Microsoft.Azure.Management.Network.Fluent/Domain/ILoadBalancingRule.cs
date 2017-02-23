@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasBackendPort,
         IHasFrontend,
-        IHasFloatingIp,
+        IHasFloatingIP,
         IHasProtocol<TransportProtocol>,
         IHasFrontendPort
     {

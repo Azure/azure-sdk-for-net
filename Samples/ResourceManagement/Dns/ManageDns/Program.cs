@@ -88,12 +88,12 @@ namespace ManageDns
                 //============================================================
                 // Creates a CName record and bind it with the web app
 
-                // Step 1: Adds CName Dns record to root DNS zone that specify web app host domain as an
+                // Step 1: Adds CName DNS record to root DNS zone that specify web app host domain as an
                 // alias for www.[customDomainName]
 
                 Utilities.Log("Updating DNS zone by adding a CName record...");
                 rootDnsZone = rootDnsZone.Update()
-                        .WithCnameRecordSet("www", webApp.DefaultHostName)
+                        .WithCNameRecordSet("www", webApp.DefaultHostName)
                         .Apply();
                 Utilities.Log("DNS zone updated");
                 Utilities.Print(rootDnsZone);
@@ -127,8 +127,8 @@ namespace ManageDns
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("empip-", 20))
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(SdkContext.RandomResourceName("empip-", 20))
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
@@ -139,11 +139,11 @@ namespace ManageDns
                 //============================================================
                 // Update DNS zone by adding a A record in root DNS zone pointing to virtual machine IPv4 address
 
-                var vm1PublicIpAddress = virtualMachine1.GetPrimaryPublicIpAddress();
+                var vm1PublicIpAddress = virtualMachine1.GetPrimaryPublicIPAddress();
                 Utilities.Log("Updating root DNS zone " + CustomDomainName + "...");
                 rootDnsZone = rootDnsZone.Update()
                         .DefineARecordSet("employees")
-                            .WithIpv4Address(vm1PublicIpAddress.IpAddress)
+                            .WithIpv4Address(vm1PublicIpAddress.IPAddress)
                             .Attach()
                         .Apply();
                 Utilities.Log("Updated root DNS zone " + rootDnsZone.Name);
@@ -153,7 +153,7 @@ namespace ManageDns
                 //
                 Utilities.Log("Getting CName record set in the root DNS zone " + CustomDomainName + "...");
                 var cnameRecordSets = rootDnsZone
-                        .CnameRecordSets
+                        .CNameRecordSets
                         .List();
 
                 foreach (var cnameRecordSet in cnameRecordSets)
@@ -169,7 +169,7 @@ namespace ManageDns
                 foreach (var aRecordSet in aRecordSets)
                 {
                     Utilities.Log("Name: " + aRecordSet.Name);
-                    foreach (var ipv4Address in aRecordSet.Ipv4Addresses)
+                    foreach (var ipv4Address in aRecordSet.IPv4Addresses)
                     {
                         Utilities.Log("  " + ipv4Address);
                     }
@@ -193,7 +193,7 @@ namespace ManageDns
                 Utilities.Log("Updating root DNS zone " + rootDnsZone + "...");
                 var nsRecordStage = rootDnsZone
                         .Update()
-                        .DefineNsRecordSet("partners")
+                        .DefineNSRecordSet("partners")
                         .WithNameServer(partnersDnsZone.NameServers[0]);
                 for (int i = 1; i < partnersDnsZone.NameServers.Count(); i++)
                 {
@@ -214,8 +214,8 @@ namespace ManageDns
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("ptnerpip-", 20))
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(SdkContext.RandomResourceName("ptnerpip-", 20))
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
@@ -224,13 +224,13 @@ namespace ManageDns
                 Utilities.Log("Virtual machine created");
 
                 //============================================================
-                // Update child Dns zone by adding a A record pointing to virtual machine IPv4 address
+                // Update child DNS zone by adding a A record pointing to virtual machine IPv4 address
 
-                var vm2PublicIpAddress = virtualMachine2.GetPrimaryPublicIpAddress();
+                var vm2PublicIpAddress = virtualMachine2.GetPrimaryPublicIPAddress();
                 Utilities.Log("Updating child DNS zone " + partnerSubDomainName + "...");
                 partnersDnsZone = partnersDnsZone.Update()
                         .DefineARecordSet("@")
-                            .WithIpv4Address(vm2PublicIpAddress.IpAddress)
+                            .WithIpv4Address(vm2PublicIpAddress.IPAddress)
                             .Attach()
                         .Apply();
                 Utilities.Log("Updated child DNS zone " + partnersDnsZone.Name);
@@ -247,7 +247,7 @@ namespace ManageDns
                 Utilities.Print(rootDnsZone);
 
                 //============================================================
-                // Deletes the Dns zone
+                // Deletes the DNS zone
 
                 Utilities.Log("Deleting child DNS zone " + partnersDnsZone.Name + "...");
                 azure.DnsZones.DeleteById(partnersDnsZone.Id);

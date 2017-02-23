@@ -6,13 +6,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a Mx (mail exchange) record set in Azure Dns Zone.
+    /// An immutable client-side representation of a MX (mail exchange) record set in Azure DNS Zone.
     /// </summary>
-    public interface IMxRecordSet  :
+    public interface IMXRecordSet  :
         IDnsRecordSet
     {
         /// <summary>
-        /// Gets the Mx records in this record set.
+        /// Gets the MX records in this record set.
         /// </summary>
         System.Collections.Generic.IList<MxRecord> Records { get; }
     }

@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.IARecordSets ARecordSets { get; }
 
-        /// <return>The record set containing Soa (start of authority) record associated with this Dns zone.</return>
+        /// <return>The record set containing Soa (start of authority) record associated with this DNS zone.</return>
         Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet GetSoaRecordSet();
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Txt (text) records.
+        /// Gets entry point to manage record sets in this zone containing TXT (text) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSets TxtRecordSets { get; }
 
@@ -41,22 +41,22 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSets AaaaRecordSets { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ns (name server) records.
+        /// Gets entry point to manage record sets in this zone containing NS (name server) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.INsRecordSets NsRecordSets { get; }
+        Microsoft.Azure.Management.Dns.Fluent.INSRecordSets NSRecordSets { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Ptr (pointer) records.
+        /// Gets entry point to manage record sets in this zone containing PTR (pointer) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSets PtrRecordSets { get; }
 
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing CName (canonical name) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets CnameRecordSets { get; }
+        Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSets CNameRecordSets { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Srv (service) records.
+        /// Gets entry point to manage record sets in this zone containing SRV (service) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets SrvRecordSets { get; }
 
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         System.Collections.Generic.IList<string> NameServers { get; }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Mx (mail exchange) records.
+        /// Gets entry point to manage record sets in this zone containing MX (mail exchange) records.
         /// </summary>
-        Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets MxRecordSets { get; }
+        Microsoft.Azure.Management.Dns.Fluent.IMXRecordSets MXRecordSets { get; }
 
         /// <summary>
         /// Gets the maximum number of record sets that can be created in this zone.

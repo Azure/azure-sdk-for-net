@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using LoadBalancer.Definition;
     using LoadBalancer.Update;
     using Models;
-    using HasPublicIpAddress.Definition;
-    using HasPublicIpAddress.UpdateDefinition;
+    using HasPublicIPAddress.Definition;
+    using HasPublicIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIpAddress.Definition.IWithNewPublicIpAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIpAddress(string leafDnsLabel)
+        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithNewPublicIPAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPublicIpAddress(leafDnsLabel) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
+            return this.WithNewPublicIPAddress(leafDnsLabel) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIpAddress.UpdateDefinition.IWithNewPublicIpAddress<LoadBalancer.Update.IUpdate>.WithNewPublicIpAddress(string leafDnsLabel)
+        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddress<LoadBalancer.Update.IUpdate>.WithNewPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPublicIpAddress(leafDnsLabel) as LoadBalancer.Update.IUpdate;
+            return this.WithNewPublicIPAddress(leafDnsLabel) as LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
@@ -445,9 +445,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIpAddress.Definition.IWithNewPublicIpAddressNoDnsLabel<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIpAddress()
+        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
+            return this.WithNewPublicIPAddress() as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
         }
 
         /// <summary>
@@ -455,9 +455,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIpAddress.Definition.IWithNewPublicIpAddressNoDnsLabel<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
+            return this.WithNewPublicIPAddress(creatable) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
         }
 
         /// <summary>
@@ -465,9 +465,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIpAddress.UpdateDefinition.IWithNewPublicIpAddressNoDnsLabel<LoadBalancer.Update.IUpdate>.WithNewPublicIpAddress()
+        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Update.IUpdate>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as LoadBalancer.Update.IUpdate;
+            return this.WithNewPublicIPAddress() as LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
@@ -475,9 +475,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIpAddress.UpdateDefinition.IWithNewPublicIpAddressNoDnsLabel<LoadBalancer.Update.IUpdate>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Update.IUpdate>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as LoadBalancer.Update.IUpdate;
+            return this.WithNewPublicIPAddress(creatable) as LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
@@ -485,19 +485,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithExistingPublicIpAddress(string resourceId)
+        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
+            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
         }
 
         /// <summary>
@@ -505,19 +505,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<LoadBalancer.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId)
+        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancer.Update.IUpdate>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as LoadBalancer.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<LoadBalancer.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancer.Update.IUpdate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as LoadBalancer.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
@@ -545,11 +545,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets resource IDs of the public IP addresses assigned to the frontends of this load balancer.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.PublicIpAddressIds
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.PublicIPAddressIds
         {
             get
             {
-                return this.PublicIpAddressIds() as System.Collections.Generic.IList<string>;
+                return this.PublicIPAddressIds() as System.Collections.Generic.IList<string>;
             }
         }
 

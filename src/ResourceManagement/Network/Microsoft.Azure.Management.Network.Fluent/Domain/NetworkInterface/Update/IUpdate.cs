@@ -4,33 +4,33 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
 {
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update;
-    using Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
 
     /// <summary>
     /// The stage of the network interface update allowing to enable or disable IP forwarding.
     /// </summary>
-    public interface IWithIpForwarding 
+    public interface IWithIPForwarding 
     {
         /// <summary>
         /// Disable IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutIpForwarding();
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutIPForwarding();
 
         /// <summary>
         /// Enable IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithIpForwarding();
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithIPForwarding();
     }
 
     /// <summary>
     /// The stage of the network interface update allowing to associate public IP address with it's primary
     /// IP configuration.
     /// </summary>
-    public interface IWithPrimaryPublicIpAddress 
+    public interface IWithPrimaryPublicIPAddress 
     {
         /// <summary>
         /// Create a new public IP address to associate the network interface's primary IP configuration,
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         /// if there is an existing public IP association then that will be removed in favour of this.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIpAddress();
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIPAddress();
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
@@ -59,21 +59,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIpAddress(string leafDnsLabel);
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIPAddress(string leafDnsLabel);
 
         /// <summary>
         /// Specifies that remove any public IP associated with the network interface's primary IP configuration.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutPrimaryPublicIpAddress();
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutPrimaryPublicIPAddress();
 
         /// <summary>
         /// Associates an existing public IP address with the network interface's primary IP configuration.
         /// if there is an existing public IP association then that will be removed in favour of this.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress);
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
     }
 
     /// <summary>
@@ -92,46 +92,46 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
     /// <summary>
     /// The stage of the network interface update allowing to configure IP configuration.
     /// </summary>
-    public interface IWithIpConfiguration 
+    public interface IWithIPConfiguration 
     {
         /// <summary>
         /// Starts definition of a secondary IP configuration.
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
         /// <return>The first stage of a secondary IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate> DefineSecondaryIpConfiguration(string name);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate> DefineSecondaryIPConfiguration(string name);
 
         /// <summary>
         /// Starts update of an IP configuration.
         /// </summary>
         /// <param name="name">Name of the IP configuration.</param>
         /// <return>The first stage of an IP configuration update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate UpdateIpConfiguration(string name);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate UpdateIPConfiguration(string name);
     }
 
     /// <summary>
     /// The stage of the network interface update allowing to specify private IP address within
     /// a virtual network subnet.
     /// </summary>
-    public interface IWithPrimaryPrivateIp 
+    public interface IWithPrimaryPrivateIP 
     {
         /// <summary>
         /// Enables dynamic private IP address allocation within the specified existing virtual network
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
         /// <return>The next stage of network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithPrimaryPrivateIpAddressDynamic();
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithPrimaryPrivateIPAddressDynamic();
 
         /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network
         /// subnet to the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="staticPrivateIpAddress">
+        /// <param name="staticPrivateIPAddress">
         /// The static IP address within the specified subnet to assign to
         /// the primary IP configuration.
         /// </param>
         /// <return>The next stage of network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress);
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithPrimaryPrivateIPAddressStatic(string staticPrivateIPAddress);
     }
 
     /// <summary>
@@ -143,12 +143,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         IAppliable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate>,
         IWithPrimaryNetworkSubnet,
-        IWithPrimaryPrivateIp,
-        IWithPrimaryPublicIpAddress,
+        IWithPrimaryPrivateIP,
+        IWithPrimaryPublicIPAddress,
         IWithNetworkSecurityGroup,
-        IWithIpForwarding,
+        IWithIPForwarding,
         IWithDnsServer,
-        IWithIpConfiguration,
+        IWithIPConfiguration,
         IWithLoadBalancer
     {
     }

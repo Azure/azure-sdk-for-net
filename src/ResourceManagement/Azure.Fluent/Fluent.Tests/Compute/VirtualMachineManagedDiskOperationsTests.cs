@@ -24,7 +24,7 @@ namespace Fluent.Tests.Compute
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var vmName1 = "myvm1";
-                var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 20);
+                var publicIPDnsLabel = SdkContext.RandomResourceName("pip", 20);
                 var uname = "juser";
                 var password = "123tEst!@|ac";
                 var resourceManager = TestHelper.CreateRollupClient();
@@ -37,8 +37,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                             .WithPopularLinuxImage(LinuxImage)
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -62,8 +62,8 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(osDisk.OsType, OperatingSystemTypes.Linux);
                     // Check the auto created public ip
                     //
-                    var publicIpId = virtualMachine.GetPrimaryPublicIpAddressId();
-                    Assert.NotNull(publicIpId);
+                    var publicIPId = virtualMachine.GetPrimaryPublicIPAddressId();
+                    Assert.NotNull(publicIPId);
                     // Validates the options which are valid only for native disks
                     //
                     Assert.Null(virtualMachine.OsUnmanagedDiskVhdUri);
@@ -86,7 +86,7 @@ namespace Fluent.Tests.Compute
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 20);
+                var publicIPDnsLabel = SdkContext.RandomResourceName("pip", 20);
                 var uname = "juser";
                 var password = "123tEst!@|ac";
                 // Create with implicit + explicit empty disks, check default and override
@@ -132,8 +132,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                             .WithPopularLinuxImage(LinuxImage)
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -261,7 +261,7 @@ namespace Fluent.Tests.Compute
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 20);
+                var publicIPDnsLabel = SdkContext.RandomResourceName("pip", 20);
                 var uname = "juser";
                 var password = "123tEst!@|ac";
                 // Create with implicit + explicit empty disks, check default and override
@@ -307,8 +307,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                             .WithPopularLinuxImage(LinuxImage)
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -324,7 +324,7 @@ namespace Fluent.Tests.Compute
                             .Create();
                     Console.WriteLine("Waiting for some time before de-provision");
                     TestHelper.Delay(60 * 1000); // Wait for some time to ensure vm is publicly accessible
-                    TestHelper.DeprovisionAgentInLinuxVM(virtualMachine1.GetPrimaryPublicIpAddress().Fqdn,
+                    TestHelper.DeprovisionAgentInLinuxVM(virtualMachine1.GetPrimaryPublicIPAddress().Fqdn,
                             22,
                             uname,
                             password);
@@ -362,8 +362,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithLinuxCustomImage(customImage.Id)
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -394,8 +394,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithLinuxCustomImage(customImage.Id)
                             .WithRootUsername(uname)
                             .WithRootPassword(password);
@@ -441,7 +441,7 @@ namespace Fluent.Tests.Compute
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 20);
+                var publicIPDnsLabel = SdkContext.RandomResourceName("pip", 20);
                 var uname = "juser";
                 var password = "123tEst!@|ac";
                 // Create with implicit + explicit empty disks, check default and override
@@ -488,8 +488,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithNewPrimaryPublicIPAddress(publicIPDnsLabel)
                             .WithPopularLinuxImage(LinuxImage)
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -548,8 +548,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithLatestLinuxImage("Canonical", "UbuntuServer", "14.04.2-LTS")
                             .WithRootUsername(uname)
                             .WithRootPassword(password)
@@ -579,8 +579,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithSpecializedOsDisk(osDisk, OperatingSystemTypes.Linux)
                             .WithSize(VirtualMachineSizeTypes.StandardD5V2)
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
@@ -618,8 +618,8 @@ namespace Fluent.Tests.Compute
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
+                            .WithPrimaryPrivateIPAddressDynamic()
+                            .WithoutPrimaryPublicIPAddress()
                             .WithPopularLinuxImage(LinuxImage)
                             .WithRootUsername(uname)
                             .WithRootPassword(password)

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IDefinition,
         IUpdate
     {
-        private Dictionary<string, IApplicationGatewayIpConfiguration> ipConfigs;
+        private Dictionary<string, IApplicationGatewayIPConfiguration> ipConfigs;
         private Dictionary<string, IApplicationGatewayFrontend> frontends;
         private Dictionary<string, IApplicationGatewayBackend> backends;
         private Dictionary<string, IApplicationGatewayBackendHttpConfiguration> backendHttpConfigs;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private ApplicationGatewayFrontendImpl defaultPublicFrontend;
         private Dictionary<string, string> creatablePipsByFrontend;
         private ICreatable<INetwork> creatableNetwork;
-        private ICreatable<IPublicIpAddress> creatablePip;
+        private ICreatable<IPublicIPAddress> creatablePip;
 
         ///GENMHASH:E348AD1CD59015734202262D2BA6F046:55E548B15E635A8197D52049D3FAB8D3
         internal ApplicationGatewayImpl(
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:605022D847E1CBA530EBD654136D8064:B699ABF72548606674C97317B2B20760
-        public IApplicationGatewayIpConfiguration DefaultIpConfiguration()
+        public IApplicationGatewayIPConfiguration DefaultIPConfiguration()
         {
             // Default means the only one
             if (ipConfigs.Count == 1)
@@ -153,10 +153,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:E89C02FDC5725B8AD23DCBADA1105204
-        public IPAllocationMethod PrivateIpAllocationMethod()
+        public IPAllocationMethod PrivateIPAllocationMethod()
         {
             var frontend = DefaultPrivateFrontend();
-            return (frontend != null) ? frontend.PrivateIpAllocationMethod : null;
+            return (frontend != null) ? frontend.PrivateIPAllocationMethod : null;
         }
 
         ///GENMHASH:57B5349245E8E0AED639AD6C90041662:15B0E79628926A104F3E67AB78CAA58A
@@ -265,10 +265,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:6566E7A57F604BD33E81174C58827CA7
-        public string PrivateIpAddress()
+        public string PrivateIPAddress()
         {
             var frontend = DefaultPrivateFrontend();
-            return (frontend != null) ? frontend.PrivateIpAddress : null;
+            return (frontend != null) ? frontend.PrivateIPAddress : null;
         }
 
         ///GENMHASH:1C444C90348D7064AB23705C542DDF18:9AE479D53BC930F7515CB230EE4EB7EF
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8535B0E23E6704558262509B5A55B45D:B0B422F1B1E66AA120E54D492AF6FDE5
-        public IReadOnlyDictionary<string, IApplicationGatewayIpConfiguration> IpConfigurations()
+        public IReadOnlyDictionary<string, IApplicationGatewayIPConfiguration> IPConfigurations()
         {
             return ipConfigs;
         }
@@ -408,12 +408,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Backends
 
         ///GENMHASH:A0A23179FBDC541925212899C1A48667:2ECFEA1CD411E1F5B44424C5D9DDACA5
-        public ApplicationGatewayImpl WithoutBackendIpAddress(string ipAddress)
+        public ApplicationGatewayImpl WithoutBackendIPAddress(string ipAddress)
         {
             foreach (var backend in backends.Values)
             {
                 ApplicationGatewayBackendImpl backendImpl = (ApplicationGatewayBackendImpl)backend;
-                backendImpl.WithoutIpAddress(ipAddress);
+                backendImpl.WithoutIPAddress(ipAddress);
             }
             return this;
         }
@@ -625,13 +625,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Public
 
         ///GENMHASH:1B49C92CBA9BDBBF9FBFD26544224384:8B6E82EE2C6ECB762256E74C48B124D1
-        public IUpdate WithoutPublicIpAddress()
+        public IUpdate WithoutPublicIPAddress()
         {
             return WithoutPublicFrontend();
         }
 
         ///GENMHASH:FE2FB4C2B86589D7D187246933236472:D02F16FB7F9F848339457F517542934A
-        public ApplicationGatewayImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
+        public ApplicationGatewayImpl WithNewPublicIPAddress(ICreatable<IPublicIPAddress> creatable)
         {
             string name = EnsureDefaultPublicFrontend().Name();
             creatablePipsByFrontend[name] = creatable.Key;
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:9865456A38EDF249959594524980AA77:4ACB26EDB3DFCE615E1000808D779EBD
-        public ApplicationGatewayImpl WithNewPublicIpAddress()
+        public ApplicationGatewayImpl WithNewPublicIPAddress()
         {
             EnsureDefaultPublicFrontend();
             return this;
@@ -659,16 +659,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:B03DC94A2FEC619005CBF1692FC52F0D
-        public ApplicationGatewayImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        public ApplicationGatewayImpl WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            EnsureDefaultPublicFrontend().WithExistingPublicIpAddress(publicIpAddress);
+            EnsureDefaultPublicFrontend().WithExistingPublicIPAddress(publicIPAddress);
             return this;
         }
 
         ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:ABD548EA6D6FF93E5050DE383F0864FE
-        public ApplicationGatewayImpl WithExistingPublicIpAddress(string resourceId)
+        public ApplicationGatewayImpl WithExistingPublicIPAddress(string resourceId)
         {
-            EnsureDefaultPublicFrontend().WithExistingPublicIpAddress(resourceId);
+            EnsureDefaultPublicFrontend().WithExistingPublicIPAddress(resourceId);
             return this;
         }
 
@@ -727,9 +727,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:EA98B464B10BD645EE3B0689825B43B8:9153A57100FB410376A86235E5F5CDBD
-        public ApplicationGatewayImpl WithPrivateIpAddressDynamic()
+        public ApplicationGatewayImpl WithPrivateIPAddressDynamic()
         {
-            EnsureDefaultPrivateFrontend().WithPrivateIpAddressDynamic();
+            EnsureDefaultPrivateFrontend().WithPrivateIPAddressDynamic();
             return this;
         }
 
@@ -752,9 +752,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:6CDEF6BE4432158ED3F8917E000EAD56:DB1402301D8518CEB5A0AE73F525CC10
-        public ApplicationGatewayImpl WithPrivateIpAddressStatic(string ipAddress)
+        public ApplicationGatewayImpl WithPrivateIPAddressStatic(string ipAddress)
         {
-            EnsureDefaultPrivateFrontend().WithPrivateIpAddressStatic(ipAddress);
+            EnsureDefaultPrivateFrontend().WithPrivateIPAddressStatic(ipAddress);
             return this;
         }
 
@@ -765,17 +765,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region IPConfigurations
 
         ///GENMHASH:5D0DD8101FDDEC22F1DD348B5DADC47F:0DDB5F3E565736FD6F95B08EE958E156
-        public ApplicationGatewayIpConfigurationImpl DefineDefaultIpConfiguration()
+        public ApplicationGatewayIPConfigurationImpl DefineDefaultIPConfiguration()
         {
-            return EnsureDefaultIpConfig();
+            return EnsureDefaultIPConfig();
         }
 
         ///GENMHASH:405FE49F57EE4AB4C0F91D84030D1DDA:F543E5F094A29330FBE6AE2B7D8F7B7A
-        public ApplicationGatewayIpConfigurationImpl UpdateIpConfiguration(string ipConfigurationName)
+        public ApplicationGatewayIPConfigurationImpl UpdateIPConfiguration(string ipConfigurationName)
         {
-            IApplicationGatewayIpConfiguration config = null;
+            IApplicationGatewayIPConfiguration config = null;
             ipConfigs.TryGetValue(ipConfigurationName, out config);
-            return (ApplicationGatewayIpConfigurationImpl)config;
+            return (ApplicationGatewayIPConfigurationImpl)config;
         }
 
         ///GENMHASH:639D88327F2B6C934F976C743B318B50:3E294A29C2E6177D4AADBC61A2C83DBC
@@ -786,52 +786,52 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:B68122A3AE9F806751DFE2AC77E699AF:5A184EBE0BAD48996EE3C74365B62FA5
-        public ApplicationGatewayIpConfigurationImpl UpdateDefaultIpConfiguration()
+        public ApplicationGatewayIPConfigurationImpl UpdateDefaultIPConfiguration()
         {
-            return (ApplicationGatewayIpConfigurationImpl)DefaultIpConfiguration();
+            return (ApplicationGatewayIPConfigurationImpl)DefaultIPConfiguration();
         }
 
         ///GENMHASH:EE79C3B68C4C6A99234BB004EDCAD67A:75C2DBDE4D61EDB193493A39766B60EE
         public ApplicationGatewayImpl WithExistingSubnet(ISubnet subnet)
         {
-            EnsureDefaultIpConfig().WithExistingSubnet(subnet);
+            EnsureDefaultIPConfig().WithExistingSubnet(subnet);
             return this;
         }
 
         ///GENMHASH:5647899224D30C7B5E1FDCD2D9AAB1DB:E44EB8F969AE406A3CE854143982FB65
         public ApplicationGatewayImpl WithExistingSubnet(INetwork network, string subnetName)
         {
-            EnsureDefaultIpConfig().WithExistingSubnet(network, subnetName);
+            EnsureDefaultIPConfig().WithExistingSubnet(network, subnetName);
             return this;
         }
 
         ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:7246BAAE40C91731DF4E96029B3FA2BA
         public ApplicationGatewayImpl WithExistingSubnet(string networkResourceId, string subnetName)
         {
-            EnsureDefaultIpConfig().WithExistingSubnet(networkResourceId, subnetName);
+            EnsureDefaultIPConfig().WithExistingSubnet(networkResourceId, subnetName);
             return this;
         }
 
         ///GENMHASH:E38530BE2EC4569C8D62DB8CEB4AD38F:90CC3E1EEF35BDBB9152B8B5149B04E0
-        private ApplicationGatewayIpConfigurationImpl DefineIpConfiguration(string name)
+        private ApplicationGatewayIPConfigurationImpl DefineIPConfiguration(string name)
         {
-            IApplicationGatewayIpConfiguration config = null;
+            IApplicationGatewayIPConfiguration config = null;
             if (!ipConfigs.TryGetValue(name, out config))
             {
                 var inner = new ApplicationGatewayIPConfigurationInner()
                 {
                     Name = name
                 };
-                return new ApplicationGatewayIpConfigurationImpl(inner, this);
+                return new ApplicationGatewayIPConfigurationImpl(inner, this);
             }
             else
             {
-                return (ApplicationGatewayIpConfigurationImpl)config;
+                return (ApplicationGatewayIPConfigurationImpl)config;
             }
         }
 
         ///GENMHASH:A3E0AFFD41A48AADA625D444BDC4B639:D755BC44A5AE232FE3D5AB7294B7260E
-        public ApplicationGatewayImpl WithoutIpConfiguration(string ipConfigurationName)
+        public ApplicationGatewayImpl WithoutIPConfiguration(string ipConfigurationName)
         {
             ipConfigs.Remove(ipConfigurationName);
             return this;
@@ -977,7 +977,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Helpers
 
         ///GENMHASH:80375A07B813FDE5A15028546D4FB694:130D5B3A30C34F066046287000EF7300
-        internal ApplicationGatewayImpl WithConfig(ApplicationGatewayIpConfigurationImpl config)
+        internal ApplicationGatewayImpl WithConfig(ApplicationGatewayIPConfigurationImpl config)
         {
             if (config != null)
             {
@@ -1023,29 +1023,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Determine if a default public frontend PIP should be created
             ApplicationGatewayFrontendImpl defaultPublicFrontend = (ApplicationGatewayFrontendImpl)DefaultPublicFrontend();
-            if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIpAddressId() == null)
+            if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIPAddressId() == null)
             {
                 // If default public frontend requested but no PIP specified, create one
                 ///GENMHASH:D232B3BB0D86D13CC0B242F4000DBF07:97DF71BC11CE54F5F4736C975A273A63
                 Task pipTask = EnsureDefaultPipDefinition().CreateAsync().ContinueWith(
                     antecedent => {
-                        var publicIp = antecedent.Result;
+                        var publicIP = antecedent.Result;
                         // Attach the created PIP when available
-                        defaultPublicFrontend.WithExistingPublicIpAddress(publicIp);
+                        defaultPublicFrontend.WithExistingPublicIPAddress(publicIP);
                     });
                 tasks.Add(pipTask);
             }
 
             // Determine if default VNet should be created
-            var defaultIpConfig = EnsureDefaultIpConfig();
+            var defaultIPConfig = EnsureDefaultIPConfig();
             var defaultPrivateFrontend = (ApplicationGatewayFrontendImpl)DefaultPrivateFrontend();
-            if (defaultIpConfig.SubnetName() != null)
+            if (defaultIPConfig.SubnetName() != null)
             {
                 // If default IP config already has a subnet assigned to it...
                 if (defaultPrivateFrontend != null)
                 {
                     // ...And a private frontend is requested, then use the same vnet for the private frontend
-                    UseSubnetFromIpConfigForFrontend(defaultIpConfig, defaultPrivateFrontend);
+                    UseSubnetFromIPConfigForFrontend(defaultIPConfig, defaultPrivateFrontend);
                 }
 
                 // ...And no need to create a default VNet
@@ -1058,7 +1058,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 {
                     //... and assign the created VNet to the default IP config
                     var network = antecedent.Result;
-                    defaultIpConfig.WithExistingSubnet(network, DEFAULT);
+                    defaultIPConfig.WithExistingSubnet(network, DEFAULT);
                     if (defaultPrivateFrontend != null)
                     {
                         // If a private frontend is also requested, then use the same VNet for the private frontend as for the IP config
@@ -1068,7 +1068,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                          * have to be the same. This may need to be revisited in the future however, as this is somewhat inconsistent
                          * with what the documentation says.
                          */
-                        UseSubnetFromIpConfigForFrontend(defaultIpConfig, defaultPrivateFrontend);
+                        UseSubnetFromIPConfigForFrontend(defaultIPConfig, defaultPrivateFrontend);
                     }
                 });
                 tasks.Add(networkTask);
@@ -1129,20 +1129,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7C4E822443AEFDF724B915FEB1AC8939:758E11F2064BDF9569DB0F6BEDA69EF2
-        private static ApplicationGatewayFrontendImpl UseSubnetFromIpConfigForFrontend(
-            ApplicationGatewayIpConfigurationImpl ipConfig,
+        private static ApplicationGatewayFrontendImpl UseSubnetFromIPConfigForFrontend(
+            ApplicationGatewayIPConfigurationImpl ipConfig,
             ApplicationGatewayFrontendImpl frontend)
         {
             if (frontend != null)
             {
                 frontend.WithExistingSubnet(ipConfig.NetworkId(), ipConfig.SubnetName());
-                if (frontend.PrivateIpAddress() == null)
+                if (frontend.PrivateIPAddress() == null)
                 {
-                    frontend.WithPrivateIpAddressDynamic();
+                    frontend.WithPrivateIPAddressDynamic();
                 }
-                else if (frontend.PrivateIpAllocationMethod() == null)
+                else if (frontend.PrivateIPAllocationMethod() == null)
                 {
-                    frontend.WithPrivateIpAddressDynamic();
+                    frontend.WithPrivateIPAddressDynamic();
                 }
             }
 
@@ -1156,13 +1156,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             foreach (var frontendPipPair in creatablePipsByFrontend)
             {
                 var createdPip = CreatedResource(frontendPipPair.Value);
-                UpdateFrontend(frontendPipPair.Key).WithExistingPublicIpAddress(createdPip.Id);
+                UpdateFrontend(frontendPipPair.Key).WithExistingPublicIPAddress(createdPip.Id);
             }
             creatablePipsByFrontend.Clear();
 
             // Reset and update IP configs
-            EnsureDefaultIpConfig();
-            Inner.GatewayIPConfigurations = InnersFromWrappers<ApplicationGatewayIPConfigurationInner, IApplicationGatewayIpConfiguration>(ipConfigs.Values);
+            EnsureDefaultIPConfig();
+            Inner.GatewayIPConfigurations = InnersFromWrappers<ApplicationGatewayIPConfigurationInner, IApplicationGatewayIPConfiguration>(ipConfigs.Values);
 
             // Reset and update frontends
             Inner.FrontendIPConfigurations = InnersFromWrappers<ApplicationGatewayFrontendIPConfigurationInner, IApplicationGatewayFrontend>(frontends.Values);
@@ -1281,7 +1281,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4AC8CF7D9CB1EC685C6E9B19CE307C6F:EA1960DD08CE81963CC51EC4948132A2
         private SubResource DefaultSubnetRef()
         {
-            var ipConfig = DefaultIpConfiguration();
+            var ipConfig = DefaultIPConfiguration();
             return (ipConfig != null) ? ipConfig.Inner.Subnet : null;
         }
 
@@ -1313,12 +1313,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return enumerator.Current;
         }
 
-        private ICreatable<IPublicIpAddress> EnsureDefaultPipDefinition()
+        private ICreatable<IPublicIPAddress> EnsureDefaultPipDefinition()
         {
             if (creatablePip == null)
             {
                 string pipName = SdkContext.RandomResourceName("pip", 9);
-                creatablePip = Manager.PublicIpAddresses.Define(pipName)
+                creatablePip = Manager.PublicIPAddresses.Define(pipName)
                     .WithRegion(RegionName)
                     .WithExistingResourceGroup(ResourceGroupName);
             }
@@ -1392,13 +1392,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:CC9715A22AECD112176C927FAD1E7A41:878620025FD4DBD54E68E653EC6A401A
-        private ApplicationGatewayIpConfigurationImpl EnsureDefaultIpConfig()
+        private ApplicationGatewayIPConfigurationImpl EnsureDefaultIPConfig()
         {
-            ApplicationGatewayIpConfigurationImpl ipConfig = (ApplicationGatewayIpConfigurationImpl) DefaultIpConfiguration();
+            ApplicationGatewayIPConfigurationImpl ipConfig = (ApplicationGatewayIPConfigurationImpl) DefaultIPConfiguration();
             if (ipConfig == null)
             {
                 string name = SdkContext.RandomResourceName("ipcfg", 11);
-                ipConfig = DefineIpConfiguration(name);
+                ipConfig = DefineIPConfiguration(name);
                 ipConfig.Attach();
             }
 
@@ -1424,13 +1424,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D10DEC59828FEAE61D059EA56D310BFE:AB6C127A63CD705630463C82659E7115
         private void InitializeConfigsFromInner()
         {
-            ipConfigs = new Dictionary<string, IApplicationGatewayIpConfiguration>();
+            ipConfigs = new Dictionary<string, IApplicationGatewayIPConfiguration>();
             var inners = Inner.GatewayIPConfigurations;
             if (inners != null)
             {
                 foreach (var inner in inners)
                 {
-                    var config = new ApplicationGatewayIpConfigurationImpl(inner, this);
+                    var config = new ApplicationGatewayIPConfigurationImpl(inner, this);
                     ipConfigs[inner.Name] = config;
                 }
             }

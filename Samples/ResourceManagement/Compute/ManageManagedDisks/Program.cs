@@ -42,8 +42,8 @@ namespace ManageManagedDisks
                         .WithRegion(region)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(linuxVM1Pip)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(linuxVM1Pip)
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(userName)
                         .WithSsh(sshkey)
@@ -101,8 +101,8 @@ namespace ManageManagedDisks
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(linuxVM2Pip)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(linuxVM2Pip)
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(userName)
                         .WithSsh(sshkey)
@@ -160,8 +160,8 @@ namespace ManageManagedDisks
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithLinuxCustomImage(virtualMachineCustomImage.Id)
                         .WithRootUsername(userName)
                         .WithSsh(sshkey)
@@ -183,8 +183,8 @@ namespace ManageManagedDisks
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithSpecializedOsUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
@@ -268,8 +268,8 @@ namespace ManageManagedDisks
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithoutPrimaryPublicIpAddress()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
                         .WithSpecializedOsDisk(newOSDisk, OperatingSystemTypes.Linux)
                         .WithExistingDataDisk(newDataDisk)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
@@ -287,8 +287,8 @@ namespace ManageManagedDisks
                         .WithRegion(region)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(linuxVM7Pip)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(linuxVM7Pip)
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername("tirekicker")
                         .WithSsh(sshkey)
@@ -366,8 +366,8 @@ namespace ManageManagedDisks
                     .WithRegion(region)
                     .WithNewResourceGroup(rgName)
                     .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithNewPrimaryPublicIPAddress(publicIpDnsLabel)
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername(userName)
                     .WithRootPassword(password)
@@ -384,7 +384,7 @@ namespace ManageManagedDisks
                     .Create();
 
             // De-provision the virtual machine
-            Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
+            Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIPAddress().Fqdn, 22, userName, password);
             Utilities.Log("Deallocate VM: " + linuxVM.Id);
             linuxVM.Deallocate();
             Utilities.Log("Deallocated VM: " + linuxVM.Id + "; state = " + linuxVM.PowerState);
@@ -405,8 +405,8 @@ namespace ManageManagedDisks
                     .WithRegion(region)
                     .WithNewResourceGroup(rgName)
                     .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithNewPrimaryPublicIPAddress(publicIpDnsLabel)
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername(userName)
                     .WithRootPassword(password)
@@ -416,7 +416,7 @@ namespace ManageManagedDisks
                     .Create();
 
             // De-provision the virtual machine
-            Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, userName, password);
+            Utilities.DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIPAddress().Fqdn, 22, userName, password);
             Utilities.Log("Deallocate VM: " + linuxVM.Id);
             linuxVM.Deallocate();
             Utilities.Log("Deallocated VM: " + linuxVM.Id + "; state = " + linuxVM.PowerState);
@@ -455,7 +455,7 @@ namespace ManageManagedDisks
             var natPool60XXto23 = "natPool60XXto23";
             var publicIpName = "pip-" + loadBalancerName1;
 
-            var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName)
+            var publicIpAddress = azure.PublicIPAddresses.Define(publicIpName)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
                     .WithLeafDomainLabel(publicIpName)
@@ -464,7 +464,7 @@ namespace ManageManagedDisks
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
                     .DefinePublicFrontend(frontendName)
-                    .WithExistingPublicIpAddress(publicIpAddress)
+                    .WithExistingPublicIPAddress(publicIpAddress)
                     .Attach()
                     // Add two backend one per rule
                     .DefineBackend(backendPoolName1)

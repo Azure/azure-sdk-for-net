@@ -102,9 +102,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPrimaryPublicIpAddress(creatable) as NetworkInterface.Update.IUpdate;
+            return this.WithNewPrimaryPublicIPAddress(creatable) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// if there is an existing public IP association then that will be removed in favour of this.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress()
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress()
         {
-            return this.WithNewPrimaryPublicIpAddress() as NetworkInterface.Update.IUpdate;
+            return this.WithNewPrimaryPublicIPAddress() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
@@ -127,29 +127,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPrimaryPublicIpAddress(leafDnsLabel) as NetworkInterface.Update.IUpdate;
+            return this.WithNewPrimaryPublicIPAddress(leafDnsLabel) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that remove any public IP associated with the network interface's primary IP configuration.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithoutPrimaryPublicIpAddress()
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIPAddress.WithoutPrimaryPublicIPAddress()
         {
-            return this.WithoutPrimaryPublicIpAddress() as NetworkInterface.Update.IUpdate;
+            return this.WithoutPrimaryPublicIPAddress() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the network interface's primary IP configuration.
         /// if there is an existing public IP association then that will be removed in favour of this.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIPAddress.WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPrimaryPublicIpAddress(publicIpAddress) as NetworkInterface.Update.IUpdate;
+            return this.WithExistingPrimaryPublicIPAddress(publicIPAddress) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPrimaryPublicIpAddress(creatable) as NetworkInterface.Definition.IWithCreate;
+            return this.WithNewPrimaryPublicIPAddress(creatable) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -169,9 +169,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// the internal name and DNS label for the public IP address will be derived from the network interface name.
         /// </summary>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress()
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress()
         {
-            return this.WithNewPrimaryPublicIpAddress() as NetworkInterface.Definition.IWithCreate;
+            return this.WithNewPrimaryPublicIPAddress() as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -181,19 +181,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPrimaryPublicIpAddress(leafDnsLabel) as NetworkInterface.Definition.IWithCreate;
+            return this.WithNewPrimaryPublicIPAddress(leafDnsLabel) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIPAddress.WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPrimaryPublicIpAddress(publicIpAddress) as NetworkInterface.Definition.IWithCreate;
+            return this.WithExistingPrimaryPublicIPAddress(publicIPAddress) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -201,23 +201,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
         /// <return>The next stage of network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic()
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPrivateIP.WithPrimaryPrivateIPAddressDynamic()
         {
-            return this.WithPrimaryPrivateIpAddressDynamic() as NetworkInterface.Update.IUpdate;
+            return this.WithPrimaryPrivateIPAddressDynamic() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network
         /// subnet to the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="staticPrivateIpAddress">
+        /// <param name="staticPrivateIPAddress">
         /// The static IP address within the specified subnet to assign to
         /// the primary IP configuration.
         /// </param>
         /// <return>The next stage of network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPrivateIP.WithPrimaryPrivateIPAddressStatic(string staticPrivateIPAddress)
         {
-            return this.WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress) as NetworkInterface.Update.IUpdate;
+            return this.WithPrimaryPrivateIPAddressStatic(staticPrivateIPAddress) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
@@ -225,32 +225,32 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
         /// <return>The next stage of network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic()
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPrivateIP.WithPrimaryPrivateIPAddressDynamic()
         {
-            return this.WithPrimaryPrivateIpAddressDynamic() as NetworkInterface.Definition.IWithCreate;
+            return this.WithPrimaryPrivateIPAddressDynamic() as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network
         /// subnet to the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="staticPrivateIpAddress">
+        /// <param name="staticPrivateIPAddress">
         /// The static IP address within the specified subnet to assign to
         /// the network interface.
         /// </param>
         /// <return>The next stage of network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPrivateIP.WithPrimaryPrivateIPAddressStatic(string staticPrivateIPAddress)
         {
-            return this.WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress) as NetworkInterface.Definition.IWithCreate;
+            return this.WithPrimaryPrivateIPAddressStatic(staticPrivateIPAddress) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Enable IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithCreate.WithIpForwarding()
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithCreate.WithIPForwarding()
         {
-            return this.WithIpForwarding() as NetworkInterface.Definition.IWithCreate;
+            return this.WithIPForwarding() as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -282,11 +282,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the private IP addresses.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIp
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIP
         {
             get
             {
-                return this.PrimaryPrivateIp();
+                return this.PrimaryPrivateIP();
             }
         }
 
@@ -330,11 +330,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
         /// </summary>
-        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIpForwardingEnabled
+        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIPForwardingEnabled
         {
             get
             {
-                return this.IsIpForwardingEnabled();
+                return this.IsIPForwardingEnabled();
             }
         }
 
@@ -352,11 +352,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP configurations of this network interface, indexed by their names.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.IpConfigurations
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.IPConfigurations
         {
             get
             {
-                return this.IpConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration>;
+                return this.IPConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration>;
             }
         }
 
@@ -374,11 +374,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the primary IP configuration of this network interface.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryIpConfiguration
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryIPConfiguration
         {
             get
             {
-                return this.PrimaryIpConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration;
+                return this.PrimaryIPConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration;
             }
         }
 
@@ -407,11 +407,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
         /// primary IP configuration.
         /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIPAllocationMethod
         {
             get
             {
-                return this.PrimaryPrivateIpAllocationMethod();
+                return this.PrimaryPrivateIPAllocationMethod();
             }
         }
 
@@ -505,9 +505,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
         /// <return>The first stage of a secondary IP configuration definition.</return>
-        NicIpConfiguration.Definition.IBlank<NetworkInterface.Definition.IWithCreate> NetworkInterface.Definition.IWithSecondaryIpConfiguration.DefineSecondaryIpConfiguration(string name)
+        NicIPConfiguration.Definition.IBlank<NetworkInterface.Definition.IWithCreate> NetworkInterface.Definition.IWithSecondaryIPConfiguration.DefineSecondaryIPConfiguration(string name)
         {
-            return this.DefineSecondaryIpConfiguration(name) as NicIpConfiguration.Definition.IBlank<NetworkInterface.Definition.IWithCreate>;
+            return this.DefineSecondaryIPConfiguration(name) as NicIPConfiguration.Definition.IBlank<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -526,9 +526,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
+        NetworkInterface.Definition.IWithPrimaryPrivateIP NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
-            return this.WithNewPrimaryNetwork(creatable) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
+            return this.WithNewPrimaryNetwork(creatable) as NetworkInterface.Definition.IWithPrimaryPrivateIP;
         }
 
         /// <summary>
@@ -540,9 +540,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string name, string addressSpace)
+        NetworkInterface.Definition.IWithPrimaryPrivateIP NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string name, string addressSpace)
         {
-            return this.WithNewPrimaryNetwork(name, addressSpace) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
+            return this.WithNewPrimaryNetwork(name, addressSpace) as NetworkInterface.Definition.IWithPrimaryPrivateIP;
         }
 
         /// <summary>
@@ -553,9 +553,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string addressSpace)
+        NetworkInterface.Definition.IWithPrimaryPrivateIP NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string addressSpace)
         {
-            return this.WithNewPrimaryNetwork(addressSpace) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
+            return this.WithNewPrimaryNetwork(addressSpace) as NetworkInterface.Definition.IWithPrimaryPrivateIP;
         }
 
         /// <summary>
@@ -563,9 +563,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">Name of the IP configuration.</param>
         /// <return>The first stage of an IP configuration update.</return>
-        NicIpConfiguration.Update.IUpdate NetworkInterface.Update.IWithIpConfiguration.UpdateIpConfiguration(string name)
+        NicIPConfiguration.Update.IUpdate NetworkInterface.Update.IWithIPConfiguration.UpdateIPConfiguration(string name)
         {
-            return this.UpdateIpConfiguration(name) as NicIpConfiguration.Update.IUpdate;
+            return this.UpdateIPConfiguration(name) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -573,9 +573,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
         /// <return>The first stage of a secondary IP configuration definition.</return>
-        NicIpConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate> NetworkInterface.Update.IWithIpConfiguration.DefineSecondaryIpConfiguration(string name)
+        NicIPConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate> NetworkInterface.Update.IWithIPConfiguration.DefineSecondaryIPConfiguration(string name)
         {
-            return this.DefineSecondaryIpConfiguration(name) as NicIpConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate>;
+            return this.DefineSecondaryIPConfiguration(name) as NicIPConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -593,9 +593,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The subnet name.</param>
         /// <return>The next stage of the network interface definition.</return>
-        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet(string name)
+        NetworkInterface.Definition.IWithPrimaryPrivateIP NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet(string name)
         {
-            return this.WithSubnet(name) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
+            return this.WithSubnet(name) as NetworkInterface.Definition.IWithPrimaryPrivateIP;
         }
 
         /// <summary>
@@ -611,18 +611,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enable IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIpForwarding.WithIpForwarding()
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIPForwarding.WithIPForwarding()
         {
-            return this.WithIpForwarding() as NetworkInterface.Update.IUpdate;
+            return this.WithIPForwarding() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Disable IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIpForwarding.WithoutIpForwarding()
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIPForwarding.WithoutIPForwarding()
         {
-            return this.WithoutIpForwarding() as NetworkInterface.Update.IUpdate;
+            return this.WithoutIPForwarding() as NetworkInterface.Update.IUpdate;
         }
     }
 }

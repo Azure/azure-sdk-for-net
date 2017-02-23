@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
         /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
         /// <return>The next stage of the public IP address definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithoutLeafDomainLabel();
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithoutLeafDomainLabel();
 
         /// <summary>
         /// Specifies the leaf domain label to associate with this public IP address.
@@ -26,35 +26,35 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
         /// </summary>
         /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
         /// <return>The next stage of the public IP address definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithLeafDomainLabel(string dnsName);
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithLeafDomainLabel(string dnsName);
     }
 
     /// <summary>
     /// The first stage of a public IP address definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup>
     {
     }
 
     /// <summary>
     /// A public IP address definition allowing to set the IP allocation method (static or dynamic).
     /// </summary>
-    public interface IWithIpAddress 
+    public interface IWithIPAddress 
     {
         /// <summary>
         /// Enables static IP address allocation.
-        /// Use PublicIpAddress.ipAddress() after the public IP address is created to obtain the
+        /// Use PublicIPAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
         /// <return>The next stage of the public IP address definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithStaticIp();
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithStaticIP();
 
         /// <summary>
         /// Enables dynamic IP address allocation.
         /// </summary>
         /// <return>The next stage of the public IP address definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithDynamicIp();
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithDynamicIP();
     }
 
     /// <summary>
@@ -67,13 +67,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
         /// </summary>
         /// <param name="reverseFQDN">The reverse FQDN to assign.</param>
         /// <return>The next stage of the resource definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithReverseFqdn(string reverseFQDN);
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithReverseFqdn(string reverseFQDN);
 
         /// <summary>
         /// Ensures that no reverse FQDN will be used.
         /// </summary>
         /// <return>The next stage of the resource definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithoutReverseFqdn();
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithoutReverseFqdn();
     }
 
     /// <summary>
@@ -86,14 +86,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
         /// </summary>
         /// <param name="minutes">The length of the time out in minutes.</param>
         /// <return>The next stage of the resource definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithIdleTimeoutInMinutes(int minutes);
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithIdleTimeoutInMinutes(int minutes);
     }
 
     /// <summary>
     /// The stage of the public IP address definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate>
+        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
     {
     }
 
@@ -103,12 +103,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
+        ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         IWithLeafDomainLabel,
-        IWithIpAddress,
+        IWithIPAddress,
         IWithReverseFQDN,
         IWithIdleTimeout,
-        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate>
+        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
     {
     }
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithGroup,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup,
         IWithCreate
     {
     }

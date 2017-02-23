@@ -18,15 +18,15 @@ namespace Azure.Tests.Network.ApplicationGateway
     /// </summary>
     public class PublicComplex : TestTemplate<IApplicationGateway, IApplicationGateways, INetworkManager>
     {
-        private List<IPublicIpAddress> testPips;
+        private List<IPublicIPAddress> testPips;
         private ApplicationGatewayHelper applicationGatewayHelper;
 
-        public PublicComplex(IPublicIpAddresses pips,
+        public PublicComplex(IPublicIPAddresses pips,
             [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             applicationGatewayHelper = new ApplicationGatewayHelper(TestUtilities.GenerateName("", methodName));
-            testPips = new List<IPublicIpAddress>(applicationGatewayHelper.EnsurePIPs(pips));
+            testPips = new List<IPublicIPAddress>(applicationGatewayHelper.EnsurePIPs(pips));
         }
 
         public override void Print(IApplicationGateway resource)
@@ -50,8 +50,8 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .ToBackendHttpPort(8080)
                         .ToBackendFqdn("www.microsoft.com")
                         .ToBackendFqdn("www.example.com")
-                        .ToBackendIpAddress("11.1.1.1")
-                        .ToBackendIpAddress("11.1.1.2")
+                        .ToBackendIPAddress("11.1.1.1")
+                        .ToBackendIPAddress("11.1.1.2")
                         .WithCookieBasedAffinity()
                         .Attach()
                     .DefineRequestRoutingRule("rule443")
@@ -76,8 +76,8 @@ namespace Azure.Tests.Network.ApplicationGateway
 
                     // Additional/explicit backends
                     .DefineBackend("backend1")
-                        .WithIpAddress("11.1.1.1")
-                        .WithIpAddress("11.1.1.2")
+                        .WithIPAddress("11.1.1.1")
+                        .WithIPAddress("11.1.1.2")
                         .Attach()
 
                     // Additional/explicit frontend listeners
@@ -91,7 +91,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .WithHostName("www.fabricam.com")
                         .Attach()
 
-                    .WithExistingPublicIpAddress(testPips[0])
+                    .WithExistingPublicIPAddress(testPips[0])
                     .WithSize(ApplicationGatewaySkuName.StandardMedium)
                     .WithInstanceCount(2)
                     .Create();
@@ -109,7 +109,7 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(ApplicationGatewayTier.Standard, appGateway.Tier);
             Assert.Equal(ApplicationGatewaySkuName.StandardMedium, appGateway.Size);
             Assert.Equal(appGateway.InstanceCount, 2);
-            Assert.Equal(appGateway.IpConfigurations.Count, 1);
+            Assert.Equal(appGateway.IPConfigurations.Count, 1);
 
             // Verify frontend ports
             Assert.Equal(appGateway.FrontendPorts.Count, 3);
@@ -161,19 +161,19 @@ namespace Azure.Tests.Network.ApplicationGateway
 
             rule = appGateway.RequestRoutingRules["rule80"];
             Assert.NotNull(rule);
-            Assert.Equal(testPips[0].Id, rule.PublicIpAddressId);
+            Assert.Equal(testPips[0].Id, rule.PublicIPAddressId);
             Assert.Equal(rule.FrontendPort, 80);
             Assert.Equal(rule.BackendPort, 8080);
             Assert.True(rule.CookieBasedAffinity);
             Assert.Equal(rule.BackendAddresses.Count, 4);
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.2"));
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.1"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.2"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.1"));
             Assert.True(rule.Backend.ContainsFqdn("www.microsoft.com"));
             Assert.True(rule.Backend.ContainsFqdn("www.example.com"));
 
             rule = appGateway.RequestRoutingRules["rule443"];
             Assert.NotNull(rule);
-            Assert.Equal(testPips[0].Id, rule.PublicIpAddressId);
+            Assert.Equal(testPips[0].Id, rule.PublicIPAddressId);
             Assert.Equal(rule.FrontendPort, 443);
             Assert.Equal(ApplicationGatewayProtocol.Https, rule.FrontendProtocol);
             Assert.NotNull(rule.SslCertificate);

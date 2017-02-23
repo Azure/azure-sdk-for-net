@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes();
 
         /// <return>The resource ID of the public IP address associated with this virtual machine's primary network interface.</return>
-        string GetPrimaryPublicIpAddressId();
+        string GetPrimaryPublicIPAddressId();
 
         /// <summary>
         /// Gets the storage account type of the managed disk backing Os disk.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// note that this method makes a rest API call to fetch the resource.
         /// </summary>
         /// <return>The public IP of the primary network interface.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress GetPrimaryPublicIpAddress();
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress GetPrimaryPublicIPAddress();
 
         /// <summary>
         /// Gets the virtual machine size.

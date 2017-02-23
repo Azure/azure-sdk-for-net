@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
         /// </summary>
-        string EndIpAddress { get; }
+        string EndIPAddress { get; }
 
         /// <summary>
         /// Gets name of the SQL Server to which this firewall rule belongs.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
         /// </summary>
-        string StartIpAddress { get; }
+        string StartIPAddress { get; }
 
         /// <summary>
         /// Deletes the firewall rule.

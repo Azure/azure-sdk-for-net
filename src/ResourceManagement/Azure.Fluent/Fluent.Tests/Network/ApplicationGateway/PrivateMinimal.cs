@@ -44,8 +44,8 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .FromPrivateFrontend()
                     .FromFrontendHttpPort(80)
                     .ToBackendHttpPort(8080)
-                    .ToBackendIpAddress("11.1.1.1")
-                    .ToBackendIpAddress("11.1.1.2")
+                    .ToBackendIPAddress("11.1.1.1")
+                    .ToBackendIPAddress("11.1.1.2")
                     .Attach()
                 .Create();
 
@@ -90,8 +90,8 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.NotNull(rule.Listener.NetworkId);
             Assert.Equal(rule.BackendAddresses.Count, 2);
             Assert.NotNull(rule.Backend);
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.1"));
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.2"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.1"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.2"));
             Assert.Equal(rule.BackendPort, 8080);
 
             return appGateway;
@@ -103,7 +103,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                 .WithInstanceCount(2)
                 .WithSize(ApplicationGatewaySkuName.StandardMedium)
                 .WithFrontendPort(81, "port81")         // Add a new port
-                .WithoutBackendIpAddress("11.1.1.1")    // Remove from all existing backends
+                .WithoutBackendIPAddress("11.1.1.1")    // Remove from all existing backends
                 .DefineListener("listener2")
                     .WithPrivateFrontend()
                     .WithFrontendPort(81)
@@ -112,7 +112,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .WithSslCertificatePassword("Abc123")
                     .Attach()
                 .DefineBackend("backend2")
-                    .WithIpAddress("11.1.1.3")
+                    .WithIPAddress("11.1.1.3")
                     .Attach()
                 .DefineBackendHttpConfiguration("config2")
                     .WithCookieBasedAffinity()
@@ -155,7 +155,7 @@ namespace Azure.Tests.Network.ApplicationGateway
             IApplicationGatewayBackend backend = resource.Backends["backend2"];
             Assert.NotNull(backend);
             Assert.Equal(backend.Addresses.Count, 1);
-            Assert.True(backend.ContainsIpAddress("11.1.1.3"));
+            Assert.True(backend.ContainsIPAddress("11.1.1.3"));
 
             // Verify HTTP configs
             Assert.Equal(resource.BackendHttpConfigurations.Count, 2);

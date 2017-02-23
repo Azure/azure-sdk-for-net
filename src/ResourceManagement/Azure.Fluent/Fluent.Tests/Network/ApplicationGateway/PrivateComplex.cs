@@ -21,16 +21,16 @@ namespace Azure.Tests.Network.ApplicationGateway
     public class PrivateComplex : TestTemplate<IApplicationGateway, IApplicationGateways, INetworkManager>
     {
         private INetworks networks;
-        private List<IPublicIpAddress> testPips;
+        private List<IPublicIPAddress> testPips;
         private ApplicationGatewayHelper applicationGatewayHelper;
 
-        public PrivateComplex(INetworks networks, IPublicIpAddresses pips,
+        public PrivateComplex(INetworks networks, IPublicIPAddresses pips,
             [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             applicationGatewayHelper = new ApplicationGatewayHelper(TestUtilities.GenerateName("", methodName));
             this.networks = networks;
-            testPips = new List<IPublicIpAddress>(applicationGatewayHelper.EnsurePIPs(pips));
+            testPips = new List<IPublicIPAddress>(applicationGatewayHelper.EnsurePIPs(pips));
         }
 
         public override void Print(IApplicationGateway resource)
@@ -61,8 +61,8 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .FromPrivateFrontend()
                         .FromFrontendHttpPort(80)
                         .ToBackendHttpPort(8080)
-                        .ToBackendIpAddress("11.1.1.1")
-                        .ToBackendIpAddress("11.1.1.2")
+                        .ToBackendIPAddress("11.1.1.1")
+                        .ToBackendIPAddress("11.1.1.2")
                         .WithCookieBasedAffinity()
                         .Attach()
                     .DefineRequestRoutingRule("rule443")
@@ -89,8 +89,8 @@ namespace Azure.Tests.Network.ApplicationGateway
 
                     // Additional/explicit backends
                     .DefineBackend("backend1")
-                        .WithIpAddress("11.1.1.3")
-                        .WithIpAddress("11.1.1.4")
+                        .WithIPAddress("11.1.1.3")
+                        .WithIPAddress("11.1.1.4")
                         .Attach()
                     .DefineBackend("backend2")
                         .Attach()
@@ -129,7 +129,7 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(appGateway.InstanceCount, 2);
             Assert.False(appGateway.IsPublic);
             Assert.True(appGateway.IsPrivate);
-            Assert.Equal(appGateway.IpConfigurations.Count, 1);
+            Assert.Equal(appGateway.IPConfigurations.Count, 1);
 
             // Verify frontend ports
             Assert.Equal(appGateway.FrontendPorts.Count, 3);
@@ -174,8 +174,8 @@ namespace Azure.Tests.Network.ApplicationGateway
             IApplicationGatewayBackend backend = appGateway.Backends["backend1"];
             Assert.NotNull(backend);
             Assert.Equal(backend.Addresses.Count, 2);
-            Assert.True(backend.ContainsIpAddress("11.1.1.3"));
-            Assert.True(backend.ContainsIpAddress("11.1.1.4"));
+            Assert.True(backend.ContainsIPAddress("11.1.1.3"));
+            Assert.True(backend.ContainsIPAddress("11.1.1.4"));
             Assert.True(appGateway.Backends.ContainsKey("backend2"));
 
             // Verify request routing rules
@@ -189,8 +189,8 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(rule.BackendPort, 8080);
             Assert.True(rule.CookieBasedAffinity);
             Assert.Equal(rule.BackendAddresses.Count, 2);
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.1"));
-            Assert.True(rule.Backend.ContainsIpAddress("11.1.1.2"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.1"));
+            Assert.True(rule.Backend.ContainsIPAddress("11.1.1.2"));
 
             rule = appGateway.RequestRoutingRules["rule443"];
             Assert.NotNull(rule);
@@ -234,7 +234,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                 .WithInstanceCount(1)
                 .WithoutFrontendPort(9000)
                 .WithoutListener("listener1")
-                .WithoutBackendIpAddress("11.1.1.4")
+                .WithoutBackendIPAddress("11.1.1.4")
                 .WithoutBackendHttpConfiguration("config2")
                 .WithoutBackend("backend2")
                 .WithoutRequestRoutingRule("rule9000")
@@ -248,14 +248,14 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .WithRequestTimeout(20)
                     .Parent()
                 .UpdateBackend("backend1")
-                    .WithoutIpAddress("11.1.1.3")
-                    .WithIpAddress("11.1.1.5")
+                    .WithoutIPAddress("11.1.1.3")
+                    .WithIPAddress("11.1.1.5")
                     .Parent()
                 .UpdateRequestRoutingRule("rule80")
                     .ToBackend("backend1")
                     .ToBackendHttpConfiguration("config1")
                     .Parent()
-                .WithExistingPublicIpAddress(testPips[0]) // Associate with a public IP as well
+                .WithExistingPublicIPAddress(testPips[0]) // Associate with a public IP as well
                 .WithTag("tag1", "value1")
                 .WithTag("tag2", "value2")
                 .Apply();
@@ -290,9 +290,9 @@ namespace Azure.Tests.Network.ApplicationGateway
             IApplicationGatewayBackend backend = resource.Backends["backend1"];
             Assert.NotNull(backend);
             Assert.Equal(backend.Addresses.Count, 1);
-            Assert.True(backend.ContainsIpAddress("11.1.1.5"));
-            Assert.True(!backend.ContainsIpAddress("11.1.1.3"));
-            Assert.True(!backend.ContainsIpAddress("11.1.1.4"));
+            Assert.True(backend.ContainsIPAddress("11.1.1.5"));
+            Assert.True(!backend.ContainsIPAddress("11.1.1.3"));
+            Assert.True(!backend.ContainsIPAddress("11.1.1.4"));
 
             // Verify HTTP configs
             Assert.Equal(resource.BackendHttpConfigurations.Count, configCount - 1);

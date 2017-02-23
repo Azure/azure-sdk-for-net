@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to Soa record sets in a Dns zone.
+    /// Entry point to Soa record sets in a DNS zone.
     /// </summary>
     public interface ISoaRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet>,

@@ -5,23 +5,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure;
     using NetworkInterface.Definition;
     using NetworkInterface.Update;
-    using NicIpConfiguration.Definition;
-    using NicIpConfiguration.Update;
-    using NicIpConfiguration.UpdateDefinition;
+    using NicIPConfiguration.Definition;
+    using NicIPConfiguration.Update;
+    using NicIPConfiguration.UpdateDefinition;
     using Models;
-    using HasPrivateIpAddress.Definition;
-    using HasPrivateIpAddress.UpdateDefinition;
-    using HasPrivateIpAddress.Update;
-    using HasPublicIpAddress.Definition;
-    using HasPublicIpAddress.UpdateDefinition;
-    using HasPublicIpAddress.Update;
+    using HasPrivateIPAddress.Definition;
+    using HasPrivateIPAddress.UpdateDefinition;
+    using HasPrivateIPAddress.Update;
+    using HasPublicIPAddress.Definition;
+    using HasPublicIPAddress.UpdateDefinition;
+    using HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
-    internal partial class NicIpConfigurationImpl 
+    internal partial class NicIPConfigurationImpl 
     {
         /// <summary>
         /// Gets the name of the subnet associated with this resource.
@@ -46,19 +46,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.ListAssociatedLoadBalancerInboundNatRules()
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.ListAssociatedLoadBalancerInboundNatRules()
         {
             return this.ListAssociatedLoadBalancerInboundNatRules() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
         }
 
         /// <return>The load balancer backends associated with this network interface IP configuration.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.ListAssociatedLoadBalancerBackends()
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.ListAssociatedLoadBalancerBackends()
         {
             return this.ListAssociatedLoadBalancerBackends() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
         /// <return>The virtual network associated with this IP configuration.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetwork Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.GetNetwork()
+        Microsoft.Azure.Management.Network.Fluent.INetwork Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.GetNetwork()
         {
             return this.GetNetwork() as Microsoft.Azure.Management.Network.Fluent.INetwork;
         }
@@ -66,11 +66,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
-        IPVersion Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.PrivateIpAddressVersion
+        IPVersion Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.PrivateIPAddressVersion
         {
             get
             {
-                return this.PrivateIpAddressVersion();
+                return this.PrivateIPAddressVersion();
             }
         }
 
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate>.WithPrivateIpVersion(string ipVersion)
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>.WithPrivateIPVersion(string ipVersion)
         {
-            return this.WithPrivateIpVersion(ipVersion) as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+            return this.WithPrivateIPVersion(ipVersion) as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -89,27 +89,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate>.WithPrivateIpVersion(string ipVersion)
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>.WithPrivateIPVersion(string ipVersion)
         {
-            return this.WithPrivateIpVersion(ipVersion) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithPrivateIPVersion(ipVersion) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Removes all the existing associations with load balancer backends.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate NicIpConfiguration.Update.IWithLoadBalancer.WithoutLoadBalancerBackends()
+        NicIPConfiguration.Update.IUpdate NicIPConfiguration.Update.IWithLoadBalancer.WithoutLoadBalancerBackends()
         {
-            return this.WithoutLoadBalancerBackends() as NicIpConfiguration.Update.IUpdate;
+            return this.WithoutLoadBalancerBackends() as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
         /// Removes all the existing associations with load balancer inbound NAT rules.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate NicIpConfiguration.Update.IWithLoadBalancer.WithoutLoadBalancerInboundNatRules()
+        NicIPConfiguration.Update.IUpdate NicIPConfiguration.Update.IWithLoadBalancer.WithoutLoadBalancerInboundNatRules()
         {
-            return this.WithoutLoadBalancerInboundNatRules() as NicIpConfiguration.Update.IUpdate;
+            return this.WithoutLoadBalancerInboundNatRules() as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate NicIpConfiguration.Update.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        NicIPConfiguration.Update.IUpdate NicIPConfiguration.Update.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
         {
-            return this.WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName) as NicIpConfiguration.Update.IUpdate;
+            return this.WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="backendName">The name of an existing backend on that load balancer.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate NicIpConfiguration.Update.IWithLoadBalancer.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
+        NicIPConfiguration.Update.IUpdate NicIPConfiguration.Update.IWithLoadBalancer.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
         {
-            return this.WithExistingLoadBalancerBackend(loadBalancer, backendName) as NicIpConfiguration.Update.IUpdate;
+            return this.WithExistingLoadBalancerBackend(loadBalancer, backendName) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -139,18 +139,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate HasPrivateIpAddress.Update.IWithPrivateIpAddress<NicIpConfiguration.Update.IUpdate>.WithPrivateIpAddressStatic(string ipAddress)
+        NicIPConfiguration.Update.IUpdate HasPrivateIPAddress.Update.IWithPrivateIPAddress<NicIPConfiguration.Update.IUpdate>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as NicIpConfiguration.Update.IUpdate;
+            return this.WithPrivateIPAddressStatic(ipAddress) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate HasPrivateIpAddress.Update.IWithPrivateIpAddress<NicIpConfiguration.Update.IUpdate>.WithPrivateIpAddressDynamic()
+        NicIPConfiguration.Update.IUpdate HasPrivateIPAddress.Update.IWithPrivateIPAddress<NicIPConfiguration.Update.IUpdate>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as NicIpConfiguration.Update.IUpdate;
+            return this.WithPrivateIPAddressDynamic() as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -158,18 +158,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithPrivateIpAddressStatic(string ipAddress)
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithPrivateIpAddressDynamic()
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+            return this.WithPrivateIPAddressDynamic() as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -177,18 +177,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPrivateIpAddress.Definition.IWithPrivateIpAddress<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithPrivateIpAddressStatic(string ipAddress)
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIpAddressStatic(ipAddress) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPrivateIpAddress.Definition.IWithPrivateIpAddress<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithPrivateIpAddressDynamic()
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIpAddressDynamic() as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithPrivateIPAddressDynamic() as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The subnet name.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate> NicIpConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate>.WithSubnet(string name)
+        NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate>.WithSubnet(string name)
         {
-            return this.WithSubnet(name) as NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate>;
+            return this.WithSubnet(name) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -206,30 +206,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The subnet name.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate>.WithSubnet(string name)
+        NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate>.WithSubnet(string name)
         {
-            return this.WithSubnet(name) as NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate>;
+            return this.WithSubnet(name) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Gets the private IP address associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAddress
+        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
         {
             get
             {
-                return this.PrivateIpAddress();
+                return this.PrivateIPAddress();
             }
         }
 
         /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PrivateIpAllocationMethod();
+                return this.PrivateIPAllocationMethod();
             }
         }
 
@@ -238,9 +238,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Update.IUpdate HasPublicIpAddress.Update.IWithNewPublicIpAddressNoDnsLabel<NicIpConfiguration.Update.IUpdate>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        NicIPConfiguration.Update.IUpdate HasPublicIPAddress.Update.IWithNewPublicIPAddressNoDnsLabel<NicIPConfiguration.Update.IUpdate>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as NicIpConfiguration.Update.IUpdate;
+            return this.WithNewPublicIPAddress(creatable) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Update.IUpdate HasPublicIpAddress.Update.IWithNewPublicIpAddressNoDnsLabel<NicIpConfiguration.Update.IUpdate>.WithNewPublicIpAddress()
+        NicIPConfiguration.Update.IUpdate HasPublicIPAddress.Update.IWithNewPublicIPAddressNoDnsLabel<NicIPConfiguration.Update.IUpdate>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as NicIpConfiguration.Update.IUpdate;
+            return this.WithNewPublicIPAddress() as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -258,9 +258,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithNewPublicIpAddressNoDnsLabel<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddressNoDnsLabel<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+            return this.WithNewPublicIPAddress(creatable) as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -268,9 +268,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithNewPublicIpAddressNoDnsLabel<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithNewPublicIpAddress()
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddressNoDnsLabel<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+            return this.WithNewPublicIPAddress() as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -278,9 +278,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIpAddress.Definition.IWithNewPublicIpAddressNoDnsLabel<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIpAddress(creatable) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithNewPublicIPAddress(creatable) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -288,9 +288,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIpAddress.Definition.IWithNewPublicIpAddressNoDnsLabel<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithNewPublicIpAddress()
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIpAddress() as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithNewPublicIPAddress() as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -307,9 +307,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate NicIpConfiguration.Update.IWithPrivateIp.WithPrivateIpVersion(string ipVersion)
+        NicIPConfiguration.Update.IUpdate NicIPConfiguration.Update.IWithPrivateIP.WithPrivateIPVersion(string ipVersion)
         {
-            return this.WithPrivateIpVersion(ipVersion) as NicIpConfiguration.Update.IUpdate;
+            return this.WithPrivateIPVersion(ipVersion) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -318,9 +318,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithLoadBalancer<NetworkInterface.Definition.IWithCreate>.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithLoadBalancer<NetworkInterface.Definition.IWithCreate>.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
         {
-            return this.WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -329,9 +329,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="backendName">The name of an existing backend on that load balancer.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithLoadBalancer<NetworkInterface.Definition.IWithCreate>.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithLoadBalancer<NetworkInterface.Definition.IWithCreate>.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
         {
-            return this.WithExistingLoadBalancerBackend(loadBalancer, backendName) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithExistingLoadBalancerBackend(loadBalancer, backendName) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -347,19 +347,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Removes the existing reference to a public IP address.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<NicIpConfiguration.Update.IUpdate>.WithoutPublicIpAddress()
+        NicIPConfiguration.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<NicIPConfiguration.Update.IUpdate>.WithoutPublicIPAddress()
         {
-            return this.WithoutPublicIpAddress() as NicIpConfiguration.Update.IUpdate;
+            return this.WithoutPublicIPAddress() as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the update.</return>
-        NicIpConfiguration.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<NicIpConfiguration.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        NicIPConfiguration.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<NicIPConfiguration.Update.IUpdate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as NicIpConfiguration.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -367,39 +367,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Update.IUpdate HasPublicIpAddress.Update.IWithExistingPublicIpAddress<NicIpConfiguration.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId)
+        NicIPConfiguration.Update.IUpdate HasPublicIPAddress.Update.IWithExistingPublicIPAddress<NicIPConfiguration.Update.IUpdate>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as NicIpConfiguration.Update.IUpdate;
+            return this.WithExistingPublicIPAddress(resourceId) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithExistingPublicIpAddress(string resourceId)
-        {
-            return this.WithExistingPublicIpAddress(resourceId) as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="publicIpAddress">An existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
-        {
-            return this.WithExistingPublicIpAddress(publicIpAddress) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -407,26 +387,46 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithExistingPublicIpAddress(string resourceId)
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIpAddress(resourceId) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithExistingPublicIPAddress(resourceId) as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Associates an existing public IP address with the resource.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
+        {
+            return this.WithExistingPublicIPAddress(publicIPAddress) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Associates an existing public IP address with the resource.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithExistingPublicIPAddress(string resourceId)
+        {
+            return this.WithExistingPublicIPAddress(resourceId) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Gets the resource ID of the associated public IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.PublicIpAddressId
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
         {
             get
             {
-                return this.PublicIpAddressId();
+                return this.PublicIPAddressId();
             }
         }
 
         /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.GetPublicIpAddress()
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
         {
-            return this.GetPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress;
+            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
         }
 
         /// <summary>
@@ -436,9 +436,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Update.IUpdate HasPublicIpAddress.Update.IWithNewPublicIpAddress<NicIpConfiguration.Update.IUpdate>.WithNewPublicIpAddress(string leafDnsLabel)
+        NicIPConfiguration.Update.IUpdate HasPublicIPAddress.Update.IWithNewPublicIPAddress<NicIPConfiguration.Update.IUpdate>.WithNewPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPublicIpAddress(leafDnsLabel) as NicIpConfiguration.Update.IUpdate;
+            return this.WithNewPublicIPAddress(leafDnsLabel) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -448,9 +448,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIpAddress.UpdateDefinition.IWithNewPublicIpAddress<NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithNewPublicIpAddress(string leafDnsLabel)
+        NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddress<NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>>.WithNewPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPublicIpAddress(leafDnsLabel) as NicIpConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
+            return this.WithNewPublicIPAddress(leafDnsLabel) as NicIPConfiguration.UpdateDefinition.IWithAttach<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -460,9 +460,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
-        NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIpAddress.Definition.IWithNewPublicIpAddress<NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithNewPublicIpAddress(string leafDnsLabel)
+        NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithNewPublicIPAddress<NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>>.WithNewPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPublicIpAddress(leafDnsLabel) as NicIpConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
+            return this.WithNewPublicIPAddress(leafDnsLabel) as NicIPConfiguration.Definition.IWithAttach<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -470,9 +470,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The subnet name.</param>
         /// <return>The next stage of the network interface IP configuration update.</return>
-        NicIpConfiguration.Update.IUpdate NicIpConfiguration.Update.IWithSubnet.WithSubnet(string name)
+        NicIPConfiguration.Update.IUpdate NicIPConfiguration.Update.IWithSubnet.WithSubnet(string name)
         {
-            return this.WithSubnet(name) as NicIpConfiguration.Update.IUpdate;
+            return this.WithSubnet(name) as NicIPConfiguration.Update.IUpdate;
         }
 
         /// <summary>
@@ -492,9 +492,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate> NicIpConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
+        NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
-            return this.WithNewNetwork(creatable) as NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate>;
+            return this.WithNewNetwork(creatable) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -506,9 +506,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate> NicIpConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(string name, string addressSpace)
+        NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(string name, string addressSpace)
         {
-            return this.WithNewNetwork(name, addressSpace) as NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate>;
+            return this.WithNewNetwork(name, addressSpace) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -519,9 +519,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate> NicIpConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(string addressSpace)
+        NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(string addressSpace)
         {
-            return this.WithNewNetwork(addressSpace) as NicIpConfiguration.UpdateDefinition.IWithPrivateIp<NetworkInterface.Update.IUpdate>;
+            return this.WithNewNetwork(addressSpace) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -529,9 +529,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate> NicIpConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithExistingNetwork(INetwork network)
+        NicIPConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithExistingNetwork(INetwork network)
         {
-            return this.WithExistingNetwork(network) as NicIpConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate>;
+            return this.WithExistingNetwork(network) as NicIPConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
@@ -540,9 +540,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
+        NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
-            return this.WithNewNetwork(creatable) as NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate>;
+            return this.WithNewNetwork(creatable) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -554,9 +554,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(string name, string addressSpace)
+        NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(string name, string addressSpace)
         {
-            return this.WithNewNetwork(name, addressSpace) as NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate>;
+            return this.WithNewNetwork(name, addressSpace) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -567,9 +567,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(string addressSpace)
+        NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(string addressSpace)
         {
-            return this.WithNewNetwork(addressSpace) as NicIpConfiguration.Definition.IWithPrivateIp<NetworkInterface.Definition.IWithCreate>;
+            return this.WithNewNetwork(addressSpace) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -577,9 +577,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
         /// <return>The next stage of the network interface IP configuration definition.</return>
-        NicIpConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate> NicIpConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithExistingNetwork(INetwork network)
+        NicIPConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithExistingNetwork(INetwork network)
         {
-            return this.WithExistingNetwork(network) as NicIpConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate>;
+            return this.WithExistingNetwork(network) as NicIPConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate>;
         }
     }
 }

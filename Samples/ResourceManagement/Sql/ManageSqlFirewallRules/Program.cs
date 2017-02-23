@@ -13,13 +13,13 @@ namespace ManageSqlFirewallRules
     {
         private static readonly string AdministratorLogin = "sqladmin3423";
         private static readonly string AdministratorPassword = "myS3cureP@ssword";
-        private static readonly string FirewallRuleIpAddress = "10.0.0.1";
-        private static readonly string FirewallRuleStartIpAddress = "10.2.0.1";
-        private static readonly string FirewallRuleEndIpAddress = "10.2.0.10";
+        private static readonly string FirewallRuleIPAddress = "10.0.0.1";
+        private static readonly string FirewallRuleStartIPAddress = "10.2.0.1";
+        private static readonly string FirewallRuleEndIPAddress = "10.2.0.10";
         private static readonly string MyFirewallName = "myFirewallRule";
-        private static readonly string MyFirewallRuleIpAddress = "10.10.10.10";
-        private static readonly string OtherFirewallRuleStartIpAddress = "121.12.12.1";
-        private static readonly string OtherFirewallRuleEndIpAddress = "121.12.12.10";
+        private static readonly string MyFirewallRuleIPAddress = "10.10.10.10";
+        private static readonly string OtherFirewallRuleStartIPAddress = "121.12.12.1";
+        private static readonly string OtherFirewallRuleEndIPAddress = "121.12.12.10";
         
         /**
          * Azure Storage sample for managing SQL Database -
@@ -48,8 +48,8 @@ namespace ManageSqlFirewallRules
                         .WithNewResourceGroup(rgName)
                         .WithAdministratorLogin(AdministratorLogin)
                         .WithAdministratorPassword(AdministratorPassword)
-                        .WithNewFirewallRule(FirewallRuleIpAddress)
-                        .WithNewFirewallRule(FirewallRuleStartIpAddress, FirewallRuleEndIpAddress)
+                        .WithNewFirewallRule(FirewallRuleIPAddress)
+                        .WithNewFirewallRule(FirewallRuleStartIPAddress, FirewallRuleEndIPAddress)
                         .Create();
 
                 Utilities.PrintSqlServer(sqlServer);
@@ -73,7 +73,7 @@ namespace ManageSqlFirewallRules
                 // Add new firewall rules.
                 Utilities.Log("Creating a firewall rule in existing SQL Server");
                 var newFirewallRule = sqlServer.FirewallRules.Define(MyFirewallName)
-                        .WithIpAddress(MyFirewallRuleIpAddress)
+                        .WithIPAddress(MyFirewallRuleIPAddress)
                         .Create();
 
                 Utilities.PrintFirewallRule(newFirewallRule);
@@ -85,7 +85,7 @@ namespace ManageSqlFirewallRules
                 Utilities.Log("Deleting and adding new firewall rules as part of SQL Server update.");
                 sqlServer.Update()
                         .WithoutFirewallRule(MyFirewallName)
-                        .WithNewFirewallRule(OtherFirewallRuleStartIpAddress, OtherFirewallRuleEndIpAddress)
+                        .WithNewFirewallRule(OtherFirewallRuleStartIPAddress, OtherFirewallRuleEndIPAddress)
                         .Apply();
 
                 foreach (var sqlFirewallRule in sqlServer.FirewallRules.List())

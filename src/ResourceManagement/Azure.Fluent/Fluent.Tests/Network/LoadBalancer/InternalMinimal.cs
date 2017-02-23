@@ -47,7 +47,7 @@ namespace Azure.Tests.Network.LoadBalancer
             var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
             
             // Must use the same VNet as the VMs
-            this.network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
+            this.network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIPConfiguration.GetNetwork();
 
             // Create a load balancer
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
@@ -77,9 +77,9 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.False(frontend.IsPublic);
             var privateFrontend = (ILoadBalancerPrivateFrontend)frontend;
             Assert.True(network.Id.Equals(privateFrontend.NetworkId, StringComparison.OrdinalIgnoreCase));
-            Assert.NotNull(privateFrontend.PrivateIpAddress);
+            Assert.NotNull(privateFrontend.PrivateIPAddress);
             Assert.True("subnet1".Equals(privateFrontend.SubnetName, StringComparison.OrdinalIgnoreCase));
-            Assert.Equal(IPAllocationMethod.Dynamic, privateFrontend.PrivateIpAllocationMethod);
+            Assert.Equal(IPAllocationMethod.Dynamic, privateFrontend.PrivateIPAllocationMethod);
 
             // Verify TCP probes
             Assert.True(lb.TcpProbes.ContainsKey("default"));
@@ -112,14 +112,14 @@ namespace Azure.Tests.Network.LoadBalancer
 
             var backend = lb.Backends["foo"];
             Assert.NotNull(backend);
-            Assert.Equal(0, backend.BackendNicIpConfigurationNames.Count);
+            Assert.Equal(0, backend.BackendNicIPConfigurationNames.Count);
 
             backend = lb.Backends["default"];
             Assert.NotNull(backend);
-            Assert.Equal(2, backend.BackendNicIpConfigurationNames.Count);
+            Assert.Equal(2, backend.BackendNicIPConfigurationNames.Count);
             foreach (IVirtualMachine vm in existingVMs)
             {
-                Assert.True(backend.BackendNicIpConfigurationNames.ContainsKey(vm.PrimaryNetworkInterfaceId));
+                Assert.True(backend.BackendNicIPConfigurationNames.ContainsKey(vm.PrimaryNetworkInterfaceId));
             }
 
             return lb;
@@ -130,7 +130,7 @@ namespace Azure.Tests.Network.LoadBalancer
             resource = resource.Update()
                         .UpdateInternalFrontend("default")
                             .WithExistingSubnet(this.network, "subnet2")
-                            .WithPrivateIpAddressStatic("10.0.0.13")
+                            .WithPrivateIPAddressStatic("10.0.0.13")
                             .Parent()
                         .UpdateTcpProbe("default")
                             .WithPort(22)
@@ -165,8 +165,8 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.False(frontend.IsPublic);
             var privateFrontend = (ILoadBalancerPrivateFrontend)frontend;
             Assert.True("subnet2".Equals(privateFrontend.SubnetName, StringComparison.OrdinalIgnoreCase));
-            Assert.Equal(IPAllocationMethod.Static, privateFrontend.PrivateIpAllocationMethod);
-            Assert.True("10.0.0.13".Equals(privateFrontend.PrivateIpAddress, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(IPAllocationMethod.Static, privateFrontend.PrivateIPAllocationMethod);
+            Assert.True("10.0.0.13".Equals(privateFrontend.PrivateIPAddress, StringComparison.OrdinalIgnoreCase));
             Assert.Equal(2, privateFrontend.LoadBalancingRules.Count);
 
             // Verify probes

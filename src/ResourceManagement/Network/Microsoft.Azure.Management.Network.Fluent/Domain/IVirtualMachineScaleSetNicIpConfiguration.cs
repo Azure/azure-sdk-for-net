@@ -9,11 +9,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An IP configuration in a network interface associated with a virtual machine
     /// scale set.
     /// </summary>
-    public interface IVirtualMachineScaleSetNicIpConfiguration  :
-        INicIpConfigurationBase,
+    public interface IVirtualMachineScaleSetNicIPConfiguration  :
+        INicIPConfigurationBase,
         IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
-        IHasPrivateIpAddress,
+        IHasPrivateIPAddress,
         IHasSubnet
     {
     }

@@ -16,14 +16,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithIpAddress(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithIPAddress(string ipAddress);
 
         /// <summary>
         /// Ensures the specified IP address is not associated with this backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutIpAddress(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutIPAddress(string ipAddress);
 
         /// <summary>
         /// Ensures the specified fully qualified domain name (FQDN) is not associated with this backend.

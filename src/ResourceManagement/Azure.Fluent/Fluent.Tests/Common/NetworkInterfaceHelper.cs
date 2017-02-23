@@ -26,27 +26,27 @@ namespace Azure.Tests.Common
                     .Append("\n\tDNS server IPs: ");
 
             // Output dns servers
-            foreach (var dnsServerIp in resource.DnsServers)
+            foreach (var dnsServerIP in resource.DnsServers)
             {
-                info.Append("\n\t\t").Append(dnsServerIp);
+                info.Append("\n\t\t").Append(dnsServerIP);
             }
 
-            info.Append("\n\tIP forwarding enabled: ").Append(resource.IsIpForwardingEnabled)
+            info.Append("\n\tIP forwarding enabled: ").Append(resource.IsIPForwardingEnabled)
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
-                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIp)
-                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIpAllocationMethod)
-                    .Append("\n\tPrimary virtual network ID: ").Append(resource.PrimaryIpConfiguration.NetworkId)
-                    .Append("\n\tPrimary subnet name: ").Append(resource.PrimaryIpConfiguration.SubnetName)
+                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIP)
+                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIPAllocationMethod)
+                    .Append("\n\tPrimary virtual network ID: ").Append(resource.PrimaryIPConfiguration.NetworkId)
+                    .Append("\n\tPrimary subnet name: ").Append(resource.PrimaryIPConfiguration.SubnetName)
                     .Append("\n\tIP configurations: ");
 
             // Output IP configs
-            foreach (var ipConfig in resource.IpConfigurations.Values)
+            foreach (var ipConfig in resource.IPConfigurations.Values)
             {
                 info.Append("\n\t\tName: ").Append(ipConfig.Name)
-                    .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIpAddress)
-                    .Append("\n\t\tPrivate IP allocation method: ").Append(ipConfig.PrivateIpAllocationMethod)
-                    .Append("\n\t\tPrivate IP version: ").Append(ipConfig.PrivateIpAddressVersion)
-                    .Append("\n\t\tPIP id: ").Append(ipConfig.PublicIpAddressId)
+                    .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIPAddress)
+                    .Append("\n\t\tPrivate IP allocation method: ").Append(ipConfig.PrivateIPAllocationMethod)
+                    .Append("\n\t\tPrivate IP version: ").Append(ipConfig.PrivateIPAddressVersion)
+                    .Append("\n\t\tPIP id: ").Append(ipConfig.PublicIPAddressId)
                     .Append("\n\t\tAssociated network ID: ").Append(ipConfig.NetworkId)
                     .Append("\n\t\tAssociated subnet name: ").Append(ipConfig.SubnetName);
 

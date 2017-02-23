@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Collections.Generic;
 
-    internal partial class NicIpConfigurationBaseImpl
+    internal partial class NicIPConfigurationBaseImpl
     {
     }
 }

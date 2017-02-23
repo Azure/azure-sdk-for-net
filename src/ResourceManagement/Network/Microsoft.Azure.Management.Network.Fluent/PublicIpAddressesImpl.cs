@@ -10,26 +10,26 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Implementation for PublicIpAddresses.
+    /// Implementation for PublicIPAddresses.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzZXNJbXBs
-    internal partial class PublicIpAddressesImpl :
+    internal partial class PublicIPAddressesImpl :
         GroupableResources<
-            IPublicIpAddress,
-            PublicIpAddressImpl,
+            IPublicIPAddress,
+            PublicIPAddressImpl,
             PublicIPAddressInner,
             IPublicIPAddressesOperations,
             INetworkManager>,
-        IPublicIpAddresses
+        IPublicIPAddresses
     {
         ///GENMHASH:053A36D2D2F106CA9668224DB2C96180:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal PublicIpAddressesImpl(NetworkManagementClient client, INetworkManager networkManager)
+        internal PublicIPAddressesImpl(NetworkManagementClient client, INetworkManager networkManager)
             : base(client.PublicIPAddresses, networkManager)
         {
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:1B78BFBA3CB91189897507DAD97A4342
-        override protected PublicIpAddressImpl WrapModel(string name)
+        override protected PublicIPAddressImpl WrapModel(string name)
         {
             PublicIPAddressInner inner = new PublicIPAddressInner();
 
@@ -38,19 +38,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 inner.DnsSettings = new PublicIPAddressDnsSettings();
             }
 
-            return new PublicIpAddressImpl(name, inner, InnerCollection, Manager);
+            return new PublicIPAddressImpl(name, inner, InnerCollection, Manager);
         }
 
-        //$TODO: shoudl return PublicIpAddressImpl
+        //$TODO: shoudl return PublicIPAddressImpl
 
         ///GENMHASH:B52B92D4359429345BB9A526A6320669:90C57C05A1A9A5C6A7F2A81DCB266191
-        override protected IPublicIpAddress WrapModel(PublicIPAddressInner inner)
+        override protected IPublicIPAddress WrapModel(PublicIPAddressInner inner)
         {
-            return new PublicIpAddressImpl(inner.Id, inner, InnerCollection, Manager);
+            return new PublicIPAddressImpl(inner.Id, inner, InnerCollection, Manager);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        internal PagedList<IPublicIpAddress> List()
+        internal PagedList<IPublicIPAddress> List()
         {
             var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.ListAll(), (string nextPageLink) =>
             {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        internal PagedList<IPublicIpAddress> ListByGroup(string groupName)
+        internal PagedList<IPublicIPAddress> ListByGroup(string groupName)
         {
             var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.List(groupName), (string nextPageLink) =>
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
-        internal PublicIpAddressImpl Define(string name)
+        internal PublicIPAddressImpl Define(string name)
         {
             return WrapModel(name);
         }
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public override async Task<IPublicIpAddress> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IPublicIPAddress> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);

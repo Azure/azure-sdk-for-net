@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
 
     /// <summary>
-    /// Represents an record set collection associated with a Dns zone.
+    /// Represents an record set collection associated with a DNS zone.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5EbnNSZWNvcmRTZXRzSW1wbA==
     internal partial class DnsRecordSetsImpl :
@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:59991185F1E4DCE6CD53407115062A4D:722C71889B2C1576A4C5173BBA782847
-        internal void WithCnameRecordSet(string name, string alias)
+        internal void WithCNameRecordSet(string name, string alias)
         {
-            CnameRecordSetImpl recordSet = CnameRecordSetImpl.NewRecordSet(name, this.Parent, this.client);
+            CNameRecordSetImpl recordSet = CNameRecordSetImpl.NewRecordSet(name, this.Parent, this.client);
             recordSet.Inner.CnameRecord.Cname = alias;
             this.SetDefaults(base.PrepareDefine(recordSet.WithTimeToLive(defaultTtlInSeconds)));
         }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Creates new DnsRecordSetsImpl.
         /// </summary>
         /// <param name="client">The client to perform REST calls on record sets.</param>
-        /// <param name="parent">The parent Dns zone of the record set.</param>
+        /// <param name="parent">The parent DNS zone of the record set.</param>
         ///GENMHASH:F9E2D3727D66DFA1253AB4BD2195C4B1:824964281DB07BCB6FFFF714E2A80FA0
         internal  DnsRecordSetsImpl(IRecordSetsOperations client, DnsZoneImpl parent) : base(parent, "RecordSet")
         {
@@ -77,15 +77,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:3BE07D98F4ADC1B06829114EA2606ED4:681C93C815E8FF939B5CFDF763BA0BF8
-        internal DnsRecordSetImpl DefineNsRecordSet(string name)
+        internal DnsRecordSetImpl DefineNSRecordSet(string name)
         {
-            return this.SetDefaults(base.PrepareDefine(NsRecordSetImpl.NewRecordSet(name, this.Parent, this.client)));
+            return this.SetDefaults(base.PrepareDefine(NSRecordSetImpl.NewRecordSet(name, this.Parent, this.client)));
         }
 
         ///GENMHASH:8F3B63282E3A22D23CA9B093FA6A44F8:D5391A93F9C3766E6D0E2B89779EC239
-        internal DnsRecordSetImpl UpdateMxRecordSet(string name)
+        internal DnsRecordSetImpl UpdateMXRecordSet(string name)
         {
-            return base.PrepareUpdate(MxRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
+            return base.PrepareUpdate(MXRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
         }
 
         ///GENMHASH:6A236BC9874C63721A7695A7FE9A4C18:0192D8DCC266E4C9BD1DD2971E321284
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:54D2D45FDDD815CD9CB65600866E9EB0:CC31A505901FD47CF2610924AB1E6670
-        internal void WithoutMxRecordSet(string name)
+        internal void WithoutMXRecordSet(string name)
         {
-            base.PrepareRemove(MxRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
+            base.PrepareRemove(MXRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
         }
 
         ///GENMHASH:DEFDD202FC66399CE6F4DC2385FFBE4E:27B8D0A18BE2BCCE96B837CA9B695464
@@ -131,9 +131,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:766D91058115C559BE5B14A9C7056073:374F2C4865988ED72AACF9B485DA9454
-        internal DnsRecordSetImpl DefineMxRecordSet(string name)
+        internal DnsRecordSetImpl DefineMXRecordSet(string name)
         {
-            return this.SetDefaults(base.PrepareDefine(MxRecordSetImpl.NewRecordSet(name, this.Parent, this.client)));
+            return this.SetDefaults(base.PrepareDefine(MXRecordSetImpl.NewRecordSet(name, this.Parent, this.client)));
         }
 
         ///GENMHASH:9AB7664BD0C8EE192BC61FD76EFCAF87:4C0D34487731D9C6F793472DA460A2A0
@@ -155,9 +155,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:EDF384FBE686F4A04431E3BC18889398:18768AB27F01069942917D1C1419E5B1
-        internal void WithoutCnameRecordSet(string name)
+        internal void WithoutCNameRecordSet(string name)
         {
-            base.PrepareRemove(CnameRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
+            base.PrepareRemove(CNameRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
         }
 
         ///GENMHASH:307087E2D68C3C7331CD91AE28C42489:A544C4DB97263ACD321136702E297EB8
@@ -173,15 +173,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:329EC651435AC8A74D3A1349985D55EE:203F4CA316E50BB09C1868097CC9C75C
-        internal DnsRecordSetImpl UpdateNsRecordSet(string name)
+        internal DnsRecordSetImpl UpdateNSRecordSet(string name)
         {
-            return base.PrepareUpdate(NsRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
+            return base.PrepareUpdate(NSRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
         }
 
         ///GENMHASH:DBFF1C1D58718301508DC884197E6B5A:AFBA3BF40171221C8B0981419D4FA585
-        internal void WithoutNsRecordSet(string name)
+        internal void WithoutNSRecordSet(string name)
         {
-            base.PrepareRemove(NsRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
+            base.PrepareRemove(NSRecordSetImpl.NewRecordSet(name, this.Parent, this.client));
         }
     }
 }

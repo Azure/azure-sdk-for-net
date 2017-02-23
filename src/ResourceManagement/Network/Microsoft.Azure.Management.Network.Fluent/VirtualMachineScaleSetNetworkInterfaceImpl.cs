@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             this.networkManager = networkManager;
         }
 
-        internal bool IsIpForwardingEnabled()
+        internal bool IsIPForwardingEnabled()
         {
             if (Inner.EnableIPForwarding.HasValue)
             {
@@ -96,45 +96,45 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.DnsSettings.AppliedDnsServers;
         }
 
-        internal string PrimaryPrivateIp()
+        internal string PrimaryPrivateIP()
         {
-            IVirtualMachineScaleSetNicIpConfiguration primaryIpConfig = this.PrimaryIpConfiguration();
-            if (primaryIpConfig == null)
+            IVirtualMachineScaleSetNicIPConfiguration primaryIPConfig = this.PrimaryIPConfiguration();
+            if (primaryIPConfig == null)
             {
                 return null;
             }
-            return primaryIpConfig.PrivateIpAddress;
+            return primaryIPConfig.PrivateIPAddress;
         }
 
-        internal IPAllocationMethod PrimaryPrivateIpAllocationMethod()
+        internal IPAllocationMethod PrimaryPrivateIPAllocationMethod()
         {
-            IVirtualMachineScaleSetNicIpConfiguration primaryIpConfig = this.PrimaryIpConfiguration();
-            if (primaryIpConfig == null)
+            IVirtualMachineScaleSetNicIPConfiguration primaryIPConfig = this.PrimaryIPConfiguration();
+            if (primaryIPConfig == null)
             {
                 return null;
             }
-            return primaryIpConfig.PrivateIpAllocationMethod;
+            return primaryIPConfig.PrivateIPAllocationMethod;
         }
 
-        internal IReadOnlyDictionary<string, IVirtualMachineScaleSetNicIpConfiguration> IpConfigurations()
+        internal IReadOnlyDictionary<string, IVirtualMachineScaleSetNicIPConfiguration> IPConfigurations()
         {
             var inners = this.Inner.IpConfigurations;
             if (inners == null || inners.Count == 0)
             {
-                return new Dictionary<string, IVirtualMachineScaleSetNicIpConfiguration>(); 
+                return new Dictionary<string, IVirtualMachineScaleSetNicIPConfiguration>(); 
             }
-            Dictionary<string, IVirtualMachineScaleSetNicIpConfiguration> nicIpConfigurations = new Dictionary<string, IVirtualMachineScaleSetNicIpConfiguration>();
+            Dictionary<string, IVirtualMachineScaleSetNicIPConfiguration> nicIPConfigurations = new Dictionary<string, IVirtualMachineScaleSetNicIPConfiguration>();
             foreach (NetworkInterfaceIPConfigurationInner inner in inners)
             {
-                VirtualMachineScaleSetNicIpConfigurationImpl nicIpConfiguration = new VirtualMachineScaleSetNicIpConfigurationImpl(inner, this, this.networkManager);
-                nicIpConfigurations.Add(nicIpConfiguration.Name(), nicIpConfiguration);
+                VirtualMachineScaleSetNicIPConfigurationImpl nicIPConfiguration = new VirtualMachineScaleSetNicIPConfigurationImpl(inner, this, this.networkManager);
+                nicIPConfigurations.Add(nicIPConfiguration.Name(), nicIPConfiguration);
             }
-            return nicIpConfigurations;
+            return nicIPConfigurations;
         }
 
-        internal IVirtualMachineScaleSetNicIpConfiguration PrimaryIpConfiguration()
+        internal IVirtualMachineScaleSetNicIPConfiguration PrimaryIPConfiguration()
         {
-            foreach (var ipConfiguration in this.IpConfigurations().Values)
+            foreach (var ipConfiguration in this.IPConfigurations().Values)
             {
                 if (ipConfiguration.IsPrimary)
                 {

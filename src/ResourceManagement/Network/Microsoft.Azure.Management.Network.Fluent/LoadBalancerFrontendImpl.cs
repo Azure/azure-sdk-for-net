@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:516B6A004CB15A757AC222DE49CEC6EC
-        internal string PrivateIpAddress()
+        internal string PrivateIPAddress()
         {
             return Inner.PrivateIPAddress;
         }
 
         ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:925E8594616C741FD699EF2269B3D731
-        internal IPAllocationMethod PrivateIpAllocationMethod()
+        internal IPAllocationMethod PrivateIPAllocationMethod()
         {
             return IPAllocationMethod.Parse(Inner.PrivateIPAllocationMethod);
         }
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:ABB345FE511A4EDDE90556048D8E5C75
-        internal string PublicIpAddressId()
+        internal string PublicIPAddressId()
         {
             return Inner.PublicIPAddress.Id;
         }
@@ -149,13 +149,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:ACEAB57753CC554AC2DC8CB1B88AC346
-        internal LoadBalancerFrontendImpl WithExistingPublicIpAddress (IPublicIpAddress pip)
+        internal LoadBalancerFrontendImpl WithExistingPublicIPAddress (IPublicIPAddress pip)
         {
-            return WithExistingPublicIpAddress(pip.Id);
+            return WithExistingPublicIPAddress(pip.Id);
         }
 
         ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:488D62DEC18443445C34B6C753A0435A
-        internal LoadBalancerFrontendImpl WithExistingPublicIpAddress (string resourceId)
+        internal LoadBalancerFrontendImpl WithExistingPublicIPAddress (string resourceId)
         {
             var pipRef = new PublicIPAddressInner(id: resourceId);
             Inner.PublicIPAddress = pipRef;
@@ -168,14 +168,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:1B49C92CBA9BDBBF9FBFD26544224384:2AADFAA8967336A82263A3FD701F270A
-        internal LoadBalancerFrontendImpl WithoutPublicIpAddress ()
+        internal LoadBalancerFrontendImpl WithoutPublicIPAddress ()
         {
             Inner.PublicIPAddress = null;
             return this;
         }
 
         ///GENMHASH:EA98B464B10BD645EE3B0689825B43B8:75F72179E2B63A55332B5241A9093C17
-        internal LoadBalancerFrontendImpl WithPrivateIpAddressDynamic ()
+        internal LoadBalancerFrontendImpl WithPrivateIPAddressDynamic ()
         {
             Inner.PrivateIPAddress = null;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:6CDEF6BE4432158ED3F8917E000EAD56:C9B470E114F7550FEADF055B40E01B61
-        internal LoadBalancerFrontendImpl WithPrivateIpAddressStatic (string ipAddress)
+        internal LoadBalancerFrontendImpl WithPrivateIPAddressStatic (string ipAddress)
         {
             Inner.PrivateIPAddress = ipAddress;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static.ToString();
@@ -203,10 +203,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
-        internal IPublicIpAddress GetPublicIpAddress ()
+        internal IPublicIPAddress GetPublicIPAddress ()
         {
-            string pipId = PublicIpAddressId();
-            return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
+            string pipId = PublicIPAddressId();
+            return (pipId != null) ? Parent.Manager.PublicIPAddresses.GetById(pipId) : null;
         }
 
         ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F

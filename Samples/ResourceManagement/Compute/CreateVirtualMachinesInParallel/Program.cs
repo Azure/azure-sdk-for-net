@@ -80,7 +80,7 @@ namespace CreateVirtualMachinesInParallel
                         //=============================================================
                         // Create 1 public IP address creatable
                         //
-                        var publicIpAddressCreatable = azure.PublicIpAddresses
+                        var publicIpAddressCreatable = azure.PublicIPAddresses
                                 .Define($"{linuxVMNamePrefix}-{i}")
                                 .WithRegion(region)
                                 .WithExistingResourceGroup(resourceGroup)
@@ -95,8 +95,8 @@ namespace CreateVirtualMachinesInParallel
                                 .WithRegion(region)
                                 .WithExistingResourceGroup(resourceGroup)
                                 .WithNewPrimaryNetwork(networkCreatable)
-                                .WithPrimaryPrivateIpAddressDynamic()
-                                .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
+                                .WithPrimaryPrivateIPAddressDynamic()
+                                .WithNewPrimaryPublicIPAddress(publicIpAddressCreatable)
                                 .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                                 .WithRootUsername(Username)
                                 .WithRootPassword(Password)
@@ -127,7 +127,7 @@ namespace CreateVirtualMachinesInParallel
                 var publicIpResourceIds = new List<string>();
                 foreach (string publicIpCreatableKey in publicIpCreatableKeys)
                 {
-                    var pip = (IPublicIpAddress)virtualMachines.CreatedRelatedResource(publicIpCreatableKey);
+                    var pip = (IPublicIPAddress)virtualMachines.CreatedRelatedResource(publicIpCreatableKey);
                     publicIpResourceIds.Add(pip.Id);
                 }
 

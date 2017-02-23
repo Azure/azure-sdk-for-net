@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using HasBackendPort.Definition;
     using HasBackendPort.UpdateDefinition;
     using HasBackendPort.Update;
-    using HasFloatingIp.Definition;
-    using HasFloatingIp.UpdateDefinition;
-    using HasFloatingIp.Update;
+    using HasFloatingIP.Definition;
+    using HasFloatingIP.UpdateDefinition;
+    using HasFloatingIP.Update;
     using HasFrontend.Definition;
     using HasFrontend.UpdateDefinition;
     using HasFrontend.Update;
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIp.UpdateDefinition.IWithFloatingIp<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIpEnabled()
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIP.UpdateDefinition.IWithFloatingIP<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIPEnabled()
         {
-            return this.WithFloatingIpEnabled() as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithFloatingIPEnabled() as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -43,27 +43,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">True if floating IP should be enabled.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIp.UpdateDefinition.IWithFloatingIp<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIp(bool enabled)
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIP.UpdateDefinition.IWithFloatingIP<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIP(bool enabled)
         {
-            return this.WithFloatingIp(enabled) as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithFloatingIP(enabled) as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIp.UpdateDefinition.IWithFloatingIp<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIpDisabled()
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIP.UpdateDefinition.IWithFloatingIP<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIPDisabled()
         {
-            return this.WithFloatingIpDisabled() as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithFloatingIPDisabled() as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasFloatingIp.Update.IWithFloatingIp<LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIpEnabled()
+        LoadBalancerInboundNatRule.Update.IUpdate HasFloatingIP.Update.IWithFloatingIP<LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIPEnabled()
         {
-            return this.WithFloatingIpEnabled() as LoadBalancerInboundNatRule.Update.IUpdate;
+            return this.WithFloatingIPEnabled() as LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -71,27 +71,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">True if floating IP should be enabled.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasFloatingIp.Update.IWithFloatingIp<LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIp(bool enabled)
+        LoadBalancerInboundNatRule.Update.IUpdate HasFloatingIP.Update.IWithFloatingIP<LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIP(bool enabled)
         {
-            return this.WithFloatingIp(enabled) as LoadBalancerInboundNatRule.Update.IUpdate;
+            return this.WithFloatingIP(enabled) as LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasFloatingIp.Update.IWithFloatingIp<LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIpDisabled()
+        LoadBalancerInboundNatRule.Update.IUpdate HasFloatingIP.Update.IWithFloatingIP<LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIPDisabled()
         {
-            return this.WithFloatingIpDisabled() as LoadBalancerInboundNatRule.Update.IUpdate;
+            return this.WithFloatingIPDisabled() as LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFloatingIp.Definition.IWithFloatingIp<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIpEnabled()
+        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFloatingIP.Definition.IWithFloatingIP<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIPEnabled()
         {
-            return this.WithFloatingIpEnabled() as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+            return this.WithFloatingIPEnabled() as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -99,18 +99,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">True if floating IP should be enabled.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFloatingIp.Definition.IWithFloatingIp<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIp(bool enabled)
+        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFloatingIP.Definition.IWithFloatingIP<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIP(bool enabled)
         {
-            return this.WithFloatingIp(enabled) as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+            return this.WithFloatingIP(enabled) as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFloatingIp.Definition.IWithFloatingIp<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIpDisabled()
+        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFloatingIP.Definition.IWithFloatingIP<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIPDisabled()
         {
-            return this.WithFloatingIpDisabled() as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+            return this.WithFloatingIPDisabled() as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -192,11 +192,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the IP configuration within the network interface associated with this NAT rule.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule.BackendNicIpConfigurationName
+        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule.BackendNicIPConfigurationName
         {
             get
             {
-                return this.BackendNicIpConfigurationName();
+                return this.BackendNicIPConfigurationName();
             }
         }
 
@@ -223,11 +223,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the state of the floating IP enablement.
         /// </summary>
-        bool Microsoft.Azure.Management.Network.Fluent.IHasFloatingIp.FloatingIpEnabled
+        bool Microsoft.Azure.Management.Network.Fluent.IHasFloatingIP.FloatingIPEnabled
         {
             get
             {
-                return this.FloatingIpEnabled();
+                return this.FloatingIPEnabled();
             }
         }
 

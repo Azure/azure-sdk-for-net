@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using HasBackendPort.Definition;
     using HasBackendPort.UpdateDefinition;
     using HasBackendPort.Update;
-    using HasFloatingIp.Definition;
-    using HasFloatingIp.UpdateDefinition;
-    using HasFloatingIp.Update;
+    using HasFloatingIP.Definition;
+    using HasFloatingIP.UpdateDefinition;
+    using HasFloatingIP.Update;
     using HasFrontend.Definition;
     using HasFrontend.UpdateDefinition;
     using HasFrontend.Update;
@@ -92,11 +92,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the state of the floating IP enablement.
         /// </summary>
-        bool Microsoft.Azure.Management.Network.Fluent.IHasFloatingIp.FloatingIpEnabled
+        bool Microsoft.Azure.Management.Network.Fluent.IHasFloatingIP.FloatingIPEnabled
         {
             get
             {
-                return this.FloatingIpEnabled();
+                return this.FloatingIPEnabled();
             }
         }
 
@@ -312,9 +312,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Update.IUpdate HasFloatingIp.Update.IWithFloatingIp<LoadBalancingRule.Update.IUpdate>.WithFloatingIpEnabled()
+        LoadBalancingRule.Update.IUpdate HasFloatingIP.Update.IWithFloatingIP<LoadBalancingRule.Update.IUpdate>.WithFloatingIPEnabled()
         {
-            return this.WithFloatingIpEnabled() as LoadBalancingRule.Update.IUpdate;
+            return this.WithFloatingIPEnabled() as LoadBalancingRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -322,27 +322,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">True if floating IP should be enabled.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Update.IUpdate HasFloatingIp.Update.IWithFloatingIp<LoadBalancingRule.Update.IUpdate>.WithFloatingIp(bool enabled)
+        LoadBalancingRule.Update.IUpdate HasFloatingIP.Update.IWithFloatingIP<LoadBalancingRule.Update.IUpdate>.WithFloatingIP(bool enabled)
         {
-            return this.WithFloatingIp(enabled) as LoadBalancingRule.Update.IUpdate;
+            return this.WithFloatingIP(enabled) as LoadBalancingRule.Update.IUpdate;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Update.IUpdate HasFloatingIp.Update.IWithFloatingIp<LoadBalancingRule.Update.IUpdate>.WithFloatingIpDisabled()
+        LoadBalancingRule.Update.IUpdate HasFloatingIP.Update.IWithFloatingIP<LoadBalancingRule.Update.IUpdate>.WithFloatingIPDisabled()
         {
-            return this.WithFloatingIpDisabled() as LoadBalancingRule.Update.IUpdate;
+            return this.WithFloatingIPDisabled() as LoadBalancingRule.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasFloatingIp.Definition.IWithFloatingIp<LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>>.WithFloatingIpEnabled()
+        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasFloatingIP.Definition.IWithFloatingIP<LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>>.WithFloatingIPEnabled()
         {
-            return this.WithFloatingIpEnabled() as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
+            return this.WithFloatingIPEnabled() as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
 
         /// <summary>
@@ -350,27 +350,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">True if floating IP should be enabled.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasFloatingIp.Definition.IWithFloatingIp<LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>>.WithFloatingIp(bool enabled)
+        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasFloatingIP.Definition.IWithFloatingIP<LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>>.WithFloatingIP(bool enabled)
         {
-            return this.WithFloatingIp(enabled) as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
+            return this.WithFloatingIP(enabled) as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasFloatingIp.Definition.IWithFloatingIp<LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>>.WithFloatingIpDisabled()
+        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasFloatingIP.Definition.IWithFloatingIP<LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>>.WithFloatingIPDisabled()
         {
-            return this.WithFloatingIpDisabled() as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
+            return this.WithFloatingIPDisabled() as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
 
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIp.UpdateDefinition.IWithFloatingIp<LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIpEnabled()
+        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIP.UpdateDefinition.IWithFloatingIP<LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIPEnabled()
         {
-            return this.WithFloatingIpEnabled() as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithFloatingIPEnabled() as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -378,18 +378,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">True if floating IP should be enabled.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIp.UpdateDefinition.IWithFloatingIp<LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIp(bool enabled)
+        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIP.UpdateDefinition.IWithFloatingIP<LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIP(bool enabled)
         {
-            return this.WithFloatingIp(enabled) as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithFloatingIP(enabled) as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIp.UpdateDefinition.IWithFloatingIp<LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIpDisabled()
+        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFloatingIP.UpdateDefinition.IWithFloatingIP<LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFloatingIPDisabled()
         {
-            return this.WithFloatingIpDisabled() as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.WithFloatingIPDisabled() as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>

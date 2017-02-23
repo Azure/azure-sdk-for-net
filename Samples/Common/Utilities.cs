@@ -85,11 +85,11 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tSSL policy: ").Append(resource.SslPolicy)
                     .Append("\n\tInternet-facing? ").Append(resource.IsPublic)
                     .Append("\n\tInternal? ").Append(resource.IsPrivate)
-                    .Append("\n\tDefault private IP address: ").Append(resource.PrivateIpAddress)
-                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIpAllocationMethod);
+                    .Append("\n\tDefault private IP address: ").Append(resource.PrivateIPAddress)
+                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod);
 
             // Show IP configs
-            var ipConfigs = resource.IpConfigurations;
+            var ipConfigs = resource.IPConfigurations;
             info.Append("\n\tIP configurations: ").Append(ipConfigs.Count);
             foreach (var ipConfig in ipConfigs.Values)
             {
@@ -109,14 +109,14 @@ namespace Microsoft.Azure.Management.Samples.Common
                 if (frontend.IsPublic)
                 {
                     // Show public frontend info
-                    info.Append("\n\t\t\tPublic IP address ID: ").Append(frontend.PublicIpAddressId);
+                    info.Append("\n\t\t\tPublic IP address ID: ").Append(frontend.PublicIPAddressId);
                 }
 
                 if (frontend.IsPrivate)
                 {
                     // Show private frontend info
-                    info.Append("\n\t\t\tPrivate IP address: ").Append(frontend.PrivateIpAddress)
-                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(frontend.PrivateIpAllocationMethod)
+                    info.Append("\n\t\t\tPrivate IP address: ").Append(frontend.PrivateIPAddress)
+                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(frontend.PrivateIPAllocationMethod)
                         .Append("\n\t\t\tSubnet name: ").Append(frontend.SubnetName)
                         .Append("\n\t\t\tVirtual network ID: ").Append(frontend.NetworkId);
                 }
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             foreach (var backend in backends.Values)
             {
                 info.Append("\n\t\tName: ").Append(backend.Name)
-                    .Append("\n\t\t\tAssociated NIC IP configuration IDs: ").Append(string.Join(", ", backend.BackendNicIpConfigurationNames.Keys.ToArray()));
+                    .Append("\n\t\t\tAssociated NIC IP configuration IDs: ").Append(string.Join(", ", backend.BackendNicIPConfigurationNames.Keys.ToArray()));
 
                 // Show addresses
                 var addresses = backend.Addresses;
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 info.Append("\n\t\tName: ").Append(rule.Name)
                     .Append("\n\t\t\tType: ").Append(rule.RuleType.ToString())
-                    .Append("\n\t\t\tPublic IP address ID: ").Append(rule.PublicIpAddressId)
+                    .Append("\n\t\t\tPublic IP address ID: ").Append(rule.PublicIPAddressId)
                     .Append("\n\t\t\tHost name: ").Append(rule.HostName)
                     .Append("\n\t\t\tServer name indication required? ").Append(rule.RequiresServerNameIndication)
                     .Append("\n\t\t\tFrontend port: ").Append(rule.FrontendPort)
@@ -549,7 +549,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tRegion: ").Append(network.Region)
                     .Append("\n\tTags: ").Append(FormatDictionary(network.Tags))
                     .Append("\n\tAddress spaces: ").Append(FormatCollection(network.AddressSpaces))
-                    .Append("\n\tDNS server IPs: ").Append(FormatCollection(network.DnsServerIps));
+                    .Append("\n\tDNS server IPs: ").Append(FormatCollection(network.DnsServerIPs));
 
             // Output subnets
             foreach (var subnet in network.Subnets.Values)
@@ -566,19 +566,19 @@ namespace Microsoft.Azure.Management.Samples.Common
             Utilities.Log(info.ToString());
         }
 
-        public static void PrintIpAddress(IPublicIpAddress publicIpAddress)
+        public static void PrintIPAddress(IPublicIPAddress publicIPAddress)
         {
-            Utilities.Log(new StringBuilder().Append("Public IP Address: ").Append(publicIpAddress.Id)
-                .Append("Name: ").Append(publicIpAddress.Name)
-                .Append("\n\tResource group: ").Append(publicIpAddress.ResourceGroupName)
-                .Append("\n\tRegion: ").Append(publicIpAddress.Region)
-                .Append("\n\tTags: ").Append(FormatDictionary(publicIpAddress.Tags))
-                .Append("\n\tIP Address: ").Append(publicIpAddress.IpAddress)
-                .Append("\n\tLeaf domain label: ").Append(publicIpAddress.LeafDomainLabel)
-                .Append("\n\tFQDN: ").Append(publicIpAddress.Fqdn)
-                .Append("\n\tReverse FQDN: ").Append(publicIpAddress.ReverseFqdn)
-                .Append("\n\tIdle timeout (minutes): ").Append(publicIpAddress.IdleTimeoutInMinutes)
-                .Append("\n\tIP allocation method: ").Append(publicIpAddress.IpAllocationMethod)
+            Utilities.Log(new StringBuilder().Append("Public IP Address: ").Append(publicIPAddress.Id)
+                .Append("Name: ").Append(publicIPAddress.Name)
+                .Append("\n\tResource group: ").Append(publicIPAddress.ResourceGroupName)
+                .Append("\n\tRegion: ").Append(publicIPAddress.Region)
+                .Append("\n\tTags: ").Append(FormatDictionary(publicIPAddress.Tags))
+                .Append("\n\tIP Address: ").Append(publicIPAddress.IPAddress)
+                .Append("\n\tLeaf domain label: ").Append(publicIPAddress.LeafDomainLabel)
+                .Append("\n\tFQDN: ").Append(publicIPAddress.Fqdn)
+                .Append("\n\tReverse FQDN: ").Append(publicIPAddress.ReverseFqdn)
+                .Append("\n\tIdle timeout (minutes): ").Append(publicIPAddress.IdleTimeoutInMinutes)
+                .Append("\n\tIP allocation method: ").Append(publicIPAddress.IPAllocationMethod)
                 .ToString());
         }
 
@@ -603,12 +603,12 @@ namespace Microsoft.Azure.Management.Samples.Common
                 info.Append("\n\t\t").Append(dnsServerIp);
             }
 
-            info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIpForwardingEnabled)
+            info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIPForwardingEnabled)
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
-                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIp)
-                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIpAllocationMethod)
-                    .Append("\n\tPrimary virtual network ID: ").Append(resource.PrimaryIpConfiguration.NetworkId)
-                    .Append("\n\tPrimary subnet name:").Append(resource.PrimaryIpConfiguration.SubnetName);
+                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIP)
+                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIPAllocationMethod)
+                    .Append("\n\tPrimary virtual network ID: ").Append(resource.PrimaryIPConfiguration.NetworkId)
+                    .Append("\n\tPrimary subnet name:").Append(resource.PrimaryIPConfiguration.SubnetName);
 
             Utilities.Log(info.ToString());
         }
@@ -625,8 +625,8 @@ namespace Microsoft.Azure.Management.Samples.Common
 
             // Show public IP addresses
             info.Append("\n\tPublic IP address IDs: ")
-                    .Append(loadBalancer.PublicIpAddressIds.Count);
-            foreach (var pipId in loadBalancer.PublicIpAddressIds)
+                    .Append(loadBalancer.PublicIPAddressIds.Count);
+            foreach (var pipId in loadBalancer.PublicIPAddressIds)
             {
                 info.Append("\n\t\tPIP id: ").Append(pipId);
             }
@@ -677,7 +677,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 info.Append("\n\t\tLB rule name: ").Append(rule.Name)
                         .Append("\n\t\t\tProtocol: ").Append(rule.Protocol)
-                        .Append("\n\t\t\tFloating IP enabled? ").Append(rule.FloatingIpEnabled)
+                        .Append("\n\t\t\tFloating IP enabled? ").Append(rule.FloatingIPEnabled)
                         .Append("\n\t\t\tIdle timeout in minutes: ").Append(rule.IdleTimeoutInMinutes)
                         .Append("\n\t\t\tLoad distribution method: ").Append(rule.LoadDistribution);
 
@@ -728,14 +728,14 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\t\tInternet facing: ").Append(frontend.IsPublic);
                 if (frontend.IsPublic)
                 {
-                    info.Append("\n\t\t\tPublic IP Address ID: ").Append(((ILoadBalancerPublicFrontend)frontend).PublicIpAddressId);
+                    info.Append("\n\t\t\tPublic IP Address ID: ").Append(((ILoadBalancerPublicFrontend)frontend).PublicIPAddressId);
                 }
                 else
                 {
                     info.Append("\n\t\t\tVirtual network ID: ").Append(((ILoadBalancerPrivateFrontend)frontend).NetworkId)
                             .Append("\n\t\t\tSubnet name: ").Append(((ILoadBalancerPrivateFrontend)frontend).SubnetName)
-                            .Append("\n\t\t\tPrivate IP address: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIpAddress)
-                            .Append("\n\t\t\tPrivate IP allocation method: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIpAllocationMethod);
+                            .Append("\n\t\t\tPrivate IP address: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIPAddress)
+                            .Append("\n\t\t\tPrivate IP allocation method: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIPAllocationMethod);
                 }
 
                 // Inbound NAT pool references
@@ -774,8 +774,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\t\tFrontend port: ").Append(natRule.FrontendPort)
                         .Append("\n\t\t\tBackend port: ").Append(natRule.BackendPort)
                         .Append("\n\t\t\tBackend NIC ID: ").Append(natRule.BackendNetworkInterfaceId)
-                        .Append("\n\t\t\tBackend NIC IP config name: ").Append(natRule.BackendNicIpConfigurationName)
-                        .Append("\n\t\t\tFloating IP? ").Append(natRule.FloatingIpEnabled)
+                        .Append("\n\t\t\tBackend NIC IP config name: ").Append(natRule.BackendNicIPConfigurationName)
+                        .Append("\n\t\t\tFloating IP? ").Append(natRule.FloatingIPEnabled)
                         .Append("\n\t\t\tIdle timeout in minutes: ").Append(natRule.IdleTimeoutInMinutes);
             }
 
@@ -803,8 +803,8 @@ namespace Microsoft.Azure.Management.Samples.Common
 
                 // Show assigned backend NICs
                 info.Append("\n\t\t\tReferenced NICs: ")
-                        .Append(backend.BackendNicIpConfigurationNames.Count);
-                foreach (var entry in backend.BackendNicIpConfigurationNames)
+                        .Append(backend.BackendNicIPConfigurationNames.Count);
+                foreach (var entry in backend.BackendNicIPConfigurationNames)
                 {
                     info.Append("\n\t\t\t\tNIC ID: ").Append(entry.Key)
                             .Append(" - IP Config: ").Append(entry.Value);
@@ -1042,8 +1042,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tResource group: ").Append(firewallRule.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(firewallRule.Region)
                     .Append("\n\tSqlServer Name: ").Append(firewallRule.SqlServerName)
-                    .Append("\n\tStart IP Address of the firewall rule: ").Append(firewallRule.StartIpAddress)
-                    .Append("\n\tEnd IP Address of the firewall rule: ").Append(firewallRule.EndIpAddress);
+                    .Append("\n\tStart IP Address of the firewall rule: ").Append(firewallRule.StartIPAddress)
+                    .Append("\n\tEnd IP Address of the firewall rule: ").Append(firewallRule.EndIPAddress);
 
             Utilities.Log(builder.ToString());
         }
@@ -1216,7 +1216,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tName: ").Append(aRecordSet.Name)
                         .Append("\n\t\tTtl (seconds): ").Append(aRecordSet.TimeToLive)
                         .Append("\n\t\tIp v4 addresses: ");
-                foreach (var ipAddress in aRecordSet.Ipv4Addresses)
+                foreach (var ipAddress in aRecordSet.IPv4Addresses)
                 {
                     builder.Append("\n\t\t\t").Append(ipAddress);
                 }
@@ -1230,13 +1230,13 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tName: ").Append(aaaaRecordSet.Name)
                         .Append("\n\t\tTtl (seconds): ").Append(aaaaRecordSet.TimeToLive)
                         .Append("\n\t\tIp v6 addresses: ");
-                foreach (var ipAddress in aaaaRecordSet.Ipv6Addresses)
+                foreach (var ipAddress in aaaaRecordSet.IPv6Addresses)
                 {
                     builder.Append("\n\t\t\t").Append(ipAddress);
                 }
             }
 
-            var cnameRecordSets = dnsZone.CnameRecordSets.List();
+            var cnameRecordSets = dnsZone.CNameRecordSets.List();
             builder.Append("\n\tCNAME Record sets:");
             foreach (var cnameRecordSet in cnameRecordSets)
             {
@@ -1246,7 +1246,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tCanonical name: ").Append(cnameRecordSet.CanonicalName);
             }
 
-            var mxRecordSets = dnsZone.MxRecordSets.List();
+            var mxRecordSets = dnsZone.MXRecordSets.List();
             builder.Append("\n\tMX Record sets:");
             foreach (var mxRecordSet in mxRecordSets)
             {
@@ -1263,7 +1263,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            var nsRecordSets = dnsZone.NsRecordSets.List();
+            var nsRecordSets = dnsZone.NSRecordSets.List();
             builder.Append("\n\tNS Record sets:");
             foreach (var nsRecordSet in nsRecordSets)
             {

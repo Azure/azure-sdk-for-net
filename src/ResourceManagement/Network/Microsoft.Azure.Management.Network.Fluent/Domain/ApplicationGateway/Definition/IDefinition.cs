@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent;
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// The stage of an application gateway definition allowing to define one or more public, or Internet-facing, frontends.
     /// </summary>
     public interface IWithPublicFrontend  :
-        IWithPublicIpAddress
+        IWithPublicIPAddress
     {
         /// <summary>
         /// Specifies that the application gateway should not be Internet-facing.
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// <summary>
     /// The stage of an application gateway definition allowing to add a new Internet-facing frontend with a public IP address.
     /// </summary>
-    public interface IWithPublicIpAddress  :
-        IWithPublicIpAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
+    public interface IWithPublicIPAddress  :
+        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
     {
     }
 
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// The stage of an application gateway definition allowing to specify the default IP address the app gateway will be internally available at,
     /// if the default private frontend has been enabled.
     /// </summary>
-    public interface IWithPrivateIpAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
+    public interface IWithPrivateIPAddress  :
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
     {
     }
 
@@ -240,10 +240,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         IWithBackendHttpConfig,
         IWithBackend,
         IWithExistingSubnet,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateIpAddress,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateIPAddress,
         IWithPrivateFrontend,
         IWithPublicFrontend,
-        IWithPublicIpAddress
+        IWithPublicIPAddress
     {
     }
 

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to Ptr record sets in a Dns zone.
+    /// Entry point to PTR record sets in a DNS zone.
     /// </summary>
     public interface IPtrRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSet>,

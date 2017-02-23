@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasInner<Models.ApplicationGatewayHttpListenerInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>,
-        IHasPublicIpAddress,
+        IHasPublicIPAddress,
         IHasProtocol<Models.ApplicationGatewayProtocol>,
         IHasHostName,
         IHasServerNameIndication,

@@ -78,7 +78,7 @@ namespace Fluent.Tests.Network
                     .Append("\n\tRegion: ").Append(resource.Region)
                     .Append("\n\tTags: ").Append(resource.Tags)
                     .Append("\n\tAddress spaces: ").Append(resource.AddressSpaces)
-                    .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIps);
+                    .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIPs);
 
             // Output subnets
             foreach (ISubnet subnet in resource.Subnets.Values)

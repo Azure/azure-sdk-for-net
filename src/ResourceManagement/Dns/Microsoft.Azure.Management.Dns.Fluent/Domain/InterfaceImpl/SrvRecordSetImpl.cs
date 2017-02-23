@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     internal partial class SrvRecordSetImpl 
     {
         /// <summary>
-        /// Gets the Srv records in this record set.
+        /// Gets the SRV records in this record set.
         /// </summary>
         System.Collections.Generic.IList<SrvRecord> Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet.Records
         {

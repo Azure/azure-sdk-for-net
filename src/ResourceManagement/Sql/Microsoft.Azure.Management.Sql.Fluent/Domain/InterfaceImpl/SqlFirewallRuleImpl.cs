@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
         /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.EndIpAddress
+        string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.EndIPAddress
         {
             get
             {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
         /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.StartIpAddress
+        string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.StartIPAddress
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="startIpAddress">Start IP address in IPv4 format.</param>
         /// <return>The next stage of the update.</return>
-        SqlFirewallRule.Update.IUpdate SqlFirewallRule.Update.IWithStartIpAddress.WithStartIpAddress(string startIpAddress)
+        SqlFirewallRule.Update.IUpdate SqlFirewallRule.Update.IWithStartIPAddress.WithStartIPAddress(string startIpAddress)
         {
             return this.WithStartIpAddress(startIpAddress) as SqlFirewallRule.Update.IUpdate;
         }
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="endIpAddress">End IP address in IPv4 format.</param>
         /// <return>The next stage of the update.</return>
-        SqlFirewallRule.Update.IUpdate SqlFirewallRule.Update.IWithEndIpAddress.WithEndIpAddress(string endIpAddress)
+        SqlFirewallRule.Update.IUpdate SqlFirewallRule.Update.IWithEndIPAddress.WithEndIPAddress(string endIpAddress)
         {
             return this.WithEndIpAddress(endIpAddress) as SqlFirewallRule.Update.IUpdate;
         }
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="startIpAddress">Starting IP address in IPv4 format.</param>
         /// <param name="endIpAddress">Starting IP address in IPv4 format.</param>
         /// <return>The next stage of the definition.</return>
-        SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIpAddressRange.WithIpAddressRange(string startIpAddress, string endIpAddress)
+        SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIPAddressRange.WithIPAddressRange(string startIpAddress, string endIpAddress)
         {
             return this.WithIpAddressRange(startIpAddress, endIpAddress) as SqlFirewallRule.Definition.IWithCreate;
         }
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="ipAddress">IP address in IPv4 format.</param>
         /// <return>The next stage of the definition.</return>
-        SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIpAddress.WithIpAddress(string ipAddress)
+        SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIPAddress.WithIPAddress(string ipAddress)
         {
             return this.WithIpAddress(ipAddress) as SqlFirewallRule.Definition.IWithCreate;
         }

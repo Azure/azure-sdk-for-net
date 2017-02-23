@@ -29,15 +29,15 @@ namespace Fluent.Tests.Network
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup("rg" + testId)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
-                        .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress("pipdns" + testId)
-                        .WithIpForwarding()
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress("pipdns" + testId)
+                        .WithIPForwarding()
                         .Create();
 
                 // Verify NIC is properly referenced by a subnet
-                var ipConfig = nic.PrimaryIpConfiguration;
+                var ipConfig = nic.PrimaryIPConfiguration;
                 Assert.NotNull(ipConfig);
-                var network = nic.PrimaryIpConfiguration.GetNetwork();
+                var network = nic.PrimaryIPConfiguration.GetNetwork();
                 Assert.NotNull(network);
                 ISubnet subnet;
                 Assert.True(network.Subnets.TryGetValue(ipConfig.SubnetName, out subnet));
@@ -50,10 +50,10 @@ namespace Fluent.Tests.Network
 
                 var resource = manager.NetworkInterfaces.GetByGroup("rg" + testId, "nic" + testId);
                 resource = resource.Update()
-                    .WithoutIpForwarding()
-                    .UpdateIpConfiguration(resource.PrimaryIpConfiguration.Name) // Updating the primary ip configuration
-                        .WithPrivateIpAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIpAddressDynamic()
-                        .WithoutPublicIpAddress()      // Equivalent to ..update().withoutPrimaryPublicIpAddress()
+                    .WithoutIPForwarding()
+                    .UpdateIPConfiguration(resource.PrimaryIPConfiguration.Name) // Updating the primary IP configuration
+                        .WithPrivateIPAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIPAddressDynamic()
+                        .WithoutPublicIPAddress()      // Equivalent to ..update().withoutPrimaryPublicIPAddress()
                         .Parent()
                     .WithTag("tag1", "value1")
                     .WithTag("tag2", "value2")
@@ -91,7 +91,7 @@ namespace Fluent.Tests.Network
                     .WithRegion(region)
                     .WithNewResourceGroup(rgCreatable)
                     .WithNewPrimaryNetwork(networkCreatable)
-                    .WithPrimaryPrivateIpAddressStatic("10.0.0.5");
+                    .WithPrimaryPrivateIPAddressStatic("10.0.0.5");
 
                 string nic2Name = "nic2";
                 ICreatable<INetworkInterface> nic2Creatable = azure.NetworkInterfaces
@@ -99,7 +99,7 @@ namespace Fluent.Tests.Network
                 .WithRegion(region)
                 .WithNewResourceGroup(rgCreatable)
                 .WithNewPrimaryNetwork(networkCreatable)
-                .WithPrimaryPrivateIpAddressStatic("10.0.0.6");
+                .WithPrimaryPrivateIPAddressStatic("10.0.0.6");
 
                 string nic3Name = "nic3";
                 ICreatable<INetworkInterface> nic3Creatable = azure.NetworkInterfaces
@@ -107,7 +107,7 @@ namespace Fluent.Tests.Network
                 .WithRegion(region)
                 .WithNewResourceGroup(rgCreatable)
                 .WithNewPrimaryNetwork(networkCreatable)
-                .WithPrimaryPrivateIpAddressStatic("10.0.0.7");
+                .WithPrimaryPrivateIPAddressStatic("10.0.0.7");
 
                 string nic4Name = "nic4";
                 ICreatable<INetworkInterface> nic4Creatable = azure.NetworkInterfaces
@@ -115,7 +115,7 @@ namespace Fluent.Tests.Network
                 .WithRegion(region)
                 .WithNewResourceGroup(rgCreatable)
                 .WithNewPrimaryNetwork(networkCreatable)
-                .WithPrimaryPrivateIpAddressStatic("10.0.0.8");
+                .WithPrimaryPrivateIPAddressStatic("10.0.0.8");
 
                 ICreatedResources<INetworkInterface> batchNics = azure.NetworkInterfaces
                                                                     .Create(nic1Creatable, nic2Creatable, nic3Creatable, nic4Creatable);
@@ -147,25 +147,25 @@ namespace Fluent.Tests.Network
                     .Append("\n\tDNS server IPs: ");
 
             // Output dns servers
-            foreach (string dnsServerIp in resource.DnsServers)
+            foreach (string dnsServerIP in resource.DnsServers)
             {
-                info.Append("\n\t\t").Append(dnsServerIp);
+                info.Append("\n\t\t").Append(dnsServerIP);
             }
 
-            info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIpForwardingEnabled)
+            info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIPForwardingEnabled)
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
-                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIp)
-                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIpAllocationMethod)
-                    .Append("\n\tSubnet Name:").Append(resource.PrimaryIpConfiguration.SubnetName)
+                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIP)
+                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIPAllocationMethod)
+                    .Append("\n\tSubnet Name:").Append(resource.PrimaryIPConfiguration.SubnetName)
                     .Append("\n\tIP configurations: ");
 
             // Output IP configs
-            foreach (INicIpConfiguration ipConfig in resource.IpConfigurations.Values)
+            foreach (INicIPConfiguration ipConfig in resource.IPConfigurations.Values)
             {
                 info.Append("\n\t\tName: ").Append(ipConfig.Name)
-                    .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIpAddress)
-                    .Append("\n\t\tPrivate IP allocation method: ").Append(ipConfig.PrivateIpAllocationMethod)
-                    .Append("\n\t\tPIP id: ").Append(ipConfig.PublicIpAddressId)
+                    .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIPAddress)
+                    .Append("\n\t\tPrivate IP allocation method: ").Append(ipConfig.PrivateIPAllocationMethod)
+                    .Append("\n\t\tPIP id: ").Append(ipConfig.PublicIPAddressId)
                     .Append("\n\t\tSubnet Name: ").Append(ipConfig.SubnetName);
             }
 

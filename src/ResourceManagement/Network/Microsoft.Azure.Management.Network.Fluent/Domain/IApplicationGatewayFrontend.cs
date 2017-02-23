@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IApplicationGatewayFrontend  :
         IHasInner<Models.ApplicationGatewayFrontendIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IHasPrivateIpAddress,
+        IHasPrivateIPAddress,
         IHasSubnet,
-        IHasPublicIpAddress
+        IHasPublicIPAddress
     {
         /// <return>The associated subnet.</return>
         Microsoft.Azure.Management.Network.Fluent.ISubnet GetSubnet();

@@ -2,26 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ApplicationGatewayIpConfiguration.Definition;
-    using ApplicationGatewayIpConfiguration.UpdateDefinition;
+    using ApplicationGatewayIPConfiguration.Definition;
+    using ApplicationGatewayIPConfiguration.UpdateDefinition;
     using Models;
     using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
-    /// Implementation for ApplicationGatewayIpConfiguration.
+    /// Implementation for ApplicationGatewayIPConfiguration.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uQXBwbGljYXRpb25HYXRld2F5SXBDb25maWd1cmF0aW9uSW1wbA==
-    internal partial class ApplicationGatewayIpConfigurationImpl :
+    internal partial class ApplicationGatewayIPConfigurationImpl :
         ChildResource<ApplicationGatewayIPConfigurationInner, ApplicationGatewayImpl, IApplicationGateway>,
-        IApplicationGatewayIpConfiguration,
+        IApplicationGatewayIPConfiguration,
         IDefinition<ApplicationGateway.Definition.IWithCreate>,
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
-        ApplicationGatewayIpConfiguration.Update.IUpdate
+        ApplicationGatewayIPConfiguration.Update.IUpdate
     {
         ///GENMHASH:309BFD95E2855ABD94CC4CEB845632F5:C0847EA0CDA78F6D91EFD239C70F0FA7
-        internal ApplicationGatewayIpConfigurationImpl(ApplicationGatewayIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
+        internal ApplicationGatewayIPConfigurationImpl(ApplicationGatewayIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
 
@@ -87,19 +87,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Withers
 
         ///GENMHASH:EE79C3B68C4C6A99234BB004EDCAD67A:7289832C1662E22EA7E068290C483F1B
-        public ApplicationGatewayIpConfigurationImpl WithExistingSubnet(ISubnet subnet)
+        public ApplicationGatewayIPConfigurationImpl WithExistingSubnet(ISubnet subnet)
         {
             return WithExistingSubnet(subnet.Parent.Id, subnet.Name);
         }
 
         ///GENMHASH:5647899224D30C7B5E1FDCD2D9AAB1DB:F08EFDCC8A8286B3C9226D19B2EA7889
-        public ApplicationGatewayIpConfigurationImpl WithExistingSubnet(INetwork network, string subnetName)
+        public ApplicationGatewayIPConfigurationImpl WithExistingSubnet(INetwork network, string subnetName)
         {
             return WithExistingSubnet(network.Id, subnetName);
         }
 
         ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:B9B4B506ED0B45772F0E2468D5E88107
-        public ApplicationGatewayIpConfigurationImpl WithExistingSubnet(string networkId, string subnetName)
+        public ApplicationGatewayIPConfigurationImpl WithExistingSubnet(string networkId, string subnetName)
         {
             var subnetRef = new SubResource()
             {

@@ -60,10 +60,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// If the public frontend IP configuration does not yet exist, it will be created under an auto-generated name.
         /// If the application gateway does not have a public IP address specified for its public frontend, one will be created
         /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings using
-        /// {.
+        /// <code>WithExistingPublicIPAddress(...)}</code> or <code>WithNewPublicIPAddress(...)}.</code>
         /// </summary>
-        /// <code>WithExistingPublicIpAddress(...)} or {.</code>
-        /// <code>WithNewPublicIpAddress(...)}.</code>
         /// <return>The next stage of the definition.</return>
         ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontendPort<ApplicationGateway.Update.IUpdate> ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontend<ApplicationGateway.Update.IUpdate>.FromPublicFrontend()
         {
@@ -89,10 +87,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// If the public frontend IP configuration does not yet exist, it will be created under an auto-generated name.
         /// If the application gateway does not have a public IP address specified for its public frontend, one will be created
         /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings using
-        /// {.
+        /// <code>WithExistingPublicIPAddress(...)</code> or <code>WithNewPublicIPAddress(...)</code>.
         /// </summary>
-        /// <code>WithExistingPublicIpAddress(...)} or {.</code>
-        /// <code>WithNewPublicIpAddress(...)}.</code>
         /// <return>The next stage of the definition.</return>
         ApplicationGatewayRequestRoutingRule.Definition.IWithFrontendPort<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> ApplicationGatewayRequestRoutingRule.Definition.IWithFrontend<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.FromPublicFrontend()
         {
@@ -209,9 +205,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddressOrAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddress<ApplicationGateway.Update.IUpdate>.ToBackendIpAddress(string ipAddress)
+        ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddressOrAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddress<ApplicationGateway.Update.IUpdate>.ToBackendIPAddress(string ipAddress)
         {
-            return this.ToBackendIpAddress(ipAddress) as ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddressOrAttach<ApplicationGateway.Update.IUpdate>;
+            return this.ToBackendIPAddress(ipAddress) as ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithBackendAddressOrAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -233,9 +229,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayRequestRoutingRule.Definition.IWithBackendAddressOrAttach<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> ApplicationGatewayRequestRoutingRule.Definition.IWithBackendAddress<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.ToBackendIpAddress(string ipAddress)
+        ApplicationGatewayRequestRoutingRule.Definition.IWithBackendAddressOrAttach<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> ApplicationGatewayRequestRoutingRule.Definition.IWithBackendAddress<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.ToBackendIPAddress(string ipAddress)
         {
-            return this.ToBackendIpAddress(ipAddress) as ApplicationGatewayRequestRoutingRule.Definition.IWithBackendAddressOrAttach<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>;
+            return this.ToBackendIPAddress(ipAddress) as ApplicationGatewayRequestRoutingRule.Definition.IWithBackendAddressOrAttach<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>;
         }
 
         /// <summary>
@@ -406,19 +402,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.GetPublicIpAddress()
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
         {
-            return this.GetPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress;
+            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
         }
 
         /// <summary>
         /// Gets the resource ID of the associated public IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIpAddress.PublicIpAddressId
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
         {
             get
             {
-                return this.PublicIpAddressId();
+                return this.PublicIPAddressId();
             }
         }
 

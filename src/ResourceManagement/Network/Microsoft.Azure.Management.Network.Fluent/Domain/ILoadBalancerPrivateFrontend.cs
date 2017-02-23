@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface ILoadBalancerPrivateFrontend  :
         ILoadBalancerFrontend,
-        IHasPrivateIpAddress,
+        IHasPrivateIPAddress,
         IHasSubnet
     {
         /// <return>

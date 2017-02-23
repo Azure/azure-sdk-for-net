@@ -174,10 +174,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:CF3AF06AB49909937FE8814F73E9DCAE
-        public string PublicIpAddressId()
+        public string PublicIPAddressId()
         {
             var frontend = Frontend();
-            return (frontend != null) ? frontend.PublicIpAddressId : null;
+            return (frontend != null) ? frontend.PublicIPAddressId : null;
         }
 
         ///GENMHASH:B206A6556439FF2D98365C5283836AD5:125C0E491D4D29CEE8322DF9019C1DE7
@@ -272,10 +272,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
-        public IPublicIpAddress GetPublicIpAddress()
+        public IPublicIPAddress GetPublicIPAddress()
         {
-            string pipId = PublicIpAddressId();
-            return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
+            string pipId = PublicIPAddressId();
+            return (pipId != null) ? Parent.Manager.PublicIPAddresses.GetById(pipId) : null;
         }
 
         #endregion

@@ -137,11 +137,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets list of DNS server IP addresses associated with this virtual network.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetwork.DnsServerIps
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetwork.DnsServerIPs
         {
             get
             {
-                return this.DnsServerIps() as System.Collections.Generic.IList<string>;
+                return this.DnsServerIPs() as System.Collections.Generic.IList<string>;
             }
         }
 

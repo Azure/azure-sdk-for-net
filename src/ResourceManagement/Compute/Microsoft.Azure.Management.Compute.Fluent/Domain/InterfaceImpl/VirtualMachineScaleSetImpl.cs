@@ -1002,11 +1002,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets IOException the IO exception.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PrimaryPublicIpAddressIds
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PrimaryPublicIPAddressIds
         {
             get
             {
-                return this.PrimaryPublicIpAddressIds() as System.Collections.Generic.IList<string>;
+                return this.PrimaryPublicIPAddressIds() as System.Collections.Generic.IList<string>;
             }
         }
 
