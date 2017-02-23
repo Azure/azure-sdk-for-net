@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="administratorLoginPassword">The administrator login
         /// password (required for server creation).</param>
         /// <param name="externalAdministratorSid">The ID of the Active Azure
-        /// Directory object with admin permissions on this server.  Legacy
-        /// parameter, always null.  To check for Active Directory admin,
+        /// Directory object with admin permissions on this server. Legacy
+        /// parameter, always null. To check for Active Directory admin,
         /// query .../servers/{serverName}/administrators.</param>
         /// <param name="externalAdministratorLogin">The display name of the
         /// Azure Active Directory object with admin permissions on this
-        /// server.  Legacy parameter, always null.  To check for Active
+        /// server. Legacy parameter, always null. To check for Active
         /// Directory admin, query
         /// .../servers/{serverName}/administrators</param>
         /// <param name="state">The state of the server. Possible values
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the ID of the Active Azure Directory object with admin
-        /// permissions on this server.  Legacy parameter, always null.  To
+        /// permissions on this server. Legacy parameter, always null. To
         /// check for Active Directory admin, query
         /// .../servers/{serverName}/administrators.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the display name of the Azure Active Directory object with
-        /// admin permissions on this server.  Legacy parameter, always null.
+        /// admin permissions on this server. Legacy parameter, always null.
         /// To check for Active Directory admin, query
         /// .../servers/{serverName}/administrators
         /// </summary>

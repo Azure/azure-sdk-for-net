@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="kind">Kind of database.  This is metadata used for
         /// the Azure portal experience.</param>
-        /// <param name="collation">The collation of the Azure SQL
-        /// database.</param>
+        /// <param name="collation">The collation of the Azure SQL database.
+        /// If createMode is not Default, this value is ignored.</param>
         /// <param name="creationDate">The creation date of the Azure SQL
         /// database (ISO8601 format).</param>
         /// <param name="containmentState">The containment state of the Azure
@@ -41,29 +41,40 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Objective ID of the Azure SQL database. This is the ID of the
         /// Service Level Objective that is currently active.</param>
         /// <param name="databaseId">The ID of the Azure SQL database.</param>
-        /// <param name="earliestRestoreDate">The recovery period start date
-        /// of the Azure SQL database. This records the start date and time
-        /// when recovery is available for this Azure SQL Database (ISO8601
-        /// format).</param>
+        /// <param name="earliestRestoreDate">This records the earliest start
+        /// date and time that restore is available for this Azure SQL
+        /// Database (ISO8601 format).</param>
         /// <param name="createMode">Specifies the type of database to create.
+        /// If createMode is not set to Default, sourceDatabaseId must be
+        /// specified. If createMode is set to PointInTimeRestore, then
+        /// restorePointInTime must be specified. If createMode is set to
+        /// Restore, then sourceDatabaseDeletionDate must be specified.
         /// Possible values include: 'Copy', 'Default',
         /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
         /// 'Recovery', 'Restore'</param>
-        /// <param name="sourceDatabaseId">Conditional. Specifies the resource
-        /// ID of the source database. If createMode is not set to Default,
-        /// then this value must be specified. The name of the source
-        /// database must be the same. NOTE: Collation, Edition, and
-        /// MaxSizeBytes must remain the same while the link is active.
-        /// Values specified for these parameters will be ignored.</param>
+        /// <param name="sourceDatabaseId">Conditional. If createMode is not
+        /// set to Default, then this value must be specified. Specifies the
+        /// resource ID of the source database. If createMode is
+        /// NonReadableSecondary or OnlineSecondary, the name of the source
+        /// database must be the same as this new database.</param>
+        /// <param name="restorePointInTime">Conditional. If createMode is set
+        /// to PointInTimeRestore, then this value must be specified.
+        /// Specifies the point in time (ISO8601 format) of the source
+        /// database that will be restored to create the new database. Must
+        /// be greater than or equal to the source database's
+        /// earliestRestoreDate value.</param>
         /// <param name="edition">The edition of the Azure SQL database. The
-        /// DatabaseEditions enumeration contains all the valid editions.
-        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
-        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System'</param>
+        /// DatabaseEditions enumeration contains all the valid editions. If
+        /// createMode is NonReadableSecondary or OnlineSecondary, this value
+        /// is ignored. Possible values include: 'Web', 'Business', 'Basic',
+        /// 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse',
+        /// 'System'</param>
         /// <param name="maxSizeBytes">The max size of the Azure SQL database
-        /// expressed in bytes. Note: Only the following sizes are supported
-        /// (in addition to limitations being placed on each edition): { 100
-        /// MB | 500 MB |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200
-        /// GB … 500 GB }</param>
+        /// expressed in bytes. If createMode is not Default, this value is
+        /// ignored. Note: Only the following sizes are supported (in
+        /// addition to limitations being placed on each edition): { 100 MB |
+        /// 500 MB |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB …
+        /// 500 GB }</param>
         /// <param name="requestedServiceObjectiveId">The configured Service
         /// Level Objective ID of the Azure SQL database. This is the Service
         /// Level Objective that is in the process of being applied to the
@@ -103,8 +114,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// are allowed to this database or not. Possible values include:
         /// 'Enabled', 'Disabled'</param>
         /// <param name="sampleName">Indicates the name of the sample schema
-        /// that was applied to this database.</param>
-        public Database(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), System.Collections.Generic.IList<ServiceTierAdvisor> serviceTierAdvisors = default(System.Collections.Generic.IList<ServiceTierAdvisor>), UpgradeHint upgradeHint = default(UpgradeHint), System.Collections.Generic.IList<Schema> schemas = default(System.Collections.Generic.IList<Schema>), System.Collections.Generic.IList<TransparentDataEncryption> transparentDataEncryption = default(System.Collections.Generic.IList<TransparentDataEncryption>), System.Collections.Generic.IList<RecommendedIndex> recommendedIndex = default(System.Collections.Generic.IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
+        /// to apply when creating this database. If createMode is not
+        /// Default, this value is ignored. Possible values include:
+        /// 'AdventureWorksLT'</param>
+        public Database(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), System.Collections.Generic.IList<ServiceTierAdvisor> serviceTierAdvisors = default(System.Collections.Generic.IList<ServiceTierAdvisor>), UpgradeHint upgradeHint = default(UpgradeHint), System.Collections.Generic.IList<Schema> schemas = default(System.Collections.Generic.IList<Schema>), System.Collections.Generic.IList<TransparentDataEncryption> transparentDataEncryption = default(System.Collections.Generic.IList<TransparentDataEncryption>), System.Collections.Generic.IList<RecommendedIndex> recommendedIndex = default(System.Collections.Generic.IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
             : base(location, name, id, type, tags)
         {
             Kind = kind;
@@ -116,6 +129,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             EarliestRestoreDate = earliestRestoreDate;
             CreateMode = createMode;
             SourceDatabaseId = sourceDatabaseId;
+            RestorePointInTime = restorePointInTime;
             Edition = edition;
             MaxSizeBytes = maxSizeBytes;
             RequestedServiceObjectiveId = requestedServiceObjectiveId;
@@ -142,7 +156,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Kind { get; set; }
 
         /// <summary>
-        /// Gets or sets the collation of the Azure SQL database.
+        /// Gets or sets the collation of the Azure SQL database. If
+        /// createMode is not Default, this value is ignored.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.collation")]
         public string Collation { get; set; }
@@ -174,46 +189,62 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string DatabaseId { get; private set; }
 
         /// <summary>
-        /// Gets the recovery period start date of the Azure SQL database.
-        /// This records the start date and time when recovery is available
-        /// for this Azure SQL Database (ISO8601 format).
+        /// Gets this records the earliest start date and time that restore is
+        /// available for this Azure SQL Database (ISO8601 format).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.earliestRestoreDate")]
         public System.DateTime? EarliestRestoreDate { get; private set; }
 
         /// <summary>
-        /// Gets or sets specifies the type of database to create. Possible
-        /// values include: 'Copy', 'Default', 'NonReadableSecondary',
-        /// 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore'
+        /// Gets or sets specifies the type of database to create. If
+        /// createMode is not set to Default, sourceDatabaseId must be
+        /// specified. If createMode is set to PointInTimeRestore, then
+        /// restorePointInTime must be specified. If createMode is set to
+        /// Restore, then sourceDatabaseDeletionDate must be specified.
+        /// Possible values include: 'Copy', 'Default',
+        /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
+        /// 'Recovery', 'Restore'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
 
         /// <summary>
-        /// Gets or sets conditional. Specifies the resource ID of the source
-        /// database. If createMode is not set to Default, then this value
-        /// must be specified. The name of the source database must be the
-        /// same. NOTE: Collation, Edition, and MaxSizeBytes must remain the
-        /// same while the link is active. Values specified for these
-        /// parameters will be ignored.
+        /// Gets or sets conditional. If createMode is not set to Default,
+        /// then this value must be specified. Specifies the resource ID of
+        /// the source database. If createMode is NonReadableSecondary or
+        /// OnlineSecondary, the name of the source database must be the same
+        /// as this new database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sourceDatabaseId")]
         public string SourceDatabaseId { get; set; }
 
         /// <summary>
+        /// Gets or sets conditional. If createMode is set to
+        /// PointInTimeRestore, then this value must be specified. Specifies
+        /// the point in time (ISO8601 format) of the source database that
+        /// will be restored to create the new database. Must be greater than
+        /// or equal to the source database's earliestRestoreDate value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.restorePointInTime")]
+        public System.DateTime? RestorePointInTime { get; set; }
+
+        /// <summary>
         /// Gets or sets the edition of the Azure SQL database. The
-        /// DatabaseEditions enumeration contains all the valid editions.
-        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
-        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System'
+        /// DatabaseEditions enumeration contains all the valid editions. If
+        /// createMode is NonReadableSecondary or OnlineSecondary, this value
+        /// is ignored. Possible values include: 'Web', 'Business', 'Basic',
+        /// 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse',
+        /// 'System'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.edition")]
         public string Edition { get; set; }
 
         /// <summary>
         /// Gets or sets the max size of the Azure SQL database expressed in
-        /// bytes. Note: Only the following sizes are supported (in addition
-        /// to limitations being placed on each edition): { 100 MB | 500 MB
-        /// |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
+        /// bytes. If createMode is not Default, this value is ignored. Note:
+        /// Only the following sizes are supported (in addition to
+        /// limitations being placed on each edition): { 100 MB | 500 MB |1
+        /// GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
@@ -315,8 +346,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ReadScale? ReadScale { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates the name of the sample schema that was
-        /// applied to this database.
+        /// Gets or sets indicates the name of the sample schema to apply when
+        /// creating this database. If createMode is not Default, this value
+        /// is ignored. Possible values include: 'AdventureWorksLT'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sampleName")]
         public string SampleName { get; set; }
