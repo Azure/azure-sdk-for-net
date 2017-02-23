@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Txt record with the given text from this record set.
+        /// Removes a TXT record with the given text from this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set definition.</return>

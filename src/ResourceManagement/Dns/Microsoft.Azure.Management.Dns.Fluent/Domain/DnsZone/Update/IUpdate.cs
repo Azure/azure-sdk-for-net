@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         /// Gets Begins the description of an update of the Soa record in this DNS zone.
         /// </summary>
         /// <summary>
-        /// Gets the stage representing configuration for the Txt record set.
+        /// Gets the stage representing configuration for the TXT record set.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord UpdateSoaRecord();
 
@@ -107,10 +107,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutAaaaRecordSet(string name);
 
         /// <summary>
-        /// Begins the description of an update of an existing Txt record set in this DNS zone.
+        /// Begins the description of an update of an existing TXT record set in this DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet UpdateTxtRecordSet(string name);
 
         /// <summary>
@@ -149,10 +149,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineAaaaRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Txt record set to be attached to the DNS zone.
+        /// Specifies definition of a TXT record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.ITxtRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineTxtRecordSet(string name);
 
         /// <summary>
@@ -170,9 +170,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutMXRecordSet(string name);
 
         /// <summary>
-        /// Removes a Txt record set in the DNS zone.
+        /// Removes a TXT record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Txt record set.</param>
+        /// <param name="name">Name of the TXT record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutTxtRecordSet(string name);
 

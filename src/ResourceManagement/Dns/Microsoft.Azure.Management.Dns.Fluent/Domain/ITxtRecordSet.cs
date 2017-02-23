@@ -6,13 +6,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a Txt (text) record set in Azure DNS Zone.
+    /// An immutable client-side representation of a TXT (text) record set in Azure DNS Zone.
     /// </summary>
     public interface ITxtRecordSet  :
         IDnsRecordSet
     {
         /// <summary>
-        /// Gets the Txt records in this record set.
+        /// Gets the TXT records in this record set.
         /// </summary>
         System.Collections.Generic.IList<TxtRecord> Records { get; }
     }

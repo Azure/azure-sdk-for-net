@@ -183,19 +183,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the SRV record definition allowing to add or remove Txt record.
+    /// The stage of the SRV record definition allowing to add or remove TXT record.
     /// </summary>
     public interface IWithTxtRecordTextValue 
     {
         /// <summary>
-        /// Removes a Txt record with the given text from this record set.
+        /// Removes a TXT record with the given text from this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet WithoutText(string text);
 
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>

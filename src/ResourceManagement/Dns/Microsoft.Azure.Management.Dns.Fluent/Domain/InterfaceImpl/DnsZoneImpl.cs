@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage record sets in this zone containing Txt (text) records.
+        /// Gets entry point to manage record sets in this zone containing TXT (text) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.TxtRecordSets
         {
@@ -260,10 +260,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing Txt record set in this DNS zone.
+        /// Begins the description of an update of an existing TXT record set in this DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet DnsZone.Update.IWithRecordSet.UpdateTxtRecordSet(string name)
         {
             return this.UpdateTxtRecordSet(name) as DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet;
@@ -290,9 +290,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Removes a Txt record set in the DNS zone.
+        /// Removes a TXT record set in the DNS zone.
         /// </summary>
-        /// <param name="name">Name of the Txt record set.</param>
+        /// <param name="name">Name of the TXT record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutTxtRecordSet(string name)
         {
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Gets Begins the description of an update of the Soa record in this DNS zone.
         /// </summary>
         /// <summary>
-        /// Gets the stage representing configuration for the Txt record set.
+        /// Gets the stage representing configuration for the TXT record set.
         /// </summary>
         DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord DnsZone.Update.IWithRecordSet.UpdateSoaRecord()
         {
@@ -341,10 +341,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Txt record set to be attached to the DNS zone.
+        /// Specifies definition of a TXT record set to be attached to the DNS zone.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.UpdateDefinition.ITxtRecordSetBlank<DnsZone.Update.IUpdate> DnsZone.Update.IWithRecordSet.DefineTxtRecordSet(string name)
         {
             return this.DefineTxtRecordSet(name) as DnsRecordSet.UpdateDefinition.ITxtRecordSetBlank<DnsZone.Update.IUpdate>;
@@ -452,10 +452,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Specifies definition of a Txt record set.
+        /// Specifies definition of a TXT record set.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.Definition.ITxtRecordSetBlank<DnsZone.Definition.IWithCreate> DnsZone.Definition.IWithRecordSet.DefineTxtRecordSet(string name)
         {
             return this.DefineTxtRecordSet(name) as DnsRecordSet.Definition.ITxtRecordSetBlank<DnsZone.Definition.IWithCreate>;

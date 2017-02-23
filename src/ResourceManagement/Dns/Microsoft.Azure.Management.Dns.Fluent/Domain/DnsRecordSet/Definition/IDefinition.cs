@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the Txt record set definition allowing to add additional Txt records or attach the record set
+    /// The stage of the TXT record set definition allowing to add additional TXT records or attach the record set
     /// to the parent.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
@@ -239,13 +239,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The stage of the SRV record definition allowing to add first Txt record.
+    /// The stage of the SRV record definition allowing to add first TXT record.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithTxtRecordTextValue<ParentT> 
     {
         /// <summary>
-        /// Creates a Txt record with the given text in this record set.
+        /// Creates a TXT record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set definition.</return>
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
-    /// The first stage of a Txt record definition.
+    /// The first stage of a TXT record definition.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface ITxtRecordSetBlank<ParentT>  :

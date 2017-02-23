@@ -77,10 +77,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IAaaaRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineAaaaRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a Txt record set.
+        /// Specifies definition of a TXT record set.
         /// </summary>
-        /// <param name="name">The name of the Txt record set.</param>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <param name="name">The name of the TXT record set.</param>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.ITxtRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineTxtRecordSet(string name);
 
         /// <summary>
