@@ -11,19 +11,17 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Azure;
     using Management;
     using Cdn;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ResourceType.
+    /// Defines values for CustomHttpsProvisioningState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceType
+    public static class CustomHttpsProvisioningState
     {
-        [EnumMember(Value = "Microsoft.Cdn/Profiles/Endpoints")]
-        MicrosoftCdnProfilesEndpoints
+        public const string Enabling = "Enabling";
+        public const string Enabled = "Enabled";
+        public const string Disabling = "Disabling";
+        public const string Disabled = "Disabled";
+        public const string Failed = "Failed";
     }
 }
 
