@@ -102,7 +102,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             Ensure.IsNotNullOrEmpty(host, "host");
             Ensure.IsNotNullOrEmpty(authenticationType, "authenticationType");
-            Ensure.IsNotNullOrEmpty(username, "username");
+            if (string.IsNullOrEmpty(EncryptedCredential))
+            {
+                Ensure.IsNotNullOrEmpty(username, "username");
+            }
             this.Host = host;
             this.AuthenticationType = authenticationType;
             this.Username = username;

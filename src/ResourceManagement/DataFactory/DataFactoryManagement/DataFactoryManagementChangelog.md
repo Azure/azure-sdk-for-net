@@ -18,7 +18,7 @@ _Release date: 2017.02.28_
     * AzureSearchIndexSink
 * The following authentication type has been added:
     * HttpAuthenticationType
-* Add ServicePrincipalId, ServicePrincipalKey, Tenant properties to AzureMLLinkedService:
+* Add ServicePrincipalId, ServicePrincipalKey and Tenant properties to AzureMLLinkedService:
     * Support update resource capability for Azure ML web service
 * Rewrite AzureDataLakeStoreLinkedService:
     * Support service principal-based authentication for ADLS
