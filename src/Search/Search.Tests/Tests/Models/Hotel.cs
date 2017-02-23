@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Search.Tests
 
             return
                 this.HotelId == other.HotelId &&
-                this.BaseRate == other.BaseRate &&
+                DoublesEqual(this.BaseRate, other.BaseRate) &&
                 this.Description == other.Description &&
                 this.DescriptionFr == other.DescriptionFr &&
                 this.HotelName == other.HotelName &&
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Search.Tests
                 ((this.Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : this.Tags.SequenceEqual(other.Tags ?? new string[0])) &&
                 this.ParkingIncluded == other.ParkingIncluded &&
                 this.SmokingAllowed == other.SmokingAllowed &&
-                this.LastRenovationDate == other.LastRenovationDate &&
+                DateTimeOffsetsEqual(this.LastRenovationDate, other.LastRenovationDate) &&
                 this.Rating == other.Rating &&
                 ((this.Location == null) ? other.Location == null : this.Location.Equals(other.Location));
         }
@@ -107,6 +107,45 @@ namespace Microsoft.Azure.Search.Tests
                 { "smokingAllowed", this.SmokingAllowed },
                 { "tags", this.Tags ?? new string[0] }   // OData always gives [] instead of null for collections.
             };
+        }
+
+        private static bool DoublesEqual(double? x, double? y)
+        {
+            if (x == null)
+            {
+                return y == null;
+            }
+
+            if (Double.IsNaN(x.Value))
+            {
+                return y != null && Double.IsNaN(y.Value);
+            }
+
+            return x == y;
+        }
+
+        private static bool DateTimeOffsetsEqual(DateTimeOffset? a, DateTimeOffset? b)
+        {
+            if (a == null)
+            {
+                return b == null;
+            }
+
+            if (b == null)
+            {
+                return false;
+            }
+
+            if (a.Value.EqualsExact(b.Value))
+            {
+                return true;
+            }
+
+            // Allow for some loss of precision in the tick count.
+            long aTicks = a.Value.UtcTicks;
+            long bTicks = b.Value.UtcTicks;
+
+            return (aTicks / 10000) == (bTicks / 10000);
         }
     }
 }
