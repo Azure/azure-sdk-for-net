@@ -3,12 +3,6 @@
   "description": "Azure Batch test common library",
   "authors": [ "Microsoft Corporation" ],
 
-  "packOptions": {
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": ""
-  },
-
   "buildOptions": {
     "warningsAsErrors": true,
     "delaySign": true,

@@ -3,11 +3,6 @@
   "description": "Azure Batch Unit tests class library",
   "authors": [ "Microsoft Corporation" ],
 
-  "packOptions": {
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": ""
-  },
   "buildOptions": {
     "warningsAsErrors": true,
     "delaySign": true,
