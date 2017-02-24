@@ -627,9 +627,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             username: ""admin"",
             password : ""fakepassword"",
             gatewayName : ""fakegatewayName"",
-            encryptedCredential : ""fakeencryptedCredential"",
-            authorization : ""fakeauthorization"",
-            sessionId : ""fakesessionId""
+            encryptedCredential : ""fakeencryptedCredential""
         }
     }
 }";
