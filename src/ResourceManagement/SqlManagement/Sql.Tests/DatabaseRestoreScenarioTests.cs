@@ -20,11 +20,6 @@ namespace Sql.Tests
             string testName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                Dictionary<string, string> tags = new Dictionary<string, string>()
-                    {
-                        { "tagKey1", "TagValue1" }
-                    };
-
                 // Create database only required parameters
                 //
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
