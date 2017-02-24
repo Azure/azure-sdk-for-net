@@ -31,7 +31,7 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Azure.Batch": {
       "target": "project",
-      "version": "6.0.0"
+      "version": "6.0.1"
     },
     "Common": "1.0.0"
   }

@@ -1,5 +1,5 @@
 ﻿{
-  "version": "6.0.0",
+  "version": "6.0.1",
   "name": "Azure.Batch",
   "description": "This client library provides access to the Microsoft Azure Batch service.",
   "authors": [ "Microsoft" ],
@@ -10,7 +10,8 @@
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "http://aka.ms/windowsazureapache2",
     "tags": [ "Microsoft", "Azure", "Batch", "windowsazureofficial" ],
-    "requireLicenseAcceptance": true
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "See https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/Batch/Client/changelog.md for release notes."
   },
   "buildOptions": {
     "outputName": "Microsoft.Azure.Batch",
