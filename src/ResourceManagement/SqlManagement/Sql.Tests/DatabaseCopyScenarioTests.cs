@@ -22,7 +22,7 @@ namespace Sql.Tests
             Dictionary<string, string> tags = new Dictionary<string, string>();
             string testName = this.GetType().FullName;
 
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(testName, "TestCreateDeleteReplicationLinks", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            SqlManagementTestUtilities.RunTestInNewResourceGroup(testName, "TestCopyDatabase", testPrefix, (resClient, sqlClient, resourceGroup) =>
             {
                 //Create two servers
                 string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
