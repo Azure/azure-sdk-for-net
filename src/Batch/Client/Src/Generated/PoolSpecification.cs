@@ -50,6 +50,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<int?> TargetDedicatedProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
+            public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
             public readonly PropertyAccessor<VirtualMachineConfiguration> VirtualMachineConfigurationProperty;
             public readonly PropertyAccessor<string> VirtualMachineSizeProperty;
 
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Batch
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>("StartTask", BindingAccess.Read | BindingAccess.Write);
                 this.TargetDedicatedProperty = this.CreatePropertyAccessor<int?>("TargetDedicated", BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>("TaskSchedulingPolicy", BindingAccess.Read | BindingAccess.Write);
+                this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>("UserAccounts", BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>("VirtualMachineConfiguration", BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor<string>("VirtualMachineSize", BindingAccess.Read | BindingAccess.Write);
             }
@@ -136,6 +138,10 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o)),
                     "TaskSchedulingPolicy",
                     BindingAccess.Read | BindingAccess.Write);
+                this.UserAccountsProperty = this.CreatePropertyAccessor(
+                    UserAccount.ConvertFromProtocolCollectionAndFreeze(protocolObject.UserAccounts),
+                    "UserAccounts",
+                    BindingAccess.Read);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.VirtualMachineConfiguration, o => new VirtualMachineConfiguration(o)),
                     "VirtualMachineConfiguration",
@@ -347,6 +353,18 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the list of user accounts to be created on each node in the pool.
+        /// </summary>
+        public IList<UserAccount> UserAccounts
+        {
+            get { return this.propertyContainer.UserAccountsProperty.Value; }
+            set
+            {
+                this.propertyContainer.UserAccountsProperty.Value = ConcurrentChangeTrackedModifiableList<UserAccount>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="VirtualMachineConfiguration"/> of the pool.
         /// </summary>
         /// <remarks>
@@ -417,6 +435,7 @@ namespace Microsoft.Azure.Batch
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicated = this.TargetDedicated,
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
+                UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),
                 VmSize = this.VirtualMachineSize,
             };

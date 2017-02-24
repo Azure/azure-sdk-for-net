@@ -187,7 +187,7 @@
             "Type": "Common.OnTaskFailure?",
             "Name": "OnTaskFailure",
             "SummaryComment": "The action the Batch service should take when any task in the job fails.",
-            "remarkComment": "A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error.",
+            "RemarksComment": "A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error.",
             "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },

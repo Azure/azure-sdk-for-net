@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<TimeSpan?> MaxWallClockTimeProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
             public readonly PropertyAccessor<TimeSpan?> RetentionTimeProperty;
-            public readonly PropertyAccessor<bool?> RunElevatedProperty;
+            public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Batch
                 this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("MaxWallClockTime", BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
                 this.RetentionTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("RetentionTime", BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor<bool?>("RunElevated", BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobReleaseTask protocolObject) : base(BindingState.Bound)
@@ -80,9 +80,9 @@ namespace Microsoft.Azure.Batch
                     protocolObject.RetentionTime,
                     "RetentionTime",
                     BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.RunElevated,
-                    "RunElevated",
+                this.UserIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
+                    "UserIdentity",
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -179,12 +179,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
+        /// Gets or sets the user identity under which the task runs.
         /// </summary>
-        public bool? RunElevated
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to the task.
+        /// </remarks>
+        public UserIdentity UserIdentity
         {
-            get { return this.propertyContainer.RunElevatedProperty.Value; }
-            set { this.propertyContainer.RunElevatedProperty.Value = value; }
+            get { return this.propertyContainer.UserIdentityProperty.Value; }
+            set { this.propertyContainer.UserIdentityProperty.Value = value; }
         }
 
         #endregion // JobReleaseTask
@@ -219,7 +222,7 @@ namespace Microsoft.Azure.Batch
                 MaxWallClockTime = this.MaxWallClockTime,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
                 RetentionTime = this.RetentionTime,
-                RunElevated = this.RunElevated,
+                UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };
 
             return result;

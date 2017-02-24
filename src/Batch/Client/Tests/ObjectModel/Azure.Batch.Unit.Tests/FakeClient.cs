@@ -22,6 +22,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
 
     public static class FakeClient
     {
@@ -52,9 +53,9 @@
             }
         }
 
-        private class FakeCredential : Microsoft.Azure.Batch.Protocol.BatchCredentials
+        private class FakeCredential : ServiceClientCredentials
         {
-            public override Task SignRequestAsync(HttpRequestMessage httpRequest, CancellationToken cancellationToken)
+            public override Task ProcessHttpRequestAsync(HttpRequestMessage httpRequest, CancellationToken cancellationToken)
             {
                 return Task.Delay(0);
             }

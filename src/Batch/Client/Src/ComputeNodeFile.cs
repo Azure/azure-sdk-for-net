@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Batch
 #region // NodeFile
 
         public override async System.Threading.Tasks.Task CopyToStreamAsync(
-            Stream stream, 
+            Stream stream,
+            GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -56,8 +57,9 @@ namespace Microsoft.Azure.Batch
                 this._poolOperations.ParentBatchClient.ProtocolLayer.GetNodeFileByNode(
                     _poolId, 
                     _computeNodeId, 
-                    base.Name, 
-                    stream, 
+                    base.Path, 
+                    stream,
+                    byteRange,
                     bhMgr, 
                     cancellationToken);
 
@@ -72,7 +74,7 @@ namespace Microsoft.Azure.Batch
             var asyncTask = _poolOperations.ParentBatchClient.ProtocolLayer.DeleteNodeFileByNode(
                 _poolId, 
                 _computeNodeId, 
-                base.Name, 
+                base.Path, 
                 recursive,
                 bhMgr, 
                 cancellationToken);
@@ -92,15 +94,15 @@ namespace Microsoft.Azure.Batch
             // create the behavior managaer
             BehaviorManager bhMgr = new BehaviorManager(base.CustomBehaviors, additionalBehaviors, detailLevel);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>> asyncTask = 
+            System.Threading.Tasks.Task<AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromComputeNodeHeaders>> asyncTask = 
                 this._poolOperations.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByNode(
                     _poolId, 
                     _computeNodeId, 
-                    base.Name, 
+                    base.Path, 
                     bhMgr, 
                     cancellationToken);
 
-            AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+            AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromComputeNodeHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // immediately available to all threads
             System.Threading.Interlocked.Exchange(ref base.fileItemBox, new FileItemBox(response.Body));

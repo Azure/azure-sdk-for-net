@@ -79,6 +79,35 @@
         }
 
         /// <summary>
+        /// Convert an enum of type AccessScope to a List of Protocol.Models.AccessScope.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert.
+        /// </param>
+        /// <returns>
+        /// The enum value to convert into list format.
+        /// </returns>
+        internal static IList<Protocol.Models.AccessScope?> AccessScopeToList(Common.AccessScope value)
+        {
+            List<Protocol.Models.AccessScope?> result = new List<Protocol.Models.AccessScope?>();
+
+            IList<Common.AccessScope> enumValues = new List<Common.AccessScope>((Common.AccessScope[])Enum.GetValues(typeof(Common.AccessScope)));
+
+            enumValues.Remove(Common.AccessScope.None); //None is an artifact of the OM so skip it
+
+            foreach (Common.AccessScope enumValue in enumValues)
+            {
+                if (value.HasFlag(enumValue))
+                {
+                    Protocol.Models.AccessScope protoEnumValue = UtilitiesInternal.MapEnum<Common.AccessScope, Protocol.Models.AccessScope>(enumValue);
+                    result.Add(protoEnumValue);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Parse enum values for type CertificateVisibility.
         /// </summary>
         /// <param name='value'>
@@ -108,7 +137,40 @@
 
             return flags;
         }
-        
+
+
+        /// <summary>
+        /// Parse enum values for type AccessScope.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static Common.AccessScope ParseAccessScope(IList<Protocol.Models.AccessScope?> value)
+        {
+            if (value == null)
+            {
+                return Common.AccessScope.None;
+            }
+
+            Common.AccessScope flags = AccessScope.None;
+
+            foreach (Protocol.Models.AccessScope? visibility in value)
+            {
+                Common.AccessScope? convertedEnum = UtilitiesInternal.MapNullableEnum<Protocol.Models.AccessScope, Common.AccessScope>(visibility);
+
+                if (convertedEnum.HasValue)
+                {
+                    flags |= convertedEnum.Value;
+                }
+            }
+
+            return flags;
+        }
+
+
         internal static void ThrowOnUnbound(BindingState bindingState)
         {
             if (BindingState.Unbound == bindingState)
@@ -188,6 +250,20 @@
             {
                 return null;
             }
+        }
+
+        internal static IList<TTo> ConvertEnumCollection<TFrom, TTo>(IEnumerable<TFrom> items)
+            where TFrom : struct
+            where TTo : struct
+        {
+            return items?.Select(MapEnum<TFrom, TTo>).ToList();
+        }
+
+        internal static IList<TTo?> ConvertEnumCollection<TFrom, TTo>(IEnumerable<TFrom?> items)
+            where TFrom : struct
+            where TTo : struct
+        {
+            return items?.Select(MapNullableEnum<TFrom, TTo>).ToList();
         }
 
         private static TList ConvertCollection<TIn, TOut, TList>(

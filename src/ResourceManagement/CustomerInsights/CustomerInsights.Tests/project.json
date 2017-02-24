@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0-*",
+  "description": "CustomerInsights.Tests Class Library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "packOptions": {
+    "summary": "CustomerInsights.Tests Tests.",
+    "tags": [ "" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
+  },
+  "buildOptions": {
+    "compile": "../../../../tools/DisableTestRunParallel.cs",
+    "delaySign": true,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "publicSign": false
+  },
+  
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {      
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.7-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.5.0-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.3,4.0.0)",
+    "Microsoft.Azure.Management.CustomerInsights": "0.0.1-preview",
+    "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+  }
+}

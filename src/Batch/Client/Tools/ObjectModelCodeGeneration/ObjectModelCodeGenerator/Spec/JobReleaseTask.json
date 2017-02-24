@@ -56,10 +56,10 @@
         },
         {
           "Key": {
-            "Type": "bool?",
-            "Name": "RunElevated",
-            "SummaryComment": "Whether to run the task in elevated mode.",
-            "RemarksComment": null,
+            "Type": "UserIdentity",
+            "Name": "UserIdentity",
+            "SummaryComment": "The user identity under which the task runs.",
+            "RemarksComment": "If omitted, the task runs as a non-administrative user unique to the task.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },

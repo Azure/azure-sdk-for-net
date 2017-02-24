@@ -291,19 +291,19 @@
         /// <summary>
         /// Begins an asynchronous request to get the specified NodeFile.
         /// </summary>
-        /// <param name="fileName">The name of the NodeFile.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
         public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
-            string fileName, 
+            string filePath, 
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            Task<NodeFile> asyncTask = this.parentBatchClient.PoolOperations.GetNodeFileAsyncImpl(this.parentPoolId, this.Id, fileName, bhMgr, cancellationToken);
+            Task<NodeFile> asyncTask = this.parentBatchClient.PoolOperations.GetNodeFileAsyncImpl(this.parentPoolId, this.Id, filePath, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -311,12 +311,12 @@
         /// <summary>
         /// Blocking call to get the specified NodeFile.
         /// </summary>
-        /// <param name="fileName">The name of the NodeFile.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <returns>A bound <see cref="NodeFile"/> object.</returns>
-        public NodeFile GetNodeFile(string fileName, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public NodeFile GetNodeFile(string filePath, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (Task<NodeFile> asyncTask = this.GetNodeFileAsync(fileName, additionalBehaviors))
+            using (Task<NodeFile> asyncTask = this.GetNodeFileAsync(filePath, additionalBehaviors))
             {
                 return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }

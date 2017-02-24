@@ -132,9 +132,16 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.TaskReactivateHeaders>> ReactivateTask(string jobId, string taskId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(string jobId, string taskId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(
+            string jobId,
+            string taskId,
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesByTask(string jobId, string taskId, string fileName, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromTaskHeaders>> GetNodeFilePropertiesByTask(string jobId, string taskId, string filePath, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<IPage<Models.CloudPool>, Models.PoolListHeaders>> ListPools(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken);
 
@@ -231,7 +238,7 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.PoolUpgradeOSHeaders>> UpgradePoolOS(string poolId, string targetOSVersion, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationHeaderResponse<Models.FileDeleteFromTaskHeaders>> DeleteNodeFileByTask(string jobId, string taskId, string fileName, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationHeaderResponse<Models.FileDeleteFromTaskHeaders>> DeleteNodeFileByTask(string jobId, string taskId, string filePath, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.ComputeNode, Models.ComputeNodeGetHeaders>> GetComputeNode(string poolId, string nodeId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
@@ -246,11 +253,18 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.TaskUpdateHeaders>> UpdateTask(string jobId, string taskId, Models.TaskConstraints constraints, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationHeaderResponse<Models.FileDeleteFromComputeNodeHeaders>> DeleteNodeFileByNode(string poolId, string nodeId, string fileName, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationHeaderResponse<Models.FileDeleteFromComputeNodeHeaders>> DeleteNodeFileByNode(string poolId, string nodeId, string filePath, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(string poolId, string nodeId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(
+            string poolId,
+            string nodeId,
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesByNode(string poolId, string nodeId, string fileName, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesByNode(string poolId, string nodeId, string filePath, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<IPage<Models.NodeFile>, Models.FileListFromComputeNodeHeaders>> ListNodeFilesByNode(
             string poolId,
@@ -271,13 +285,13 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.CertificateCancelDeletionHeaders>> CancelDeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllJobsLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllPoolsLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.TaskAddCollectionResult, Models.TaskAddCollectionHeaders>> AddTaskCollection(string jobId, IEnumerable<Models.TaskAddParameter> tasks, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetrics(
+        Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListUsageMetricsHeaders>> ListPoolUsageMetrics(
             DateTime? startTime,
             DateTime? endTime,
             string skipToken,

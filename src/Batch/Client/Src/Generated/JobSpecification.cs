@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<JobPreparationTask> JobPreparationTaskProperty;
             public readonly PropertyAccessor<JobReleaseTask> JobReleaseTaskProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
+            public readonly PropertyAccessor<Common.OnAllTasksComplete?> OnAllTasksCompleteProperty;
+            public readonly PropertyAccessor<Common.OnTaskFailure?> OnTaskFailureProperty;
             public readonly PropertyAccessor<PoolInformation> PoolInformationProperty;
             public readonly PropertyAccessor<int?> PriorityProperty;
             public readonly PropertyAccessor<bool?> UsesTaskDependenciesProperty;
@@ -55,6 +57,8 @@ namespace Microsoft.Azure.Batch
                 this.JobPreparationTaskProperty = this.CreatePropertyAccessor<JobPreparationTask>("JobPreparationTask", BindingAccess.Read | BindingAccess.Write);
                 this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>("JobReleaseTask", BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
+                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>("OnAllTasksComplete", BindingAccess.Read | BindingAccess.Write);
+                this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>("OnTaskFailure", BindingAccess.Read | BindingAccess.Write);
                 this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>("PoolInformation", BindingAccess.Read | BindingAccess.Write);
                 this.PriorityProperty = this.CreatePropertyAccessor<int?>("Priority", BindingAccess.Read | BindingAccess.Write);
                 this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor<bool?>("UsesTaskDependencies", BindingAccess.Read | BindingAccess.Write);
@@ -89,6 +93,14 @@ namespace Microsoft.Azure.Batch
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     "Metadata",
+                    BindingAccess.Read | BindingAccess.Write);
+                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete, Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
+                    "OnAllTasksComplete",
+                    BindingAccess.Read | BindingAccess.Write);
+                this.OnTaskFailureProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.OnTaskFailure, Common.OnTaskFailure>(protocolObject.OnTaskFailure),
+                    "OnTaskFailure",
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PoolInfo, o => new PoolInformation(o)),
@@ -212,6 +224,29 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the action the Batch service should take when all tasks in the job are in the <see cref="Common.JobState.Completed"/> 
+        /// state.
+        /// </summary>
+        public Common.OnAllTasksComplete? OnAllTasksComplete
+        {
+            get { return this.propertyContainer.OnAllTasksCompleteProperty.Value; }
+            set { this.propertyContainer.OnAllTasksCompleteProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the action the Batch service should take when any task in the job fails.
+        /// </summary>
+        /// <remarks>
+        /// A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, 
+        /// or if it had a scheduling error.
+        /// </remarks>
+        public Common.OnTaskFailure? OnTaskFailure
+        {
+            get { return this.propertyContainer.OnTaskFailureProperty.Value; }
+            set { this.propertyContainer.OnTaskFailureProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the pool on which the Batch service runs the tasks of jobs created via this <see cref="JobSpecification"/>.
         /// </summary>
         public PoolInformation PoolInformation
@@ -279,6 +314,8 @@ namespace Microsoft.Azure.Batch
                 JobPreparationTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobPreparationTask, (o) => o.GetTransportObject()),
                 JobReleaseTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobReleaseTask, (o) => o.GetTransportObject()),
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
+                OnAllTasksComplete = UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
+                OnTaskFailure = UtilitiesInternal.MapNullableEnum<Common.OnTaskFailure, Models.OnTaskFailure>(this.OnTaskFailure),
                 PoolInfo = UtilitiesInternal.CreateObjectWithNullCheck(this.PoolInformation, (o) => o.GetTransportObject()),
                 Priority = this.Priority,
                 UsesTaskDependencies = this.UsesTaskDependencies,

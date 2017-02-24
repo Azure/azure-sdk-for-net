@@ -25,8 +25,7 @@ For detailed release notes, see https://github.com/Azure/azure-sdk-for-net/blob/
     <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="WindowsAzure.Storage" version="6.2.0" />
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="3.3.1" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="3.3.5" />
       </group>
     </dependencies>
   </metadata>
