@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/invoices?$expand=downloadUrl&$filter=invoicePeriodEndDate%20lt%202016-01-31&$top=1&api-version=2017-02-27-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM0N2Q2M2EtNDIxYS00M2E3LTgzNmEtNWYzODljNzljZDA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9pbnZvaWNlcz8kZXhwYW5kPWRvd25sb2FkVXJsJiRmaWx0ZXI9aW52b2ljZVBlcmlvZEVuZERhdGUlMjBsdCUyMDIwMTYtMDEtMzEmJHRvcD0xJmFwaS12ZXJzaW9uPTIwMTctMDItMjctcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "88ecaa48-34bf-4889-8522-c89e405d7fc9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Billing.BillingClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"target\": \"https://billing-preview.windowsazure.com/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/invoices?$expand=downloadUrl&$filter=invoicePeriodEndDate%20lt%202016-01-31&$top=1&api-version=2017-02-27-preview\",\r\n    \"message\": \"Could not find invoice for the subscription.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "339"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 18 Feb 2017 19:44:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "a3ca3620-41a5-4f1f-9928-22d3e933f67d"
+        ],
+        "x-ms-correlation-request-id": [
+          "a3ca3620-41a5-4f1f-9928-22d3e933f67d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170218T194402Z:a3ca3620-41a5-4f1f-9928-22d3e933f67d"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0347d63a-421a-43a7-836a-5f389c79cd07"
+  }
+}
