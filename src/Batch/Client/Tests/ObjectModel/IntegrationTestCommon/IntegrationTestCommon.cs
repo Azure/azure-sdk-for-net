@@ -95,7 +95,7 @@ namespace IntegrationTestCommon
                 certificate2 = certificates.Cast<X509Certificate2>().FirstOrDefault(
                     c => String.Equals(
                         c.Thumbprint,
-                        TestCommon.Configuration.BatchTRPCertificateThumbprint,
+                        TestCommon.Configuration.BatchTRPCertificateThumbprint(),
                         StringComparison.OrdinalIgnoreCase));
 
                 if (certificate2 == null)
