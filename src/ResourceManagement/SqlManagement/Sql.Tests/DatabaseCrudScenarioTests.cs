@@ -46,7 +46,8 @@ namespace Sql.Tests
                     RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
                     RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Tags = tags,
-                    CreateMode = "Default"
+                    CreateMode = "Default",
+                    SampleName = SampleName.AdventureWorksLT
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);

@@ -107,11 +107,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? StorageMB { get; set; }
 
         /// <summary>
-        /// Gets or sets kind of elastic pool.  This is metadata used for the
-        /// Azure portal experience.
+        /// Gets kind of elastic pool.  This is metadata used for the Azure
+        /// portal experience.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
+        public string Kind { get; private set; }
 
         /// <summary>
         /// Validate the object.
