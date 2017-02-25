@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IWebAppBase  :
         IHasName,
-        IGroupableResource<IAppServiceManager>,
-        IHasInner<Models.SiteInner>
+        IGroupableResource<IAppServiceManager, SiteInner>
     {
         /// <summary>
         /// Gets the connection strings defined on the web app.

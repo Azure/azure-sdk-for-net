@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             IDefinitionT,
             IUpdatableT,
             ManagerT>,
-        IIndependentChildResource<ManagerT>
+        IIndependentChildResource<ManagerT, InnerModelT>
         where InnerModelT : Fluent.Resource
         where FluentResourceT : IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT, ManagerT>, IFluentResourceT
-        where FluentParentModelT : class, IGroupableResource<ManagerT>
+        where FluentParentModelT : class, IResource, IHasResourceGroup
         where IDefinitionT : class
         where IUpdatableT : class
         where IFluentResourceT : class, IDefinitionT

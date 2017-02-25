@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Core;
     using System.Threading.Tasks;
     using System.Threading;
 
@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
     /// Provides access to getting a specific Azure resource based on its resource group and parent.
     /// </summary>
     /// <typeparam name="">The type of the resource collection.</typeparam>
-    public interface ISupportsGettingByParent<T, ParentT, ManagerT> where ParentT : IGroupableResource<ManagerT> 
+    public interface ISupportsGettingByParent<T, ParentT, ManagerT> where ParentT : IResource, IHasResourceGroup 
     {
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.

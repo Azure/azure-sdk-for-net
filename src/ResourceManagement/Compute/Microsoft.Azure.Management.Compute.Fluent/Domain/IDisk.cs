@@ -11,9 +11,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure managed disk.
     /// </summary>
     public interface IDisk  :
-        IGroupableResource<IComputeManager>,
+        IGroupableResource<IComputeManager, DiskInner>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
-        IHasInner<Models.DiskInner>,
         IUpdatable<Disk.Update.IUpdate>
     {
         /// <summary>

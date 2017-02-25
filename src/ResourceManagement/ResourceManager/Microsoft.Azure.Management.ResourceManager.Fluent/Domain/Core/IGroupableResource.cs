@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <summary>
     /// Base interface for resources in resource groups.
     /// </summary>
-    public interface IGroupableResource<ManagerT>  :
-        IResource, IHasResourceGroup, IHasManager<ManagerT>
+    public interface IGroupableResource<ManagerT, InnerT>  :
+        IResource, IHasResourceGroup, IHasManager<ManagerT>, IHasInner<InnerT>
     {
        
     }

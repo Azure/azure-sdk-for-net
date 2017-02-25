@@ -9,8 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure App Service Certificate.
     /// </summary>
     public interface IAppServiceCertificateKeyVaultBinding  :
-        IIndependentChildResource<IAppServiceManager>,
-        IHasInner<Models.AppServiceCertificateInner>
+        IIndependentChildResource<IAppServiceManager, AppServiceCertificateInner>
     {
         /// <summary>
         /// Gets the status of the Key Vault secret.

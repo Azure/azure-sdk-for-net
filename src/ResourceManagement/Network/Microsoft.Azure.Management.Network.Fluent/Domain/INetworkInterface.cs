@@ -13,9 +13,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface INetworkInterface  :
         INetworkInterfaceBase,
-        IGroupableResource<INetworkManager>,
+        IGroupableResource<INetworkManager, NetworkInterfaceInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        IHasInner<Models.NetworkInterfaceInner>,
         IUpdatable<NetworkInterface.Update.IUpdate>
     {
         /// <summary>

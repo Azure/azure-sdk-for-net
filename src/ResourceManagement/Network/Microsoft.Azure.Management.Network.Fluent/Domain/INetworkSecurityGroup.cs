@@ -12,9 +12,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Network security group.
     /// </summary>
     public interface INetworkSecurityGroup  :
-        IGroupableResource<INetworkManager>,
+        IGroupableResource<INetworkManager, NetworkSecurityGroupInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        IHasInner<Models.NetworkSecurityGroupInner>,
         IUpdatable<NetworkSecurityGroup.Update.IUpdate>,
         IHasAssociatedSubnets
     {

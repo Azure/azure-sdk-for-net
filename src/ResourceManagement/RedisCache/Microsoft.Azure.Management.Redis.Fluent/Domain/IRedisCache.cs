@@ -14,10 +14,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// An immutable client-side representation of an Azure Redis Cache.
     /// </summary>
     public interface IRedisCache  :
-        IGroupableResource<IRedisManager>,
+        IGroupableResource<IRedisManager, RedisResourceInner>,
         IRefreshable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
-        IUpdatable<RedisCache.Update.IUpdate>,
-        IHasInner<Models.RedisResourceInner>
+        IUpdatable<RedisCache.Update.IUpdate>
     {
         /// <summary>
         /// Gets the subnetId value.

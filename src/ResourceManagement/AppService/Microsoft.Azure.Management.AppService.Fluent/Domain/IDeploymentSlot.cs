@@ -5,12 +5,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using DeploymentSlot.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure Web App deployment slot.
     /// </summary>
     public interface IDeploymentSlot  :
-        IIndependentChildResource<IAppServiceManager>,
+        IIndependentChildResource<IAppServiceManager, SiteInner>,
         IWebAppBase,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
         IUpdatable<DeploymentSlot.Update.IUpdate>

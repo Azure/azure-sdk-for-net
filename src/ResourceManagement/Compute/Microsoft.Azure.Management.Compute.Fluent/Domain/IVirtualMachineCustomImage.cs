@@ -11,9 +11,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine custom image.
     /// </summary>
     public interface IVirtualMachineCustomImage  :
-        IGroupableResource<IComputeManager>,
-        IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
-        IHasInner<Models.ImageInner>
+        IGroupableResource<IComputeManager, ImageInner>,
+        IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
     {
         /// <summary>
         /// Gets operating system disk image in this image.

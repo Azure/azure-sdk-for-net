@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ISupportsDeletingByGroup,
         IHasManager<ManagerT>,
         IHasInner<InnerCollectionT>
-        where IFluentResourceT : class, IGroupableResource<ManagerT>
+        where IFluentResourceT : class, IGroupableResource<ManagerT, InnerResourceT>
         where FluentResourceT : IFluentResourceT
         where ManagerT : IManagerBase
     {

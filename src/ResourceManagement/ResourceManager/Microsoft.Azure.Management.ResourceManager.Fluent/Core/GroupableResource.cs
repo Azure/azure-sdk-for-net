@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         DefTypeWithTags,
         UTypeWithTags> :
         ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>,
-        IGroupableResource<ManagerT>
+        IGroupableResource<ManagerT, InnerResourceT>
         where FluentResourceT : GroupableResource<IFluentResourceT,
             InnerResourceT,
             FluentResourceT,

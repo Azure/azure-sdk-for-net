@@ -15,10 +15,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure App Service Certificate Order.
     /// </summary>
     public interface IAppServiceCertificateOrder  :
-        IGroupableResource<IAppServiceManager>,
+        IGroupableResource<IAppServiceManager, AppServiceCertificateOrderInner>,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
-        IUpdatable<AppServiceCertificateOrder.Update.IUpdate>,
-        IHasInner<Models.AppServiceCertificateOrderInner>
+        IUpdatable<AppServiceCertificateOrder.Update.IUpdate>
     {
         /// <summary>
         /// Gets duration in years (must be between 1 and 3).
