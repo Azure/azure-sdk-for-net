@@ -4,30 +4,26 @@
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
-    public class CdnManager : ManagerBase, ICdnManager
+    public class CdnManager : Manager<ICdnManagementClient>, ICdnManager
     {
-        #region SDK clients
-        private CdnManagementClient client;
-        #endregion
-
         #region Fluent private collections
         private ICdnProfiles profiles;
         #endregion
 
-
-        public CdnManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
+        public CdnManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new CdnManagementClient(
+                new Uri(restClient.BaseUri),
+                    restClient.Credentials,
+                    restClient.RootHttpHandler,
+                    restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
         {
-            client = new CdnManagementClient(new Uri(restClient.BaseUri),
-                restClient.Credentials,
-                restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
         }
         
         public static ICdnManager Authenticate(AzureCredentials credentials, string subscriptionId)
@@ -74,14 +70,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             {
                 if (profiles == null)
                 {
-                    profiles = new CdnProfilesImpl(this.client, this);
+                    profiles = new CdnProfilesImpl(Inner, this);
                 }
                 return profiles;
             }
         }
     }
 
-    public interface ICdnManager : IManagerBase
+    public interface ICdnManager : IManager<ICdnManagementClient>
     {
         ICdnProfiles Profiles { get; }
     }

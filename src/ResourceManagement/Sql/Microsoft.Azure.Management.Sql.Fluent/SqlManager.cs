@@ -8,23 +8,19 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    public class SqlManager : ManagerBase, ISqlManager
+    public class SqlManager : Manager<ISqlManagementClient>, ISqlManager
     {
         private ISqlServers sqlServers;
 
-        #region SDK clients
-
-        private SqlManagementClient client;
-
-        #endregion SDK clients
-
-        public SqlManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
-        {
-            client = new SqlManagementClient(new Uri(restClient.BaseUri),
+        public SqlManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new SqlManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
         }
 
         #region SqlManager builder
@@ -82,10 +78,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 if (sqlServers == null)
                 {
                     sqlServers = new SqlServersImpl(
-                            client.Servers,
-                            client.ElasticPools,
-                            client.Databases,
-                            client.RecommendedElasticPools,
+                            Inner.Servers,
+                            Inner.ElasticPools,
+                            Inner.Databases,
+                            Inner.RecommendedElasticPools,
                             this);
                 }
 
@@ -94,7 +90,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
     }
 
-    public interface ISqlManager : IManagerBase
+    public interface ISqlManager : IManager<ISqlManagementClient>
     {
         ISqlServers SqlServers { get; }
     }

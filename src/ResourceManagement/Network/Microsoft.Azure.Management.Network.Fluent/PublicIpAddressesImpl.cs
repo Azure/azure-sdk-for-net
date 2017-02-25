@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IPublicIPAddresses
     {
         ///GENMHASH:053A36D2D2F106CA9668224DB2C96180:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal PublicIPAddressesImpl(NetworkManagementClient client, INetworkManager networkManager)
+        internal PublicIPAddressesImpl(INetworkManagementClient client, INetworkManager networkManager)
             : base(client.PublicIPAddresses, networkManager)
         {
         }

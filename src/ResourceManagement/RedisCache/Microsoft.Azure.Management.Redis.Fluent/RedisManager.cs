@@ -10,19 +10,20 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
-    public partial class RedisManager : ManagerBase, IRedisManager
+    public partial class RedisManager : Manager<IRedisManagementClient>, IRedisManager
     {
-        private RedisManagementClient redisManagementClient;
         private IRedisCaches redisCaches;
 
-        private RedisManager(RestClient restClient, string subscriptionId) 
-            : base(restClient, subscriptionId)
-        {
-            redisManagementClient = new RedisManagementClient(new Uri(restClient.BaseUri),
+        private RedisManager(RestClient restClient, string subscriptionId)
+            : base(restClient, subscriptionId, new RedisManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            redisManagementClient.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            }
+    )
+        {
         }
 
         #region StorageManager builder
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             {
                 if (redisCaches == null)
                 {
-                    redisCaches = new RedisCachesImpl(redisManagementClient.Redis, redisManagementClient.PatchSchedules, this);
+                    redisCaches = new RedisCachesImpl(Inner.Redis, Inner.PatchSchedules, this);
                 }
                 return redisCaches;
             }
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// <summary>
     /// Entry point to Azure Redis Cache management.
     /// </summary>
-    public interface IRedisManager : IManagerBase
+    public interface IRedisManager : IManager<IRedisManagementClient>
     {
         /// <summary>
         /// Gets the Redis Cache management API entry point.

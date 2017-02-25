@@ -4,18 +4,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DeploymentSlot.Definition;
     using DeploymentSlot.Update;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Resource.Fluent.Core.GroupableResource.Definition;
-    using Resource.Fluent.Core.Resource.Update;
-    using Resource.Fluent.Core.ResourceActions;
+    using Models;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml;
 
     /// <summary>
     /// The implementation for DeploymentSlot.
@@ -202,7 +197,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:7165E4A72787EF020E1C59029B4D2D13:A0244A057D0D2A3944D2A1B6B5FC52D6
-        internal DeploymentSlotImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppImpl parent, IWebAppsOperations client, IAppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal DeploymentSlotImpl(
+            string name,
+            SiteInner innerObject,
+            SiteConfigInner configObject,
+            WebAppImpl parent,
+            IWebAppsOperations client,
+            IAppServiceManager manager,
+            IWebSiteManagementClient serviceClient)
                     : base(Regex.Replace(name, ".*/", ""), innerObject, configObject, client, manager, serviceClient)
         {
             this.name = Regex.Replace(name, ".*/", "");

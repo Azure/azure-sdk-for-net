@@ -4,16 +4,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Resource.Fluent.Core;
+    using Models;
     using System;
-    using Rest.Azure;
-    using System.Collections.Generic;
-    using System.Collections;
-    using System.Linq;
 
     /// <summary>
     /// The implementation for WebApps.
@@ -28,7 +21,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceManager>,
         IWebApps
     {
-        private WebSiteManagementClient serviceClient;
+        private IWebSiteManagementClient serviceClient;
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public WebAppImpl Define(string name)
@@ -72,7 +65,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9CF36554B675F661BFEE8D1C53C27496:E373401BADB43C440BA3AAFA9214451D
-        internal WebAppsImpl(IWebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal WebAppsImpl(
+            IWebAppsOperations innerCollection,
+            AppServiceManager manager,
+            IWebSiteManagementClient serviceClient)
             : base(innerCollection, manager)
         {
             this.serviceClient = serviceClient;

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDeploymentSlots
     {
         private WebAppImpl parent;
-        private WebSiteManagementClient serviceClient;
+        private IWebSiteManagementClient serviceClient;
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public IBlank Define(string name)
@@ -46,7 +46,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:DED500AFBAD0A9AF916DAD488509F998:46CC5FC812EA999640A1A10FD4B00D83
-        internal DeploymentSlotsImpl(WebAppImpl parent, IWebAppsOperations innerCollection, IAppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal DeploymentSlotsImpl(
+            WebAppImpl parent,
+            IWebAppsOperations innerCollection,
+            IAppServiceManager manager,
+            IWebSiteManagementClient serviceClient)
             : base(innerCollection, manager)
         {
             this.serviceClient = serviceClient;

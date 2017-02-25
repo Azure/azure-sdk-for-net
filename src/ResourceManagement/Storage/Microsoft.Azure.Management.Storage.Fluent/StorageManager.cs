@@ -1,31 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Rest;
 using System;
 using System.Linq;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    public class StorageManager : ManagerBase, IStorageManager
+    public class StorageManager : Manager<IStorageManagementClient>, IStorageManager
     {
-        #region SDK clients
-        private StorageManagementClient storageManagementClient;
-        #endregion
-
         #region ctrs
 
-        private StorageManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
-        {
-            storageManagementClient = new StorageManagementClient(new Uri(restClient.BaseUri),
+        private StorageManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new StorageManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            storageManagementClient.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
         }
 
         #endregion
@@ -108,7 +103,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             {
                 if (storageAccounts == null)
                 {
-                    storageAccounts = new StorageAccountsImpl(storageManagementClient.StorageAccounts, this);
+                    storageAccounts = new StorageAccountsImpl(Inner.StorageAccounts, this);
                 }
                 return storageAccounts;
             }
@@ -119,7 +114,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             {
                 if (usages == null)
                 {
-                    usages = new UsagesImpl(storageManagementClient.Usage);
+                    usages = new UsagesImpl(Inner.Usage);
                 }
                 return usages;
             }
@@ -131,7 +126,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// <summary>
     /// Entry point to Azure storage resource management.
     /// </summary>
-    public interface IStorageManager : IManagerBase
+    public interface IStorageManager : IManager<IStorageManagementClient>
     {
         /// <summary>
         /// Gets the storage resource management API entry point.

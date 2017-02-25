@@ -7,18 +7,13 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
-using Microsoft.Azure.Management.Compute.Fluent;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    public class ComputeManager : ManagerBase, IComputeManager
+    public class ComputeManager : Manager<IComputeManagementClient>, IComputeManager
     {
         private IStorageManager storageManager;
         private INetworkManager networkManager;
-
-        #region SDK clients
-        private ComputeManagementClient client;
-        #endregion
 
         #region Fluent private collections
         private IVirtualMachines virtualMachines;
@@ -34,13 +29,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         #region ctrs
 
-        public ComputeManager(RestClient restClient, string subscriptionId)  : base(restClient, subscriptionId)
-        {
-            client = new ComputeManagementClient(new Uri(restClient.BaseUri),
+        public ComputeManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new ComputeManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
         }
@@ -98,9 +95,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 if (virtualMachines == null)
                 {
                     virtualMachines = new VirtualMachinesImpl(
-                        client.VirtualMachines, 
-                        client.VirtualMachineExtensions,
-                        client.VirtualMachineSizes, 
+                        Inner.VirtualMachines, 
+                        Inner.VirtualMachineExtensions,
+                        Inner.VirtualMachineSizes, 
                         this,
                         storageManager,
                         networkManager);
@@ -116,8 +113,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineImages == null)
                 {
-                    virtualMachineImages = new VirtualMachineImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, 
-                        client.VirtualMachineExtensionImages), client.VirtualMachineImages);
+                    virtualMachineImages = new VirtualMachineImagesImpl(
+                        new VirtualMachinePublishersImpl(
+                            Inner.VirtualMachineImages, 
+                            Inner.VirtualMachineExtensionImages),
+                        Inner.VirtualMachineImages);
                 }
                 return virtualMachineImages;
             }
@@ -129,7 +129,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineExtensionImages == null)
                 {
-                    virtualMachineExtensionImages = new VirtualMachineExtensionImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, client.VirtualMachineExtensionImages));
+                    virtualMachineExtensionImages = new VirtualMachineExtensionImagesImpl(
+                        new VirtualMachinePublishersImpl(
+                            Inner.VirtualMachineImages,
+                            Inner.VirtualMachineExtensionImages));
                 }
                 return virtualMachineExtensionImages;
             }
@@ -141,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (availabilitySets == null)
                 {
-                    availabilitySets = new AvailabilitySetsImpl(client.AvailabilitySets, this);
+                    availabilitySets = new AvailabilitySetsImpl(Inner.AvailabilitySets, this);
                 }
                 return availabilitySets;
             }
@@ -152,11 +155,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineScaleSets == null)
                 {
-                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets,
-                        client.VirtualMachineScaleSetVMs,
+                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(Inner.VirtualMachineScaleSets,
+                        Inner.VirtualMachineScaleSetVMs,
                         this, 
-                        this.storageManager,
-                        this.networkManager);
+                        storageManager,
+                        networkManager);
                 }
                 return virtualMachineScaleSets;
             }
@@ -168,7 +171,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (usages == null)
                 {
-                    usages = new ComputeUsagesImpl(this.client);
+                    usages = new ComputeUsagesImpl(Inner);
                 }
                 return usages;
             }
@@ -180,7 +183,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (disks == null)
                 {
-                    disks = new DisksImpl(this.client.Disks, this);
+                    disks = new DisksImpl(Inner.Disks, this);
                 }
                 return disks;
             }
@@ -192,7 +195,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (snapshots == null)
                 {
-                    snapshots = new SnapshotsImpl(this.client.Snapshots, this);
+                    snapshots = new SnapshotsImpl(Inner.Snapshots, this);
                 }
                 return snapshots;
             }
@@ -204,7 +207,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineCustomImages == null)
                 {
-                    virtualMachineCustomImages = new VirtualMachineCustomImagesImpl(this.client.Images, this);
+                    virtualMachineCustomImages = new VirtualMachineCustomImagesImpl(Inner.Images, this);
                 }
                 return virtualMachineCustomImages;
             }
@@ -212,7 +215,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         #endregion
     }
 
-    public interface IComputeManager : IManagerBase
+    public interface IComputeManager : IManager<IComputeManagementClient>
     {
         IVirtualMachines VirtualMachines { get; }
 

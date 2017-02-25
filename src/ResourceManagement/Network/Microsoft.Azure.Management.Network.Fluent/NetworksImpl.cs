@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworks
     {
         ///GENMHASH:99AB116FA6B60A0F95DB5F2163F9ADFA:B5BDA251123B955B743DF55108166660
-        internal  NetworksImpl (NetworkManagementClient networkClient, NetworkManager networkManager)
+        internal  NetworksImpl (INetworkManagementClient networkClient, NetworkManager networkManager)
             : base(networkClient.VirtualNetworks, networkManager)
         {
         }

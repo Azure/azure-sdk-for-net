@@ -9,24 +9,20 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-    public class BatchManager : ManagerBase, IBatchManager
+    public class BatchManager : Manager<IBatchManagementClient>, IBatchManager
     {
         private IStorageManager storageManager;
         private IBatchAccounts batchAccounts;
 
-        #region SDK clients
-
-        private BatchManagementClient client;
-
-        #endregion SDK clients
-
-        public BatchManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
-        {
-            client = new BatchManagementClient(new Uri(restClient.BaseUri),
+        public BatchManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new BatchManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
         }
 
@@ -87,11 +83,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 if (batchAccounts == null)
                 {
                     batchAccounts = new BatchAccountsImpl(
-                        client.BatchAccount,
+                        Inner.BatchAccount,
                         this,
-                        client.Application,
-                        client.ApplicationPackage,
-                        client.Location,
+                        Inner.Application,
+                        Inner.ApplicationPackage,
+                        Inner.Location,
                         storageManager);
                 }
 
@@ -102,7 +98,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         #endregion IBatchManager implementation
     }
 
-    public interface IBatchManager : IManagerBase
+    public interface IBatchManager : IManager<IBatchManagementClient>
     {
         IBatchAccounts BatchAccounts { get; }
     }

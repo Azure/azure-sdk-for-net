@@ -8,9 +8,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Linq;
     using Resource.Fluent.Authentication;
 
-    public class NetworkManager : ManagerBase, INetworkManager
+    public class NetworkManager : Manager<INetworkManagementClient>, INetworkManager
     {
-        private NetworkManagementClient networkManagementClient;
         private PublicIPAddressesImpl publicIPAddresses;
         private NetworkInterfacesImpl networkInterfaces;
         private NetworkSecurityGroupsImpl networkSecurityGroups;
@@ -19,13 +18,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private ApplicationGatewaysImpl appGateways;
         private IRouteTables routeTables;
 
-        private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
-        {
-            networkManagementClient = new NetworkManagementClient(new Uri(restClient.BaseUri),
+        private NetworkManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new NetworkManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            networkManagementClient.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (networks == null)
                 {
-                    networks = new NetworksImpl(networkManagementClient, this);
+                    networks = new NetworksImpl(Inner, this);
                 }
 
                 return networks;
@@ -111,7 +112,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (networkSecurityGroups == null)
                 {
-                    networkSecurityGroups = new NetworkSecurityGroupsImpl(networkManagementClient.NetworkSecurityGroups, this);
+                    networkSecurityGroups = new NetworkSecurityGroupsImpl(Inner.NetworkSecurityGroups, this);
                 }
 
                 return networkSecurityGroups;
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (publicIPAddresses == null)
                 {
-                    publicIPAddresses = new PublicIPAddressesImpl(networkManagementClient, this);
+                    publicIPAddresses = new PublicIPAddressesImpl(Inner, this);
                 }
 
                 return publicIPAddresses;
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (networkInterfaces == null)
                 {
-                    networkInterfaces = new NetworkInterfacesImpl(networkManagementClient, this);
+                    networkInterfaces = new NetworkInterfacesImpl(Inner, this);
                 }
 
                 return networkInterfaces;
@@ -159,7 +160,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (appGateways == null)
                 {
-                    appGateways = new ApplicationGatewaysImpl(networkManagementClient, this);
+                    appGateways = new ApplicationGatewaysImpl(Inner, this);
                 }
 
                 return appGateways;
@@ -175,7 +176,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (loadBalancers == null)
                 {
-                    loadBalancers = new LoadBalancersImpl(networkManagementClient, this);
+                    loadBalancers = new LoadBalancersImpl(Inner, this);
                 }
 
                 return loadBalancers;
@@ -191,7 +192,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (routeTables == null)
                 {
-                    routeTables = new RouteTablesImpl(networkManagementClient, this);
+                    routeTables = new RouteTablesImpl(Inner, this);
                 }
 
                 return routeTables;
@@ -199,7 +200,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
     }
 
-    public interface INetworkManager : IManagerBase
+    public interface INetworkManager : IManager<INetworkManagementClient>
     {
         /// <summary>
         /// return entry point to virtual network management

@@ -4,14 +4,11 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
-    using Management.Network.Fluent.Models;
+    using Models;
     using Resource.Fluent.Core;
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Network;
     using System.Collections.Generic;
-    using System;
-    using Fluent;
 
     /// <summary>
     /// Implementation for NetworkInterfaces.
@@ -27,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworkInterfaces
     {
         ///GENMHASH:29B7EF31B65B0BDDE2C36E88B44BD866:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal NetworkInterfacesImpl(NetworkManagementClient client, INetworkManager networkManager)
+        internal NetworkInterfacesImpl(INetworkManagementClient client, INetworkManager networkManager)
             : base(client.NetworkInterfaces, networkManager)
         {
         }

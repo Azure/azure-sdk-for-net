@@ -4,15 +4,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Models;
     using WebAppBase.Definition;
     using WebAppBase.Update;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent;
     using System.Collections.Generic;
     using System;
     using System.Linq;
-    using Resource.Fluent.Core;
     using Resource.Fluent.Core.Resource.Update;
     using System.Text.RegularExpressions;
     using System.Collections.ObjectModel;
@@ -45,7 +43,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
 
         protected IWebAppsOperations client;
-        protected WebSiteManagementClient serviceClient;
+        protected IWebSiteManagementClient serviceClient;
         private IDictionary<string, IAppSetting> cachedAppSettings;
         private IDictionary<string, IConnectionString> cachedConnectionStrings;
         private ISet<string> hostNamesSet;
@@ -963,12 +961,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
-        internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, IAppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal  WebAppBaseImpl(
+            string name,
+            SiteInner innerObject,
+            SiteConfigInner configObject,
+            IWebAppsOperations client,
+            IAppServiceManager manager,
+            IWebSiteManagementClient serviceClient)
             : base (name, innerObject, manager)
         {
             this.client = client;
             this.serviceClient = serviceClient;
-            this.Inner.SiteConfig = configObject;
+            Inner.SiteConfig = configObject;
             NormalizeProperties();
         }
 
