@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Search.Tests
                 },
                 Suggesters = new[]
                 {
-                    new Suggester("FancySuggester", SuggesterSearchMode.AnalyzingInfixMatching, "hotelName")
+                    new Suggester("FancySuggester", "hotelName")
                 }
             };
 

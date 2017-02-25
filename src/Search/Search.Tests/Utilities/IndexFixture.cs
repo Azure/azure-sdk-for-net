@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     {
                         new Suggester(
                             name: "sg", 
-                            searchMode: SuggesterSearchMode.AnalyzingInfixMatching, 
                             sourceFields: new[] { "description", "hotelName" })
                     },
                     ScoringProfiles = new[]
