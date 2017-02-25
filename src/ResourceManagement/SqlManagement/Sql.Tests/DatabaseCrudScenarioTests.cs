@@ -226,5 +226,53 @@ namespace Sql.Tests
                 }
             });
         }
+        
+        [Fact]
+        public void TestRemoveDatabaseFromPool()
+        {
+            string testPrefix = "sqlcrudtest-";
+            string testName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestRemoveDatabaseFromPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            {
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create an elastic pool
+                // 
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Tags = tags,
+                    Dtu = 100,
+                    DatabaseDtuMax = 5,
+                    DatabaseDtuMin = 0
+                };
+                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+
+                // Create a database in first elastic pool
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    ElasticPoolName = epName
+                };
+                sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                // Remove the database from the pool
+                dbInput = new Database()
+                {
+                    Location = server.Location,
+                    RequestedServiceObjectiveName = ServiceObjectiveName.Basic
+                };
+                var dbResult = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                Assert.Equal(null, dbResult.ElasticPoolName);
+            });
+        }
     }
 }
