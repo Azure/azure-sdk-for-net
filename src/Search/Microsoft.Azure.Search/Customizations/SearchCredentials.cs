@@ -49,10 +49,6 @@ namespace Microsoft.Azure.Search
 
             request.Headers.Add("api-key", ApiKey);
 
-            // TODO: Remove once this GitHub issue is fixed:
-            // https://github.com/Azure/autorest/issues/488
-            request.Headers.Add("Prefer", "return=representation");
-
             return base.ProcessHttpRequestAsync(request, cancellationToken);
         }
     }

@@ -443,6 +443,7 @@ namespace Microsoft.Azure.Search
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            string prefer = "return=representation";
             System.Guid? clientRequestId = default(System.Guid?);
             if (searchRequestOptions != null)
             {
@@ -467,6 +468,7 @@ namespace Microsoft.Azure.Search
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("indexerName", indexerName);
                 tracingParameters.Add("indexer", indexer);
+                tracingParameters.Add("prefer", prefer);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("ifNoneMatch", ifNoneMatch);
@@ -495,6 +497,14 @@ namespace Microsoft.Azure.Search
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (prefer != null)
+            {
+                if (_httpRequest.Headers.Contains("Prefer"))
+                {
+                    _httpRequest.Headers.Remove("Prefer");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Prefer", prefer);
             }
             if (Client.AcceptLanguage != null)
             {
