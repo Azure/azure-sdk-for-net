@@ -65,6 +65,7 @@
       "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5994/certificates/IntegrationAccountCertificate753?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTk5NC9jZXJ0aWZpY2F0ZXMvSW50ZWdyYXRpb25BY2NvdW50Q2VydGlmaWNhdGU3NTM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
       "RequestMethod": "PUT",
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"key\": {\r\n      \"keyVault\": {\r\n        \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourcegroups/flowrg/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault\"\r\n      },\r\n      \"keyName\": \"PRIVATEKEY\",\r\n      \"keyVersion\": \"87d9764197604449b9b8eb7bd8710868\"\r\n    }\r\n  },\r\n  \"location\": \"brazilsouth\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
@@ -84,6 +85,7 @@
           "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"key\": {\r\n      \"keyVault\": {\r\n        \"name\": \"AzureSdkTestKeyVault\",\r\n        \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourcegroups/flowrg/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault\",\r\n        \"type\": \"Microsoft.KeyVault/vaults\"\r\n      },\r\n      \"keyName\": \"PRIVATEKEY\",\r\n      \"keyVersion\": \"87d9764197604449b9b8eb7bd8710868\"\r\n    },\r\n    \"createdTime\": \"2017-02-25T00:21:04.9581585Z\",\r\n    \"changedTime\": \"2017-02-25T00:21:04.9583985Z\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5994/certificates/IntegrationAccountCertificate753\",\r\n  \"name\": \"IntegrationAccountCertificate753\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/certificates\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
