@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:4C6EFF21E5E730775AFD95DC77DDD7F4
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.InnerCollection.DeleteAsync(groupName, name, null, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, null, cancellationToken);
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IDnsZone> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await this.InnerCollection.GetAsync(groupName, name));
+            return WrapModel(await Inner.GetAsync(groupName, name));
         }
 
         ///GENMHASH:6FA0B6DE5CB193A4650CC6B5966DBC04:345CFB0A0B8A514DED6957391B1D99E5
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E29BEEAB8CFC79BEFB042BF8EE0AED00
         public PagedList<IDnsZone> List()
         {
-            var pagedList = new PagedList<ZoneInner>(this.InnerCollection.List(), (string nextPageLink) =>
+            var pagedList = new PagedList<ZoneInner>(Inner.List(), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:B533AA6052ED2EA7F8D7C96A5C95034C
         public PagedList<IDnsZone> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<ZoneInner>(this.InnerCollection.ListByResourceGroup(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<ZoneInner>(Inner.ListByResourceGroup(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListByResourceGroupNext(nextPageLink);
+                return Inner.ListByResourceGroupNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             return new DnsZoneImpl(name,
             new ZoneInner(),
-            this.InnerCollection,
+            Inner,
             this.recordSetsClient,
             this.Manager);
         }
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             return new DnsZoneImpl(inner.Name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 this.recordSetsClient,
                 this.Manager);
         }

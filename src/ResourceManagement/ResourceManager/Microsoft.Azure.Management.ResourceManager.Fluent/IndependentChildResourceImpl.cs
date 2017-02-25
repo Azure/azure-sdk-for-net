@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ///GENMHASH:2345D3E100BA4B78504A2CC57A361F1E:F09D7F392261B6225D607D71947E5D4D
         public  FluentResourceT WithoutTag(string key)
         {
-            this.Inner.Tags.Remove(key);
+            Inner.Tags.Remove(key);
             return this as FluentResourceT;
         }
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return this.Inner.Location;
+                return Inner.Location;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return this.Inner.Type;
+                return Inner.Type;
             }
         }
 
@@ -155,9 +155,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                if (this.Inner != null)
+                if (Inner != null)
                 {
-                    return this.Inner.Id;
+                    return Inner.Id;
                 }
 
                 return null;

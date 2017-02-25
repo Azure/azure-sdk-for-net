@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         public PagedList<ICdnProfile> List()
         {
-            var pagedList = new PagedList<ProfileInner>(this.InnerCollection.List());
+            var pagedList = new PagedList<ProfileInner>(Inner.List());
             return WrapList(pagedList);
         }
 
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             string name, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:83F5C51B6E80CB8E2B2AB13088098EAD:B3C4E9597EF812E4EDA1B18AD5F4A05E
@@ -105,14 +105,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             string name, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProfileInner profileInner = await this.InnerCollection.GetAsync(groupName, name, cancellationToken);
+            ProfileInner profileInner = await Inner.GetAsync(groupName, name, cancellationToken);
             return WrapModel(profileInner);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
         public PagedList<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile> ListByGroup(string groupName)
         {
-            return WrapList(new PagedList<ProfileInner>(this.InnerCollection.ListByResourceGroup(groupName)));
+            return WrapList(new PagedList<ProfileInner>(Inner.ListByResourceGroup(groupName)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:80BCE26D6F015BF71C5D9844E17987C3
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return new CdnProfileImpl(
                 name,
                 new ProfileInner(),
-                this.InnerCollection,
+                Inner,
                 this.endpointsClient,
                 this.originsClient,
                 this.customDomainsClient,
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return new CdnProfileImpl(
                 inner.Name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 this.endpointsClient,
                 this.originsClient,
                 this.customDomainsClient,

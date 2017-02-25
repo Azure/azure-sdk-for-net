@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:2EBE0E253F1D6DB178F3433FF5310EA8:676B110D94D76F014EEEE150AEE3144F
         public IList<string> NameServers()
         {
-            return this.Inner.NameServers;
+            return Inner.NameServers;
         }
 
         ///GENMHASH:11F6C7A282BFB4C2631CAE48D9B23761:266B9231EBE6B8B39DE5D64A23C759BF
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:92C4BF577DB6715BC383624BAE7694E5:F61135431BDB8F0F20AAC7E8F1DAA179
         public long MaxNumberOfRecordSets()
         {
-            return this.Inner.MaxNumberOfRecordSets.Value;
+            return Inner.MaxNumberOfRecordSets.Value;
         }
 
         ///GENMHASH:4412D5DEE797756911CD87C84F382A35:8933C3344596C85C396329822B55F61D
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public override async Task<IDnsZone> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
 
-            var innerResource = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            var innerResource = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, Inner);
             this.SetInner(innerResource);
             await this.recordSetsImpl.CommitAndGetAllAsync(cancellationToken);
             return this;
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:6367F8A407349BBB833D3790CE7781BE:E5617108F877DD24CA72463B3D7BBB6D
         public long NumberOfRecordSets()
         {
-            return this.Inner.NumberOfRecordSets.Value;
+            return Inner.NumberOfRecordSets.Value;
         }
 
         ///GENMHASH:9346CB4D0F5C719EB9C7E3A3AE77D732:CF958FACD1F19347590706D6D905C707

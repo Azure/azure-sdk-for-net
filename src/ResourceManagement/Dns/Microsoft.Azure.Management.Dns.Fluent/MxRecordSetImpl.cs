@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:0D98BE0584279084FC4D20C014B0932B
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.MxRecords != null && this.Inner.MxRecords.Count > 0)
+            if (Inner.MxRecords != null && Inner.MxRecords.Count > 0)
             {
                 if (resource.MxRecords == null)
                 {
                     resource.MxRecords = new List<MxRecord>();
                 }
 
-                foreach (var record in this.Inner.MxRecords)
+                foreach (var record in Inner.MxRecords)
                 {
                     resource.MxRecords.Add(record);
                 }
-                this.Inner.MxRecords.Clear();
+                Inner.MxRecords.Clear();
             }
 
             if (this.recordSetRemoveInfo.MxRecords.Count > 0)
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IList<MxRecord> Records()
         {
             List<MxRecord> records = new List<MxRecord>();
-            if (this.Inner.MxRecords != null)
+            if (Inner.MxRecords != null)
             {
-                foreach (MxRecord record in this.Inner.MxRecords)
+                foreach (MxRecord record in Inner.MxRecords)
                 {
                     records.Add(new MxRecord
                     {

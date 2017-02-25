@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:6E7FC7AC8D073A3C3B9DDD1D764ADF68:9685139DF186DEC19F0A0EDA4B91F24C
         public CdnProfileImpl WithStandardAkamaiSku()
         {
-            this.Inner.Sku = new Sku(SkuName.StandardAkamai);
+            Inner.Sku = new Sku(SkuName.StandardAkamai);
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:0C4071C9FB9B1B9D467AC6C4D4BF2C8F:A9DD6B4B67E69C5141C1637E3D1687C9
         public CdnProfileImpl WithPremiumVerizonSku()
         {
-            this.Inner.Sku = new Sku(SkuName.PremiumVerizon);
+            Inner.Sku = new Sku(SkuName.PremiumVerizon);
             return this;
         }
 
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:DEAE39A7D24B41C1AF6ABFA406FD058B:D168A69FDBBD9E3F4C438F385B147840
         public string ResourceState()
         {
-			return this.Inner.ResourceState;
+			return Inner.ResourceState;
         }
 
         ///GENMHASH:1813B9F987B61B140F89FFDE640AC0CA:A6F445874DBD721BE222ABA208139C51
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:43E446F640DC3345BDBD9A3378F2018A
         public Sku Sku()
         {
-			return this.Inner.Sku;
+			return Inner.Sku;
         }
 
         ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:9A2D97FEFEBDC31898D678B6141E3DC7
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:C6C1323E0A4FDE3D66F498AFAE74AAF7:F414D32545A9C48981123025A8BD63AA
         public CdnProfileImpl WithStandardVerizonSku()
         {
-            this.Inner.Sku = new Sku(SkuName.StandardVerizon);
+            Inner.Sku = new Sku(SkuName.StandardVerizon);
             return this;
         }
 

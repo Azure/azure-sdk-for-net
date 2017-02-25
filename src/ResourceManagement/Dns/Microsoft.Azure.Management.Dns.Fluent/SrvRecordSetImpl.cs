@@ -18,17 +18,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:53BB67595D71CD0CA502C876E02949C2
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.SrvRecords != null && this.Inner.SrvRecords.Count > 0)
+            if (Inner.SrvRecords != null && Inner.SrvRecords.Count > 0)
             {
                 if (resource.SrvRecords == null)
                 {
                     resource.SrvRecords = new List<SrvRecord>();
                 }
-                foreach (var record in this.Inner.SrvRecords)
+                foreach (var record in Inner.SrvRecords)
                 {
                     resource.SrvRecords.Add(record);
                 }
-                this.Inner.SrvRecords.Clear();
+                Inner.SrvRecords.Clear();
             }
             if (this.recordSetRemoveInfo.SrvRecords.Count > 0)
             {
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:4FC81B687476F8722014B0A4F98E1756:8E7FFCF6FB312ED092A54EB827BE698C
         public IList<SrvRecord> Records()
         {
-            if (this.Inner.SrvRecords != null)
+            if (Inner.SrvRecords != null)
             {
-                return this.Inner.SrvRecords;
+                return Inner.SrvRecords;
             }
             return new List<SrvRecord>();
         }

@@ -154,10 +154,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:9E984BEB4133DD0B3AA842B63D7D77AC:1C3F555F09D9102CFCAD04ADC6BBFE42
         public ImageOSDisk OsDiskImage()
         {
-            if (this.Inner.StorageProfile == null) {
+            if (Inner.StorageProfile == null) {
                 return null;
             }
-            return this.Inner.StorageProfile.OsDisk;
+            return Inner.StorageProfile.OsDisk;
         }
 
         ///GENMHASH:AD43D1605284BA4522153DD29AFF8D8B:7D4D98F4B0CD177EAA3A94285F340953
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:A9B6728240A4B95433E54D7F2431D575:B65391AF61655CEE129B6EA0A26BC818
         public VirtualMachineCustomImageImpl FromVirtualMachine(string virtualMachineId)
         {
-            this.Inner.SourceVirtualMachine = new SubResource()
+            Inner.SourceVirtualMachine = new SubResource()
             {
                 Id = virtualMachineId
             };
@@ -208,31 +208,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:333EAA45B1D1CC338A9F5F2890D1FCF7:3D915441151BB98BE34814C400261E58
         public string SourceVirtualMachineId()
         {
-            if (this.Inner.SourceVirtualMachine == null) {
+            if (Inner.SourceVirtualMachine == null) {
                 return null;
             }
-            return this.Inner.SourceVirtualMachine.Id;
+            return Inner.SourceVirtualMachine.Id;
         }
 
         ///GENMHASH:1C7A9AF7A9A2B672155EEEF5F6420E08:03573333EBFDEDB75330E6D42BEFE5F3
         internal VirtualMachineCustomImageImpl WithCustomImageDataDisk(CustomImageDataDiskImpl customImageDataDisk)
         {
-            if (this.Inner.StorageProfile == null) {
-                this.Inner.StorageProfile = new ImageStorageProfile();
+            if (Inner.StorageProfile == null) {
+                Inner.StorageProfile = new ImageStorageProfile();
             }
-            if (this.Inner.StorageProfile.DataDisks == null) {
-                this.Inner.StorageProfile.DataDisks = new List<ImageDataDisk>();
+            if (Inner.StorageProfile.DataDisks == null) {
+                Inner.StorageProfile.DataDisks = new List<ImageDataDisk>();
             }
-            this.Inner.StorageProfile.DataDisks.Add(customImageDataDisk.Inner);
+            Inner.StorageProfile.DataDisks.Add(customImageDataDisk.Inner);
             return this;
         }
 
         ///GENMHASH:6F1E3BE4AB7D8C34567FE15B20B16EAF:420419EBE6CD60053DC391B80B4294E8
         private void EnsureDefaultLuns()
         {
-            if (this.Inner.StorageProfile != null
-                && this.Inner.StorageProfile.DataDisks != null) {
-                var imageDisks = this.Inner.StorageProfile.DataDisks;
+            if (Inner.StorageProfile != null
+                && Inner.StorageProfile.DataDisks != null) {
+                var imageDisks = Inner.StorageProfile.DataDisks;
                 var usedLuns = new HashSet<int>();
                 foreach(var imageDisk in imageDisks)  {
                     if (imageDisk.Lun != -1) {
@@ -259,11 +259,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:467A5E1DBEFF6DFFFD3FD21A958498A3:C71F36C1B0B9950F5EC79B4A234987CC
         public IReadOnlyDictionary<int, Models.ImageDataDisk> DataDiskImages()
         {
-            if (this.Inner.StorageProfile == null || this.Inner.StorageProfile.DataDisks == null) {
+            if (Inner.StorageProfile == null || Inner.StorageProfile.DataDisks == null) {
                 return new Dictionary<int, ImageDataDisk>();
             }
             Dictionary<int, ImageDataDisk> diskImages = new Dictionary<int, ImageDataDisk>();
-            foreach(var dataDisk in this.Inner.StorageProfile.DataDisks)  {
+            foreach(var dataDisk in Inner.StorageProfile.DataDisks)  {
                 diskImages.Add(dataDisk.Lun, dataDisk);
             }
             return diskImages;
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public override async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             EnsureDefaultLuns();
-            var imageInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, this.Inner);
+            var imageInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             this.SetInner(imageInner);
             return this;
         }
@@ -300,15 +300,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E625C1F29CDEA4A229F9F716CB068DE5:C82C3D88AD1345B17C97817FCB05C6D8
         private ImageOSDisk EnsureOsDiskImage()
         {
-            if (this.Inner.StorageProfile == null) {
-                this.Inner.StorageProfile = new ImageStorageProfile();
+            if (Inner.StorageProfile == null) {
+                Inner.StorageProfile = new ImageStorageProfile();
             }
-            if (this.Inner.StorageProfile.OsDisk == null) {
-                this.Inner
+            if (Inner.StorageProfile.OsDisk == null) {
+                Inner
                     .StorageProfile
                     .OsDisk = new ImageOSDisk();
             }
-            return this.Inner.StorageProfile.OsDisk;
+            return Inner.StorageProfile.OsDisk;
         }
     }
 }

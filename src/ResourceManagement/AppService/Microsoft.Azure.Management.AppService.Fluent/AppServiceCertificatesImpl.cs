@@ -28,34 +28,34 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
-        internal AppServiceCertificatesImpl(ICertificatesOperations InnerCollection, IAppServiceManager manager)
-            : base(InnerCollection, manager)
+        internal AppServiceCertificatesImpl(ICertificatesOperations innerCollection, IAppServiceManager manager)
+            : base(innerCollection, manager)
         {
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
         public PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> ListByGroup(string resourceGroupName)
         {
-            return WrapList(new PagedList<CertificateInner>(InnerCollection.ListByResourceGroup(resourceGroupName),
-                nextPageLink => InnerCollection.ListByResourceGroupNext(nextPageLink)));
+            return WrapList(new PagedList<CertificateInner>(Inner.ListByResourceGroup(resourceGroupName),
+                nextPageLink => Inner.ListByResourceGroupNext(nextPageLink)));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
         public override async Task<IAppServiceCertificate> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await InnerCollection.GetAsync(groupName, name, cancellationToken));
+            return WrapModel(await Inner.GetAsync(groupName, name, cancellationToken));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5AC27B4C4791A2919F43CCB97C0275BA
         protected override AppServiceCertificateImpl WrapModel(string name)
         {
-            return new AppServiceCertificateImpl(name, new CertificateInner(), InnerCollection, Manager);
+            return new AppServiceCertificateImpl(name, new CertificateInner(), Inner, Manager);
         }
 
         ///GENMHASH:446794D74A04366F0AA274DF90F28CE3:218BCD2B4CE1C82F271307788818A2EC
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new AppServiceCertificateImpl(inner.Name, inner, InnerCollection, Manager);
+            return new AppServiceCertificateImpl(inner.Name, inner, Inner, Manager);
         }
     }
 }

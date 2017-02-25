@@ -45,24 +45,24 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 this.recordSetRemoveInfo.Metadata.Clear();
             }
 
-            if (this.Inner.Metadata != null && this.Inner.Metadata.Count > 0)
+            if (Inner.Metadata != null && Inner.Metadata.Count > 0)
             {
                 if (resource.Metadata == null)
                 {
                     resource.Metadata = new Dictionary<string, string>();
                 }
 
-                foreach (var keyVal in this.Inner.Metadata)
+                foreach (var keyVal in Inner.Metadata)
                 {
                     resource.Metadata.Add(keyVal.Key, keyVal.Value);
                 }
-                this.Inner.Metadata.Clear();
+                Inner.Metadata.Clear();
             }
              
-            if (this.Inner.TTL != null)
+            if (Inner.TTL != null)
             {
-                resource.TTL = this.Inner.TTL;
-                this.Inner.TTL = null;
+                resource.TTL = Inner.TTL;
+                Inner.TTL = null;
             }
             ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:27E486AB74A10242FF421C0798DDC450
             return PrepareForUpdate(resource);
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:12F281B8230A0FD8CE8A0DF277EF885D:DF7D49CE4CC74DB0E5D593989B78CB8D
         public IReadOnlyDictionary<string,string> Metadata()
         {
-            if (this.Inner.Metadata == null)
+            if (Inner.Metadata == null)
             {
                 return new Dictionary<string, string>();
             }
             else
             {
-                return this.Inner.Metadata as Dictionary<string, string>;
+                return Inner.Metadata as Dictionary<string, string>;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:FB0C10CB41D7B922FF0580521AB216A6:8CAEADA4A5AF9EE51022E3AACA965264
         public DnsRecordSetImpl WithRecord(string target, int port, int priority, int weight)
         {
-            this.Inner.SrvRecords
+            Inner.SrvRecords
                 .Add(new SrvRecord { Target = target, Port = port, Priority = priority, Weight = weight });
             return this;
         }
@@ -119,20 +119,20 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:F55643C465E2111FF58A74CD2FC02F67:E726662DDC93F264FBEC106CADBCFF38
         public DnsRecordSetImpl WithNegativeResponseCachingTimeToLiveInSeconds(long negativeCachingTimeToLive)
         {
-            this.Inner.SoaRecord.MinimumTtl = negativeCachingTimeToLive;
+            Inner.SoaRecord.MinimumTtl = negativeCachingTimeToLive;
             return this;
         }
 
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:18B12FED433DF6A1F3CA0DD1940B789C
         public override async Task<IDnsRecordSet> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await CreateOrUpdateAsync(this.Inner);
+            return await CreateOrUpdateAsync(Inner);
         }
 
         ///GENMHASH:7126FE6FA387F1E4960F18681C53EC88:B90619A2787B110ED29E0558824FCEEC
         public DnsRecordSetImpl WithTargetDomainName(string targetDomainName)
         {
-            this.Inner.PtrRecords
+            Inner.PtrRecords
                 .Add(new PtrRecord { Ptrdname = targetDomainName });
             return this;
         }
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:2C0DB6B1F104247169DC6BCC9246747C:FD4CF3518891ACD11184E48644DB2B2F
         public long TimeToLive()
         {
-            return this.Inner.TTL.Value;
+            return Inner.TTL.Value;
         }
 
         ///GENMHASH:EC29C72674344ADABB3A944C3E2479DB:5ED48E280A79185C34BAD7FC806CCBB5
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:EF847E8C645CB64D66F22F7C8F41EADF:668CAC97ECB380171D891C73BE38F63B
         public DnsRecordSetImpl WithSerialNumber(long serialNumber)
         {
-            this.Inner.SoaRecord.SerialNumber = serialNumber;
+            Inner.SoaRecord.SerialNumber = serialNumber;
             return this;
         }
 
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:0CFE78AB79C5BF41808567966F348D74:F96F4FA644159C0CD0EBB1C5B9EEF1A0
         public DnsRecordSetImpl WithIpv6Address(string ipv6Address)
         {
-            this.Inner.AaaaRecords
+            Inner.AaaaRecords
                 .Add(new AaaaRecord { Ipv6Address =ipv6Address });
             return this;
         }
@@ -194,14 +194,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:C99F2F80022268E13D703B3379BD3B58:E0FC813C874E3B3480E4DA74E4253BCC
         public DnsRecordSetImpl WithIpv4Address(string ipv4Address)
         {
-            this.Inner.ARecords.Add(new ARecord { Ipv4Address = ipv4Address });
+            Inner.ARecords.Add(new ARecord { Ipv4Address = ipv4Address });
             return this;
         }
 
         ///GENMHASH:4B07DB88181953A1AA185580F8B1266A:B3424C4783A914D6F340B7301EAFAE8E
         public DnsRecordSetImpl WithRetryTimeInSeconds(long retryTimeInSeconds)
         {
-            this.Inner.SoaRecord.RetryTime = retryTimeInSeconds;
+            Inner.SoaRecord.RetryTime = retryTimeInSeconds;
             return this;
         }
 
@@ -244,14 +244,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:6D37E4EB187608D1444EE0B12AEEAB67:4B5F1BDCC88474FFF19319243A41B6F7
         public DnsRecordSetImpl WithRefreshTimeInSeconds(long refreshTimeInSeconds)
         {
-            this.Inner.SoaRecord.RefreshTime = refreshTimeInSeconds;
+            Inner.SoaRecord.RefreshTime = refreshTimeInSeconds;
             return this;
         }
 
         ///GENMHASH:E8E20943CC1653864072EDF514EE642D:10153E6B4A158154E1E8933759138F87
         public DnsRecordSetImpl WithEmailServer(string emailServerHostName)
         {
-            this.Inner.SoaRecord.Email = emailServerHostName;
+            Inner.SoaRecord.Email = emailServerHostName;
             return this;
         }
 
@@ -268,19 +268,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:3802EA6243E9AF80A622FF944E74B5EA:8520CAFB7CB8489C528CA99FBB8E0916
         public RecordType RecordType()
         {
-            return (RecordType) Enum.Parse(typeof(RecordType), this.Inner.Type);
+            return (RecordType) Enum.Parse(typeof(RecordType), Inner.Type);
         }
 
         ///GENMHASH:A8504DD39B3F14EC8A5C6530FB22292A:5BA5A4ACBB2C6A840606E1F8F35C4054
         public DnsRecordSetImpl WithMetadata(string key, string value)
         {
-            if (this.Inner.Metadata == null)
+            if (Inner.Metadata == null)
             {
-                this.Inner.Metadata = new Dictionary<string, string>();
+                Inner.Metadata = new Dictionary<string, string>();
             }
-            if (!this.Inner.Metadata.ContainsKey(key))
+            if (!Inner.Metadata.ContainsKey(key))
             {
-                this.Inner.Metadata.Add(key, value);
+                Inner.Metadata.Add(key, value);
             }
             return this;
         }
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:4784E7B75FB76CEEC96CAC590D7BC733:EE061C20B2C852EF45A468E94B59809D
         public DnsRecordSetImpl WithMailExchange(string mailExchangeHostName, int priority)
         {
-            this.Inner.MxRecords.Add(new MxRecord
+            Inner.MxRecords.Add(new MxRecord
             {
                 Exchange = mailExchangeHostName,
                 Preference = priority
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:06F60982829BD1FCB08F550025D02EC6:DB0A29B22B9B76C5DFDCA28B3F4AD95F
         public DnsRecordSetImpl WithTimeToLive(long ttlInSeconds)
         {
-            this.Inner.TTL = ttlInSeconds;
+            Inner.TTL = ttlInSeconds;
             return this;
         }
 
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:4ECEC95ECA7A8DC269D2A9F01EFAB22F:23360CE86BB90FDBC6677495A1E19515
         public DnsRecordSetImpl WithExpireTimeInSeconds(long expireTimeInSeconds)
         {
-            this.Inner.SoaRecord.ExpireTime = expireTimeInSeconds;
+            Inner.SoaRecord.ExpireTime = expireTimeInSeconds;
             return this;
         }
 
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:A495194BB5D71557F5AA70FF3FAE37F2:DAF74D854B6F3C3F3FED97303FD90564
         public DnsRecordSetImpl WithNameServer(string nameServerHostName)
         {
-            this.Inner.NsRecords
+            Inner.NsRecords
                 .Add(new NsRecord { Nsdname = nameServerHostName });
             return this;
         }
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             List<string> value = new List<string>();
             value.Add(text);
-            this.Inner.TxtRecords.Add(new TxtRecord { Value = value });
+            Inner.TxtRecords.Add(new TxtRecord { Value = value });
             return this;
         }
 

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal RestorePointImpl(RestorePointInner innerObject)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.FromString(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(Inner.Id);
         }
 
         ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:9FE42D967416923E070F823D07063A47
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:5D8C32D2751B491914616D667B547A6C:7EDB4220F88516901344158E2ED52A30
         public DateTime RestorePointCreationDate()
         {
-            return this.Inner.RestorePointCreationDate.GetValueOrDefault();
+            return Inner.RestorePointCreationDate.GetValueOrDefault();
         }
 
         ///GENMHASH:61F5809AB3B985C61AC40B98B1FBC47E:1DE3B7D49F042BF9BD713FC79256757A
@@ -62,13 +62,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:F2ABE029F6A55328DAF428566FF166D9:AA34FA1E27583C49DDBE6DC99C3A871E
         public RestorePointTypes RestorePointType()
         {
-            return this.Inner.RestorePointType.GetValueOrDefault();
+            return Inner.RestorePointType.GetValueOrDefault();
         }
 
         ///GENMHASH:FA6C4C8AE7729C6D128F00A0883B7A82:050D474227760B6267EFCEC6085DD2B2
         public DateTime EarliestRestoreDate()
         {
-            return this.Inner.EarliestRestoreDate.GetValueOrDefault();
+            return Inner.EarliestRestoreDate.GetValueOrDefault();
         }
     }
 }

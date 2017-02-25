@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.InnerCollection.DeleteAsync(groupName, name);
+            await Inner.DeleteAsync(groupName, name);
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:92EAC0C15F6E0EE83B7B356CD097B0A0
         public override async Task<ISqlServer> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await this.InnerCollection.GetByResourceGroupAsync(groupName, name, cancellationToken));
+            return WrapModel(await Inner.GetByResourceGroupAsync(groupName, name, cancellationToken));
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         public PagedList<ISqlServer> List()
         {
-            return WrapList(new PagedList<ServerInner>(this.InnerCollection.List()));
+            return WrapList(new PagedList<ServerInner>(Inner.List()));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4400109B5DDC2A92920D8D598AB5D8B9
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlServerImpl(
                 name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 base.Manager,
                 this.elasticPoolsInner,
                 this.databasesInner,
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlServerImpl(
                 inner.Name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 this.Manager,
                 this.elasticPoolsInner,
                 this.databasesInner,
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
         public PagedList<ISqlServer> ListByGroup(string resourceGroupName)
         {
-            return WrapList(new PagedList<ServerInner>(this.InnerCollection.ListByResourceGroup(resourceGroupName)));
+            return WrapList(new PagedList<ServerInner>(Inner.ListByResourceGroup(resourceGroupName)));
         }
     }
 }

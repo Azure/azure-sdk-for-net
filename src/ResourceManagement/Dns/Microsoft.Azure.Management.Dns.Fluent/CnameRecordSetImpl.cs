@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:90659807B6B17ED9B2E619F2F74829BA:5F97BB0D1B58FFF4810D8B3F037EC111
         public string CanonicalName()
         {
-            if (this.Inner.CnameRecord != null) {
-                return this.Inner.CnameRecord.Cname;
+            if (Inner.CnameRecord != null) {
+                return Inner.CnameRecord.Cname;
             }
             return null;
         }

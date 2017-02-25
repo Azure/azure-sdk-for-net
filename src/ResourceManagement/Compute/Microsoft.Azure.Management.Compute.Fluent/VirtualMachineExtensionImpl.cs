@@ -54,32 +54,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.Inner.Id;
+                return Inner.Id;
             }
         }
 
         ///GENMHASH:06BBF1077FAA38CC78AFC6E69E23FB58:2E1C21AC97868331579C4445DFF8B199
         public string PublisherName()
         {
-            return this.Inner.Publisher;
+            return Inner.Publisher;
         }
 
         ///GENMHASH:062496BB5D915E140ABE560B4E1D89B1:BF06270DCF74C3EB9DC7E255F7D93417
         public string TypeName()
         {
-            return this.Inner.VirtualMachineExtensionType;
+            return Inner.VirtualMachineExtensionType;
         }
 
         ///GENMHASH:59C1C6208A5C449165066C7E1FDE11ED:D218DCBF15733B59D5054B1545063FEA
         public string VersionName()
         {
-            return this.Inner.TypeHandlerVersion;
+            return Inner.TypeHandlerVersion;
         }
 
         ///GENMHASH:38030CBAE29B9F2F38D72F365E2E629A:E94F2D3DAC3B970EABC385A12F44BB26
         public bool AutoUpgradeMinorVersionEnabled()
         {
-            return this.Inner.AutoUpgradeMinorVersion.Value;
+            return Inner.AutoUpgradeMinorVersion.Value;
         }
 
         ///GENMHASH:E8B034BE63B3FB3349E5BCFC76224AF8:CA9E3FB93CD214E58089AA8C2C20B7A3
@@ -101,13 +101,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E21E3E6E61153DDD23E28BC18B49F1AC:6FB4182F747416C98B49B59F74185782
         public VirtualMachineExtensionInstanceView InstanceView()
         {
-            return this.Inner.InstanceView;
+            return Inner.InstanceView;
         }
 
         ///GENMHASH:4B19A5F1B35CA91D20F63FBB66E86252:497CEBB37227D75C20D80EC55C7C4F14
         public IReadOnlyDictionary<string, string> Tags()
         {
-            IDictionary<string, string> tags = this.Inner.Tags;
+            IDictionary<string, string> tags = Inner.Tags;
             if (tags == null)
             {
                 tags = new Dictionary<string, string>();
@@ -118,36 +118,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C
         public string ProvisioningState()
         {
-            return this.Inner.ProvisioningState;
+            return Inner.ProvisioningState;
         }
 
         ///GENMHASH:467F635EADCCCC617A72CEB57E5B3D41:7B7B2063CA85FFEC8E5F9CF53A22CED0
         public VirtualMachineExtensionImpl WithMinorVersionAutoUpgrade()
         {
-            this.Inner.AutoUpgradeMinorVersion = true;
+            Inner.AutoUpgradeMinorVersion = true;
             return this;
         }
 
         ///GENMHASH:23B0698FE3BB00936E77BFAAD4E8C173:2897633350A3881BCCEECEB8CBDCFF63
         public VirtualMachineExtensionImpl WithoutMinorVersionAutoUpgrade()
         {
-            this.Inner.AutoUpgradeMinorVersion = false;
+            Inner.AutoUpgradeMinorVersion = false;
             return this;
         }
 
         ///GENMHASH:FCA44D692D2CBD47AF19A7B5D9CEB263:ACF3758115981B4301C26F8F01A9CEB3
         public VirtualMachineExtensionImpl WithImage (IVirtualMachineExtensionImage image)
         {
-            this.Inner.Publisher = image.PublisherName;
-            this.Inner.VirtualMachineExtensionType = image.TypeName;
-            this.Inner.TypeHandlerVersion = image.VersionName;
+            Inner.Publisher = image.PublisherName;
+            Inner.VirtualMachineExtensionType = image.TypeName;
+            Inner.TypeHandlerVersion = image.VersionName;
             return this;
         }
 
         ///GENMHASH:D09614E022482293C9A2EEE2C6E4098E:86E8D4D3B2BDB9EEBA09E6F348394801
         public VirtualMachineExtensionImpl WithPublisher(string extensionImagePublisherName)
         {
-            this.Inner.Publisher = extensionImagePublisherName;
+            Inner.Publisher = extensionImagePublisherName;
             return this;
         }
 
@@ -191,35 +191,35 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1B55955986893FF406609C78FCC96FEE:6289EFC386BAA3CA812B7F8EF8B95388
         public VirtualMachineExtensionImpl WithType(string extensionImageTypeName)
         {
-            this.Inner.VirtualMachineExtensionType = extensionImageTypeName;
+            Inner.VirtualMachineExtensionType = extensionImageTypeName;
             return this;
         }
 
         ///GENMHASH:5A056156A7C92738B7A05BFFB861E1B4:DA8B164AFF802F7E1F62BE36FA742A8D
         public VirtualMachineExtensionImpl WithVersion(string extensionImageVersionName)
         {
-            this.Inner.TypeHandlerVersion = extensionImageVersionName;
+            Inner.TypeHandlerVersion = extensionImageVersionName;
             return this;
         }
 
         ///GENMHASH:32E35A609CF1108D0FC5FAAF9277C1AA:E462F242E1761228E205CEE8F760EDF9
         public VirtualMachineExtensionImpl WithTags(IDictionary<string, string> tags)
         {
-            this.Inner.Tags = tags;
+            Inner.Tags = tags;
             return this;
         }
 
         ///GENMHASH:FF80DD5A8C82E021759350836BD2FAD1:E70E0F84833F74462C0831B3C84D4A03
         public VirtualMachineExtensionImpl WithTag(string key, string value)
         {
-            this.Inner.Tags.Add(key, value);
+            Inner.Tags.Add(key, value);
             return this;
         }
 
         ///GENMHASH:2345D3E100BA4B78504A2CC57A361F1E:250EC2907300FFA6125F7205F03A3E7F
         public VirtualMachineExtensionImpl WithoutTag(string key)
         {
-            this.Inner.Tags.Remove(key);
+            Inner.Tags.Remove(key);
             return this;
         }
 
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             string name;
             if (this.IsReference()) {
-                name = ResourceUtils.NameFromResourceId(this.Inner.Id);
+                name = ResourceUtils.NameFromResourceId(Inner.Id);
             } else {
-                name = this.Inner.Name;
+                name = Inner.Name;
             }
             VirtualMachineExtensionInner inner = this.client.Get(this.Parent.ResourceGroupName, this.Parent.Name, name);
             this.SetInner(inner);
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             VirtualMachineExtensionInner inner = await this.client.CreateOrUpdateAsync(this.Parent.ResourceGroupName,
                 this.Parent.Name,
                 this.Name(),
-                this.Inner,
+                Inner,
                 cancellationToken);
             this.SetInner(inner);
             this.InitializeSettings();
@@ -263,13 +263,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.NullifySettingsIfEmpty();
             if (this.IsReference())
             {
-                string extensionName = ResourceUtils.NameFromResourceId(this.Inner.Id);
+                string extensionName = ResourceUtils.NameFromResourceId(Inner.Id);
                 var resource = await this.client.GetAsync(this.Parent.ResourceGroupName, this.Parent.Name, extensionName);
-                this.Inner.Publisher = resource.Publisher;
-                this.Inner.VirtualMachineExtensionType = resource.VirtualMachineExtensionType;
-                if (this.Inner.AutoUpgradeMinorVersion == null)
+                Inner.Publisher = resource.Publisher;
+                Inner.VirtualMachineExtensionType = resource.VirtualMachineExtensionType;
+                if (Inner.AutoUpgradeMinorVersion == null)
                 {
-                    this.Inner.AutoUpgradeMinorVersion = resource.AutoUpgradeMinorVersion;
+                    Inner.AutoUpgradeMinorVersion = resource.AutoUpgradeMinorVersion;
                 }
                 IDictionary<string, object> publicSettings = resource.Settings as IDictionary<string, object>;
                 if (publicSettings != null && publicSettings.Count > 0)
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:5034C466FD077AE4C3BB0E8BB3EBEFB3:6AC48AA816918FEA6040CB47074973FD
         public bool IsReference()
         {
-            return this.Inner.Name == null;
+            return Inner.Name == null;
         }
 
         ///GENMHASH:85C90F4F6082200D94668A66AEFC6726:7DA1F1B9237639B669A209E12821D17A
@@ -317,36 +317,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.publicSettings.Count == 0)
             {
-                this.Inner.Settings = null;
+                Inner.Settings = null;
             }
 
             if (this.protectedSettings.Count == 0)
             {
-                this.Inner.ProtectedSettings = null;
+                Inner.ProtectedSettings = null;
             }
         }
 
         ///GENMHASH:1DE96DF05FCD164699FABE2722D3B823:DDB96B1018AF16195187204FD1A5F7F0
         private void InitializeSettings ()
         {
-            if (this.Inner.Settings == null)
+            if (Inner.Settings == null)
             {
                 this.publicSettings = new Dictionary<string, object>();
-                this.Inner.Settings = this.publicSettings;
+                Inner.Settings = this.publicSettings;
             }
             else
             {
-                this.publicSettings = this.Inner.Settings as IDictionary<string, object>;
+                this.publicSettings = Inner.Settings as IDictionary<string, object>;
             }
 
-            if (this.Inner.ProtectedSettings == null)
+            if (Inner.ProtectedSettings == null)
             {
                 this.protectedSettings = new Dictionary<string, object>();
-                this.Inner.ProtectedSettings = this.protectedSettings;
+                Inner.ProtectedSettings = this.protectedSettings;
             }
             else
             {
-                this.protectedSettings = this.Inner.ProtectedSettings as IDictionary<string, object>;
+                this.protectedSettings = Inner.ProtectedSettings as IDictionary<string, object>;
             }
         }
         VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()

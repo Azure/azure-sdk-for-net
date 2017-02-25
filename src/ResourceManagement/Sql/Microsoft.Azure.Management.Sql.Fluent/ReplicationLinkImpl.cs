@@ -20,13 +20,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:59D8987F7EC078423F8247D1F7D40FBD:D2670680EF14BA9058384CB186AA4289
         public string ReplicationState()
         {
-            return this.Inner.ReplicationState;
+            return Inner.ReplicationState;
         }
 
         ///GENMHASH:7DDE9B1BB82467D17BDE73EEF70FC15A:FD23977BD91FE98C3065B6E757B7B31A
         public ReplicationRole Role()
         {
-            return this.Inner.Role.GetValueOrDefault();
+            return Inner.Role.GetValueOrDefault();
         }
 
         ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:9FE42D967416923E070F823D07063A47
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:A6FB40DB55DA08C2751F5BBFFCD06BA6:0BD76FC865DFF06EA7CB878F1666969B
         public string PartnerServer()
         {
-            return this.Inner.PartnerServer;
+            return Inner.PartnerServer;
         }
 
         ///GENMHASH:663AECE9E2B94E49177C45542A675796:6FCFDC6E0E888975E162F9E3A6690673
         public ReplicationRole PartnerRole()
         {
-            return this.Inner.PartnerRole.GetValueOrDefault();
+            return Inner.PartnerRole.GetValueOrDefault();
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:A7F868EA1D284A335598127348D0A1AD
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:3F5BF88EAEB847CE67B8C16A5FDD2D28
         public int PercentComplete()
         {
-            return this.Inner.PercentComplete.GetValueOrDefault();
+            return Inner.PercentComplete.GetValueOrDefault();
         }
 
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:5DF2D34B34E97D7C050D4229F8A0ABE1
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal ReplicationLinkImpl(ReplicationLinkInner innerObject, IDatabasesOperations innerCollection)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.FromString(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(Inner.Id);
             this.innerCollection = innerCollection;
         }
 
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:D1AA514022A702178FC60111EBA279F9:23D982D34E0AA0229B0409AE0E6C9099
         public string PartnerDatabase()
         {
-            return this.Inner.PartnerDatabase;
+            return Inner.PartnerDatabase;
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:A08302619254C2A4BBCEC7165449AD96
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:8550B4F26F41D82222F735D9324AEB6D:42AE1A0453935D9BF88147F2F9C3EC20
         public DateTime StartTime()
         {
-            return this.Inner.StartTime.GetValueOrDefault();
+            return Inner.StartTime.GetValueOrDefault();
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:003E1843567E7760DFADC015F30E6AF4
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:868B2F3C33B56DD970703291B23E174D:DF14267C442E5344D77EF314AD1B4A87
         public string PartnerLocation()
         {
-            return this.Inner.PartnerLocation;
+            return Inner.PartnerLocation;
         }
     }
 }

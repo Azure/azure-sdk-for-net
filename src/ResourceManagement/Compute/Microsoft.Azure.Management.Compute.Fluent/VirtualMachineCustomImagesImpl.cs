@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:737180B1BC9FBD3E5083EE06E951D489
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:664BEF11BF4AA10D27449EE89EF181F3
@@ -42,16 +42,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:0DA05B447E9373BA84F249FC22D8EDFF
         public override async Task<IVirtualMachineCustomImage> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await this.InnerCollection.GetAsync(resourceGroupName, name, null, cancellationToken);
+            var inner = await Inner.GetAsync(resourceGroupName, name, null, cancellationToken);
             return WrapModel(inner);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage> List()
         {
-            var pagedList = new PagedList<ImageInner>(this.InnerCollection.List(), (string nextPageLink) =>
+            var pagedList = new PagedList<ImageInner>(Inner.List(), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<ImageInner>(this.InnerCollection.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
+            var pagedList = new PagedList<ImageInner>(Inner.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListByResourceGroupNext(nextPageLink);
+                return Inner.ListByResourceGroupNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return new VirtualMachineCustomImageImpl(name,
                 new ImageInner(),
-                this.InnerCollection,
+                Inner,
                 this.Manager);
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return new VirtualMachineCustomImageImpl(inner.Name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 this.Manager);
         }
     }

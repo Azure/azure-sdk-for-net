@@ -41,27 +41,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:B5D0CEDC0E866EFD1D97D2FC06AC78B2:540C8E40423CBE57B12D10B8EE2CEEF4
         public DiskImpl WithSizeInGB(int sizeInGB)
         {
-            this.Inner.DiskSizeGB = sizeInGB;
+            Inner.DiskSizeGB = sizeInGB;
             return this;
         }
 
         ///GENMHASH:AAD8E592A024E583CCB079E40FA35511:86D949645392B88CC8EBDF08E3E0EDF8
         public DiskImpl WithLinuxFromVhd(string vhdUrl)
         {
-            this.Inner.OsType = OperatingSystemTypes.Linux;
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Import;
-            this.Inner.CreationData.SourceUri = vhdUrl;
+            Inner.OsType = OperatingSystemTypes.Linux;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Import;
+            Inner.CreationData.SourceUri = vhdUrl;
             return this;
         }
 
         ///GENMHASH:0305227D84160F6D01FAC3F90C4D3B17:B17E3BD9F6452F930B5081BFB28B816E
         public DiskImpl WithWindowsFromDisk(string sourceDiskId)
         {
-            this.Inner.OsType = OperatingSystemTypes.Windows;
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Copy;
-            this.Inner.CreationData.SourceResourceId = sourceDiskId;
+            Inner.OsType = OperatingSystemTypes.Windows;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Copy;
+            Inner.CreationData.SourceResourceId = sourceDiskId;
             return this;
         }
 
@@ -80,17 +80,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C9FA7E95A384165D3EF616382AA69B2D:E7F1DA78794C44C2AC55569F4DDCBD11
         public DiskImpl WithOSType(OperatingSystemTypes osType)
         {
-            this.Inner.OsType = osType;
+            Inner.OsType = osType;
             return this;
         }
 
         ///GENMHASH:E4F5CCFED775B8C1F10A8019B52CC013:AF82C13C6612DFDED62B43750E8734C8
         public DiskImpl WithLinuxFromDisk(string sourceDiskId)
         {
-            this.Inner.OsType = OperatingSystemTypes.Linux;
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Copy;
-            this.Inner.CreationData.SourceResourceId = sourceDiskId;
+            Inner.OsType = OperatingSystemTypes.Linux;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Copy;
+            Inner.CreationData.SourceResourceId = sourceDiskId;
             return this;
         }
 
@@ -109,22 +109,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:32ABF27B7A32286845C5FAFE717F8E4D:5065B0FD2B80D38CDBB3AD2A7840B68D
         public CreationSource Source()
         {
-            return new CreationSource(this.Inner.CreationData);
+            return new CreationSource(Inner.CreationData);
         }
 
         ///GENMHASH:D85E911348B4AD36294F154A7C700412:507C952D65DEB7C06C2758D22266AB43
         public DiskCreateOption CreationMethod()
         {
-            return this.Inner.CreationData.CreateOption;
+            return Inner.CreationData.CreateOption;
         }
 
         ///GENMHASH:28C892DD6868506954A9B3D406FE4710:E57D05C8BB272E6441E14E0F73F93F60
         public DiskImpl WithWindowsFromVhd(string vhdUrl)
         {
-            this.Inner.OsType = OperatingSystemTypes.Windows;
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Import;
-            this.Inner.CreationData.SourceUri = vhdUrl;
+            Inner.OsType = OperatingSystemTypes.Windows;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Import;
+            Inner.CreationData.SourceUri = vhdUrl;
             return this;
         }
 
@@ -137,9 +137,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:920045A2761D4D5D5F5E2E52D43917D0:28B657BB52464897349F96AD3FEE7B7C
         public int SizeInGB()
         {
-            if (this.Inner.DiskSizeGB != null && this.Inner.DiskSizeGB.HasValue)
+            if (Inner.DiskSizeGB != null && Inner.DiskSizeGB.HasValue)
             {
-                return this.Inner.DiskSizeGB.Value;
+                return Inner.DiskSizeGB.Value;
             }
             return 0;
         }
@@ -147,15 +147,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:F71645491B82E137E4D1786750E7ADF0
         public OperatingSystemTypes? OsType()
         {
-            return this.Inner.OsType;
+            return Inner.OsType;
         }
 
         ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:A57B8C47BCE45BC6F3DA10CAF14C67BE
         public DiskSkuTypes Sku()
         {
-            if (this.Inner.AccountType != null && this.Inner.AccountType.HasValue)
+            if (Inner.AccountType != null && Inner.AccountType.HasValue)
             {
-                return new DiskSkuTypes(this.Inner.AccountType.Value);
+                return new DiskSkuTypes(Inner.AccountType.Value);
             }
             return null;
         }
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3E35FB42190F8D9DBB9DAD636FA3EDE3:18D9C432A23D2C301F2F3E9EF7C57583
         public string VirtualMachineId()
         {
-            return this.Inner.OwnerId;
+            return Inner.OwnerId;
         }
 
         ///GENMHASH:DAC486F08AF23F259E630032FC20FAF1:3FE53F300A729DFBC3C1F55BBB117CA1
@@ -200,9 +200,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:B0C9EEFDDA443C25158B8F287BDAF3D8:6F1F05D0FB05C43F2A1F954CC1CBE3FB
         public DiskImpl FromDisk(string managedDiskId)
         {
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Copy;
-            this.Inner.CreationData.SourceResourceId = managedDiskId;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Copy;
+            Inner.CreationData.SourceResourceId = managedDiskId;
             return this;
         }
 
@@ -225,17 +225,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:26BC80239F0CCAAB14CDBC15A85351B8:5C4E68981DCB985DABC30CE2B145CC62
         public DiskImpl WithSku(DiskSkuTypes sku)
         {
-            this.Inner.AccountType = sku.AccountType;
+            Inner.AccountType = sku.AccountType;
             return this;
         }
 
         ///GENMHASH:27B8AD5B496821160B763BEE4B6DAB47:A99E5BCABB2F6C6A293C01FAEA00D27B
         public DiskImpl WithWindowsFromSnapshot(string sourceSnapshotId)
         {
-            this.Inner.OsType = OperatingSystemTypes.Windows;
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Copy;
-            this.Inner.CreationData.SourceResourceId = sourceSnapshotId;
+            Inner.OsType = OperatingSystemTypes.Windows;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Copy;
+            Inner.CreationData.SourceResourceId = sourceSnapshotId;
             return this;
         }
 
@@ -253,27 +253,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:33732DE66CF09C72524FF6128BF39B86:95A2FDC64707881A6ECE16C0FF2967B1
         public DiskImpl WithData()
         {
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Empty;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Empty;
             return this;
         }
 
         ///GENMHASH:20127E6A8A1B4B28CE511AEB479A6C9A:B42B6D1380F4A7780F5B729A33312605
         public DiskImpl FromVhd(string vhdUrl)
         {
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Import;
-            this.Inner.CreationData.SourceUri = vhdUrl;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Import;
+            Inner.CreationData.SourceUri = vhdUrl;
             return this;
         }
 
         ///GENMHASH:70CBBB70E322069BB113700431A2BB15:B0B6C2751314366F7CFDC62C6B6738E6
         public DiskImpl WithLinuxFromSnapshot(string sourceSnapshotId)
         {
-            this.Inner.OsType = OperatingSystemTypes.Linux;
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Copy;
-            this.Inner.CreationData.SourceResourceId = sourceSnapshotId;
+            Inner.OsType = OperatingSystemTypes.Linux;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Copy;
+            Inner.CreationData.SourceResourceId = sourceSnapshotId;
             return this;
         }
 
@@ -298,9 +298,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8D34B63403FF8A31ACD1E973BFBE7F09:E487F6DBBFE574160FCF0ECE22B0979B
         public DiskImpl FromSnapshot(string snapshotId)
         {
-            this.Inner.CreationData = new CreationData();
-            this.Inner.CreationData.CreateOption = DiskCreateOption.Copy;
-            this.Inner.CreationData.SourceResourceId = snapshotId;
+            Inner.CreationData = new CreationData();
+            Inner.CreationData.CreateOption = DiskCreateOption.Copy;
+            Inner.CreationData.SourceResourceId = snapshotId;
             return this;
         }
 

@@ -21,20 +21,15 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     {
         protected GroupableResources(InnerCollectionT innerCollection, ManagerT manager)
         {
-            InnerCollection = innerCollection;
+            Inner = innerCollection;
             Manager = manager;
         }
-
-        protected InnerCollectionT InnerCollection { get; }
 
         public ManagerT Manager { get; }
 
         public InnerCollectionT Inner
         {
-            get
-            {
-                return InnerCollection;
-            }
+            get; private set;
         }
 
         #region Implementation of ISupportsGettingByGroup interface

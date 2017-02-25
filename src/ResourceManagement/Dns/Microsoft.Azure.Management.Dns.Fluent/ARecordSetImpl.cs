@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IList<string> Ipv4Addresses()
         {
             List<string> ipv4Addresses = new List<string>();
-            if (this.Inner.ARecords != null) {
-                foreach(var aRecord in this.Inner.ARecords)  {
+            if (Inner.ARecords != null) {
+                foreach(var aRecord in Inner.ARecords)  {
                     ipv4Addresses.Add(aRecord.Ipv4Address);
                 }
             }
@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:BFFE923AC1A74C33749D31F3CABB1EA2
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.ARecords != null && this.Inner.ARecords.Count > 0) {
+            if (Inner.ARecords != null && Inner.ARecords.Count > 0) {
                 if (resource.ARecords == null) {
                     resource.ARecords = new List<ARecord>();
                 }
-                foreach (var record in this.Inner.ARecords) {
+                foreach (var record in Inner.ARecords) {
                     resource.ARecords.Add(record);
                 }
-                this.Inner.ARecords.Clear();
+                Inner.ARecords.Clear();
             }
 
             if (this.recordSetRemoveInfo.ARecords.Count > 0) {

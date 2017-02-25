@@ -48,15 +48,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:88BF8FC8FF5E454A69B0A7818E15A401:540C8E40423CBE57B12D10B8EE2CEEF4
         public VirtualMachineScaleSetUnmanagedDataDiskImpl WithSizeInGB(int sizeInGB)
         {
-            this.Inner.DiskSizeGB = sizeInGB;
+            Inner.DiskSizeGB = sizeInGB;
             return this;
         }
 
         ///GENMHASH:4D03AEE57198D17CD3696CC56B467F2B:C53E1C1BD65826C0F9A2EF5BCBD283F4
         public VirtualMachineScaleSetUnmanagedDataDiskImpl FromImage(int imageLun)
         {
-            this.Inner.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner.Lun = imageLun;
+            Inner.CreateOption = DiskCreateOptionTypes.FromImage;
+            Inner.Lun = imageLun;
             return this;
         }
 
@@ -101,13 +101,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public override string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:51D4B59B71DF10B44776B4681F73B529:D3A7D61EDBE1631F4C5B0CD3CCDF840C
         public VirtualMachineScaleSetUnmanagedDataDiskImpl WithLun(int lun)
         {
-            this.Inner.Lun = lun;
+            Inner.Lun = lun;
             return this;
         }
 
@@ -120,15 +120,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:6D0A07B7BA2CC9D76E93E7DDD3FCD168:F0DBEF25393BFAD18455A742CA0EFE14
         public VirtualMachineScaleSetUnmanagedDataDiskImpl WithNewVhd(int sizeInGB)
         {
-            this.Inner.CreateOption = DiskCreateOptionTypes.Empty;
-            this.Inner.DiskSizeGB = sizeInGB;
+            Inner.CreateOption = DiskCreateOptionTypes.Empty;
+            Inner.DiskSizeGB = sizeInGB;
             return this;
         }
 
         ///GENMHASH:C7091D00973B3F300E66AD6FC3B9988D:54AEB1FA4318E2287B56DE751B25DB84
         public VirtualMachineScaleSetUnmanagedDataDiskImpl WithCaching(CachingTypes cachingType)
         {
-            this.Inner.Caching = cachingType;
+            Inner.Caching = cachingType;
             return this;
         }
 

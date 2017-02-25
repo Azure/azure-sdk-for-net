@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         internal IReadOnlyDictionary<string, IVirtualMachineScaleSetNicIPConfiguration> IPConfigurations()
         {
-            var inners = this.Inner.IpConfigurations;
+            var inners = Inner.IpConfigurations;
             if (inners == null || inners.Count == 0)
             {
                 return new Dictionary<string, IVirtualMachineScaleSetNicIPConfiguration>(); 
@@ -146,11 +146,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         internal string NetworkSecurityGroupId()
         {
-            if (this.Inner.NetworkSecurityGroup == null)
+            if (Inner.NetworkSecurityGroup == null)
             {
                 return null;
             }
-            return this.Inner.NetworkSecurityGroup.Id;
+            return Inner.NetworkSecurityGroup.Id;
         }
 
         internal INetworkSecurityGroup GetNetworkSecurityGroup()
@@ -168,11 +168,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         internal string VirtualMachineId()
         {
-            if (this.Inner.VirtualMachine == null)
+            if (Inner.VirtualMachine == null)
             {
                 return null;
             }
-            return this.Inner.VirtualMachine.Id;
+            return Inner.VirtualMachine.Id;
         }
 
         public override async Task<IVirtualMachineScaleSetNetworkInterface> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))

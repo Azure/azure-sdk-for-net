@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private void InitializeBackendsFromInner ()
         {
             backends = new SortedDictionary<string, ILoadBalancerBackend>();
-            IList<BackendAddressPoolInner> backendsInner = this.Inner.BackendAddressPools;
+            IList<BackendAddressPoolInner> backendsInner = Inner.BackendAddressPools;
             if (backendsInner != null)
             {
                 foreach (var backendInner in backendsInner)
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private void InitializeLoadBalancingRulesFromInner()
         {
             loadBalancingRules = new SortedDictionary<string, ILoadBalancingRule>();
-            IList<LoadBalancingRuleInner> rulesInner = this.Inner.LoadBalancingRules;
+            IList<LoadBalancingRuleInner> rulesInner = Inner.LoadBalancingRules;
             if (rulesInner != null)
             {
                 foreach (var ruleInner in rulesInner) {

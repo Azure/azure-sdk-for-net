@@ -39,31 +39,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public override string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:06BBF1077FAA38CC78AFC6E69E23FB58:2E1C21AC97868331579C4445DFF8B199
         public string PublisherName()
         {
-            return this.Inner.Publisher;
+            return Inner.Publisher;
         }
 
         ///GENMHASH:062496BB5D915E140ABE560B4E1D89B1:605B8FC69F180AFC7CE18C754024B46C
         public string TypeName()
         {
-            return this.Inner.Type;
+            return Inner.Type;
         }
 
         ///GENMHASH:59C1C6208A5C449165066C7E1FDE11ED:D218DCBF15733B59D5054B1545063FEA
         public string VersionName()
         {
-            return this.Inner.TypeHandlerVersion;
+            return Inner.TypeHandlerVersion;
         }
 
         ///GENMHASH:38030CBAE29B9F2F38D72F365E2E629A:E94F2D3DAC3B970EABC385A12F44BB26
         public bool AutoUpgradeMinorVersionEnabled()
         {
-            return this.Inner.AutoUpgradeMinorVersion.Value;
+            return Inner.AutoUpgradeMinorVersion.Value;
         }
 
         ///GENMHASH:E8B034BE63B3FB3349E5BCFC76224AF8:CA9E3FB93CD214E58089AA8C2C20B7A3
@@ -85,20 +85,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C
         public string ProvisioningState()
         {
-            return this.Inner.ProvisioningState;
+            return Inner.ProvisioningState;
         }
 
         ///GENMHASH:467F635EADCCCC617A72CEB57E5B3D41:7B7B2063CA85FFEC8E5F9CF53A22CED0
         public VirtualMachineScaleSetExtensionImpl WithMinorVersionAutoUpgrade()
         {
-            this.Inner.AutoUpgradeMinorVersion = true;
+            Inner.AutoUpgradeMinorVersion = true;
             return this;
         }
 
         ///GENMHASH:23B0698FE3BB00936E77BFAAD4E8C173:2897633350A3881BCCEECEB8CBDCFF63
         public VirtualMachineScaleSetExtensionImpl WithoutMinorVersionAutoUpgrade()
         {
-            this.Inner.AutoUpgradeMinorVersion = false;
+            Inner.AutoUpgradeMinorVersion = false;
             return this;
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D09614E022482293C9A2EEE2C6E4098E:86E8D4D3B2BDB9EEBA09E6F348394801
         public VirtualMachineScaleSetExtensionImpl WithPublisher(string extensionImagePublisherName)
         {
-            this.Inner.Publisher = extensionImagePublisherName;
+            Inner.Publisher = extensionImagePublisherName;
             return this;
         }
 
@@ -172,36 +172,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private void NullifySettingsIfEmpty()
         {
             if (this.publicSettings.Count == 0) {
-                this.Inner.Settings = null;
+                Inner.Settings = null;
             }
 
             if (this.protectedSettings.Count == 0)
             {
-                this.Inner.ProtectedSettings = null;
+                Inner.ProtectedSettings = null;
             }
         }
 
         ///GENMHASH:1DE96DF05FCD164699FABE2722D3B823:DDB96B1018AF16195187204FD1A5F7F0
         private void InitializeSettings()
         {
-            if (this.Inner.Settings == null)
+            if (Inner.Settings == null)
             {
                 this.publicSettings = new Dictionary<string, object>();
-                this.Inner.Settings = this.publicSettings;
+                Inner.Settings = this.publicSettings;
             }
             else
             {
-                this.publicSettings = this.Inner.Settings as IDictionary<string, object>;
+                this.publicSettings = Inner.Settings as IDictionary<string, object>;
             }
 
-            if (this.Inner.ProtectedSettings == null)
+            if (Inner.ProtectedSettings == null)
             {
                 this.protectedSettings = new Dictionary<string, object>();
-                this.Inner.ProtectedSettings = this.protectedSettings;
+                Inner.ProtectedSettings = this.protectedSettings;
             }
             else
             {
-                this.protectedSettings = this.Inner.ProtectedSettings as IDictionary<string, object>;
+                this.protectedSettings = Inner.ProtectedSettings as IDictionary<string, object>;
             }
         }
 

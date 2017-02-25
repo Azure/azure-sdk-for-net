@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C19382933BDE655D0F0F95CD9474DFE7:28B657BB52464897349F96AD3FEE7B7C
         public int Size()
         {
-            if (this.Inner.DiskSizeGB.HasValue)
+            if (Inner.DiskSizeGB.HasValue)
             {
-                return this.Inner.DiskSizeGB.Value;
+                return Inner.DiskSizeGB.Value;
             }
             return 0;
         }
@@ -31,43 +31,43 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2AACDDD3816365551D8FC102857D11E2:D89ABFB09517172FED352E3CE1BCA70F
         public int Lun()
         {
-            return this.Inner.Lun;
+            return Inner.Lun;
         }
 
         ///GENMHASH:301C4791B0609BB2A3EF3CEB742CCE25:79B6BAD7C09953890526D60F9A4A6FDE
         public CachingTypes? CachingType()
         {
-            return this.Inner.Caching;
+            return Inner.Caching;
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:529D413DA27B62CF8FA74DD34751A761:2AB50F106A2C0F2D00579F7B1825D8B0
         public StorageAccountTypes? StorageAccountType()
         {
-            if (this.Inner.ManagedDisk == null) {
+            if (Inner.ManagedDisk == null) {
                 return null;
             }
-            return this.Inner.ManagedDisk.StorageAccountType;
+            return Inner.ManagedDisk.StorageAccountType;
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:FBF1D26DE5D0CBA789F0BA74B22FDAAC
         public string Id()
         {
-            if (this.Inner.ManagedDisk == null) {
+            if (Inner.ManagedDisk == null) {
                 return null;
             }
-            return this.Inner.ManagedDisk.Id;
+            return Inner.ManagedDisk.Id;
         }
 
         ///GENMHASH:D85E911348B4AD36294F154A7C700412:BFD5BBE75FF2933909C9A5EE4D96DB28
         public DiskCreateOptionTypes CreationMethod()
         {
-            return this.Inner.CreateOption;
+            return Inner.CreateOption;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:EBE49FE507369AC7A8F4328AF938B32D:95FDB4476A86D2D89C844159139FF9F4
         internal TransparentDataEncryptionActivityImpl(TransparentDataEncryptionActivity innerObject) : base(innerObject)
         {
-            this.resourceId = ResourceId.FromString(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(Inner.Id);
         }
 
         ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:9FE42D967416923E070F823D07063A47
@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:60E139E176D51169A736C4BE93730827
         public double PercentComplete()
         {
-            return this.Inner.PercentComplete.GetValueOrDefault();
+            return Inner.PercentComplete.GetValueOrDefault();
         }
 
         ///GENMHASH:06F61EC9451A16F634AEB221D51F2F8C:1ABA34EF946CBD0278FAD778141792B2
         public string Status()
         {
-            return this.Inner.Status;
+            return Inner.Status;
         }
     }
 }

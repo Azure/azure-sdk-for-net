@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>(),
                 DnsSettings = new NetworkInterfaceDnsSettings()
             };
-            return new NetworkInterfaceImpl(name, inner, InnerCollection, Manager);
+            return new NetworkInterfaceImpl(name, inner, Inner, Manager);
         }
 
         //$TODO: this should return NetworkInterfaceImpl
@@ -45,15 +45,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0FC0465591EF4D86100A2FF1DC557738:D9F9A024A97F1477B173138B75BCFE13
         override protected INetworkInterface WrapModel(NetworkInterfaceInner inner)
         {
-            return new NetworkInterfaceImpl(inner.Name, inner, InnerCollection, Manager);
+            return new NetworkInterfaceImpl(inner.Name, inner, Inner, Manager);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:EA49478191CB500D3891D0EDE475C10E
         internal PagedList<INetworkInterface> List()
         {
-            var pagedList = new PagedList<NetworkInterfaceInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<NetworkInterfaceInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:C8F667C9694115E8E2EC05A78BB18EDD
         internal PagedList<INetworkInterface> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<NetworkInterfaceInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<NetworkInterfaceInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -79,13 +79,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<INetworkInterface> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
                 scaleSetName,
-                this.InnerCollection,
+                Inner,
                 this.Manager);
             return scaleSetNetworkInterfaces.GetByVirtualMachineInstanceId(instanceId, name);
         }
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
                 scaleSetName,
-                this.InnerCollection,
+                Inner,
                 this.Manager);
             return scaleSetNetworkInterfaces.List();
         }
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
                 scaleSetName,
-                this.InnerCollection,
+                Inner,
                 this.Manager);
             return scaleSetNetworkInterfaces.ListByVirtualMachineInstanceId(instanceId);
         }

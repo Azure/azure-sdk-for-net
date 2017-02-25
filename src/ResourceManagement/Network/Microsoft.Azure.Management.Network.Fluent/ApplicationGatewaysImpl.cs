@@ -25,16 +25,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IApplicationGateway> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, cancellationToken);
             return WrapModel(data);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         public PagedList<IApplicationGateway> List()
         {
-            var pagedList = new PagedList<ApplicationGatewayInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<ApplicationGatewayInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         public PagedList<IApplicationGateway> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<ApplicationGatewayInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<ApplicationGatewayInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return new ApplicationGatewayImpl(
                 name,
                 inner,
-                InnerCollection,
+                Inner,
                 Manager);
         }
 
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (inner == null) ? null : new ApplicationGatewayImpl(
                 inner.Name,
                 inner,
-                InnerCollection,
+                Inner,
                 Manager);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name);
+            return Inner.DeleteAsync(groupName, name);
         }
     }
 }

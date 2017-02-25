@@ -18,16 +18,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:09F5D9EDC414E52781BD92550F31253C
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-             if (this.Inner.AaaaRecords != null && this.Inner.AaaaRecords.Count > 0) {
+             if (Inner.AaaaRecords != null && Inner.AaaaRecords.Count > 0) {
                 if (resource.AaaaRecords == null) {
                     resource.AaaaRecords = new List<AaaaRecord>();
                 }
 
-                foreach (var record in this.Inner.AaaaRecords)
+                foreach (var record in Inner.AaaaRecords)
                 {
                     resource.AaaaRecords.Add(record);
                 }
-                this.Inner.AaaaRecords.Clear();
+                Inner.AaaaRecords.Clear();
              }
              
              if (this.recordSetRemoveInfo.AaaaRecords.Count > 0) {
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IList<string> Ipv6Addresses()
         {
             List<string> ipv6Addresses = new List<string>();
-            if (this.Inner.AaaaRecords != null) {
-                foreach(var aaaaRecord in this.Inner.AaaaRecords)  {
+            if (Inner.AaaaRecords != null) {
+                foreach(var aaaaRecord in Inner.AaaaRecords)  {
                     ipv6Addresses.Add(aaaaRecord.Ipv6Address);
                 }
             }

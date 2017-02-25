@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> List()
         {
-            var pagedList = new PagedList<VirtualMachineInner>(this.InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<VirtualMachineInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<VirtualMachineInner>(this.InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<VirtualMachineInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -80,43 +80,43 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2048E8AC80AC022225C462CE7FD14A6F:AB513A3D7E5B1192B76F853CB23CBB12
         public void Deallocate(string groupName, string name)
         {
-            this.InnerCollection.Deallocate(groupName, name);
+            Inner.Deallocate(groupName, name);
         }
 
         ///GENMHASH:00E88CFB1570D8A0A8E9FDE81CE27B2D:41D46BEAFAD59BFEA295012F3A5791B5
         public void Generalize(string groupName, string name)
         {
-            this.InnerCollection.Generalize(groupName, name);
+            Inner.Generalize(groupName, name);
         }
 
         ///GENMHASH:9F1310A4445A183902C9AF672DA34354:F32BEF843CE33ABB858763CFD92B9A36
         public void PowerOff(string groupName, string name)
         {
-            this.InnerCollection.PowerOff(groupName, name);
+            Inner.PowerOff(groupName, name);
         }
 
         ///GENMHASH:CD0E967F30C27C522C0DE3E4523C6CDD:8C9B139D9CD48BE89CACA8348E2E8469
         public void Restart(string groupName, string name)
         {
-            this.InnerCollection.Restart(groupName, name);
+            Inner.Restart(groupName, name);
         }
 
         ///GENMHASH:F5C1D0B90DEED77EE54F7CEB164C727E:4E2B451086A707DC66F26388A688071E
         public void Start(string groupName, string name)
         {
-            this.InnerCollection.Start(groupName, name);
+            Inner.Start(groupName, name);
         }
 
         ///GENMHASH:5BA0ADF7CF4FCFD811B372F59A1C376E:0961DB2042C5E898ED8D9586E90E4F33
         public void Redeploy(string groupName, string name)
         {
-            this.InnerCollection.Redeploy(groupName, name);
+            Inner.Redeploy(groupName, name);
         }
 
         ///GENMHASH:7DBF1DD4080EA265532035CF9FB8D313:1A99BFC30D31869BE5E39DD7E4E0639D
         public void ConvertToManaged(string groupName, string name)
         {
-            this.InnerCollection.ConvertToManagedDisks(groupName, name);
+            Inner.ConvertToManagedDisks(groupName, name);
         }
 
         ///GENMHASH:E5D7B16A7B6C705114CC71E8BB2B20E1:6975A84E6594FF8DEA88E6C992B0B500
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             parameters.DestinationContainerName = containerName;
             parameters.OverwriteVhds = overwriteVhd;
             parameters.VhdPrefix = vhdPrefix;
-            VirtualMachineCaptureResultInner captureResult = this.InnerCollection.Capture(groupName, name, parameters);
+            VirtualMachineCaptureResultInner captureResult = Inner.Capture(groupName, name, parameters);
             return captureResult.Output.ToString();
         }
 
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
             return new VirtualMachineImpl(name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 this.virtualMachineExtensionsClient,
                 base.Manager,
                 this.storageManager,
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return new VirtualMachineImpl(virtualMachineInner.Name,
                 virtualMachineInner,
-                this.InnerCollection,
+                Inner,
                 this.virtualMachineExtensionsClient,
                 base.Manager,
                 this.storageManager,
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await this.InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return this.WrapModel(data);
         }
     }

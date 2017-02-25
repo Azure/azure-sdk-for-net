@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public bool CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            return InnerCollection.CheckExistence(
+            return Inner.CheckExistence(
                 resourceGroupName,
                 resourceProviderNamespace,
                 parentResourcePath,
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public void Delete(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            this.InnerCollection.Delete(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion);
+            Inner.Delete(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion);
         }
 
         public IGenericResource Get(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                 parentResourcePath = "";
             }
 
-            GenericResourceInner inner = InnerCollection.Get(
+            GenericResourceInner inner = Inner.Get(
                     resourceGroupName,
                     resourceProviderNamespace,
                     parentResourcePath,
@@ -81,10 +81,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public PagedList<IGenericResource> ListByGroup(string resourceGroupName)
         {
-            IPage<GenericResourceInner> firstPage = InnerCollection.List();
+            IPage<GenericResourceInner> firstPage = Inner.List();
             var pagedList = new PagedList<GenericResourceInner>(firstPage, (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                 TargetResourceGroup = targetResourceGroup.Id,
                 Resources = resources,
             };
-            InnerCollection.MoveResources(sourceResourceGroupName, moveInfo);
+            Inner.MoveResources(sourceResourceGroupName, moveInfo);
         }
 
         protected override IGenericResource WrapModel(GenericResourceInner inner)

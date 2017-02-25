@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:D505D44BBE5A66C92A4176DBA1DD5891:68BABEE90E833AD1BFA7F46A8C19127A
         public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var appServiceCertificateOrderInner = await InnerCollection.GetAsync(resourceGroupName, name);
+            var appServiceCertificateOrderInner = await Inner.GetAsync(resourceGroupName, name);
 
             return WrapModel(appServiceCertificateOrderInner);
         }
@@ -44,20 +44,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
         public PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> ListByGroup(string resourceGroupName)
         {
-            return WrapList(new PagedList<AppServiceCertificateOrderInner>(InnerCollection.ListByResourceGroup(resourceGroupName),
-                nextLink => InnerCollection.ListByResourceGroupNext(nextLink)));
+            return WrapList(new PagedList<AppServiceCertificateOrderInner>(Inner.ListByResourceGroup(resourceGroupName),
+                nextLink => Inner.ListByResourceGroupNext(nextLink)));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:60ECC4D32A4130D4A0971FBE7432E886
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await InnerCollection.DeleteCertificateOrderAsync(groupName, name);
+            await Inner.DeleteCertificateOrderAsync(groupName, name);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0AA8888F1EA6DA91AC72678639578389
         protected override AppServiceCertificateOrderImpl WrapModel(string name)
         {
-            return new AppServiceCertificateOrderImpl(name, new AppServiceCertificateOrderInner(), InnerCollection, Manager);
+            return new AppServiceCertificateOrderImpl(name, new AppServiceCertificateOrderInner(), Inner, Manager);
         }
 
         ///GENMHASH:B36EBFDFA77033C03C4B7C1A493B9315:7827EBFF4491A5043A5099AE2A01FBDF
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return null;
             }
 
-            return new AppServiceCertificateOrderImpl(inner.Name, inner, InnerCollection, Manager);
+            return new AppServiceCertificateOrderImpl(inner.Name, inner, Inner, Manager);
         }
     }
 }

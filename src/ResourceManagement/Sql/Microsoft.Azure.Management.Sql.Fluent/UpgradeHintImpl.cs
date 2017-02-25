@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:47B0CCFDDE32BC2E26AB51DB1F9DA342:507DFB69022C36CEE10273849AA5004C
         public Guid TargetServiceLevelObjectiveId()
         {
-            return this.Inner.TargetServiceLevelObjectiveId.GetValueOrDefault();
+            return Inner.TargetServiceLevelObjectiveId.GetValueOrDefault();
         }
 
         ///GENMHASH:D5C9144F34CDE74E76FA4B029FD4C6BF:C0C35E00AF4E17F141675A2C05C7067B
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:50212B0935C6C914B9E96569CFD74DE2:C119A85170FBF3FBAE458A726CF7D732
         public string TargetServiceLevelObjective()
         {
-            return this.Inner.TargetServiceLevelObjective;
+            return Inner.TargetServiceLevelObjective;
         }
     }
 }

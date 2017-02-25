@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E05BE5112BBF24DC07F63B90A384905C
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         public PagedList<IAvailabilitySet> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<AvailabilitySetInner>(InnerCollection.List(resourceGroupName));
+            var pagedList = new PagedList<AvailabilitySetInner>(Inner.List(resourceGroupName));
             return WrapList(pagedList);
         }
 
@@ -67,14 +67,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7CC0F8C63730735B2D69A34858088DFD
         public override async Task<IAvailabilitySet> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var availabilitySetInner = await InnerCollection.GetAsync(groupName, name, cancellationToken);
+            var availabilitySetInner = await Inner.GetAsync(groupName, name, cancellationToken);
             return WrapModel(availabilitySetInner);
         }
 
         ///GENMHASH:08094366E86F6F96174452394778C4F6:ACF6A3952D2A0F720A28B7BE9957D330
         protected override IAvailabilitySet WrapModel(AvailabilitySetInner availabilitySetInner)
         {
-            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, InnerCollection, Manager);
+            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, Inner, Manager);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0BFDE6A0F400FA3705EAC9170F74F0CB
         protected override AvailabilitySetImpl WrapModel(string name)
         {
-            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), InnerCollection, Manager);
+            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), Inner, Manager);
         }
     }
 }

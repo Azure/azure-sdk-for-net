@@ -43,14 +43,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.Inner.Id;
+                return Inner.Id;
             }
         }
 
         ///GENMHASH:5E567D525C2D1A4E96F5EDCE712176A4:E661050B2228F0D19D27F5E798A9AAED
         public CdnEndpointImpl WithOrigin(string originName, string hostname)
         {
-            this.Inner.Origins.Add(
+            Inner.Origins.Add(
                 new DeepCreatedOrigin
                 {
                    Name = originName,
@@ -68,16 +68,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:18D91A64C4BA864D24E2DE4DD2523297:08F121BA4E95C8CA8A60DE2B6D8A259A
         public CdnEndpointImpl WithQueryStringCachingBehavior(QueryStringCachingBehavior cachingBehavior)
         {
-            this.Inner.QueryStringCachingBehavior = cachingBehavior;
+            Inner.QueryStringCachingBehavior = cachingBehavior;
             return this;
         }
 
         ///GENMHASH:BA650B492EF1E2A3A4C8226C4A669B7F:3DDBCC9A4C358BBA941924D7644F0538
         public CdnEndpointImpl WithHttpsPort(int httpsPort)
         {
-            if (this.Inner.Origins != null && this.Inner.Origins.Any())
+            if (Inner.Origins != null && Inner.Origins.Any())
             {
-                this.Inner.Origins.ElementAt(0).HttpsPort = httpsPort;
+                Inner.Origins.ElementAt(0).HttpsPort = httpsPort;
             }
             return this;
         }
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 this.Parent.ResourceGroupName,
                 this.Parent.Name,
                 this.Name(),
-                this.Inner,
+                Inner,
                 cancellationToken);
             this.SetInner(endpointInner);
             
@@ -143,19 +143,19 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             EndpointUpdateParametersInner updateInner = new EndpointUpdateParametersInner
                                                         {
-                                                            IsHttpAllowed = this.Inner.IsHttpAllowed,
-                                                            IsHttpsAllowed = this.Inner.IsHttpsAllowed,
-                                                            OriginPath = this.Inner.OriginPath,
-                                                            OriginHostHeader = this.Inner.OriginHostHeader,
-                                                            IsCompressionEnabled = this.Inner.IsCompressionEnabled,
-                                                            ContentTypesToCompress = this.Inner.ContentTypesToCompress,
-                                                            GeoFilters = this.Inner.GeoFilters,
-                                                            OptimizationType = this.Inner.OptimizationType,
-                                                            QueryStringCachingBehavior = this.Inner.QueryStringCachingBehavior,
-                                                            Tags = this.Inner.Tags
+                                                            IsHttpAllowed = Inner.IsHttpAllowed,
+                                                            IsHttpsAllowed = Inner.IsHttpsAllowed,
+                                                            OriginPath = Inner.OriginPath,
+                                                            OriginHostHeader = Inner.OriginHostHeader,
+                                                            IsCompressionEnabled = Inner.IsCompressionEnabled,
+                                                            ContentTypesToCompress = Inner.ContentTypesToCompress,
+                                                            GeoFilters = Inner.GeoFilters,
+                                                            OptimizationType = Inner.OptimizationType,
+                                                            QueryStringCachingBehavior = Inner.QueryStringCachingBehavior,
+                                                            Tags = Inner.Tags
                                                         };
             
-            DeepCreatedOrigin originInner = this.Inner.Origins.ElementAt(0);
+            DeepCreatedOrigin originInner = Inner.Origins.ElementAt(0);
             OriginUpdateParametersInner originParameters = new OriginUpdateParametersInner
                                                             {
                                                                 HostName = originInner.HostName,
@@ -193,45 +193,45 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:DEAE39A7D24B41C1AF6ABFA406FD058B:997BF86B1AE48764E97C384BDB52387E
         public string ResourceState()
         {
-			return this.Inner.ResourceState;
+			return Inner.ResourceState;
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
         public string Id()
         {
-			return this.Inner.Id;
+			return Inner.Id;
         }
 
         ///GENMHASH:50951E75802920DF638B9F82BEC67147:0486B1BC9AE097182CCECA801B4C0A3C
         public CdnEndpointImpl WithContentTypeToCompress(string contentTypeToCompress)
         {
-            if (this.Inner.ContentTypesToCompress == null)
+            if (Inner.ContentTypesToCompress == null)
             {
-                this.Inner.ContentTypesToCompress = new List<string>();
+                Inner.ContentTypesToCompress = new List<string>();
             }
-            this.Inner.ContentTypesToCompress.Add(contentTypeToCompress);
+            Inner.ContentTypesToCompress.Add(contentTypeToCompress);
             return this;
         }
 
         ///GENMHASH:3BC1B56E1EA6D8692923934DD96FA69E:3E899646D6EF65C7F18D49308FB9672A
         public IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> GeoFilters()
         {
-                return this.Inner.GeoFilters;
+                return Inner.GeoFilters;
         }
 
         ///GENMHASH:6F62B34CB3A912AA692DBF18C6F448CB:A04B2C5688B47A48AC0B72C698E4AFC4
         public CdnEndpointImpl WithHostHeader(string hostHeader)
         {
-            this.Inner.OriginHostHeader = hostHeader;
+            Inner.OriginHostHeader = hostHeader;
             return this;
         }
 
         ///GENMHASH:52A2DCF36C3A58BEC0D85E7C013DD0A4:4E93ADCD1660A9273F08B84E6A5E307D
         public CdnEndpointImpl WithoutContentTypesToCompress()
         {
-            if (this.Inner.ContentTypesToCompress != null)
+            if (Inner.ContentTypesToCompress != null)
             {
-                this.Inner.ContentTypesToCompress.Clear();
+                Inner.ContentTypesToCompress.Clear();
             }
             return this;
         }
@@ -239,10 +239,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:69AE408B69EFE5C70BE2FFF8DAFDE487:664DE54EB6DDDFB480C8D678BFF06988
         public int HttpPort()
         {
-			if (this.Inner.Origins != null && this.Inner.Origins.Any() &&
-				this.Inner.Origins.ElementAt(0).HttpPort.HasValue)
+			if (Inner.Origins != null && Inner.Origins.Any() &&
+				Inner.Origins.ElementAt(0).HttpPort.HasValue)
 			{
-				return this.Inner.Origins.ElementAt(0).HttpPort.Value;
+				return Inner.Origins.ElementAt(0).HttpPort.Value;
 			}
 			return 0;
         }
@@ -250,24 +250,24 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:F2439439456B08DA8AB97215E07770D4:3B1EB2372D771F546AF6E37C78648BB2
         public QueryStringCachingBehavior QueryStringCachingBehavior()
         {
-			return this.Inner.QueryStringCachingBehavior.Value;
+			return Inner.QueryStringCachingBehavior.Value;
         }
 
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C
         public string ProvisioningState()
         {
-			return this.Inner.ProvisioningState;
+			return Inner.ProvisioningState;
         }
 
         ///GENMHASH:03E80F0F2C9B94D8F1D6C59D199A324F:40C8D11EF6D101133A63F404CB1BB8D9
         public CdnEndpointImpl WithoutGeoFilter(string relativePath)
         {
-            if (this.Inner.GeoFilters != null && this.Inner.GeoFilters.Any())
+            if (Inner.GeoFilters != null && Inner.GeoFilters.Any())
             {
-                var cleanList = this.Inner.GeoFilters
+                var cleanList = Inner.GeoFilters
                     .Where(s => !s.RelativePath.Equals(relativePath, System.StringComparison.OrdinalIgnoreCase))
                     .ToList();
-                this.Inner.GeoFilters = cleanList;
+                Inner.GeoFilters = cleanList;
             }
             return this;
         }
@@ -281,41 +281,41 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:4432D0ADF52DD4D5E7DE90F40C6E8896:76F37D088A77DEC25DE11A157AB47F1D
         public string OriginHostHeader()
         {
-			return this.Inner.OriginHostHeader;
+			return Inner.OriginHostHeader;
 		}
 
         ///GENMHASH:3660F0252470EA7E11BE799A78D9EC84:B7A7715C766EAE6ADE136666DFFE09AC
         public bool IsHttpsAllowed()
         {
-			return (this.Inner.IsHttpsAllowed.HasValue) ?
-                    this.Inner.IsHttpsAllowed.Value : false;
+			return (Inner.IsHttpsAllowed.HasValue) ?
+                    Inner.IsHttpsAllowed.Value : false;
         }
 
         ///GENMHASH:B616A3CDCC5668DC239E5CB02EC9777C:8915C60D99E7BDD3A3FD9CF713070E1C
         public string OptimizationType()
         {
-			return this.Inner.OptimizationType;
+			return Inner.OptimizationType;
         }
 
         ///GENMHASH:339AE17292CFA9A95578C99FBDA11380:C16B6B3A2E90C698F4A188EF7462D6DC
         public CdnEndpointImpl WithHttpsAllowed(bool httpsAllowed)
         {
-            this.Inner.IsHttpsAllowed = httpsAllowed;
+            Inner.IsHttpsAllowed = httpsAllowed;
             return this;
         }
 
         ///GENMHASH:A50A011CA652E846C1780DCE98D171DE:1130E1FDC5A612FAE78D6B24DD71D43E
         public string HostName()
         {
-			return this.Inner.HostName;
+			return Inner.HostName;
         }
 
         ///GENMHASH:0D2A82EC2942737570457A70F9912934:F9F8378CA5AE05C20515570CAE35960A
         public string OriginHostName()
         {
-			if (this.Inner.Origins != null && this.Inner.Origins.Any())
+			if (Inner.Origins != null && Inner.Origins.Any())
 			{
-				return this.Inner.Origins.ElementAt(0).HostName;
+				return Inner.Origins.ElementAt(0).HostName;
 			}
 			return null;
         }
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:E60DC199BAC0D1A721C0F7662730ABA2:518C4F662A2D3826050A6374C08548F8
         public string OriginPath()
         {
-			return this.Inner.OriginPath;
+			return Inner.OriginPath;
         }
 
         ///GENMHASH:FEA86C0334821B08888EC64FA387E385:3C9E4B867B3BFA631870D3CB338CF2DD
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             foreach (var contentType in contentTypesToCompress)
             {
-                this.Inner.ContentTypesToCompress.Add(contentType);
+                Inner.ContentTypesToCompress.Add(contentType);
             }
             return this;
         }
@@ -339,10 +339,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:1616938B44B8E0E6D22C3659A2BCFCFE:55912BF697AF997979E54EED9E353D49
         public int HttpsPort()
         {
-			if (this.Inner.Origins != null && this.Inner.Origins.Any() &&
-				this.Inner.Origins.ElementAt(0).HttpsPort.HasValue)
+			if (Inner.Origins != null && Inner.Origins.Any() &&
+				Inner.Origins.ElementAt(0).HttpsPort.HasValue)
 			{
-				return this.Inner.Origins.ElementAt(0).HttpsPort.Value;
+				return Inner.Origins.ElementAt(0).HttpsPort.Value;
 			}
 			return 0;
         }
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 geoFilter.CountryCodes = new List<string>();
             }
             geoFilter.CountryCodes.Add(countryCode.ToString());
-            this.Inner.GeoFilters.Add(geoFilter);
+            Inner.GeoFilters.Add(geoFilter);
             return this;
         }
 
@@ -378,16 +378,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             {
                 geoFilter.CountryCodes.Add(countryCode.ToString());
             }
-            this.Inner.GeoFilters.Add(geoFilter);
+            Inner.GeoFilters.Add(geoFilter);
             return this;
         }
 
         ///GENMHASH:C7E3B6CC7CD3267F666A96B615DDC068:0357550555FFEA6B58DFA325B94D8DA2
         public CdnEndpointImpl WithHttpPort(int httpPort)
         {
-            if (this.Inner.Origins != null && this.Inner.Origins.Any())
+            if (Inner.Origins != null && Inner.Origins.Any())
             {
-                this.Inner.Origins.ElementAt(0).HttpPort = httpPort;
+                Inner.Origins.ElementAt(0).HttpPort = httpPort;
             }
             return this;
         }
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:02F4B346FD2A70C665ACC639FDB892A8:55B871B6D1B5DB1661BCCFCFAE29D39C
         public IList<string> ContentTypesToCompress()
         {
-			return this.Inner.ContentTypesToCompress;
+			return Inner.ContentTypesToCompress;
         }
 
         ///GENMHASH:E6BF4911DAC5A8F7935D5D2C29B496A4:5599AE7A8F08BDC419B9D9D6350D80B3
@@ -428,14 +428,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:23C4E65AB754D70B878D3A66AEE8E654:B3F227E77BD8D90C6C9A5BFB4BED56AB
         public CdnEndpointImpl WithCompressionEnabled(bool compressionEnabled)
         {
-            this.Inner.IsCompressionEnabled = compressionEnabled;
+            Inner.IsCompressionEnabled = compressionEnabled;
             return this;
         }
 
         ///GENMHASH:49ED727092D355BFE0529224205A61FE:FB641FDF3348A96399457703B16AA777
         public CdnEndpointImpl WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
         {
-            this.Inner.GeoFilters = geoFilters;
+            Inner.GeoFilters = geoFilters;
             return this;
         }
 
@@ -448,15 +448,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:57B9D4E7F982060F78F28F5609F2BC38:C49EB5D71E9039DEC17115C095E282F9
         public CdnEndpointImpl WithHttpAllowed(bool httpAllowed)
         {
-            this.Inner.IsHttpAllowed = httpAllowed;
+            Inner.IsHttpAllowed = httpAllowed;
             return this;
         }
 
         ///GENMHASH:CD6809DFDD78677C6753D833E44E73E6:8AB02C538F745324130F952F19B611D7
         public bool IsHttpAllowed()
         {
-			return (this.Inner.IsHttpAllowed.HasValue) ?
-                    this.Inner.IsHttpAllowed.Value : false;
+			return (Inner.IsHttpAllowed.HasValue) ?
+                    Inner.IsHttpAllowed.Value : false;
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:A5F7C81073BA64AE03AC5C595EE8B6E5
@@ -486,9 +486,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:64AF8E4C0DC21702ECEBDAB60ABF9E38:B0E2487AEAA046DB40AFBF76759F57B7
         public CdnEndpointImpl WithoutGeoFilters()
         {
-            if(this.Inner.GeoFilters != null)
+            if(Inner.GeoFilters != null)
             {
-                this.Inner.GeoFilters.Clear();
+                Inner.GeoFilters.Clear();
             }
             return this;
         }
@@ -506,8 +506,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:ED6AC52E4E80AB09EC1F1A4F7D67B43D:1304F5065C963D2A0B0FDB3559616C62
         public bool IsCompressionEnabled()
         {
-			return (this.Inner.IsCompressionEnabled.HasValue) ? 
-                    this.Inner.IsCompressionEnabled.Value : false;
+			return (Inner.IsCompressionEnabled.HasValue) ? 
+                    Inner.IsCompressionEnabled.Value : false;
         }
 
         ///GENMHASH:D3FBCD749DB493DA3ADF137746D72E03:9DBDBE523213D7A819804C9FDF7A21BF
@@ -531,9 +531,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:D318AAF0AF67937A3B0D7457810D7189:9C29B8395D3F24B9173B3136ACF366A7
         public CdnEndpointImpl WithoutContentTypeToCompress(string contentTypeToCompress)
         {
-            if(this.Inner.ContentTypesToCompress != null)
+            if(Inner.ContentTypesToCompress != null)
             {
-                this.Inner.ContentTypesToCompress.Remove(contentTypeToCompress);
+                Inner.ContentTypesToCompress.Remove(contentTypeToCompress);
             }
             return this;
         }
@@ -541,18 +541,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:693BE444A3B7607A943975559DB607E2:06BF95A95E70AE38A4CDD5D6B5F142E7
         public CdnEndpointImpl WithOriginPath(string originPath)
         {
-            this.Inner.OriginPath = originPath;
+            Inner.OriginPath = originPath;
             return this;
         }
 
         ///GENMHASH:79A840C9F24220C8EF02C0B73BAD3C0F:3586CFD7AEFDBFA89168B9EFC6A2C18C
         private GeoFilter CreateGeoFiltersObject(string relativePath, GeoFilterActions action)
         {
-            if (this.Inner.GeoFilters == null)
+            if (Inner.GeoFilters == null)
             {
-                this.Inner.GeoFilters = new List<GeoFilter>();
+                Inner.GeoFilters = new List<GeoFilter>();
             }
-            var geoFilter = this.Inner.GeoFilters
+            var geoFilter = Inner.GeoFilters
                 .FirstOrDefault(s => s.RelativePath.Equals(
                     relativePath, 
                     System.StringComparison.OrdinalIgnoreCase));
@@ -563,7 +563,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             }
             else
             {
-                this.Inner.GeoFilters.Remove(geoFilter);
+                Inner.GeoFilters.Remove(geoFilter);
             }
             geoFilter.RelativePath = relativePath;
             geoFilter.Action = action;

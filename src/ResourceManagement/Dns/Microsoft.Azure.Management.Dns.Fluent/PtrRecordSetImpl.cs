@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:8254A32ABF739B147B00EFE318330056
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.PtrRecords != null && this.Inner.PtrRecords.Count > 0)
+            if (Inner.PtrRecords != null && Inner.PtrRecords.Count > 0)
             {
                 if (resource.PtrRecords == null)
                 {
                     resource.PtrRecords = new List<PtrRecord>();
                 }
 
-                foreach (var record in this.Inner.PtrRecords)
+                foreach (var record in Inner.PtrRecords)
                 {
                     resource.PtrRecords.Add(record);
                 }
-                this.Inner.PtrRecords.Clear();
+                Inner.PtrRecords.Clear();
             }
 
             if (this.recordSetRemoveInfo.PtrRecords.Count > 0)
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IList<string> TargetDomainNames()
         {
             List<string> targetDomainNames = new List<string>();
-            if (this.Inner.PtrRecords != null) {
-                foreach(var ptrRecord in this.Inner.PtrRecords)
+            if (Inner.PtrRecords != null) {
+                foreach(var ptrRecord in Inner.PtrRecords)
                 {
                     targetDomainNames.Add(ptrRecord.Ptrdname);
                 }
