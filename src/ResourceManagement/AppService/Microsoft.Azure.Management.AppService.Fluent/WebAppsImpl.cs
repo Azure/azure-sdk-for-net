@@ -21,8 +21,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceManager>,
         IWebApps
     {
-        private IWebSiteManagementClient serviceClient;
-
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public WebAppImpl Define(string name)
         {
@@ -65,19 +63,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9CF36554B675F661BFEE8D1C53C27496:E373401BADB43C440BA3AAFA9214451D
-        internal WebAppsImpl(
-            IWebAppsOperations innerCollection,
-            AppServiceManager manager,
-            IWebSiteManagementClient serviceClient)
-            : base(innerCollection, manager)
+        internal WebAppsImpl(AppServiceManager manager)
+            : base(manager.Inner.WebApps, manager)
         {
-            this.serviceClient = serviceClient;
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:E49716A6377D1B0BC4969F4A89093ED9
         protected override WebAppImpl WrapModel(string name)
         {
-            return new WebAppImpl(name, new SiteInner(), null, Inner, Manager, serviceClient);
+            return new WebAppImpl(name, new SiteInner(), null, Manager);
         }
 
         ///GENMHASH:64609469010BC4A501B1C3197AE4F243:BEC51BB7FA5CB1F04F04C62A207332AE
@@ -87,7 +81,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return null;
             }
             var configInner = inner.SiteConfig;
-            return new WebAppImpl(inner.Name, inner, configInner, Inner, Manager, serviceClient);
+            return new WebAppImpl(inner.Name, inner, configInner, Manager);
         }
     }
 }

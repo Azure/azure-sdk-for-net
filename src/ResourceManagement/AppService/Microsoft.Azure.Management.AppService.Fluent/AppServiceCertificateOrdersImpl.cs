@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FCA66BA6767E2497E23A1AF83D62F9F0:0FCD47CBCD9128C3D4A03458C5796741
-        internal AppServiceCertificateOrdersImpl(IAppServiceCertificateOrdersOperations innerCollection, IAppServiceManager manager)
-            : base(innerCollection, manager)
+        internal AppServiceCertificateOrdersImpl(IAppServiceManager manager)
+            : base(manager.Inner.AppServiceCertificateOrders, manager)
         {
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0AA8888F1EA6DA91AC72678639578389
         protected override AppServiceCertificateOrderImpl WrapModel(string name)
         {
-            return new AppServiceCertificateOrderImpl(name, new AppServiceCertificateOrderInner(), Inner, Manager);
+            return new AppServiceCertificateOrderImpl(name, new AppServiceCertificateOrderInner(), Manager);
         }
 
         ///GENMHASH:B36EBFDFA77033C03C4B7C1A493B9315:7827EBFF4491A5043A5099AE2A01FBDF
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return null;
             }
 
-            return new AppServiceCertificateOrderImpl(inner.Name, inner, Inner, Manager);
+            return new AppServiceCertificateOrderImpl(inner.Name, inner, Manager);
         }
     }
 }

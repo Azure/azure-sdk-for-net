@@ -4,13 +4,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServiceDomain.Definition;
     using AppServiceDomain.Update;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Models;
+    using Resource.Fluent;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Net;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -33,9 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDefinition,
         IUpdate
     {
-        private IDomainsOperations client;
-        private ITopLevelDomainsOperations topLevelDomainsInner;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostName> hostNameMap;
+        private IDictionary<string, HostName> hostNameMap;
         private string clientIp = "127.0.0.1";
 
         ///GENMHASH:E3A506AB29CB79E19BE35E770B4C876E:E11180BB79B722174FB3D0453FCEA12B
@@ -45,7 +42,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:CD48C699C847906F9DDB2B020855A2B4:7B32ADCF145314E68A75089E358F8048
-        public IReadOnlyDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostName> ManagedHostNames()
+        public IReadOnlyDictionary<string, HostName> ManagedHostNames()
         {
             if (hostNameMap == null)
             {
@@ -77,7 +74,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             string[] domainParts = this.Name.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
             string topLevel = domainParts[domainParts.Length - 1];
             // Step 1: Consent to agreements
-            var agreements = await topLevelDomainsInner.ListAgreementsAsync(topLevel);
+            var agreements = await Manager.Inner.TopLevelDomains.ListAgreementsAsync(topLevel);
             var agreementKeys = agreements.Select(x => x.AgreementKey).ToList();
             // Step 2: Create domain
             using (var httpClient = new HttpClient())
@@ -93,7 +90,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 AgreementKeys = agreementKeys
             };
 
-            SetInner(await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
+            SetInner(await Manager.Inner.Domains.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
 
             return this;
         }
@@ -119,15 +116,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
-        internal AppServiceDomainImpl(string name, DomainInner innerObject, IDomainsOperations client, ITopLevelDomainsOperations topLevelDomainsInner, IAppServiceManager manager)
+        internal AppServiceDomainImpl(string name, DomainInner innerObject, IAppServiceManager manager)
             : base(name, innerObject, manager)
         {
-            this.client = client;
-            this.topLevelDomainsInner = topLevelDomainsInner;
             Inner.Location = "global";
             if (Inner.ManagedHostNames != null)
             {
-                this.hostNameMap = Inner.ManagedHostNames.ToDictionary(h => h.Name);
+                hostNameMap = Inner.ManagedHostNames.ToDictionary(h => h.Name);
             }
         }
 
@@ -145,7 +140,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Location = "global",
                 OwnershipId = domainVerificationToken
             };
-            await client.CreateOrUpdateOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner);
+            await Manager.Inner.Domains.CreateOrUpdateOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner);
         }
 
         ///GENMHASH:EE3A4FAA12095D4EBD752C6D82325EDA:DD8B0DBE8A8402002F39ECC61A75D5BE
@@ -157,7 +152,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
         public override IAppServiceDomain Refresh()
         {
-            this.SetInner(client.Get(ResourceGroupName, Name));
+            this.SetInner(Manager.Inner.Domains.Get(ResourceGroupName, Name));
             return this;
         }
 

@@ -41,9 +41,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
     {
-
-        protected IWebAppsOperations client;
-        protected IWebSiteManagementClient serviceClient;
         private IDictionary<string, IAppSetting> cachedAppSettings;
         private IDictionary<string, IConnectionString> cachedConnectionStrings;
         private ISet<string> hostNamesSet;
@@ -64,7 +61,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private bool sourceControlToDelete;
 
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:27E486AB74A10242FF421C0798DDC450
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:400B39C84CFE07A8B031B773061CF1BB:54F16B494685A43639288CB0A223084F
         public FluentImplT WithAppSettingStickiness(string key, bool sticky)
@@ -100,7 +97,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:620993DCE6DF78140D8125DD97478452:27E486AB74A10242FF421C0798DDC450
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> ListAppSettingsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<StringDictionaryInner> ListAppSettingsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:879627C2DAE69433191E7E3A0197FFCB:97444012B93FEF52369A6C980B714A5A
         private FluentT NormalizeProperties()
@@ -292,7 +289,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:27E486AB74A10242FF421C0798DDC450
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(
+            ConnectionStringDictionaryInner inner,
+            CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:5C64261945401D044556FE57A81F8919:9E936C439A1F037DD069CDD0064C2AC0
         public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineHostnameBinding()
@@ -305,7 +304,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 AzureResourceName = Name,
                 HostNameType = HostNameType.Verified
             };
-            return new HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(inner, (FluentImplT)this, client);
+            return new HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(
+                inner,
+                (FluentImplT)this);
         }
 
         ///GENMHASH:C41BC129D11DD290512802D4F95ED197:C6674CAD927602613E222F438F228B47
@@ -644,7 +645,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public ManagedPipelineMode ManagedPipelineMode()
         {
             if (Inner.SiteConfig == null || Inner.SiteConfig.ManagedPipelineMode == null) {
-                return Microsoft.Azure.Management.AppService.Fluent.Models.ManagedPipelineMode.Classic;
+                return Models.ManagedPipelineMode.Classic;
             }
             return (ManagedPipelineMode) Inner.SiteConfig.ManagedPipelineMode;
         }
@@ -782,7 +783,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             if (Inner.SiteConfig == null || Inner.SiteConfig.PhpVersion == null)
             {
-                return Microsoft.Azure.Management.AppService.Fluent.PhpVersion.Off;
+                return Fluent.PhpVersion.Off;
             }
             return Fluent.PhpVersion.Parse(Inner.SiteConfig.PhpVersion);
         }
@@ -802,7 +803,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:B2C0373522058958F4115A63609B90C1:C3580B34803FD62C1976A18A7581AA0B
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSslBinding()
         {
-            return new HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(new HostNameSslState(), (FluentImplT) this, Manager);
+            return new HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(
+                new HostNameSslState(),
+                (FluentImplT) this);
         }
 
         ///GENMHASH:9C834AC4DD619BA31DBCFAAB13EE9923:914A632A86CAEA343D26353F278D7305
@@ -842,10 +845,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:B4CE82C3129D4304A7C71A600E1CA97C
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSourceControl()
         {
-            return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(new SiteSourceControlInner()
-            {
-                Location = RegionName
-            }, this, serviceClient);
+            return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(
+                new SiteSourceControlInner()
+                {
+                    Location = RegionName
+                }, this);
         }
 
         ///GENMHASH:1703877FCECC33D73EA04EEEF89045EF:A93CDCF3EC94A75CDDBFCAC39CD42834
@@ -869,15 +873,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:3BE74CEDB189CF13F08D5268649B73D7:FBDC4182C8802269267E808E13D08A16
-        public IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IAppSetting> AppSettings()
+        public IReadOnlyDictionary<string, IAppSetting> AppSettings()
         {
             return new ReadOnlyDictionary<string, IAppSetting>(cachedAppSettings);
         }
 
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:F76B0B1D4816856D9C8EA506F611C03D:91C46F0ECB5CC2D51804D2C0710E6211
         public FluentImplT WithoutSslBinding(string hostname)
@@ -950,28 +954,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.SiteConfig.NodeVersion;
         }
 
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:FA07D0476A4A7B9F0FDA17B8DF0095F1:FC345DE9B0C87952B3DE42BCE0488ECD
-        public IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString> ConnectionStrings()
+        public IReadOnlyDictionary<string, IConnectionString> ConnectionStrings()
         {
-            return new ReadOnlyDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IConnectionString>(cachedConnectionStrings);
+            return new ReadOnlyDictionary<string, IConnectionString>(cachedConnectionStrings);
         }
 
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
         internal  WebAppBaseImpl(
             string name,
             SiteInner innerObject,
             SiteConfigInner configObject,
-            IWebAppsOperations client,
-            IAppServiceManager manager,
-            IWebSiteManagementClient serviceClient)
+            IAppServiceManager manager)
             : base (name, innerObject, manager)
         {
-            this.client = client;
-            this.serviceClient = serviceClient;
             Inner.SiteConfig = configObject;
             NormalizeProperties();
         }
@@ -1052,7 +1052,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (bool)Inner.SiteConfig.AlwaysOn;
         }
 
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:FA11486B840C0E86D3D1A446BF2A3C96:AA358901B07077B2692CB317CAFFF60D
         public FluentImplT WithStickyAppSetting(string key, string value)
@@ -1109,7 +1109,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> ListConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<ConnectionStringDictionaryInner> ListConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:6CAC70824B4E95B3FC2D7FE1CE29759E:513EF027EB09EB5FEC6C661F74328B72
         public bool ClientAffinityEnabled()
@@ -1136,9 +1136,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:C2F7B915E364BA07AE840A3986B36AFE:798E625A28DD9AA65131B7A5A1494291
-        public IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState> HostNameSslStates()
+        public IReadOnlyDictionary<string, HostNameSslState> HostNameSslStates()
         {
-            return new ReadOnlyDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>(hostNameSslStateMap);
+            return new ReadOnlyDictionary<string, HostNameSslState>(hostNameSslStateMap);
         }
 
         ///GENMHASH:1BEBA30733974CB2A2FB9AC9E036FA93:72C814A27C1E75E81B6BEEBB5056F950

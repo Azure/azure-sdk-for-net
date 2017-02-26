@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:C35C270B3C2E9692DFA4DB35882E6EF7
         protected override AppServicePlanImpl WrapModel(string name)
         {
-            return new AppServicePlanImpl(name, new AppServicePlanInner(), Inner, Manager);
+            return new AppServicePlanImpl(name, new AppServicePlanInner(), Manager);
         }
 
         ///GENMHASH:1421F11CFE57BDF3BEA54271EBAF3758:8BBC6CEF06D15B4BC058A7C4E216A1A2
@@ -66,12 +66,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new AppServicePlanImpl(inner.Name, inner, Inner, Manager);
+            return new AppServicePlanImpl(inner.Name, inner, Manager);
         }
 
         ///GENMHASH:13EDEABEC8823ED4BDC78DA4C9882000:0FCD47CBCD9128C3D4A03458C5796741
-        internal AppServicePlansImpl(IAppServicePlansOperations innerCollection, IAppServiceManager manager)
-            : base(innerCollection, manager)
+        internal AppServicePlansImpl(IAppServiceManager manager)
+            : base(manager.Inner.AppServicePlans, manager)
         {
         }
     }

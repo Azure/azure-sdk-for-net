@@ -5,12 +5,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServiceCertificateOrder.Definition;
     using HostNameSslBinding.UpdateDefinition;
     using KeyVault.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
-    using Resource.Fluent.Core.ResourceActions;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
@@ -22,7 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVTc2xCaW5kaW5nSW1wbA==
     internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> :
-        IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>,
+        IndexableWrapper<HostNameSslState>,
         IHostNameSslBinding,
         HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
@@ -34,7 +32,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         private Func<Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>> newCertificate;
         private IWithKeyVault certificateInDefinition;
-        private IAppServiceManager manager;
         private FluentImplT parent;
 
         ///GENMHASH:A1F44CA6A666B87D4C3A3AF168E6B317:B3CDCCA65868AC18E4EC708E7218B458
@@ -94,7 +91,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:1CBA63C4D54835D9C11EFE4E0444EE09:353CE8610C345C1C601531BF2C13A9A5
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
-            newCertificate = async () => await manager.AppServiceCertificates
+            newCertificate = async () => await parent.Manager.AppServiceCertificates
                 .Define(GetCertificateUniqueName(certificateOrder.SignedCertificate.Thumbprint, parent.Region))
                 .WithRegion(parent.Region)
                 .WithExistingResourceGroup(parent.ResourceGroupName)
@@ -116,7 +113,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPfxCertificateToUpload(string pfxPath, string password)
         {
             var thumbprint = GetCertificateThumbprint(pfxPath, password);
-            newCertificate = async () => await manager.AppServiceCertificates
+            newCertificate = async () => await parent.Manager.AppServiceCertificates
                 .Define(GetCertificateUniqueName(thumbprint, parent.Region))
                 .WithRegion(parent.Region)
                 .WithExistingResourceGroup(parent.ResourceGroupName)
@@ -128,17 +125,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:040FCD0915B61247DC4493834E39F655:A419F25EF828A0B88F2F3CAA051C4F14
-        internal HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent, IAppServiceManager manager)
+        internal HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent)
                     : base(inner)
         {
             this.parent = parent;
-            this.manager = manager;
         }
 
         ///GENMHASH:FECDA6325A56C366902AD25EE3271FA5:27D3A54723DD08767C3E53EDE9EA8C5E
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewStandardSslCertificateOrder(string certificateOrderName)
         {
-            this.certificateInDefinition = manager.AppServiceCertificateOrders.Define(certificateOrderName)
+            this.certificateInDefinition = parent.Manager.AppServiceCertificateOrders.Define(certificateOrderName)
                 .WithExistingResourceGroup(parent.ResourceGroupName)
                 .WithHostName(Name())
                 .WithStandardSku()
@@ -162,7 +158,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 var appServiceCertificateOrder = await certificateInDefinition
                     .WithNewKeyVault(vaultName, parent.Region)
                     .CreateAsync();
-                return await manager.AppServiceCertificates.Define(appServiceCertificateOrder.Name)
+                return await parent.Manager.AppServiceCertificates.Define(appServiceCertificateOrder.Name)
                     .WithRegion(parent.RegionName)
                     .WithExistingResourceGroup(parent.ResourceGroupName)
                     .WithExistingCertificateOrder(appServiceCertificateOrder)
@@ -207,7 +203,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 var appServiceCertificateOrder = await certificateInDefinition
                     .WithExistingKeyVault(vault)
                     .CreateAsync();
-                return await manager.AppServiceCertificates.Define(appServiceCertificateOrder.Name)
+                return await parent.Manager.AppServiceCertificates.Define(appServiceCertificateOrder.Name)
                     .WithRegion(parent.RegionName)
                     .WithExistingResourceGroup(parent.ResourceGroupName)
                     .WithExistingCertificateOrder(appServiceCertificateOrder)

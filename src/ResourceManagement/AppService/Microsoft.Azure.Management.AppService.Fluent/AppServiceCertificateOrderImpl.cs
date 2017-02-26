@@ -5,9 +5,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServiceCertificateOrder.Definition;
     using AppServiceCertificateOrder.Update;
     using KeyVault.Fluent.Models;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.KeyVault.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Models;
+    using KeyVault.Fluent;
+    using Resource.Fluent;
     using System;
     using System.Linq;
     using System.Threading;
@@ -31,10 +31,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDefinition,
         IUpdate
     {
-        internal IAppServiceCertificateOrdersOperations client;
         private IWebAppBase domainVerifyWebApp;
         private IAppServiceDomain domainVerifyDomain;
-        private Func<Task<Microsoft.Azure.Management.KeyVault.Fluent.IVault>> bindingVault;
+        private Func<Task<IVault>> bindingVault;
 
         ///GENMHASH:614D2D9852F00FD5BFCAF60BA2A659B0:86E327FE34A305973AC1A32ECEC60D57
         public AppServiceCertificateOrderImpl WithDomainVerification(IAppServiceDomain domain)
@@ -73,9 +72,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:88F80234ADBF5F0E8B64015C7A3EF8D0
-        public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var certificateOrder = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var certificateOrder = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             Task verifyDomainOwnerShip = null;
             if (domainVerifyWebApp != null)
             {
@@ -140,18 +139,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:89B68C3393E544990D0BC1837B4C4C0E:B1CB960E9688630133BF735EE72C4279
-        internal AppServiceCertificateOrderImpl(string key, AppServiceCertificateOrderInner innerObject, IAppServiceCertificateOrdersOperations client, IAppServiceManager manager)
+        internal AppServiceCertificateOrderImpl(
+            string key,
+            AppServiceCertificateOrderInner innerObject,
+            IAppServiceManager manager)
                     : base(key, innerObject, manager)
         {
-            this.client = client;
-            this.WithRegion("global");
-            this.WithValidYears(1);
+            WithRegion("global");
+            WithValidYears(1);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
         public override IAppServiceCertificateOrder Refresh()
         {
-            this.SetInner(client.Get(ResourceGroupName, Name));
+            this.SetInner(Manager.Inner.AppServiceCertificateOrders.Get(ResourceGroupName, Name));
             return this;
         }
 
@@ -176,7 +177,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:04406413E97C82F19F013C72D1DD2758:39E496E31AE9087192892138F0910259
-        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
         {
             AppServiceCertificateInner certInner = new AppServiceCertificateInner();
 
@@ -184,7 +185,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             certInner.KeyVaultId = vault.Id;
             certInner.KeyVaultSecretName = certificateName;
 
-            var appServiceCertificateInner = await client.CreateOrUpdateCertificateAsync(ResourceGroupName, Name, certificateName, certInner);
+            var appServiceCertificateInner = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateCertificateAsync(
+                ResourceGroupName, Name, certificateName, certInner);
             return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInner, this);
         }
 
@@ -204,7 +206,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0CD614E818D4086C936A0BF04B47C550:E31DD88A5AABE0E7EB1AA9BD08BE551A
         public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> GetKeyVaultBindingAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var appServiceCertificateInnerPage = await client.ListCertificatesAsync(ResourceGroupName, Name);
+            var appServiceCertificateInnerPage = await Manager.Inner.AppServiceCertificateOrders.ListCertificatesAsync(ResourceGroupName, Name);
 
             // There can only be one binding associated with an order
             if (appServiceCertificateInnerPage == null || !appServiceCertificateInnerPage.Any())

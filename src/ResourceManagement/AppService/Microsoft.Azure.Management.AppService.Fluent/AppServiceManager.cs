@@ -94,8 +94,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServicePlans == null)
                 {
-                    appServicePlans = new AppServicePlansImpl(
-                        Inner.AppServicePlans, this);
+                    appServicePlans = new AppServicePlansImpl(this);
                 }
                 return appServicePlans;
             }
@@ -107,7 +106,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (webApps == null)
                 {
-                    webApps = new WebAppsImpl(Inner.WebApps, this, Inner);
+                    webApps = new WebAppsImpl(this);
                 }
                 return webApps;
             }
@@ -119,7 +118,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServiceDomains == null)
                 {
-                    appServiceDomains = new AppServiceDomainsImpl(Inner.Domains, Inner.TopLevelDomains, this);
+                    appServiceDomains = new AppServiceDomainsImpl(this);
                 }
                 return appServiceDomains;
             }
@@ -131,7 +130,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServiceCertificates == null)
                 {
-                    appServiceCertificates = new AppServiceCertificatesImpl(Inner.Certificates, this);
+                    appServiceCertificates = new AppServiceCertificatesImpl(this);
                 }
                 return appServiceCertificates;
             }
@@ -143,7 +142,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServiceCertificateOrders == null)
                 {
-                    appServiceCertificateOrders = new AppServiceCertificateOrdersImpl(Inner.AppServiceCertificateOrders, this);
+                    appServiceCertificateOrders = new AppServiceCertificateOrdersImpl(this);
                 }
                 return appServiceCertificateOrders;
             }

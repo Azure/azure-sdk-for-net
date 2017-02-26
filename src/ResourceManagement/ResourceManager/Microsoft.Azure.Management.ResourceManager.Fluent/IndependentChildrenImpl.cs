@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         where ImplT : T
         where ParentT : IResource, IHasResourceGroup
     {
-        protected InnerCollectionT innerCollection;
+        private InnerCollectionT innerCollection;
 
         public ManagerT Manager { get; private set; }
 

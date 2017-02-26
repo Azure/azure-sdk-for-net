@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceManager>,
         IAppServiceDomains
     {
-        private ITopLevelDomainsOperations topLevelDomainsInner;
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public AppServiceDomainImpl Define(string name)
@@ -34,8 +33,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C332A900315E8149F8047F02D419C9DC:7655A447C81D4846C50195D4FED8EB4A
         public PagedList<Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement> ListAgreements(string topLevelExtension)
         {
-            var innerPagedList = new PagedList<TldLegalAgreement>(topLevelDomainsInner.ListAgreements(topLevelExtension),
-                nextLink => topLevelDomainsInner.ListAgreementsNext(nextLink));
+            var topLevelDomains = Manager.Inner.TopLevelDomains;
+            var innerPagedList = new PagedList<TldLegalAgreement>(topLevelDomains.ListAgreements(topLevelExtension),
+                nextLink => topLevelDomains.ListAgreementsNext(nextLink));
 
             return PagedListConverter.Convert<TldLegalAgreement, IDomainLegalAgreement>(innerPagedList, inner =>
             {
@@ -77,16 +77,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9303C19C6745E77DCF648A0A5F603980:6058FD68A2D3CB7431C37FFF30958B5E
-        internal  AppServiceDomainsImpl(IDomainsOperations innerCollection, ITopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
-            : base (innerCollection, manager)
+        internal  AppServiceDomainsImpl(AppServiceManager manager)
+            : base (manager.Inner.Domains, manager)
         {
-            this.topLevelDomainsInner = topLevelDomainsInner;
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:E44B844695C9BA669571A2A4CFD69105
         protected override AppServiceDomainImpl WrapModel(string name)
         {
-            return new AppServiceDomainImpl(name, new DomainInner(), Inner, topLevelDomainsInner, Manager);
+            return new AppServiceDomainImpl(name, new DomainInner(), Manager);
         }
 
         ///GENMHASH:D46619B18B9E2DF548FE051B5E4AA581:A6FE631194B3B92F0A3A833982E01503
@@ -95,7 +94,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             if (inner == null) {
                 return null;
             }
-            return new AppServiceDomainImpl(inner.Name, inner, Inner, topLevelDomainsInner, Manager);
+            return new AppServiceDomainImpl(inner.Name, inner, Manager);
         }
     }
 }

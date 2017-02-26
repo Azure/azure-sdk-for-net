@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.CollectionActions;
     using Models;
     using Resource.Fluent.Core.ResourceActions;
     using SqlFirewallRules.SqlFirewallRulesCreatable;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:67032F38ECA8CBB405D18A2581390A32
         public override async Task<PagedList<ISqlFirewallRule>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapList(new PagedList<ServerFirewallRuleInner>(await this.innerCollection.ListFirewallRulesAsync(resourceGroupName, parentName, cancellationToken)));
+            return WrapList(new PagedList<ServerFirewallRuleInner>(await Inner.ListFirewallRulesAsync(resourceGroupName, parentName, cancellationToken)));
         }
 
         ///GENMHASH:03C6F391A16F96A5127D98827B5423FA:877F7B73190881879934925547D57EAF
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:9E40C7C36CC9390C7C5D4EB7F13D8D4A
         public override async Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.innerCollection.DeleteFirewallRuleAsync(groupName, parentName, name, cancellationToken);
+            await Inner.DeleteFirewallRuleAsync(groupName, parentName, name, cancellationToken);
         }
 
         ///GENMHASH:E153333077E8B838087B8132AAA900EF:3E07C2B5BD84D8C41CD65F3910EFB3A1
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlFirewallRuleImpl(
                 firewallRuleName,
                 inner,
-                this.innerCollection,
+                Inner,
                 this.Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:D9AFFE54BAA276E6A6DADDEBF326C548
         public override async Task<ISqlFirewallRule> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await this.innerCollection.GetFirewallRuleAsync(resourceGroup, parentName, name, cancellationToken));
+            return WrapModel(await Inner.GetFirewallRuleAsync(resourceGroup, parentName, name, cancellationToken));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:09C3921CF8225D39924E9982602EA792
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             {
                 return null;
             }
-            return new SqlFirewallRuleImpl(inner.Name, inner, this.innerCollection, this.Manager);
+            return new SqlFirewallRuleImpl(inner.Name, inner, Inner, Manager);
         }
     }
 }

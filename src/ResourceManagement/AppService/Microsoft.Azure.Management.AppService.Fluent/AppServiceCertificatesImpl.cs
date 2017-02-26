@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
-        internal AppServiceCertificatesImpl(ICertificatesOperations innerCollection, IAppServiceManager manager)
-            : base(innerCollection, manager)
+        internal AppServiceCertificatesImpl(IAppServiceManager manager)
+            : base(manager.Inner.Certificates, manager)
         {
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5AC27B4C4791A2919F43CCB97C0275BA
         protected override AppServiceCertificateImpl WrapModel(string name)
         {
-            return new AppServiceCertificateImpl(name, new CertificateInner(), Inner, Manager);
+            return new AppServiceCertificateImpl(name, new CertificateInner(), Manager);
         }
 
         ///GENMHASH:446794D74A04366F0AA274DF90F28CE3:218BCD2B4CE1C82F271307788818A2EC
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new AppServiceCertificateImpl(inner.Name, inner, Inner, Manager);
+            return new AppServiceCertificateImpl(inner.Name, inner, Manager);
         }
     }
 }

@@ -2,15 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Implementation for Tenant.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uRG9tYWluTGVnYWxBZ3JlZW1lbnRJbXBs
     internal sealed partial class DomainLegalAgreementImpl :
-        Wrapper<Microsoft.Azure.Management.AppService.Fluent.Models.TldLegalAgreement>,
+        Wrapper<TldLegalAgreement>,
         IDomainLegalAgreement
     {
 

@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DomainContact.Definition;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Implementation for DomainContact and its create and update interfaces.
@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uRG9tYWluQ29udGFjdEltcGw=
     internal partial class DomainContactImpl :
         ChildResource<
-            Microsoft.Azure.Management.AppService.Fluent.Models.Contact,
-            Microsoft.Azure.Management.AppService.Fluent.AppServiceDomainImpl,
-            Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+            Contact,
+            AppServiceDomainImpl,
+            IAppServiceDomain>,
         IDomainContact,
         IDefinition<AppServiceDomain.Definition.IWithCreate>
     {
