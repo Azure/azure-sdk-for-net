@@ -109,6 +109,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._licenseType = value; }
         }
         
+        private MaintenanceStatus _maintenanceStatus;
+        
+        /// <summary>
+        /// Optional. Contains the maintenance information.
+        /// </summary>
+        public MaintenanceStatus MaintenanceStatus
+        {
+            get { return this._maintenanceStatus; }
+            set { this._maintenanceStatus = value; }
+        }
+        
         private string _migrationState;
         
         /// <summary>

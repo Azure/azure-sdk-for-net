@@ -192,6 +192,30 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<AzureOperationResponse> BeginDeletingAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Initiating Maintenance on role operation initiates
+        /// maintenance on the specified virtual machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to initiate maintenance.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginInitiatingMaintenanceAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Redeploying role operation redeploys the specified
         /// virtual machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
@@ -627,6 +651,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The Download RDP file operation response.
         /// </returns>
         Task<VirtualMachineGetRemoteDesktopFileResponse> GetRemoteDesktopFileAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Initiate Maintenance on role operation initiates maintenance on
+        /// the specified virtual machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to initiate maintenance.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> InitiateMaintenanceAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Redeploy role operation redeploys the specified virtual

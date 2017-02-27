@@ -2518,6 +2518,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     Assert.NotEqual(dep.CreatedTime, dep.LastModifiedTime);
                     role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
                     Assert.Equal(serviceName, role1.RoleName);
+                    // TODO: Assert.Contains(MaintenanceStatus, dep.Configuration);
+                    //Assert.True(dep.Roles[0].MaintenanceStatus);
 
                     // Delete all virtual machines
                     compute.Deployments.DeleteByName(serviceName, deploymentName, true);
