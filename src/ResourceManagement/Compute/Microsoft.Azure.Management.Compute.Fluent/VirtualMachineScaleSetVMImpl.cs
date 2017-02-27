@@ -2,12 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Linq;
     using Network.Fluent;
 
@@ -16,12 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldFZNSW1wbA==
     internal partial class VirtualMachineScaleSetVMImpl :
-        ChildResource<VirtualMachineScaleSetVMInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ChildResource<VirtualMachineScaleSetVMInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetVM
     {
         private VirtualMachineInstanceView virtualMachineInstanceView;
-        private IVirtualMachineScaleSetVMsOperations client;
-        private IComputeManager computeManager;
 
         ///GENMHASH:7A41C20BB6F19CCDAC03072604BF281B:10AB7511A9B5C284B8E2E1F35126DD60
         public string WindowsTimeZone()
@@ -57,9 +54,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:E8FB723EB69B1FF154465213A3298460
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            VirtualMachineScaleSetVMInstanceViewInner instanceViewInner = this.client.GetInstanceView(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId());
+            VirtualMachineScaleSetVMInstanceViewInner instanceViewInner = Parent.Manager.Inner.VirtualMachineScaleSetVMs.GetInstanceView(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId());
 
             if (instanceViewInner != null) {
                 this.virtualMachineInstanceView = new VirtualMachineInstanceView()
@@ -178,9 +176,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:58ABB710ED036C0D7836493A79C470A9
         public Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.StartAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId(),
+            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.StartAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId(),
                 cancellationToken);
         }
 
@@ -272,9 +271,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C0EB387DE858347CC9ECD61143087BEE:370DCDB672E2ABECD4FA09EF809A2A86
         public Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.DeallocateAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId(),
+            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.DeallocateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId(),
                 cancellationToken);
         }
 
@@ -330,9 +330,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:FEB63CBC1CA7D22A121F19D94AB44052:7E7C3C37B9FF921AE8D5F1C8460403A7
         public Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.RestartAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId(),
+            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.RestartAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId(),
                 cancellationToken);
         }
 
@@ -341,7 +342,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.IsOSBasedOnCustomImage()) {
                 ImageReferenceInner imageReference = Inner.StorageProfile.ImageReference;
-                return this.computeManager.VirtualMachineCustomImages.GetById(imageReference.Id);
+                return Parent.Manager.VirtualMachineCustomImages.GetById(imageReference.Id);
             }
             return null;
         }
@@ -352,7 +353,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (this.IsOSBasedOnPlatformImage())
             {
                 ImageReference imageReference = this.PlatformImageReference();
-                return this.computeManager.VirtualMachineImages.GetImage(this.Region(),
+                return Parent.Manager.VirtualMachineImages.GetImage(this.Region(),
                     imageReference.Publisher,
                     imageReference.Offer,
                     imageReference.Sku,
@@ -456,9 +457,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D689C0F3639A0E935C55CB38C26FAAFD:E6911DC70A59F96D2F88F3FF5122E38B
         public Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.PowerOffAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId(), 
+            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.PowerOffAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId(), 
                 cancellationToken);
         }
 
@@ -471,9 +473,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:960A44940EE0E051601BB59CD935FE22:09B1869890AC6095FE0FBE503BBBBFB6
         public Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.ReimageAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId(),
+            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.ReimageAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId(),
                 cancellationToken);
         }
 
@@ -501,30 +504,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:44ACDDF0B04148CC3F9347EA7C0643B4
         public IVirtualMachineScaleSetVM Refresh()
         {
-            this.SetInner(this.client.Get(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId()));
-                this.ClearCachedRelatedResources();
+            SetInner(Parent.Manager.Inner.VirtualMachineScaleSetVMs.Get(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId()));
+                ClearCachedRelatedResources();
             return this;
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:C5FE9F038576055F219FB734E49D39D9
         public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.DeleteAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.InstanceId(), cancellationToken);
+            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.DeleteAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                InstanceId(),
+                cancellationToken);
         }
 
         ///GENMHASH:56E00E1F789510BB94AFCDC1FF61D00B:C0B660115AA9DC53D76DEDA856496556
-        internal VirtualMachineScaleSetVMImpl(VirtualMachineScaleSetVMInner inner,
-            VirtualMachineScaleSetImpl parent,
-            IVirtualMachineScaleSetVMsOperations client,
-            IComputeManager computeManager) : base(inner, parent)
+        internal VirtualMachineScaleSetVMImpl(VirtualMachineScaleSetVMInner inner, VirtualMachineScaleSetImpl parent)
+            : base(inner, parent)
         {
-            this.client = client;
-            this.computeManager = computeManager;
-            this.virtualMachineInstanceView = Inner.InstanceView;
+            virtualMachineInstanceView = Inner.InstanceView;
         }
 
         ///GENMHASH:7F0A9CB4CB6BBC98F72CF50A81EBFBF4:BBFAD2E04A2C1C43EB33356B7F7A2AD6

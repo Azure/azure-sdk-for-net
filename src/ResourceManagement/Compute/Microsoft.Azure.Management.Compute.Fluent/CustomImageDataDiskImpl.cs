@@ -5,9 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using VirtualMachineCustomImage;
     using VirtualMachineCustomImage.CustomImageDataDisk.Definition;
-    using VirtualMachineCustomImage.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Resource.Fluent.Core;
     using Resource.Fluent;
 
     /// <summary>
@@ -15,9 +13,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uQ3VzdG9tSW1hZ2VEYXRhRGlza0ltcGw=
     internal partial class CustomImageDataDiskImpl :
-        ChildResource<Models.ImageDataDisk, 
-            VirtualMachineCustomImageImpl, 
-            Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
+        ChildResource<
+            ImageDataDisk, 
+            VirtualMachineCustomImageImpl,
+            IVirtualMachineCustomImage>,
         ICustomImageDataDisk,
         IDefinition<VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings>
     {
@@ -83,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:2BA83F380103FA104C2E7DA546CF60B6
         public VirtualMachineCustomImageImpl Attach()
         {
-            return this.Parent.WithCustomImageDataDisk(this);
+            return Parent.WithCustomImageDataDisk(this);
         }
 
         ///GENMHASH:8D34B63403FF8A31ACD1E973BFBE7F09:7432CF6CED181EEFBBE1AEC96A1146E1

@@ -4,15 +4,10 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using VirtualMachineScaleSetExtension.UpdateDefinition;
-    using VirtualMachineScaleSetExtension.Update;
     using VirtualMachineScaleSetExtension.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using VirtualMachineScaleSet.Definition;
-    using VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
 
@@ -21,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEV4dGVuc2lvbkltcGw=
     internal partial class VirtualMachineScaleSetExtensionImpl :
-        ChildResource<Models.VirtualMachineScaleSetExtensionInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
         IDefinition<VirtualMachineScaleSet.Definition.IWithCreate>,
         IUpdateDefinition<VirtualMachineScaleSet.Update.IWithApply>,

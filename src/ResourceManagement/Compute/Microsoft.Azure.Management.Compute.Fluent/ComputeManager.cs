@@ -95,9 +95,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 if (virtualMachines == null)
                 {
                     virtualMachines = new VirtualMachinesImpl(
-                        Inner.VirtualMachines, 
-                        Inner.VirtualMachineExtensions,
-                        Inner.VirtualMachineSizes, 
                         this,
                         storageManager,
                         networkManager);
@@ -144,7 +141,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (availabilitySets == null)
                 {
-                    availabilitySets = new AvailabilitySetsImpl(Inner.AvailabilitySets, this);
+                    availabilitySets = new AvailabilitySetsImpl(this);
                 }
                 return availabilitySets;
             }
@@ -155,8 +152,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineScaleSets == null)
                 {
-                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(Inner.VirtualMachineScaleSets,
-                        Inner.VirtualMachineScaleSetVMs,
+                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(
                         this, 
                         storageManager,
                         networkManager);
@@ -183,7 +179,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (disks == null)
                 {
-                    disks = new DisksImpl(Inner.Disks, this);
+                    disks = new DisksImpl(this);
                 }
                 return disks;
             }
@@ -195,7 +191,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (snapshots == null)
                 {
-                    snapshots = new SnapshotsImpl(Inner.Snapshots, this);
+                    snapshots = new SnapshotsImpl(this);
                 }
                 return snapshots;
             }
@@ -207,7 +203,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineCustomImages == null)
                 {
-                    virtualMachineCustomImages = new VirtualMachineCustomImagesImpl(Inner.Images, this);
+                    virtualMachineCustomImages = new VirtualMachineCustomImagesImpl(this);
                 }
                 return virtualMachineCustomImages;
             }

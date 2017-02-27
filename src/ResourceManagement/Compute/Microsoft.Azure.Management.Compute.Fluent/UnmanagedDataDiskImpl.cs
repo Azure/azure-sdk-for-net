@@ -3,20 +3,13 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using VirtualMachine.Definition;
-    using VirtualMachine.Update;
-    using VirtualMachineUnmanagedDataDisk.Definition;
     using VirtualMachineUnmanagedDataDisk.DefinitionWithExistingVhd;
     using VirtualMachineUnmanagedDataDisk.DefinitionWithImage;
     using VirtualMachineUnmanagedDataDisk.DefinitionWithNewVhd;
-    using VirtualMachineUnmanagedDataDisk.Update;
-    using VirtualMachineUnmanagedDataDisk.UpdateDefinition;
     using VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithExistingVhd;
     using VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithNewVhd;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Storage.Fluent;
+    using Resource.Fluent.Core;
+    using Storage.Fluent;
     using System.Collections.Generic;
     using Resource.Fluent.Core.ChildResourceActions;
     using System;
@@ -26,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVW5tYW5hZ2VkRGF0YURpc2tJbXBs
     internal partial class UnmanagedDataDiskImpl :
-        ChildResource<Models.DataDisk, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ChildResource<DataDisk, VirtualMachineImpl, IVirtualMachine>,
         IVirtualMachineUnmanagedDataDisk,
         IDefinitionWithExistingVhd<VirtualMachine.Definition.IWithUnmanagedCreate>,
         IDefinitionWithNewVhd<VirtualMachine.Definition.IWithUnmanagedCreate>,
@@ -71,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:92AE46C01A63B43959FE4FF2A5F2504A:610AF42860E2EF86F5F9AC3635C2A5A9
-        internal static void SetDataDisksDefaults(IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> dataDisks, string namePrefix)
+        internal static void SetDataDisksDefaults(IList<IVirtualMachineUnmanagedDataDisk> dataDisks, string namePrefix)
         {
             var usedLuns = new HashSet<int>();
             foreach(var dataDisk in dataDisks)
@@ -122,7 +115,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:638DE13F1D4D90A0515B35BE7FE1BE5C:8FABD54B6B9CC34ECD0DAE095274C8FB
-        internal static void EnsureDisksVhdUri(IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> dataDisks, IStorageAccount storageAccount, string namePrefix)
+        internal static void EnsureDisksVhdUri(IList<IVirtualMachineUnmanagedDataDisk> dataDisks, IStorageAccount storageAccount, string namePrefix)
         {
             foreach(var dataDisk in dataDisks)  {
                 if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty
@@ -139,7 +132,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:E2572688B4B3B1EAAAB910EE8FE4FC34:F8253F56C932FDE6B3232FBAD1099CA0
-        internal static void EnsureDisksVhdUri(IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> dataDisks, string namePrefix)
+        internal static void EnsureDisksVhdUri(IList<IVirtualMachineUnmanagedDataDisk> dataDisks, string namePrefix)
         {
             string containerUrl = null;
             foreach(var dataDisk in dataDisks)  {

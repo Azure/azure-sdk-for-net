@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -17,15 +16,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uQXZhaWxhYmlsaXR5U2V0c0ltcGw=
     internal partial class AvailabilitySetsImpl :
         GroupableResources<
-            Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet,
-            Microsoft.Azure.Management.Compute.Fluent.AvailabilitySetImpl,
-            Models.AvailabilitySetInner,
+            IAvailabilitySet,
+            AvailabilitySetImpl,
+            AvailabilitySetInner,
             IAvailabilitySetsOperations,
             IComputeManager>,
         IAvailabilitySets
     {
         ///GENMHASH:8CC9050C7F8D33DF867D6102B6152B2E:872A681ED7AE386A7C237A1C77E3E12A
-        internal AvailabilitySetsImpl(IAvailabilitySetsOperations client, IComputeManager computeManager) : base(client, computeManager)
+        internal AvailabilitySetsImpl(IComputeManager computeManager) : base(computeManager.Inner.AvailabilitySets, computeManager)
         {}
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -74,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:08094366E86F6F96174452394778C4F6:ACF6A3952D2A0F720A28B7BE9957D330
         protected override IAvailabilitySet WrapModel(AvailabilitySetInner availabilitySetInner)
         {
-            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, Inner, Manager);
+            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, Manager);
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0BFDE6A0F400FA3705EAC9170F74F0CB
         protected override AvailabilitySetImpl WrapModel(string name)
         {
-            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), Inner, Manager);
+            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), Manager);
         }
     }
 }

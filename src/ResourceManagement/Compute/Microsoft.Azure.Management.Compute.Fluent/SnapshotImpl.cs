@@ -5,36 +5,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Models;
-    using Snapshot.Definition;
-    using Snapshot.Update;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent;
 
     /// <summary>
     /// The implementation for Snapshot and its create and update interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uU25hcHNob3RJbXBs
     internal partial class SnapshotImpl :
-        GroupableResource<Microsoft.Azure.Management.Compute.Fluent.ISnapshot, 
-            Models.SnapshotInner, 
-            Microsoft.Azure.Management.Compute.Fluent.SnapshotImpl, 
+        GroupableResource<ISnapshot,
+            SnapshotInner,
+            SnapshotImpl, 
             IComputeManager,
             Snapshot.Definition.IWithGroup,
             Snapshot.Definition.IWithSnapshotSource,
             Snapshot.Definition.IWithCreate,
             Snapshot.Update.IUpdate>,
         ISnapshot,
-        IDefinition,
-        IUpdate
+        Snapshot.Definition.IDefinition,
+        Snapshot.Update.IUpdate
     {
-        private ISnapshotsOperations client;
-        
         ///GENMHASH:7065B24BABAC7FE0E97BB15717DED4C5:113A819FAF18DEACEC4BCC60120F8166
-        internal SnapshotImpl(string name, SnapshotInner innerModel, 
-            ISnapshotsOperations client, 
-            IComputeManager computeManager) : base(name, innerModel, computeManager)
+        internal SnapshotImpl(string name, SnapshotInner innerModel, IComputeManager computeManager) :
+            base(name, innerModel, computeManager)
         {
-            this.client = client;
         }
 
         ///GENMHASH:E3D5170F7AD778FE9D743F7A13428F7F:6F1F05D0FB05C43F2A1F954CC1CBE3FB
@@ -102,8 +95,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             grantAccessDataInner.Access = AccessLevel.Read;
             grantAccessDataInner.DurationInSeconds = accessDurationInSeconds;
 
-            AccessUriInner accessUriInner = this.client.GrantAccess(this.ResourceGroupName,
-                this.Name, grantAccessDataInner);
+            AccessUriInner accessUriInner = Manager.Inner.Snapshots.GrantAccess(
+                ResourceGroupName, Name, grantAccessDataInner);
             if (accessUriInner == null)
             {
                 return null;
@@ -143,8 +136,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:465E0149E0D9FAAA15FE3F675F59732D
         public override ISnapshot Refresh()
         {
-            SnapshotInner snapshotInner = this.client.Get(this.ResourceGroupName, this.Name);
-            this.SetInner(snapshotInner);
+            SnapshotInner snapshotInner = Manager.Inner.Snapshots.Get(ResourceGroupName, Name);
+            SetInner(snapshotInner);
             return this;
         }
 
@@ -164,9 +157,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             WithLinuxFromDisk(sourceDisk.Id);
             if (sourceDisk.OsType != null && sourceDisk.OsType.HasValue)
             {
-                this.WithOSType(sourceDisk.OsType.Value);
+                WithOSType(sourceDisk.OsType.Value);
             }
-            this.WithSku(sourceDisk.Sku);
+            WithSku(sourceDisk.Sku);
             return this;
         }
 
@@ -224,16 +217,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             WithWindowsFromSnapshot(sourceSnapshot.Id);
             if (sourceSnapshot.OsType != null && sourceSnapshot.OsType.HasValue)
             {
-                this.WithOSType(sourceSnapshot.OsType.Value);
+                WithOSType(sourceSnapshot.OsType.Value);
             }
-            this.WithSku(sourceSnapshot.Sku);
+            WithSku(sourceSnapshot.Sku);
             return this;
         }
 
         ///GENMHASH:C14080365CC6F93E30BB51B78DED7084:769384CE5F12D8DA31D146E04DAD108F
         public void RevokeAccess()
         {
-            this.client.RevokeAccess(this.ResourceGroupName, this.Name);
+            Manager.Inner.Snapshots.RevokeAccess(ResourceGroupName, Name);
 
         }
 
@@ -279,16 +272,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             WithLinuxFromSnapshot(sourceSnapshot.Id);
             if (sourceSnapshot.OsType != null && sourceSnapshot.OsType.HasValue)
             {
-                this.WithOSType(sourceSnapshot.OsType.Value);
+                WithOSType(sourceSnapshot.OsType.Value);
             }
-            this.WithSku(sourceSnapshot.Sku);
+            WithSku(sourceSnapshot.Sku);
             return this;
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:4862DE76074C3C17570C425395A8E68C
-        public override async Task<Microsoft.Azure.Management.Compute.Fluent.ISnapshot> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<ISnapshot> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var snapshotInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var snapshotInner = await Manager.Inner.Snapshots.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             SetInner(snapshotInner);
             return this;
         }

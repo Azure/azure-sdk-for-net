@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Collections.Generic;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldFZNSW5zdGFuY2VFeHRlbnNpb25JbXBs
     internal partial class VirtualMachineScaleSetVMInstanceExtensionImpl :
-        ChildResource<Models.VirtualMachineExtensionInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetVMImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>,
+        ChildResource<VirtualMachineExtensionInner, VirtualMachineScaleSetVMImpl, IVirtualMachineScaleSetVM>,
         IVirtualMachineScaleSetVMInstanceExtension
     {
         private IDictionary<string, object> publicSettings;

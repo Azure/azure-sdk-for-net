@@ -4,38 +4,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Disk.Definition;
-    using Disk.Update;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent;
 
     /// <summary>
     /// The implementation for Disk and its create and update interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uRGlza0ltcGw=
     internal partial class DiskImpl :
-        GroupableResource<Microsoft.Azure.Management.Compute.Fluent.IDisk, 
-            Models.DiskInner,
-            Microsoft.Azure.Management.Compute.Fluent.DiskImpl, 
+        GroupableResource<IDisk, 
+            DiskInner,
+            DiskImpl, 
             IComputeManager, 
             Disk.Definition.IWithGroup,
             Disk.Definition.IWithDiskSource,
             Disk.Definition.IWithCreate,
             Disk.Update.IUpdate>,
         IDisk,
-        IDefinition,
-        IUpdate
+        Disk.Definition.IDefinition,
+        Disk.Update.IUpdate
     {
-        private IDisksOperations client;
-
         ///GENMHASH:40B6E8297181515AA2C730D3D30BE761:113A819FAF18DEACEC4BCC60120F8166
-        internal DiskImpl(string name,
-            DiskInner innerModel,
-            IDisksOperations client,
-            IComputeManager computeManager) : base(name, innerModel, computeManager)
+        internal DiskImpl(string name, DiskInner innerModel, IComputeManager computeManager) : base(name, innerModel, computeManager)
         {
-            this.client = client;
         }
 
         ///GENMHASH:B5D0CEDC0E866EFD1D97D2FC06AC78B2:540C8E40423CBE57B12D10B8EE2CEEF4
@@ -71,9 +62,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             WithWindowsFromDisk(sourceDisk.Id);
             if (sourceDisk.OsType != null && sourceDisk.OsType.HasValue)
             {
-                this.WithOSType(sourceDisk.OsType.Value);
+                WithOSType(sourceDisk.OsType.Value);
             }
-            this.WithSku(sourceDisk.Sku);
+            WithSku(sourceDisk.Sku);
             return this;
         }
 
@@ -131,8 +122,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C14080365CC6F93E30BB51B78DED7084:769384CE5F12D8DA31D146E04DAD108F
         public void RevokeAccess()
         {
-            this.client.RevokeAccess(this.ResourceGroupName, this.Name);
-}
+            Manager.Inner.Disks.RevokeAccess(ResourceGroupName, Name);
+        }
 
         ///GENMHASH:920045A2761D4D5D5F5E2E52D43917D0:28B657BB52464897349F96AD3FEE7B7C
         public int SizeInGB()
@@ -163,7 +154,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:4862DE76074C3C17570C425395A8E68C
         public override async Task<Microsoft.Azure.Management.Compute.Fluent.IDisk> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var diskInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
+            var diskInner = await Manager.Inner.Disks.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(diskInner);
             return this;
         }
@@ -181,8 +172,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             grantAccessDataInner.Access = AccessLevel.Read;
             grantAccessDataInner.DurationInSeconds = accessDurationInSeconds;
             
-            AccessUriInner accessUriInner = this.client.GrantAccess(this.ResourceGroupName,
-                this.Name, grantAccessDataInner);
+            AccessUriInner accessUriInner = Manager.Inner.Disks.GrantAccess(ResourceGroupName, Name, grantAccessDataInner);
             if (accessUriInner == null) {
                 return null;
             }
@@ -192,8 +182,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:AACFFB1D9582E4E00031423DDDD4036A
         public override IDisk Refresh()
         {
-            DiskInner diskInner = this.client.Get(this.ResourceGroupName, this.Name);
-            this.SetInner(diskInner);
+            DiskInner diskInner = Manager.Inner.Disks.Get(ResourceGroupName, Name);
+            SetInner(diskInner);
             return this;
         }
 

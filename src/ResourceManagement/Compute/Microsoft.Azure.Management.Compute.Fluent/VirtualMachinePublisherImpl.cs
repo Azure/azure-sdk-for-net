@@ -3,8 +3,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Models;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// The implementation for VirtualMachinePublisher.

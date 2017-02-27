@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Storage.Fluent;
+    using Network.Fluent;
+    using Resource.Fluent;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.ResourceActions;
+    using Storage.Fluent;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEltcGw=
     internal partial class VirtualMachineScaleSetImpl :
-        GroupableParentResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet,
+        GroupableParentResource<IVirtualMachineScaleSet,
             Models.VirtualMachineScaleSetInner,
-            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl,
+            VirtualMachineScaleSetImpl,
             IComputeManager,
             VirtualMachineScaleSet.Definition.IWithGroup,
             VirtualMachineScaleSet.Definition.IWithSku,
@@ -39,9 +39,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IUpdate
     {
         // Clients
-        private IVirtualMachineScaleSetsOperations client;
-
-        private IVirtualMachineScaleSetVMsOperations vmInstancesClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
 
@@ -93,14 +90,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         internal VirtualMachineScaleSetImpl(
             string name,
             VirtualMachineScaleSetInner innerModel,
-            IVirtualMachineScaleSetsOperations client,
-            IVirtualMachineScaleSetVMsOperations vmInstancesClient,
             IComputeManager computeManager,
             IStorageManager storageManager,
             INetworkManager networkManager) : base(name, innerModel, computeManager)
         {
-            this.client = client;
-            this.vmInstancesClient = vmInstancesClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.namer = SdkContext.CreateResourceNamer(this.Name);
@@ -151,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
         public void PowerOff()
         {
-            this.client.PowerOff(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.PowerOff(ResourceGroupName, Name);
         }
 
         ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:51AD565B2270FC1F9104F1A5BC632E24
@@ -178,7 +171,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
         public void Deallocate()
         {
-            this.client.Deallocate(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Deallocate(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
@@ -698,7 +691,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
         public void Restart()
         {
-            this.client.Restart(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Restart(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:5880487AA9218E8DF536932A49A0ACDD:35850B81E88D88D68766589B9671E590
@@ -738,11 +731,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:9A047B4B22E09AEB6344D4F23EC361E5
         public override IVirtualMachineScaleSet Refresh()
         {
-            var response = client.Get(this.ResourceGroupName,
-                this.Name);
+            var response = Manager.Inner.VirtualMachineScaleSets.Get(ResourceGroupName, Name);
             SetInner(response);
-            this.ClearCachedProperties();
-            this.InitializeChildrenFromInner();
+            ClearCachedProperties();
+            InitializeChildrenFromInner();
             return this;
         }
 
@@ -1383,9 +1375,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:CAFE3044E63DB355E0097F6FD22A0282:600739A4DD068DBA0CF85CC076E9111F
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
-            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
+            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(
+                Manager.Inner.VirtualMachineScaleSets.ListSkus(ResourceGroupName, Name), nextLink =>
             {
-                return this.client.ListSkusNext(nextLink);
+                return Manager.Inner.VirtualMachineScaleSets.ListSkusNext(nextLink);
             });
 
             return PagedListConverter.Convert<VirtualMachineScaleSetSku, IVirtualMachineScaleSetSku>(innerPagedList, inner =>
@@ -1653,7 +1646,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8E925C4949ADC5B976067DDC58BE3E3C:D2243C739D20D636DF7C32705C2B6CAF
         public IVirtualMachineScaleSetVMs VirtualMachines()
         {
-            return new VirtualMachineScaleSetVMsImpl(this, this.vmInstancesClient, this.Manager);
+            return new VirtualMachineScaleSetVMsImpl(this, Manager);
         }
 
         ///GENMHASH:D5F141800B409906045662B0DD536DE4:26BA1C1FFB483992498725C1ED900BA1
@@ -1698,7 +1691,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:DB561BC9EF939094412065B65EB3D2EA:323D5930D438D7B746B03A2AB231B061
         public void Reimage()
         {
-            this.client.Reimage(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Reimage(ResourceGroupName, Name);
         }
 
         ///GENMHASH:7BA741621F15820BA59476A9CFEBBD88:395C45C93AFFE4737734EBBF09A6B2AF
@@ -1916,10 +1909,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 .VirtualMachineProfile
                 .StorageProfile
                 .DataDisks;
-                VirtualMachineScaleSetUnmanagedDataDiskImpl.SetDataDisksDefaults(dataDisks, this.Name);
+                VirtualMachineScaleSetUnmanagedDataDiskImpl.SetDataDisksDefaults(dataDisks, Name);
             }
             await HandleOSDiskContainersAsync();
-            return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, Inner);
+            return await Manager.Inner.VirtualMachineScaleSets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:621A22301B3EB5233E9DB4ED5BEC5735:E8427EEC4ACC25554660EF889ECD07A2
@@ -1968,7 +1961,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
         public void Start()
         {
-            this.client.Start(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Start(ResourceGroupName, Name);
         }
 
         ///GENMHASH:E3A33B29616A6EAF518CC10EA90B45C7:191C8844004D95B6F7362BD81543FE33

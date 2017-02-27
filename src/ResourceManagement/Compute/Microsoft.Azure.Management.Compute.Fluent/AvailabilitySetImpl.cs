@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Models;
+    using Resource.Fluent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -25,15 +25,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         AvailabilitySet.Definition.IDefinition,
         AvailabilitySet.Update.IUpdate
     {
-        private IAvailabilitySetsOperations client;
         private List<string> idOfVMsInSet;
 
         ///GENMHASH:8C96B0BDC54BDF41F3FC5BCCAA028C8D:113A819FAF18DEACEC4BCC60120F8166
-        internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel,
-            IAvailabilitySetsOperations client,
-            IComputeManager computeManager) : base(name, innerModel, computeManager)
+        internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel, IComputeManager computeManager) :
+            base(name, innerModel, computeManager)
         {
-            this.client = client;
         }
 
         ///GENMHASH:C260E0C5666F525F67582200AB726081:7DE3282328DE495135BCEDAABABE05D1
@@ -76,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 Inner.PlatformUpdateDomainCount = 5;
             }
-            var availabilitySetInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var availabilitySetInner = await Manager.Inner.AvailabilitySets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;
@@ -85,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:031612B4E8FDCD8F07810CE8D68580BA
         public override IAvailabilitySet Refresh()
         {
-            var availabilitySetInner = client.Get(ResourceGroupName, Name);
+            var availabilitySetInner = Manager.Inner.AvailabilitySets.Get(ResourceGroupName, Name);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;

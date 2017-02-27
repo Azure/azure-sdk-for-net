@@ -3,16 +3,10 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using VirtualMachineScaleSet.Definition;
-    using VirtualMachineScaleSet.Update;
-    using VirtualMachineScaleSetUnmanagedDataDisk.Definition;
     using VirtualMachineScaleSetUnmanagedDataDisk.DefinitionWithImage;
     using VirtualMachineScaleSetUnmanagedDataDisk.DefinitionWithNewVhd;
-    using VirtualMachineScaleSetUnmanagedDataDisk.Update;
     using VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
     using Resource.Fluent.Core.ChildResourceActions;
 
@@ -21,9 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldFVubWFuYWdlZERhdGFEaXNrSW1wbA==
     internal partial class VirtualMachineScaleSetUnmanagedDataDiskImpl :
-        ChildResource<Models.VirtualMachineScaleSetDataDisk, 
-            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl, 
-            Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ChildResource<VirtualMachineScaleSetDataDisk,
+            VirtualMachineScaleSetImpl,
+            IVirtualMachineScaleSet>,
         IDefinitionWithNewVhd<VirtualMachineScaleSet.Definition.IWithUnmanagedCreate>,
         IDefinitionWithImage<VirtualMachineScaleSet.Definition.IWithUnmanagedCreate>,
         IUpdateDefinition<VirtualMachineScaleSet.Update.IWithApply>,

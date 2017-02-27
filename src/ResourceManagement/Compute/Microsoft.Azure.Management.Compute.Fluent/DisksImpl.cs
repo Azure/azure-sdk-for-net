@@ -4,26 +4,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using Disk.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
 
     /// <summary>
     /// The implementation for Disks.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uRGlza3NJbXBs
     internal partial class DisksImpl :
-        GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IDisk, 
-            Microsoft.Azure.Management.Compute.Fluent.DiskImpl, 
-            Models.DiskInner,
+        GroupableResources<IDisk,
+            DiskImpl,
+            DiskInner,
             IDisksOperations, 
             IComputeManager>,
         IDisks
     {
         ///GENMHASH:6D37C99378AE377ECF5B67AC9088DAB3:872A681ED7AE386A7C237A1C77E3E12A
-        internal DisksImpl(IDisksOperations client, IComputeManager computeManager) : base(client, computeManager)
+        internal DisksImpl(IComputeManager computeManager) : base(computeManager.Inner.Disks, computeManager)
         {
         }
 
@@ -75,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk> ListByGroup(string resourceGroupName)
+        public PagedList<IDisk> ListByGroup(string resourceGroupName)
         {
             var pagedList = new PagedList<DiskInner>(Inner.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
             {
@@ -87,19 +85,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:37323FCC616B8746EEBA6B2152BF1DA6
         protected override DiskImpl WrapModel(string name)
         {
-            return new DiskImpl(name,
-                new DiskInner(),
-                Inner,
-                Manager);
+            return new DiskImpl(name, new DiskInner(), Manager);
         }
 
         ///GENMHASH:943063AEBCC7240660ED1B045E340B9C:5E0539B7C0A06A24BFDFF3DD193A9746
         protected override IDisk WrapModel(DiskInner inner)
         {
-            return new DiskImpl(inner.Name,
-                inner,
-                Inner,
-                Manager);
+            return new DiskImpl(inner.Name, inner, Manager);
         }
     }
 }

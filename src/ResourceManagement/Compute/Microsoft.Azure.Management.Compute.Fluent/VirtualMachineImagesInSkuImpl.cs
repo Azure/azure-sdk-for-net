@@ -1,15 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// The implementation for VirtualMachineImagesInSku.
@@ -29,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:F11EF4E68CC9208DDB5333BF63B56234
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage> List()
+        public PagedList<IVirtualMachineImage> List()
         {
             List<IVirtualMachineImage> firstPage = new List<IVirtualMachineImage>();
             var innerImages = innerCollection.List(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name);

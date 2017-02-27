@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Resource.Fluent.Core;
+    using Models;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImage.

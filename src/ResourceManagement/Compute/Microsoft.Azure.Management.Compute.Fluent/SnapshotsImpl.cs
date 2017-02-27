@@ -4,26 +4,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using Snapshot.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
 
     /// <summary>
     /// The implementation for Snapshots.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uU25hcHNob3RzSW1wbA==
     internal partial class SnapshotsImpl :
-        GroupableResources<Microsoft.Azure.Management.Compute.Fluent.ISnapshot, 
-            Microsoft.Azure.Management.Compute.Fluent.SnapshotImpl, 
-            Models.SnapshotInner, 
+        GroupableResources<ISnapshot,
+            SnapshotImpl,
+            SnapshotInner, 
             ISnapshotsOperations, 
             IComputeManager>,
         ISnapshots
     {
         ///GENMHASH:0A26D543418307E510FEAF101AB92A20:872A681ED7AE386A7C237A1C77E3E12A
-        internal SnapshotsImpl(ISnapshotsOperations client, ComputeManager computeManager) : base(client, computeManager)
+        internal SnapshotsImpl(ComputeManager computeManager) : base(computeManager.Inner.Snapshots, computeManager)
         {
         }
 
@@ -75,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.ISnapshot> ListByGroup(string resourceGroupName)
+        public PagedList<ISnapshot> ListByGroup(string resourceGroupName)
         {
             var pagedList = new PagedList<SnapshotInner>(Inner.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
             {
@@ -87,19 +85,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:3CA46DBF2D9D3E2609846FB4E368F357
         protected override SnapshotImpl WrapModel(string name)
         {
-            return new SnapshotImpl(name,
-                new SnapshotInner(),
-                Inner,
-                Manager);
+            return new SnapshotImpl(name, new SnapshotInner(), Manager);
         }
 
         ///GENMHASH:A33FD2C567E662AFDC5CB2FD277C2CF2:9B2DEA0DAB4AA3978BD346D58F2C8619
         protected override ISnapshot WrapModel(SnapshotInner inner)
         {
-            return new SnapshotImpl(inner.Name,
-                inner,
-                Inner,
-                Manager);
+            return new SnapshotImpl(inner.Name, inner, Manager);
         }
     }
 }

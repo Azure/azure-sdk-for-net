@@ -5,13 +5,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading.Tasks;
     using Models;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using Resource.Fluent.Core;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using VirtualMachine.Definition;
     using Network.Fluent;
     using Storage.Fluent;
     using System.Collections.Generic;
@@ -21,31 +16,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVzSW1wbA==
     internal partial class VirtualMachinesImpl :
-        GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl, Models.VirtualMachineInner, IVirtualMachinesOperations, IComputeManager>,
+        GroupableResources<
+            IVirtualMachine,
+            VirtualMachineImpl,
+            VirtualMachineInner,
+            IVirtualMachinesOperations,
+            IComputeManager>,
         IVirtualMachines
     {
         private readonly IStorageManager storageManager;
         private readonly INetworkManager networkManager;
         private readonly VirtualMachineSizesImpl vmSizes;
-        private readonly IVirtualMachineExtensionsOperations virtualMachineExtensionsClient;
+
         ///GENMHASH:CF74C66AC4A6B06C41B8E9D08F5D5F4B:DB478B04CDDECD11BE9F5F93E71FB984
         internal VirtualMachinesImpl(
-            IVirtualMachinesOperations client,
-            IVirtualMachineExtensionsOperations virtualMachineExtensionsClient,
-            IVirtualMachineSizesOperations virtualMachineSizesClient,
             IComputeManager computeManager,
             IStorageManager storageManager,
             INetworkManager networkManager) :
-            base(client, computeManager)
+            base(computeManager.Inner.VirtualMachines, computeManager)
         {
-            this.virtualMachineExtensionsClient = virtualMachineExtensionsClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
-            this.vmSizes = new VirtualMachineSizesImpl(virtualMachineSizesClient);
+            this.vmSizes = new VirtualMachineSizesImpl(computeManager.Inner.VirtualMachineSizes);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> List()
+        public PagedList<IVirtualMachine> List()
         {
             var pagedList = new PagedList<VirtualMachineInner>(Inner.ListAll(), (string nextPageLink) =>
             {
@@ -56,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> ListByGroup(string groupName)
+        public PagedList<IVirtualMachine> ListByGroup(string groupName)
         {
             var pagedList = new PagedList<VirtualMachineInner>(Inner.List(groupName), (string nextPageLink) =>
             {
@@ -152,10 +148,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             inner.HardwareProfile = new HardwareProfile();
             inner.NetworkProfile = networkProfile;
 
-            return new VirtualMachineImpl(name,
+            return new VirtualMachineImpl(
+                name,
                 inner,
-                Inner,
-                this.virtualMachineExtensionsClient,
                 base.Manager,
                 this.storageManager,
                 this.networkManager);
@@ -166,8 +161,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return new VirtualMachineImpl(virtualMachineInner.Name,
                 virtualMachineInner,
-                Inner,
-                this.virtualMachineExtensionsClient,
                 base.Manager,
                 this.storageManager,
                 this.networkManager);

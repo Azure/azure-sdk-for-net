@@ -8,13 +8,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineExtension.Definition;
     using Models;
     using System.Threading;
-    using VirtualMachineExtension.Update;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using VirtualMachine.Definition;
-    using VirtualMachine.Update;
+    using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
     using System.Collections.ObjectModel;
@@ -24,29 +19,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbXBs
     internal partial class VirtualMachineExtensionImpl :
-        ExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension, Models.VirtualMachineExtensionInner, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl>,
+        ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineExtension,
         IDefinition<VirtualMachine.Definition.IWithCreate>,
         IUpdateDefinition<VirtualMachine.Update.IUpdate>,
         VirtualMachineExtension.Update.IUpdate
     {
-        private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;
         private IDictionary<string, object> protectedSettings;
         ///GENMHASH:90947EC118BF5E99153E929733992E3D:2B5D1133EDB84DA652C7CF5DCF2A8534
-        internal VirtualMachineExtensionImpl(string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner, IVirtualMachineExtensionsOperations client) : base(name, parent, inner)
+        internal VirtualMachineExtensionImpl(string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner) :
+            base(name, parent, inner)
         {
-            this.client = client;
-            this.InitializeSettings();
+            InitializeSettings();
         }
 
         ///GENMHASH:712957B0CCD6FF08974D0F02498E499C:D9D3A1E2F88492FB40E494CFF83FC124
-        internal static VirtualMachineExtensionImpl NewVirtualMachineExtension (string name, VirtualMachineImpl parent, IVirtualMachineExtensionsOperations client)
+        internal static VirtualMachineExtensionImpl NewVirtualMachineExtension (string name, VirtualMachineImpl parent)
         {
-            return new VirtualMachineExtensionImpl(name,
-                parent,
-                new VirtualMachineExtensionInner { Location = parent.RegionName },
-                client);
+            return new VirtualMachineExtensionImpl(name, parent,
+                new VirtualMachineExtensionInner { Location = parent.RegionName });
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
@@ -234,37 +226,39 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IVirtualMachineExtension Refresh()
         {
             string name;
-            if (this.IsReference()) {
+            if (IsReference()) {
                 name = ResourceUtils.NameFromResourceId(Inner.Id);
             } else {
                 name = Inner.Name;
             }
-            VirtualMachineExtensionInner inner = this.client.Get(this.Parent.ResourceGroupName, this.Parent.Name, name);
-            this.SetInner(inner);
+            VirtualMachineExtensionInner inner = Parent.Manager.Inner.VirtualMachineExtensions.Get(
+                Parent.ResourceGroupName, Parent.Name, name);
+            SetInner(inner);
             return this;
         }
 
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:C13D0601ACA269F4AA251080A5EAB8A3
-        public async override Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IVirtualMachineExtension> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            VirtualMachineExtensionInner inner = await this.client.CreateOrUpdateAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name(),
+            VirtualMachineExtensionInner inner = await Parent.Manager.Inner.VirtualMachineExtensions.CreateOrUpdateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
                 Inner,
                 cancellationToken);
-            this.SetInner(inner);
-            this.InitializeSettings();
+            SetInner(inner);
+            InitializeSettings();
             return this;
         }
 
         ///GENMHASH:F08598A17ADD014E223DFD77272641FF:E0CB43D17A95680E1FA5052B3D980A7C
-        public async override Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IVirtualMachineExtension> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             this.NullifySettingsIfEmpty();
             if (this.IsReference())
             {
                 string extensionName = ResourceUtils.NameFromResourceId(Inner.Id);
-                var resource = await this.client.GetAsync(this.Parent.ResourceGroupName, this.Parent.Name, extensionName);
+                var resource = await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(this.Parent.ResourceGroupName, this.Parent.Name, extensionName);
                 Inner.Publisher = resource.Publisher;
                 Inner.VirtualMachineExtensionType = resource.VirtualMachineExtensionType;
                 if (Inner.AutoUpgradeMinorVersion == null)
@@ -295,9 +289,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4ECAD0C81AFE0A2718CE4BFF1EC4C29F
         public override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.DeleteAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name());
+            return Parent.Manager.Inner.VirtualMachineExtensions.DeleteAsync(this.Parent.ResourceGroupName, Parent.Name, Name());
         }
 
         /// <returns>true if this is just a reference to the extension.</returns>

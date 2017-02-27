@@ -6,7 +6,6 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Azure.Management.Storage.Fluent.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,9 +20,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbXBs
     internal partial class VirtualMachineImpl :
-        GroupableResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine,
-            Models.VirtualMachineInner,
-            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl,
+        GroupableResource<IVirtualMachine,
+            VirtualMachineInner,
+            VirtualMachineImpl,
             IComputeManager,
             VirtualMachine.Definition.IWithGroup,
             VirtualMachine.Definition.IWithNetwork,
@@ -35,7 +34,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachine.DefinitionUnmanaged.IDefinitionUnmanaged,
         VirtualMachine.Update.IUpdate
     {
-        private readonly IVirtualMachinesOperations client;
         private readonly IStorageManager storageManager;
         private readonly INetworkManager networkManager;
         private readonly string vmName;
@@ -47,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IStorageAccount existingStorageAccountToAssociate;
         private IAvailabilitySet existingAvailabilitySetToAssociate;
         private INetworkInterface existingPrimaryNetworkInterfaceToAssociate;
-        private IList<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
+        private IList<INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIP nicDefinitionWithPrivateIP;
@@ -55,21 +53,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
         private bool isUnmanagedDiskSelected;
-        private IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> unmanagedDataDisks;
+        private IList<IVirtualMachineUnmanagedDataDisk> unmanagedDataDisks;
         private ManagedDataDiskCollection managedDataDisks;
 
         ///GENMHASH:0A331C2401291DF824493E64F2798884:D3B04C536032C2BDC056A8F85225875E
-        internal VirtualMachineImpl(string name,
+        internal VirtualMachineImpl(
+            string name,
             VirtualMachineInner innerModel,
-            IVirtualMachinesOperations client,
-            IVirtualMachineExtensionsOperations extensionsClient,
             IComputeManager computeManager,
             IStorageManager storageManager,
-            INetworkManager networkManager) :
-            base(name, innerModel, computeManager)
+            INetworkManager networkManager)
+            : base(name, innerModel, computeManager)
         {
-
-            this.client = client;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.vmName = name;
@@ -77,7 +72,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.namer = SdkContext.CreateResourceNamer(this.vmName);
             this.creatableSecondaryNetworkInterfaceKeys = new List<string>();
             this.existingSecondaryNetworkInterfacesToAssociate = new List<INetworkInterface>();
-            this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(extensionsClient, this);
+            this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(this);
             this.managedDataDisks = new ManagedDataDiskCollection(this);
             InitializeDataDisks();
         }
@@ -85,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:4C74CDEFBB89F8ADB720DB2B740C1AB3
         public override IVirtualMachine Refresh()
         {
-            var response = client.Get(ResourceGroupName, Name);
+            var response = Manager.Inner.VirtualMachines.Get(ResourceGroupName, Name);
             SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
@@ -96,52 +91,52 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
         public void Deallocate()
         {
-            this.client.Deallocate(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.Deallocate(this.ResourceGroupName, this.Name);
 
         }
 
         ///GENMHASH:0745971EF3F2CE7276C7E535722C5E6C:F7A7B3A36B61441CF0850BDE432A2805
         public void Generalize()
         {
-            this.client.Generalize(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.Generalize(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
         public void PowerOff()
         {
-            this.client.PowerOff(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.PowerOff(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
         public void Restart()
         {
-            this.client.Restart(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.Restart(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
         public void Start()
         {
-            this.client.Start(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.Start(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:D9EB75AF88B1A07EDC0965B26A7F7C04:E30F1E083D68AA7A68C7128405BA3741
         public void Redeploy()
         {
-            this.client.Redeploy(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.Redeploy(this.ResourceGroupName, this.Name);
 
         }
 
         ///GENMHASH:BF8CE5C594210A476EF389DC52B15805:2795B67DFA718D9C0FFC69E152857591
         public void ConvertToManaged()
         {
-            this.client.ConvertToManagedDisks(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachines.ConvertToManagedDisks(this.ResourceGroupName, this.Name);
             this.Refresh();
         }
 
         ///GENMHASH:842FBE4DCB8BFE1B50632DBBE157AEA8:B5262187B60CE486998F800E9A96B659
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes()
         {
-            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
+            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(Manager.Inner.VirtualMachines.ListAvailableSizes(this.ResourceGroupName,
             this.Name), innerSize =>
             {
                 return new VirtualMachineSizeImpl(innerSize);
@@ -155,14 +150,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             parameters.DestinationContainerName = containerName;
             parameters.OverwriteVhds = overwriteVhd;
             parameters.VhdPrefix = vhdPrefix;
-            VirtualMachineCaptureResultInner captureResult = this.client.Capture(this.ResourceGroupName, this.Name, parameters);
+            VirtualMachineCaptureResultInner captureResult = Manager.Inner.VirtualMachines.Capture(this.ResourceGroupName, this.Name, parameters);
             return JsonConvert.SerializeObject(captureResult.Output);
         }
 
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:43A87ABD605FCDAA3CA444A643F83DB4
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            this.virtualMachineInstanceView = this.client.Get(this.ResourceGroupName,
+            this.virtualMachineInstanceView = Manager.Inner.VirtualMachines.Get(this.ResourceGroupName,
                 this.Name,
                 InstanceViewTypes.InstanceView).InstanceView;
             return this.virtualMachineInstanceView;
@@ -1402,7 +1397,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             await HandleStorageSettingsAsync();
             HandleNetworkSettings();
             HandleAvailabilitySettings();
-            var response = await client.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner);
+            var response = await Manager.Inner.VirtualMachines.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner);
             this.SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();

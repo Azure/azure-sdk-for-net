@@ -2,12 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Resource.Fluent.Core.CollectionActions;
     using Network.Fluent;
     using Resource.Fluent.Core;
     using Storage.Fluent;
-    using Management.Compute.Fluent;
-    using Management.Compute.Fluent.Models;
+    using Models;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -19,25 +17,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldHNJbXBs
     internal partial class VirtualMachineScaleSetsImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet,
-            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl,
-            Models.VirtualMachineScaleSetInner,
+            IVirtualMachineScaleSet,
+            VirtualMachineScaleSetImpl,
+            VirtualMachineScaleSetInner,
             IVirtualMachineScaleSetsOperations,
             IComputeManager>,
         IVirtualMachineScaleSets
     {
-        private IVirtualMachineScaleSetVMsOperations vmInstanceClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
+
         ///GENMHASH:D153EE3A7098DCC0FDE502B79387242D:20D58C6F0677BACCE2BBFE4994C6C570
         internal VirtualMachineScaleSetsImpl (
-            IVirtualMachineScaleSetsOperations client,
-            IVirtualMachineScaleSetVMsOperations vmInstanceClient,
             IComputeManager computeManager,
             IStorageManager storageManager,
-            INetworkManager networkManager) : base(client, computeManager)
+            INetworkManager networkManager) : base(computeManager.Inner.VirtualMachineScaleSets, computeManager)
         {
-            this.vmInstanceClient = vmInstanceClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
         }
@@ -155,25 +150,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     }
                 }
             };
-            return new VirtualMachineScaleSetImpl(name,
+            return new VirtualMachineScaleSetImpl(
+                name,
                 inner,
-                Inner,
-                this.vmInstanceClient,
-                this.Manager,
-                this.storageManager,
-                this.networkManager);
+                Manager,
+                storageManager,
+                networkManager);
         }
 
         ///GENMHASH:02DED088A2888BB795F0F3D5DD74F4BD:5D05902D26BEABDC6406C636F9FE6823
         protected override IVirtualMachineScaleSet WrapModel(VirtualMachineScaleSetInner inner)
         {
-            return new VirtualMachineScaleSetImpl(inner.Name,
+            return new VirtualMachineScaleSetImpl(
+                inner.Name,
                 inner,
-                Inner,
-                this.vmInstanceClient,
-                this.Manager,
-                this.storageManager,
-                this.networkManager);
+                Manager,
+                storageManager,
+                networkManager);
         }
     }
 }
