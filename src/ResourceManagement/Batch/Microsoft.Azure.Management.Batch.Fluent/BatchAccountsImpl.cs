@@ -3,8 +3,7 @@
 
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-    using Management.Batch;
-    using Management.Batch.Fluent.Models;
+    using Models;
     using Resource.Fluent.Core;
     using Storage.Fluent;
     using System;
@@ -25,24 +24,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         IBatchAccounts
     {
         private IStorageManager storageManager;
-        private IApplicationOperations applicationsClient;
-        private IApplicationPackageOperations applicationPackagesClient;
-        private ILocationOperations locationClient;
 
         ///GENMHASH:704C7023D5B3E401D9747BB082F479BF:B46F5BAEB07AD00DFC9E48403D627ACE
-        internal BatchAccountsImpl(
-                IBatchAccountOperations batchAccountOperations,
-                BatchManager manager,
-                IApplicationOperations applicationsClient,
-                IApplicationPackageOperations applicationPackagesClient,
-                ILocationOperations locationClient,
-                IStorageManager storageManager)
-            : base(batchAccountOperations, manager)
+        internal BatchAccountsImpl(BatchManager manager, IStorageManager storageManager)
+            : base(manager.Inner.BatchAccount, manager)
         {
             this.storageManager = storageManager;
-            this.applicationsClient = applicationsClient;
-            this.applicationPackagesClient = applicationPackagesClient;
-            this.locationClient = locationClient;
         }
 
         public void Delete(string id)
@@ -63,10 +50,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return new BatchAccountImpl(
                 name,
                 inner,
-                Inner,
                 Manager,
-                applicationsClient,
-                applicationPackagesClient,
                 storageManager);
         }
 
@@ -100,10 +84,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return new BatchAccountImpl(
                 inner.Name,
                 inner,
-                Inner,
                 Manager,
-                applicationsClient,
-                applicationPackagesClient,
                 storageManager);
         }
 
@@ -134,7 +115,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:F8EF648D033A93895EA3A4E4EB60B9B2:F0DC62FB7F617AF3C57F4F01580CC827
         internal int GetBatchAccountQuotaByLocation(Region region)
         {
-            return locationClient.GetQuotas(region.Name).AccountQuota.GetValueOrDefault();
+            return Manager.Inner.Location.GetQuotas(region.Name).AccountQuota.GetValueOrDefault();
         }
     }
 }

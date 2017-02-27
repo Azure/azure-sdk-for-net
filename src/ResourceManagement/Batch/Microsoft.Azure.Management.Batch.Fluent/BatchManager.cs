@@ -82,13 +82,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             {
                 if (batchAccounts == null)
                 {
-                    batchAccounts = new BatchAccountsImpl(
-                        Inner.BatchAccount,
-                        this,
-                        Inner.Application,
-                        Inner.ApplicationPackage,
-                        Inner.Location,
-                        storageManager);
+                    batchAccounts = new BatchAccountsImpl(this, storageManager);
                 }
 
                 return batchAccounts;

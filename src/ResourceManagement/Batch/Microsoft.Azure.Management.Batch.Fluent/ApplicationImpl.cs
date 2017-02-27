@@ -25,19 +25,15 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         Application.UpdateDefinition.IUpdateDefinition<BatchAccount.Update.IUpdate>,
         Application.Update.IUpdate
     {
-        private IApplicationOperations client;
         private ApplicationPackagesImpl applicationPackages;
 
         ///GENMHASH:E599FB9EB31E9A9D449368FB30F00A12:AE61E46F25E32E41F3889C4B879C0A37
         internal ApplicationImpl(string name,
             BatchAccountImpl batchAccount,
-            ApplicationInner inner,
-            IApplicationOperations client,
-            IApplicationPackageOperations applicationPackagesClient)
+            ApplicationInner inner)
             : base(name, batchAccount, inner)
         {
-            this.client = client;
-            applicationPackages = new ApplicationPackagesImpl(applicationPackagesClient, this);
+            applicationPackages = new ApplicationPackagesImpl(batchAccount.Manager.Inner.ApplicationPackage, this);
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
@@ -80,7 +76,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             createParameter.DisplayName = Inner.DisplayName;
             createParameter.AllowUpdates = Inner.AllowUpdates;
 
-            var inner = await client.CreateAsync(
+            var inner = await Parent.Manager.Inner.Application.CreateAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 Name(), createParameter, cancellationToken);
@@ -97,7 +93,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             updateParameter.DisplayName = Inner.DisplayName;
             updateParameter.AllowUpdates = Inner.AllowUpdates;
 
-            await client.UpdateAsync(Parent.ResourceGroupName, Parent.Name, Name(), updateParameter, cancellationToken);
+            await Parent.Manager.Inner.Application.UpdateAsync(Parent.ResourceGroupName, Parent.Name, Name(), updateParameter, cancellationToken);
             await applicationPackages.CommitAndGetAllAsync(cancellationToken);
 
             return this;
@@ -106,13 +102,13 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:F0565BDDC7B68F770608A54BA76D915F
         public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await client.DeleteAsync(Parent.ResourceGroupName, Parent.Name, Name(), cancellationToken);
+            await Parent.Manager.Inner.Application.DeleteAsync(Parent.ResourceGroupName, Parent.Name, Name(), cancellationToken);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:409C31CA8E99C248AA5D2D551769B232
         public IApplication Refresh()
         {
-            ApplicationInner inner = client.Get(Parent.ResourceGroupName, Parent.Name, Inner.Id);
+            ApplicationInner inner = Parent.Manager.Inner.Application.Get(Parent.ResourceGroupName, Parent.Name, Inner.Id);
             SetInner(inner);
             applicationPackages.Refresh();
 
@@ -140,14 +136,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:5D2E49B9EB1EE6B00286D10BF760C32B:AD92800DE9BADB7C037AA5D5C472BE5C
-        internal static ApplicationImpl NewApplication(string name,
-            BatchAccountImpl parent,
-            IApplicationOperations client,
-            IApplicationPackageOperations applicationPackagesClient)
+        internal static ApplicationImpl NewApplication(string name, BatchAccountImpl parent)
         {
             var inner = new ApplicationInner();
             inner.Id = name;
-            var applicationImpl = new ApplicationImpl(name, parent, inner, client, applicationPackagesClient);
+            var applicationImpl = new ApplicationImpl(name, parent, inner);
 
             return applicationImpl;
         }
