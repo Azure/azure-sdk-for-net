@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using CdnEndpoint.UpdatePremiumEndpoint;
     using CdnEndpoint.UpdateStandardEndpoint;
     using CdnProfile.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using Resource.Fluent;
     using Resource.Fluent.Core.ChildResourceActions;
@@ -33,9 +33,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         IUpdateStandardEndpoint,
         IUpdatePremiumEndpoint
     {
-        private IEndpointsOperations client;
-        private IOriginsOperations originsClient;
-        private ICustomDomainsOperations customDomainsClient;
         private List<CustomDomainInner> customDomainList;
         private List<CustomDomainInner> deletedCustomDomainList;
 
@@ -85,31 +82,31 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:947989B0DEAD5D70EE77D478831B3C67
         public async override Task<Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var endpointInner = await this.client.CreateAsync(
-                this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name(),
+            var endpointInner = await Parent.Manager.Inner.Endpoints.CreateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
                 Inner,
                 cancellationToken);
-            this.SetInner(endpointInner);
+            SetInner(endpointInner);
             
             foreach (var itemToCreate in this.customDomainList)
             {
-                await this.customDomainsClient.CreateAsync(
-                    this.Parent.ResourceGroupName,
-                    this.Parent.Name,
-                    this.Name(),
+                await Parent.Manager.Inner.CustomDomains.CreateAsync(
+                    Parent.ResourceGroupName,
+                    Parent.Name,
+                    Name(),
                     SdkContext.RandomResourceName("CustomDomain", 50),
                     itemToCreate.HostName,
                     cancellationToken);
             }
 
-            this.customDomainList.Clear();
-            this.customDomainList.AddRange(
-                await this.customDomainsClient.ListByEndpointAsync(
-                    this.Parent.ResourceGroupName,
-                    this.Parent.Name,
-                    this.Name(),
+            customDomainList.Clear();
+            customDomainList.AddRange(
+                await Parent.Manager.Inner.CustomDomains.ListByEndpointAsync(
+                    Parent.ResourceGroupName,
+                    Parent.Name,
+                    Name(),
                     cancellationToken));
             return this;
         }
@@ -164,28 +161,28 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                                                             };
 
 
-            await Task.WhenAll(this.deletedCustomDomainList
-                .Select(itemToDelete => this.customDomainsClient.DeleteAsync(
-                    this.Parent.ResourceGroupName,
-                    this.Parent.Name,
-                    this.Name(),
+            await Task.WhenAll(deletedCustomDomainList
+                .Select(itemToDelete => Parent.Manager.Inner.CustomDomains.DeleteAsync(
+                    Parent.ResourceGroupName,
+                    Parent.Name,
+                    Name(),
                     itemToDelete.Name)));
 
-            this.deletedCustomDomainList.Clear();
+            deletedCustomDomainList.Clear();
 
-            await this.originsClient.UpdateAsync(
-                this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name(),
+            await Parent.Manager.Inner.Origins.UpdateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
                 originInner.Name,
                 originParameters);
 
-            var endpointInner = await this.client.UpdateAsync(
-                this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name(),
+            var endpointInner = await Parent.Manager.Inner.Endpoints.UpdateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
                 updateInner);
-            this.SetInner(endpointInner);
+            SetInner(endpointInner);
 
             return this;
         }
@@ -468,18 +465,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:F8A6A48920042C49572BFDA9629E1BC7
         public ICdnEndpoint Refresh()
         {
-            EndpointInner inner = this.client.Get(
-                this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name());
-            this.SetInner(inner);
-            this.customDomainList.Clear();
-            this.deletedCustomDomainList.Clear();
-            this.customDomainList.AddRange(
-                this.customDomainsClient.ListByEndpoint(
-                    this.Parent.ResourceGroupName,
-                    this.Parent.Name,
-                    this.Name()));
+            EndpointInner inner = Parent.Manager.Inner.Endpoints.Get(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name());
+            SetInner(inner);
+            customDomainList.Clear();
+            deletedCustomDomainList.Clear();
+            customDomainList.AddRange(
+                Parent.Manager.Inner.CustomDomains.ListByEndpoint(
+                    Parent.ResourceGroupName,
+                    Parent.Name,
+                    Name()));
             return this;
         }
 
@@ -496,10 +493,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4ECAD0C81AFE0A2718CE4BFF1EC4C29F
         public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.client.DeleteAsync(
-                this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name(),
+            await Parent.Manager.Inner.Endpoints.DeleteAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
                 cancellationToken);
         }
 
@@ -511,21 +508,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:D3FBCD749DB493DA3ADF137746D72E03:9DBDBE523213D7A819804C9FDF7A21BF
-        internal CdnEndpointImpl(
-            string name,
-            CdnProfileImpl parent,
-            EndpointInner inner,
-            IEndpointsOperations client,
-            IOriginsOperations originsClient,
-            ICustomDomainsOperations customDomainsClient)
+        internal CdnEndpointImpl(string name, CdnProfileImpl parent, EndpointInner inner)
             : base(name, parent, inner)
         {
-            this.client = client;
-            this.originsClient = originsClient;
-            this.customDomainsClient = customDomainsClient;
-            this.customDomainList = new List<CustomDomainInner>();
-            this.deletedCustomDomainList = new List<CustomDomainInner>();
-
+            customDomainList = new List<CustomDomainInner>();
+            deletedCustomDomainList = new List<CustomDomainInner>();
         }
 
         ///GENMHASH:D318AAF0AF67937A3B0D7457810D7189:9C29B8395D3F24B9173B3136ACF366A7

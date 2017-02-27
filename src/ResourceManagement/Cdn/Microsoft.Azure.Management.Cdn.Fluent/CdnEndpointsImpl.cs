@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using Resource.Fluent;
 
@@ -15,30 +15,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     internal partial class CdnEndpointsImpl :
         ExternalChildResourcesCached<CdnEndpointImpl,ICdnEndpoint,EndpointInner,ICdnProfile,CdnProfileImpl>
     {
-        private IEndpointsOperations client;
-        private IOriginsOperations originsClient;
-        private ICustomDomainsOperations customDomainsClient;
-
         ///GENMHASH:6A122C62EB559D6E6E53725061B422FB:8A24BA59C4D80CD9D76FF994C7632585
-        protected override IList<Microsoft.Azure.Management.Cdn.Fluent.CdnEndpointImpl> ListChildResources()
+        protected override IList<CdnEndpointImpl> ListChildResources()
         {
             List<CdnEndpointImpl> childResources = new List<CdnEndpointImpl>();
 
-            foreach(var innerEndpoint in this.client.ListByProfile(
-                this.Parent.ResourceGroupName,
-                this.Parent.Name))
+            foreach(var innerEndpoint in Parent.Manager.Inner.Endpoints.ListByProfile(Parent.ResourceGroupName, Parent.Name))
             {
-                var endpoint = new CdnEndpointImpl(
-                    innerEndpoint.Name,
-                    this.Parent,
-                    innerEndpoint,
-                    this.client,
-                    this.originsClient,
-                    this.customDomainsClient);
+                var endpoint = new CdnEndpointImpl(innerEndpoint.Name, Parent, innerEndpoint);
 
-                foreach (var customDomain in this.customDomainsClient.ListByEndpoint(
-                    this.Parent.ResourceGroupName, 
-                    this.Parent.Name, 
+                foreach (var customDomain in Parent.Manager.Inner.CustomDomains.ListByEndpoint(
+                    Parent.ResourceGroupName, 
+                    Parent.Name, 
                     innerEndpoint.Name))
                 {
                     endpoint.WithCustomDomain(customDomain.HostName);
@@ -89,17 +77,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:0E17135F576ED293506D3C5D4AB3CC33:0A9C82E8F2ECF2EDFD1BDEA306B57C31
-        internal  CdnEndpointsImpl(
-            IEndpointsOperations client, 
-            IOriginsOperations originsClient, 
-            ICustomDomainsOperations customDomainsClient, 
-            CdnProfileImpl parent) 
-            : base(parent, "Endpoint")
+        internal  CdnEndpointsImpl(CdnProfileImpl parent) : base(parent, "Endpoint")
         {
-            this.client = client;
-            this.originsClient = originsClient;
-            this.customDomainsClient = customDomainsClient;
-
             if (parent.Id != null)
             {
                 this.CacheCollection();
@@ -124,19 +103,13 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:8E8DA5B84731A2D412247D25A544C502:5A9014B901131DE511752BB8941DE4EC
         protected override CdnEndpointImpl NewChildResource(string name)
         {
-            return new CdnEndpointImpl(
-                name,
-                this.Parent,
-                new EndpointInner(),
-                this.client,
-                this.originsClient,
-                this.customDomainsClient);
+            return new CdnEndpointImpl(name, Parent, new EndpointInner());
         }
 
         ///GENMHASH:A0B0C406BF96B9B40A3A34687F4E17B2:51E2B88157BC18A1733D263CFDD19D70
         public CdnEndpointImpl DefineNewEndpoint(string endpointName, string originName, string endpointOriginHostname)
         {
-            CdnEndpointImpl endpoint = this.DefineNewEndpoint(endpointName);
+            CdnEndpointImpl endpoint = DefineNewEndpoint(endpointName);
             endpoint.Inner.Origins.Add(
                 new DeepCreatedOrigin
                 {
@@ -149,7 +122,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:391E96CD689B8A8B7D37B118706D13A5:51020309D68A9D47DC901FDD76CC79AA
         public CdnEndpointImpl DefineNewEndpoint(string endpointName, string endpointOriginHostname)
         {
-            return this.DefineNewEndpoint(endpointName, "origin", endpointOriginHostname);
+            return DefineNewEndpoint(endpointName, "origin", endpointOriginHostname);
         }
 
         ///GENMHASH:9754CC4582FF9A2DB0A7695F48B2CEF6:BC2FC9D337780BCFC4B1E4C417B868E4

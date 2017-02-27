@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             {
                 if (profiles == null)
                 {
-                    profiles = new CdnProfilesImpl(Inner, this);
+                    profiles = new CdnProfilesImpl(this);
                 }
                 return profiles;
             }
