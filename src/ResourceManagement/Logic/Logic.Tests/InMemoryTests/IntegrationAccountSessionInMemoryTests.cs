@@ -14,7 +14,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Xunit;
 
-    public class IntegrationAccountSessionInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountSessionInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountSessionInMemoryTests()
         {

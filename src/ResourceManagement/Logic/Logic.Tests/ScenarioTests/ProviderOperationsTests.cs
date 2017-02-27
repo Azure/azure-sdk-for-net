@@ -2,24 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-
 namespace Test.Azure.Management.Logic
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using Microsoft.Azure.Management.Logic;
-    using Microsoft.Azure.Management.Logic.Models;
-    using System;
 
     /// <summary>
     /// Scenario tests for the provider operations.
     /// </summary>
     [Collection("ProviderOperationsTests")]
-    public class ProviderOperationsTests : BaseScenarioTests
+    public class ProviderOperationsTests : ScenarioTestsBase
     {
         /// <summary>
         /// Name of the test class.

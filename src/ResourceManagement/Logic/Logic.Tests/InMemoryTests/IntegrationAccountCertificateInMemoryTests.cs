@@ -12,10 +12,10 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
     using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;    
+    using Microsoft.Azure.Management.Logic;
     using System.IO;
 
-    public class IntegrationAccountCertificateInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountCertificateInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountCertificateInMemoryTests()
         {

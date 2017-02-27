@@ -13,7 +13,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
 
-    public class WorkflowVersionsInMemoryTests : BaseInMemoryTests
+    public class WorkflowVersionsInMemoryTests : InMemoryTestsBase
     {
         #region Constructor
 

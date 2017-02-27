@@ -9,9 +9,9 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest;
 
     /// <summary>
-    /// Base class for InMemory tests provides common methods and attributes.
+    /// Base class for in memory tests provides common methods and attributes.
     /// </summary>
-    public class BaseInMemoryTests
+    abstract public class InMemoryTestsBase
     {
         /// <summary>
         /// Test resourcegroup name for integration account

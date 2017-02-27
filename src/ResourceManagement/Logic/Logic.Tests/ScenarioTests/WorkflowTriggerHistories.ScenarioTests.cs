@@ -12,7 +12,7 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowTriggerHistoriesScenarioTests")]
-    public class WorkflowTriggerHistoriesScenarioTests : BaseScenarioTests
+    public class WorkflowTriggerHistoriesScenarioTests : ScenarioTestsBase
     {
         [Fact]
         public void ListHistory()

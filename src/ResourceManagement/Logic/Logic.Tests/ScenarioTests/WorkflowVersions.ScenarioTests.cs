@@ -11,7 +11,7 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowVersionsScenarioTests")]
-    public class WorkflowVersionsScenarioTests : BaseScenarioTests
+    public class WorkflowVersionsScenarioTests : ScenarioTestsBase
     {
         [Fact]
         public void CreateAndGetWorkflowVersion()

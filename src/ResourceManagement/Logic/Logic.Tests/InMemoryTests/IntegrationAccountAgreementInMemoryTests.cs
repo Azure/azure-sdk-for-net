@@ -2,21 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.Linq;
-
 namespace Test.Azure.Management.Logic
 {
-    using System;
+    using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Azure.Management.Logic;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;
-    using System.IO;
 
-    public class IntegrationAccountAgreementInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountAgreementInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountAgreementInMemoryTests()
         {

@@ -16,7 +16,7 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts partner.
     /// </summary>
     [Collection("IntegrationAccountPartnerScenarioTests")]
-    public class IntegrationAccountPartnerScenarioTests : BaseScenarioTests
+    public class IntegrationAccountPartnerScenarioTests : ScenarioTestsBase
     {
         /// <summary>
         /// Name of the test class

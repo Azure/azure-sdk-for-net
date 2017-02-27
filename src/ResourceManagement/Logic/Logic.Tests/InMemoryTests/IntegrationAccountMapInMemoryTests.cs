@@ -5,7 +5,6 @@
 namespace Test.Azure.Management.Logic
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -13,10 +12,10 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
     using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;    
+    using Microsoft.Azure.Management.Logic;
     using System.IO;
 
-    public class IntegrationAccountMapInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountMapInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountMapInMemoryTests()
         {

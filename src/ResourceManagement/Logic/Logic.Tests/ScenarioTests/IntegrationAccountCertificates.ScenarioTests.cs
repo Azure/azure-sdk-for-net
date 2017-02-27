@@ -2,27 +2,24 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Security;
-using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
-
 namespace Test.Azure.Management.Logic
 {
-    using System.IO;
-    using System.Collections.Generic;
+    using System;
+    using System.Globalization;
     using System.Linq;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
+    using System.Security.Cryptography.X509Certificates;
+
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Xunit;
 
     /// <summary>
     /// Scenario tests for the integration accounts certificates.
     /// </summary>
     [Collection("IntegrationAccountCertificateScenarioTests")]
-    public class IntegrationAccountCertificateScenarioTests : BaseScenarioTests
+    public class IntegrationAccountCertificateScenarioTests : ScenarioTestsBase
     {
 
         /// <summary>
