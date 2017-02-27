@@ -2095,7 +2095,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the database to be retrieved.
         /// </param>
         /// <param name='expand'>
-        /// The comma separated list of child objects to expand in the response.
+        /// A comma separated list of child objects to expand in the response.
         /// Possible properties: serviceTierAdvisors, upgradeHint,
         /// transparentDataEncryption.
         /// </param>
@@ -2300,6 +2300,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
+        /// <param name='filter'>
+        /// An OData filter expression that describes a subset of databases to return.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2318,7 +2321,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Database>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Database>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, string filter = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -2343,6 +2346,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListByServer", tracingParameters);
             }
@@ -2356,6 +2360,10 @@ namespace Microsoft.Azure.Management.Sql
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {

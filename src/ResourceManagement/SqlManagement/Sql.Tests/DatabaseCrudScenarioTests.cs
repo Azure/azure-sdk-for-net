@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.Sql.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -192,19 +193,26 @@ namespace Sql.Tests
             string testName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                Dictionary<string, Database> inputs = new Dictionary<string, Database>();
-
-                // Create some small databases to run the get/List tests on.
+                // Begin creating some small databases to run the get/List tests on.
+                //
+                List<Task<Database>> createDbTasks = new List<Task<Database>>();
                 for (int i = 0; i < 4; i++)
                 {
                     string name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    inputs.Add(
-                        name,
-                        sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, name, 
-                        new Database() {
+                    createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(resourceGroup.Name, server.Name, name,
+                        new Database()
+                        {
                             Location = server.Location
                         }));
                 }
+
+                // Wait for all databases to be created.
+                IDictionary<string, Database> inputs =
+                    Task.WhenAll(createDbTasks.ToArray())
+                        .Result
+                        .ToDictionary(
+                            keySelector: d => d.Name,
+                            elementSelector: d => d);
 
                 // Get each database and compare to the results of create database
                 //
@@ -214,13 +222,23 @@ namespace Sql.Tests
                     SqlManagementTestUtilities.ValidateDatabaseEx(db.Value, response);
                 }
 
+                // List all databases
+                //
                 var listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name);
 
                 // Remove master database from the list
                 listResponse = listResponse.Where(db => db.Name != "master");
                 Assert.Equal(inputs.Count(), listResponse.Count());
-                
                 foreach(var db in listResponse)
+                {
+                    SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
+                }
+
+                // List databases with filter
+                //
+                listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name, filter: "properties/edition ne 'System'");
+                Assert.Equal(inputs.Count(), listResponse.Count());
+                foreach (var db in listResponse)
                 {
                     SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
                 }

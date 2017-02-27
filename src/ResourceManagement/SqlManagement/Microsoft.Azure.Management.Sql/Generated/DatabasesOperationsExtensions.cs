@@ -784,7 +784,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the database to be retrieved.
             /// </param>
             /// <param name='expand'>
-            /// The comma separated list of child objects to expand in the response.
+            /// A comma separated list of child objects to expand in the response.
             /// Possible properties: serviceTierAdvisors, upgradeHint,
             /// transparentDataEncryption.
             /// </param>
@@ -810,7 +810,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the database to be retrieved.
             /// </param>
             /// <param name='expand'>
-            /// The comma separated list of child objects to expand in the response.
+            /// A comma separated list of child objects to expand in the response.
             /// Possible properties: serviceTierAdvisors, upgradeHint,
             /// transparentDataEncryption.
             /// </param>
@@ -838,9 +838,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static System.Collections.Generic.IEnumerable<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
+            /// <param name='filter'>
+            /// An OData filter expression that describes a subset of databases to return.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName, string filter = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListByServerAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListByServerAsync(resourceGroupName, serverName, filter), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -856,12 +859,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='filter'>
+            /// An OData filter expression that describes a subset of databases to return.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Collections.Generic.IEnumerable<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string filter = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
