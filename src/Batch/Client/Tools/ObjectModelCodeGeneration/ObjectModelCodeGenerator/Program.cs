@@ -26,7 +26,7 @@ namespace ObjectModelCodeGenerator
         {
             GenerateModelFiles();
 
-            //GenerateSomeRoslynFiles();
+            GenerateSomeRoslynFiles();
         }
 
         private static void GenerateModelFiles()

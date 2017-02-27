@@ -72,13 +72,14 @@
                 this.testOutputHelper.WriteLine("{0}", exceptionType);
             }
 
-            IReadOnlyCollection<string> expectedExceptions = new List<string>()
-                                                             {
-                                                                 "ArgumentNullException",
-                                                                 "ValidationException",
-                                                                 "SerializationException"
-                                                             };
-            Assert.Equal((IEnumerable<string>)expectedExceptions, exceptionSet);
+            IEnumerable<string> expectedExceptions = new List<string>()
+            {
+                "ArgumentNullException",
+                "ValidationException",
+                "SerializationException"
+            };
+
+            Assert.Equal(expectedExceptions, exceptionSet);
         }
 
         [Fact]
