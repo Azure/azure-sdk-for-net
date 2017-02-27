@@ -1,5 +1,5 @@
 {
   "projects": [
-    "src","tests/objectmodel"
+    "Src","Tests/ObjectModel"
   ]
 }
