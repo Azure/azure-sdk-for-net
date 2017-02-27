@@ -1,0 +1,21 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "Microsoft.Azure.Management.Fluent": "1.0.0-beta50",
+    "Microsoft.Azure.Management.ResourceManager": "1.4.0-preview"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
+    }
+  }
+}
