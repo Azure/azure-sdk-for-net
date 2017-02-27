@@ -407,7 +407,4 @@
 		<Copy SourceFiles="@(_PackageBinaries->'%(SignedFlatFileName)')" DestinationFiles="@(_PackageBinaries->'%(FullPath)')"></Copy>
 		<Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(_NetCorePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_NetCorePackages.Filename)" />
 	</Target>
-	<Target Name="Debug">
-		<DebugTask/>
-	</Target>
 </Project>
