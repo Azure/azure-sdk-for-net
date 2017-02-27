@@ -63,18 +63,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:95E0FEFA5B6425061BFC820775C7828F:CA299EA256F0BDA5FC1EAD032F4E9E7D
-        internal static SoaRecordSetImpl NewRecordSet(DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static SoaRecordSetImpl NewRecordSet(DnsZoneImpl parent)
         {
              return new SoaRecordSetImpl(parent,
              new RecordSetInner {
                 Name = "@",
-                Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.SOA),
+                Type = Enum.GetName(typeof(RecordType), Models.RecordType.SOA),
                 SoaRecord = new SoaRecord()
-             },
-             client);
+             });
         }
 
-        internal  SoaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  SoaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
     }

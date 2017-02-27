@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ITxtRecordSet
     {
         ///GENMHASH:CDD40393B54202CD5F601C8951933BA5:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  TxtRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  TxtRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
 
@@ -68,15 +68,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:39B0573F34E150A79B6172F2B15E69E9
-        internal static TxtRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static TxtRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
             return new TxtRecordSetImpl(parent,
             new RecordSetInner {
                 Name = name,
-                Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.TXT),
+                Type = Enum.GetName(typeof(RecordType), Models.RecordType.TXT),
                 TxtRecords = new List<TxtRecord>()
-            },
-            client);
+            });
         }
     }
 }

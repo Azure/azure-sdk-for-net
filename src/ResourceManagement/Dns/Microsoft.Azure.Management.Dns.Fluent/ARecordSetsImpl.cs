@@ -17,47 +17,47 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IARecordSets
     {
         private DnsZoneImpl dnsZone;
-        private IRecordSetsOperations client;
 
         public async Task<IARecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            RecordSetInner inner = await this.client.GetAsync(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            RecordSetInner inner = await dnsZone.Manager.Inner.RecordSets.GetAsync(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 name,
                 RecordType.A,
                 cancellationToken);
-            return new ARecordSetImpl(this.dnsZone, inner, this.client);
+            return new ARecordSetImpl(dnsZone, inner);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:9D63E6488572EF04D783581AA61B0F7E
         public IARecordSet GetByName(string name)
         {
-            return this.GetByNameAsync(name, CancellationToken.None).Result;
+            return GetByNameAsync(name, CancellationToken.None).Result;
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:8F2ACE161999F511784115AD341D0CF6
         public PagedList<IARecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(this.client.ListByType(this.dnsZone.ResourceGroupName,
-            this.dnsZone.Name,
-            RecordType.A), (string nextPageLink) =>
+            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
+                RecordType.A), (string nextPageLink) =>
             {
-                return client.ListByTypeNext(nextPageLink);
+                return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
 
         ///GENMHASH:A640FDB092C8BFC007EAD13B539088B5:93DD647D9AB0DB30D017785882D88829
-        internal  ARecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
+        internal  ARecordSetsImpl(DnsZoneImpl dnsZone)
         {
             this.dnsZone = dnsZone;
-            this.client = client;
         }
 
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:EACBD36191F2DD9AB334947B7732F4F0
         protected override IARecordSet WrapModel(RecordSetInner inner)
         {
-            return new ARecordSetImpl(this.dnsZone, inner, this.client);
+            return new ARecordSetImpl(dnsZone, inner);
         }
     }
 }

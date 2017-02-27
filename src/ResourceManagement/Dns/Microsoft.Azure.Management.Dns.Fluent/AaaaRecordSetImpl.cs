@@ -59,20 +59,20 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:6CC2CE509AA8735DD6507ACE8F3C9688:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  AaaaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  AaaaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:A6C5980717429E458E9F5A7FCB8885B4
-        internal static AaaaRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static AaaaRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
-            return new AaaaRecordSetImpl(parent,
+            return new AaaaRecordSetImpl(
+                parent,
                 new RecordSetInner() {
                     Name = name,
-                    Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.AAAA),
+                    Type = Enum.GetName(typeof(RecordType), Models.RecordType.AAAA),
                     AaaaRecords = new List<AaaaRecord>()
-                },
-                client);
+                });
         }
     }
 }

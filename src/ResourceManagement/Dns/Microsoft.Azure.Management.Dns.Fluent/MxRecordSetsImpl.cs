@@ -17,16 +17,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IMXRecordSets
     {
         private DnsZoneImpl dnsZone;
-        private IRecordSetsOperations client;
         
         public async Task<IMXRecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            RecordSetInner inner = await this.client.GetAsync(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            RecordSetInner inner = await dnsZone.Manager.Inner.RecordSets.GetAsync(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 name,
                 RecordType.MX,
                 cancellationToken);
-            return new MXRecordSetImpl(this.dnsZone, inner, this.client);
+            return new MXRecordSetImpl(dnsZone, inner);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:1AD3FB2435C046F2F71535A24004CDFD
@@ -38,11 +38,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:35BF201395273B958A9213F1436D5DD1
         public PagedList<IMXRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(this.client.ListByType(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 RecordType.MX), (string nextPageLink) =>
                 {
-                    return client.ListByTypeNext(nextPageLink);
+                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
                 });
             return WrapList(pagedList);
         }
@@ -50,14 +51,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:AE9F50303BC13DCE8F677D0C754BDBC0
         protected override IMXRecordSet WrapModel(RecordSetInner inner)
         {
-            return new MXRecordSetImpl(this.dnsZone, inner, this.client);
+            return new MXRecordSetImpl(dnsZone, inner);
         }
 
         ///GENMHASH:6F2FBDD481155D6AAAD51709649A57BB:93DD647D9AB0DB30D017785882D88829
-        internal  MXRecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
+        internal  MXRecordSetsImpl(DnsZoneImpl dnsZone)
         {
             this.dnsZone = dnsZone;
-            this.client = client;
         }
     }
 }

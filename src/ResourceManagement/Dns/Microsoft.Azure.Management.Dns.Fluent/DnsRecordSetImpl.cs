@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IUpdateDefinition<DnsZone.Update.IUpdate>,
         IUpdateCombined
     {
-        protected IRecordSetsOperations client;
         protected RecordSetInner recordSetRemoveInfo;
 
         ///GENMHASH:4F856FB578CC3E1352902BE5686B7CC9:D624DD59AB1913F5FF4AECA70621F115
@@ -84,11 +83,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:F9C01790C5D58B1748BB35183FF3B0D8:5457AA11A0051BA4663F3248B60D5E39
         private async Task<IDnsRecordSet> CreateOrUpdateAsync(RecordSetInner resource, CancellationToken cancellationToken = default(CancellationToken))
         {
-            RecordSetInner inner = await this.client.CreateOrUpdateAsync(this.Parent.ResourceGroupName, this.Parent.Name, 
-                this.Name(),
-                this.RecordType(),
+            RecordSetInner inner = await Parent.Manager.Inner.RecordSets.CreateOrUpdateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name, 
+                Name(),
+                RecordType(),
                 resource);
-            this.SetInner(inner);
+            SetInner(inner);
             return this;
         }
 
@@ -217,13 +218,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:F08598A17ADD014E223DFD77272641FF:0D896236D48569C34CE1A91B25C2906D
         public override async Task<IDnsRecordSet> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            RecordSetInner resource = await this.client.GetAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.Name(),
-                this.RecordType(),
+            RecordSetInner resource = await Parent.Manager.Inner.RecordSets.GetAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
+                RecordType(),
                 cancellationToken);
-            resource = this.Prepare(resource);
-            return await this.CreateOrUpdateAsync(resource);
+            resource = Prepare(resource);
+            return await CreateOrUpdateAsync(resource);
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:43D11CBDAF5A13A288B18B4C8884B621
@@ -288,18 +290,22 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:4A10213038743768C271AE3184DC5B16
         public IDnsRecordSet Refresh()
         {
-            this.SetInner(this.client.Get(this.Parent.ResourceGroupName, 
-                this.Parent.Name, 
-                this.Name(), 
-                this.RecordType()));
+            this.SetInner(Parent.Manager.Inner.RecordSets.Get(
+                Parent.ResourceGroupName, 
+                Parent.Name, 
+                Name(), 
+                RecordType()));
             return this;
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4983E2059828207A0EBDD76459661F4B
         public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.client.DeleteAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name, this.Name(), this.RecordType());
+            await Parent.Manager.Inner.RecordSets.DeleteAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
+                RecordType());
         }
 
         ///GENMHASH:4784E7B75FB76CEEC96CAC590D7BC733:EE061C20B2C852EF45A468E94B59809D
@@ -336,9 +342,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:C9AB5BEB0FF2C1CFD204A7692C092D2D:2603823A7ECCC53B6CAF90D20F5F9E24
-        protected  DnsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(innerModel.Name, parent, innerModel)
+        protected  DnsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(innerModel.Name, parent, innerModel)
         {
-            this.client = client;
             this.recordSetRemoveInfo = new RecordSetInner
             {
                 Name = innerModel.Name,

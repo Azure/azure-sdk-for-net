@@ -2,11 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using System.Threading.Tasks;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
 
     /// <summary>
@@ -17,8 +15,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         GroupableResources<IDnsZone, DnsZoneImpl, ZoneInner, IZonesOperations, IDnsZoneManager>,
         IDnsZones
     {
-        private IRecordSetsOperations recordSetsClient;
-
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:4C6EFF21E5E730775AFD95DC77DDD7F4
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -38,9 +34,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:6FA0B6DE5CB193A4650CC6B5966DBC04:345CFB0A0B8A514DED6957391B1D99E5
-        internal  DnsZonesImpl(IDnsManagementClient dnsManagementClient, DnsZoneManager dnsZoneManager) : base(dnsManagementClient.Zones, dnsZoneManager)
+        internal  DnsZonesImpl(DnsZoneManager dnsZoneManager) : base(dnsZoneManager.Inner.Zones, dnsZoneManager)
         {
-            this.recordSetsClient = dnsManagementClient.RecordSets;
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E29BEEAB8CFC79BEFB042BF8EE0AED00
@@ -74,21 +69,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:F388A69B4ED70BD6EEC04A90B7F6BC69
         protected override DnsZoneImpl WrapModel(string name)
         {
-            return new DnsZoneImpl(name,
-            new ZoneInner(),
-            Inner,
-            this.recordSetsClient,
-            this.Manager);
+            return new DnsZoneImpl(name, new ZoneInner(), Manager);
         }
 
         ///GENMHASH:50B7BBEB7CFE01590A174CABC4281F74:FFEBBA1AA8764B359821A3189D400AA9
         protected override IDnsZone WrapModel(ZoneInner inner)
         {
-            return new DnsZoneImpl(inner.Name,
-                inner,
-                Inner,
-                this.recordSetsClient,
-                this.Manager);
+            return new DnsZoneImpl(inner.Name, inner, Manager);
         }
     }
 }

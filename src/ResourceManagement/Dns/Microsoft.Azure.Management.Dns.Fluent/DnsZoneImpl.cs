@@ -3,11 +3,10 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Resource.Fluent;
     using DnsZone.Update;
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using DnsZone.Definition;
     using Models;
 
@@ -28,8 +27,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IDefinition,
         IUpdate
     {
-        private IZonesOperations innerCollection;
-        private IRecordSetsOperations recordSetsClient;
         private IARecordSets aRecordSets;
         private IAaaaRecordSets aaaaRecordSets;
         private ICNameRecordSets cnameRecordSets;
@@ -111,14 +108,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:EE1082F2F97076B859060B336D52A16B:73E10727349F87730D611072370EFB6E
         private void InitRecordSets()
         {
-            this.aRecordSets = new ARecordSetsImpl(this, this.recordSetsClient);
-            this.aaaaRecordSets = new AaaaRecordSetsImpl(this, this.recordSetsClient);
-            this.cnameRecordSets = new CNameRecordSetsImpl(this, this.recordSetsClient);
-            this.mxRecordSets = new MXRecordSetsImpl(this, this.recordSetsClient);
-            this.nsRecordSets = new NSRecordSetsImpl(this, this.recordSetsClient);
-            this.ptrRecordSets = new PtrRecordSetsImpl(this, this.recordSetsClient);
-            this.srvRecordSets = new SrvRecordSetsImpl(this, this.recordSetsClient);
-            this.txtRecordSets = new TxtRecordSetsImpl(this, this.recordSetsClient);
+            this.aRecordSets = new ARecordSetsImpl(this);
+            this.aaaaRecordSets = new AaaaRecordSetsImpl(this);
+            this.cnameRecordSets = new CNameRecordSetsImpl(this);
+            this.mxRecordSets = new MXRecordSetsImpl(this);
+            this.nsRecordSets = new NSRecordSetsImpl(this);
+            this.ptrRecordSets = new PtrRecordSetsImpl(this);
+            this.srvRecordSets = new SrvRecordSetsImpl(this);
+            this.txtRecordSets = new TxtRecordSetsImpl(this);
             this.recordSetsImpl.ClearPendingOperations();
         }
 
@@ -195,9 +192,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public override async Task<IDnsZone> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
 
-            var innerResource = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, Inner);
-            this.SetInner(innerResource);
-            await this.recordSetsImpl.CommitAndGetAllAsync(cancellationToken);
+            var innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            SetInner(innerResource);
+            await recordSetsImpl.CommitAndGetAllAsync(cancellationToken);
             return this;
         }
 
@@ -220,19 +217,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:132875C15861A92E60F93E154E091602:F70AB38B6FDE85737888182B48E6B611
-        internal  DnsZoneImpl(string name, ZoneInner innerModel, IZonesOperations innerCollection, IRecordSetsOperations recordSetsClient, IDnsZoneManager dnsZoneManager) : base(name, innerModel, dnsZoneManager)
+        internal  DnsZoneImpl(string name, ZoneInner innerModel, IDnsZoneManager dnsZoneManager) : base(name, innerModel, dnsZoneManager)
         {
-            this.innerCollection = innerCollection;
-            this.recordSetsClient = recordSetsClient;
-            this.recordSetsImpl = new DnsRecordSetsImpl(recordSetsClient, this);
+            recordSetsImpl = new DnsRecordSetsImpl(this);
             InitRecordSets();
         }
 
         ///GENMHASH:3F0A6CC3DBBB3330F47E8737215D7ECE:08F4FF93F43929543646D0EBF2903504
         public ISoaRecordSet GetSoaRecordSet()
         {
-            RecordSetInner inner = this.recordSetsClient.Get(this.ResourceGroupName, this.Name, "@", RecordType.SOA);
-            return new SoaRecordSetImpl(this, inner, this.recordSetsClient);
+            RecordSetInner inner = Manager.Inner.RecordSets.Get(ResourceGroupName, Name, "@", RecordType.SOA);
+            return new SoaRecordSetImpl(this, inner);
         }
 
         ///GENMHASH:9AB7664BD0C8EE192BC61FD76EFCAF87:F3CAC648F4ECD829852ED6ADB4E1A338
@@ -244,15 +239,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:5954219C81F347FC86D24BBD07355380:8CFD324CF132033F543444B0B1ED6EC5
         public IAaaaRecordSets AaaaRecordSets()
         {
-            return this.aaaaRecordSets;
+            return aaaaRecordSets;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:6E114CA661817C270373E8F5D86D84F5
         public override IDnsZone Refresh()
         {
-            ZoneInner inner = this.innerCollection.Get(this.ResourceGroupName, this.Name);
-            this.SetInner(inner);
-            this.InitRecordSets();
+            ZoneInner inner = Manager.Inner.Zones.Get(ResourceGroupName, Name);
+            SetInner(inner);
+            InitRecordSets();
             return this;
         }
 

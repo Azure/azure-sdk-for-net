@@ -65,18 +65,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:CB203AB264B7FDA759C81987060D51B8
-        internal static SrvRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static SrvRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
              return new SrvRecordSetImpl(parent,
              new RecordSetInner {
                 Name = name,
-                Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.SRV),
+                Type = Enum.GetName(typeof(RecordType), Models.RecordType.SRV),
                  SrvRecords = new List<SrvRecord>()
-             },
-             client);
+             });
         }
 
-        internal  SrvRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  SrvRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
     }

@@ -67,19 +67,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:626ADA7635E8C9E10AE63FDF8E70C4FE:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  PtrRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  PtrRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:854410776AE83C4AE59DD946AEEEB94B
-        internal static PtrRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static PtrRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
             return new PtrRecordSetImpl(parent,
                 new RecordSetInner { 
                     Name = name,
-                    Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.PTR),
+                    Type = Enum.GetName(typeof(RecordType), Models.RecordType.PTR),
                     PtrRecords = new List<PtrRecord>()
-                }, client);
+                });
         }
     }
 }

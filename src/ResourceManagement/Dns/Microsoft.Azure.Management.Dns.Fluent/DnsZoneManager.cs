@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             {
                 if (dnsZones == null)
                 {
-                    dnsZones = new DnsZonesImpl(Inner, this);
+                    dnsZones = new DnsZonesImpl(this);
                 }
                 return dnsZones;
             }
