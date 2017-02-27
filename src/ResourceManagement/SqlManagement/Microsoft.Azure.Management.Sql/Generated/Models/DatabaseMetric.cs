@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents Azure SQL Database metrics.
+    /// Represents database metrics.
     /// </summary>
     public partial class DatabaseMetric : SqlSubResource
     {

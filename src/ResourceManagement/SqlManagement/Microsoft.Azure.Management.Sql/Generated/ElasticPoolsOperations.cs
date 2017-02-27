@@ -42,22 +42,20 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-        /// elastic pool.
+        /// Creates a new elastic pool or updates an existing elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-        /// created).
+        /// The name of the elastic pool to be operated on (updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for creating or updating an Elastic Pool.
+        /// The required parameters for creating or updating an elastic pool.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,22 +74,20 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-        /// elastic pool.
+        /// Creates a new elastic pool or updates an existing elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-        /// created).
+        /// The name of the elastic pool to be operated on (updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for creating or updating an Elastic Pool.
+        /// The required parameters for creating or updating an elastic pool.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -313,17 +309,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Deletes the Azure SQL elastic pool.
+        /// Deletes the elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be deleted.
+        /// The name of the elastic pool to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -483,17 +479,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets information about an Azure SQL elastic pool.
+        /// Gets an elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be retrieved.
+        /// The name of the elastic pool to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -682,14 +678,14 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about Azure SQL elastic pools.
+        /// Returns elastic pools.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -872,18 +868,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about Azure SQL elastic pool activities.
+        /// Returns elastic pool activities.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool for which to get the current
-        /// activity.
+        /// The name of the elastic pool for which to get the current activity.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1072,18 +1067,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about activity on Azure SQL databases inside of an
-        /// Azure SQL elastic pool.
+        /// Returns activity on databases inside of an elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool.
+        /// The name of the elastic pool.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1272,21 +1266,20 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets information about an Azure SQL database inside of an Azure SQL
-        /// elastic pool.
+        /// Gets a database inside of an elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be retrieved.
+        /// The name of the elastic pool to be retrieved.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to be retrieved.
+        /// The name of the database to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1481,18 +1474,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about an Azure SQL database inside of an Azure SQL
-        /// elastic pool.
+        /// Returns a database inside of an elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be retrieved.
+        /// The name of the elastic pool to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

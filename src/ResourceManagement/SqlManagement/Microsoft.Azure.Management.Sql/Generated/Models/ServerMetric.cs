@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents Azure SQL server metrics.
+    /// Represents server metrics.
     /// </summary>
     public partial class ServerMetric
     {

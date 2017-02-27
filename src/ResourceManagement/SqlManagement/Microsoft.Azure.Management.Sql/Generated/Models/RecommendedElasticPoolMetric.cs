@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents Azure SQL recommended elastic pool metric.
+    /// Represents recommended elastic pool metric.
     /// </summary>
     public partial class RecommendedElasticPoolMetric
     {

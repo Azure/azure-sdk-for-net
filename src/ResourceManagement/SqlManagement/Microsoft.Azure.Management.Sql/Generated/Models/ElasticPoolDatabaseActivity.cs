@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the activity on an Azure SQL Elastic Pool.
+    /// Represents the activity on an elastic pool.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ElasticPoolDatabaseActivity : Resource
@@ -42,16 +42,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="operationId">The unique operation ID.</param>
         /// <param name="percentComplete">The percentage complete if
         /// available.</param>
-        /// <param name="requestedElasticPoolName">The name for the Elastic
-        /// Pool the database is moving into if available.</param>
+        /// <param name="requestedElasticPoolName">The name for the elastic
+        /// pool the database is moving into if available.</param>
         /// <param name="currentElasticPoolName">The name of the current
-        /// Elastic Pool the database is in if available.</param>
+        /// elastic pool the database is in if available.</param>
         /// <param name="currentServiceObjective">The name of the current
         /// service objective if available.</param>
         /// <param name="requestedServiceObjective">The name of the requested
         /// service objective if available.</param>
-        /// <param name="serverName">The name of the Azure SQL server the
-        /// Elastic Pool is in.</param>
+        /// <param name="serverName">The name of the server the elastic pool
+        /// is in.</param>
         /// <param name="startTime">The time the operation started (ISO8601
         /// format).</param>
         /// <param name="state">The current state of the operation.</param>
@@ -124,14 +124,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? PercentComplete { get; private set; }
 
         /// <summary>
-        /// Gets the name for the Elastic Pool the database is moving into if
+        /// Gets the name for the elastic pool the database is moving into if
         /// available.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedElasticPoolName")]
         public string RequestedElasticPoolName { get; private set; }
 
         /// <summary>
-        /// Gets the name of the current Elastic Pool the database is in if
+        /// Gets the name of the current elastic pool the database is in if
         /// available.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.currentElasticPoolName")]
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string RequestedServiceObjective { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Azure SQL server the Elastic Pool is in.
+        /// Gets the name of the server the elastic pool is in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serverName")]
         public string ServerName { get; private set; }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database Transparent Data Encryption .
+    /// Represents a database transparent data encryption .
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class TransparentDataEncryption : SqlSubResource
@@ -26,9 +26,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
-        /// <param name="status">The status of the Azure SQL Database
-        /// Transparent Data Encryption. Possible values include: 'Enabled',
-        /// 'Disabled'</param>
+        /// <param name="status">The status of the database transparent data
+        /// encryption. Possible values include: 'Enabled', 'Disabled'</param>
         public TransparentDataEncryption(string name = default(string), string id = default(string), TransparentDataEncryptionStates? status = default(TransparentDataEncryptionStates?))
             : base(name, id)
         {
@@ -36,8 +35,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets or sets the status of the Azure SQL Database Transparent Data
-        /// Encryption. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets the status of the database transparent data
+        /// encryption. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
         public TransparentDataEncryptionStates? Status { get; set; }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IRecommendedElasticPoolsOperations
     {
         /// <summary>
-        /// Gets information about an Azure SQL Recommended Elastic Pool.
+        /// Gets a recommented elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
-        /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+        /// The name of the recommended elastic pool to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,8 +47,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RecommendedElasticPool>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string recommendedElasticPoolName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets information about an Azure SQL database inside of an Azure
-        /// SQL Recommended Elastic Pool.
+        /// Gets a database inside of a recommented elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -56,13 +55,13 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool to be retrieved.
+        /// The name of the elastic pool to be retrieved.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to be retrieved.
+        /// The name of the database to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,7 +80,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Database>> GetDatabasesWithHttpMessagesAsync(string resourceGroupName, string serverName, string recommendedElasticPoolName, string databaseName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about Azure SQL Recommended Elastic Pools.
+        /// Returns recommended elastic pools.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -108,8 +107,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<RecommendedElasticPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about an Azure SQL database inside of an Azure
-        /// SQL Recommended Elastic Pool.
+        /// Returns a database inside of a recommented elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -117,10 +115,10 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
-        /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+        /// The name of the recommended elastic pool to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -139,7 +137,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Database>>> ListDatabasesWithHttpMessagesAsync(string resourceGroupName, string serverName, string recommendedElasticPoolName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about an recommended elastic pool metrics.
+        /// Returns a recommented elastic pool metrics.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -147,10 +145,10 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='recommendedElasticPoolName'>
-        /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+        /// The name of the recommended elastic pool to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

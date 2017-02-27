@@ -42,19 +42,17 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Deletes the Azure SQL database replication link with the given ID. Cannot
-        /// be done during failover.
+        /// Deletes a database replication link. Cannot be done during failover.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database that has the replication link to be
-        /// dropped.
+        /// The name of the database that has the replication link to be dropped.
         /// </param>
         /// <param name='linkId'>
         /// The ID of the replication link to be deleted.
@@ -223,17 +221,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets information about an Azure SQL database replication link.
+        /// Gets a database replication link.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to get the link for.
+        /// The name of the database to get the link for.
         /// </param>
         /// <param name='linkId'>
         /// The replication link ID to be retrieved.
@@ -431,18 +429,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Failover the Azure SQL database replication link with the given ID.
+        /// Failover the database replication link.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database that has the replication link to be
-        /// failed over.
+        /// The name of the database that has the replication link to be failed over.
         /// </param>
         /// <param name='linkId'>
         /// The ID of the replication link to be failed over.
@@ -462,18 +459,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Failover the Azure SQL database replication link with the given ID.
+        /// Failover the database replication link.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database that has the replication link to be
-        /// failed over.
+        /// The name of the database that has the replication link to be failed over.
         /// </param>
         /// <param name='linkId'>
         /// The ID of the replication link to be failed over.
@@ -642,19 +638,18 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Force failover the Azure SQL database replication link with the given ID
-        /// which may result in data loss.
+        /// Force failover the database replication link, which may result in data
+        /// loss.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database that has the replication link to be
-        /// failed over.
+        /// The name of the database that has the replication link to be failed over.
         /// </param>
         /// <param name='linkId'>
         /// The ID of the replication link to be failed over.
@@ -674,19 +669,18 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Force failover the Azure SQL database replication link with the given ID
-        /// which may result in data loss.
+        /// Force failover the database replication link, which may result in data
+        /// loss.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database that has the replication link to be
-        /// failed over.
+        /// The name of the database that has the replication link to be failed over.
         /// </param>
         /// <param name='linkId'>
         /// The ID of the replication link to be failed over.
@@ -855,17 +849,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets information about Azure SQL database replication links.
+        /// Lists a database's replication links.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to retrieve links for.
+        /// The name of the database to retrieve links for.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1054,17 +1048,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Pause an Azure SQL Data Warehouse database.
+        /// Pauses a data warehouse.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Data Warehouse database to pause.
+        /// The name of the data warehouse to pause.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1081,17 +1075,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Pause an Azure SQL Data Warehouse database.
+        /// Pauses a data warehouse.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Data Warehouse database to pause.
+        /// The name of the data warehouse to pause.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1251,17 +1245,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Resume an Azure SQL Data Warehouse database.
+        /// Resumes a data warehouse.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Data Warehouse database to resume.
+        /// The name of the data warehouse to resume.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1278,17 +1272,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Resume an Azure SQL Data Warehouse database.
+        /// Resumes a data warehouse.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Data Warehouse database to resume.
+        /// The name of the data warehouse to resume.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1448,18 +1442,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns a list of Azure SQL database restore points.
+        /// Returns a list of database restore points.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database from which to retrieve available
-        /// restore points.
+        /// The name of the database from which to retrieve available restore points.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1648,19 +1641,19 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates a new Azure SQL database or updates an existing Azure SQL
-        /// database. Location is a required property in the request body, and it
-        /// must be the same as the location of the SQL server.
+        /// Creates a new database or updates an existing database. Location is a
+        /// required property in the request body, and it must be the same as the
+        /// location of the SQL server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to be operated on (updated or created).
+        /// The name of the database to be operated on (updated or created).
         /// </param>
         /// <param name='parameters'>
         /// The required parameters for creating or updating a database.
@@ -1682,19 +1675,19 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates a new Azure SQL database or updates an existing Azure SQL
-        /// database. Location is a required property in the request body, and it
-        /// must be the same as the location of the SQL server.
+        /// Creates a new database or updates an existing database. Location is a
+        /// required property in the request body, and it must be the same as the
+        /// location of the SQL server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to be operated on (updated or created).
+        /// The name of the database to be operated on (updated or created).
         /// </param>
         /// <param name='parameters'>
         /// The required parameters for creating or updating a database.
@@ -1919,17 +1912,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Deletes an Azure SQL database.
+        /// Deletes a database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to be deleted.
+        /// The name of the database to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2089,17 +2082,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets information about an Azure SQL database.
+        /// Gets a database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database to be retrieved.
+        /// The name of the database to be retrieved.
         /// </param>
         /// <param name='expand'>
         /// The comma separated list of child objects to expand in the response.
@@ -2298,14 +2291,14 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about an Azure SQL database.
+        /// Returns a list of databases by server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2488,17 +2481,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about Azure SQL database usages.
+        /// Returns database usages.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database.
+        /// The name of the database.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2687,14 +2680,14 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets information about a service tier advisor.
+        /// Gets a service tier advisor.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
         /// The name of database.
@@ -2895,14 +2888,14 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns information about service tier advisors for specified database.
+        /// Returns service tier advisors for specified database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
         /// The name of database.
@@ -3094,19 +3087,18 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updates an Azure SQL Database Transparent Data Encryption
-        /// Operation.
+        /// Creates or updates a database's transparent data encryption configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database for which setting the Transparent Data
-        /// Encryption applies.
+        /// The name of the database for which setting the transparent data encryption
+        /// applies.
         /// </param>
         /// <param name='parameters'>
         /// The required parameters for creating or updating transparent data
@@ -3328,18 +3320,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets an Azure SQL Database Transparent Data Encryption Response.
+        /// Gets a database's transparent data encryption configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database for which the Transparent Data
-        /// Encryption applies.
+        /// The name of the database for which the transparent data encryption applies.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3528,19 +3519,17 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns an Azure SQL Database Transparent Data Encryption Activity
-        /// Response.
+        /// Returns a database's transparent data encryption operation result.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL database for which the Transparent Data
-        /// Encryption applies.
+        /// The name of the database for which the transparent data encryption applies.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

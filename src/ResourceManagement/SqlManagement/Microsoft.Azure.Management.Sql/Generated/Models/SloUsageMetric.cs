@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="serviceLevelObjective">The serviceLevelObjective for
         /// SLO usage metric. Possible values include: 'Basic', 'S0', 'S1',
         /// 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
-        /// 'System1', 'System2', 'System3', 'System4'</param>
+        /// 'ElasticPool'</param>
         /// <param name="serviceLevelObjectiveId">The serviceLevelObjectiveId
         /// for SLO usage metric.</param>
         /// <param name="inRangeTimeRatio">Gets or sets inRangeTimeRatio for
@@ -41,8 +41,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the serviceLevelObjective for SLO usage metric.
         /// Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1',
-        /// 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'System1',
-        /// 'System2', 'System3', 'System4'
+        /// 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'ElasticPool'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "serviceLevelObjective")]
         public string ServiceLevelObjective { get; set; }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the activity on an Azure SQL Elastic Pool.
+    /// Represents the activity on an elastic pool.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ElasticPoolActivity : Resource
@@ -46,20 +46,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="requestedDtu">The requested DTU for the pool if
         /// available.</param>
         /// <param name="requestedElasticPoolName">The requested name for the
-        /// Elastic Pool if available.</param>
+        /// elastic pool if available.</param>
         /// <param name="requestedStorageLimitInGB">The requested storage
         /// limit for the pool in GB if available.</param>
-        /// <param name="elasticPoolName">The name of the Elastic Pool.</param>
-        /// <param name="serverName">The name of the Azure SQL server the
-        /// Elastic Pool is in.</param>
+        /// <param name="elasticPoolName">The name of the elastic pool.</param>
+        /// <param name="serverName">The name of the server the elastic pool
+        /// is in.</param>
         /// <param name="startTime">The time the operation started (ISO8601
         /// format).</param>
         /// <param name="state">The current state of the operation.</param>
         /// <param name="requestedStorageLimitInMB">The requested storage
         /// limit in MB.</param>
         /// <param name="requestedDatabaseDtuGuarantee">The requested per
-        /// Database DTU guarantee.</param>
-        /// <param name="requestedDatabaseDtuCap">The requested per Database
+        /// database DTU guarantee.</param>
+        /// <param name="requestedDatabaseDtuCap">The requested per database
         /// DTU cap.</param>
         /// <param name="requestedDtuGuarantee">The requested DTU
         /// guarantee.</param>
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? RequestedDtu { get; private set; }
 
         /// <summary>
-        /// Gets the requested name for the Elastic Pool if available.
+        /// Gets the requested name for the elastic pool if available.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedElasticPoolName")]
         public string RequestedElasticPoolName { get; private set; }
@@ -161,13 +161,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         public long? RequestedStorageLimitInGB { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Elastic Pool.
+        /// Gets the name of the elastic pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.elasticPoolName")]
         public string ElasticPoolName { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Azure SQL server the Elastic Pool is in.
+        /// Gets the name of the server the elastic pool is in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serverName")]
         public string ServerName { get; private set; }
@@ -191,13 +191,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? RequestedStorageLimitInMB { get; private set; }
 
         /// <summary>
-        /// Gets the requested per Database DTU guarantee.
+        /// Gets the requested per database DTU guarantee.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedDatabaseDtuGuarantee")]
         public int? RequestedDatabaseDtuGuarantee { get; private set; }
 
         /// <summary>
-        /// Gets the requested per Database DTU cap.
+        /// Gets the requested per database DTU cap.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedDatabaseDtuCap")]
         public int? RequestedDatabaseDtuCap { get; private set; }

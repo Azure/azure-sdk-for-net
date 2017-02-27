@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Recommended Elastic Pool.
+    /// Represents a recommented elastic pool.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RecommendedElasticPool : Resource
@@ -29,12 +29,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="databaseEdition">The edition of the Azure SQL
-        /// Recommended Elastic Pool. The ElasticPoolEditions enumeration
-        /// contains all the valid editions. Possible values include:
-        /// 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="dtu">The DTU for the Azure Sql Recommended Elastic
-        /// Pool.</param>
+        /// <param name="databaseEdition">The edition of the recommended
+        /// elastic pool. The ElasticPoolEditions enumeration contains all
+        /// the valid editions. Possible values include: 'Basic', 'Standard',
+        /// 'Premium'</param>
+        /// <param name="dtu">The DTU for the recommended elastic pool.</param>
         /// <param name="databaseDtuMin">The minimum DTU for the
         /// database.</param>
         /// <param name="databaseDtuMax">The maximum DTU for the
@@ -47,10 +46,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="maxObservedDtu">Gets maximum observed DTU.</param>
         /// <param name="maxObservedStorageMB">Gets maximum observed storage
         /// in megabytes.</param>
-        /// <param name="databases">The list of Azure SQL Databases in this
-        /// pool. Expanded property</param>
-        /// <param name="metrics">The list of Azure SQL Databases housed in
-        /// the server. Expanded property</param>
+        /// <param name="databases">The list of databases in this pool.
+        /// Expanded property</param>
+        /// <param name="metrics">The list of databases housed in the server.
+        /// Expanded property</param>
         public RecommendedElasticPool(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string databaseEdition = default(string), double? dtu = default(double?), double? databaseDtuMin = default(double?), double? databaseDtuMax = default(double?), double? storageMB = default(double?), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? maxObservedDtu = default(double?), double? maxObservedStorageMB = default(double?), System.Collections.Generic.IList<Database> databases = default(System.Collections.Generic.IList<Database>), System.Collections.Generic.IList<RecommendedElasticPoolMetric> metrics = default(System.Collections.Generic.IList<RecommendedElasticPoolMetric>))
             : base(location, name, id, type, tags)
         {
@@ -68,7 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the edition of the Azure SQL Recommended Elastic Pool. The
+        /// Gets the edition of the recommended elastic pool. The
         /// ElasticPoolEditions enumeration contains all the valid editions.
         /// Possible values include: 'Basic', 'Standard', 'Premium'
         /// </summary>
@@ -76,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string DatabaseEdition { get; private set; }
 
         /// <summary>
-        /// Gets or sets the DTU for the Azure Sql Recommended Elastic Pool.
+        /// Gets or sets the DTU for the recommended elastic pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dtu")]
         public double? Dtu { get; set; }
@@ -124,15 +123,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         public double? MaxObservedStorageMB { get; private set; }
 
         /// <summary>
-        /// Gets the list of Azure SQL Databases in this pool. Expanded
-        /// property
+        /// Gets the list of databases in this pool. Expanded property
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.databases")]
         public System.Collections.Generic.IList<Database> Databases { get; private set; }
 
         /// <summary>
-        /// Gets the list of Azure SQL Databases housed in the server.
-        /// Expanded property
+        /// Gets the list of databases housed in the server. Expanded property
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.metrics")]
         public System.Collections.Generic.IList<RecommendedElasticPoolMetric> Metrics { get; private set; }

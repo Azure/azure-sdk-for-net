@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database.
+    /// Represents a database.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class Database : Resource
@@ -31,19 +31,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="kind">Kind of database.  This is metadata used for
         /// the Azure portal experience.</param>
-        /// <param name="collation">The collation of the Azure SQL database.
-        /// If createMode is not Default, this value is ignored.</param>
-        /// <param name="creationDate">The creation date of the Azure SQL
-        /// database (ISO8601 format).</param>
-        /// <param name="containmentState">The containment state of the Azure
-        /// SQL database.</param>
-        /// <param name="currentServiceObjectiveId">The current Service Level
-        /// Objective ID of the Azure SQL database. This is the ID of the
-        /// Service Level Objective that is currently active.</param>
-        /// <param name="databaseId">The ID of the Azure SQL database.</param>
+        /// <param name="collation">The collation of the database. If
+        /// createMode is not Default, this value is ignored.</param>
+        /// <param name="creationDate">The creation date of the database
+        /// (ISO8601 format).</param>
+        /// <param name="containmentState">The containment state of the
+        /// database.</param>
+        /// <param name="currentServiceObjectiveId">The current service level
+        /// objective ID of the database. This is the ID of the service level
+        /// objective that is currently active.</param>
+        /// <param name="databaseId">The ID of the database.</param>
         /// <param name="earliestRestoreDate">This records the earliest start
-        /// date and time that restore is available for this Azure SQL
-        /// Database (ISO8601 format).</param>
+        /// date and time that restore is available for this database
+        /// (ISO8601 format).</param>
         /// <param name="createMode">Specifies the type of database to create.
         /// If createMode is not set to Default, sourceDatabaseId must be
         /// specified. If createMode is set to PointInTimeRestore, then
@@ -63,39 +63,42 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database that will be restored to create the new database. Must
         /// be greater than or equal to the source database's
         /// earliestRestoreDate value.</param>
-        /// <param name="edition">The edition of the Azure SQL database. The
+        /// <param name="edition">The edition of the database. The
         /// DatabaseEditions enumeration contains all the valid editions. If
         /// createMode is NonReadableSecondary or OnlineSecondary, this value
         /// is ignored. Possible values include: 'Web', 'Business', 'Basic',
         /// 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse',
         /// 'System'</param>
-        /// <param name="maxSizeBytes">The max size of the Azure SQL database
-        /// expressed in bytes. If createMode is not Default, this value is
-        /// ignored. Note: Only the following sizes are supported (in
-        /// addition to limitations being placed on each edition): { 100 MB |
-        /// 500 MB |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB …
-        /// 500 GB }</param>
-        /// <param name="requestedServiceObjectiveId">The configured Service
-        /// Level Objective ID of the Azure SQL database. This is the Service
-        /// Level Objective that is in the process of being applied to the
-        /// Azure SQL database. Once successfully updated, it will match the
-        /// value of currentServiceObjectiveId property.</param>
+        /// <param name="maxSizeBytes">The max size of the database expressed
+        /// in bytes. If createMode is not Default, this value is ignored.
+        /// Note: Only the following sizes are supported (in addition to
+        /// limitations being placed on each edition): { 100 MB | 500 MB |1
+        /// GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB
+        /// }</param>
+        /// <param name="requestedServiceObjectiveId">The configured service
+        /// level objective ID of the database. This is the service level
+        /// objective that is in the process of being applied to the
+        /// database. Once successfully updated, it will match the value of
+        /// currentServiceObjectiveId property. If
+        /// requestedServiceObjectiveId and requestedServiceObjectiveName are
+        /// both updated, the value of requestedServiceObjectiveId overrides
+        /// the value of requestedServiceObjectiveName.</param>
         /// <param name="requestedServiceObjectiveName">The name of the
-        /// configured Service Level Objective of the Azure SQL database.
-        /// This is the Service Level Objective that is in the process of
-        /// being applied to the Azure SQL database. Once successfully
-        /// updated, it will match the value of serviceLevelObjective
-        /// property. Possible values include: 'Basic', 'S0', 'S1', 'S2',
-        /// 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
-        /// 'System1', 'System2', 'System3', 'System4'</param>
-        /// <param name="serviceLevelObjective">The current Service Level
-        /// Objective of the Azure SQL database. Possible values include:
+        /// configured service level objective of the database. This is the
+        /// service level objective that is in the process of being applied
+        /// to the database. Once successfully updated, it will match the
+        /// value of serviceLevelObjective property. Possible values include:
         /// 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6',
-        /// 'P11', 'P15', 'System', 'System1', 'System2', 'System3',
-        /// 'System4'</param>
-        /// <param name="status">The status of the Azure SQL database.</param>
-        /// <param name="elasticPoolName">The name of the Azure SQL Elastic
-        /// Pool the database is in.</param>
+        /// 'P11', 'P15', 'System', 'ElasticPool'</param>
+        /// <param name="serviceLevelObjective">The current service level
+        /// objective of the database. Possible values include: 'Basic',
+        /// 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11',
+        /// 'P15', 'System', 'ElasticPool'</param>
+        /// <param name="status">The status of the database.</param>
+        /// <param name="elasticPoolName">The name of the elastic pool the
+        /// database is in. If elasticPoolName and
+        /// requestedServiceObjectiveName are both updated, the value of
+        /// requestedServiceObjectiveName is ignored.</param>
         /// <param name="defaultSecondaryLocation">The default secondary
         /// region for this database.</param>
         /// <param name="serviceTierAdvisors">The list of service tier
@@ -153,41 +156,40 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Kind { get; private set; }
 
         /// <summary>
-        /// Gets or sets the collation of the Azure SQL database. If
-        /// createMode is not Default, this value is ignored.
+        /// Gets or sets the collation of the database. If createMode is not
+        /// Default, this value is ignored.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.collation")]
         public string Collation { get; set; }
 
         /// <summary>
-        /// Gets the creation date of the Azure SQL database (ISO8601 format).
+        /// Gets the creation date of the database (ISO8601 format).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.creationDate")]
         public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
-        /// Gets the containment state of the Azure SQL database.
+        /// Gets the containment state of the database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.containmentState")]
         public long? ContainmentState { get; private set; }
 
         /// <summary>
-        /// Gets the current Service Level Objective ID of the Azure SQL
-        /// database. This is the ID of the Service Level Objective that is
-        /// currently active.
+        /// Gets the current service level objective ID of the database. This
+        /// is the ID of the service level objective that is currently active.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.currentServiceObjectiveId")]
         public System.Guid? CurrentServiceObjectiveId { get; private set; }
 
         /// <summary>
-        /// Gets the ID of the Azure SQL database.
+        /// Gets the ID of the database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.databaseId")]
         public string DatabaseId { get; private set; }
 
         /// <summary>
         /// Gets this records the earliest start date and time that restore is
-        /// available for this Azure SQL Database (ISO8601 format).
+        /// available for this database (ISO8601 format).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.earliestRestoreDate")]
         public System.DateTime? EarliestRestoreDate { get; private set; }
@@ -226,66 +228,68 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the edition of the Azure SQL database. The
-        /// DatabaseEditions enumeration contains all the valid editions. If
-        /// createMode is NonReadableSecondary or OnlineSecondary, this value
-        /// is ignored. Possible values include: 'Web', 'Business', 'Basic',
-        /// 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse',
-        /// 'System'
+        /// Gets or sets the edition of the database. The DatabaseEditions
+        /// enumeration contains all the valid editions. If createMode is
+        /// NonReadableSecondary or OnlineSecondary, this value is ignored.
+        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
+        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.edition")]
         public string Edition { get; set; }
 
         /// <summary>
-        /// Gets or sets the max size of the Azure SQL database expressed in
-        /// bytes. If createMode is not Default, this value is ignored. Note:
-        /// Only the following sizes are supported (in addition to
-        /// limitations being placed on each edition): { 100 MB | 500 MB |1
-        /// GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
+        /// Gets or sets the max size of the database expressed in bytes. If
+        /// createMode is not Default, this value is ignored. Note: Only the
+        /// following sizes are supported (in addition to limitations being
+        /// placed on each edition): { 100 MB | 500 MB |1 GB | 5 GB | 10 GB |
+        /// 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
 
         /// <summary>
-        /// Gets or sets the configured Service Level Objective ID of the
-        /// Azure SQL database. This is the Service Level Objective that is
-        /// in the process of being applied to the Azure SQL database. Once
-        /// successfully updated, it will match the value of
-        /// currentServiceObjectiveId property.
+        /// Gets or sets the configured service level objective ID of the
+        /// database. This is the service level objective that is in the
+        /// process of being applied to the database. Once successfully
+        /// updated, it will match the value of currentServiceObjectiveId
+        /// property. If requestedServiceObjectiveId and
+        /// requestedServiceObjectiveName are both updated, the value of
+        /// requestedServiceObjectiveId overrides the value of
+        /// requestedServiceObjectiveName.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedServiceObjectiveId")]
         public System.Guid? RequestedServiceObjectiveId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the configured Service Level Objective of
-        /// the Azure SQL database. This is the Service Level Objective that
-        /// is in the process of being applied to the Azure SQL database.
-        /// Once successfully updated, it will match the value of
-        /// serviceLevelObjective property. Possible values include: 'Basic',
-        /// 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11',
-        /// 'P15', 'System', 'System1', 'System2', 'System3', 'System4'
+        /// Gets or sets the name of the configured service level objective of
+        /// the database. This is the service level objective that is in the
+        /// process of being applied to the database. Once successfully
+        /// updated, it will match the value of serviceLevelObjective
+        /// property. Possible values include: 'Basic', 'S0', 'S1', 'S2',
+        /// 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
+        /// 'ElasticPool'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestedServiceObjectiveName")]
         public string RequestedServiceObjectiveName { get; set; }
 
         /// <summary>
-        /// Gets the current Service Level Objective of the Azure SQL
-        /// database. Possible values include: 'Basic', 'S0', 'S1', 'S2',
-        /// 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System',
-        /// 'System1', 'System2', 'System3', 'System4'
+        /// Gets the current service level objective of the database. Possible
+        /// values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2',
+        /// 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'ElasticPool'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceLevelObjective")]
         public string ServiceLevelObjective { get; private set; }
 
         /// <summary>
-        /// Gets the status of the Azure SQL database.
+        /// Gets the status of the database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the Azure SQL Elastic Pool the database
-        /// is in.
+        /// Gets or sets the name of the elastic pool the database is in. If
+        /// elasticPoolName and requestedServiceObjectiveName are both
+        /// updated, the value of requestedServiceObjectiveName is ignored.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.elasticPoolName")]
         public string ElasticPoolName { get; set; }

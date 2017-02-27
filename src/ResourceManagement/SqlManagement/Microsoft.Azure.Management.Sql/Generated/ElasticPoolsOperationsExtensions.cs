@@ -18,8 +18,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ElasticPoolsOperationsExtensions
     {
             /// <summary>
-            /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-            /// elastic pool.
+            /// Creates a new elastic pool or updates an existing elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,14 +28,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-            /// created).
+            /// The name of the elastic pool to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Elastic Pool.
+            /// The required parameters for creating or updating an elastic pool.
             /// </param>
             public static ElasticPool CreateOrUpdate(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPool parameters)
             {
@@ -44,8 +42,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-            /// elastic pool.
+            /// Creates a new elastic pool or updates an existing elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,14 +52,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-            /// created).
+            /// The name of the elastic pool to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Elastic Pool.
+            /// The required parameters for creating or updating an elastic pool.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -76,8 +72,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-            /// elastic pool.
+            /// Creates a new elastic pool or updates an existing elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -87,14 +82,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-            /// created).
+            /// The name of the elastic pool to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Elastic Pool.
+            /// The required parameters for creating or updating an elastic pool.
             /// </param>
             public static ElasticPool BeginCreateOrUpdate(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPool parameters)
             {
@@ -102,8 +96,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-            /// elastic pool.
+            /// Creates a new elastic pool or updates an existing elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -113,14 +106,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-            /// created).
+            /// The name of the elastic pool to be operated on (updated or created).
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating an Elastic Pool.
+            /// The required parameters for creating or updating an elastic pool.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -134,7 +126,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the Azure SQL elastic pool.
+            /// Deletes the elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -144,10 +136,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be deleted.
+            /// The name of the elastic pool to be deleted.
             /// </param>
             public static void Delete(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
             {
@@ -155,7 +147,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the Azure SQL elastic pool.
+            /// Deletes the elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,10 +157,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be deleted.
+            /// The name of the elastic pool to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -179,7 +171,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL elastic pool.
+            /// Gets an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -189,10 +181,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             public static ElasticPool Get(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
             {
@@ -200,7 +192,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL elastic pool.
+            /// Gets an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,10 +202,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -227,7 +219,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL elastic pools.
+            /// Returns elastic pools.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -237,7 +229,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ElasticPool> ListByServer(this IElasticPoolsOperations operations, string resourceGroupName, string serverName)
             {
@@ -245,7 +237,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL elastic pools.
+            /// Returns elastic pools.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -255,7 +247,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -269,7 +261,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL elastic pool activities.
+            /// Returns elastic pool activities.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -279,11 +271,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool for which to get the current
-            /// activity.
+            /// The name of the elastic pool for which to get the current activity.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ElasticPoolActivity> ListActivity(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
             {
@@ -291,7 +282,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL elastic pool activities.
+            /// Returns elastic pool activities.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -301,11 +292,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool for which to get the current
-            /// activity.
+            /// The name of the elastic pool for which to get the current activity.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -319,8 +309,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about activity on Azure SQL databases inside of an
-            /// Azure SQL elastic pool.
+            /// Returns activity on databases inside of an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -330,10 +319,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool.
+            /// The name of the elastic pool.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ElasticPoolDatabaseActivity> ListDatabaseActivity(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
             {
@@ -341,8 +330,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about activity on Azure SQL databases inside of an
-            /// Azure SQL elastic pool.
+            /// Returns activity on databases inside of an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -352,10 +340,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool.
+            /// The name of the elastic pool.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -369,8 +357,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL database inside of an Azure SQL
-            /// elastic pool.
+            /// Gets a database inside of an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -380,13 +367,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
+            /// The name of the database to be retrieved.
             /// </param>
             public static Database GetDatabase(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, string databaseName)
             {
@@ -394,8 +381,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL database inside of an Azure SQL
-            /// elastic pool.
+            /// Gets a database inside of an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -405,13 +391,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
+            /// The name of the database to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -425,8 +411,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL database inside of an Azure SQL
-            /// elastic pool.
+            /// Returns a database inside of an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -436,10 +421,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             public static System.Collections.Generic.IEnumerable<Database> ListDatabases(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
             {
@@ -447,8 +432,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL database inside of an Azure SQL
-            /// elastic pool.
+            /// Returns a database inside of an elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -458,10 +442,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

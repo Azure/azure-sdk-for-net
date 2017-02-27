@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IServersOperations
     {
         /// <summary>
-        /// Creates or updates an Azure SQL server firewall rule.
+        /// Creates or updates a firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='firewallRuleName'>
-        /// The name of the Azure SQL server firewall rule.
+        /// The name of the firewall rule.
         /// </param>
         /// <param name='parameters'>
         /// The required parameters for creating or updating a firewall rule.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ServerFirewallRule>> CreateOrUpdateFirewallRuleWithHttpMessagesAsync(string resourceGroupName, string serverName, string firewallRuleName, ServerFirewallRule parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes an Azure SQL server firewall rule.
+        /// Deletes a firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='firewallRuleName'>
-        /// The name of the Azure SQL server firewall rule.
+        /// The name of the firewall rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteFirewallRuleWithHttpMessagesAsync(string resourceGroupName, string serverName, string firewallRuleName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns an Azure SQL server firewall rule.
+        /// Gets a firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='firewallRuleName'>
-        /// The name of the Azure SQL server firewall rule.
+        /// The name of the firewall rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ServerFirewallRule>> GetFirewallRuleWithHttpMessagesAsync(string resourceGroupName, string serverName, string firewallRuleName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns a list of Azure SQL server firewall rules.
+        /// Returns a list of firewall rules.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ServerFirewallRule>>> ListFirewallRulesWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about an Azure SQL server.
+        /// Returns a list of servers.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Server>>> ListWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Creates or updates a new Azure SQL server.
+        /// Creates or updates a new server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='parameters'>
         /// The required parameters for creating or updating a server.
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets information about an Azure SQL server.
+        /// Gets a server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Server>> GetByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about an Azure SQL server.
+        /// Returns a server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Server>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about Azure SQL server usage.
+        /// Returns server usages.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ServerMetric>>> ListUsagesWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets information about an Azure SQL database Service Objective.
+        /// Gets a database service objective.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='serviceObjectiveName'>
         /// The name of the service objective to retrieve.
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ServiceObjective>> GetServiceObjectiveWithHttpMessagesAsync(string resourceGroupName, string serverName, string serviceObjectiveName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns information about Azure SQL database Service Objectives.
+        /// Returns database service objectives.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Sql
         /// portal.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL server.
+        /// The name of the server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL server.
+    /// Represents a server.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class Server : Resource

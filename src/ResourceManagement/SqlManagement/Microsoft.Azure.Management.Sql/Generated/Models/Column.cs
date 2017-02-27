@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database table column.
+    /// Represents a database table column.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class Column : Resource
@@ -29,8 +29,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="columnType">The type of Azure SQL Database table
-        /// column.</param>
+        /// <param name="columnType">The type of database table column.</param>
         public Column(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string columnType = default(string))
             : base(location, name, id, type, tags)
         {
@@ -38,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the type of Azure SQL Database table column.
+        /// Gets the type of database table column.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.columnType")]
         public string ColumnType { get; private set; }

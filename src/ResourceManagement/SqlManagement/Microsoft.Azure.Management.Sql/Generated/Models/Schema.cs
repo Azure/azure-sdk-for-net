@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database schema.
+    /// Represents a database schema.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class Schema : Resource

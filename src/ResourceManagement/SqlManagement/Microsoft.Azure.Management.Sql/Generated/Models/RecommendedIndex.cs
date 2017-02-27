@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database recommended index.
+    /// Represents a database recommended index.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RecommendedIndex : Resource

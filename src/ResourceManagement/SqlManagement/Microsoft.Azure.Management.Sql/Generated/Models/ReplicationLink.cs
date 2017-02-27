@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL database replication link.
+    /// Represents a database replication link.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ReplicationLink : SqlSubResource
@@ -33,19 +33,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// termination is allowed.  Currently always returns true.</param>
         /// <param name="replicationMode">Replication mode of this replication
         /// link.</param>
-        /// <param name="partnerServer">The name of the Azure SQL server
-        /// hosting the partner Azure SQL Database.</param>
-        /// <param name="partnerDatabase">The name of the partner Azure SQL
-        /// Database.</param>
+        /// <param name="partnerServer">The name of the server hosting the
+        /// partner database.</param>
+        /// <param name="partnerDatabase">The name of the partner
+        /// database.</param>
         /// <param name="partnerLocation">The Azure Region of the partner
-        /// Azure SQL Database.</param>
-        /// <param name="role">The role of the Azure SQL database in the
+        /// database.</param>
+        /// <param name="role">The role of the database in the replication
+        /// link. Possible values include: 'Primary', 'Secondary',
+        /// 'NonReadableSecondary', 'Source', 'Copy'</param>
+        /// <param name="partnerRole">The role of the partner database in the
         /// replication link. Possible values include: 'Primary',
         /// 'Secondary', 'NonReadableSecondary', 'Source', 'Copy'</param>
-        /// <param name="partnerRole">The role of the partner Azure SQL
-        /// Database in the replication link. Possible values include:
-        /// 'Primary', 'Secondary', 'NonReadableSecondary', 'Source',
-        /// 'Copy'</param>
         /// <param name="startTime">The start time for the replication
         /// link.</param>
         /// <param name="percentComplete">The percentage of seeding complete
@@ -96,35 +95,34 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string ReplicationMode { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Azure SQL server hosting the partner Azure
-        /// SQL Database.
+        /// Gets the name of the server hosting the partner database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.partnerServer")]
         public string PartnerServer { get; private set; }
 
         /// <summary>
-        /// Gets the name of the partner Azure SQL Database.
+        /// Gets the name of the partner database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.partnerDatabase")]
         public string PartnerDatabase { get; private set; }
 
         /// <summary>
-        /// Gets the Azure Region of the partner Azure SQL Database.
+        /// Gets the Azure Region of the partner database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.partnerLocation")]
         public string PartnerLocation { get; private set; }
 
         /// <summary>
-        /// Gets the role of the Azure SQL database in the replication link.
-        /// Possible values include: 'Primary', 'Secondary',
-        /// 'NonReadableSecondary', 'Source', 'Copy'
+        /// Gets the role of the database in the replication link. Possible
+        /// values include: 'Primary', 'Secondary', 'NonReadableSecondary',
+        /// 'Source', 'Copy'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.role")]
         public ReplicationRole? Role { get; private set; }
 
         /// <summary>
-        /// Gets the role of the partner Azure SQL Database in the replication
-        /// link. Possible values include: 'Primary', 'Secondary',
+        /// Gets the role of the partner database in the replication link.
+        /// Possible values include: 'Primary', 'Secondary',
         /// 'NonReadableSecondary', 'Source', 'Copy'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.partnerRole")]

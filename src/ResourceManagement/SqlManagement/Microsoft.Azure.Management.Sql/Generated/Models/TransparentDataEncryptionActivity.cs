@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database Transparent Data Encryption Scan.
+    /// Represents a database transparent data encryption Scan.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class TransparentDataEncryptionActivity : SqlSubResource
@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
-        /// <param name="status">The status of the Azure SQL database.
-        /// Possible values include: 'Encrypting', 'Decrypting'</param>
+        /// <param name="status">The status of the database. Possible values
+        /// include: 'Encrypting', 'Decrypting'</param>
         /// <param name="percentComplete">The percent complete of the
-        /// transparent data encryption scan for a Azure SQL Database.</param>
+        /// transparent data encryption scan for a database.</param>
         public TransparentDataEncryptionActivity(string name = default(string), string id = default(string), string status = default(string), double? percentComplete = default(double?))
             : base(name, id)
         {
@@ -40,15 +40,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the status of the Azure SQL database. Possible values
-        /// include: 'Encrypting', 'Decrypting'
+        /// Gets the status of the database. Possible values include:
+        /// 'Encrypting', 'Decrypting'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
 
         /// <summary>
         /// Gets the percent complete of the transparent data encryption scan
-        /// for a Azure SQL Database.
+        /// for a database.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.percentComplete")]
         public double? PercentComplete { get; private set; }

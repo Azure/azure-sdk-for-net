@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database table.
+    /// Represents a database table.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class Table : Resource
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="tableType">The type of Azure SQL Database table.
-        /// Possible values include: 'BaseTable', 'View'</param>
+        /// <param name="tableType">The type of database table. Possible
+        /// values include: 'BaseTable', 'View'</param>
         /// <param name="columns">The columns from this table.</param>
         /// <param name="recommendedIndexes">The recommended indices for this
         /// table.</param>
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the type of Azure SQL Database table. Possible values
-        /// include: 'BaseTable', 'View'
+        /// Gets the type of database table. Possible values include:
+        /// 'BaseTable', 'View'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.tableType")]
         public TableType? TableType { get; private set; }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class RecommendedElasticPoolsOperationsExtensions
     {
             /// <summary>
-            /// Gets information about an Azure SQL Recommended Elastic Pool.
+            /// Gets a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// The name of the recommended elastic pool to be retrieved.
             /// </param>
             public static RecommendedElasticPool Get(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
             {
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL Recommended Elastic Pool.
+            /// Gets a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// The name of the recommended elastic pool to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -66,8 +66,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL database inside of an Azure SQL
-            /// Recommended Elastic Pool.
+            /// Gets a database inside of a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,13 +76,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
+            /// The name of the database to be retrieved.
             /// </param>
             public static Database GetDatabases(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName, string databaseName)
             {
@@ -91,8 +90,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL database inside of an Azure SQL
-            /// Recommended Elastic Pool.
+            /// Gets a database inside of a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,13 +100,13 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// The name of the elastic pool to be retrieved.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
+            /// The name of the database to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -122,7 +120,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Recommended Elastic Pools.
+            /// Returns recommended elastic pools.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,7 +130,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<RecommendedElasticPool> List(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName)
             {
@@ -140,7 +138,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL Recommended Elastic Pools.
+            /// Returns recommended elastic pools.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -150,7 +148,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -164,8 +162,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL database inside of an Azure SQL
-            /// Recommended Elastic Pool.
+            /// Returns a database inside of a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -175,10 +172,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// The name of the recommended elastic pool to be retrieved.
             /// </param>
             public static System.Collections.Generic.IEnumerable<Database> ListDatabases(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
             {
@@ -186,8 +183,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL database inside of an Azure SQL
-            /// Recommended Elastic Pool.
+            /// Returns a database inside of a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -197,10 +193,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// The name of the recommended elastic pool to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -214,7 +210,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an recommended elastic pool metrics.
+            /// Returns a recommented elastic pool metrics.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -224,10 +220,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// The name of the recommended elastic pool to be retrieved.
             /// </param>
             public static System.Collections.Generic.IEnumerable<RecommendedElasticPoolMetric> ListMetrics(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
             {
@@ -235,7 +231,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an recommended elastic pool metrics.
+            /// Returns a recommented elastic pool metrics.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -245,10 +241,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// The name of the recommended elastic pool to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

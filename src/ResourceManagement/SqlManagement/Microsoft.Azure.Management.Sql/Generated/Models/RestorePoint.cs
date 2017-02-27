@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database restore point.
+    /// Represents a database restore point.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RestorePoint : Resource
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="restorePointType">The restore point type of the Azure
-        /// SQL database restore point. Possible values include: 'DISCRETE',
+        /// <param name="restorePointType">The restore point type of the
+        /// database restore point. Possible values include: 'DISCRETE',
         /// 'CONTINUOUS'</param>
         /// <param name="restorePointCreationDate">Restore point creation time
         /// (ISO8601 format). Populated when restorePointType = CONTINUOUS.
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the restore point type of the Azure SQL database restore
-        /// point. Possible values include: 'DISCRETE', 'CONTINUOUS'
+        /// Gets the restore point type of the database restore point.
+        /// Possible values include: 'DISCRETE', 'CONTINUOUS'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.restorePointType")]
         public RestorePointTypes? RestorePointType { get; private set; }

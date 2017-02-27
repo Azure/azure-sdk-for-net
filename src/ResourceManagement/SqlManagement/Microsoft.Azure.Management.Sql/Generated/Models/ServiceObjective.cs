@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Database Service Objective.
+    /// Represents a database service objective.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ServiceObjective : SqlSubResource

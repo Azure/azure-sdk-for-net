@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ServersOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates an Azure SQL server firewall rule.
+            /// Creates or updates a firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
+            /// The name of the firewall rule.
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a firewall rule.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates an Azure SQL server firewall rule.
+            /// Creates or updates a firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,10 +52,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
+            /// The name of the firewall rule.
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a firewall rule.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes an Azure SQL server firewall rule.
+            /// Deletes a firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
+            /// The name of the firewall rule.
             /// </param>
             public static void DeleteFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
             {
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes an Azure SQL server firewall rule.
+            /// Deletes a firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,10 +103,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
+            /// The name of the firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns an Azure SQL server firewall rule.
+            /// Gets a firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,10 +127,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
+            /// The name of the firewall rule.
             /// </param>
             public static ServerFirewallRule GetFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
             {
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns an Azure SQL server firewall rule.
+            /// Gets a firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -148,10 +148,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
+            /// The name of the firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of Azure SQL server firewall rules.
+            /// Returns a list of firewall rules.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ServerFirewallRule> ListFirewallRules(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of Azure SQL server firewall rules.
+            /// Returns a list of firewall rules.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL server.
+            /// Returns a list of servers.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL server.
+            /// Returns a list of servers.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a new Azure SQL server.
+            /// Creates or updates a new server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a server.
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a new Azure SQL server.
+            /// Creates or updates a new server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='parameters'>
             /// The required parameters for creating or updating a server.
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static void Delete(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL server.
+            /// Gets a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static Server GetByResourceGroup(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL server.
+            /// Gets a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL server.
+            /// Returns a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about an Azure SQL server.
+            /// Returns a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL server usage.
+            /// Returns server usages.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ServerMetric> ListUsages(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL server usage.
+            /// Returns server usages.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL database Service Objective.
+            /// Gets a database service objective.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='serviceObjectiveName'>
             /// The name of the service objective to retrieve.
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets information about an Azure SQL database Service Objective.
+            /// Gets a database service objective.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='serviceObjectiveName'>
             /// The name of the service objective to retrieve.
@@ -490,7 +490,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL database Service Objectives.
+            /// Returns database service objectives.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -500,7 +500,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             public static System.Collections.Generic.IEnumerable<ServiceObjective> ListServiceObjectives(this IServersOperations operations, string resourceGroupName, string serverName)
             {
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns information about Azure SQL database Service Objectives.
+            /// Returns database service objectives.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the Azure SQL server.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
