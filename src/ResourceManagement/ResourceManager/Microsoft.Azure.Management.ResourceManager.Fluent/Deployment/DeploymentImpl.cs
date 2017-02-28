@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
@@ -22,19 +21,12 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         Deployment.Definition.IDefinition,
         Deployment.Update.IUpdate
     {
-        private IDeploymentsOperations client;
-        private IDeploymentOperationsOperations deploymentOperationsClient;
         private IResourceManager resourceManager;
         private string resourceGroupName;
         private ICreatable<IResourceGroup> creatableResourceGroup;
 
-        internal DeploymentImpl(DeploymentExtendedInner innerModel,
-            IDeploymentsOperations client,
-            IDeploymentOperationsOperations deploymentOperationsClient,
-            IResourceManager resourceManager) : base(innerModel.Name, innerModel)
+        internal DeploymentImpl(DeploymentExtendedInner innerModel, IResourceManager resourceManager) : base(innerModel.Name, innerModel)
         {
-            this.client = client;
-            this.deploymentOperationsClient = deploymentOperationsClient;
             resourceGroupName = ResourceUtils.GroupFromResourceId(innerModel.Id);
             this.resourceManager = resourceManager;
         }
@@ -194,9 +186,18 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             get
             {
-                return new DeploymentOperationsImpl(deploymentOperationsClient, this);
+                return new DeploymentOperationsImpl(Manager.Inner.DeploymentOperations, this);
             }
         }
+
+        public IResourceManager Manager
+        {
+            get
+            {
+                return resourceManager;
+            }
+        }
+
 
         #endregion
 
@@ -376,14 +377,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public void Cancel()
         {
-            client.Cancel(resourceGroupName, Name);
+            Manager.Inner.Deployments.Cancel(resourceGroupName, Name);
         }
 
         public IDeploymentExportResult ExportTemplate
         {
             get
             {
-                DeploymentExportResultInner inner = client.ExportTemplate(ResourceGroupName, Name);
+                DeploymentExportResultInner inner = Manager.Inner.Deployments.ExportTemplate(ResourceGroupName, Name);
                 return new DeploymentExportResultImpl(inner);
             }
         }
@@ -401,7 +402,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            client.BeginCreateOrUpdate(resourceGroupName, Name, inner);
+            Manager.Inner.Deployments.BeginCreateOrUpdate(resourceGroupName, Name, inner);
             return this;
         }
 
@@ -411,7 +412,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public override IDeployment Refresh()
         {
-            DeploymentExtendedInner inner = client.Get(ResourceGroupName, Name);
+            DeploymentExtendedInner inner = Manager.Inner.Deployments.Get(ResourceGroupName, Name);
             SetInner(inner);
             return this;
         }
@@ -456,7 +457,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            await client.CreateOrUpdateAsync(ResourceGroupName, Name, inner);
+            await Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner);
             return this;
         }
 
@@ -473,7 +474,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            client.CreateOrUpdate(ResourceGroupName, Name, inner);
+            Manager.Inner.Deployments.CreateOrUpdate(ResourceGroupName, Name, inner);
             return this;
         }
 

@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 if (genericResources == null)
                 {
-                    genericResources = new GenericResourcesImpl(Inner, this);
+                    genericResources = new GenericResourcesImpl(this);
 
                 }
                 return genericResources;
@@ -206,9 +206,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 if (deployments == null)
                 {
-                    deployments = new DeploymentsImpl(Inner.Deployments,
-                        Inner.DeploymentOperations,
-                        this);
+                    deployments = new DeploymentsImpl(this);
                 }
                 return deployments;
             }

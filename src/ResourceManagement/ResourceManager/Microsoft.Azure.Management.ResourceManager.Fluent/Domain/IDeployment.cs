@@ -17,13 +17,12 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     public interface IDeployment  :
         IRefreshable<IDeployment>,
         IUpdatable<IUpdate>,
-        IHasInner<DeploymentExtendedInner>
+        IHasInner<DeploymentExtendedInner>,
+        IHasName,
+        IHasManager<IResourceManager>
     {
         /// <returns>the name of this deployment's resource group</returns>
         string ResourceGroupName { get; }
-
-        /// <returns>the name of the deployment</returns>
-        string Name { get; }
 
         /// <returns>the state of the provisioning process of the resources being deployed</returns>
         string ProvisioningState { get; }
