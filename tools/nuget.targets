@@ -75,6 +75,7 @@
 	</Target>
 
 	<Target Name="ListPackages">
+		<Message Text="Nuspec: %(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />		
 		<Message Text="%(SdkNuGetPackage.Identity) %(SdkNuGetPackage.PackageVersion) %(SdkNuGetPackage.Folder)" />
 	</Target>
 
@@ -82,7 +83,7 @@
 	Build NuGet packages
 	-->
 	<Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
-		<CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_NetCore_AutoRestLibraries) != '' or @(NonAutoRestLibraries) != ''" />
+		<CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_NetCore_AutoRestLibraries) != '' or @(SdkNuGetPackage) != ''" />
 
 		<Message Text="Generating NuGet library" Importance="high" />
 		<Exec Condition=" '%(SdkNuGetPackage.Identity)' != '' "
