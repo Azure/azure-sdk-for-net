@@ -4,7 +4,6 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
     using System.Net.Http;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -16,14 +15,17 @@ namespace Microsoft.Azure.Search.Tests
             params DelegatingHandler[] handlers)
         {
             TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-            Uri baseUri = currentEnvironment.GetBaseSearchUri(fixture.SearchServiceName);
-            currentEnvironment.BaseUri = baseUri;
-            var credentials = new SearchCredentials(fixture.PrimaryApiKey);
-            return fixture.MockContext.GetServiceClientWithCredentials<SearchServiceClient>(
-                currentEnvironment, 
-                credentials,
-                false,
-                handlers);
+
+            SearchServiceClient client =
+                fixture.MockContext.GetServiceClientWithCredentials<SearchServiceClient>(
+                    currentEnvironment,
+                    new SearchCredentials(fixture.PrimaryApiKey),
+                    internalBaseUri: true,
+                    handlers: handlers);
+
+            client.SearchServiceName = fixture.SearchServiceName;
+            client.SearchDnsSuffix = currentEnvironment.GetSearchDnsSuffix(fixture.SearchServiceName);
+            return client;
         }
     }
 }

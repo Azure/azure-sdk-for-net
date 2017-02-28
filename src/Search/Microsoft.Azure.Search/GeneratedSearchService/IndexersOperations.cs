@@ -79,6 +79,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse> ResetWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
@@ -105,8 +113,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "Reset", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')/search.reset").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers('{indexerName}')/search.reset";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             _url = _url.Replace("{indexerName}", System.Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -248,6 +258,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse> RunWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
@@ -274,8 +292,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "Run", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')/search.run").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers('{indexerName}')/search.run";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             _url = _url.Replace("{indexerName}", System.Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -427,6 +447,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
@@ -476,8 +504,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers('{indexerName}')";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             _url = _url.Replace("{indexerName}", System.Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -696,6 +726,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
@@ -734,8 +772,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers('{indexerName}')";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             _url = _url.Replace("{indexerName}", System.Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -896,6 +936,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse<Indexer>> GetWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
@@ -922,8 +970,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers('{indexerName}')";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             _url = _url.Replace("{indexerName}", System.Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1091,6 +1141,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse<IndexerListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1112,8 +1170,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1283,6 +1343,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse<Indexer>> CreateWithHttpMessagesAsync(Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexer == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexer");
@@ -1313,8 +1381,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1490,6 +1560,14 @@ namespace Microsoft.Azure.Search
         /// </return>
         public async Task<AzureOperationResponse<IndexerExecutionInfo>> GetStatusWithHttpMessagesAsync(string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
             if (indexerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
@@ -1516,8 +1594,10 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Enter(_invocationId, this, "GetStatus", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')/search.status").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "indexers('{indexerName}')/search.status";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
             _url = _url.Replace("{indexerName}", System.Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

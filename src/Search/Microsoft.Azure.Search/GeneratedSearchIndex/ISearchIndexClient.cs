@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -44,6 +43,22 @@ namespace Microsoft.Azure.Search
         /// Client Api Version.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The name of the Azure Search service.
+        /// </summary>
+        string SearchServiceName { get; set; }
+
+        /// <summary>
+        /// The DNS suffix of the Azure Search service. The default is
+        /// search.windows.net.
+        /// </summary>
+        string SearchDnsSuffix { get; set; }
+
+        /// <summary>
+        /// The name of the Azure Search index.
+        /// </summary>
+        string IndexName { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
