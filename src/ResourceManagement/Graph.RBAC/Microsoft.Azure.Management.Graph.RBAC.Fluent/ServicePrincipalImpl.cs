@@ -3,15 +3,12 @@
 
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using ServicePrincipal.Definition;
+    using Resource.Fluent.Core.ResourceActions;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Update;
+    using ServicePrincipal.Update;
     using System.Threading;
     using System.Linq;
     using System;

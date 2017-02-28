@@ -96,7 +96,6 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 if (vaults == null)
                 {
                     vaults = new VaultsImpl(
-                        Inner.Vaults,
                         this,
                         graphRbacManager,
                         tenantId);

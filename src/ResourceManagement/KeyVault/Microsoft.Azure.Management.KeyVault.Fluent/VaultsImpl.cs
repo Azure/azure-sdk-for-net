@@ -4,12 +4,8 @@
 namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Management.KeyVault;
+    using Resource.Fluent.Core;
+    using Models;
     using Graph.RBAC.Fluent;
     using System;
     using System.Threading.Tasks;
@@ -26,8 +22,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         private IGraphRbacManager graphRbacManager;
         private string tenantId;
         ///GENMHASH:CDB7D4D816159A58F5240A4C88E5241C:4E00EDDBAADBA44B155253E3B63448A4
-        internal VaultsImpl (IVaultsOperations client, IKeyVaultManager keyVaultManager, IGraphRbacManager graphRbacManager, string tenantId)
-            : base(client, keyVaultManager)
+        internal VaultsImpl (IKeyVaultManager keyVaultManager, IGraphRbacManager graphRbacManager, string tenantId)
+            : base(keyVaultManager.Inner.Vaults, keyVaultManager)
         {
             this.graphRbacManager = graphRbacManager;
             this.tenantId = tenantId;
@@ -103,7 +99,6 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return new VaultImpl(
                 name,
                 inner,
-                Inner,
                 Manager,
                 graphRbacManager);
         }
@@ -114,7 +109,6 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return new VaultImpl(
                 vaultInner.Name,
                 vaultInner,
-                Inner,
                 Manager,
                 graphRbacManager);
         }
