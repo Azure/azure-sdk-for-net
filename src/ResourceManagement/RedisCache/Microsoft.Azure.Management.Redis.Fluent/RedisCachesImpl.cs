@@ -20,8 +20,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             IRedisManager>,
         IRedisCaches
     {
-        private IPatchSchedulesOperations pathcSchedulesClient;
-
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -29,10 +27,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:C2F15BEB23386D8534B400C08B468649:2DA21496DE2BD6513C1C418114ACEF97
-        internal RedisCachesImpl(IRedisOperations client, IPatchSchedulesOperations patchClient, IRedisManager redisManager)
-            : base(client, redisManager)
+        internal RedisCachesImpl(IRedisManager redisManager)
+            : base(redisManager.Inner.Redis, redisManager)
         {
-            pathcSchedulesClient = patchClient;
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -70,8 +67,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return new RedisCacheImpl(
                 name,
                 new RedisResourceInner(),
-                this.pathcSchedulesClient,
-                Inner,
                 this.Manager);
         }
 
@@ -81,8 +76,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return new RedisCacheImpl(
                 redisResourceInner.Name,
                 redisResourceInner,
-                this.pathcSchedulesClient,
-                Inner,
                 this.Manager);
         }
     }
