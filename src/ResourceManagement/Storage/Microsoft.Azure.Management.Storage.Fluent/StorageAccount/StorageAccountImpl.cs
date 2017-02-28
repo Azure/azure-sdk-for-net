@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Threading;
 using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
 using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;
@@ -33,18 +31,12 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         private StorageAccountUpdateParametersInner updateParameters;
         private IList<StorageAccountKey> cachedAccountKeys;
 
-        private IStorageAccountsOperations client;
-
-
-        internal StorageAccountImpl(string name,
-            Management.Storage.Fluent.Models.StorageAccountInner innerObject,
-            IStorageAccountsOperations client,
-            IStorageManager manager) : base(name, innerObject, manager)
+        internal StorageAccountImpl(string name, StorageAccountInner innerObject, IStorageManager manager)
+            : base(name, innerObject, manager)
         {
             this.name = name;
             createParameters = new StorageAccountCreateParametersInner();
             updateParameters = new StorageAccountUpdateParametersInner();
-            this.client = client;
         }
 
         #region Getters
@@ -171,13 +163,13 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public IWithCreateAndAccessTier WithBlobStorageAccountKind()
         {
-            createParameters.Kind = Management.Storage.Fluent.Models.Kind.BlobStorage;
+            createParameters.Kind = Kind.BlobStorage;
             return this;
         }
 
         public IWithCreate WithGeneralPurposeAccountKind()
         {
-            createParameters.Kind = Management.Storage.Fluent.Models.Kind.Storage;
+            createParameters.Kind = Kind.Storage;
             return this;
         }
 
@@ -216,7 +208,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         IUpdate IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {
-            if (Inner.Kind != Management.Storage.Fluent.Models.Kind.BlobStorage)
+            if (Inner.Kind != Kind.BlobStorage)
             {
                 throw new ArgumentException("Access tier cannot be changed for general purpose storage accounts");
             }
@@ -278,14 +270,14 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public IList<StorageAccountKey> RefreshKeys()
         {
-            var storageAccountListKeysResultInner = client.ListKeys(ResourceGroupName, Name);
+            var storageAccountListKeysResultInner = Manager.Inner.StorageAccounts.ListKeys(ResourceGroupName, Name);
             cachedAccountKeys = storageAccountListKeysResultInner.Keys;
             return cachedAccountKeys;
         }
 
         public IList<StorageAccountKey> RegenerateKey(string keyName)
         {
-            var storageAccountListKeysResultInner = client.RegenerateKey(ResourceGroupName, Name, keyName);
+            var storageAccountListKeysResultInner = Manager.Inner.StorageAccounts.RegenerateKey(ResourceGroupName, Name, keyName);
             cachedAccountKeys = storageAccountListKeysResultInner.Keys;
             return cachedAccountKeys;
         }
@@ -296,7 +288,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public override IStorageAccount Refresh()
         {
-            var response = client.GetProperties(ResourceGroupName, Name);
+            var response = Manager.Inner.StorageAccounts.GetProperties(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }
@@ -325,7 +317,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
             createParameters.Location = RegionName;
             createParameters.Tags = Inner.Tags;
-            var response = await client.CreateAsync(ResourceGroupName, this.name, createParameters, cancellationToken);
+            var response = await Manager.Inner.StorageAccounts.CreateAsync(ResourceGroupName, this.name, createParameters, cancellationToken);
             SetInner(response);
             return this;
         }
@@ -333,7 +325,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         public override async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             // overriding the base.ApplyAsync here since the parameter for update is different from the one for create.
-            var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
+            var response = await Manager.Inner.StorageAccounts.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
             SetInner(response);
             return this;
         }
