@@ -3,32 +3,26 @@
 
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Azure.Management.TrafficManager.Fluent;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
-    public class TrafficManager : ManagerBase, ITrafficManager
+    public class TrafficManager : Manager<ITrafficManagerManagementClient>, ITrafficManager
     {
-        #region SDK clients
-        private ITrafficManagerManagementClient client;
-        #endregion
-
         #region Fluent private collections
         private ITrafficManagerProfiles profiles;
         #endregion
 
-
-        public TrafficManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
-        {
-            client = new TrafficManagerManagementClient(new Uri(restClient.BaseUri),
+        public TrafficManager(RestClient restClient, string subscriptionId) : 
+            base(restClient, subscriptionId, new TrafficManagerManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
         }
 
         #region DnsZoneManager builder
@@ -79,14 +73,14 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             {
                 if (profiles == null)
                 {
-                    profiles = new TrafficManagerProfilesImpl(this.client, this);
+                    profiles = new TrafficManagerProfilesImpl(Inner, this);
                 }
                 return profiles;
             }
         }
     }
 
-    public interface ITrafficManager : IManagerBase
+    public interface ITrafficManager : IManager<ITrafficManagerManagementClient>
     {
         ITrafficManagerProfiles Profiles { get; }
     }

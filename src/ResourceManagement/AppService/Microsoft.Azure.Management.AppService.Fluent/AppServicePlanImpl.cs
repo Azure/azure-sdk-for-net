@@ -6,9 +6,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Threading.Tasks;
     using AppServicePlan.Definition;
     using AppServicePlan.Update;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Models;
+    using Resource.Fluent;
     using System;
 
     /// <summary>
@@ -29,8 +28,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDefinition,
         IUpdate
     {
-        private IAppServicePlansOperations client;
-
         ///GENMHASH:DD6D049506665D52592C7FE5BDE38234:6B280B367194B8DBB81238BF9E23FF56
         public AppServicePlanImpl WithPerSiteScaling(bool perSiteScaling)
         {
@@ -88,7 +85,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:F27412D40851995FA8EF630919CB5FD6
         public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            SetInner(await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
+            SetInner(await Manager.Inner.AppServicePlans.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
 
             return this;
         }
@@ -96,7 +93,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
         public override IAppServicePlan Refresh()
         {
-            this.SetInner(client.Get(ResourceGroupName, Name));
+            this.SetInner(Manager.Inner.AppServicePlans.Get(ResourceGroupName, Name));
             return this;
         }
 
@@ -107,10 +104,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:07BF52A3FFAEDB1E45066F5776F5CC29:8A264E667F06CE3E13EBAC780725861E
-        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServicePlansOperations client, IAppServiceManager manager)
+        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServiceManager manager)
             : base (name, innerObject, manager)
         {
-            this.client = client;
         }
     }
 }

@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System.Collections.ObjectModel;
 
@@ -13,19 +13,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25zSW1wbA==
     internal partial class VirtualMachineExtensionsImpl :
-        ExternalChildResourcesCached<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtensionImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension, Models.VirtualMachineExtensionInner, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl>
+        ExternalChildResourcesCached<
+            VirtualMachineExtensionImpl,
+            IVirtualMachineExtension,
+            VirtualMachineExtensionInner,
+            IVirtualMachine,
+            VirtualMachineImpl>
     {
-        private IVirtualMachineExtensionsOperations client;
         /// <summary>
         /// Creates new VirtualMachineExtensionsImpl.
         /// </summary>
         /// <param name="client">The client to perform REST calls on extensions.</param>
         /// <param name="parent">The parent virtual machine of the extensions.</param>
         ///GENMHASH:5FE619A4E78C738ABAB49088366D56E9:A3B8391A0D11DA58771A04AD80F595FB
-        internal VirtualMachineExtensionsImpl(IVirtualMachineExtensionsOperations client, VirtualMachineImpl parent) 
+        internal VirtualMachineExtensionsImpl(VirtualMachineImpl parent) 
             : base(parent, "VirtualMachineExtension")
         {
-            this.client = client;
             this.CacheCollection();
         }
 
@@ -41,10 +44,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 var extensionName = entry.Key;
                 if (entry.Value.IsReference())
                 {
-                    extension = new VirtualMachineExtensionImpl(extensionName,
-                        this.Parent,
-                        this.client.Get(Parent.ResourceGroupName, Parent.Name, extensionName),
-                        this.client);
+                    extension = new VirtualMachineExtensionImpl(
+                        extensionName,
+                        Parent,
+                        Parent.Manager.Inner.VirtualMachineExtensions.Get(Parent.ResourceGroupName, Parent.Name, extensionName));
                 }
                 result.Add(extensionName, extension);
             }
@@ -107,16 +110,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     if (inner.Name == null)
                     {
                         inner.Location = this.Parent.RegionName;
-                        childResources.Add(new VirtualMachineExtensionImpl(ResourceUtils.NameFromResourceId(inner.Id),
-                            this.Parent,
-                            inner,
-                            this.client));
+                        childResources.Add(new VirtualMachineExtensionImpl(ResourceUtils.NameFromResourceId(inner.Id), Parent, inner));
                     } else
                     {
-                        childResources.Add(new VirtualMachineExtensionImpl(inner.Name,
-                            this.Parent,
-                            inner,
-                            this.client));
+                        childResources.Add(new VirtualMachineExtensionImpl(inner.Name, Parent, inner));
                     }
                 }
             }
@@ -126,7 +123,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8E8DA5B84731A2D412247D25A544C502:A46E953787CEB47EF54D89C635EAF3F8
         protected override VirtualMachineExtensionImpl NewChildResource(string name)
         {
-            VirtualMachineExtensionImpl extension = VirtualMachineExtensionImpl.NewVirtualMachineExtension(name, this.Parent, this.client);
+            VirtualMachineExtensionImpl extension = VirtualMachineExtensionImpl.NewVirtualMachineExtension(name, Parent);
             return extension;
         }
     }

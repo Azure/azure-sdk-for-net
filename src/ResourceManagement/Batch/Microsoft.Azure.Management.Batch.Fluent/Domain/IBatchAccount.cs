@@ -12,10 +12,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// An immutable client-side representation of an Azure batch account.
     /// </summary>
     public interface IBatchAccount  :
-        IGroupableResource<IBatchManager>,
+        IGroupableResource<IBatchManager, BatchAccountInner>,
         IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        IUpdatable<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>,
-        IHasInner<Microsoft.Azure.Management.Batch.Fluent.Models.BatchAccountInner>
+        IUpdatable<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>
     {
         /// <returns>the provisioned state of the resource. Possible values include:</returns>
         /// <returns>'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</returns>

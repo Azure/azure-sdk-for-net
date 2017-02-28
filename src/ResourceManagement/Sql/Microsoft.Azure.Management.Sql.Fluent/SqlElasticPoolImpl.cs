@@ -74,20 +74,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:F018FD6E531156DFCBAA9FAE7F4D8519:4FA6D0F883E9F521846C7A0D28C7480B
         public int DatabaseDtuMax()
         {
-            return this.Inner.DatabaseDtuMax.GetValueOrDefault();
+            return Inner.DatabaseDtuMax.GetValueOrDefault();
         }
 
         ///GENMHASH:CE6E5E981686AB8CE8A830CF9AB6387F:D3C554B6F628CA009F2AB5D1A90A12F8
         public SqlElasticPoolImpl WithEdition(string edition)
         {
-            this.Inner.Edition = edition;
+            Inner.Edition = edition;
             return this;
         }
 
         ///GENMHASH:88F495E6170B34BE98D7ECF345A40578:86A1F833D72B342BD29B3DD462FD72B4
         public int Dtu()
         {
-            return this.Inner.Dtu.GetValueOrDefault();
+            return Inner.Dtu.GetValueOrDefault();
         }
 
         ///GENMHASH:61F5809AB3B985C61AC40B98B1FBC47E:04B212B505D5C86A62596EEEE457DD66
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:EA721512D35742AECA1CE1F7CBF2BB99
         protected override async Task<ISqlElasticPool> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var elasticPoolInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.SqlServerName(), Name, this.Inner);
+            var elasticPoolInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.SqlServerName(), Name, Inner);
             SetInner(elasticPoolInner);
 
             await CreateOrUpdateDatabaseAsync();
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:F5BFC9500AE4C04846BAAD2CC50792B3:DA87C4AB3EEB9D4BA746DF610E8BC39F
         public string Edition()
         {
-            return this.Inner.Edition;
+            return Inner.Edition;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1ACD6B53BB71F7548B6ACD87115C57CE
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:ED7351448838F0ED89C6E4AE8FB19EAE:E3FFCB76DD3743CD850897669FC40D12
         public DateTime CreationDate()
         {
-            return this.Inner.CreationDate.GetValueOrDefault();
+            return Inner.CreationDate.GetValueOrDefault();
         }
 
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:EBCADD6850E9711DA91415429B1577E3
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:5AD4BED8CF2346B6D40F11D14D91854E:7666B4D046985F07C01EE064CD7C00B4
         public int DatabaseDtuMin()
         {
-            return this.Inner.DatabaseDtuMin.GetValueOrDefault();
+            return Inner.DatabaseDtuMin.GetValueOrDefault();
         }
 
         ///GENMHASH:1C25D7B8D9084176A24655682A78634D:ABBCB4CE203E2AC2B27991A84095239D
@@ -193,41 +193,41 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:52F9B4107BF3F85A991B429161CF5EB8:41FD2D9003985AE2BA9F4027A8AE05F9
         public SqlElasticPoolImpl WithDatabaseDtuMin(int databaseDtuMin)
         {
-            this.Inner.DatabaseDtuMin = databaseDtuMin;
+            Inner.DatabaseDtuMin = databaseDtuMin;
             return this;
         }
 
         ///GENMHASH:BE89876FF9AA93145223609370F06FD8:FBCF393F261D9724E5F8A4C1DD0CEF0D
         public SqlElasticPoolImpl WithDatabaseDtuMax(int databaseDtuMax)
         {
-            this.Inner.DatabaseDtuMax = databaseDtuMax;
+            Inner.DatabaseDtuMax = databaseDtuMax;
             return this;
         }
 
         ///GENMHASH:FB97B6A01BB44DE1679EAB5070CAB853:55229E4F94B6412796A001B6C5185A8A
         public int StorageMB()
         {
-            return this.Inner.StorageMB.GetValueOrDefault();
+            return Inner.StorageMB.GetValueOrDefault();
         }
 
         ///GENMHASH:E293D352B4C8ABEA82BF928E8B1ADC36:E89B91984CA129C2BAB11F8710EC7526
         public SqlElasticPoolImpl WithDtu(int dtu)
         {
-            this.Inner.Dtu = dtu;
+            Inner.Dtu = dtu;
             return this;
         }
 
         ///GENMHASH:5219D4DB320BF9F9DA49E9B44C0088EE:3721F7B0F159C1617BDBEA9251EA81E6
         public SqlElasticPoolImpl WithStorageCapacity(int storageMB)
         {
-            this.Inner.StorageMB = storageMB;
+            Inner.StorageMB = storageMB;
             return this;
         }
 
         ///GENMHASH:AEE17FD09F624712647F5EBCEC141EA5:F31B0F3D0CD1A4C57DB28EB70C9E094A
         public string State()
         {
-            return this.Inner.State;
+            return Inner.State;
         }
 
         IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Collections.Generic;
@@ -12,7 +11,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// The implementation for VirtualMachineSkus.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTa3VzSW1wbA==
-    internal partial class VirtualMachineSkusImpl : ReadableWrappers<IVirtualMachineSku, VirtualMachineSkuImpl, VirtualMachineImageResourceInner>, IVirtualMachineSkus
+    internal partial class VirtualMachineSkusImpl : ReadableWrappers<
+        IVirtualMachineSku,
+        VirtualMachineSkuImpl,
+        VirtualMachineImageResourceInner>, IVirtualMachineSkus
     {
         private IVirtualMachineImagesOperations innerCollection;
         private IVirtualMachineOffer offer;
@@ -25,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:F06F4A28DDFE89624259B7BA06AB2A0E
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku> List()
+        public PagedList<IVirtualMachineSku> List()
         {
             IEnumerable<VirtualMachineImageResourceInner> innerSkus = innerCollection.ListSkus(offer.Region.Name, offer.Publisher.Name, offer.Name);
             var pagedList = new PagedList<VirtualMachineImageResourceInner>(innerSkus);

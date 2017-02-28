@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.CollectionActions;
     using Models;
     using Resource.Fluent.Core.ResourceActions;
     using SqlElasticPool.Definition;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:7F70CB1AA5FE23578E360B95D229A1C6
         public override async Task<PagedList<ISqlElasticPool>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapList(new PagedList<ElasticPoolInner>(await this.innerCollection.ListByServerAsync(resourceGroupName, parentName, cancellationToken)));
+            return WrapList(new PagedList<ElasticPoolInner>(await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken)));
         }
 
         ///GENMHASH:03C6F391A16F96A5127D98827B5423FA:877F7B73190881879934925547D57EAF
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:1056648A6B4A4D9B6EA5F5AC88AE4C12
         public override async Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.innerCollection.DeleteAsync(groupName, parentName, name);
+            await Inner.DeleteAsync(groupName, parentName, name);
         }
 
         ///GENMHASH:E3353FA0F9E79B667402107BE3CC7CC3:C2CAD38DE0065D9787A2B130E2E189DD
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlElasticPoolImpl(
                 elasticPoolName,
                 inner,
-                innerCollection,
+                Inner,
                 databasesInner,
                 databasesImpl,
                 Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:36E87C79062474D6AB62B46DAD7396F9
         public override async Task<ISqlElasticPool> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await this.innerCollection.GetAsync(resourceGroup, parentName, name, cancellationToken));
+            return WrapModel(await Inner.GetAsync(resourceGroup, parentName, name, cancellationToken));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -103,9 +103,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlElasticPoolImpl(
                 name,
                 inner,
-                this.innerCollection,
-                this.databasesInner,
-                this.databasesImpl,
+                Inner,
+                databasesInner,
+                databasesImpl,
                 Manager);
         }
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 return null;
             }
 
-            return new SqlElasticPoolImpl(inner.Name, inner, this.innerCollection, this.databasesInner, this.databasesImpl, Manager);
+            return new SqlElasticPoolImpl(inner.Name, inner, Inner, databasesInner, databasesImpl, Manager);
         }
     }
 }

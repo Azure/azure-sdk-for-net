@@ -36,20 +36,20 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         public PagedList<IVault> List ()
         {
-            var pagedList = new PagedList<VaultInner>(InnerCollection.List());
+            var pagedList = new PagedList<VaultInner>(Inner.List());
             return WrapList(pagedList);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
         public PagedList<IVault> ListByGroup (string groupName)
         {
-            var pagedList = new PagedList<VaultInner>(InnerCollection.ListByResourceGroup(groupName));
+            var pagedList = new PagedList<VaultInner>(Inner.ListByResourceGroup(groupName));
             return WrapList(pagedList);
         }
 
         public async Task<PagedList<IVault>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await InnerCollection.ListByResourceGroupAsync(resourceGroupName);
+            var inner = await Inner.ListByResourceGroupAsync(resourceGroupName);
             var pagedList = new PagedList<VaultInner>(inner);
             return WrapList(pagedList);
         }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IVault> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await InnerCollection.GetAsync(groupName, name, cancellationToken);
+            var inner = await Inner.GetAsync(groupName, name, cancellationToken);
             return WrapModel(inner);
         }
 
@@ -68,18 +68,18 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
 
         public void Delete (string groupName, string name)
         {
-            InnerCollection.Delete(groupName, name);
+            Inner.Delete(groupName, name);
         }
 
         public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            return Inner.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name);
+            return Inner.DeleteAsync(groupName, name);
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:913702868132D01F4C836BBF3499B8CE
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return new VaultImpl(
                 name,
                 inner,
-                InnerCollection,
+                Inner,
                 Manager,
                 graphRbacManager);
         }
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return new VaultImpl(
                 vaultInner.Name,
                 vaultInner,
-                InnerCollection,
+                Inner,
                 Manager,
                 graphRbacManager);
         }

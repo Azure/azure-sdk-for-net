@@ -11,11 +11,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure App Service Plan.
     /// </summary>
     public interface IAppServicePlan  :
-        IGroupableResource<IAppServiceManager>,
+        IGroupableResource<IAppServiceManager, AppServicePlanInner>,
         IHasName,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
-        IUpdatable<AppServicePlan.Update.IUpdate>,
-        IHasInner<Models.AppServicePlanInner>
+        IUpdatable<AppServicePlan.Update.IUpdate>
     {
         /// <summary>
         /// Gets if apps assigned to this App Service Plan can be scaled independently.

@@ -4,8 +4,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
 
     /// <summary>
@@ -13,7 +12,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVPZmZlcnNJbXBs
     internal partial class VirtualMachineOffersImpl :
-        ReadableWrappers<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineOfferImpl, Models.VirtualMachineImageResourceInner>,
+        ReadableWrappers<IVirtualMachineOffer, VirtualMachineOfferImpl, VirtualMachineImageResourceInner>,
         IVirtualMachineOffers
     {
         private IVirtualMachineImagesOperations innerCollection;
@@ -27,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:CF6916AB824B8B57D0C4089778CE6C55
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer> List()
+        public PagedList<IVirtualMachineOffer> List()
         {
             IEnumerable<VirtualMachineImageResourceInner> innerOffers =
                 innerCollection.ListOffers(publisher.Region.Name, publisher.Name);

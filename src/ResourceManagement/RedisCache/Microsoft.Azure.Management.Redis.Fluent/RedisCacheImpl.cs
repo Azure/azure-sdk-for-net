@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
-    using Microsoft.Azure.Management.Redis.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:A46525F44B70758E2EDBD761F1C43440:CDCB954FF16DBA73112F76E0FBD05F88
         public string SubnetId()
         {
-            return this.Inner.SubnetId;
+            return Inner.SubnetId;
         }
 
         ///GENMHASH:DA29E6CF75B7755D5158B0C9AAA9D5A0:A3EDD15A99413A6F39B0B8A0338713D9
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:A50A011CA652E846C1780DCE98D171DE:1130E1FDC5A612FAE78D6B24DD71D43E
         public string HostName()
         {
-            return this.Inner.HostName;
+            return Inner.HostName;
         }
 
         ///GENMHASH:3D7C4113A3F55E3E31A8AB77D2A98BC2:342BB306A1B89F9C0E62BB6844E58611
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:8939689DC27B99614145E6616DB6A0BF:60428C770DA47B41ED0FE8196801C941
         public string StaticIP()
         {
-            return this.Inner.StaticIP;
+            return Inner.StaticIP;
         }
 
         ///GENMHASH:6EE61FA0DE4D0297160B059C5B56D12A:FCE23512A2C31EB7F68F7065799142F4
@@ -224,14 +224,14 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:83D353023D85D6E91BB9A3E8AC689039:DF02D821D2252D83CC2CDE0D9667F24E
         public IReadOnlyDictionary<string,string> RedisConfiguration()
         {
-            return new ReadOnlyDictionary<string,string>(this.Inner.RedisConfiguration);
+            return new ReadOnlyDictionary<string,string>(Inner.RedisConfiguration);
         }
 
         ///GENMHASH:6D1D6050A5B64D726B268700D1D5B76A:B617C9AF570BA31ABDF18E43D8A277EA
         public bool NonSslPort()
         {
-            return (this.Inner.EnableNonSslPort.HasValue)?
-                this.Inner.EnableNonSslPort.Value : false;
+            return (Inner.EnableNonSslPort.HasValue)?
+                Inner.EnableNonSslPort.Value : false;
         }
 
         ///GENMHASH:A4D7300B7F198955D626D528C3191C0D:7D05859155D538EA8AAA13A7171F55B2
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
         public Sku Sku()
         {
-            return this.Inner.Sku;
+            return Inner.Sku;
         }
 
         ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:C4C75685A8644A15C4342387354A58BB
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             if (IsInCreateMode)
             {
                 createParameters.Location = this.RegionName;
-                createParameters.Tags = this.Inner.Tags;
+                createParameters.Tags = Inner.Tags;
                 var inner = await this.client.CreateAsync(this.ResourceGroupName, this.Name, createParameters, cancellationToken);
                 this.SetInner(inner);
                 await this.UpdatePatchSchedules(cancellationToken);
@@ -349,14 +349,14 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C
         public string ProvisioningState()
         {
-            return this.Inner.ProvisioningState;
+            return Inner.ProvisioningState;
         }
 
         ///GENMHASH:8E06C1A19EE798AB8D863FD70174E162:EB25F0BF011FB476ED48A193129040E2
         public int SslPort()
         {
-            return (this.Inner.SslPort.HasValue)?
-                this.Inner.SslPort.Value : 0;
+            return (Inner.SslPort.HasValue)?
+                Inner.SslPort.Value : 0;
         }
 
         ///GENMHASH:4F64337819291292917CAEDDE1BA957C:61DFF56DF837BA3A7526DB4C6FB3A760
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:0DEA6EED7C42496EBE4A5F0A6169F305:DB027AD772BBD41451F9E589A68B87F8
         public string RedisVersion()
         {
-            return this.Inner.RedisVersion;
+            return Inner.RedisVersion;
         }
 
         ///GENMHASH:09C8C6B57BAA375B863AFE579BB6807D:91AAC365E5F79518CF38951EBEE910D6
@@ -401,8 +401,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:F0090A6ECB1B91C3BCFD966232A4C1D4
         public int Port()
         {
-            return (this.Inner.Port.HasValue)?
-                this.Inner.Port.Value : 0;
+            return (Inner.Port.HasValue)?
+                Inner.Port.Value : 0;
         }
 
         ///GENMHASH:00B3FC5713723EC459E8D0BBE862C56F:FB69548FAA3E0BDC93FB1EB6A6E158EC
@@ -483,8 +483,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:246CCD739A2C2D6763D6C1A7A4C3F1B3:FCB76FD3E14B5306E0C0D9C582A496EF
         public int ShardCount()
         {
-            return (this.Inner.ShardCount.HasValue)?
-                this.Inner.ShardCount.Value : 0;
+            return (Inner.ShardCount.HasValue)?
+                Inner.ShardCount.Value : 0;
         }
 
         ///GENMHASH:D24D0D518EC4AAB3671622B0122F4207:2884FF302CBD610FA22D475BDC8EBC01

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name);
+            return Inner.DeleteAsync(groupName, name);
         }
 
         ///GENMHASH:8257BDEA83EA75371BBAD6EFAF87E8AD:27A33792B39BF284AA170EA2D21817BE
@@ -37,16 +37,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IRouteTable> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         public PagedList<IRouteTable> List()
         {
-            var pagedList = new PagedList<RouteTableInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<RouteTableInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         public PagedList<IRouteTable> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<RouteTableInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<RouteTableInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         protected override RouteTableImpl WrapModel(string name)
         {
             RouteTableInner inner = new RouteTableInner();
-            return new RouteTableImpl(name, inner, InnerCollection, this.Manager);
+            return new RouteTableImpl(name, inner, Inner, this.Manager);
         }
 
         ///GENMHASH:94F659065F113D561DCD4FF928601AA3:B4753C73FFD737567848B1D8D4A06D23
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return new RouteTableImpl(
                 inner.Name,
                 inner,
-                InnerCollection,
+                Inner,
                 Manager);
         }
     }

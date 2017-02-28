@@ -21,26 +21,26 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:E5A5F4A2DE55AF67359951B8714E8E37:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  CNameRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  CNameRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:D5B3BC12D1EBABAB93ACF0C43C024873
-        internal static CNameRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static CNameRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
              return new CNameRecordSetImpl(parent,
              new RecordSetInner {
                 Name = name,
-                Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.CNAME),
+                Type = Enum.GetName(typeof(RecordType), Models.RecordType.CNAME),
                 CnameRecord = new CnameRecord()
-             }, client);
+             });
         }
 
         ///GENMHASH:90659807B6B17ED9B2E619F2F74829BA:5F97BB0D1B58FFF4810D8B3F037EC111
         public string CanonicalName()
         {
-            if (this.Inner.CnameRecord != null) {
-                return this.Inner.CnameRecord.Cname;
+            if (Inner.CnameRecord != null) {
+                return Inner.CnameRecord.Cname;
             }
             return null;
         }

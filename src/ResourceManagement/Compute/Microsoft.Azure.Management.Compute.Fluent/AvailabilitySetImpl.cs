@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Models;
+    using Resource.Fluent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -25,15 +25,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         AvailabilitySet.Definition.IDefinition,
         AvailabilitySet.Update.IUpdate
     {
-        private IAvailabilitySetsOperations client;
         private List<string> idOfVMsInSet;
 
         ///GENMHASH:8C96B0BDC54BDF41F3FC5BCCAA028C8D:113A819FAF18DEACEC4BCC60120F8166
-        internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel,
-            IAvailabilitySetsOperations client,
-            IComputeManager computeManager) : base(name, innerModel, computeManager)
+        internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel, IComputeManager computeManager) :
+            base(name, innerModel, computeManager)
         {
-            this.client = client;
         }
 
         ///GENMHASH:C260E0C5666F525F67582200AB726081:7DE3282328DE495135BCEDAABABE05D1
@@ -68,15 +65,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:BFC85CD3DA2E7E01EDB277A99CA8A8DE
         public async override Task<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.Inner.PlatformFaultDomainCount == null)
+            if (Inner.PlatformFaultDomainCount == null)
             {
-                this.Inner.PlatformFaultDomainCount = 2;
+                Inner.PlatformFaultDomainCount = 2;
             }
-            if (this.Inner.PlatformUpdateDomainCount == null)
+            if (Inner.PlatformUpdateDomainCount == null)
             {
-                this.Inner.PlatformUpdateDomainCount = 5;
+                Inner.PlatformUpdateDomainCount = 5;
             }
-            var availabilitySetInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var availabilitySetInner = await Manager.Inner.AvailabilitySets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;
@@ -85,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:031612B4E8FDCD8F07810CE8D68580BA
         public override IAvailabilitySet Refresh()
         {
-            var availabilitySetInner = client.Get(ResourceGroupName, Name);
+            var availabilitySetInner = Manager.Inner.AvailabilitySets.Get(ResourceGroupName, Name);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;
@@ -108,9 +105,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:76F4D314E5BB1E6DEE9BFF0081B150DC
         public AvailabilitySetSkuTypes Sku()
         {
-            if (this.Inner.Sku != null && this.Inner.Sku.Name != null)
+            if (Inner.Sku != null && Inner.Sku.Name != null)
             {
-                return AvailabilitySetSkuTypes.Parse(this.Inner.Sku.Name);
+                return AvailabilitySetSkuTypes.Parse(Inner.Sku.Name);
             }
             return null;
         }
@@ -118,11 +115,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:53AB73C440C52ADA0E332540DA0BEEB4:F6990CB6AF41DB826958D5810A250621
         public AvailabilitySetImpl WithSku(AvailabilitySetSkuTypes skuType)
         {
-            if (this.Inner.Sku == null)
+            if (Inner.Sku == null)
             {
-                this.Inner.Sku = new Sku();
+                Inner.Sku = new Sku();
             }
-            this.Inner.Sku.Name = skuType.ToString();
+            Inner.Sku.Name = skuType.ToString();
             return this;
         }
     }

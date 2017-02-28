@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:C2F15BEB23386D8534B400C08B468649:2DA21496DE2BD6513C1C418114ACEF97
@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IRedisCache> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var RedisResourceInner = await InnerCollection.GetAsync(groupName, name, cancellationToken);
+            var RedisResourceInner = await Inner.GetAsync(groupName, name, cancellationToken);
             return WrapModel(RedisResourceInner);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         public PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> List()
         {
-            IEnumerable<RedisResourceInner> redisResources = InnerCollection.List();
+            IEnumerable<RedisResourceInner> redisResources = Inner.List();
             var pagedList = new PagedList<RedisResourceInner>(redisResources);
             return WrapList(pagedList);
         }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
         public PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> ListByGroup(string groupName)
         {
-            IEnumerable<RedisResourceInner> redisResources = InnerCollection.ListByResourceGroup(groupName);
+            IEnumerable<RedisResourceInner> redisResources = Inner.ListByResourceGroup(groupName);
             var pagedList = new PagedList<RedisResourceInner>(redisResources);
             return WrapList(pagedList);
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 name,
                 new RedisResourceInner(),
                 this.pathcSchedulesClient,
-                this.InnerCollection,
+                Inner,
                 this.Manager);
         }
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 redisResourceInner.Name,
                 redisResourceInner,
                 this.pathcSchedulesClient,
-                this.InnerCollection,
+                Inner,
                 this.Manager);
         }
     }

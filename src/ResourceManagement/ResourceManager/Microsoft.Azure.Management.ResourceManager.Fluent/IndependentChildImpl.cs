@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         where IUpdatableT : class
         where IFluentResourceT : class, IResourceT
         where FluentResourceT : class
-        where FluentParentModelT: class, IGroupableResource<ManagerT>
+        where FluentParentModelT: class, IResource, IHasResourceGroup
     {
         private string groupName;
         protected string parentName;

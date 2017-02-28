@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:974E7FCA59BCBB12A26AB795E4C4A982:8418C83028CC7E2D2717B3EC2E3DBF97
         public TrafficManagerEndpointImpl ToResourceId(string resourceId)
         {
-            this.Inner.TargetResourceId = resourceId;
+            Inner.TargetResourceId = resourceId;
             return this;
         }
 
         ///GENMHASH:7E4D6CD4225C7C45A2617BA279790518:CDE1537547721862503F9A0FA1A322D4
         public int RoutingPriority()
         {
-            return (int) this.Inner.Priority.Value;
+            return (int) Inner.Priority.Value;
         }
 
         ///GENMHASH:01C4B6E26D53E1762A443721CECB5D96:43F1F30B8E8EB5054939168766D4F5BE
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:85BAA8BAAF184D879CCE5080E089F024:D3868AC81F258C85BCA29FE3546FDBB0
         public TrafficManagerEndpointImpl ToProfile(ITrafficManagerProfile nestedProfile)
         {
-            this.Inner.TargetResourceId = nestedProfile.Id;
-            this.Inner.MinChildEndpoints = 1;
+            Inner.TargetResourceId = nestedProfile.Id;
+            Inner.MinChildEndpoints = 1;
             return this;
         }
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:3A31ACD3BD909199AC20F8F3E3739FBC:74F3955C06F9B8A4E58621607D351E22
         public int RoutingWeight()
         {
-            return (int) this.Inner.Weight.Value;
+            return (int) Inner.Weight.Value;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:C47C4325FAE65E493A947196909A8664
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:91BB0A08404D6D37671F71EB696F7DDA:C7EED8E9DF95CD503E77886E10606183
         public TrafficManagerEndpointImpl FromRegion(Region location)
         {
-            this.Inner.EndpointLocation = location.Name;
+            Inner.EndpointLocation = location.Name;
             return this;
         }
 
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 this.Parent.Name,
                 this.EndpointType().LocalName,
                 this.Name(),
-                this.Inner);
+                Inner);
             this.SetInner(endpointInner);
             return this;
         }
@@ -119,13 +119,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:3F2076D33F84FDFAB700A1F0C8C41647:DABEB48E6D840C88546C3B33907CE0B9
         public bool IsEnabled()
         {
-            return this.Inner.EndpointStatus.Equals(TrafficManagerEndpointImpl.endpointStatusEnabled, System.StringComparison.OrdinalIgnoreCase);
+            return Inner.EndpointStatus.Equals(TrafficManagerEndpointImpl.endpointStatusEnabled, System.StringComparison.OrdinalIgnoreCase);
         }
 
         ///GENMHASH:E596842042AC44324049E25924338641:279322A898E3742765E012128C6BA094
         public TrafficManagerEndpointImpl WithTrafficDisabled()
         {
-            this.Inner.EndpointStatus = TrafficManagerEndpointImpl.endpointStatusDisabled;
+            Inner.EndpointStatus = TrafficManagerEndpointImpl.endpointStatusDisabled;
             return this;
         }
 
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:0F772C1CE5DA7681E1BE68BEBBDC7ED7:4CA1E78BF8CEC54E9503538BE5ED1B9E
         public TrafficManagerEndpointImpl WithRoutingPriority(int priority)
         {
-            this.Inner.Priority = priority;
+            Inner.Priority = priority;
             return this;
         }
 
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
             get
             {
-                return this.Inner.Id;
+                return Inner.Id;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:F3CEF905F52D0898C9748690DA270B37:E6BE9AF60DE7E23E08DA51CD41A40433
         public TrafficManagerEndpointImpl WithTrafficEnabled()
         {
-            this.Inner.EndpointStatus = TrafficManagerEndpointImpl.endpointStatusEnabled;
+            Inner.EndpointStatus = TrafficManagerEndpointImpl.endpointStatusEnabled;
             return this;
         }
 
@@ -173,21 +173,21 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:F1873F4E2C7FA7133A7B71292C66E670:DA5C65C0BDAEE12A7FCA134EE523B9C0
         public TrafficManagerEndpointImpl WithRoutingWeight(int weight)
         {
-            this.Inner.Weight = weight;
+            Inner.Weight = weight;
             return this;
         }
 
         ///GENMHASH:A4259C4B7C7D66426DF3049BC1F1EA7F:7ED9C9DE573E721F3D9C8B9D654C0F0E
         public TrafficManagerEndpointImpl ToFqdn(string externalFqdn)
         {
-            this.Inner.Target = externalFqdn;
+            Inner.Target = externalFqdn;
             return this;
         }
 
         ///GENMHASH:E4E05A91613DD6996BA2D79AA74792A7:E7BC928E840DEFB2EF72E4980D9651F7
         public TrafficManagerEndpointImpl WithMinimumEndpointsToEnableTraffic(int count)
         {
-            this.Inner.MinChildEndpoints = count;
+            Inner.MinChildEndpoints = count;
             return this;
         }
 

@@ -3,8 +3,7 @@
 
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-    using Management.Batch;
-    using Management.Batch.Fluent.Models;
+    using Models;
     using Resource.Fluent.Core;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -21,18 +20,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             IBatchAccount,
             BatchAccountImpl>
     {
-        private IApplicationOperations client;
-        private IApplicationPackageOperations applicationPackagesClient;
         private BatchAccountImpl parent;
 
         ///GENMHASH:7F1D4CEF6D71CC38B50E5E83BB1A6DDB:C5EC5A81A9B660015E5BC8802942DF92
-        internal ApplicationsImpl(IApplicationOperations client, IApplicationPackageOperations applicationPackagesClient, BatchAccountImpl parent)
+        internal ApplicationsImpl(BatchAccountImpl parent)
             : base(parent, "Application")
         {
-            this.client = client;
             this.parent = parent;
-            this.applicationPackagesClient = applicationPackagesClient;
-            this.CacheCollection();
+            CacheCollection();
         }
 
         ///GENMHASH:310B2185D2F2431DF2BBDBC06E585C74:9EA9A37597EAD8A99691D15719026E07
@@ -81,11 +76,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 return childResources;
             }
 
-            var applicationList = client.List(Parent.ResourceGroupName, Parent.Name);
+            var applicationList = Parent.Manager.Inner.Application.List(Parent.ResourceGroupName, Parent.Name);
 
             foreach (var application in applicationList)
             {
-                childResources.Add(new ApplicationImpl(application.Id, parent, application, client, applicationPackagesClient));
+                childResources.Add(new ApplicationImpl(
+                    application.Id,
+                    parent,
+                    application));
             }
 
             return childResources;
@@ -94,7 +92,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:8E8DA5B84731A2D412247D25A544C502:9982C2948E7BAC51FB839F919FEB2148
         protected override ApplicationImpl NewChildResource(string name)
         {
-            ApplicationImpl application = ApplicationImpl.NewApplication(name, parent, client, applicationPackagesClient);
+            ApplicationImpl application = ApplicationImpl.NewApplication(name, parent);
             return application;
         }
     }

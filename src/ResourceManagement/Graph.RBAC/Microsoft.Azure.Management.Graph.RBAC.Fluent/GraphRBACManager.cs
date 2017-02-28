@@ -2,24 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Rest.Azure;
-using Microsoft.Rest;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-    public class GraphRbacManager : ManagerBase, IGraphRbacManager
+    public class GraphRbacManager : Manager<IGraphRbacManagementClient>, IGraphRbacManager
     {
-        #region SDK clients
-        private GraphRbacManagementClient client;
-        #endregion
-
         #region Fluent private collections
         private IUsers users;
         private IServicePrincipals servicePrincipals;
@@ -27,13 +17,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         #region ctrs
 
-        public GraphRbacManager(RestClient restClient, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
-        {
-            client = new GraphRbacManagementClient(new Uri(restClient.BaseUri),
+        public GraphRbacManager(RestClient restClient, string subscriptionId, string tenantId) :
+            base(restClient, subscriptionId, new GraphRbacManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.TenantID = tenantId;
+                restClient.Handlers.ToArray())
+            {
+                TenantID = tenantId
+            })
+        {
         }
 
         #endregion
@@ -89,7 +81,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 if (users == null)
                 {
                     users = new UsersImpl(
-                        client.Users,
+                        Inner.Users,
                         this);
                 }
 
@@ -103,7 +95,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             {
                 if (servicePrincipals == null)
                 {
-                    servicePrincipals = new ServicePrincipalsImpl(client.ServicePrincipals, this);
+                    servicePrincipals = new ServicePrincipalsImpl(Inner.ServicePrincipals, this);
                 }
                 return servicePrincipals;
             }
@@ -111,7 +103,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         #endregion
     }
 
-    public interface IGraphRbacManager : IManagerBase
+    public interface IGraphRbacManager : IManager<IGraphRbacManagementClient>
     {
         IUsers Users { get; }
         IServicePrincipals ServicePrincipals { get; }

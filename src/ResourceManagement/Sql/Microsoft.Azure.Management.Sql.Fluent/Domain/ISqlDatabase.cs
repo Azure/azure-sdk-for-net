@@ -13,10 +13,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Database.
     /// </summary>
     public interface ISqlDatabase  :
-        IIndependentChildResource<ISqlManager>,
+        IIndependentChildResource<ISqlManager, DatabaseInner>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        IUpdatable<SqlDatabase.Update.IUpdate>,
-        IHasInner<Models.DatabaseInner>
+        IUpdatable<SqlDatabase.Update.IUpdate>
     {
         /// <return>All the replication links associated with the database.</return>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Sql.Fluent.IReplicationLink> ListReplicationLinks();

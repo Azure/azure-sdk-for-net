@@ -9,10 +9,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// An immutable client-side representation of an Azure storage account.
     /// </summary>
     public interface IStorageAccount  :
-        IGroupableResource<IStorageManager>,
+        IGroupableResource<IStorageManager, Models.StorageAccountInner>,
         IRefreshable<IStorageAccount>,
-        IUpdatable<StorageAccount.Update.IUpdate>,
-        IHasInner<Management.Storage.Fluent.Models.StorageAccountInner>
+        IUpdatable<StorageAccount.Update.IUpdate>
     {
         /// <returns>the status indicating whether the primary and secondary location of</returns>
         /// <returns>the storage account is available or unavailable. Possible values include:</returns>

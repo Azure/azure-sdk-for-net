@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.InnerCollection.DeleteAsync(groupName, name);
+            await Inner.DeleteAsync(groupName, name);
         }
 
         ///GENMHASH:EA7883DCA673C6F67CCCF6E8828D7D51:4DBFF5109C555E749B7E1943ECE31E34
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 Name = dnsNameLabel,
                 Type = "Microsoft.Network/trafficManagerProfiles"
             };
-            return new CheckProfileDnsNameAvailabilityResult(this.InnerCollection
+            return new CheckProfileDnsNameAvailabilityResult(Inner
                 .CheckTrafficManagerRelativeDnsNameAvailability(parameter));
         }
 
@@ -49,15 +49,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<ITrafficManagerProfile> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProfileInner profileInner = await this.InnerCollection.GetAsync(groupName, name);
+            ProfileInner profileInner = await Inner.GetAsync(groupName, name);
             return WrapModel(profileInner);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         public PagedList<ITrafficManagerProfile> List()
         {
-            //$ return wrapList(this.InnerCollection.ListAll());
-            var pagedList = new PagedList<ProfileInner>(this.InnerCollection.ListAll());
+            //$ return wrapList(Inner.ListAll());
+            var pagedList = new PagedList<ProfileInner>(Inner.ListAll());
             return WrapList(pagedList);
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:2A90E64B785A8609460D87572CE513A1
         public PagedList<ITrafficManagerProfile> ListByGroup(string groupName)
         {
-            return WrapList(new PagedList<ProfileInner>(this.InnerCollection.ListAllInResourceGroup(groupName)));
+            return WrapList(new PagedList<ProfileInner>(Inner.ListAllInResourceGroup(groupName)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:12B839BC780AC48D63D16C362B5E2FF5
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
              return new TrafficManagerProfileImpl(name,
                 new ProfileInner(),
-                this.InnerCollection,
+                Inner,
                 this.endpointsClient,
                 this.Manager);
         }
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
             return new TrafficManagerProfileImpl(inner.Name,
                 inner,
-                this.InnerCollection,
+                Inner,
                 this.endpointsClient,
                 this.Manager);
         }

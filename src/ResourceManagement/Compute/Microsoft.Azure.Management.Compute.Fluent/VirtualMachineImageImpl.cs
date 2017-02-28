@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
 
     /// <summary>
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbWFnZUltcGw=
     internal partial class VirtualMachineImageImpl :
-        IndexableWrapper<Models.VirtualMachineImageInner>,
+        IndexableWrapper<VirtualMachineImageInner>,
         IVirtualMachineImage
     {
         private Region location;
@@ -32,7 +32,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:CAB6054620B9FCCB39E850FA6DA1DC9E:D5C70E9798250262CE50A31D1767529C
-        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
+        internal VirtualMachineImageImpl(
+            Region location,
+            string publisher,
+            string offer,
+            string sku,
+            string version,
+            VirtualMachineImageInner inner) 
             : base(inner)
         {
             this.location = location;
@@ -59,10 +65,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:7DECE31892F905458F7A5F7C5B963D8F
         public string Id()
         {
-            if (this.Inner == null) {
+            if (Inner == null) {
                 return null;
             }
-            return this.Inner.Id;
+            return Inner.Id;
         }
 
         ///GENMHASH:A85BBC58BA3B783F90EB92B75BD97D51:B0F0BE5FE7AB84929ACF2368E8415A69

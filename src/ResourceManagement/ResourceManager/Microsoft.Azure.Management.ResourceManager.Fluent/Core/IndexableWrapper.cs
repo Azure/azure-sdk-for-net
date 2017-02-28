@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public void SetInner(InnerT innerObject)
         {
-            this.Inner = innerObject;
+            Inner = innerObject;
         }
     }
 }

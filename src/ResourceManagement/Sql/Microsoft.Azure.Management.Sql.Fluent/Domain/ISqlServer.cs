@@ -15,11 +15,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Server.
     /// </summary>
     public interface ISqlServer  :
-        IGroupableResource<ISqlManager>,
+        IGroupableResource<ISqlManager, ServerInner>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         IUpdatable<SqlServer.Update.IUpdate>,
-        IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>,
-        IHasInner<Models.ServerInner>
+        IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>
     {
         /// <summary>
         /// Gets the administrator login user name for the SQL Server.

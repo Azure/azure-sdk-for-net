@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworks
     {
         ///GENMHASH:99AB116FA6B60A0F95DB5F2163F9ADFA:B5BDA251123B955B743DF55108166660
-        internal  NetworksImpl (NetworkManagementClient networkClient, NetworkManager networkManager)
+        internal  NetworksImpl (INetworkManagementClient networkClient, NetworkManager networkManager)
             : base(networkClient.VirtualNetworks, networkManager)
         {
         }
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         internal PagedList<INetwork> List ()
         {
-            var pagedList = new PagedList<VirtualNetworkInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<VirtualNetworkInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         internal PagedList<INetwork> ListByGroup (string groupName)
         {
-            var pagedList = new PagedList<VirtualNetworkInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<VirtualNetworkInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -59,13 +59,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<INetwork> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 dhcp.DnsServers = new List<string>();
             }
-            return new NetworkImpl(name, inner, InnerCollection, Manager);
+            return new NetworkImpl(name, inner, Inner, Manager);
         }
 
         //$TODO: this should return NetworkImpl
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95C9E8EAF4F740DFFF516E71ABF00C42:E81780AEFA4C9F41FD95A65101672DF8
         override protected INetwork WrapModel (VirtualNetworkInner inner)
         {
-            return new NetworkImpl(inner.Name, inner, InnerCollection, Manager);
+            return new NetworkImpl(inner.Name, inner, Inner, Manager);
         }
     }
 }

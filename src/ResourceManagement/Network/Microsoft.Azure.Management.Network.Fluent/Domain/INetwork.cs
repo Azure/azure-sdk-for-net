@@ -12,9 +12,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for Virtual Network management API in Azure.
     /// </summary>
     public interface INetwork  :
-        IGroupableResource<INetworkManager>,
+        IGroupableResource<INetworkManager, VirtualNetworkInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
-        IHasInner<Models.VirtualNetworkInner>,
         IUpdatable<Network.Update.IUpdate>
     {
         /// <summary>

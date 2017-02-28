@@ -22,59 +22,58 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 resource.SoaRecord = new SoaRecord();
              }
 
-             if (this.Inner.SoaRecord.Email != null)
+             if (Inner.SoaRecord.Email != null)
              {
-                resource.SoaRecord.Email = this.Inner.SoaRecord.Email;
+                resource.SoaRecord.Email = Inner.SoaRecord.Email;
              }
             
-             if (this.Inner.SoaRecord.ExpireTime != null)
+             if (Inner.SoaRecord.ExpireTime != null)
              {
-                resource.SoaRecord.ExpireTime = this.Inner.SoaRecord.ExpireTime;
+                resource.SoaRecord.ExpireTime = Inner.SoaRecord.ExpireTime;
              }
              
-             if (this.Inner.SoaRecord.MinimumTtl != null)
+             if (Inner.SoaRecord.MinimumTtl != null)
              {
-                resource.SoaRecord.MinimumTtl = this.Inner.SoaRecord.MinimumTtl;
+                resource.SoaRecord.MinimumTtl = Inner.SoaRecord.MinimumTtl;
              }
              
-             if (this.Inner.SoaRecord.RefreshTime != null)
+             if (Inner.SoaRecord.RefreshTime != null)
              {
-                resource.SoaRecord.RefreshTime = this.Inner.SoaRecord.RefreshTime;
+                resource.SoaRecord.RefreshTime = Inner.SoaRecord.RefreshTime;
              }
 
-             if (this.Inner.SoaRecord.RetryTime != null)
+             if (Inner.SoaRecord.RetryTime != null)
              {
-                resource.SoaRecord.RetryTime = this.Inner.SoaRecord.RetryTime;
+                resource.SoaRecord.RetryTime = Inner.SoaRecord.RetryTime;
              }
              
-             if (this.Inner.SoaRecord.SerialNumber != null)
+             if (Inner.SoaRecord.SerialNumber != null)
              {
-                resource.SoaRecord.SerialNumber = this.Inner.SoaRecord.SerialNumber;
+                resource.SoaRecord.SerialNumber = Inner.SoaRecord.SerialNumber;
              }
              
-             this.Inner.SoaRecord = new SoaRecord();
+             Inner.SoaRecord = new SoaRecord();
              return resource;
         }
 
         ///GENMHASH:336FEA01421A8435A2D03E2E622EC294:E42DE42A88E9C5F585C74E76DA54EF39
         public SoaRecord Record()
         {
-            return this.Inner.SoaRecord;
+            return Inner.SoaRecord;
         }
 
         ///GENMHASH:95E0FEFA5B6425061BFC820775C7828F:CA299EA256F0BDA5FC1EAD032F4E9E7D
-        internal static SoaRecordSetImpl NewRecordSet(DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static SoaRecordSetImpl NewRecordSet(DnsZoneImpl parent)
         {
              return new SoaRecordSetImpl(parent,
              new RecordSetInner {
                 Name = "@",
-                Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.SOA),
+                Type = Enum.GetName(typeof(RecordType), Models.RecordType.SOA),
                 SoaRecord = new SoaRecord()
-             },
-             client);
+             });
         }
 
-        internal  SoaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  SoaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
     }

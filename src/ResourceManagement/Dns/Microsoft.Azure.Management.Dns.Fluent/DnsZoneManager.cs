@@ -10,24 +10,22 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    public class DnsZoneManager : ManagerBase, IDnsZoneManager
+    public class DnsZoneManager : Manager<IDnsManagementClient>, IDnsZoneManager
     {
-        #region SDK clients
-        private DnsManagementClient client;
-        #endregion
-
         #region Fluent private collections
         private IDnsZones dnsZones;
         #endregion
 
 
-        public DnsZoneManager(RestClient restClient, string subscriptionId)  : base(restClient, subscriptionId)
-        {
-            client = new DnsManagementClient(new Uri(restClient.BaseUri),
+        public DnsZoneManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, new DnsManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
         }
 
         #region DnsZoneManager builder
@@ -78,14 +76,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             {
                 if (dnsZones == null)
                 {
-                    dnsZones = new DnsZonesImpl(this.client, this);
+                    dnsZones = new DnsZonesImpl(this);
                 }
                 return dnsZones;
             }
         }
     }
 
-    public interface IDnsZoneManager : IManagerBase
+    public interface IDnsZoneManager : IManager<IDnsManagementClient>
     {
         IDnsZones Zones { get; }
     }

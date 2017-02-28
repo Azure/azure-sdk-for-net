@@ -12,9 +12,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure app service certificate.
     /// </summary>
     public interface IAppServiceCertificate  :
-        IGroupableResource<IAppServiceManager>,
-        IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
-        IHasInner<Models.CertificateInner>
+        IGroupableResource<IAppServiceManager, CertificateInner>,
+        IRefreshable<IAppServiceCertificate>
     {
         /// <summary>
         /// Gets the pfx blob.

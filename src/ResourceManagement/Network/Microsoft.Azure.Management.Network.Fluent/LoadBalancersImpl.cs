@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ILoadBalancers
     {
         ///GENMHASH:DC62D974883C70D83DDB9D5F4637868C:C8672EF40558C709D72F2EABF261037D
-        internal LoadBalancersImpl(NetworkManagementClient networkClient, INetworkManager networkManager)
+        internal LoadBalancersImpl(INetworkManagementClient networkClient, INetworkManager networkManager)
             : base(networkClient.LoadBalancers, networkManager)
         {
         }
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         internal PagedList<ILoadBalancer> List ()
         {
-            var pagedList = new PagedList<LoadBalancerInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<LoadBalancerInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         internal PagedList<ILoadBalancer> ListByGroup (string groupName)
         {
-            var pagedList = new PagedList<LoadBalancerInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<LoadBalancerInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -58,25 +58,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
         override protected LoadBalancerImpl WrapModel (string name)
         {
             LoadBalancerInner inner = new LoadBalancerInner();
-            return new LoadBalancerImpl(name, inner, InnerCollection, Manager);
+            return new LoadBalancerImpl(name, inner, Inner, Manager);
         }
 
         ///GENMHASH:2B5A2E3F465A968F1950DAD37181F731:F150C6361EF462F597E93FAB337DC91B
         override protected ILoadBalancer WrapModel (LoadBalancerInner inner) //$TODO: This needs to return LoadBalancerImpl
         {
-            return new LoadBalancerImpl(inner.Name, inner, InnerCollection, Manager);
+            return new LoadBalancerImpl(inner.Name, inner, Inner, Manager);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name);
+            return Inner.DeleteAsync(groupName, name);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<ILoadBalancer> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 

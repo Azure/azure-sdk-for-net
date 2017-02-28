@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <summary>
     /// Interface for the child resource which can be CRUDed independently from the parent resource.
     /// </summary>
-    public interface IIndependentChildResource<ManagerT>  :
-        IGroupableResource<ManagerT>,
+    public interface IIndependentChildResource<ManagerT, InnerT>  :
+        IGroupableResource<ManagerT, InnerT>,
         IIndependentChild<ManagerT>
     {
     }

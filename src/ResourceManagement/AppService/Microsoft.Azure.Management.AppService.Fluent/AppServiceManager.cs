@@ -2,28 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Rest.Azure;
-using Microsoft.Rest;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    public class AppServiceManager : ManagerBase, IAppServiceManager
+    public class AppServiceManager : Manager<IWebSiteManagementClient>, IAppServiceManager
     {
         private IKeyVaultManager keyVaultManager;
         private string tenantId;
         private RestClient restClient;
-
-        #region SDK clients
-        private WebSiteManagementClient client;
-        #endregion
 
         #region Fluent private collections
         private IAppServicePlans appServicePlans;
@@ -35,14 +25,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         #region ctrs
 
-        public AppServiceManager(RestClient restClient, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
-        {
-            client = new WebSiteManagementClient(new Uri(restClient.BaseUri),
+        public AppServiceManager(RestClient restClient, string subscriptionId, string tenantId) :
+            base(restClient, subscriptionId, new WebSiteManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
-            keyVaultManager = Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManager.Authenticate(RestClient.Configure()
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
+            keyVaultManager = KeyVault.Fluent.KeyVaultManager.Authenticate(RestClient.Configure()
                 .WithBaseUri(restClient.BaseUri)
                 .WithCredentials(restClient.Credentials)
                 .Build(), subscriptionId, tenantId);
@@ -102,8 +94,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServicePlans == null)
                 {
-                    appServicePlans = new AppServicePlansImpl(
-                        client.AppServicePlans, this);
+                    appServicePlans = new AppServicePlansImpl(this);
                 }
                 return appServicePlans;
             }
@@ -115,8 +106,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (webApps == null)
                 {
-                    webApps = new WebAppsImpl(
-                        client.WebApps, this, client);
+                    webApps = new WebAppsImpl(this);
                 }
                 return webApps;
             }
@@ -128,8 +118,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServiceDomains == null)
                 {
-                    appServiceDomains = new AppServiceDomainsImpl(
-                        client.Domains, client.TopLevelDomains, this);
+                    appServiceDomains = new AppServiceDomainsImpl(this);
                 }
                 return appServiceDomains;
             }
@@ -141,8 +130,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServiceCertificates == null)
                 {
-                    appServiceCertificates = new AppServiceCertificatesImpl(
-                        client.Certificates, this);
+                    appServiceCertificates = new AppServiceCertificatesImpl(this);
                 }
                 return appServiceCertificates;
             }
@@ -154,8 +142,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 if (appServiceCertificateOrders == null)
                 {
-                    appServiceCertificateOrders = new AppServiceCertificateOrdersImpl(
-                        client.AppServiceCertificateOrders, this);
+                    appServiceCertificateOrders = new AppServiceCertificateOrdersImpl(this);
                 }
                 return appServiceCertificateOrders;
             }
@@ -172,7 +159,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         #endregion
     }
 
-    public interface IAppServiceManager : IManagerBase
+    public interface IAppServiceManager : IManager<IWebSiteManagementClient>
     {
         IAppServicePlans AppServicePlans { get; }
         IWebApps WebApps { get; }

@@ -3,14 +3,10 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using WebAppBase.Definition;
+    using Models;
     using WebAppBase.Update;
-    using WebAppSourceControl.Definition;
     using WebAppSourceControl.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Resource.Fluent.Core;
     using System.Threading;
 
     /// <summary>
@@ -30,7 +26,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where UpdateT : class, IUpdate<FluentT>
     {
         private WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent;
-        private WebSiteManagementClient serviceClient;
         private string githubAccessToken;
 
         ///GENMHASH:8560BA43F3FC1809A8347C8CFFC2AB2F:153E3E10E3E86D913133A2F022C5C3C5
@@ -56,7 +51,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             if (githubAccessToken != null)
             {
-                return await serviceClient.UpdateSourceControlAsync("Github", new SourceControlInner
+                return await parent.Manager.Inner.UpdateSourceControlAsync("Github", new SourceControlInner
                 {
                     Location = Parent().RegionName,
                     Token = githubAccessToken
@@ -72,11 +67,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:DBC91E274023CE112BF5317D36B0BDC3:08D6495FD781CCB57E524CE9B1EDE729
-        internal WebAppSourceControlImpl(SiteSourceControlInner inner, WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent, WebSiteManagementClient serviceClient)
+        internal WebAppSourceControlImpl(
+            SiteSourceControlInner inner,
+            WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent)
             : base (inner)
         {
             this.parent = parent;
-            this.serviceClient = serviceClient;
         }
 
         ///GENMHASH:A969DD4C3B042B64471282EF52C2AAFC:E8E2064A7FA83CBF5A4805C096AA480A

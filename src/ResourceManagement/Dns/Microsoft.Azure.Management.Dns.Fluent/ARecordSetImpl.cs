@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IList<string> Ipv4Addresses()
         {
             List<string> ipv4Addresses = new List<string>();
-            if (this.Inner.ARecords != null) {
-                foreach(var aRecord in this.Inner.ARecords)  {
+            if (Inner.ARecords != null) {
+                foreach(var aRecord in Inner.ARecords)  {
                     ipv4Addresses.Add(aRecord.Ipv4Address);
                 }
             }
@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:BFFE923AC1A74C33749D31F3CABB1EA2
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.ARecords != null && this.Inner.ARecords.Count > 0) {
+            if (Inner.ARecords != null && Inner.ARecords.Count > 0) {
                 if (resource.ARecords == null) {
                     resource.ARecords = new List<ARecord>();
                 }
-                foreach (var record in this.Inner.ARecords) {
+                foreach (var record in Inner.ARecords) {
                     resource.ARecords.Add(record);
                 }
-                this.Inner.ARecords.Clear();
+                Inner.ARecords.Clear();
             }
 
             if (this.recordSetRemoveInfo.ARecords.Count > 0) {
@@ -57,19 +57,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:E1426F341AA03829F8336FF9716A3A8D:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  ARecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
+        internal  ARecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
 
         ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:7BDEC259FD27CB56EA82014D5B2F1271
-        internal static ARecordSetImpl NewRecordSet(string name, DnsZoneImpl parent, IRecordSetsOperations client)
+        internal static ARecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
             return new ARecordSetImpl(parent,
                 new RecordSetInner {
                     Name = name,
-                    Type = Enum.GetName(typeof(Microsoft.Azure.Management.Dns.Fluent.Models.RecordType), Microsoft.Azure.Management.Dns.Fluent.Models.RecordType.A),
+                    Type = Enum.GetName(typeof(RecordType), Models.RecordType.A),
                     ARecords = new List<ARecord>()
-                }, client);
+                });
         }
     }
 }

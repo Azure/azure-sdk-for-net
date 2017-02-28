@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageType.
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachinePublisher publisher;
         ///GENMHASH:8175A2B55D06EDD2889B5CCA8AAB9443:B3CBCEB2E89FF4D7DBD086799C1C3A5B
-        internal VirtualMachineExtensionImageTypeImpl (IVirtualMachineExtensionImagesOperations client, IVirtualMachinePublisher publisher, VirtualMachineExtensionImageInner inner) : base(inner)
+        internal VirtualMachineExtensionImageTypeImpl(IVirtualMachineExtensionImagesOperations client, IVirtualMachinePublisher publisher, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.client = client;
             this.publisher = publisher;
@@ -26,19 +26,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
         public string Id()
         {
-            return this.Inner.Id;
+            return Inner.Id;
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:F340B9C68B7C557DDB54F615FEF67E89:3054A3D10ED7865B89395E7C007419C9
         public string RegionName()
         {
-            return this.Inner.Location;
+            return Inner.Location;
         }
 
         ///GENMHASH:8E3FF63FC02A3540865E75052785D668:614A841E9596603BBD981A7D09F66158

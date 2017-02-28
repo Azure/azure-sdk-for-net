@@ -2,8 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,16 +16,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ISrvRecordSets
     {
         private DnsZoneImpl dnsZone;
-        private IRecordSetsOperations client;
 
         public async Task<ISrvRecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            RecordSetInner inner = await this.client.GetAsync(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            RecordSetInner inner = await dnsZone.Manager.Inner.RecordSets.GetAsync(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 name,
                 RecordType.SRV,
                 cancellationToken);
-            return new SrvRecordSetImpl(this.dnsZone, inner, this.client);
+            return new SrvRecordSetImpl(dnsZone, inner);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:12F579E9FC43A4A571B88A8BBF9CC790
@@ -36,20 +35,20 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:067B649C793B3A4FB476B1DC9A95DBE0:93DD647D9AB0DB30D017785882D88829
-        internal  SrvRecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
+        internal  SrvRecordSetsImpl(DnsZoneImpl dnsZone)
         {
             this.dnsZone = dnsZone;
-            this.client = client;
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E9415FFDEC272ED3312A39C040C09EFD
         public PagedList<ISrvRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(this.client.ListByType(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 RecordType.SRV), (string nextPageLink) =>
                 {
-                    return client.ListByTypeNext(nextPageLink);
+                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
                 });
             return WrapList(pagedList);
         }
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:03274371FE0B9D92DBF3F1DA42023F15
         protected override ISrvRecordSet WrapModel(RecordSetInner inner)
         {
-            return new SrvRecordSetImpl(this.dnsZone, inner, this.client);
+            return new SrvRecordSetImpl(dnsZone, inner);
         }
     }
 }

@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Resource.Fluent.Core;
+    using Models;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImage.
@@ -26,13 +26,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
         public string Id()
         {
-            return this.Inner.Id;
+            return Inner.Id;
         }
 
         ///GENMHASH:F340B9C68B7C557DDB54F615FEF67E89:3054A3D10ED7865B89395E7C007419C9
         public string RegionName()
         {
-            return this.Inner.Location;
+            return Inner.Location;
         }
 
         ///GENMHASH:06BBF1077FAA38CC78AFC6E69E23FB58:41B9E71253D9CCEFF7CA5542B45F14E6
@@ -57,36 +57,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public OperatingSystemTypes OsType()
         {
             // OperatingSystemTypes is an AutoRest generated type from the swagger
-            return EnumHelper.FromEnumMemberSerializationValue<OperatingSystemTypes>(this.Inner.OperatingSystem);
+            return EnumHelper.FromEnumMemberSerializationValue<OperatingSystemTypes>(Inner.OperatingSystem);
         }
 
         ///GENMHASH:1D0E421DB766190CD95F143F42464EC7:6A4E7C0B70D703812B26F169D2CFCB2F
         public ComputeRoles ComputeRole()
         {
-            if (this.Inner.ComputeRole == null)
+            if (Inner.ComputeRole == null)
             {
                 return ComputeRoles.Unknown;
             }
             // ComputeRole is a fluent level convinence enum
-            return EnumNameAttribute.FromName<ComputeRoles>(this.Inner.ComputeRole);
+            return EnumNameAttribute.FromName<ComputeRoles>(Inner.ComputeRole);
         }
 
         ///GENMHASH:BCB10920AA6CEA36A0DBA6F93351D65A:770B8354C3BC669CD5EB2063212873E4
         public string HandlerSchema()
         {
-            return this.Inner.HandlerSchema;
+            return Inner.HandlerSchema;
         }
 
         ///GENMHASH:355015174124B234A4C86F6B973DD7B3:D292E7D1222E05DF0A23631EE2FED776
         public bool SupportsVirtualMachineScaleSets()
         {
-            return this.Inner.VmScaleSetEnabled.Value;
+            return Inner.VmScaleSetEnabled.Value;
         }
 
         ///GENMHASH:782B21B7A5982B53E0E5315FD604618E:7701C408ACEED1BDD21CBB09C82DE9ED
         public bool SupportsMultipleExtensions()
         {
-            return this.Inner.SupportsMultipleExtensions.Value;
+            return Inner.SupportsMultipleExtensions.Value;
         }
 
         ///GENMHASH:493B1EDB88EACA3A476D936362A5B14C:66128BDE4C307AFBBA299AAD3751C145

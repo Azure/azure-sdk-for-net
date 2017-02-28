@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         internal PagedList<INetworkSecurityGroup> List ()
         {
-            var pagedList = new PagedList<NetworkSecurityGroupInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<NetworkSecurityGroupInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         internal PagedList<INetworkSecurityGroup> ListByGroup (string groupName)
         {
-            var pagedList = new PagedList<NetworkSecurityGroupInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<NetworkSecurityGroupInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -85,13 +85,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         override protected NetworkSecurityGroupImpl WrapModel (string name)
         {
             NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner();
-            return new NetworkSecurityGroupImpl(name, inner, InnerCollection, Manager);
+            return new NetworkSecurityGroupImpl(name, inner, Inner, Manager);
         }
 
         //$TODO: return NetworkSecurityGroupImpl
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:B59141AC50BFD765AA31B7D8EBE354C5:DBC6065F28483C4BE88514804CCBFFAA
         override protected INetworkSecurityGroup WrapModel (NetworkSecurityGroupInner inner)
         {
-            return new NetworkSecurityGroupImpl(inner.Name, inner, InnerCollection, Manager);
+            return new NetworkSecurityGroupImpl(inner.Name, inner, Inner, Manager);
         }
     }
 }

@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:963770852AF9FA245B7756A9091BA5E1:35EFB9F3197D86AF34A553208A6A8B5E
         public ITransparentDataEncryption UpdateStatus(TransparentDataEncryptionStates transparentDataEncryptionState)
         {
-            this.Inner.Status = transparentDataEncryptionState;
+            Inner.Status = transparentDataEncryptionState;
             this.SetInner(
                 this.databasesInner.CreateOrUpdateTransparentDataEncryptionConfiguration(
                     this.ResourceGroupName(),
                     this.SqlServerName(),
                     this.DatabaseName(),
-                    this.Inner));
+                    Inner));
 
             return this;
         }
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal TransparentDataEncryptionImpl(TransparentDataEncryptionInner innerObject, IDatabasesOperations databasesInner)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.FromString(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(Inner.Id);
             this.databasesInner = databasesInner;
         }
 
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:06F61EC9451A16F634AEB221D51F2F8C:1ABA34EF946CBD0278FAD778141792B2
         public TransparentDataEncryptionStates Status()
         {
-            return this.Inner.Status.GetValueOrDefault();
+            return Inner.Status.GetValueOrDefault();
         }
     }
 }

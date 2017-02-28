@@ -3,16 +3,15 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageVersions.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbWFnZVZlcnNpb25zSW1wbA==
     internal partial class VirtualMachineExtensionImageVersionsImpl :
-        ReadableWrappers<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtensionImageVersionImpl, Models.VirtualMachineExtensionImageInner>,
+        ReadableWrappers<IVirtualMachineExtensionImageVersion, VirtualMachineExtensionImageVersionImpl, VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageVersions
     {
         private IVirtualMachineExtensionImagesOperations client;
@@ -25,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:DE7A9E25A3A0DA8C686B167840FC2C68
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion> List()
+        public PagedList<IVirtualMachineExtensionImageVersion> List()
         {
             return WrapList(this.client.ListVersions(
                 type.RegionName,

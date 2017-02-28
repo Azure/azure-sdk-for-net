@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
     /// (Note: this interface is not intended to be implemented by user code).
     /// </summary>
     /// <typeparam name="">The type of the resources listed.</typeparam>
-    public interface ISupportsListingByParent<T, ParentT, ManagerT> where ParentT : IGroupableResource<ManagerT>
+    public interface ISupportsListingByParent<T, ParentT, ManagerT> where ParentT : IResource, IHasResourceGroup
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.

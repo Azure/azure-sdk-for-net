@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:889A7F8637F19A4ED19E45F820660A34:B16DDC09F7A2219086D4252E79738610
         public bool IsSystem()
         {
-            return this.Inner.IsSystem.GetValueOrDefault();
+            return Inner.IsSystem.GetValueOrDefault();
         }
 
         ///GENMHASH:CDF93F9784B71C89BE4A0C05251822C7:B800FA8E3517BE137F6E49C8775C0FA6
         public bool IsDefault()
         {
-            return this.Inner.IsDefault.GetValueOrDefault();
+            return Inner.IsDefault.GetValueOrDefault();
         }
 
         ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:9FE42D967416923E070F823D07063A47
@@ -43,19 +43,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:D0058F471249EF9DC848FC249DF641F9:896ECA7AFE82035F26A379486227ABF8
         public string ServiceObjectiveName()
         {
-            return this.Inner.ServiceObjectiveName;
+            return Inner.ServiceObjectiveName;
         }
 
         ///GENMHASH:7B3CA3D467253D93C6FF7587C3C0D0B7:F5293CC540B22E551BB92F6FCE17DE2C
         public string Description()
         {
-            return this.Inner.Description;
+            return Inner.Description;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:D6BF73A4CFB4DF465653CAFA9E2F5177
@@ -68,21 +68,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
         public string Id()
         {
-            return this.Inner.Id;
+            return Inner.Id;
         }
 
         ///GENMHASH:1AB678115EC14BC6A56602D164114315:BE55E38683913BEF23106A037A3E9F1C
         internal ServiceObjectiveImpl(ServiceObjectiveInner innerObject, IServersOperations serversInner)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.FromString(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(Inner.Id);
             this.serversInner = serversInner;
         }
 
         ///GENMHASH:1703877FCECC33D73EA04EEEF89045EF:EB71563FB99F270D0827FDCDA083A584
         public bool Enabled()
         {
-            return this.Inner.Enabled.GetValueOrDefault();
+            return Inner.Enabled.GetValueOrDefault();
         }
     }
 }

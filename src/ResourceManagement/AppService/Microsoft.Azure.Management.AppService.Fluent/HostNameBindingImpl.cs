@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using HostNameBinding.UpdateDefinition;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Models;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.ResourceActions;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -20,18 +20,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVCaW5kaW5nSW1wbA==
     internal partial class HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> :
-        IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameBindingInner>,
-        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>,
+        IndexableWrapper<HostNameBindingInner>,
+        ICreatable<IHostNameBinding>,
         IHostNameBinding,
         HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
-        IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
+        IUpdateDefinition<IUpdate<FluentT>>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
         where FluentT : class, IWebAppBase
         where DefAfterRegionT : class
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
     {
-        private IWebAppsOperations client;
         private FluentImplT parent;
         private string domainName;
         private string name;
@@ -40,7 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Name();
+                return Name();
             }
         }
 
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Id();
+                return Id();
             }
         }
 
@@ -73,7 +72,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:6512D3749B75699084BD4F008D90C101:1006227322BF1ED668B3D3B04C2C1A00
         public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithSubDomain(string subDomain)
         {
-            this.name = NormalizeHostNameBindingName(subDomain, domainName);
+            name = NormalizeHostNameBindingName(subDomain, domainName);
             return this;
         }
 
@@ -105,8 +104,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public async Task<IHostNameBinding> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var hostNameBindingInner = parent is IDeploymentSlot
-                    ? await client.CreateOrUpdateHostNameBindingSlotAsync(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, name, Inner, parent.Name)
-                    : await client.CreateOrUpdateHostNameBindingAsync(parent.ResourceGroupName, parent.Name, name, Inner);
+                    ? await parent.Manager.Inner.WebApps.CreateOrUpdateHostNameBindingSlotAsync(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, name, Inner, parent.Name)
+                    : await parent.Manager.Inner.WebApps.CreateOrUpdateHostNameBindingAsync(parent.ResourceGroupName, parent.Name, name, Inner);
             SetInner(hostNameBindingInner);
 
             return this;
@@ -164,15 +163,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:405D133ADB31FC54FCFE6E63CC7CE6DF:528163E8A39CE260ED65B356ABCB872C
-        internal HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent, IWebAppsOperations client)
+        internal HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent)
                 : base(innerObject)
         {
             this.parent = parent;
-            this.client = client;
-            this.name = innerObject.Name;
+            name = innerObject.Name;
             if (name != null && name.Contains("/"))
             {
-                this.name = name.Replace(parent.Name + "/", "");
+                name = name.Replace(parent.Name + "/", "");
             }
         }
 
@@ -218,7 +216,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             Inner.DomainId = domain.Id;
             Inner.HostNameType = Models.HostNameType.Managed;
-            this.domainName = domain.Name;
+            domainName = domain.Name;
 
             return this;
         }
@@ -232,7 +230,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:9E6C2387B371ABFFE71039FB9CDF745F:E5EF1EA4BA2D309DA43A37720754443C
         new public string ToString()
         {
-            String suffix;
+            string suffix;
             if (AzureResourceType() == Models.AzureResourceType.TrafficManager)
             {
                 suffix = ".Trafficmanager.Net";
@@ -249,11 +247,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             if (parent is IDeploymentSlot)
             {
-                this.SetInner(client.GetHostNameBindingSlot(Parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, name));
+                SetInner(parent.Manager.Inner.WebApps.GetHostNameBindingSlot(Parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, name));
             }
             else
             {
-                this.SetInner(client.GetHostNameBinding(parent.ResourceGroupName, parent.Name, name));
+                SetInner(parent.Manager.Inner.WebApps.GetHostNameBinding(parent.ResourceGroupName, parent.Name, name));
             }
 
             return this;
@@ -263,11 +261,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             if (parent is IWebApp)
             {
-                SetInner(client.GetHostNameBinding(parent.ResourceGroupName, parent.Name, Name()));
+                SetInner(parent.Manager.Inner.WebApps.GetHostNameBinding(parent.ResourceGroupName, parent.Name, Name()));
             }
             else
             {
-                SetInner(client.GetHostNameBindingSlot(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, Name()));
+                SetInner(parent.Manager.Inner.WebApps.GetHostNameBindingSlot(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, Name()));
             }
             return this;
         }

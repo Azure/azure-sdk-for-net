@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         IndependentChildrenImpl<T,ImplT,InnerT, InnerCollectionT, ManagerT, ParentT>
         where T : class, IHasId
         where ImplT : T
-        where ParentT : IGroupableResource<ManagerT>
+        where ParentT : IResource, IHasResourceGroup
     {
         ///GENMHASH:74E72052324700D906F1B847F422F81F:0FCD47CBCD9128C3D4A03458C5796741
         public IndependentChildResourcesImpl(InnerCollectionT innerCollection, ManagerT manager) : base(innerCollection, manager)

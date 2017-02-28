@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServiceCertificate.Definition;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Models;
+    using Resource.Fluent;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -29,7 +29,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IAppServiceCertificate,
         IDefinition
     {
-        private ICertificatesOperations client;
         private string pfxFileUrl;
         private IAppServiceCertificateOrder certificateOrder;
 
@@ -110,7 +109,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Inner.KeyVaultId = keyVaultBinding.KeyVaultId;
                 Inner.KeyVaultSecretName = keyVaultBinding.KeyVaultSecretName;
             }
-            SetInner(await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
+            SetInner(await Manager.Inner.Certificates.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
             return this;
         }
 
@@ -141,10 +140,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
-        internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, ICertificatesOperations client, IAppServiceManager manager)
+        internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, IAppServiceManager manager)
                     : base(Name, innerObject, manager)
         {
-            this.client = client;
         }
 
         ///GENMHASH:2011D9A3168939FB5CC6C7A6E7141572:CEC8E083AF5149E6FBE98797F626ABD8
@@ -175,7 +173,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
         public override IAppServiceCertificate Refresh()
         {
-            this.SetInner(client.Get(ResourceGroupName, Name));
+            SetInner(Manager.Inner.Certificates.Get(ResourceGroupName, Name));
             return this;
         }
 

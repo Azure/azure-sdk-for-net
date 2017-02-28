@@ -8,22 +8,23 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-    public class ResourceManager : ManagerBase, IResourceManager
+    public class ResourceManager : Manager<IResourceManagementClient>, IResourceManager
     {
         #region SDK clients
-        private ResourceManagementClient resourceManagementClient;
         private FeatureClient featureClient;
         #endregion
 
         #region ctrs
 
-        private ResourceManager(RestClient restClient, string subscriptionId) : base(null, subscriptionId)
-        {
-            resourceManagementClient = new ResourceManagementClient(new Uri(restClient.BaseUri),
+        private ResourceManager(RestClient restClient, string subscriptionId) :
+            base(null, subscriptionId, new ResourceManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            resourceManagementClient.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
             featureClient = new FeatureClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
@@ -180,7 +181,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 if (resourceGroups == null)
                 {
-                    resourceGroups = new ResourceGroupsImpl(resourceManagementClient.ResourceGroups);
+                    resourceGroups = new ResourceGroupsImpl(Inner.ResourceGroups);
                 }
                 return resourceGroups;
             }
@@ -192,7 +193,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 if (genericResources == null)
                 {
-                    genericResources = new GenericResourcesImpl(resourceManagementClient, this);
+                    genericResources = new GenericResourcesImpl(Inner, this);
 
                 }
                 return genericResources;
@@ -205,8 +206,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 if (deployments == null)
                 {
-                    deployments = new DeploymentsImpl(resourceManagementClient.Deployments,
-                        resourceManagementClient.DeploymentOperations,
+                    deployments = new DeploymentsImpl(Inner.Deployments,
+                        Inner.DeploymentOperations,
                         this);
                 }
                 return deployments;
@@ -231,7 +232,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 if (providers == null)
                 {
-                    providers = new ProvidersImpl(resourceManagementClient.Providers);
+                    providers = new ProvidersImpl(Inner.Providers);
                 }
                 return providers;
             }
@@ -243,7 +244,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// <summary>
     /// Entry point to Azure resource management.
     /// </summary>
-    public interface IResourceManager : IManagerBase
+    public interface IResourceManager : IManager<IResourceManagementClient>
     {
         /// <summary>
         /// Gets the resource group management API entry point.

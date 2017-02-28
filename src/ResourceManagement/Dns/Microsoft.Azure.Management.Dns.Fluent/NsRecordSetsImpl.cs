@@ -2,8 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,39 +16,39 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         INSRecordSets
     {
         private DnsZoneImpl dnsZone;
-        private IRecordSetsOperations client;
 
         public async Task<INSRecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            RecordSetInner inner = await this.client.GetAsync(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            RecordSetInner inner = await dnsZone.Manager.Inner.RecordSets.GetAsync(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 name,
                 RecordType.NS,
                 cancellationToken);
-            return new NSRecordSetImpl(this.dnsZone, inner, this.client);
+            return new NSRecordSetImpl(dnsZone, inner);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:4A497749B5E023624BDEB285134C423F
         public INSRecordSet GetByName(string name)
         {
-            return this.GetByNameAsync(name, CancellationToken.None).Result;
+            return GetByNameAsync(name, CancellationToken.None).Result;
         }
 
         ///GENMHASH:87CC6AA908BEE0D6E4535EB1332F9164:93DD647D9AB0DB30D017785882D88829
-        internal  NSRecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
+        internal  NSRecordSetsImpl(DnsZoneImpl dnsZone)
         {
             this.dnsZone = dnsZone;
-            this.client = client;
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:1D093FE5F27526EC91963B97D8C4EFC9
         public PagedList<INSRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(this.client.ListByType(this.dnsZone.ResourceGroupName,
-                this.dnsZone.Name,
+            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
+                dnsZone.ResourceGroupName,
+                dnsZone.Name,
                 RecordType.NS), (string nextPageLink) =>
                 {
-                    return client.ListByTypeNext(nextPageLink);
+                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
                 });
             return WrapList(pagedList);
         }
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:ADE4AD664D47FA28F09C3CE440BD1806
         protected override INSRecordSet WrapModel(RecordSetInner inner)
         {
-            return new NSRecordSetImpl(this.dnsZone, inner, this.client);
+            return new NSRecordSetImpl(dnsZone, inner);
         }
     }
 }

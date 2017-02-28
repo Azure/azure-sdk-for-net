@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IPublicIPAddresses
     {
         ///GENMHASH:053A36D2D2F106CA9668224DB2C96180:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal PublicIPAddressesImpl(NetworkManagementClient client, INetworkManager networkManager)
+        internal PublicIPAddressesImpl(INetworkManagementClient client, INetworkManager networkManager)
             : base(client.PublicIPAddresses, networkManager)
         {
         }
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 inner.DnsSettings = new PublicIPAddressDnsSettings();
             }
 
-            return new PublicIPAddressImpl(name, inner, InnerCollection, Manager);
+            return new PublicIPAddressImpl(name, inner, Inner, Manager);
         }
 
         //$TODO: shoudl return PublicIPAddressImpl
@@ -46,15 +46,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:B52B92D4359429345BB9A526A6320669:90C57C05A1A9A5C6A7F2A81DCB266191
         override protected IPublicIPAddress WrapModel(PublicIPAddressInner inner)
         {
-            return new PublicIPAddressImpl(inner.Id, inner, InnerCollection, Manager);
+            return new PublicIPAddressImpl(inner.Id, inner, Inner, Manager);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         internal PagedList<IPublicIPAddress> List()
         {
-            var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            var pagedList = new PagedList<PublicIPAddressInner>(Inner.ListAll(), (string nextPageLink) =>
             {
-                return InnerCollection.ListAllNext(nextPageLink);
+                return Inner.ListAllNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         internal PagedList<IPublicIPAddress> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            var pagedList = new PagedList<PublicIPAddressInner>(Inner.List(groupName), (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
 
             return WrapList(pagedList);
@@ -80,13 +80,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IPublicIPAddress> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
+            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
     }

@@ -34,21 +34,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:957BA7B4E61C9B91983ED17E2B61DBD7:9549FCCFE13908133153A6585989F147
         public string ElasticPoolName()
         {
-            return this.Inner.ElasticPoolName;
+            return Inner.ElasticPoolName;
         }
 
         ///GENMHASH:C3E676C1E567606631528A28B60C9771:D3C554B6F628CA009F2AB5D1A90A12F8
         public SqlDatabaseImpl WithEdition(string edition)
         {
-            this.Inner.Edition = edition;
+            Inner.Edition = edition;
             return this;
         }
 
         ///GENMHASH:396EF11BF84C5A5AEDE59746D18EF7FA:5DA565B751F97F39EE5A582282DB4BCC
         public SqlDatabaseImpl WithServiceObjective(string serviceLevelObjective)
         {
-            this.Inner.RequestedServiceObjectiveName = serviceLevelObjective;
-            this.Inner.RequestedServiceObjectiveId = null;
+            Inner.RequestedServiceObjectiveName = serviceLevelObjective;
+            Inner.RequestedServiceObjectiveId = null;
 
             return this;
         }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:F5BFC9500AE4C04846BAAD2CC50792B3:DA87C4AB3EEB9D4BA746DF610E8BC39F
         public string Edition()
         {
-            return this.Inner.Edition;
+            return Inner.Edition;
         }
 
         ///GENMHASH:7B6933FD706B12808B9D39A178094149:67E0D89B9ED5BC9ECD83BA032F54BCDD
@@ -79,20 +79,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:B23645FC2F779DBC6F44B880C488B561:FD8121B9F8029AC826DD64E68A0C727C
         public SqlDatabaseImpl WithMaxSizeBytes(long maxSizeBytes)
         {
-            this.Inner.MaxSizeBytes = maxSizeBytes.ToString();
+            Inner.MaxSizeBytes = maxSizeBytes.ToString();
             return this;
         }
 
         ///GENMHASH:D2C5B9B5EC8B12A40F6CC3A999383810:AA70F16BA24A6FB5F01832A54902603A
         public Guid CurrentServiceObjectiveId()
         {
-            return this.Inner.CurrentServiceObjectiveId.GetValueOrDefault();
+            return Inner.CurrentServiceObjectiveId.GetValueOrDefault();
         }
 
         ///GENMHASH:7EF1D1197B665941F65A1D87438FFF51:6720981D90FC7BDAEC21501CC0D020D9
         public SqlDatabaseImpl WithExistingElasticPool(string elasticPoolName)
         {
-            this.Inner.ElasticPoolName = elasticPoolName;
+            Inner.ElasticPoolName = elasticPoolName;
             return this;
         }
 
@@ -110,13 +110,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:2E256CC1ACCA4253233F61C79F9D712E:B8220E91EC25625885438BBA3AFCE559
         public IUpgradeHint GetUpgradeHint()
         {
-            if (this.Inner.UpgradeHint == null)
+            if (Inner.UpgradeHint == null)
             {
                 this.SetInner(this.innerCollection.Get(this.ResourceGroupName, this.SqlServerName(), this.Name, "upgradeHint"));
             }
-            if (this.Inner.UpgradeHint != null)
+            if (Inner.UpgradeHint != null)
             {
-                return new UpgradeHintImpl(this.Inner.UpgradeHint);
+                return new UpgradeHintImpl(Inner.UpgradeHint);
             }
 
             return null;
@@ -125,37 +125,37 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:A26C8D278B6519B28BA17D3966024017:F423185C6D626161C0F1E1F2B8386ECC
         public long MaxSizeBytes()
         {
-            return long.Parse(this.Inner.MaxSizeBytes);
+            return long.Parse(Inner.MaxSizeBytes);
         }
 
         ///GENMHASH:68AE3BBF06B3A5F31F06F3A6A3469188:CF334608A3F1A8CD53872D1D3F94B016
         public string DefaultSecondaryLocation()
         {
-            return this.Inner.DefaultSecondaryLocation;
+            return Inner.DefaultSecondaryLocation;
         }
 
         ///GENMHASH:09F37EE7E8975407273D6FA4FB12441D:5B750DDCC180A5B0F60DE4E3840E3CCB
         public string Collation()
         {
-            return this.Inner.Collation;
+            return Inner.Collation;
         }
 
         ///GENMHASH:41180B8AE28244EF8581E555D8B35D2B:2DF5AEC1603C5646911A31D59840F773
         public string DatabaseId()
         {
-            return this.Inner.DatabaseId;
+            return Inner.DatabaseId;
         }
 
         ///GENMHASH:FA6C4C8AE7729C6D128F00A0883B7A82:050D474227760B6267EFCEC6085DD2B2
         public DateTime EarliestRestoreDate()
         {
-            return this.Inner.EarliestRestoreDate.GetValueOrDefault();
+            return Inner.EarliestRestoreDate.GetValueOrDefault();
         }
 
         ///GENMHASH:DF623B844EDAA9403C7ADB3E4D089ADD:1E1FA9AB1DCE4AD9527CF761EC52F4BC
         public string RequestedServiceObjectiveName()
         {
-            return this.Inner.RequestedServiceObjectiveName;
+            return Inner.RequestedServiceObjectiveName;
         }
 
         ///GENMHASH:94274C9965DC54702B64A387A19F1F2B:CBA2A056219E542449E5F7E9EBA4B7D8
@@ -176,14 +176,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:36003534781597C965476F5DF65AFAE0:DA791BE2F36A2C18D1735C6D541B662C
         public SqlDatabaseImpl WithCollation(string collation)
         {
-            this.Inner.Collation = collation;
+            Inner.Collation = collation;
             return this;
         }
 
         ///GENMHASH:A521981B274EF2B3D621C0705EFAA811:04B6FF01426ED6345B850E411A20FD6F
         public SqlDatabaseImpl WithMode(string createMode)
         {
-            this.Inner.CreateMode = createMode;
+            Inner.CreateMode = createMode;
             return this;
         }
 
@@ -214,14 +214,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 var sqlElasticPool = (ISqlElasticPool)this.CreatedResource(this.elasticPoolCreatableKey);
                 WithExistingElasticPool(sqlElasticPool);
             }
-            if (!string.IsNullOrWhiteSpace(this.Inner.ElasticPoolName))
+            if (!string.IsNullOrWhiteSpace(Inner.ElasticPoolName))
             {
-                this.Inner.Edition = string.Empty;
-                this.Inner.RequestedServiceObjectiveName = string.Empty;
-                this.Inner.RequestedServiceObjectiveId = null;
+                Inner.Edition = string.Empty;
+                Inner.RequestedServiceObjectiveName = string.Empty;
+                Inner.RequestedServiceObjectiveId = null;
             }
 
-            var databaseInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.SqlServerName(), this.Name, this.Inner);
+            var databaseInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.SqlServerName(), this.Name, Inner);
 
             SetInner(databaseInner);
             this.elasticPoolCreatableKey = null;
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:D460F07553280DBC1866880BA0BD8AEF
         public override ISqlDatabase Refresh()
         {
-            if (this.Inner.UpgradeHint != null)
+            if (Inner.UpgradeHint != null)
             {
                 this.SetInner(this.innerCollection.Get(this.ResourceGroupName, this.SqlServerName(), this.Name));
             }
@@ -278,13 +278,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:ED7351448838F0ED89C6E4AE8FB19EAE:E3FFCB76DD3743CD850897669FC40D12
         public DateTime CreationDate()
         {
-            return this.Inner.CreationDate.GetValueOrDefault();
+            return Inner.CreationDate.GetValueOrDefault();
         }
 
         ///GENMHASH:411E9B7C553E0F8FE64EB33DF4872E6A:A0F10EC124D07E925E3BE6285203F7E0
         public string ServiceLevelObjective()
         {
-            return this.Inner.ServiceLevelObjective;
+            return Inner.ServiceLevelObjective;
         }
 
         ///GENMHASH:0F0FD44A3D87F875885456FD45CEE6DF:FC20F8BEAA0D65FFE9DA4206313524DE
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:F5717DCDC59DCEC39989A49248CA5245:753DCACCE1725C3E1909124033BA7DBE
         public SqlDatabaseImpl WithoutElasticPool()
         {
-            this.Inner.ElasticPoolName = "";
+            Inner.ElasticPoolName = "";
             return this;
         }
 
@@ -310,13 +310,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:B1D3E971A2C4574ED03F74E5745E8301:B5D8E6907D7456C71BFBDDD84D4CAF3D
         public Guid RequestedServiceObjectiveId()
         {
-            return this.Inner.RequestedServiceObjectiveId.GetValueOrDefault();
+            return Inner.RequestedServiceObjectiveId.GetValueOrDefault();
         }
 
         ///GENMHASH:F8954D151717AC497C4A3B76321952A6:6742E1EFB9385FBFEB7C33ADDE36250E
         public IWithCreateMode WithSourceDatabase(string sourceDatabaseId)
         {
-            this.Inner.SourceDatabaseId = sourceDatabaseId;
+            Inner.SourceDatabaseId = sourceDatabaseId;
             return this;
         }
 
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:06F61EC9451A16F634AEB221D51F2F8C:1ABA34EF946CBD0278FAD778141792B2
         public string Status()
         {
-            return this.Inner.Status;
+            return Inner.Status;
         }
 
         ///GENMHASH:6F25566A2BEBF8E935396FF70D7412F6:51165F870EA30D4BEC4237182E7E63FE

@@ -12,7 +12,7 @@ using Xunit;
 namespace Azure.Tests.Common
 {
     public abstract class TestTemplate<T, C, ManagerT>
-        where T : IGroupableResource<ManagerT>
+        where T : IResource, IHasResourceGroup
         where C : ISupportsListing<T>, ISupportsGettingByGroup<T>, ISupportsDeletingById, ISupportsGettingById<T>
     {
         protected string TestId { get; private set; }

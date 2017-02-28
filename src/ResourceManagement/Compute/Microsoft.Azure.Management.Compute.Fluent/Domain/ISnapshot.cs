@@ -11,10 +11,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure managed snapshot.
     /// </summary>
     public interface ISnapshot  :
-        IGroupableResource<IComputeManager>,
-        IRefreshable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
-        IHasInner<Models.SnapshotInner>,
-        IUpdatable<Snapshot.Update.IUpdate>
+        IGroupableResource<IComputeManager, SnapshotInner>,
+        IRefreshable<ISnapshot>,
+        IUpdatable<IUpdate>
     {
         /// <summary>
         /// Revoke access granted to the snapshot.

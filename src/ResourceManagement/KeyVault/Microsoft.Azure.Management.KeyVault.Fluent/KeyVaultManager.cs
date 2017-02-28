@@ -10,14 +10,10 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
-    public class KeyVaultManager : ManagerBase, IKeyVaultManager
+    public class KeyVaultManager : Manager<IKeyVaultManagementClient>, IKeyVaultManager
     {
         private IGraphRbacManager graphRbacManager;
         private string tenantId;
-
-        #region SDK clients
-        private KeyVaultManagementClient client;
-        #endregion
 
         #region Fluent private collections
         private IVaults vaults;
@@ -25,13 +21,15 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
 
         #region ctrs
 
-        public KeyVaultManager(RestClient restClient, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
-        {
-            client = new KeyVaultManagementClient(new Uri(restClient.BaseUri),
+        public KeyVaultManager(RestClient restClient, string subscriptionId, string tenantId) :
+            base(restClient, subscriptionId, new KeyVaultManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
-            client.SubscriptionId = subscriptionId;
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            })
+        {
             string graphEndpoint = AzureEnvironment.AzureGlobalCloud.GraphEndpoint;
             if (restClient.Credentials is AzureCredentials)
             {
@@ -98,7 +96,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 if (vaults == null)
                 {
                     vaults = new VaultsImpl(
-                        client.Vaults,
+                        Inner.Vaults,
                         this,
                         graphRbacManager,
                         tenantId);
@@ -111,7 +109,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         #endregion
     }
 
-    public interface IKeyVaultManager : IManagerBase
+    public interface IKeyVaultManager : IManager<IKeyVaultManagementClient>
     {
         IVaults Vaults { get; }
     }

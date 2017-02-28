@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:A4568D5A538C2116779423E74A62442B
         public override string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:FF8C06269C32F184B39DCFD10D8279BF

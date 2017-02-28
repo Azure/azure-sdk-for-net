@@ -3,8 +3,7 @@
 
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-    using Management.Batch.Fluent;
-    using Management.Batch.Fluent.Models;
+    using Models;
     using Resource.Fluent;
     using Resource.Fluent.Core.ResourceActions;
     using Storage.Fluent;
@@ -31,31 +30,27 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         BatchAccount.Definition.IDefinition,
         BatchAccount.Update.IUpdate
     {
-        private IBatchAccountOperations innerCollection;
         private IStorageManager storageManager;
         private string creatableStorageAccountKey;
         private IStorageAccount existingStorageAccountToAssociate;
         private ApplicationsImpl applicationsImpl;
 
         ///GENMHASH:4A1C1CE1A5FD21C2D77E9D249E53B0FC:2CAC092B38BC608EA9EE02AF770A8C0D
-        internal BatchAccountImpl(string name,
-                BatchAccountInner innerObject,
-                IBatchAccountOperations innerCollection,
-                IBatchManager manager,
-                IApplicationOperations applicationsClient,
-                IApplicationPackageOperations applicationPackagesClient,
-                IStorageManager storageManager)
+        internal BatchAccountImpl(
+            string name,
+            BatchAccountInner innerObject,
+            IBatchManager manager,
+            IStorageManager storageManager)
             : base(name, innerObject, manager)
         {
-            this.innerCollection = innerCollection;
             this.storageManager = storageManager;
-            applicationsImpl = new ApplicationsImpl(applicationsClient, applicationPackagesClient, this);
+            applicationsImpl = new ApplicationsImpl(this);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:7CF0E4D2E689061F164F4E8CBEEE0032
         public override IBatchAccount Refresh()
         {
-            BatchAccountInner response = innerCollection.Get(ResourceGroupName, Name);
+            BatchAccountInner response = Manager.Inner.BatchAccount.Get(ResourceGroupName, Name);
 
             SetInner(response);
             applicationsImpl.Refresh();
@@ -81,7 +76,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             batchAccountCreateParametersInner.Location = Inner.Location;
             batchAccountCreateParametersInner.Tags = Inner.Tags;
 
-            var batchAccountInner = await innerCollection.CreateAsync(ResourceGroupName, Name, batchAccountCreateParametersInner, cancellationToken);
+            var batchAccountInner = await Manager.Inner.BatchAccount.CreateAsync(
+                ResourceGroupName, Name, batchAccountCreateParametersInner, cancellationToken);
             creatableStorageAccountKey = null;
             SetInner(batchAccountInner);
             await applicationsImpl.CommitAndGetAllAsync(cancellationToken);
@@ -128,21 +124,21 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:E4DFA7EA15F8324FB60C810D0C96D2FF:2C24EC1143CD8F8542845A9D3A0F116A
         internal BatchAccountKeys GetKeys()
         {
-            BatchAccountKeysInner keys = innerCollection.GetKeys(ResourceGroupName, Name);
+            BatchAccountKeysInner keys = Manager.Inner.BatchAccount.GetKeys(ResourceGroupName, Name);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
         ///GENMHASH:837770291CB03D6C2AB9BDA889A5B07D:916D2188C6A5919A33DB6C700CE38C2A
         internal BatchAccountKeys RegenerateKeys(AccountKeyType keyType)
         {
-            BatchAccountKeysInner keys = innerCollection.RegenerateKey(ResourceGroupName, Name, keyType);
+            BatchAccountKeysInner keys = Manager.Inner.BatchAccount.RegenerateKey(ResourceGroupName, Name, keyType);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
         ///GENMHASH:F464067830773D729F2254E152F52E95:21A9F1295EB43C714008C5226DECA98E
         internal void SynchronizeAutoStorageKeys()
         {
-            innerCollection.SynchronizeAutoStorageKeys(ResourceGroupName, Name);
+            Manager.Inner.BatchAccount.SynchronizeAutoStorageKeys(ResourceGroupName, Name);
         }
 
         ///GENMHASH:672E69F72385496EBDF873EB27A7AA15:C0743C8E69844064A4120ADE2213CA5B

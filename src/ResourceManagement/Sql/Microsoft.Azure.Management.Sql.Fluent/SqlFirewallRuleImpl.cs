@@ -26,8 +26,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:86CD1E259A3329513723B4E03EFABB98:15BC15CFDD8106B985088348087483E5
         public SqlFirewallRuleImpl WithIpAddressRange(string startIpAddress, string endIpAddress)
         {
-            this.Inner.StartIpAddress = startIpAddress;
-            this.Inner.EndIpAddress = endIpAddress;
+            Inner.StartIpAddress = startIpAddress;
+            Inner.EndIpAddress = endIpAddress;
 
             return this;
         }
@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:C4C0D4751CA4E1904C31CE6DF0B02AC3:B30E59DD4D927FB508DCE8588A7B6C5E
         public string Kind()
         {
-            return this.Inner.Kind;
+            return Inner.Kind;
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:077B87F3E32DB4F7DBE3AFD7C44190B4
         protected override async Task<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var firewallRuleInner = await this.innerCollection.CreateOrUpdateFirewallRuleAsync(this.ResourceGroupName, this.SqlServerName(), this.Name, this.Inner);
+            var firewallRuleInner = await this.innerCollection.CreateOrUpdateFirewallRuleAsync(this.ResourceGroupName, this.SqlServerName(), this.Name, Inner);
             SetInner(firewallRuleInner);
 
             return this;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:F447869988CA4FAC84328D668E8C3E63:FC2F4AB7336D8B5FBACF1012628B157F
         public SqlFirewallRuleImpl WithEndIpAddress(string endIpAddress)
         {
-            this.Inner.EndIpAddress = endIpAddress;
+            Inner.EndIpAddress = endIpAddress;
 
             return this;
         }
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:D5B3C39B9575015B060C5915E28F7DED:E2EB90CF1BFD48AF581DD19E19A48783
         public string StartIpAddress()
         {
-            return this.Inner.StartIpAddress;
+            return Inner.StartIpAddress;
         }
 
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:11CCB9FA7CDA7C4110B5B485953F2C3A
@@ -90,13 +90,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:6ADF1ABD01F52EF2AB48EBDB916AC61B:0E617A4FA7C8B0429E44FA81A0CA93AE
         public string EndIpAddress()
         {
-            return this.Inner.EndIpAddress;
+            return Inner.EndIpAddress;
         }
 
         ///GENMHASH:78ADACC8F10C5519A35307D4BCF30B70:19E90E783DF08C6EF5789BCD8F9F2F63
         public SqlFirewallRuleImpl WithStartIpAddress(string startIpAddress)
         {
-            this.Inner.StartIpAddress = startIpAddress;
+            Inner.StartIpAddress = startIpAddress;
 
             return this;
         }
@@ -116,9 +116,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             get
             {
-                if (this.Inner != null)
+                if (Inner != null)
                 {
-                    return this.Inner.Id;
+                    return Inner.Id;
                 }
 
                 return null;
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:D48F16C6B9830DCBDCBFBD281C142173
         public Region Region()
         {
-            return Resource.Fluent.Core.Region.Create(this.Inner.Location);
+            return Resource.Fluent.Core.Region.Create(Inner.Location);
         }
     }
 }

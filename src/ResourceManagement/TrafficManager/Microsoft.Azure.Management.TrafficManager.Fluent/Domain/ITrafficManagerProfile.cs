@@ -12,9 +12,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     /// An immutable client-side representation of an Azure traffic manager profile.
     /// </summary>
     public interface ITrafficManagerProfile  :
-        IGroupableResource<ITrafficManager>,
+        IGroupableResource<ITrafficManager, ProfileInner>,
         IRefreshable<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        IHasInner<ProfileInner>,
         IUpdatable<TrafficManagerProfile.Update.IUpdate>
     {
         /// <summary>

@@ -23,19 +23,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:8656A38C172C076E1333F8F38C03C729:9F7F41DC9E871B0E7570A255D093021E
         public Guid ServiceLevelObjectiveId()
         {
-            return this.Inner.ServiceLevelObjectiveId.GetValueOrDefault();
+            return Inner.ServiceLevelObjectiveId.GetValueOrDefault();
         }
 
         ///GENMHASH:411E9B7C553E0F8FE64EB33DF4872E6A:A0F10EC124D07E925E3BE6285203F7E0
         public string ServiceLevelObjective()
         {
-            return this.Inner.ServiceLevelObjective;
+            return Inner.ServiceLevelObjective;
         }
 
         ///GENMHASH:C1C0B7CC034C960866980D125808D68D:7B4F68BEB7F199EBCBD2599A04BA443A
         public double InRangeTimeRatio()
         {
-            return this.Inner.InRangeTimeRatio.GetValueOrDefault();
+            return Inner.InRangeTimeRatio.GetValueOrDefault();
         }
     }
 }

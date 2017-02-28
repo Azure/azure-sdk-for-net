@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         IHasInner<InnerCollectionT>
         where T : class, IHasId
         where ImplT : T
-        where ParentT : IGroupableResource<ManagerT>
+        where ParentT : IResource, IHasResourceGroup
     {
-        protected InnerCollectionT innerCollection;
+        private InnerCollectionT innerCollection;
 
         public ManagerT Manager { get; private set; }
 

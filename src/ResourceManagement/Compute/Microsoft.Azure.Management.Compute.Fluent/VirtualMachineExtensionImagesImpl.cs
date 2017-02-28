@@ -3,8 +3,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImages.
@@ -21,13 +20,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:BA2FEDDF9D78BF55786D81F6C85E907C:CD5A589A9B297BE134944F6A531D30E8
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> ListByRegion(Region region)
+        public PagedList<IVirtualMachineExtensionImage> ListByRegion(Region region)
         {
             return ListByRegion(region.Name);
         }
 
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:639E5895B91E59F5F02E157A874115D1
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> ListByRegion(string regionName)
+        public PagedList<IVirtualMachineExtensionImage> ListByRegion(string regionName)
         {
 
             PagedList<IVirtualMachinePublisher> publishers = Publishers().ListByRegion(regionName);

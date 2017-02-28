@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         internal int NetworkInterfaceIPConfigurationCount()
         {
-            var ipConfigRefs = this.Inner.IpConfigurations;
+            var ipConfigRefs = Inner.IpConfigurations;
             if (ipConfigRefs != null)
             {
                 return ipConfigRefs.Count;

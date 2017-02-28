@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return new CheckNameAvailabilityResult(InnerCollection.CheckNameAvailability(name));
+            return new CheckNameAvailabilityResult(Inner.CheckNameAvailability(name));
         }
 
         #endregion Actions
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public PagedList<IStorageAccount> List()
         {
-            IEnumerable<StorageAccountInner> storageAccounts = InnerCollection.List();
+            IEnumerable<StorageAccountInner> storageAccounts = Inner.List();
             var pagedList = new PagedList<StorageAccountInner>(storageAccounts);
             return WrapList(pagedList);
         }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public PagedList<IStorageAccount> ListByGroup(string groupName)
         {
-            IEnumerable<StorageAccountInner> storageAccounts = InnerCollection.ListByResourceGroup(groupName);
+            IEnumerable<StorageAccountInner> storageAccounts = Inner.ListByResourceGroup(groupName);
             var pagedList = new PagedList<StorageAccountInner>(storageAccounts);
             return WrapList(pagedList);
         }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public override async Task<IStorageAccount> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var storageAccount = await InnerCollection.GetPropertiesAsync(groupName, name, cancellationToken);
+            var storageAccount = await Inner.GetPropertiesAsync(groupName, name, cancellationToken);
             return WrapModel(storageAccount);
         }
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public override Task DeleteByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(resourceGroupName, name, cancellationToken);
+            return Inner.DeleteAsync(resourceGroupName, name, cancellationToken);
         }
 
         #endregion Implementation of ISupportsDeletingByGroup interface
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         {
             return new StorageAccountImpl(inner.Name,
                 inner,
-                InnerCollection,
+                Inner,
                 Manager);
         }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             Management.Storage.Fluent.Models.StorageAccountInner innerObject = new StorageAccountInner();
             return new StorageAccountImpl(name,
                 innerObject,
-                InnerCollection,
+                Inner,
                 Manager
             );
         }

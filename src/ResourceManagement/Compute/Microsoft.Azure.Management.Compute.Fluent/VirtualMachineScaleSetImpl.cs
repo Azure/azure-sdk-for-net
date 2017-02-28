@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Storage.Fluent;
+    using Network.Fluent;
+    using Resource.Fluent;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.ResourceActions;
+    using Storage.Fluent;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEltcGw=
     internal partial class VirtualMachineScaleSetImpl :
-        GroupableParentResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet,
+        GroupableParentResource<IVirtualMachineScaleSet,
             Models.VirtualMachineScaleSetInner,
-            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl,
+            VirtualMachineScaleSetImpl,
             IComputeManager,
             VirtualMachineScaleSet.Definition.IWithGroup,
             VirtualMachineScaleSet.Definition.IWithSku,
@@ -39,9 +39,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IUpdate
     {
         // Clients
-        private IVirtualMachineScaleSetsOperations client;
-
-        private IVirtualMachineScaleSetVMsOperations vmInstancesClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
 
@@ -93,14 +90,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         internal VirtualMachineScaleSetImpl(
             string name,
             VirtualMachineScaleSetInner innerModel,
-            IVirtualMachineScaleSetsOperations client,
-            IVirtualMachineScaleSetVMsOperations vmInstancesClient,
             IComputeManager computeManager,
             IStorageManager storageManager,
             INetworkManager networkManager) : base(name, innerModel, computeManager)
         {
-            this.client = client;
-            this.vmInstancesClient = vmInstancesClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.namer = SdkContext.CreateResourceNamer(this.Name);
@@ -151,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
         public void PowerOff()
         {
-            this.client.PowerOff(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.PowerOff(ResourceGroupName, Name);
         }
 
         ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:51AD565B2270FC1F9104F1A5BC632E24
@@ -159,17 +152,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             VirtualHardDisk userImageVhd = new VirtualHardDisk();
             userImageVhd.Uri = imageUrl;
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .StorageProfile.OsDisk.Image = userImageVhd;
             // For platform image osType will be null, azure will pick it from the image metadata.
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Linux;
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile.LinuxConfiguration = new LinuxConfiguration();
             return this;
@@ -178,13 +171,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
         public void Deallocate()
         {
-            this.client.Deallocate(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Deallocate(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
         public VirtualMachineScaleSetImpl WithOsDiskCaching(CachingTypes cachingType)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.Caching = cachingType;
             return this;
@@ -229,14 +222,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2E38406EB22698CAE339875C7D4BDD7E:258FD1D5537E0DC025DC120D7BC231E2
         internal VirtualMachineScaleSetImpl WithUnmanagedDataDisk(VirtualMachineScaleSetUnmanagedDataDiskImpl unmanagedDisk)
         {
-            if (this.Inner.VirtualMachineProfile.StorageProfile.DataDisks == null)
+            if (Inner.VirtualMachineProfile.StorageProfile.DataDisks == null)
             {
-                this.Inner
+                Inner
                 .VirtualMachineProfile
                 .StorageProfile
                 .DataDisks = new List<VirtualMachineScaleSetDataDisk>();
             }
-            IList<VirtualMachineScaleSetDataDisk> dataDisks = this.Inner
+            IList<VirtualMachineScaleSetDataDisk> dataDisks = Inner
                 .VirtualMachineProfile
                 .StorageProfile
                 .DataDisks;
@@ -247,13 +240,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:FFF894943EBDE56EEC0675ADF0891867
         public CachingTypes OsDiskCachingType()
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching.Value;
+            return Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching.Value;
         }
 
         ///GENMHASH:C5EB453493B1100152604C49B4350246:13A96702474EC693EFE5444489CDEDCC
         public VirtualMachineScaleSetImpl WithOsDiskName(string name)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.Name = name;
             return this;
@@ -262,19 +255,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:CEAEE81352B41505EB71BF5E42D2A3B6
         public VirtualMachineScaleSetSkuTypes Sku()
         {
-            return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
+            return new VirtualMachineScaleSetSkuTypes(Inner.Sku);
         }
 
         ///GENMHASH:B2876749E60D892750D75C97943BBB13:00E375F5DFA1F92EE59D32432D8BB9AD
         public VirtualMachineScaleSetImpl WithSpecificLinuxImageVersion(ImageReference imageReference)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.ImageReference = imageReference.Inner;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.LinuxConfiguration = new LinuxConfiguration();
             this.isMarketplaceLinuxImage = true;
@@ -319,7 +312,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:438AB79E7DABFF084F3F25050C0B0DCB
         public VirtualMachineScaleSetImpl WithoutVmAgent()
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
             return this;
@@ -429,7 +422,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public UpgradeMode UpgradeModel()
         {
             // upgradePolicy is a required property so no null check
-            return this.Inner.UpgradePolicy.Mode.Value;
+            return Inner.UpgradePolicy.Mode.Value;
         }
 
         ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:48A72DF34AA591EEC3FD96876F4C2258
@@ -452,7 +445,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:B38C06867B5D878680004A07BD077546
         public long Capacity()
         {
-            return (int)this.Inner.Sku.Capacity.Value;
+            return (int)Inner.Sku.Capacity.Value;
         }
 
         ///GENMHASH:5357697C243DBDD2060BF2C164461C10:CCFD65A9998AF06471C50E7F44A70A67
@@ -485,7 +478,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F2FFAF5448D7DFAFBE00130C62E87053:F7407CEA3D12779F169A4F2984ACFC2B
         public VirtualMachineScaleSetImpl WithRootPassword(string password)
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile
                     .AdminPassword = password;
@@ -591,7 +584,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C9A8EFD03D810995DC8CE56B0EFD441D:E7976D224D54D6C1BB8B22CE27B71F44
         public VirtualMachineScaleSetImpl WithOverProvision(bool enabled)
         {
-            this.Inner
+            Inner
                     .Overprovision = enabled;
             return this;
         }
@@ -619,7 +612,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:98B10909018928720DBCCEBE53E08820:75A4D7D6FD5B54E56A4949AE30530D27
         public VirtualMachineScaleSetImpl WithoutAutoUpdate()
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
             return this;
@@ -698,7 +691,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
         public void Restart()
         {
-            this.client.Restart(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Restart(this.ResourceGroupName, this.Name);
         }
 
         ///GENMHASH:5880487AA9218E8DF536932A49A0ACDD:35850B81E88D88D68766589B9671E590
@@ -738,11 +731,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:9A047B4B22E09AEB6344D4F23EC361E5
         public override IVirtualMachineScaleSet Refresh()
         {
-            var response = client.Get(this.ResourceGroupName,
-                this.Name);
+            var response = Manager.Inner.VirtualMachineScaleSets.Get(ResourceGroupName, Name);
             SetInner(response);
-            this.ClearCachedProperties();
-            this.InitializeChildrenFromInner();
+            ClearCachedProperties();
+            InitializeChildrenFromInner();
             return this;
         }
 
@@ -862,7 +854,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7F0A9CB4CB6BBC98F72CF50A81EBFBF4:3C12806E439FD7F02ABD5EEE521A9AB0
         public VirtualMachineScaleSetStorageProfile StorageProfile()
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile;
+            return Inner.VirtualMachineProfile.StorageProfile;
         }
 
         ///GENMHASH:3874257232804C74BD7501DE2BE2F0E9:D48844CD7D7EEEF909BD7006D3A7E439
@@ -920,20 +912,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             ImageReferenceInner imageReferenceInner = new ImageReferenceInner();
             imageReferenceInner.Id = customImageId;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.ImageReference = imageReferenceInner;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration = new WindowsConfiguration();
             // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
@@ -949,7 +941,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1BBF95374A03EFFD0583730762AB8753:657393D43CB30B9E2DA291459E17BAD9
         public VirtualMachineScaleSetImpl WithTimeZone(string timeZone)
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile.WindowsConfiguration.TimeZone = timeZone;
             return this;
@@ -987,13 +979,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             ImageReferenceInner imageReferenceInner = new ImageReferenceInner();
             imageReferenceInner.Id = customImageId;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.ImageReference = imageReferenceInner;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.LinuxConfiguration = new LinuxConfiguration();
             this.isMarketplaceLinuxImage = true;
@@ -1136,7 +1128,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:33905CDEAEEF3BB750202A2D6D557629:DB1E6EAD0CBA02A64BE5E2EE1AE862FC
         public bool OverProvisionEnabled()
         {
-            return this.Inner.Overprovision.Value;
+            return Inner.Overprovision.Value;
         }
 
         ///GENMHASH:6EBC495ACCF47FA1132C69EF861BEF04:D2A5B97B4B994A8E4E51963BF644DE4B
@@ -1184,7 +1176,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:AFF08018A4055EA21949F6479B3BCCA0:4175296A99E4DC787679DF89D1FABCD5
         public VirtualMachineScaleSetNetworkProfile NetworkProfile()
         {
-            return this.Inner.VirtualMachineProfile.NetworkProfile;
+            return Inner.VirtualMachineProfile.NetworkProfile;
         }
 
         ///GENMHASH:408E3AC8FC1959B99618665484BFE199:6DCFB156DC060B1BEBD0F007DDD76D62
@@ -1194,7 +1186,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return;
             }
-            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner.VirtualMachineProfile.StorageProfile;
+            VirtualMachineScaleSetStorageProfile storageProfile = Inner.VirtualMachineProfile.StorageProfile;
             VirtualMachineScaleSetOSDisk osDisk = storageProfile.OsDisk;
             if (IsOSDiskFromImage(osDisk))
             {
@@ -1238,7 +1230,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 // NOP [ODDisk CreateOption: ATTACH, ATTACH is not supported for VMSS]
             }
-            if (this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
+            if (Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
             {
                 WithOsDiskCaching(CachingTypes.ReadWrite);
             }
@@ -1264,7 +1256,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:5810786355B161A5CD254C9E3BE76524:F7407CEA3D12779F169A4F2984ACFC2B
         public VirtualMachineScaleSetImpl WithAdminPassword(string password)
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile
                     .AdminPassword = password;
@@ -1291,7 +1283,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:9BBA27913235B4504FD9F07549E645CC:0BF9F49BB572288259C5C2CF97915D33
         public VirtualMachineScaleSetImpl WithSsh(string publicKeyData)
         {
-            VirtualMachineScaleSetOSProfile osProfile = this.Inner
+            VirtualMachineScaleSetOSProfile osProfile = Inner
                     .VirtualMachineProfile
                     .OsProfile;
             if (osProfile.LinuxConfiguration.Ssh == null)
@@ -1330,7 +1322,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:38EF4A7AB82168A6DD38F533747DA9D5:362113C4E307F07B620E363B30115839
         public string ComputerNamePrefix()
         {
-            return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
+            return Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
         }
 
         ///GENMHASH:44218FC054E9DD430ECE7417A9705EB2:2DB39ADE66ABE6DB110EEDB9C63E2DB3
@@ -1357,24 +1349,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             VirtualHardDisk userImageVhd = new VirtualHardDisk();
             userImageVhd.Uri = imageUrl;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.Image = userImageVhd;
             // For platform image osType will be null, azure will pick it from the image metadata.
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration = new WindowsConfiguration();
             // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
@@ -1383,9 +1375,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:CAFE3044E63DB355E0097F6FD22A0282:600739A4DD068DBA0CF85CC076E9111F
         public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
-            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
+            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(
+                Manager.Inner.VirtualMachineScaleSets.ListSkus(ResourceGroupName, Name), nextLink =>
             {
-                return this.client.ListSkusNext(nextLink);
+                return Manager.Inner.VirtualMachineScaleSets.ListSkusNext(nextLink);
             });
 
             return PagedListConverter.Convert<VirtualMachineScaleSetSku, IVirtualMachineScaleSetSku>(innerPagedList, inner =>
@@ -1403,7 +1396,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:CE408710AAEBD9F32D9AA9DB3280112C:DE7951813645A18DB8AC5B2A48405BD0
         public VirtualMachineScaleSetImpl WithSku(VirtualMachineScaleSetSkuTypes skuType)
         {
-            this.Inner.Sku = skuType.Sku;
+            Inner.Sku = skuType.Sku;
             return this;
         }
 
@@ -1446,20 +1439,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4A7665D6C5D507E115A9A8E551801DB6:2F9DC0F45AE7B5E40E42D209F813E9DD
         public VirtualMachineScaleSetImpl WithSpecificWindowsImageVersion(ImageReference imageReference)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .StorageProfile.ImageReference = imageReference.Inner;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration = new WindowsConfiguration();
             // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
@@ -1483,7 +1476,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C81171F34FA85CED80852E725FF8B7A4:8AADBD78C0C1C88EB899BC43FF6E8A1E
         public bool IsManagedDiskEnabled()
         {
-            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner.VirtualMachineProfile.StorageProfile;
+            VirtualMachineScaleSetStorageProfile storageProfile = Inner.VirtualMachineProfile.StorageProfile;
             if (IsOsDiskFromCustomImage(storageProfile))
             {
                 return true;
@@ -1522,7 +1515,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:938517A3FC2059570C8EA6BFD0A7E151:78F7A73923F62410889B71C234EDE483
         private VirtualMachineScaleSetIPConfigurationInner PrimaryNicDefaultIPConfiguration()
         {
-            IList<VirtualMachineScaleSetNetworkConfigurationInner> nicConfigurations = this.Inner
+            IList<VirtualMachineScaleSetNetworkConfigurationInner> nicConfigurations = Inner
                     .VirtualMachineProfile
                     .NetworkProfile
                     .NetworkInterfaceConfigurations;
@@ -1553,14 +1546,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.extensions.Count > 0)
             {
-                this.Inner.VirtualMachineProfile
+                Inner.VirtualMachineProfile
                     .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
                     {
                         Extensions = new List<VirtualMachineScaleSetExtensionInner>()
                     };
                 foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
                 {
-                    this.Inner.VirtualMachineProfile
+                    Inner.VirtualMachineProfile
                         .ExtensionProfile
                         .Extensions.Add(extension.Inner);
                 }
@@ -1570,11 +1563,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:FD4CE9D235CA642C8185D0844177DDFB:D7E2129941B29E412D9F2124F2BAE432
         public IList<string> VhdContainers()
         {
-            if (this.Inner.VirtualMachineProfile.StorageProfile != null
-                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
-                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
+            if (Inner.VirtualMachineProfile.StorageProfile != null
+                && Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
+                && Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
             {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
+                return Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
             }
             return new List<string>();
         }
@@ -1586,20 +1579,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return;
             }
-            if (this.Inner.Sku.Capacity == null)
+            if (Inner.Sku.Capacity == null)
             {
                 this.WithCapacity(2);
             }
-            if (this.Inner.UpgradePolicy == null
-                || this.Inner.UpgradePolicy.Mode == null)
+            if (Inner.UpgradePolicy == null
+                || Inner.UpgradePolicy.Mode == null)
             {
-                this.Inner.UpgradePolicy = new UpgradePolicy();
-                this.Inner.UpgradePolicy.Mode = UpgradeMode.Automatic;
+                Inner.UpgradePolicy = new UpgradePolicy();
+                Inner.UpgradePolicy.Mode = UpgradeMode.Automatic;
             }
-            VirtualMachineScaleSetOSProfile osProfile = this.Inner
+            VirtualMachineScaleSetOSProfile osProfile = Inner
                 .VirtualMachineProfile
                 .OsProfile;
-            VirtualMachineScaleSetOSDisk osDisk = this.Inner.VirtualMachineProfile.StorageProfile.OsDisk;
+            VirtualMachineScaleSetOSDisk osDisk = Inner.VirtualMachineProfile.StorageProfile.OsDisk;
             if (IsOSDiskFromImage(osDisk))
             {
                 // ODDisk CreateOption: FROM_IMAGE
@@ -1634,7 +1627,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             else
             {
                 // NOP [ODDisk CreateOption: ATTACH, ATTACH is not supported for VMSS]
-                this.Inner
+                Inner
                     .VirtualMachineProfile
                     .OsProfile = null;
             }
@@ -1653,13 +1646,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8E925C4949ADC5B976067DDC58BE3E3C:D2243C739D20D636DF7C32705C2B6CAF
         public IVirtualMachineScaleSetVMs VirtualMachines()
         {
-            return new VirtualMachineScaleSetVMsImpl(this, this.vmInstancesClient, this.Manager);
+            return new VirtualMachineScaleSetVMsImpl(this, Manager);
         }
 
         ///GENMHASH:D5F141800B409906045662B0DD536DE4:26BA1C1FFB483992498725C1ED900BA1
         public VirtualMachineScaleSetImpl WithRootUsername(string rootUserName)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile
                 .AdminUsername = rootUserName;
@@ -1669,7 +1662,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D7FDEEE05B0AD7938194763373E58DCF:B966166E0B6ED23B8FE875ADCB3E96A7
         public VirtualMachineScaleSetImpl WithUpgradeMode(UpgradeMode upgradeMode)
         {
-            this.Inner
+            Inner
                     .UpgradePolicy
                     .Mode = upgradeMode;
             return this;
@@ -1698,13 +1691,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:DB561BC9EF939094412065B65EB3D2EA:323D5930D438D7B746B03A2AB231B061
         public void Reimage()
         {
-            this.client.Reimage(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Reimage(ResourceGroupName, Name);
         }
 
         ///GENMHASH:7BA741621F15820BA59476A9CFEBBD88:395C45C93AFFE4737734EBBF09A6B2AF
         public VirtualMachineScaleSetImpl WithComputerNamePrefix(string namePrefix)
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile
                     .ComputerNamePrefix = namePrefix;
@@ -1714,7 +1707,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:A50ABE2E1C931A4A3E6C46728ECA9763:0D2CCE10FD77C080849AE0BE069DCC7D
         public VirtualMachineScaleSetImpl WithAutoUpdate()
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
@@ -1722,7 +1715,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         private async Task HandleOSDiskContainersAsync()
         {
-            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner
+            VirtualMachineScaleSetStorageProfile storageProfile = Inner
                     .VirtualMachineProfile
                     .StorageProfile;
             if (IsManagedDiskEnabled())
@@ -1817,34 +1810,34 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:39841E710EB7DD7AE8E99B918CA0EEEA:C48030ECFE011DCB363EBC211AAE918D
         public string OsDiskName()
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
+            return Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:637A809EDFD013CAD03D1C7CE71A5FD8
         public OperatingSystemTypes OsType()
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.GetValueOrDefault();
+            return Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.GetValueOrDefault();
         }
 
         ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:78969D0BA29AFC39123F017955CEE8EE
         public VirtualMachineScaleSetImpl WithWinRm(WinRMListener listener)
         {
-            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
+            if (Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
             {
                 WinRMConfiguration winRMConfiguration = new WinRMConfiguration();
-                this.Inner
+                Inner
                         .VirtualMachineProfile
                         .OsProfile.WindowsConfiguration.WinRM = winRMConfiguration;
             }
-            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM.Listeners == null)
+            if (Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM.Listeners == null)
             {
-                this.Inner
+                Inner
                     .VirtualMachineProfile
                     .OsProfile
                     .WindowsConfiguration.WinRM
                     .Listeners = new List<WinRMListener>();
             }
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile
                     .WindowsConfiguration
@@ -1857,7 +1850,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E8024524BA316DC9DEEB983B272ABF81:35404321E1B27D532B34DF57EB311A9E
         public VirtualMachineScaleSetImpl WithCustomData(string base64EncodedCustomData)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile
                 .CustomData = base64EncodedCustomData;
@@ -1912,14 +1905,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
             else
             {
-                IList<VirtualMachineScaleSetDataDisk> dataDisks = this.Inner
+                IList<VirtualMachineScaleSetDataDisk> dataDisks = Inner
                 .VirtualMachineProfile
                 .StorageProfile
                 .DataDisks;
-                VirtualMachineScaleSetUnmanagedDataDiskImpl.SetDataDisksDefaults(dataDisks, this.Name);
+                VirtualMachineScaleSetUnmanagedDataDiskImpl.SetDataDisksDefaults(dataDisks, Name);
             }
             await HandleOSDiskContainersAsync();
-            return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            return await Manager.Inner.VirtualMachineScaleSets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:621A22301B3EB5233E9DB4ED5BEC5735:E8427EEC4ACC25554660EF889ECD07A2
@@ -1939,7 +1932,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:085C052B5E99B190740EE6AF70CF4D53:4F450AB75A3E01A0CCB9AFBF4F23BE28
         public VirtualMachineScaleSetImpl WithCapacity(int capacity)
         {
-            this.Inner
+            Inner
                     .Sku.Capacity = capacity;
             return this;
         }
@@ -1955,10 +1948,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         protected override void InitializeChildrenFromInner()
         {
             this.extensions = new Dictionary<string, IVirtualMachineScaleSetExtension>();
-            if (this.Inner.VirtualMachineProfile.ExtensionProfile != null
-               && this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions != null)
+            if (Inner.VirtualMachineProfile.ExtensionProfile != null
+               && Inner.VirtualMachineProfile.ExtensionProfile.Extensions != null)
             {
-                foreach (var innerExtenison in this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions)
+                foreach (var innerExtenison in Inner.VirtualMachineProfile.ExtensionProfile.Extensions)
                 {
                     this.extensions.Add(innerExtenison.Name, new VirtualMachineScaleSetExtensionImpl(innerExtenison, this));
                 }
@@ -1968,7 +1961,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
         public void Start()
         {
-            this.client.Start(this.ResourceGroupName, this.Name);
+            Manager.Inner.VirtualMachineScaleSets.Start(ResourceGroupName, Name);
         }
 
         ///GENMHASH:E3A33B29616A6EAF518CC10EA90B45C7:191C8844004D95B6F7362BD81543FE33
@@ -2025,7 +2018,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3CAA43EAEEB81309EADF54AA78725296:E14EB64EB306A8F5A0DF21CD2E85782B
         public VirtualMachineScaleSetImpl WithVmAgent()
         {
-            this.Inner
+            Inner
                     .VirtualMachineProfile
                     .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
             return this;
@@ -2050,7 +2043,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0E3F9BC2C5C0DB936DBA634A972BC916:26BA1C1FFB483992498725C1ED900BA1
         public VirtualMachineScaleSetImpl WithAdminUsername(string adminUserName)
         {
-            this.Inner
+            Inner
                 .VirtualMachineProfile
                 .OsProfile
                 .AdminUsername = adminUserName;

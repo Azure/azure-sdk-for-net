@@ -12,9 +12,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for load balancer management API in Azure.
     /// </summary>
     public interface ILoadBalancer  :
-        IGroupableResource<INetworkManager>,
+        IGroupableResource<INetworkManager, LoadBalancerInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IHasInner<Models.LoadBalancerInner>,
         IUpdatable<LoadBalancer.Update.IUpdate>,
         IHasLoadBalancingRules
     {

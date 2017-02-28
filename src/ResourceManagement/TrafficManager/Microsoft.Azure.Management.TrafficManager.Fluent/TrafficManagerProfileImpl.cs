@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:C7D63CAAB4D5C78DCBABA455FA741326:50737CF16CD493FD8BB7A09EF461690C
         public string MonitoringPath()
         {
-            return this.Inner.MonitorConfig.Path;
+            return Inner.MonitorConfig.Path;
         }
 
         ///GENMHASH:6C28BB464B795DC8681442F876749A3D:57455B1D83CC1849A88FF401A87B3652
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:4FD71958F542A872CEE597B1CEA332F8:CD2E0F8F28E49A3BD6482AFD85AFF2C1
         public TrafficManagerProfileImpl WithLeafDomainLabel(string dnsLabel)
         {
-            this.Inner.DnsConfig.RelativeName = dnsLabel;
+            Inner.DnsConfig.RelativeName = dnsLabel;
             return this;
         }
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:2C0DB6B1F104247169DC6BCC9246747C:D88E948223FB86124BBB6F6774621201
         public int TimeToLive()
         {
-            return (int) this.Inner.DnsConfig.Ttl.Value;
+            return (int) Inner.DnsConfig.Ttl.Value;
         }
 
         ///GENMHASH:5E218AF13EC4B07DD7170E0991E64373:B45FF059EA30EB01427BCCB27086FEBF
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:9AEC42BC2F36531F5A364F6C9BC7299B:06AEBFC10FD1E07B85CFFC68257D1C3A
         public TrafficManagerProfileImpl WithProfileStatusEnabled()
         {
-            this.Inner.ProfileStatus = TrafficManagerProfileImpl.profileStatusEnabled;
+            Inner.ProfileStatus = TrafficManagerProfileImpl.profileStatusEnabled;
             return this;
         }
 
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:655A859AB9D888489CDFDD334146F9D1:176F10BD0111531F78393D5651ABF7C5
         public TrafficManagerProfileImpl WithProfileStatusDisabled()
         {
-            this.Inner.ProfileStatus = TrafficManagerProfileImpl.profileStatusDisabled;
+            Inner.ProfileStatus = TrafficManagerProfileImpl.profileStatusDisabled;
             return this;
         }
 
@@ -156,13 +156,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:577F8437932AEC6E08E1A137969BDB4A:93FB31E2F199B29EB12AF1D037A21B91
         public string Fqdn()
         {
-            return this.Inner.DnsConfig.Fqdn;
+            return Inner.DnsConfig.Fqdn;
         }
 
         ///GENMHASH:CBED4DBEF4FE611072BC440D90324271:80930CC778C5ED77B07A0B587D7C5950
         public int MonitoringPort()
         {
-            return (int) this.Inner.MonitorConfig.Port.Value;
+            return (int) Inner.MonitorConfig.Port.Value;
         }
 
         ///GENMHASH:C69FFBA25D969C2C45775433EBFD49EA:01BC02A541C8C945111AEC0AF9DB6FF1
@@ -210,9 +210,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:088F115956764D909356F941714DD214:72C3991B01AC2306292D697D6CB9A5EE
         public TrafficManagerProfileImpl WithHttpMonitoring(int port, string path)
         {
-            this.Inner.MonitorConfig.Port = port;
-            this.Inner.MonitorConfig.Path = path;
-            this.Inner.MonitorConfig.Protocol = "http";
+            Inner.MonitorConfig.Port = port;
+            Inner.MonitorConfig.Path = path;
+            Inner.MonitorConfig.Protocol = "http";
             return this;
         }
 
@@ -225,35 +225,35 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:339D7124F9EE53875E3B1321B2E2D9FD:A28860E9058E7040BCE32AA17CDB136B
         public TrafficManagerProfileImpl WithHttpsMonitoring(int port, string path)
         {
-            this.Inner.MonitorConfig.Port = port;
-            this.Inner.MonitorConfig.Path = path;
-            this.Inner.MonitorConfig.Protocol = "https";
+            Inner.MonitorConfig.Port = port;
+            Inner.MonitorConfig.Path = path;
+            Inner.MonitorConfig.Protocol = "https";
             return this;
         }
 
         ///GENMHASH:E75269B73212138A7E1E8F94A2FD913C:AD931D14F514F37D5342A16ACD3342B3
         public TrafficManagerProfileImpl WithTimeToLive(int ttlInSeconds)
         {
-            this.Inner.DnsConfig.Ttl = ttlInSeconds;
+            Inner.DnsConfig.Ttl = ttlInSeconds;
             return this;
         }
 
         ///GENMHASH:4E79F831CA615F31A3B9091C9216E524:1135A0CCE498B0EFFC0343DDE3CEB9BF
         public string DnsLabel()
         {
-            return this.Inner.DnsConfig.RelativeName;
+            return Inner.DnsConfig.RelativeName;
         }
 
         ///GENMHASH:3F2076D33F84FDFAB700A1F0C8C41647:8E2768B25039756DEB5365F724C21484
         public bool IsEnabled()
         {
-            return this.Inner.ProfileStatus.Equals(TrafficManagerProfileImpl.profileStatusEnabled, System.StringComparison.OrdinalIgnoreCase);
+            return Inner.ProfileStatus.Equals(TrafficManagerProfileImpl.profileStatusEnabled, System.StringComparison.OrdinalIgnoreCase);
         }
 
         ///GENMHASH:BB0D1050B0185C55C13B3722F9DC8EFD:954997B5F0A4C3371FBFA90DB6C24AC3
         public TrafficManagerProfileImpl WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod)
         {
-            this.Inner.TrafficRoutingMethod = routingMethod.ToString();
+            Inner.TrafficRoutingMethod = routingMethod.ToString();
             return this;
         }
 

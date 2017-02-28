@@ -13,33 +13,33 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         CreatableResources<IResourceGroup, ResourceGroupImpl, ResourceGroupInner>,
         IResourceGroups
     {
-        private IResourceGroupsOperations InnerCollection { get; set; }
+        private IResourceGroupsOperations Inner { get; set; }
 
         internal ResourceGroupsImpl(IResourceGroupsOperations innerCollection)
         {
-            InnerCollection = innerCollection;
+            Inner = innerCollection;
         }
 
         public PagedList<IResourceGroup> List()
         {
-            IPage<ResourceGroupInner> firstPage = InnerCollection.List();
+            IPage<ResourceGroupInner> firstPage = Inner.List();
             var pagedList = new PagedList<ResourceGroupInner>(firstPage, (string nextPageLink) =>
             {
-                return InnerCollection.ListNext(nextPageLink);
+                return Inner.ListNext(nextPageLink);
             });
            return WrapList(pagedList);
         }
 
         public bool CheckExistence(string name)
         {
-            return InnerCollection.CheckExistence(name);
+            return Inner.CheckExistence(name);
         }
 
         public ResourceGroup.Definition.IBlank Define(string name)
         {
             ResourceGroupInner inner = new ResourceGroupInner();
             inner.Name = name;
-            return new ResourceGroupImpl(inner, InnerCollection);
+            return new ResourceGroupImpl(inner, Inner);
         }
 
         public void DeleteByName(string name)
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(name, cancellationToken);
+            return Inner.DeleteAsync(name, cancellationToken);
         }
 
         public override void DeleteById(string id)
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public async Task<IResourceGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var resourceGroupInner = await InnerCollection.GetAsync(name, cancellationToken);
+            var resourceGroupInner = await Inner.GetAsync(name, cancellationToken);
             return WrapModel(resourceGroupInner);
         }
 
@@ -80,12 +80,12 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             return new ResourceGroupImpl(new ResourceGroupInner
             {
                 Name = name
-            }, InnerCollection);
+            }, Inner);
         }
 
         protected override IResourceGroup WrapModel(ResourceGroupInner inner)
         {
-            return new ResourceGroupImpl(inner, InnerCollection);
+            return new ResourceGroupImpl(inner, Inner);
         }
 
         #endregion

@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:76CA3DF47AE2173C7DD2F7771FDD2AD0:B347DF5D92EFFF6EC992D5C6C59BB49E
         public string AdministratorLogin()
         {
-            return this.Inner.AdministratorLogin;
+            return Inner.AdministratorLogin;
         }
 
         ///GENMHASH:E8FF0EA4C9A70B28C5CC2D7109717350:1E18DC483BE5652C158841887DD5936F
@@ -110,14 +110,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:2F58B86CF4C09A3821196E375EB636F4:AA91D65BA65D340B46D6B88D4467855D
         public SqlServerImpl WithAdministratorLogin(string administratorLogin)
         {
-            this.Inner.AdministratorLogin = administratorLogin;
+            Inner.AdministratorLogin = administratorLogin;
             return this;
         }
 
         ///GENMHASH:618686B3EE435187E4F949C115EFA823:983FBE57E91E1FA947BEA694720011F0
         public SqlServerImpl WithAdministratorPassword(string administratorLoginPassword)
         {
-            this.Inner.AdministratorLoginPassword = administratorLoginPassword;
+            Inner.AdministratorLoginPassword = administratorLoginPassword;
             return this;
         }
 
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:3A15AE6B9ADA17FBEC37A8078DA08565
         public override async Task<ISqlServer> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var serverInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            var serverInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, Inner);
             SetInner(serverInner);
 
             await DeleteChildResourcesAsync();
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:207CF59627452C607A1B799233F875B9:24C6C69C18977BD264EC783E32744339
         public string FullyQualifiedDomainName()
         {
-            return this.Inner.FullyQualifiedDomainName;
+            return Inner.FullyQualifiedDomainName;
         }
 
         ///GENMHASH:22ED13819FBF2CA919B55726AC1FB656:470E0AF821791A8E1F0273443B706FEA
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:493B1EDB88EACA3A476D936362A5B14C:583937857C93CEEDEFD65D6B38E46ADD
         public string Version()
         {
-            return this.Inner.Version;
+            return Inner.Version;
         }
 
         ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:CEA494BF84552A0D1AD6DEA7E85EA72E
