@@ -242,6 +242,11 @@ namespace Fluent.Tests.Common
                             .Select(f => (IAzureClient)f.GetValue(m))
                             .ToList()
                             .ForEach(c => c.LongRunningOperationRetryTimeout = 0);
+
+                    m.GetType().GetProperties().Where(n => n.Name.Equals("Inner"))
+                        .Select(f => (IAzureClient)f.GetValue(m))
+                        .ToList()
+                        .ForEach(c => c.LongRunningOperationRetryTimeout = 0);
                 }
             }
             return manager;
