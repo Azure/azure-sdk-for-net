@@ -377,5 +377,22 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 
         }
 
+        [Fact]
+        public void TestPolymorphicJsonSerializer()
+        {
+            var horseyText = "{  \"PetType\": \"Horse\",  \"speed\": 21,  \"name\": \"Spike\"}";
+            var horsey = new Horse() { Name="Spike", Speed=21 };
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Pet>("PetType"));
+            var horseyJson = SafeJsonConvert.SerializeObject(horsey, serializeSettings);
+            Assert.Equal(horseyJson.Replace("\n", "").Replace("\r", ""), horseyText);
+        }
+
     }
 }

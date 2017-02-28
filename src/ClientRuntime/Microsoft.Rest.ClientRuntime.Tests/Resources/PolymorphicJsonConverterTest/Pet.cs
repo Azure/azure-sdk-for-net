@@ -27,4 +27,25 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources.PolymorphicJsonConverterT
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
     }
+    public class Horse : Pet
+    {
+        /// <summary>
+        /// Initializes a new instance of the Horse class.
+        /// </summary>
+        public Horse() { }
+
+        /// <summary>
+        /// Initializes a new instance of the Horse class.
+        /// </summary>
+        public Horse(string name = default(string), int? speed = default(int?))
+            : base(name)
+        {
+            Speed = speed;
+        }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "speed")]
+        public int? Speed { get; set; }
+    }
 }

@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
-using System.IO;
 
 namespace Microsoft.Rest.Serialization
 {
