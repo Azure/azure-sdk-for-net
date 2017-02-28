@@ -1,15 +1,15 @@
 {
-  "version": "8.3.0-preview",
+  "version": "8.4.0-preview",
   "description": "Provides management capabilities for Network services.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
     "summary": "Provides management capabilities for Network services",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
-    "tags": [ "Microsoft Azure Network management", "Network", "Network management","REST HTTP client",  "windowsazureofficial" ],
+    "tags": [ "Microsoft Azure Network management", "Network", "Network management","REST HTTP client",  "windowsazureofficial", "netcore451511" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {
@@ -19,30 +19,32 @@
   },
 
   "dependencies": {
-    },
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.5,3.0.0)"
+  },
 
   "frameworks": {
     "net45": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)" 
       }
     },
     "netstandard1.5": {
       "imports": ["dnxcore50"],
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.Net.Http": "4.1.0",
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "NETStandard.Library": "1.6.1",
+        "System.Diagnostics.Tools": "4.3.0",
+        "System.Net.Http": "4.3.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Threading.Tasks": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)" 
+        "System.Threading.Tasks": "4.3.0"
       }
     },
     "netstandard1.1": {
       "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)" 
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "NETStandard.Library": "1.6.1",
+        "System.Runtime.Serialization.Primitives": "4.1.1"
       }
     }
   }
