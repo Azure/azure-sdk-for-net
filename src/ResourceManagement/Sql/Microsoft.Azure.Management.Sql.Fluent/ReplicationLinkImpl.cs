@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System;
 
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5SZXBsaWNhdGlvbkxpbmtJbXBs
     internal partial class ReplicationLinkImpl :
-        Wrapper<Models.ReplicationLinkInner>,
+        Wrapper<ReplicationLinkInner>,
         IReplicationLink
     {
         private IDatabasesOperations innerCollection;

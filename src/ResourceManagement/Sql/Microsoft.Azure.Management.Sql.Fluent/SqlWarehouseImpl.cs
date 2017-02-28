@@ -13,21 +13,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISqlWarehouse
     {
         ///GENMHASH:478F77EE25B1DAD41512D7810F424A78:E1ECD7008D29BB72B20EB2538850BB93
-        internal  SqlWarehouseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection, ISqlManager manager)
-            : base(name, innerObject, innerCollection, manager)
+        internal  SqlWarehouseImpl(string name, DatabaseInner innerObject, ISqlManager manager)
+            : base(name, innerObject, manager)
         {
         }
 
         ///GENMHASH:638E920B34EB7CDD894A8A261D1A3364:F65A55844E1B000D318C0439E7EDE006
         public void ResumeDataWarehouse()
         {
-            this.innerCollection.ResumeDataWarehouse(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.Databases.ResumeDataWarehouse(ResourceGroupName, SqlServerName(), Name);
         }
 
         ///GENMHASH:CC45B434E5AD72F7D764B575FE4DBBB0:BA80FAB6E26489720ABD292F74B22257
         public void PauseDataWarehouse()
         {
-            this.innerCollection.PauseDataWarehouse(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.Databases.PauseDataWarehouse(ResourceGroupName, SqlServerName(), Name);
         }
     }
 }

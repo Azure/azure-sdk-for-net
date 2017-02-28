@@ -24,19 +24,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISqlFirewallRulesCreatable
     {
         ///GENMHASH:94CD9D1734A2AA402A84D7B04BE4E08E:0FCD47CBCD9128C3D4A03458C5796741
-        internal SqlFirewallRulesImpl(IServersOperations innerCollection, ISqlManager manager)
-            : base(innerCollection, manager)
+        internal SqlFirewallRulesImpl(ISqlManager manager)
+            : base(manager.Inner.Servers, manager)
         {
         }
 
         ///GENMHASH:16CEA22B57032A6757D8EFC1BF423794:F46E4D0A3CDB6C5AE412BF5B7FB52B09
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(string resourceGroupName, string sqlServerName)
+        public IList<ISqlFirewallRule> ListBySqlServer(string resourceGroupName, string sqlServerName)
         {
             return new List<ISqlFirewallRule>(this.ListByParent(resourceGroupName, sqlServerName));
         }
 
         ///GENMHASH:CD989F8A79EC70D56C4F5154E2B8BE11:57462F0C7FF757AFBBFD3B3561C9F9ED
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer)
+        public IList<ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer)
         {
             return new List<ISqlFirewallRule>(this.ListByParent(sqlServer));
         }
@@ -73,8 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlFirewallRuleImpl(
                 firewallRuleName,
                 inner,
-                Inner,
-                this.Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
+                Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:D9AFFE54BAA276E6A6DADDEBF326C548
@@ -96,7 +95,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             {
                 return null;
             }
-            return new SqlFirewallRuleImpl(inner.Name, inner, Inner, Manager);
+            return new SqlFirewallRuleImpl(inner.Name, inner, Manager);
         }
     }
 }

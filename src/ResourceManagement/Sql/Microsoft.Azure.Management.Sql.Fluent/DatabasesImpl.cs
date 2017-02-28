@@ -50,12 +50,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:C991D14C4C20226EA0EEFFB24D7747A7:245AF9C01FA00285C2B11293A70D2F1B
-        internal DatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager, string resourceGroupName, string sqlServerName, Region region)
+        internal DatabasesImpl(
+            ISqlManager manager,
+            string resourceGroupName,
+            string sqlServerName,
+            Region region)
         {
             this.resourceGroupName = resourceGroupName;
             this.sqlServerName = sqlServerName;
             this.region = region;
-            this.databases = new SqlDatabasesImpl(innerCollection, manager);
+            databases = new SqlDatabasesImpl(manager);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:DDC88190329C40E33404F24D728694C7

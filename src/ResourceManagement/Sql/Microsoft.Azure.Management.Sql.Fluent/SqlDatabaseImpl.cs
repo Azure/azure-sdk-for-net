@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Definition;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.IndependentChild.Definition;
     using Models;
     using Resource.Fluent.Core.Resource.Definition;
     using Resource.Fluent.Core.ResourceActions;
@@ -28,8 +28,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         SqlDatabase.Definition.IWithMaxSizeBytes,
         IWithParentResource<ISqlDatabase, ISqlServer>
     {
-        internal IDatabasesOperations innerCollection;
         private string elasticPoolCreatableKey;
+
+        ///GENMHASH:0F0FD44A3D87F875885456FD45CEE6DF:FC20F8BEAA0D65FFE9DA4206313524DE
+        internal SqlDatabaseImpl(string name, DatabaseInner innerObject, ISqlManager manager)
+               : base(name, innerObject, manager)
+        {
+        }
 
         ///GENMHASH:957BA7B4E61C9B91983ED17E2B61DBD7:9549FCCFE13908133153A6585989F147
         public string ElasticPoolName()
@@ -73,7 +78,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:EBCADD6850E9711DA91415429B1577E3
         public void Delete()
         {
-            this.innerCollection.Delete(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.Databases.Delete(ResourceGroupName, SqlServerName(), Name);
         }
 
         ///GENMHASH:B23645FC2F779DBC6F44B880C488B561:FD8121B9F8029AC826DD64E68A0C727C
@@ -112,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             if (Inner.UpgradeHint == null)
             {
-                this.SetInner(this.innerCollection.Get(this.ResourceGroupName, this.SqlServerName(), this.Name, "upgradeHint"));
+                SetInner(Manager.Inner.Databases.Get(ResourceGroupName, SqlServerName(), Name, "upgradeHint"));
             }
             if (Inner.UpgradeHint != null)
             {
@@ -161,13 +166,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:94274C9965DC54702B64A387A19F1F2B:CBA2A056219E542449E5F7E9EBA4B7D8
         public IReadOnlyDictionary<string, Microsoft.Azure.Management.Sql.Fluent.IReplicationLink> ListReplicationLinks()
         {
-            var replicationLinks = this.innerCollection.ListReplicationLinks(
-                this.ResourceGroupName, this.SqlServerName(), this.Name);
+            var replicationLinks = Manager.Inner.Databases.ListReplicationLinks(
+                ResourceGroupName, SqlServerName(), Name);
 
             IDictionary<string, IReplicationLink> result = new Dictionary<string, IReplicationLink>();
             foreach (var replicationLink in replicationLinks)
             {
-                result.Add(replicationLink.Name, new ReplicationLinkImpl(replicationLink, this.innerCollection));
+                result.Add(replicationLink.Name, new ReplicationLinkImpl(replicationLink, Manager.Inner.Databases));
             }
 
             return new ReadOnlyDictionary<string, IReplicationLink>(result);
@@ -193,10 +198,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             Func<DatabaseMetric, DatabaseMetricImpl> convertor = (databaseMetricInner) => new DatabaseMetricImpl(databaseMetricInner);
 
             return PagedListConverter.Convert(
-                this.innerCollection.ListUsages(
-                this.ResourceGroupName,
-                this.SqlServerName(),
-                this.Name), convertor);
+                Manager.Inner.Databases.ListUsages(
+                    ResourceGroupName,
+                    SqlServerName(),
+                    Name), convertor);
         }
 
         ///GENMHASH:61F5809AB3B985C61AC40B98B1FBC47E:04B212B505D5C86A62596EEEE457DD66
@@ -221,10 +226,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 Inner.RequestedServiceObjectiveId = null;
             }
 
-            var databaseInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.SqlServerName(), this.Name, Inner);
+            var databaseInner = await Manager.Inner.Databases.CreateOrUpdateAsync(ResourceGroupName, SqlServerName(), Name, Inner);
 
             SetInner(databaseInner);
-            this.elasticPoolCreatableKey = null;
+            elasticPoolCreatableKey = null;
 
             return this;
         }
@@ -233,10 +238,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public ITransparentDataEncryption GetTransparentDataEncryption()
         {
             return new TransparentDataEncryptionImpl(
-                this.innerCollection.GetTransparentDataEncryptionConfiguration(
-                this.ResourceGroupName,
-                this.SqlServerName(),
-                this.Name), this.innerCollection);
+                Manager.Inner.Databases.GetTransparentDataEncryptionConfiguration(
+                    ResourceGroupName,
+                    SqlServerName(),
+                    Name), Manager.Inner.Databases);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:D460F07553280DBC1866880BA0BD8AEF
@@ -244,11 +249,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             if (Inner.UpgradeHint != null)
             {
-                this.SetInner(this.innerCollection.Get(this.ResourceGroupName, this.SqlServerName(), this.Name));
+                SetInner(Manager.Inner.Databases.Get(ResourceGroupName, SqlServerName(), Name));
             }
             else
             {
-                this.SetInner(this.innerCollection.Get(this.ResourceGroupName, this.SqlServerName(), this.Name, "upgradeHint"));
+                SetInner(Manager.Inner.Databases.Get(ResourceGroupName, SqlServerName(), Name, "upgradeHint"));
             }
 
             return this;
@@ -257,10 +262,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:495111B1D55D7AA3C4EA4E49042FA05A:81AF1DB897B99ED47A56E01F499D4D5A
         public SqlDatabaseImpl WithNewElasticPool(ICreatable<ISqlElasticPool> sqlElasticPool)
         {
-            if (this.elasticPoolCreatableKey == null)
+            if (elasticPoolCreatableKey == null)
             {
-                this.elasticPoolCreatableKey = sqlElasticPool.Key;
-                this.AddCreatableDependency(sqlElasticPool as IResourceCreator<IHasId>);
+                elasticPoolCreatableKey = sqlElasticPool.Key;
+                AddCreatableDependency(sqlElasticPool as IResourceCreator<IHasId>);
             }
             return this;
         }
@@ -271,7 +276,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             Func<RestorePointInner, RestorePointImpl> convertor = (restorePointInner) => new RestorePointImpl(restorePointInner);
 
             return PagedListConverter.Convert(
-                this.innerCollection.ListRestorePoints(this.ResourceGroupName, this.SqlServerName(), this.Name),
+                Manager.Inner.Databases.ListRestorePoints(ResourceGroupName, SqlServerName(), Name),
                 convertor);
         }
 
@@ -285,13 +290,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public string ServiceLevelObjective()
         {
             return Inner.ServiceLevelObjective;
-        }
-
-        ///GENMHASH:0F0FD44A3D87F875885456FD45CEE6DF:FC20F8BEAA0D65FFE9DA4206313524DE
-        internal SqlDatabaseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection, ISqlManager manager)
-               : base(name, innerObject, manager)
-        {
-            this.innerCollection = innerCollection;
         }
 
         ///GENMHASH:F5717DCDC59DCEC39989A49248CA5245:753DCACCE1725C3E1909124033BA7DBE
@@ -338,10 +336,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             var serviceTierAdvisorMap = new Dictionary<string, IServiceTierAdvisor>();
 
             foreach (var serviceTierAdvisorInner
-                in this.innerCollection.ListServiceTierAdvisors(this.ResourceGroupName, this.SqlServerName(), this.Name))
+                in Manager.Inner.Databases.ListServiceTierAdvisors(ResourceGroupName, SqlServerName(), Name))
             {
                 serviceTierAdvisorMap.Add(serviceTierAdvisorInner.Name, new ServiceTierAdvisorImpl(serviceTierAdvisorInner,
-                    this.innerCollection));
+                    Manager.Inner.Databases));
             }
 
             return new ReadOnlyDictionary<string, IServiceTierAdvisor>(serviceTierAdvisorMap);

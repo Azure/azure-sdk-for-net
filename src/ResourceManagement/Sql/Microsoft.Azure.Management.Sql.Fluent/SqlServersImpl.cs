@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using SqlServer.Definition;
     using System.Threading;
@@ -16,21 +16,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         GroupableResources<ISqlServer, SqlServerImpl, ServerInner, IServersOperations, ISqlManager>,
         ISqlServers
     {
-        private IElasticPoolsOperations elasticPoolsInner;
-        private IDatabasesOperations databasesInner;
-        private IRecommendedElasticPoolsOperations recommendedElasticPoolsInner;
-
         ///GENMHASH:01C0FA69267690E3BF39F794FC8D1F05:9CCC9CA468F37F7150A173588C172C02
-        internal SqlServersImpl(IServersOperations innerCollection,
-            IElasticPoolsOperations elasticPoolsInner,
-            IDatabasesOperations databasesInner,
-            IRecommendedElasticPoolsOperations recommendedElasticPoolsInner,
-            SqlManager manager)
-            : base(innerCollection, manager)
+        internal SqlServersImpl(SqlManager manager)
+            : base(manager.Inner.Servers, manager)
         {
-            this.elasticPoolsInner = elasticPoolsInner;
-            this.databasesInner = databasesInner;
-            this.recommendedElasticPoolsInner = recommendedElasticPoolsInner;
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
@@ -65,11 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlServerImpl(
                 name,
                 inner,
-                Inner,
-                base.Manager,
-                this.elasticPoolsInner,
-                this.databasesInner,
-                this.recommendedElasticPoolsInner);
+                Manager);
         }
 
         ///GENMHASH:14929760F9002214878530515584D731:A4CD16875FD79CECC756C53898FB4374
@@ -83,11 +68,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlServerImpl(
                 inner.Name,
                 inner,
-                Inner,
-                this.Manager,
-                this.elasticPoolsInner,
-                this.databasesInner,
-                this.recommendedElasticPoolsInner);
+                Manager);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System;
 
@@ -14,6 +14,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Wrapper<Models.ServerMetric>,
         IServerMetric
     {
+
+        ///GENMHASH:4AB2D6CDCFE00A6C02A7E1E798E9A763:C0C35E00AF4E17F141675A2C05C7067B
+        internal ServerMetricImpl(ServerMetric innerObject)
+            : base(innerObject)
+        {
+        }
 
         ///GENMHASH:98D67B93923AC46ECFE338C62748BCCB:AE6A688E48A33F4836A5CFB695421894
         public string Unit()
@@ -31,12 +37,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public double Limit()
         {
             return Inner.Limit.GetValueOrDefault();
-        }
-
-        ///GENMHASH:4AB2D6CDCFE00A6C02A7E1E798E9A763:C0C35E00AF4E17F141675A2C05C7067B
-        internal ServerMetricImpl(ServerMetric innerObject)
-            : base(innerObject)
-        {
         }
 
         ///GENMHASH:CFF1906C54159B35DA3E7633AE6E2E80:7850BA840C43355BE0988A1E45FB8D54

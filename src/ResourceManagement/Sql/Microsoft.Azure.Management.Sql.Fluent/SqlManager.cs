@@ -77,12 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             {
                 if (sqlServers == null)
                 {
-                    sqlServers = new SqlServersImpl(
-                            Inner.Servers,
-                            Inner.ElasticPools,
-                            Inner.Databases,
-                            Inner.RecommendedElasticPools,
-                            this);
+                    sqlServers = new SqlServersImpl(this);
                 }
 
                 return sqlServers;

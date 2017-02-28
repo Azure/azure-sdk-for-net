@@ -23,9 +23,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private Region region;
 
         ///GENMHASH:C9332154641E1021A796A0AA87A41D7C:CB5497929793111AF874DCDF5A64A775
-        internal ElasticPoolsImpl(IElasticPoolsOperations innerCollection,
+        internal ElasticPoolsImpl(
             ISqlManager manager,
-            IDatabasesOperations databasesInner,
             DatabasesImpl databasesImpl,
             string resourceGroupName,
             string sqlServerName,
@@ -34,7 +33,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.resourceGroupName = resourceGroupName;
             this.sqlServerName = sqlServerName;
             this.region = region;
-            this.elasticPools = new SqlElasticPoolsImpl(innerCollection, manager, databasesInner, databasesImpl);
+            elasticPools = new SqlElasticPoolsImpl(manager, databasesImpl);
         }
 
         ///GENMHASH:22ED13819FBF2CA919B55726AC1FB656:D59C288EAB8D4BB7EA1BB303B03CC500

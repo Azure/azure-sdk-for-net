@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -13,17 +13,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5SZWNvbW1lbmRlZEVsYXN0aWNQb29sSW1wbA==
     internal partial class RecommendedElasticPoolImpl :
-        Wrapper<Models.RecommendedElasticPoolInner>,
+        Wrapper<RecommendedElasticPoolInner>,
         IRecommendedElasticPool
     {
-        private IDatabasesOperations databasesInner;
-        private IRecommendedElasticPoolsOperations recommendedElasticPoolsInner;
         private ResourceId resourceId;
 
         ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:2EE5EC6E56E27CC62928F7FDA722AB08
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Databases()
+        public IList<ISqlDatabase> Databases()
         {
-            return Inner.Databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, databasesInner, Manager)).ToList();
+            return Inner.Databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(
+                databaseInner.Name,
+                databaseInner,
+                Manager)).ToList();
         }
 
         ///GENMHASH:F018FD6E531156DFCBAA9FAE7F4D8519:F548C4892951BC9F8563B941B288836A
@@ -39,14 +40,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:3C9B0CE07C64DBB8CF2AEF14E330501A:2E8B0A743655F7A17FCDF72496CA11B0
-        internal RecommendedElasticPoolImpl(RecommendedElasticPoolInner innerObject,
-            IDatabasesOperations databasesInner,
-            IRecommendedElasticPoolsOperations recommendedElasticPoolsInner,
-            ISqlManager manager)
+        internal RecommendedElasticPoolImpl(RecommendedElasticPoolInner innerObject, ISqlManager manager)
             : base(innerObject)
         {
-            this.databasesInner = databasesInner;
-            this.recommendedElasticPoolsInner = recommendedElasticPoolsInner;
             resourceId = ResourceId.FromString(Inner.Id);
             Manager = manager;
         }
@@ -74,18 +70,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:CD775E31F43CBA6304D6EEA9E01682A1:FE7D9343E169D0420CF0E1FC9A9A3736
         public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases()
         {
-            var databases = this.recommendedElasticPoolsInner.ListDatabases(
-                this.ResourceGroupName(),
-                this.SqlServerName(),
-                this.Name());
+            var databases = Manager.Inner.RecommendedElasticPools.ListDatabases(
+                ResourceGroupName(),
+                SqlServerName(),
+                Name());
 
-            return databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, databasesInner, Manager)).ToList();
+            return databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(
+                databaseInner.Name,
+                databaseInner,
+                Manager)).ToList();
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:887D95D040FBCBF81B9BA7419D7F3A39
         public IRecommendedElasticPool Refresh()
         {
-            this.SetInner(this.recommendedElasticPoolsInner.Get(this.ResourceGroupName(), this.SqlServerName(), this.Name()));
+            SetInner(Manager.Inner.RecommendedElasticPools.Get(ResourceGroupName(), SqlServerName(), Name()));
             return this;
         }
 
@@ -116,22 +115,22 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1C25D7B8D9084176A24655682A78634D:F7EA0DF49958322A52E6952D781B9782
         public ISqlDatabase GetDatabase(string databaseName)
         {
-            DatabaseInner databaseInner = this.recommendedElasticPoolsInner.GetDatabases(
-                this.ResourceGroupName(),
-                this.SqlServerName(),
-                this.Name(),
+            DatabaseInner databaseInner = Manager.Inner.RecommendedElasticPools.GetDatabases(
+                ResourceGroupName(),
+                SqlServerName(),
+                Name(),
                 databaseName);
 
-            return new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner, Manager);
+            return new SqlDatabaseImpl(databaseInner.Name, databaseInner, Manager);
         }
 
         ///GENMHASH:77909FCEE2BCE7A1585A5D65D695B384:13846C17B14D55E5F3A4AE220EAFBEDC
-        public IList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric> ListMetrics()
+        public IList<IRecommendedElasticPoolMetric> ListMetrics()
         {
-            var metricInner = this.recommendedElasticPoolsInner.ListMetrics(
-                this.ResourceGroupName(),
-                this.SqlServerName(),
-                this.Name());
+            var metricInner = Manager.Inner.RecommendedElasticPools.ListMetrics(
+                ResourceGroupName(),
+                SqlServerName(),
+                Name());
             return metricInner.Select(recommendedElasticPoolMetricInner => (IRecommendedElasticPoolMetric)new RecommendedElasticPoolMetricImpl(recommendedElasticPoolMetricInner)).ToList();
         }
 
