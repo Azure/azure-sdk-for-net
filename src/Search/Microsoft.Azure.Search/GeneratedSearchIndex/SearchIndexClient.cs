@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Search
         {
             Documents = new DocumentsOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}/indexes('{indexName}')";
-            ApiVersion = "2016-09-01";
+            ApiVersion = "2016-09-01-Preview";
             SearchDnsSuffix = "search.windows.net";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

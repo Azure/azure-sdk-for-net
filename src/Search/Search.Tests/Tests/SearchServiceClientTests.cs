@@ -48,6 +48,19 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void ConstructorSetsUrlRelatedProperties()
+        {
+            const string TestServiceName = "azs-doesnotexist";
+            const string TestApiKey = "123";
+
+            var serviceClient = new SearchServiceClient(TestServiceName, new SearchCredentials(TestApiKey));
+
+            Assert.Equal(TestServiceName, serviceClient.SearchServiceName);
+            Assert.Equal("search.windows.net", serviceClient.SearchDnsSuffix);
+            Assert.Equal(TestApiKey, serviceClient.SearchCredentials.ApiKey);
+        }
+
+        [Fact]
         public void IndexClientHasSameTimeoutAsSearchClient()
         {
             Run(() =>

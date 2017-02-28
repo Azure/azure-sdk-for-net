@@ -33,6 +33,21 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void ConstructorSetsUrlRelatedProperties()
+        {
+            const string TestServiceName = "azs-doesnotexist";
+            const string TestIndexName = "test-index";
+            const string TestApiKey = "123";
+
+            var indexClient = new SearchIndexClient(TestServiceName, TestIndexName, new SearchCredentials(TestApiKey));
+
+            Assert.Equal(TestServiceName, indexClient.SearchServiceName);
+            Assert.Equal(TestIndexName, indexClient.IndexName);
+            Assert.Equal("search.windows.net", indexClient.SearchDnsSuffix);
+            Assert.Equal(TestApiKey, indexClient.SearchCredentials.ApiKey);
+        }
+
+        [Fact]
         public void CanChangeIndexAfterConstructionWithoutServiceName()
         {
             Run(() =>

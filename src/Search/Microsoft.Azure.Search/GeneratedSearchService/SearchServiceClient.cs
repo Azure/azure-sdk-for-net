@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Search
             Indexers = new IndexersOperations(this);
             Indexes = new IndexesOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}";
-            ApiVersion = "2016-09-01";
+            ApiVersion = "2016-09-01-Preview";
             SearchDnsSuffix = "search.windows.net";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
