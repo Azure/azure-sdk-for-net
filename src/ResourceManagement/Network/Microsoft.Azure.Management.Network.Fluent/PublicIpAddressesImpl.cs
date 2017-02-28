@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IPublicIPAddresses
     {
         ///GENMHASH:053A36D2D2F106CA9668224DB2C96180:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal PublicIPAddressesImpl(INetworkManagementClient client, INetworkManager networkManager)
-            : base(client.PublicIPAddresses, networkManager)
+        internal PublicIPAddressesImpl(INetworkManager networkManager)
+            : base(networkManager.Inner.PublicIPAddresses, networkManager)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 inner.DnsSettings = new PublicIPAddressDnsSettings();
             }
 
-            return new PublicIPAddressImpl(name, inner, Inner, Manager);
+            return new PublicIPAddressImpl(name, inner, Manager);
         }
 
         //$TODO: shoudl return PublicIPAddressImpl
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:B52B92D4359429345BB9A526A6320669:90C57C05A1A9A5C6A7F2A81DCB266191
         override protected IPublicIPAddress WrapModel(PublicIPAddressInner inner)
         {
-            return new PublicIPAddressImpl(inner.Id, inner, Inner, Manager);
+            return new PublicIPAddressImpl(inner.Id, inner, Manager);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15

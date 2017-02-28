@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (networks == null)
                 {
-                    networks = new NetworksImpl(Inner, this);
+                    networks = new NetworksImpl(this);
                 }
 
                 return networks;
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (networkSecurityGroups == null)
                 {
-                    networkSecurityGroups = new NetworkSecurityGroupsImpl(Inner.NetworkSecurityGroups, this);
+                    networkSecurityGroups = new NetworkSecurityGroupsImpl(this);
                 }
 
                 return networkSecurityGroups;
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (publicIPAddresses == null)
                 {
-                    publicIPAddresses = new PublicIPAddressesImpl(Inner, this);
+                    publicIPAddresses = new PublicIPAddressesImpl(this);
                 }
 
                 return publicIPAddresses;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (networkInterfaces == null)
                 {
-                    networkInterfaces = new NetworkInterfacesImpl(Inner, this);
+                    networkInterfaces = new NetworkInterfacesImpl(this);
                 }
 
                 return networkInterfaces;
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (appGateways == null)
                 {
-                    appGateways = new ApplicationGatewaysImpl(Inner, this);
+                    appGateways = new ApplicationGatewaysImpl(this);
                 }
 
                 return appGateways;
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (loadBalancers == null)
                 {
-                    loadBalancers = new LoadBalancersImpl(Inner, this);
+                    loadBalancers = new LoadBalancersImpl(this);
                 }
 
                 return loadBalancers;
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 if (routeTables == null)
                 {
-                    routeTables = new RouteTablesImpl(Inner, this);
+                    routeTables = new RouteTablesImpl(this);
                 }
 
                 return routeTables;

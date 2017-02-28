@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8257BDEA83EA75371BBAD6EFAF87E8AD:27A33792B39BF284AA170EA2D21817BE
-        internal RouteTablesImpl(INetworkManagementClient networkClient, INetworkManager networkManager) : base(networkClient.RouteTables, networkManager)
+        internal RouteTablesImpl(INetworkManager networkManager) : base(networkManager.Inner.RouteTables, networkManager)
         {
         }
 
@@ -65,17 +65,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         protected override RouteTableImpl WrapModel(string name)
         {
             RouteTableInner inner = new RouteTableInner();
-            return new RouteTableImpl(name, inner, Inner, this.Manager);
+            return new RouteTableImpl(name, inner, Manager);
         }
 
         ///GENMHASH:94F659065F113D561DCD4FF928601AA3:B4753C73FFD737567848B1D8D4A06D23
         protected override IRouteTable WrapModel(RouteTableInner inner)
         {
-            return new RouteTableImpl(
-                inner.Name,
-                inner,
-                Inner,
-                Manager);
+            return new RouteTableImpl(inner.Name, inner, Manager);
         }
     }
 }

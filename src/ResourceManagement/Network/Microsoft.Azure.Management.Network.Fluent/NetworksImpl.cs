@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworks
     {
         ///GENMHASH:99AB116FA6B60A0F95DB5F2163F9ADFA:B5BDA251123B955B743DF55108166660
-        internal  NetworksImpl (INetworkManagementClient networkClient, NetworkManager networkManager)
-            : base(networkClient.VirtualNetworks, networkManager)
+        internal  NetworksImpl (NetworkManager networkManager)
+            : base(networkManager.Inner.VirtualNetworks, networkManager)
         {
         }
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 dhcp.DnsServers = new List<string>();
             }
-            return new NetworkImpl(name, inner, Inner, Manager);
+            return new NetworkImpl(name, inner, Manager);
         }
 
         //$TODO: this should return NetworkImpl
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:95C9E8EAF4F740DFFF516E71ABF00C42:E81780AEFA4C9F41FD95A65101672DF8
         override protected INetwork WrapModel (VirtualNetworkInner inner)
         {
-            return new NetworkImpl(inner.Name, inner, Inner, Manager);
+            return new NetworkImpl(inner.Name, inner, Manager);
         }
     }
 }

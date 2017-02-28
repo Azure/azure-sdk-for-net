@@ -22,9 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworkSecurityGroups
     {
         ///GENMHASH:0181826DACC9044D90EB575AAA5C527E:51C34340BDCC9750108D6EDBB1DD1BA7
-        internal  NetworkSecurityGroupsImpl (
-            INetworkSecurityGroupsOperations innerCollection,
-            INetworkManager networkManager) : base(innerCollection, networkManager)
+        internal  NetworkSecurityGroupsImpl (INetworkManager networkManager) : base(networkManager.Inner.NetworkSecurityGroups, networkManager)
         {
         }
 
@@ -99,7 +97,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         override protected NetworkSecurityGroupImpl WrapModel (string name)
         {
             NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner();
-            return new NetworkSecurityGroupImpl(name, inner, Inner, Manager);
+            return new NetworkSecurityGroupImpl(name, inner, Manager);
         }
 
         //$TODO: return NetworkSecurityGroupImpl
@@ -107,7 +105,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:B59141AC50BFD765AA31B7D8EBE354C5:DBC6065F28483C4BE88514804CCBFFAA
         override protected INetworkSecurityGroup WrapModel (NetworkSecurityGroupInner inner)
         {
-            return new NetworkSecurityGroupImpl(inner.Name, inner, Inner, Manager);
+            return new NetworkSecurityGroupImpl(inner.Name, inner, Manager);
         }
     }
 }

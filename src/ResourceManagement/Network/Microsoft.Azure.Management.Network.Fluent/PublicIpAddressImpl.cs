@@ -26,15 +26,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         PublicIPAddress.Definition.IDefinition,
         PublicIPAddress.Update.IUpdate
     {
-        private IPublicIPAddressesOperations client;
         ///GENMHASH:A0911D017083345CFF1600AF047515EF:A09FFAE271F481C05A45DEAA5B766366
         internal PublicIPAddressImpl(
             string name,
             PublicIPAddressInner innerModel,
-            IPublicIPAddressesOperations client,
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-            this.client = client;
         }
 
         ///GENMHASH:0268D4A22C553236F2D086625BC961C0:99F3B859668CAC9A1F4A84E29AE2E9C5
@@ -141,7 +138,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            SetInner(await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
+            SetInner(await Manager.Inner.PublicIPAddresses.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
             return this;
         }
 
@@ -188,7 +185,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:46083B525E2D28949C602FA14CD8C6BB
         public override IPublicIPAddress Refresh()
         {
-            var response = client.Get(ResourceGroupName, Inner.Name);
+            var response = Manager.Inner.PublicIPAddresses.Get(ResourceGroupName, Inner.Name);
             SetInner(response);
             return this;
         }

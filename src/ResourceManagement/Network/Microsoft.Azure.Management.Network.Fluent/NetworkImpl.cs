@@ -25,16 +25,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Network.Definition.IDefinition,
         Network.Update.IUpdate
     {
-        private IVirtualNetworksOperations innerCollection;
         private IDictionary<string, ISubnet> subnets;
         ///GENMHASH:3D0F0C9DA19FF797EAF5133A38664022:55E548B15E635A8197D52049D3FAB8D3
-        internal NetworkImpl(
-            string name,
-            VirtualNetworkInner innerModel,
-            IVirtualNetworksOperations innerCollection,
-            INetworkManager networkManager) : base(name, innerModel, networkManager)
+        internal NetworkImpl(string name, VirtualNetworkInner innerModel, INetworkManager networkManager)
+            : base(name, innerModel, networkManager)
         {
-            this.innerCollection = innerCollection;
         }
 
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:7D80D923C32722759F2DC956E9A32D71
@@ -55,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:283E100E0B274CF53096A783583FAE37
         public override INetwork Refresh()
         {
-            var response = innerCollection.Get(ResourceGroupName, Name);
+            var response = Manager.Inner.VirtualNetworks.Get(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }
@@ -196,7 +191,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<VirtualNetworkInner> CreateInnerAsync()
         {
-            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return Manager.Inner.VirtualNetworks.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
     }
 }

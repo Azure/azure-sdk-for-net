@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdate
     {
         static string DEFAULT = "default";
-        private ILoadBalancersOperations innerCollection;
         private IDictionary<string, string> nicsInBackends = new Dictionary<string, string>();
         private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
 
@@ -47,16 +46,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal  LoadBalancerImpl (
             string name,
             LoadBalancerInner innerModel,
-            ILoadBalancersOperations innerCollection,
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-            this.innerCollection = innerCollection;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:420B9F8BE887CC0E8BEEE7DBFEAED60C
         override public ILoadBalancer Refresh ()
         {
-            var response = this.innerCollection.Get(ResourceGroupName, Name);
+            var response = Manager.Inner.LoadBalancers.Get(ResourceGroupName, Name);
             SetInner(response);
             InitializeChildrenFromInner();
             return this;
@@ -220,7 +217,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<LoadBalancerInner> CreateInnerAsync()
         {
-            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return Manager.Inner.LoadBalancers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:38719597698E42AABAD5A9917188C155:D9C6887E0B146C62C173F2FC8A940200

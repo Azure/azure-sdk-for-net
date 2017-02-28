@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ILoadBalancers
     {
         ///GENMHASH:DC62D974883C70D83DDB9D5F4637868C:C8672EF40558C709D72F2EABF261037D
-        internal LoadBalancersImpl(INetworkManagementClient networkClient, INetworkManager networkManager)
-            : base(networkClient.LoadBalancers, networkManager)
+        internal LoadBalancersImpl(INetworkManager networkManager)
+            : base(networkManager.Inner.LoadBalancers, networkManager)
         {
         }
 
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         override protected LoadBalancerImpl WrapModel (string name)
         {
             LoadBalancerInner inner = new LoadBalancerInner();
-            return new LoadBalancerImpl(name, inner, Inner, Manager);
+            return new LoadBalancerImpl(name, inner, Manager);
         }
 
         ///GENMHASH:2B5A2E3F465A968F1950DAD37181F731:F150C6361EF462F597E93FAB337DC91B
         override protected ILoadBalancer WrapModel (LoadBalancerInner inner) //$TODO: This needs to return LoadBalancerImpl
         {
-            return new LoadBalancerImpl(inner.Name, inner, Inner, Manager);
+            return new LoadBalancerImpl(inner.Name, inner, Manager);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D

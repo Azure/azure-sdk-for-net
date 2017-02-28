@@ -26,17 +26,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         NetworkSecurityGroup.Definition.IDefinition,
         NetworkSecurityGroup.Update.IUpdate
     {
-        private INetworkSecurityGroupsOperations innerCollection;
         private IDictionary<string, INetworkSecurityRule> rules;
         private IDictionary<string, INetworkSecurityRule> defaultRules;
         ///GENMHASH:EF8FBA50FA03F1FE4888F19050CEDBB9:55E548B15E635A8197D52049D3FAB8D3
         internal  NetworkSecurityGroupImpl(
             string name,
             NetworkSecurityGroupInner innerModel,
-            INetworkSecurityGroupsOperations innerCollection,
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-            this.innerCollection = innerCollection;
         }
 
         #region Helpers
@@ -44,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<NetworkSecurityGroupInner> CreateInnerAsync()
         {
-            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return Manager.Inner.NetworkSecurityGroups.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:A61BAEAFF2676CB74CB2C0A5F49B245E
@@ -133,7 +130,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:7399EBE775B4308D075A8364EF2A490D
         public override INetworkSecurityGroup Refresh()
         {
-            var response = innerCollection.Get(ResourceGroupName, Name);
+            var response = Manager.Inner.NetworkSecurityGroups.Get(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }

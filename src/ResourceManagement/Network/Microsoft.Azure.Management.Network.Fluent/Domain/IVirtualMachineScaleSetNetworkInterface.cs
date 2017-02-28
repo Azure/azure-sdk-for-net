@@ -13,8 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IVirtualMachineScaleSetNetworkInterface  :
         INetworkInterfaceBase,
         IResource,
-        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
-        IHasInner<Models.NetworkInterfaceInner>
+        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>
     {
         /// <summary>
         /// Gets the IP configurations of this network interface, indexed by their names.
