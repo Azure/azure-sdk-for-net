@@ -77,6 +77,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         SdkNuGetPackage.Add(nProj);
                 }
             }
+            else
+            {
+                SdkNuGetPackage = SdkNugetPackageInput.ToList<ITaskItem>();
+            }
 
             foreach (ITaskItem solution in AllLibraries)
             {

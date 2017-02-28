@@ -125,12 +125,12 @@
 		<FilterOutAutoRestLibraries SdkNugetPackageInput="@(SdkNuGetPackage)" AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects" NugetPackagesToPublish="$(PackageName)">
 		  <Output TaskParameter="Non_NetCore_AutoRestLibraries" ItemName="Non_NetCore_AutoRestLibraries" />
 		  <Output TaskParameter="NetCore_AutoRestLibraries" ItemName="NetCore_AutoRestLibraries" />
-		  <Output TaskParameter="NonAutoRestLibraries" ItemName="NAutoRestLibraries" />
+		  <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
 		  <Output TaskParameter="SdkNuGetPackageOutput" ItemName="SdkNuGetPackageItem" />
 		</FilterOutAutoRestLibraries>
 		<Message Text="Non-NetCore based AutoRest Libraries: @(Non_NetCore_AutoRestLibraries)" />
 		<Message Text="NetCore AutoRest Libraries: @(NetCore_AutoRestLibraries)" />
-		<Message Text="NAutoRestLibraries Libraries: @(NAutoRestLibraries)" />		
+		<Message Text="NonAutoRestLibraries Libraries: @(NonAutoRestLibraries)" />		
 
 		<!--Do not build old libraries except Authentication, which Azure PowerShell still uses-->
 		<ItemGroup>
