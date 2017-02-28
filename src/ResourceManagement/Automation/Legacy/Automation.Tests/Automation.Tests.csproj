@@ -5,7 +5,7 @@
     <RootNamespace>Automation.Tests</RootNamespace>
     <AssemblyName>Automation.Tests</AssemblyName>
   </PropertyGroup>
-  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Customizations\ResponseWithSkipToken.cs" />
