@@ -4,19 +4,20 @@
     "authors": [
         "Microsoft"
     ],
-    "packOptions": {
-        "tags": [
-            "Microsoft Azure Power BI Embedded management",
-            "Power BI Embedded",
-            "Power BI Embedded management",
-            "REST HTTP client",
-            "windowsazureofficial",
-            "netcore451511"
-        ],
-        "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-        "requireLicenseAcceptance": true
-    },
+  "packOptions": {
+    "tags": [
+      "Microsoft Azure Power BI Embedded management",
+      "Power BI Embedded",
+      "Power BI Embedded management",
+      "REST HTTP client",
+      "windowsazureofficial",
+      "netcore451511"
+    ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "requireLicenseAcceptance": true
+  },
     "buildOptions": {
     "delaySign": true,
     "publicSign": false,
