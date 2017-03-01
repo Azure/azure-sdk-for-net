@@ -2,23 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
-    using TrafficManagerEndpoint.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using TrafficManagerProfile.Update;
+    using Resource.Fluent.Core;
     using TrafficManagerEndpoint.UpdateDefinition;
     using TrafficManagerEndpoint.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using System.Threading.Tasks;
     using TrafficManagerEndpoint.UpdateNestedProfileEndpoint;
     using TrafficManagerEndpoint.UpdateExternalEndpoint;
     using System.Threading;
-    using TrafficManagerProfile.Definition;
     using TrafficManagerEndpoint.UpdateAzureEndpoint;
     using Resource.Fluent.Core.ChildResourceActions;
-    using System;
-    using Management.TrafficManager.Fluent.Models;
-    using Management.TrafficManager.Fluent;
+    using Models;
 
     /// <summary>
     /// Implementation for TrafficManagerEndpoint.
@@ -33,9 +26,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         IUpdateExternalEndpoint,
         IUpdateNestedProfileEndpoint
     {
-        private IEndpointsOperations client;
         private const string endpointStatusDisabled = "Disabled";
         private const string endpointStatusEnabled = "Enabled";
+
+        ///GENMHASH:2521373455D66779FDC191E5AF5A324E:A74628459133C1690F2A62C7C482A9A9
+        internal TrafficManagerEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner) : base(name, parent, inner)
+        {
+        }
 
         ///GENMHASH:974E7FCA59BCBB12A26AB795E4C4A982:8418C83028CC7E2D2717B3EC2E3DBF97
         public TrafficManagerEndpointImpl ToResourceId(string resourceId)
@@ -64,12 +61,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             return this;
         }
 
-        ///GENMHASH:2521373455D66779FDC191E5AF5A324E:A74628459133C1690F2A62C7C482A9A9
-        internal  TrafficManagerEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner)
-        {
-            this.client = client;
-        }
-
         ///GENMHASH:3A31ACD3BD909199AC20F8F3E3739FBC:74F3955C06F9B8A4E58621607D351E22
         public int RoutingWeight()
         {
@@ -79,21 +70,23 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:C47C4325FAE65E493A947196909A8664
         public ITrafficManagerEndpoint Refresh()
         {
-            EndpointInner inner = this.client.Get(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.EndpointType().ToString(),
-                this.Name());
-            this.SetInner(inner);
+            EndpointInner inner = Parent.Manager.Inner.Endpoints.Get(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                EndpointType().ToString(),
+                Name());
+            SetInner(inner);
             return this;
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:E3744107BCA5CCCE4C7486E0C86460B6
         public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.client.DeleteAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.EndpointType().LocalName,
-                this.Name(),
+            await Parent.Manager.Inner.Endpoints.DeleteAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                EndpointType().LocalName,
+                Name(),
                 cancellationToken);
         }
 
@@ -107,19 +100,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:456A0329D077009BC6D9D0C6B91ADA12
         public async override Task<ITrafficManagerEndpoint> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            EndpointInner endpointInner =  await this.client.CreateOrUpdateAsync(this.Parent.ResourceGroupName,
-                this.Parent.Name,
-                this.EndpointType().LocalName,
-                this.Name(),
+            EndpointInner endpointInner =  await Parent.Manager.Inner.Endpoints.CreateOrUpdateAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                EndpointType().LocalName,
+                Name(),
                 Inner);
-            this.SetInner(endpointInner);
+            SetInner(endpointInner);
             return this;
         }
 
         ///GENMHASH:3F2076D33F84FDFAB700A1F0C8C41647:DABEB48E6D840C88546C3B33907CE0B9
         public bool IsEnabled()
         {
-            return Inner.EndpointStatus.Equals(TrafficManagerEndpointImpl.endpointStatusEnabled, System.StringComparison.OrdinalIgnoreCase);
+            return Inner.EndpointStatus.Equals(endpointStatusEnabled, System.StringComparison.OrdinalIgnoreCase);
         }
 
         ///GENMHASH:E596842042AC44324049E25924338641:279322A898E3742765E012128C6BA094
@@ -160,7 +154,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:F3CEF905F52D0898C9748690DA270B37:E6BE9AF60DE7E23E08DA51CD41A40433
         public TrafficManagerEndpointImpl WithTrafficEnabled()
         {
-            Inner.EndpointStatus = TrafficManagerEndpointImpl.endpointStatusEnabled;
+            Inner.EndpointStatus = endpointStatusEnabled;
             return this;
         }
 

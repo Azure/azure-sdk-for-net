@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             {
                 if (profiles == null)
                 {
-                    profiles = new TrafficManagerProfilesImpl(Inner, this);
+                    profiles = new TrafficManagerProfilesImpl(this);
                 }
                 return profiles;
             }

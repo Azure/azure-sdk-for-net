@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
@@ -15,7 +14,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ITrafficManagerAzureEndpoint
     {
         ///GENMHASH:ADDA04C7700D3A4F0C913857C08BC9EB:2682BD2661D3A018D6E09706819D354F
-        internal  TrafficManagerAzureEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner, client)
+        internal  TrafficManagerAzureEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner)
+            : base(name, parent, inner)
         {
         }
 

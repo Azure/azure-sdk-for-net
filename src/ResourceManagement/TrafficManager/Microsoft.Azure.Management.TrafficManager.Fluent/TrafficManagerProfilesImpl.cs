@@ -2,24 +2,24 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent;
     using System.Threading;
     using System.Collections.Generic;
-    using Management.TrafficManager.Fluent;
-    using Management.TrafficManager.Fluent.Models;
+    using Models;
 
     /// <summary>
     /// Implementation for TrafficManagerProfiles.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLmltcGxlbWVudGF0aW9uLlRyYWZmaWNNYW5hZ2VyUHJvZmlsZXNJbXBs
     internal partial class TrafficManagerProfilesImpl  :
-        GroupableResources<ITrafficManagerProfile,TrafficManagerProfileImpl,ProfileInner,IProfilesOperations,ITrafficManager>,
+        GroupableResources<ITrafficManagerProfile, TrafficManagerProfileImpl, ProfileInner, IProfilesOperations, ITrafficManager>,
         ITrafficManagerProfiles
     {
-        private IEndpointsOperations endpointsClient;
+        ///GENMHASH:84B6E84F790DD3CF43388254CEEE3609:519A2844AD55FAC6990427C640AC9D4B
+        internal TrafficManagerProfilesImpl(TrafficManager trafficManager) : base(trafficManager.Inner.Profiles, trafficManager)
+        {
+        }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -86,27 +86,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:12B839BC780AC48D63D16C362B5E2FF5
         protected override TrafficManagerProfileImpl WrapModel(string name)
         {
-             return new TrafficManagerProfileImpl(name,
-                new ProfileInner(),
-                Inner,
-                this.endpointsClient,
-                this.Manager);
+             return new TrafficManagerProfileImpl(name, new ProfileInner(), Manager);
         }
 
         ///GENMHASH:96AD55F2D1A183F1EF3F3859FC90630B:3C2F1C0167F4F4C255F6C1FD907E64F4
         protected override ITrafficManagerProfile WrapModel(ProfileInner inner)
         {
-            return new TrafficManagerProfileImpl(inner.Name,
-                inner,
-                Inner,
-                this.endpointsClient,
-                this.Manager);
-        }
-
-        ///GENMHASH:84B6E84F790DD3CF43388254CEEE3609:519A2844AD55FAC6990427C640AC9D4B
-        internal  TrafficManagerProfilesImpl(ITrafficManagerManagementClient trafficManagementClient, TrafficManager trafficManager) : base(trafficManagementClient.Profiles, trafficManager)
-        {
-            this.endpointsClient = trafficManagementClient.Endpoints;
+            return new TrafficManagerProfileImpl(inner.Name, inner, Manager);
         }
     }
 }

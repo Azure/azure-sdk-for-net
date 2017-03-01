@@ -3,10 +3,9 @@
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using System;
-    using Management.TrafficManager.Fluent;
-    using Management.TrafficManager.Fluent.Models;
+    using Models;
 
     /// <summary>
     /// Represents an endpoint collection associated with a traffic manager profile.
@@ -15,11 +14,21 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     internal partial class TrafficManagerEndpointsImpl  :
         ExternalChildResourcesCached<TrafficManagerEndpointImpl, ITrafficManagerEndpoint,EndpointInner, ITrafficManagerProfile, TrafficManagerProfileImpl>
     {
-        private IEndpointsOperations client;
         /// <summary>
         /// Adds the endpoint to the collection.
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
+
+        /// <summary>
+        /// Creates new EndpointsImpl.
+        /// </summary>
+        /// <param name="client">The client to perform REST calls on endpoints.</param>
+        /// <param name="parent">The parent traffic manager profile of the endpoints.</param>
+        ///GENMHASH:4D0E5B9E7FAF82899EC6E6B3762A42CE:86647EE6A7C92249B46A6C7B4A2F9A64
+        internal TrafficManagerEndpointsImpl(TrafficManagerProfileImpl parent) : base(parent, "Endpoint")
+        {
+            CacheCollection();
+        }
 
         ///GENMHASH:8CB67A1B3CF8E6894B88F02B1AE365EC:31C08CE442572994D91AB64D5DB46CB3
         public void AddEndpoint(TrafficManagerEndpointImpl endpoint)
@@ -36,10 +45,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             foreach (var entry in this.Collection) {
                 TrafficManagerEndpointImpl endpoint = entry.Value;
                 if (endpoint.EndpointType() == EndpointType.NestedProfile) {
-                    ITrafficManagerNestedProfileEndpoint nestedProfileEndpoint = new TrafficManagerNestedProfileEndpointImpl(entry.Key,
-                        this.Parent,
-                        endpoint.Inner,
-                        this.client);
+                    ITrafficManagerNestedProfileEndpoint nestedProfileEndpoint = new TrafficManagerNestedProfileEndpointImpl(
+                        entry.Key,
+                        Parent,
+                        endpoint.Inner);
                     result.Add(entry.Key, nestedProfileEndpoint);
                 }
             }
@@ -68,10 +77,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 TrafficManagerEndpointImpl endpoint = entry.Value;
                 if (endpoint.EndpointType() == EndpointType.External)
                 {
-                    ITrafficManagerExternalEndpoint externalEndpoint = new TrafficManagerExternalEndpointImpl(entry.Key,
-                        this.Parent,
-                        endpoint.Inner,
-                        this.client);
+                    ITrafficManagerExternalEndpoint externalEndpoint = new TrafficManagerExternalEndpointImpl(
+                        entry.Key,
+                        Parent,
+                        endpoint.Inner);
                     result.Add(entry.Key, externalEndpoint);
                 }
             }
@@ -84,10 +93,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             List<TrafficManagerEndpointImpl> childResources = new List<TrafficManagerEndpointImpl>();
             if (Parent.Inner.Endpoints != null) {
                 foreach(var inner in Parent.Inner.Endpoints)  {
-                    childResources.Add(new TrafficManagerEndpointImpl(inner.Name,
-                        this.Parent,
-                        inner,
-                        this.client));
+                    childResources.Add(new TrafficManagerEndpointImpl(
+                        inner.Name,
+                        Parent,
+                        inner));
                 }
             }
             return childResources;
@@ -104,10 +113,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 TrafficManagerEndpointImpl endpoint = entry.Value;
                 if (endpoint.EndpointType() == EndpointType.Azure)
                 {
-                    ITrafficManagerAzureEndpoint azureEndpoint = new TrafficManagerAzureEndpointImpl(entry.Key,
-                        this.Parent,
-                        endpoint.Inner,
-                        this.client);
+                    ITrafficManagerAzureEndpoint azureEndpoint = new TrafficManagerAzureEndpointImpl(
+                        entry.Key,
+                        Parent,
+                        endpoint.Inner);
                     result.Add(entry.Key, azureEndpoint);
                 }
             }
@@ -128,18 +137,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 throw new ArgumentException($"An external endpoint with name {name} not found in the profile");
             }
             return endpoint;
-        }
-
-        /// <summary>
-        /// Creates new EndpointsImpl.
-        /// </summary>
-        /// <param name="client">The client to perform REST calls on endpoints.</param>
-        /// <param name="parent">The parent traffic manager profile of the endpoints.</param>
-        ///GENMHASH:4D0E5B9E7FAF82899EC6E6B3762A42CE:86647EE6A7C92249B46A6C7B4A2F9A64
-        internal  TrafficManagerEndpointsImpl(IEndpointsOperations client, TrafficManagerProfileImpl parent) : base(parent, "Endpoint")
-        {
-            this.client = client;
-            this.CacheCollection();
         }
 
         /// <summary>
@@ -189,8 +186,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:8E8DA5B84731A2D412247D25A544C502:37DC546F8DB33DF63F6C1EF339D32991
         protected override TrafficManagerEndpointImpl NewChildResource(string name)
         {
-            TrafficManagerEndpointImpl endpoint = new TrafficManagerEndpointImpl(name,
-                this.Parent, new EndpointInner { Name = name }, this.client);
+            TrafficManagerEndpointImpl endpoint = new TrafficManagerEndpointImpl(
+                name,
+                Parent, new EndpointInner { Name = name });
             return endpoint
                 .WithRoutingWeight(1)
                 .WithTrafficEnabled();
