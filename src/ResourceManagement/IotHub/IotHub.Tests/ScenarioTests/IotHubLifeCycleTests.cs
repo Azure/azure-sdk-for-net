@@ -250,17 +250,17 @@ namespace IotHub.Tests.ScenarioTests
                             ConnectionString = ehConnectionString
                         }
                     },
-                    ServiceBusQueues = new List<RoutingMessagingEndpointProperties>()
+                    ServiceBusQueues = new List<RoutingServiceBusQueueEndpointProperties>()
                     {
-                        new RoutingMessagingEndpointProperties()
+                        new RoutingServiceBusQueueEndpointProperties()
                         {
                             Name = "sb1",
                             ConnectionString = sbConnectionString
                         }
                     },
-                    ServiceBusTopics = new List<RoutingMessagingEndpointProperties>()
+                    ServiceBusTopics = new List<RoutingServiceBusTopicEndpointProperties>()
                     {
-                        new RoutingMessagingEndpointProperties()
+                        new RoutingServiceBusTopicEndpointProperties()
                         {
                             Name = "tp1",
                             ConnectionString = topicConnectionString

@@ -11,10 +11,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The properties related to the user-provided endpoints to which IoT hub
-    /// routes the messages to, based on the routing rules. A maximum of 10
-    /// endpoints is allowed across all endpoint types for paid hubs and a
-    /// maximum of 1 endpoint is allowed across all endpoint types for free
+    /// The properties related to the custom endpoints to which your IoT hub
+    /// routes messages based on the routing rules. A maximum of 10 custom
+    /// endpoints are allowed across all endpoint types for paid hubs and
+    /// only 1 custom endpoint is allowed across all endpoint types for free
     /// hubs.
     /// </summary>
     public partial class RoutingEndpoints
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Initializes a new instance of the RoutingEndpoints class.
         /// </summary>
-        public RoutingEndpoints(IList<RoutingMessagingEndpointProperties> serviceBusQueues = default(IList<RoutingMessagingEndpointProperties>), IList<RoutingMessagingEndpointProperties> serviceBusTopics = default(IList<RoutingMessagingEndpointProperties>), IList<RoutingEventHubProperties> eventHubs = default(IList<RoutingEventHubProperties>))
+        public RoutingEndpoints(IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default(IList<RoutingServiceBusQueueEndpointProperties>), IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default(IList<RoutingServiceBusTopicEndpointProperties>), IList<RoutingEventHubProperties> eventHubs = default(IList<RoutingEventHubProperties>))
         {
             ServiceBusQueues = serviceBusQueues;
             ServiceBusTopics = serviceBusTopics;
@@ -35,23 +35,23 @@ namespace Microsoft.Azure.Management.IotHub.Models
         }
 
         /// <summary>
-        /// The list of service bus queue endpoints to which IoT hub routes
-        /// the messages to, based on the routing rules.
+        /// The list of Service Bus queue endpoints that IoT hub routes the
+        /// messages to, based on the routing rules.
         /// </summary>
         [JsonProperty(PropertyName = "serviceBusQueues")]
-        public IList<RoutingMessagingEndpointProperties> ServiceBusQueues { get; set; }
+        public IList<RoutingServiceBusQueueEndpointProperties> ServiceBusQueues { get; set; }
 
         /// <summary>
-        /// The list of service bus topic endpoints to which IoT hub routes
+        /// The list of Service Bus topic endpoints that the IoT hub routes
         /// the messages to, based on the routing rules.
         /// </summary>
         [JsonProperty(PropertyName = "serviceBusTopics")]
-        public IList<RoutingMessagingEndpointProperties> ServiceBusTopics { get; set; }
+        public IList<RoutingServiceBusTopicEndpointProperties> ServiceBusTopics { get; set; }
 
         /// <summary>
-        /// The list of eventhub endpoints to which IoT hub routes the
-        /// messages to, based on the routing rules. This list should not
-        /// include the in-built eventhub endpoint.
+        /// The list of Event Hubs endpoints that IoT hub routes messages to,
+        /// based on the routing rules. This list does not include the
+        /// built-in Event Hubs endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "eventHubs")]
         public IList<RoutingEventHubProperties> EventHubs { get; set; }

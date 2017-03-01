@@ -13,7 +13,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
     /// <summary>
     /// The operations monitoring properties for the IoT hub. The possible
     /// keys to the dictionary are Connections, DeviceTelemetry, C2DCommands,
-    /// DeviceIdentityOperations, FileUploadOperations.
+    /// DeviceIdentityOperations, FileUploadOperations, Routes,
+    /// D2CTwinOperations, C2DTwinOperations, TwinQueries, JobsOperations,
+    /// DirectMethods.
     /// </summary>
     public partial class OperationsMonitoringProperties
     {

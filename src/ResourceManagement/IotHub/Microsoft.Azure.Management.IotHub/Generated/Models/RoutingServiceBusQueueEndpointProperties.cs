@@ -11,19 +11,21 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The properties related to an event hub endpoint.
+    /// The properties related to service bus queue endpoint types.
     /// </summary>
-    public partial class RoutingEventHubProperties
+    public partial class RoutingServiceBusQueueEndpointProperties
     {
         /// <summary>
-        /// Initializes a new instance of the RoutingEventHubProperties class.
+        /// Initializes a new instance of the
+        /// RoutingServiceBusQueueEndpointProperties class.
         /// </summary>
-        public RoutingEventHubProperties() { }
+        public RoutingServiceBusQueueEndpointProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the RoutingEventHubProperties class.
+        /// Initializes a new instance of the
+        /// RoutingServiceBusQueueEndpointProperties class.
         /// </summary>
-        public RoutingEventHubProperties(string connectionString, string name, string id = default(string), string subscriptionId = default(string), string resourceGroup = default(string))
+        public RoutingServiceBusQueueEndpointProperties(string connectionString, string name, string id = default(string), string subscriptionId = default(string), string resourceGroup = default(string))
         {
             ConnectionString = connectionString;
             Name = name;
@@ -33,17 +35,19 @@ namespace Microsoft.Azure.Management.IotHub.Models
         }
 
         /// <summary>
-        /// The connection string of the event hub endpoint.
+        /// The connection string of the service bus queue endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "connectionString")]
         public string ConnectionString { get; set; }
 
         /// <summary>
-        /// The name of the event hub endpoint. The name can only include
-        /// alphanumeric characters, periods, underscores, hyphens and has a
-        /// maximum length of 64 characters. The following names are
-        /// reserved;  events, operationsMonitoringEvents, fileNotifications,
-        /// $default. Endpoint names must be unique across endpoint types.
+        /// The name of the service bus queue endpoint. The name can only
+        /// include alphanumeric characters, periods, underscores, hyphens
+        /// and has a maximum length of 64 characters. The following names
+        /// are reserved;  events, operationsMonitoringEvents,
+        /// fileNotifications, $default. Endpoint names must be unique across
+        /// endpoint types. The name need not be the same as the actual queue
+        /// name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -60,13 +64,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// The subscription identifier of the event hub endpoint.
+        /// The subscription identifier of the service bus queue endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The name of the resource group of the event hub endpoint.
+        /// The name of the resource group of the service bus queue endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "resourceGroup")]
         public string ResourceGroup { get; set; }

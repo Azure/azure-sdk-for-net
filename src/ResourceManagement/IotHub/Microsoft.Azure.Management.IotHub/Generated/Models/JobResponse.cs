@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string JobId { get; private set; }
 
         /// <summary>
-        /// The start time of the Job.
+        /// The start time of the job.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "startTimeUtc")]

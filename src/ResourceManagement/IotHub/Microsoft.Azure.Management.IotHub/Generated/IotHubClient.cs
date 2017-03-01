@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.IotHub
     using Models;
 
     /// <summary>
-    /// Use this API to manage the IoT hubs in your subscription.
+    /// Use this API to manage the IoT hubs in your Azure subscription.
     /// </summary>
     public partial class IotHubClient : ServiceClient<IotHubClient>, IIotHubClient, IAzureClient
     {

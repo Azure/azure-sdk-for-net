@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The common properties of an azure resource.
+    /// The common properties of an Azure resource.
     /// </summary>
     public partial class Resource : IResource
     {

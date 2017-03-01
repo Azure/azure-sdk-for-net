@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
 
         /// <summary>
         /// The lock duration. See:
-        /// https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-file-upload.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload.
         /// </summary>
         [JsonProperty(PropertyName = "lockDurationAsIso8601")]
         public TimeSpan? LockDurationAsIso8601 { get; set; }
@@ -42,14 +42,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// The period of time for which a message is available to consume
         /// before it is expired by the IoT hub. See:
-        /// https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-file-upload.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload.
         /// </summary>
         [JsonProperty(PropertyName = "ttlAsIso8601")]
         public TimeSpan? TtlAsIso8601 { get; set; }
 
         /// <summary>
         /// The number of times the IoT hub attempts to deliver a message.
-        /// See: https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-file-upload.
+        /// See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload.
         /// </summary>
         [JsonProperty(PropertyName = "maxDeliveryCount")]
         public int? MaxDeliveryCount { get; set; }
