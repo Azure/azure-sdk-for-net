@@ -305,7 +305,7 @@ namespace Microsoft.Rest.Azure.Authentication
                         clientSettings.PromptBehavior,
                         userId,
                         clientSettings.AdditionalQueryParameters);
-                    return result;
+                    return result;                    
                 }
                 catch (Exception e)
                 {
