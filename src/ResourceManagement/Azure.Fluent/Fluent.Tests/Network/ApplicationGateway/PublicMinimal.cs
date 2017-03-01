@@ -19,12 +19,10 @@ namespace Azure.Tests.Network.ApplicationGateway
         private INetworks networks;
         private ApplicationGatewayHelper applicationGatewayHelper;
 
-        public PublicMinimal(INetworks networks, [CallerMemberName] string methodName = "testframework_failed")
+        public PublicMinimal([CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             applicationGatewayHelper = new ApplicationGatewayHelper(TestUtilities.GenerateName("", methodName));
-
-            this.networks = networks;
         }
 
         public override void Print(IApplicationGateway resource)
@@ -34,6 +32,7 @@ namespace Azure.Tests.Network.ApplicationGateway
 
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
+            networks = resources.Manager.Networks;
 
             resources.Define(applicationGatewayHelper.AppGatewayName)
                 .WithRegion(applicationGatewayHelper.Region)
