@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         internal MessageLockLostException(string message, Exception innerException)
-            : base(true, message, innerException)
+            : base(false, message, innerException)
         {
         }
     }

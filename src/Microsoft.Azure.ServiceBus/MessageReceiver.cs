@@ -6,13 +6,17 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public abstract class MessageReceiver : ClientEntity
     {
         readonly TimeSpan operationTimeout;
+        readonly object messageReceivePumpSyncLock;
         int prefetchCount;
         long lastPeekedSequenceNumber;
+        MessageReceivePump receivePump;
+        CancellationTokenSource receivePumpCancellationTokenSource;
 
         protected MessageReceiver(ReceiveMode receiveMode, TimeSpan operationTimeout)
             : base(nameof(MessageReceiver) + StringUtility.GetRandomString())
@@ -20,6 +24,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ReceiveMode = receiveMode;
             this.operationTimeout = operationTimeout;
             this.lastPeekedSequenceNumber = Constants.DefaultLastPeekedSequenceNumber;
+            this.messageReceivePumpSyncLock = new object();
         }
 
         public abstract string Path { get; }
@@ -69,6 +74,19 @@ namespace Microsoft.Azure.ServiceBus
 
         protected MessagingEntityType EntityType { get; set; }
 
+        public override Task CloseAsync()
+        {
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump != null)
+                {
+                    this.receivePumpCancellationTokenSource.Cancel();
+                    this.receivePump = null;
+                }
+            }
+            return Task.FromResult(0);
+        }
+
         /// <summary>
         /// Asynchronously receives a message using the <see cref="MessageReceiver" />.
         /// </summary>
@@ -117,7 +135,7 @@ namespace Microsoft.Azure.ServiceBus
             IList<BrokeredMessage> messages;
             try
             {
-                messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime);
+                messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -302,8 +320,18 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             MessagingEventSource.Log.MessagePeekStop(this.ClientId, messages?.Count ?? 0);
-
             return messages;
+        }
+
+        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback)
+        {
+            this.OnMessageAsync(callback, new OnMessageOptions() { ReceiveTimeOut = this.OperationTimeout });
+        }
+
+        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback, OnMessageOptions onMessageOptions)
+        {
+            onMessageOptions.ReceiveTimeOut = this.OperationTimeout;
+            this.OnMessageHandlerAsync(onMessageOptions, callback).GetAwaiter().GetResult();
         }
 
         protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
@@ -350,6 +378,40 @@ namespace Microsoft.Azure.ServiceBus
             {
                 throw Fx.Exception.AsError(new InvalidOperationException("The operation is only supported in 'PeekLock' receive mode."));
             }
+        }
+
+        async Task OnMessageHandlerAsync(
+            OnMessageOptions onMessageOptions,
+            Func<BrokeredMessage, CancellationToken, Task> callback)
+        {
+            MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, onMessageOptions);
+
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump != null)
+                {
+                    throw new InvalidOperationException(Resources.OnMessageAlreadyCalled);
+                }
+
+                this.receivePumpCancellationTokenSource = new CancellationTokenSource();
+                this.receivePump = new MessageReceivePump(this, onMessageOptions, callback, this.receivePumpCancellationTokenSource.Token);
+            }
+
+            try
+            {
+                await this.receivePump.StartPumpAsync().ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.RegisterOnMessageHandlerException(this.ClientId, exception);
+
+                this.receivePumpCancellationTokenSource.Cancel();
+                this.receivePumpCancellationTokenSource.Dispose();
+                this.receivePump = null;
+                throw;
+            }
+
+            MessagingEventSource.Log.RegisterOnMessageHandlerStop(this.ClientId);
         }
     }
 }

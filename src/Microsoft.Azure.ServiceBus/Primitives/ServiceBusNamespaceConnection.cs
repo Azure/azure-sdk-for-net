@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public class ServiceBusNamespaceConnection : ServiceBusConnection
     {
         public ServiceBusNamespaceConnection(string namespaceConnectionString)
-            : this(namespaceConnectionString, ServiceBusConnection.DefaultOperationTimeout, RetryPolicy.Default)
+            : this(namespaceConnectionString, Constants.DefaultOperationTimeout, RetryPolicy.Default)
         {
         }
 

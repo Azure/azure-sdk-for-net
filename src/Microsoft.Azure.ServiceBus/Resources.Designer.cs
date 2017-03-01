@@ -96,6 +96,33 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to There are no brokeredMessages supplied. Please make sure input messages are not empty..
+        /// </summary>
+        public static string BrokeredMessageListIsNullOrEmpty {
+            get {
+                return ResourceManager.GetString("BrokeredMessageListIsNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Sending empty {0} is not a valid operation..
+        /// </summary>
+        public static string CannotSendAnEmptyMessage {
+            get {
+                return ResourceManager.GetString("CannotSendAnEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Failed to serialize the session state because its state stream has been partially consumed..
+        /// </summary>
+        public static string CannotSerializeSessionStateWithPartiallyConsumedStream {
+            get {
+                return ResourceManager.GetString("CannotSerializeSessionStateWithPartiallyConsumedStream", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to &apos;{0}&apos; contains character &apos;{1}&apos; which is not allowed because it is reserved in the Uri scheme..
         /// </summary>
         public static string CharacterReservedForUriScheme {
@@ -112,13 +139,13 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///    Looks up a localized string similar to Failed to serialize the session state because its state stream has been partially consumed..
+        ///    Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
         /// </summary>
-        public static string CannotSerializeSessionStateWithPartiallyConsumedStream {
+        public static string FailedToSerializeUnsupportedType {
             get {
-                return ResourceManager.GetString("CannotSerializeSessionStateWithPartiallyConsumedStream", resourceCulture);
+                return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
             }
         }
         
@@ -141,6 +168,15 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxConcurrentCalls&quot; must be greater than zero..
+        /// </summary>
+        public static string MaxConcurrentCallsMustBeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("MaxConcurrentCallsMustBeGreaterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue..
         /// </summary>
         public static string MessageLockLost {
@@ -157,25 +193,16 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("NotSupportedPropertyType", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///    Looks up a localized string similar to The session lock has expired on the MessageSession. Accept a new MessageSession..
+        ///    Looks up a localized string similar to The method &apos;OnMessageAsync&apos; has already been called..
         /// </summary>
-        public static string SessionLockExpiredOnMessageSession {
+        public static string OnMessageAlreadyCalled {
             get {
-                return ResourceManager.GetString("SessionLockExpiredOnMessageSession", resourceCulture);
+                return ResourceManager.GetString("OnMessageAlreadyCalled", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///    Looks up a localized string similar to Provided rule filter {0} is not supported. Supported values are: {1}, {2}.
-        /// </summary>
-        public static string RuleFilterNotSupported {
-            get {
-                return ResourceManager.GetString("RuleFilterNotSupported", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
         /// </summary>
@@ -184,7 +211,25 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("PeekLockModeRequired", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Provided rule filter {0} is not supported. Supported values are: {1}, {2}.
+        /// </summary>
+        public static string RuleFilterNotSupported {
+            get {
+                return ResourceManager.GetString("RuleFilterNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The session lock has expired on the MessageSession. Accept a new MessageSession..
+        /// </summary>
+        public static string SessionLockExpiredOnMessageSession {
+            get {
+                return ResourceManager.GetString("SessionLockExpiredOnMessageSession", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///    Looks up a localized string similar to The length of the filter action statement is {0}, which exceeds the maximum length of {1}..
         /// </summary>

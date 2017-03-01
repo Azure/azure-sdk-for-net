@@ -186,4 +186,10 @@
   <data name="PeekLockModeRequired" xml:space="preserve">
     <value>This operation is only supported for a message receiver in 'PeekLock' receive mode.</value>
   </data>
+  <data name="MaxConcurrentCallsMustBeGreaterThanZero" xml:space="preserve">
+    <value>The specified value '{0}' is invalid. "maxConcurrentCalls" must be greater than zero.</value>
+  </data>
+  <data name="OnMessageAlreadyCalled" xml:space="preserve">
+    <value>The method 'OnMessageAsync' has already been called.</value>
+  </data>
 </root>

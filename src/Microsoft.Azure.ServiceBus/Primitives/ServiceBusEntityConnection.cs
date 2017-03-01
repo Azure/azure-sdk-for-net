@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public class ServiceBusEntityConnection : ServiceBusConnection
     {
         public ServiceBusEntityConnection(string entityConnectionString)
-            : this(entityConnectionString, ServiceBusConnection.DefaultOperationTimeout, RetryPolicy.Default)
+            : this(entityConnectionString, Constants.DefaultOperationTimeout, RetryPolicy.Default)
         {
         }
 

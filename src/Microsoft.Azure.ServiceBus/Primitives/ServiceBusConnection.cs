@@ -11,7 +11,6 @@ namespace Microsoft.Azure.ServiceBus
 
     public abstract class ServiceBusConnection
     {
-        public static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
         static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
         int prefetchCount;
 

@@ -228,5 +228,45 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(messages.Count == 1);
             Assert.True(messages.First().MessageId == "Dummy");
         }
+
+        protected async Task OnMessageAsyncTestCase(
+            MessageSender messageSender,
+            MessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+        {
+            int count = 0;
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            messageReceiver.OnMessageAsync(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SequenceNumber}");
+                    count++;
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await message.CompleteAsync();
+                    }
+                    await Task.FromResult(0);
+                },
+                new OnMessageOptions() { MaxConcurrentCalls = maxConcurrentCalls });
+
+            // Wait for the OnMessage Tasks to finish
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == messageCount)
+                {
+                    TestUtility.Log($"All '{messageCount}' messages Received.");
+                    break;
+                }
+                else
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            }
+
+            Assert.True(count == messageCount);
+        }
     }
 }

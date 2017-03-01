@@ -17,7 +17,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         internal QuotaExceededException(string message, Exception innerException)
-            : base(true, message, innerException)
+            : base(false, message, innerException)
         {
         }
     }

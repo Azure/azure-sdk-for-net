@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Primitives;
 
@@ -314,6 +315,21 @@ namespace Microsoft.Azure.ServiceBus
         public Task<DateTime> RenewMessageLockAsync(Guid lockToken)
         {
             return this.InnerReceiver.RenewLockAsync(lockToken);
+        }
+
+        /// <summary>Asynchronously processes a message.</summary>
+        /// <param name="callback">The method to invoke when the operation is complete.</param>
+        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback)
+        {
+            this.InnerReceiver.OnMessageAsync(callback);
+        }
+
+        /// <summary>Asynchronously processes a message.</summary>
+        /// <param name="callback">The method to invoke when the operation is complete.</param>
+        /// <param name="onMessageOptions">Calls a message option.</param>
+        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback, OnMessageOptions onMessageOptions)
+        {
+            this.InnerReceiver.OnMessageAsync(callback, onMessageOptions);
         }
 
         /// <summary>
