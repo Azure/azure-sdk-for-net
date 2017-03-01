@@ -272,7 +272,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateSchema(IntegrationAccountSchema schema)
         {
-            Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/IntegrationAccountSdkTest/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1600/schemas/IntegrationAccountSchema2147", schema.Id);            
+            Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/IntegrationAccountSdkTest/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1600/schemas/IntegrationAccountSchema2147", schema.Id);
             Assert.Equal("IntegrationAccountSchema2147", schema.Name);
             Assert.Equal("Microsoft.Logic/integrationAccounts/schemas", schema.Type);
 

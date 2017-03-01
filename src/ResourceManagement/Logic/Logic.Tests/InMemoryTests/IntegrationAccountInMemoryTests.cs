@@ -20,7 +20,7 @@ namespace Test.Azure.Management.Logic
         public IntegrationAccountInMemoryTests()
         {
             var content = File.ReadAllText(@"TestData/IntegrationAccountResponseContent.json");
-            var callbackUrlContent = File.ReadAllText(@"TestData/IntegrationAccountCallbackUrlResponseContent.json");            
+            var callbackUrlContent = File.ReadAllText(@"TestData/IntegrationAccountCallbackUrlResponseContent.json");
 
             this.IntegrationAccountsList =
                 new StringContent(string.Format(Constants.ListFormat,

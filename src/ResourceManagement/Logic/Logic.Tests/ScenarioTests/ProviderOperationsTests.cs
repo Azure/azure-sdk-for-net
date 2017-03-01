@@ -16,18 +16,13 @@ namespace Test.Azure.Management.Logic
     public class ProviderOperationsTests : ScenarioTestsBase
     {
         /// <summary>
-        /// Name of the test class.
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.ProviderOperationsTests";
-
-        /// <summary>
         /// Tests the get operation of provider.
         /// </summary>
         [Fact]
         public void GetProviderOperations()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 var client = context.GetServiceClient<LogicManagementClient>();
                 var operationList = client.ListOperations();

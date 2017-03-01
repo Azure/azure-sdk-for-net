@@ -20,18 +20,12 @@ namespace Test.Azure.Management.Logic
     public class IntegrationAccountScenarioTests : ScenarioTestsBase
     {
         /// <summary>
-        /// Name of the test class.
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountScenarioTests";
-
-        /// <summary>
         /// Tests the create and delete operations of the integration account.
         /// </summary>
         [Fact]
         public void CreateAndDeleteIntegrationAccount()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -55,8 +49,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndUpdateIntegrationAccount()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -96,8 +89,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndGetIntegrationAccountByName()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -124,8 +116,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountBySubscription()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -152,8 +143,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountByResourceGroup()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -180,8 +170,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void UpdateIntegrationAccount()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -220,8 +209,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountCallbackUrl()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -259,7 +247,6 @@ namespace Test.Azure.Management.Logic
 
                 // Delete the IntegrationAccount
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
             }
         }
 

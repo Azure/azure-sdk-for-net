@@ -16,6 +16,11 @@ namespace Test.Azure.Management.Logic
     abstract public class ScenarioTestsBase : TestBase
     {
         /// <summary>
+        /// Name of the test class
+        /// </summary>
+        protected string testClassName { get { return this.GetType().FullName; } }
+
+        /// <summary>
         /// Default serviceplan Resource id 
         /// </summary>
         protected string ServicePlanResourceId

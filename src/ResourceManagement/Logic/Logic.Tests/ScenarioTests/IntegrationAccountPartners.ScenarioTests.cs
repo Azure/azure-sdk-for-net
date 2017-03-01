@@ -19,18 +19,13 @@ namespace Test.Azure.Management.Logic
     public class IntegrationAccountPartnerScenarioTests : ScenarioTestsBase
     {
         /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests";
-
-        /// <summary>
         /// Tests the create and delete operations of the integration account partner.
         /// </summary>
         [Fact]
         public void CreateAndDeleteIntegrationAccountPartner()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -58,7 +53,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountPartnerOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -88,7 +83,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountPartner()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -137,7 +132,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountPartner()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -171,7 +166,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountPartners()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =

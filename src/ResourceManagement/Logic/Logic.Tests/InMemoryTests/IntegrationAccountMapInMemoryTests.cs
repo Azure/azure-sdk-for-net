@@ -272,7 +272,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateMap(IntegrationAccountMap map)
         {
-            Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/IntegrationAccountSdkTest/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5935/maps/IntegrationAccountMap1", map.Id);            
+            Assert.True(this.ValidateIdFormat(id: map.Id, entityTypeName: "integrationAccounts", entitySubtypeName: "maps"));
             Assert.Equal("IntegrationAccountMap1", map.Name);
             Assert.Equal("Microsoft.Logic/integrationAccounts/maps", map.Type);
 

@@ -8,7 +8,6 @@ namespace Test.Azure.Management.Logic
     using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
@@ -19,18 +18,13 @@ namespace Test.Azure.Management.Logic
     public class IntegrationAccountSessionScenarioTests : ScenarioTestsBase
     {
         /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests";
-
-        /// <summary>
         /// Tests the create and delete operations of the integration account session.
         /// https://msazure.visualstudio.com/One/_workitems/edit/587947
         /// </summary>
         [Fact]
         public void CreateAndDeleteIntegrationAccountSession()
         {
-            using (var context = MockContext.Start(className: TestClass))
+            using (var context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
                 var integrationAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
@@ -95,7 +89,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndUpdateIntegrationAccountSession()
         {
-            using (var context = MockContext.Start(className: TestClass))
+            using (var context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
                 var integrationAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
@@ -141,7 +135,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndGetIntegrationAccountSession()
         {
-            using (var context = MockContext.Start(TestClass))
+            using (var context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
                 var integrationAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
@@ -184,7 +178,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountSessions()
         {
-            using (var context = MockContext.Start(TestClass))
+            using (var context = MockContext.Start(className: this.testClassName))
             {
 
                 var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
@@ -242,7 +236,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void DeleteIntegrationAccountSessionOnAccountDeletion()
         {
-            using (var context = MockContext.Start(TestClass))
+            using (var context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var integrationAccountSessionName = TestUtilities.GenerateName(Constants.IntegrationAccountSessionPrefix);
@@ -283,7 +277,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateIntegrationAccountSessionUsingFile()
         {
-            using (var context = MockContext.Start(TestClass))
+            using (var context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
                 var integrationAs2AccountSessionName =TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);

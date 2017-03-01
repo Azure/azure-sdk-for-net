@@ -306,11 +306,11 @@ namespace Test.Azure.Management.Logic
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }
 
-        private void ValidateSession(IntegrationAccountSession Session)
+        private void ValidateSession(IntegrationAccountSession session)
         {
-            Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/IntegrationAccountSdkTest/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1600/sessions/IntegrationAccountAgreement8906-ICN", Session.Id);
-            Assert.Equal("IntegrationAccountAgreement8906-ICN", Session.Name);
-            Assert.Equal("Microsoft.Logic/integrationAccounts/sessions", Session.Type);
+            Assert.True(this.ValidateIdFormat(id: session.Id, entityTypeName: "integrationAccounts", entitySubtypeName: "sessions"));
+            Assert.Equal("IntegrationAccountAgreement8906-ICN", session.Name);
+            Assert.Equal("Microsoft.Logic/integrationAccounts/sessions", session.Type);
         }
     }
 }
