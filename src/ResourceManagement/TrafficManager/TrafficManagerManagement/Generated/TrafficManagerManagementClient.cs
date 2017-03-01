@@ -100,6 +100,17 @@ namespace Microsoft.Azure.Management.TrafficManager
             get { return this._endpoints; }
         }
         
+        private IGeographicHierarchyOperations _geographicHierarchy;
+        
+        /// <summary>
+        /// Operations for retrieving the Geographic Hierarchy for use with
+        /// Geographic traffic routing.
+        /// </summary>
+        public virtual IGeographicHierarchyOperations GeographicHierarchy
+        {
+            get { return this._geographicHierarchy; }
+        }
+        
         private IProfileOperations _profiles;
         
         /// <summary>
@@ -118,6 +129,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             : base()
         {
             this._endpoints = new EndpointOperations(this);
+            this._geographicHierarchy = new GeographicHierarchyOperations(this);
             this._profiles = new ProfileOperations(this);
             this._apiVersion = "2017-03-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -188,6 +200,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             : base(httpClient)
         {
             this._endpoints = new EndpointOperations(this);
+            this._geographicHierarchy = new GeographicHierarchyOperations(this);
             this._profiles = new ProfileOperations(this);
             this._apiVersion = "2017-03-01";
             this._longRunningOperationInitialTimeout = -1;

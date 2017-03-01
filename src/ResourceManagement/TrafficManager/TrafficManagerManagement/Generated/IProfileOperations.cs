@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.TrafficManager
     public partial interface IProfileOperations
     {
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Checks if a relative domain name is available to be used for a
+        /// Traffic Manager Profile.
         /// </summary>
         /// <param name='parameters'>
         /// The Traffic Manager name parameters supplied to the

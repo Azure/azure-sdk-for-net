@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Checks if a relative domain name is available to be used for a
+        /// Traffic Manager Profile.
         /// </summary>
         /// <param name='parameters'>
         /// Required. The Traffic Manager name parameters supplied to the
@@ -301,10 +302,6 @@ namespace Microsoft.Azure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.Profile");
             }
-            if (parameters.Profile.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Profile.Location");
-            }
             if (parameters.Profile.Properties != null)
             {
                 if (parameters.Profile.Properties.DnsConfig != null)
@@ -538,7 +535,10 @@ namespace Microsoft.Azure.Management.TrafficManager
                     profileCreateOrUpdateParametersValue["type"] = parameters.Profile.Type;
                 }
                 
-                profileCreateOrUpdateParametersValue["location"] = parameters.Profile.Location;
+                if (parameters.Profile.Location != null)
+                {
+                    profileCreateOrUpdateParametersValue["location"] = parameters.Profile.Location;
+                }
                 
                 if (parameters.Profile.Tags != null)
                 {
@@ -2190,10 +2190,6 @@ namespace Microsoft.Azure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.Profile");
             }
-            if (parameters.Profile.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Profile.Location");
-            }
             if (parameters.Profile.Properties != null)
             {
                 if (parameters.Profile.Properties.DnsConfig != null)
@@ -2427,7 +2423,10 @@ namespace Microsoft.Azure.Management.TrafficManager
                     profileUpdateParametersValue["type"] = parameters.Profile.Type;
                 }
                 
-                profileUpdateParametersValue["location"] = parameters.Profile.Location;
+                if (parameters.Profile.Location != null)
+                {
+                    profileUpdateParametersValue["location"] = parameters.Profile.Location;
+                }
                 
                 if (parameters.Profile.Tags != null)
                 {

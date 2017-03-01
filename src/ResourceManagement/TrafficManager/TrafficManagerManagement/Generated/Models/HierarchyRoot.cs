@@ -20,33 +20,49 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class representing a Traffic Manager profile.
+    /// A region in the Traffic Manager Geographic Hierarchy that can be used
+    /// with the Geographic Traffic Routing Method.
     /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial class HierarchyRoot : GeographicEntity
     {
-        private ProfileProperties _properties;
+        private IList<RegionalGrouping> _regions;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Optional. Gets or sets the list of Regions grouped under this
+        /// Region in the Geographic Hierarchy.
         /// </summary>
-        public ProfileProperties Properties
+        public IList<RegionalGrouping> Regions
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._regions; }
+            set { this._regions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Profile class.
+        /// Initializes a new instance of the HierarchyRoot class.
         /// </summary>
-        public Profile()
+        public HierarchyRoot()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the HierarchyRoot class with required
+        /// arguments.
+        /// </summary>
+        public HierarchyRoot(string code)
+            : this()
+        {
+            if (code == null)
+            {
+                throw new ArgumentNullException("code");
+            }
+            this.Code = code;
         }
     }
 }

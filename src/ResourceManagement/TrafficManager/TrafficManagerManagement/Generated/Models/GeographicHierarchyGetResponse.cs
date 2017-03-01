@@ -27,25 +27,27 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class representing a Traffic Manager profile.
+    /// The response to a Traffic Manager profile 'CreateOrUpdate' operation.
     /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial class GeographicHierarchyGetResponse : AzureOperationResponse
     {
-        private ProfileProperties _properties;
+        private GeographicHierarchy _geographicHierarchy;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Optional. Gets or sets the hiearchy in the response for the the
+        /// 'GetTrafficManagerGeographicHierarchy' operation.
         /// </summary>
-        public ProfileProperties Properties
+        public GeographicHierarchy GeographicHierarchy
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._geographicHierarchy; }
+            set { this._geographicHierarchy = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Profile class.
+        /// Initializes a new instance of the GeographicHierarchyGetResponse
+        /// class.
         /// </summary>
-        public Profile()
+        public GeographicHierarchyGetResponse()
         {
         }
     }

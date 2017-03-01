@@ -21,32 +21,29 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.TrafficManager.Models;
 
-namespace Microsoft.Azure.Management.TrafficManager.Models
+namespace Microsoft.Azure.Management.TrafficManager
 {
     /// <summary>
-    /// Class representing a Traffic Manager profile.
+    /// Operations for retrieving the Geographic Hierarchy for use with
+    /// Geographic traffic routing.
     /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial interface IGeographicHierarchyOperations
     {
-        private ProfileProperties _properties;
-        
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Gets a hierarchy of regions for use with the Geographic Traffic
+        /// Routing Method.
         /// </summary>
-        public ProfileProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Profile class.
-        /// </summary>
-        public Profile()
-        {
-        }
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a Traffic Manager profile 'CreateOrUpdate'
+        /// operation.
+        /// </returns>
+        Task<GeographicHierarchyGetResponse> GetDefaultAsync(CancellationToken cancellationToken);
     }
 }

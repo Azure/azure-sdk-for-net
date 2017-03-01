@@ -21,31 +21,31 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class representing a Traffic Manager profile.
+    /// Class representing the properties of a Geographic Hierarchy.
     /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial class GeographicHierarchyProperties
     {
-        private ProfileProperties _properties;
+        private HierarchyRoot _root;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Optional. Gets or sets the root of the Geographic Hierarchy.
         /// </summary>
-        public ProfileProperties Properties
+        public HierarchyRoot Root
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._root; }
+            set { this._root = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Profile class.
+        /// Initializes a new instance of the GeographicHierarchyProperties
+        /// class.
         /// </summary>
-        public Profile()
+        public GeographicHierarchyProperties()
         {
         }
     }

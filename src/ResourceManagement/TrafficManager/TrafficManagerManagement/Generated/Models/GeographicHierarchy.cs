@@ -27,25 +27,26 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class representing a Traffic Manager profile.
+    /// Class representing the hierarchy of regions available to use with the
+    /// Geographic Traffic Routing Method.
     /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial class GeographicHierarchy : ResourceBaseExtended
     {
-        private ProfileProperties _properties;
+        private GeographicHierarchyProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Optional. Gets or sets the root of the Geographic Hierarchy.
         /// </summary>
-        public ProfileProperties Properties
+        public GeographicHierarchyProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Profile class.
+        /// Initializes a new instance of the GeographicHierarchy class.
         /// </summary>
-        public Profile()
+        public GeographicHierarchy()
         {
         }
     }
