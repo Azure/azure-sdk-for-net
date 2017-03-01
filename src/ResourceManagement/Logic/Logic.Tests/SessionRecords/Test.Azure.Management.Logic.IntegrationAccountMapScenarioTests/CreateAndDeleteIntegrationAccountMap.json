@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9784?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTc4ND9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5886?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTg4Nj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "91"
         ],
         "x-ms-client-request-id": [
-          "02e68653-6f07-4250-9b49-43bc7293ba60"
+          "29d27916-36dc-4245-a985-46c997310429"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9784\",\r\n  \"name\": \"IntegrationAccount9784\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5886\",\r\n  \"name\": \"IntegrationAccount5886\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts\",\r\n  \"location\": \"westus\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "290"
@@ -38,126 +38,13 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 01 Mar 2017 20:50:57 GMT"
+          "Wed, 01 Mar 2017 21:58:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:8d4fccf8-430f-4a0b-b7f5-c9935a75fc60"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "54a83b57-664b-4c64-9084-8b0e8ea0afca"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20170301T205057Z:54a83b57-664b-4c64-9084-8b0e8ea0afca"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9784/maps/IntegrationAccountMap880?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTc4NC9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDg4MD9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"content\": \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-16\\\"?>\\r\\n<xsl:stylesheet xmlns:xsl=\\\"http://www.w3.org/1999/XSL/Transform\\\" xmlns:msxsl=\\\"urn:schemas-microsoft-com:xslt\\\" xmlns:var=\\\"http://schemas.microsoft.com/BizTalk/2003/var\\\" exclude-result-prefixes=\\\"msxsl var s0 userCSharp\\\" version=\\\"1.0\\\" xmlns:ns0=\\\"http://BizTalk_Server_Project4.StringFunctoidsDestinationSchema\\\" xmlns:s0=\\\"http://BizTalk_Server_Project4.StringFunctoidsSourceSchema\\\" xmlns:userCSharp=\\\"http://schemas.microsoft.com/BizTalk/2003/userCSharp\\\">\\r\\n  <xsl:import href=\\\"http://btsfunctoids.blob.core.windows.net/functoids/functoids.xslt\\\" />\\r\\n  <xsl:output omit-xml-declaration=\\\"yes\\\" method=\\\"xml\\\" version=\\\"1.0\\\" />\\r\\n  <xsl:template match=\\\"/\\\">\\r\\n    <xsl:apply-templates select=\\\"/s0:Root\\\" />\\r\\n  </xsl:template>\\r\\n  <xsl:template match=\\\"/s0:Root\\\">\\r\\n    <xsl:variable name=\\\"var:v1\\\" select=\\\"userCSharp:StringFind(string(StringFindSource/text()) , &quot;SearchString&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v2\\\" select=\\\"userCSharp:StringLeft(string(StringLeftSource/text()) , &quot;2&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v3\\\" select=\\\"userCSharp:StringRight(string(StringRightSource/text()) , &quot;2&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v4\\\" select=\\\"userCSharp:StringUpperCase(string(UppercaseSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v5\\\" select=\\\"userCSharp:StringLowerCase(string(LowercaseSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v6\\\" select=\\\"userCSharp:StringSize(string(SizeSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v7\\\" select=\\\"userCSharp:StringSubstring(string(StringExtractSource/text()) , &quot;0&quot; , &quot;2&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v8\\\" select=\\\"userCSharp:StringConcat(string(StringConcatSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v9\\\" select=\\\"userCSharp:StringTrimLeft(string(StringLeftTrimSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v10\\\" select=\\\"userCSharp:StringTrimRight(string(StringRightTrimSource/text()))\\\" />\\r\\n    <ns0:Root>\\r\\n      <StringFindDestination>\\r\\n        <xsl:value-of select=\\\"$var:v1\\\" />\\r\\n      </StringFindDestination>\\r\\n      <StringLeftDestination>\\r\\n        <xsl:value-of select=\\\"$var:v2\\\" />\\r\\n      </StringLeftDestination>\\r\\n      <StringRightDestination>\\r\\n        <xsl:value-of select=\\\"$var:v3\\\" />\\r\\n      </StringRightDestination>\\r\\n      <UppercaseDestination>\\r\\n        <xsl:value-of select=\\\"$var:v4\\\" />\\r\\n      </UppercaseDestination>\\r\\n      <LowercaseDestination>\\r\\n        <xsl:value-of select=\\\"$var:v5\\\" />\\r\\n      </LowercaseDestination>\\r\\n      <SizeDestination>\\r\\n        <xsl:value-of select=\\\"$var:v6\\\" />\\r\\n      </SizeDestination>\\r\\n      <StringExtractDestination>\\r\\n        <xsl:value-of select=\\\"$var:v7\\\" />\\r\\n      </StringExtractDestination>\\r\\n      <StringConcatDestination>\\r\\n        <xsl:value-of select=\\\"$var:v8\\\" />\\r\\n      </StringConcatDestination>\\r\\n      <StringLeftTrimDestination>\\r\\n        <xsl:value-of select=\\\"$var:v9\\\" />\\r\\n      </StringLeftTrimDestination>\\r\\n      <StringRightTrimDestination>\\r\\n        <xsl:value-of select=\\\"$var:v10\\\" />\\r\\n      </StringRightTrimDestination>\\r\\n    </ns0:Root>\\r\\n  </xsl:template>\\r\\n</xsl:stylesheet>\",\r\n    \"contentType\": \"application/xml\",\r\n    \"metadata\": \"IntegrationAccountMap880\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"integrationAccountMapName\": \"IntegrationAccountMap880\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "3512"
-        ],
-        "x-ms-client-request-id": [
-          "cc0b0e1f-6bec-432f-b6c4-2b1de6d2a838"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://flowprodcu20by01.blob.core.windows.net/integrationaccountsdc08429a22a24167b89a572e6c40f698/99D1E_XSLT_INTEGRATIONACCOUNTMAP880-11172EFA4ED949C2BEA4BB0EE252F0DC?sv=2016-05-31&sr=b&sig=vH7WLj6zvY%2Bbwh1ILc39g0KzT4ZeH0sEh4OWn6VfTkA%3D&se=2017-03-02T00%3A50%3A58Z&sp=r\",\r\n      \"contentVersion\": \"\\\"0x8D460E4A97AAF04\\\"\",\r\n      \"contentSize\": 3056,\r\n      \"contentHash\": {\r\n        \"algorithm\": \"md5\",\r\n        \"value\": \"A2avz/M0ov2FPI3+Je8vDw==\"\r\n      }\r\n    },\r\n    \"createdTime\": \"2017-03-01T20:50:58.0853203Z\",\r\n    \"changedTime\": \"2017-03-01T20:50:58.08561Z\",\r\n    \"metadata\": \"IntegrationAccountMap880\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9784/maps/IntegrationAccountMap880\",\r\n  \"name\": \"IntegrationAccountMap880\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "849"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 01 Mar 2017 20:50:57 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "westus:2826f7d4-4d21-4e8f-b436-8b03b5f1c6d4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "x-ms-correlation-request-id": [
-          "ceda8d64-6d82-4ea2-96ed-9c2b4b9aa193"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20170301T205058Z:ceda8d64-6d82-4ea2-96ed-9c2b4b9aa193"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9784/maps/IntegrationAccountMap880?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTc4NC9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDg4MD9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "4b065cce-9023-4150-83e5-83572b8247f9"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 01 Mar 2017 20:50:58 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "westus:6a80a4cc-5ac1-4a2d-8875-5b3c356d9dd9"
+          "westus:7339a66f-e0f3-496e-8d74-7141215f1f44"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -166,29 +53,90 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "54725351-92e4-4966-9538-b4020d53199e"
+          "e368f20d-3e0b-4b01-8dd1-cea904b4f02c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170301T205058Z:54725351-92e4-4966-9538-b4020d53199e"
+          "WESTUS2:20170301T215817Z:e368f20d-3e0b-4b01-8dd1-cea904b4f02c"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount9784?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50OTc4ND9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5886/maps/IntegrationAccountMap1839?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTg4Ni9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDE4Mzk/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"content\": \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-16\\\"?>\\r\\n<xsl:stylesheet xmlns:xsl=\\\"http://www.w3.org/1999/XSL/Transform\\\" xmlns:msxsl=\\\"urn:schemas-microsoft-com:xslt\\\" xmlns:var=\\\"http://schemas.microsoft.com/BizTalk/2003/var\\\" exclude-result-prefixes=\\\"msxsl var s0 userCSharp\\\" version=\\\"1.0\\\" xmlns:ns0=\\\"http://BizTalk_Server_Project4.StringFunctoidsDestinationSchema\\\" xmlns:s0=\\\"http://BizTalk_Server_Project4.StringFunctoidsSourceSchema\\\" xmlns:userCSharp=\\\"http://schemas.microsoft.com/BizTalk/2003/userCSharp\\\">\\r\\n  <xsl:import href=\\\"http://btsfunctoids.blob.core.windows.net/functoids/functoids.xslt\\\" />\\r\\n  <xsl:output omit-xml-declaration=\\\"yes\\\" method=\\\"xml\\\" version=\\\"1.0\\\" />\\r\\n  <xsl:template match=\\\"/\\\">\\r\\n    <xsl:apply-templates select=\\\"/s0:Root\\\" />\\r\\n  </xsl:template>\\r\\n  <xsl:template match=\\\"/s0:Root\\\">\\r\\n    <xsl:variable name=\\\"var:v1\\\" select=\\\"userCSharp:StringFind(string(StringFindSource/text()) , &quot;SearchString&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v2\\\" select=\\\"userCSharp:StringLeft(string(StringLeftSource/text()) , &quot;2&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v3\\\" select=\\\"userCSharp:StringRight(string(StringRightSource/text()) , &quot;2&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v4\\\" select=\\\"userCSharp:StringUpperCase(string(UppercaseSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v5\\\" select=\\\"userCSharp:StringLowerCase(string(LowercaseSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v6\\\" select=\\\"userCSharp:StringSize(string(SizeSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v7\\\" select=\\\"userCSharp:StringSubstring(string(StringExtractSource/text()) , &quot;0&quot; , &quot;2&quot;)\\\" />\\r\\n    <xsl:variable name=\\\"var:v8\\\" select=\\\"userCSharp:StringConcat(string(StringConcatSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v9\\\" select=\\\"userCSharp:StringTrimLeft(string(StringLeftTrimSource/text()))\\\" />\\r\\n    <xsl:variable name=\\\"var:v10\\\" select=\\\"userCSharp:StringTrimRight(string(StringRightTrimSource/text()))\\\" />\\r\\n    <ns0:Root>\\r\\n      <StringFindDestination>\\r\\n        <xsl:value-of select=\\\"$var:v1\\\" />\\r\\n      </StringFindDestination>\\r\\n      <StringLeftDestination>\\r\\n        <xsl:value-of select=\\\"$var:v2\\\" />\\r\\n      </StringLeftDestination>\\r\\n      <StringRightDestination>\\r\\n        <xsl:value-of select=\\\"$var:v3\\\" />\\r\\n      </StringRightDestination>\\r\\n      <UppercaseDestination>\\r\\n        <xsl:value-of select=\\\"$var:v4\\\" />\\r\\n      </UppercaseDestination>\\r\\n      <LowercaseDestination>\\r\\n        <xsl:value-of select=\\\"$var:v5\\\" />\\r\\n      </LowercaseDestination>\\r\\n      <SizeDestination>\\r\\n        <xsl:value-of select=\\\"$var:v6\\\" />\\r\\n      </SizeDestination>\\r\\n      <StringExtractDestination>\\r\\n        <xsl:value-of select=\\\"$var:v7\\\" />\\r\\n      </StringExtractDestination>\\r\\n      <StringConcatDestination>\\r\\n        <xsl:value-of select=\\\"$var:v8\\\" />\\r\\n      </StringConcatDestination>\\r\\n      <StringLeftTrimDestination>\\r\\n        <xsl:value-of select=\\\"$var:v9\\\" />\\r\\n      </StringLeftTrimDestination>\\r\\n      <StringRightTrimDestination>\\r\\n        <xsl:value-of select=\\\"$var:v10\\\" />\\r\\n      </StringRightTrimDestination>\\r\\n    </ns0:Root>\\r\\n  </xsl:template>\\r\\n</xsl:stylesheet>\",\r\n    \"contentType\": \"application/xml\",\r\n    \"metadata\": \"IntegrationAccountMap1839\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"integrationAccountMapName\": \"IntegrationAccountMap1839\"\r\n  }\r\n}",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "3514"
+        ],
         "x-ms-client-request-id": [
-          "8e966bea-1b27-42a8-b4b0-594d6d8a6b81"
+          "85d177e9-c8cf-4d8b-8abb-0ef5e4745c73"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://flowprodcu24by01.blob.core.windows.net/integrationaccounts751ce794eda349c7b83b7a1bef197283/99D1E_XSLT_INTEGRATIONACCOUNTMAP1839-3B3C7852A5B44ACA9AFD8A333D747190?sv=2016-05-31&sr=b&sig=FjS%2FoBHo3uHjZNBdwvbrRU%2BfuMmbDvLi1cqiqo1TsWg%3D&se=2017-03-02T01%3A58%3A17Z&sp=r\",\r\n      \"contentVersion\": \"\\\"0x8D460EE1163FA9B\\\"\",\r\n      \"contentSize\": 3056,\r\n      \"contentHash\": {\r\n        \"algorithm\": \"md5\",\r\n        \"value\": \"A2avz/M0ov2FPI3+Je8vDw==\"\r\n      }\r\n    },\r\n    \"createdTime\": \"2017-03-01T21:58:17.7619529Z\",\r\n    \"changedTime\": \"2017-03-01T21:58:17.7623224Z\",\r\n    \"metadata\": \"IntegrationAccountMap1839\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5886/maps/IntegrationAccountMap1839\",\r\n  \"name\": \"IntegrationAccountMap1839\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "857"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 01 Mar 2017 21:58:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:78d320eb-bb5f-4b9b-aba7-965c9fd42a00"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "37672ae1-e707-4310-93f5-4a99cdc9b1e6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170301T215817Z:37672ae1-e707-4310-93f5-4a99cdc9b1e6"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5886/maps/IntegrationAccountMap1839?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTg4Ni9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDE4Mzk/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dec70e39-7be7-4eda-9cad-314c2df25301"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
         ]
       },
       "ResponseBody": "",
@@ -203,25 +151,77 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 01 Mar 2017 20:50:59 GMT"
+          "Wed, 01 Mar 2017 21:58:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:42c0125f-dd26-4e7a-b8a4-0c56f0b0dca5"
+          "westus:fc7f632c-5449-409f-a538-8041fd3895c4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "9763b4d2-58d0-4a45-9019-6189c38c968b"
+          "a640cf29-2491-4721-8813-4c9e252b6bed"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170301T205059Z:9763b4d2-58d0-4a45-9019-6189c38c968b"
+          "WESTUS2:20170301T215817Z:a640cf29-2491-4721-8813-4c9e252b6bed"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5886?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTg4Nj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "84e4da92-fa06-44b6-9c6e-7d5ab500bdc6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/2.1.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 01 Mar 2017 21:58:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:11911bb0-1647-49b4-8592-3e34e089ff6d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "0e36d1e7-d3d3-4b88-889b-5825f7b4baa8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170301T215818Z:0e36d1e7-d3d3-4b88-889b-5825f7b4baa8"
         ]
       },
       "StatusCode": 200
@@ -229,8 +229,8 @@
   ],
   "Names": {
     "CreateAndDeleteIntegrationAccountMap": [
-      "IntegrationAccount9784",
-      "IntegrationAccountMap880"
+      "IntegrationAccount5886",
+      "IntegrationAccountMap1839"
     ]
   },
   "Variables": {
