@@ -18,7 +18,7 @@ namespace Sql.Tests
         {
             string testPrefix = "sqlcrudtest-";
             string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreate", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetUsageData", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Get server metrics
                 IEnumerable<ServerMetric> serverMetrics = sqlClient.Servers.ListUsages(resourceGroup.Name, server.Name);

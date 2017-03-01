@@ -357,9 +357,9 @@ namespace Microsoft.Azure.Batch.Tests
         }
 
         [Fact]
-        public void AccountDeleteNoContentValidateMessage()
+        public void AccountDeleteOkValidateMessage()
         {
-            var noContentResponse = new HttpResponseMessage(HttpStatusCode.NoContent)
+            var noContentResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"")
             };

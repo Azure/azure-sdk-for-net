@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.Cdn.Models;
 using Cdn.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 
 namespace Cdn.Tests.ScenarioTests
 {
@@ -92,6 +93,11 @@ namespace Cdn.Tests.ScenarioTests
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(2, customDomains.Count());
 
+                // Enable custom https on custom domain that is already enabled should fail
+                Assert.ThrowsAny<ErrorResponseException>(() => {
+                    cdnMgmtClient.CustomDomains.DisableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName2);
+                });
+
                 // Delete second custom domain on stopped endpoint should succeed
                 cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName2);
 
@@ -105,6 +111,9 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Start endpoint
                 cdnMgmtClient.Endpoints.Start(resourceGroupName, profileName, endpointName);
+
+                // Enable custom https on custom domain that is already enabled should fail
+                cdnMgmtClient.CustomDomains.EnableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName1);
 
                 // Delete first custom domain on stopped endpoint should succeed
                 cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName1);

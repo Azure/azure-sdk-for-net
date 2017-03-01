@@ -1,15 +1,15 @@
 {
-  "version": "2.1.0-preview",
+  "version": "2.2.0-preview",
   "description": "Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
     "summary": "Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
-    "tags": [ "Microsoft Azure NotificationHubs Management", "NotificationHubs", "NotificationHubs management", "REST HTTP client", "windowsazureofficial" ],
+    "tags": [ "Microsoft Azure NotificationHubs Management", "NotificationHubs", "NotificationHubs management", "REST HTTP client", "windowsazureofficial", "netcore451511" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {
@@ -19,38 +19,40 @@
   },
 
   "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.5,3.0.0)"
   },
 
   "frameworks": {
     "net45": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
       }
     },
     "netstandard1.5": {
       "imports": ["dnxcore50"],
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "System.Diagnostics.Debug": "4.0.11",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.Diagnostics.Tracing": "4.1.0",
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "NETStandard.Library": "1.6.1",
+        "System.Diagnostics.Debug": "4.3.0",
+        "System.Diagnostics.Tools": "4.3.0",
+        "System.Diagnostics.Tracing": "4.3.0",
         "Microsoft.CSharp": "4.0.1",
-        "System.Threading.Thread": "4.0.0", 
-        "System.Threading.Tasks": "4.0.11",
-        "System.Threading.Timer": "4.0.1",
-        "System.Collections": "4.0.11",
-        "System.Linq": "4.1.0",
-        "System.Runtime": "4.1.0",
-        "System.Net.Http": "4.1.0",
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Threading.Thread": "4.0.0",
+        "System.Threading.Tasks": "4.3.0",
+        "System.Threading.Timer": "4.3.0",
+        "System.Collections": "4.3.0",
+        "System.Linq": "4.3.0",
+        "System.Runtime": "4.3.0",
+        "System.Net.Http": "4.3.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1"
       }
     },
     "netstandard1.1": {
       "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "NETStandard.Library": "1.6.1",
+        "System.Runtime.Serialization.Primitives": "4.1.1"
       }
     }
   }

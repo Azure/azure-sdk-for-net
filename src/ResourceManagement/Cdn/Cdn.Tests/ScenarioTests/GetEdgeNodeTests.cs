@@ -9,6 +9,7 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Cdn.Models;
 
 namespace Cdn.Tests.ScenarioTests
 {
@@ -31,7 +32,7 @@ namespace Cdn.Tests.ScenarioTests
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
 
-                var edgeNodes = cdnMgmtClient.EdgeNodes.List().Value;
+                var edgeNodes = cdnMgmtClient.EdgeNodes.List().GetEnumerator().ToIEnumerable<EdgeNode>().ToList();
 
                 Assert.Equal(0, edgeNodes.Select(e => e.Name).Except(expectedEdgeNodeNames).Count());
                 Assert.Equal(0, expectedEdgeNodeNames.Except(edgeNodes.Select(e => e.Name)).Count());

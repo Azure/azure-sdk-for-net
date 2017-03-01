@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static EdgenodeResult List(this IEdgeNodesOperations operations)
+            public static IPage<EdgeNode> List(this IEdgeNodesOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,9 +41,43 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EdgenodeResult> ListAsync(this IEdgeNodesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EdgeNode>> ListAsync(this IEdgeNodesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all the edge nodes of a CDN service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EdgeNode> ListNext(this IEdgeNodesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all the edge nodes of a CDN service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EdgeNode>> ListNextAsync(this IEdgeNodesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
