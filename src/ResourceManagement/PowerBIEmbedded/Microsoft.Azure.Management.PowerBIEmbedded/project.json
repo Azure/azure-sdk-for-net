@@ -1,5 +1,5 @@
 {
-    "version": "1.0.7-preview",
+    "version": "1.1.0-preview",
     "description": "Microsoft Azure Management Power BI Embedded Library",
     "authors": [
         "Microsoft"
@@ -10,7 +10,8 @@
             "Power BI Embedded",
             "Power BI Embedded management",
             "REST HTTP client",
-            "windowsazureofficial"
+            "windowsazureofficial",
+            "netcore451511"
         ],
         "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
         "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
@@ -22,36 +23,38 @@
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
     },
 
-    "dependencies": {
-    },
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.5,3.0.0)"
+  },
 
     "frameworks": {
         "net45": {
             "dependencies": {
-                "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
             }
         },
         "netstandard1.5": {
             "imports": [ "dnxcore50" ],
             "buildOptions": { "define": [ "PORTABLE" ] },
-            "dependencies": {
-                "System.Runtime.Serialization.Primitives": "4.1.1",
-                "Microsoft.NETCore.Platforms": "1.0.1",
-                        "System.Diagnostics.Tools": "4.0.1",
-                "System.Net.Http": "4.1.0",
-                "System.Resources.ResourceManager": "4.0.1",
-                "System.Runtime": "4.1.0",
-                "System.Threading.Tasks": "4.0.11",
-                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
-            }
+          "dependencies": {
+            "Microsoft.NETCore.Platforms": "1.1.0",
+            "NETStandard.Library": "1.6.1",
+            "System.Runtime.Serialization.Primitives": "4.1.1",
+            "System.Diagnostics.Tools": "4.3.0",
+            "System.Net.Http": "4.3.0",
+            "System.Resources.ResourceManager": "4.3.0",
+            "System.Runtime": "4.3.0",
+            "System.Threading.Tasks": "4.3.0"
+          }
         },
         "netstandard1.1": {
             "imports": [ "dnxcore50" ],
             "buildOptions": { "define": [ "PORTABLE" ] },
-            "dependencies": {
-                "System.Runtime.Serialization.Primitives": "4.1.1",
-                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
-            }
+          "dependencies": {
+            "Microsoft.NETCore.Platforms": "1.1.0",
+            "NETStandard.Library": "1.6.1",
+            "System.Runtime.Serialization.Primitives": "4.1.1"
+          }
         }
     }
 }
