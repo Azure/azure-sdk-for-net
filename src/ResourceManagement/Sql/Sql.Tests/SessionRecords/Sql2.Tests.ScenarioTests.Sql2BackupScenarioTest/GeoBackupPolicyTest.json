@@ -1,0 +1,341 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmI2NDdkODgtYjdjMy00ZGIxLTg0MTUtYjI2MWRiMDdhYWEyL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL3Rlc3RzdnItYWxhemFkL2RhdGFiYXNlcy90ZXN0ZHdkYi9nZW9CYWNrdXBQb2xpY2llcy9EZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/geoBackupPolicies\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageType\": \"Premium\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "e3e84583-84ff-4180-b870-24117792f537"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "d1cbebd3-e87e-416a-8fd8-e3c4aedf2b01"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T171630Z:d1cbebd3-e87e-416a-8fd8-e3c4aedf2b01"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 17:16:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmI2NDdkODgtYjdjMy00ZGIxLTg0MTUtYjI2MWRiMDdhYWEyL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL3Rlc3RzdnItYWxhemFkL2RhdGFiYXNlcy90ZXN0ZHdkYi9nZW9CYWNrdXBQb2xpY2llcy9EZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/geoBackupPolicies\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"state\": \"Disabled\",\r\n    \"storageType\": \"Premium\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "346"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "159255b1-b9b8-4637-a455-65577dcc9424"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a6698f0-f3aa-45b2-9110-9a790e53509c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T171632Z:0a6698f0-f3aa-45b2-9110-9a790e53509c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 17:16:32 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmI2NDdkODgtYjdjMy00ZGIxLTg0MTUtYjI2MWRiMDdhYWEyL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL3Rlc3RzdnItYWxhemFkL2RhdGFiYXNlcy90ZXN0ZHdkYi9nZW9CYWNrdXBQb2xpY2llcy9EZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/geoBackupPolicies\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageType\": \"Premium\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "3f25c09d-3225-4724-a76a-652edd072d83"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "a3347c2d-f041-4eb2-b034-2d647e30e485"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T171634Z:a3347c2d-f041-4eb2-b034-2d647e30e485"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 17:16:34 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmI2NDdkODgtYjdjMy00ZGIxLTg0MTUtYjI2MWRiMDdhYWEyL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL3Rlc3RzdnItYWxhemFkL2RhdGFiYXNlcy90ZXN0ZHdkYi9nZW9CYWNrdXBQb2xpY2llcy9EZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Disabled\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "99"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/geoBackupPolicies\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"state\": \"Disabled\",\r\n    \"storageType\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "341"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "ee2c6163-def8-4997-ab9a-b1c278fc8183"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "9d105693-a2e6-4d40-af58-bbd08914da4c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T171632Z:9d105693-a2e6-4d40-af58-bbd08914da4c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 17:16:32 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmI2NDdkODgtYjdjMy00ZGIxLTg0MTUtYjI2MWRiMDdhYWEyL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL3Rlc3RzdnItYWxhemFkL2RhdGFiYXNlcy90ZXN0ZHdkYi9nZW9CYWNrdXBQb2xpY2llcy9EZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/geoBackupPolicies\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageType\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "340"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "c5fe0fbb-8240-4dc0-8f1b-379f94db608a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "729cfda3-c879-47c8-9069-17a76d5876b6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T171634Z:729cfda3-c879-47c8-9069-17a76d5876b6"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 17:16:34 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmI2NDdkODgtYjdjMy00ZGIxLTg0MTUtYjI2MWRiMDdhYWEyL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL3Rlc3RzdnItYWxhemFkL2RhdGFiYXNlcy90ZXN0ZHdkYi9nZW9CYWNrdXBQb2xpY2llcy9EZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2b647d88-b7c3-4db1-8415-b261db07aaa2/resourceGroups/TestRG/providers/Microsoft.Sql/servers/testsvr-alazad/databases/testdwdb/geoBackupPolicies/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/geoBackupPolicies\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageType\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "340"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "9ac9b482-142e-4661-9e84-303ed3a1f6cd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "2087562a-a76f-4b1b-a7d4-3bccd61833ef"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T171636Z:2087562a-a76f-4b1b-a7d4-3bccd61833ef"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 17:16:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "2b647d88-b7c3-4db1-8415-b261db07aaa2"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ea841058-b4bc-4534-b5f0-f5eb5286de2f/resourceGroups/WIRunnersProd/providers/Microsoft.Sql/servers/wi-runner-australia-east/elasticPools/WIRunnerPool/advisors/CreateIndex?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWE4NDEwNTgtYjRiYy00NTM0LWI1ZjAtZjVlYjUyODZkZTJmL3Jlc291cmNlR3JvdXBzL1dJUnVubmVyc1Byb2QvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy93aS1ydW5uZXItYXVzdHJhbGlhLWVhc3QvZWxhc3RpY1Bvb2xzL1dJUnVubmVyUG9vbC9hZHZpc29ycy9DcmVhdGVJbmRleD9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClientV2/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ea841058-b4bc-4534-b5f0-f5eb5286de2f/resourceGroups/WIRunnersProd/providers/Microsoft.Sql/servers/wi-runner-australia-east/elasticPools/WIRunnerPool/advisors/CreateIndex\",\r\n  \"name\": \"CreateIndex\",\r\n  \"type\": \"Microsoft.Sql/servers/elasticPools/advisors\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"\",\r\n  \"properties\": {\r\n    \"advisorStatus\": \"GA\",\r\n    \"autoExecuteStatus\": \"Disabled\",\r\n    \"autoExecuteStatusInheritedFrom\": \"Database\",\r\n    \"recommendationsStatus\": \"Ok\",\r\n    \"lastChecked\": \"2016-06-23T03:57:09Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "112"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "203c5d21-eb6d-47b8-bb50-c752d24ac654"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14755"
+        ],
+        "x-ms-correlation-request-id": [
+          "868dfcfb-19ba-463e-a415-6d41a968e2a2"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160623T110831Z:868dfcfb-19ba-463e-a415-6d41a968e2a2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 23 Jun 2016 11:08:31 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "ea841058-b4bc-4534-b5f0-f5eb5286de2f"
+  }
+}

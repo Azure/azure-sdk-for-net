@@ -33,19 +33,12 @@
     <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteWebhook.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanGetUsage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
-      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
-      <Name>TestDependencies</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutomationManagement\AutomationManagement.csproj">
-      <Project>{3bc8f71c-6424-44f8-b553-babc031f2ae7}</Project>
-      <Name>AutomationManagement</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
 </Project>

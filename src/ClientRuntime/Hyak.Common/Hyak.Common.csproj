@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <BuildProfileSet>portable</BuildProfileSet>
+    <ProjectGuid>{7F524559-93F9-4F3F-9E2C-AF41A0C2E6F4}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hyak.Common</RootNamespace>
+    <AssemblyName>Hyak.Common</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NuGetPackageImportStamp>d6eb8bcd</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>bin\Debug\Hyak.Common.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\tools\Development.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\tools\library.props" />
+  <ItemGroup>
+    <Compile Include="Credentials\BasicAuthenticationCloudCredentials.cs" />
+    <Compile Include="Exception\CloudError.cs" />
+    <Compile Include="Exception\CloudExceptionType.cs" />
+    <Compile Include="Exception\CloudHttpErrorInfo.cs" />
+    <Compile Include="Exception\CloudHttpRequestErrorInfo.cs" />
+    <Compile Include="Exception\CloudHttpResponseErrorInfo.cs" />
+    <Compile Include="Internals\DisposableReference.cs" />
+    <Compile Include="Internals\HttpExtensions.cs" />
+    <Compile Include="Internals\IndisposableDelegatingHandler.cs" />
+    <Compile Include="Internals\PortablePlatformAbstraction.cs" />
+    <Compile Include="Internals\TypeConversion.cs" />
+    <Compile Include="Models\ILazyCollection.cs" />
+    <Compile Include="Models\LazyDictionary.cs" />
+    <Compile Include="Models\LazyList.cs" />
+    <Compile Include="Models\HttpOperationResponse.cs" />
+    <Compile Include="Platform\HttpTransportHandlerProvider.cs" />
+    <Compile Include="Credentials\CloudCredentials.cs" />
+    <Compile Include="Handlers\RetryHandler.cs" />
+    <Compile Include="Tracing\TracingAdapter.cs" />
+    <Compile Include="ServiceClient.cs" />
+    <Compile Include="IServiceOperations.cs" />
+    <Compile Include="Exception\CloudException.cs" />
+    <Compile Include="Platform\IHttpTransportHandlerProvider.cs" />
+    <Compile Include="Extensions\TracingExtensions.cs" />
+    <Compile Include="Tracing\ICloudTracingInterceptor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TransientFaultHandling\AsyncExecution.cs" />
+    <Compile Include="TransientFaultHandling\DefaultHttpErrorDetectionStrategy.cs" />
+    <Compile Include="TransientFaultHandling\ExponentialBackoff.cs" />
+    <Compile Include="TransientFaultHandling\FixedInterval.cs" />
+    <Compile Include="TransientFaultHandling\Guard.cs" />
+    <Compile Include="TransientFaultHandling\HttpRequestExceptionWithStatus.cs" />
+    <Compile Include="TransientFaultHandling\Incremental.cs" />
+    <Compile Include="TransientFaultHandling\ITransientErrorDetectionStrategy.cs" />
+    <Compile Include="TransientFaultHandling\RetryingEventArgs.cs" />
+    <Compile Include="TransientFaultHandling\RetryLimitExceededException.cs" />
+    <Compile Include="TransientFaultHandling\RetryManager.cs" />
+    <Compile Include="TransientFaultHandling\RetryPolicy.cs" />
+    <Compile Include="TransientFaultHandling\RetryPolicy.Generic.cs" />
+    <Compile Include="TransientFaultHandling\RetryStrategy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Hyak.Common.nuget.proj" />
+    <None Include="Hyak.Common.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(CurrentBuildConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(CurrentBuildConfiguration)' != 'portable' " />
+  <Import Project="$(SolutionDir)\tools\library.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

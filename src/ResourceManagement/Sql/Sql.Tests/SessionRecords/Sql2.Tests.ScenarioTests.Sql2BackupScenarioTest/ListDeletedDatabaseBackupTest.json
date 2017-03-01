@@ -1,0 +1,3224 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourcegroups/csm-rg-backup31415?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlZ3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"North Europe\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "34"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415\",\r\n  \"name\": \"csm-rg-backup31415\",\r\n  \"location\": \"northeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "194"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1190"
+        ],
+        "x-ms-request-id": [
+          "1c7883bc-14be-4374-b380-c7899872a719"
+        ],
+        "x-ms-correlation-request-id": [
+          "1c7883bc-14be-4374-b380-c7899872a719"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T014910Z:1c7883bc-14be-4374-b380-c7899872a719"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:49:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTU/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"version\": \"12.0\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"NotYukon!9\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "186"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415\",\r\n  \"name\": \"csm-sql-backup31415\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"csm-sql-backup31415.sqltest-eg1.mscds.com\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"NotYukon!9\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "517"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "1c9ea137-d738-4b4c-91f7-ac5be603a037"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef7c539b-b107-421d-8f2c-19cc42ef95a4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T014913Z:ef7c539b-b107-421d-8f2c-19cc42ef95a4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:49:12 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTU/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"edition\": \"Standard\",\r\n    \"maxSizeBytes\": \"1073741824\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"restorePointInTime\": \"0001-01-01T00:00:00\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "262"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2016-02-11T17:49:14.327-08:00\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "80"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "a77f89c0-300c-4ddb-9de4-9b55387c80c8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/azureAsyncOperation/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "d114f844-9889-4deb-ab0c-69f41a2015e1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T014915Z:d114f844-9889-4deb-ab0c-69f41a2015e1"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:49:15 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/operationResults/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/operationResults/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTUvb3BlcmF0aW9uUmVzdWx0cy9hNzdmODljMC0zMDBjLTRkZGItOWRlNC05YjU1Mzg3YzgwYzg/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2016-02-12T01:49:14.017Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "75"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "f8d1c5d7-b033-44ba-aa4c-c3a9210c490e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/azureAsyncOperation/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-correlation-request-id": [
+          "a1b157a7-dc0c-4818-9561-8235a13d3992"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T014916Z:a1b157a7-dc0c-4818-9561-8235a13d3992"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:49:15 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/operationResults/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/operationResults/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTUvb3BlcmF0aW9uUmVzdWx0cy9hNzdmODljMC0zMDBjLTRkZGItOWRlNC05YjU1Mzg3YzgwYzg/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2016-02-12T01:49:14.017Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "75"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "d9fdd010-2d4d-4135-8257-b1e43f9545e4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/azureAsyncOperation/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-correlation-request-id": [
+          "d5ca86e2-5a1d-44ad-9585-e206386f118e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T014947Z:d5ca86e2-5a1d-44ad-9585-e206386f118e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:49:46 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/operationResults/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415/operationResults/a77f89c0-300c-4ddb-9de4-9b55387c80c8?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTUvb3BlcmF0aW9uUmVzdWx0cy9hNzdmODljMC0zMDBjLTRkZGItOWRlNC05YjU1Mzg3YzgwYzg/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415\",\r\n  \"name\": \"csm-sql-backup-db31415\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"00221cce-7eff-4cda-85cc-bdfcdc6a6b5d\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"1073741824\",\r\n    \"creationDate\": \"2016-02-12T01:49:14.847Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": null,\r\n    \"defaultSecondaryLocation\": \"SouthEast Asia\",\r\n    \"earliestRestoreDate\": \"2016-02-12T02:00:00.523Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "866"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "dafe14f9-f590-4256-8673-5090416c1db9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-correlation-request-id": [
+          "9d20064d-5943-4a85-a2cc-44798982e117"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015003Z:9d20064d-5943-4a85-a2cc-44798982e117"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:50:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTU/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "64a01d8f-68c9-4df3-a1ba-dabb70e2208a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "1.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1187"
+        ],
+        "x-ms-correlation-request-id": [
+          "95fbcf11-4161-4a5a-bee6-73e8384fb8da"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015036Z:95fbcf11-4161-4a5a-bee6-73e8384fb8da"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:50:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/restorabledroppeddatabases?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvcmVzdG9yYWJsZWRyb3BwZWRkYXRhYmFzZXM/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/restorableDroppedDatabases/csm-sql-backup-db31415,130997137262870000\",\r\n      \"name\": \"csm-sql-backup-db31415,130997137262870000\",\r\n      \"type\": \"Microsoft.Sql/servers/restorableDroppedDatabases\",\r\n      \"location\": \"North Europe\",\r\n      \"properties\": {\r\n        \"databaseName\": \"csm-sql-backup-db31415\",\r\n        \"edition\": \"Standard\",\r\n        \"maxSizeBytes\": \"1073741824\",\r\n        \"serviceLevelObjective\": \"S0\",\r\n        \"elasticPoolName\": null,\r\n        \"creationDate\": \"2016-02-12T01:08:30.827Z\",\r\n        \"deletionDate\": \"2016-02-12T01:22:06.287Z\",\r\n        \"earliestRestoreDate\": \"2016-02-12T01:22:06.287Z\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "651"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "734a9846-6547-4a2e-8c6a-842aaed7a512"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-correlation-request-id": [
+          "861be862-c3f3-42e7-940d-f90ce84d010c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015038Z:861be862-c3f3-42e7-940d-f90ce84d010c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:50:37 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceDatabaseId\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/restorableDroppedDatabases/csm-sql-backup-db31415,130997137262870000\",\r\n    \"createMode\": \"Restore\",\r\n    \"restorePointInTime\": \"2016-02-12T01:22:06.287Z\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "393"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-11T17:50:41.885-08:00\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "79"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "6b03e57a-d73e-4f66-8478-db0721f61dfb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1186"
+        ],
+        "x-ms-correlation-request-id": [
+          "6ab4cf43-0d6e-4061-b72a-244ed22b9ffc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015043Z:6ab4cf43-0d6e-4061-b72a-244ed22b9ffc"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:50:42 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4fa2be6f-081f-46a0-b3f5-e304a433b8a2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7c8f4ef-0b4f-420e-98cc-a1ef59b8910b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015044Z:f7c8f4ef-0b4f-420e-98cc-a1ef59b8910b"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:50:44 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "9a0dec4d-6d77-4e07-a741-226833da73f3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd7a1c51-9256-487c-bb56-7c0bb2e7c67b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015115Z:bd7a1c51-9256-487c-bb56-7c0bb2e7c67b"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:51:15 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "493a113c-0443-463e-8951-308c641677dd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "x-ms-correlation-request-id": [
+          "82fd89ee-cdab-4485-9ba8-e4b62eda8eb2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015130Z:82fd89ee-cdab-4485-9ba8-e4b62eda8eb2"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:51:30 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "eee356ab-3696-4678-809c-dfd2994076a4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-correlation-request-id": [
+          "5436e715-aaaf-40ae-9678-7619f9418303"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015146Z:5436e715-aaaf-40ae-9678-7619f9418303"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:51:45 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "28b2ad6a-4e05-475d-86e4-d404534c71a5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "df302b12-bd32-49fb-8019-178211105acd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015202Z:df302b12-bd32-49fb-8019-178211105acd"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:52:02 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "28103690-a78f-4fea-a6c6-08b20b3aabf5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "7ea94b7b-dbfd-4317-8835-06af5ca0b56d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015218Z:7ea94b7b-dbfd-4317-8835-06af5ca0b56d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:52:18 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "52e62569-8f8f-473c-818e-17e797783e26"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14979"
+        ],
+        "x-ms-correlation-request-id": [
+          "76cece9c-3e8f-4ca5-89e3-41122ec5e488"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015234Z:76cece9c-3e8f-4ca5-89e3-41122ec5e488"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:52:33 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4e93424a-14cc-4749-a4f7-7bb8d61142ce"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14978"
+        ],
+        "x-ms-correlation-request-id": [
+          "b1c370fb-703d-4643-814d-fb05c4847ba8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015249Z:b1c370fb-703d-4643-814d-fb05c4847ba8"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:52:49 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "bdde501b-c790-44ca-8383-78f22e9821fd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14977"
+        ],
+        "x-ms-correlation-request-id": [
+          "025f48dd-6489-4984-8e81-13a66aa8b9b5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015306Z:025f48dd-6489-4984-8e81-13a66aa8b9b5"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:53:05 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "495e3cee-d7e1-443f-9bc9-dc1f7753f89a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "08e09bba-95af-4521-918e-3416624e49b6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015322Z:08e09bba-95af-4521-918e-3416624e49b6"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:53:21 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "e792bd60-bff9-4185-b8f8-64f1571c9233"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
+        ],
+        "x-ms-correlation-request-id": [
+          "2bb0a15b-0175-428b-8f69-78a471b6fbe2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015337Z:2bb0a15b-0175-428b-8f69-78a471b6fbe2"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:53:37 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "fffcfffe-add8-405e-abdc-90448c5c8467"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-correlation-request-id": [
+          "f3ee9fc5-3e13-4747-aa58-7479265a6a7d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015353Z:f3ee9fc5-3e13-4747-aa58-7479265a6a7d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:53:53 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4e77ba9e-f187-4c77-b376-b89460a79ef5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14973"
+        ],
+        "x-ms-correlation-request-id": [
+          "2b87f11d-0d6b-439f-a38c-5d6e0c9dd93f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015412Z:2b87f11d-0d6b-439f-a38c-5d6e0c9dd93f"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:54:11 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "b15b68eb-ec60-4b66-9b4e-d61b47082ecc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14972"
+        ],
+        "x-ms-correlation-request-id": [
+          "15341f4e-7abe-4fd8-b9a1-710b4d196df7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015431Z:15341f4e-7abe-4fd8-b9a1-710b4d196df7"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:54:30 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "2fbc120d-5462-4152-92dd-bd5f45e39240"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14971"
+        ],
+        "x-ms-correlation-request-id": [
+          "a96af5f9-814a-4a40-ad81-ad29725a8466"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015447Z:a96af5f9-814a-4a40-ad81-ad29725a8466"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:54:46 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "234d978f-403b-483f-a351-15bf40351d23"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14970"
+        ],
+        "x-ms-correlation-request-id": [
+          "40d8d146-6fcb-4952-88a7-5f3a460f5c99"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015503Z:40d8d146-6fcb-4952-88a7-5f3a460f5c99"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:55:02 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "0af0dede-6631-4a1d-880e-871bf73d0994"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14969"
+        ],
+        "x-ms-correlation-request-id": [
+          "39207da4-568e-4b2c-abf1-20f3eaf26528"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015518Z:39207da4-568e-4b2c-abf1-20f3eaf26528"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:55:18 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "cbb43279-4478-4184-bf35-418b9b383503"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14968"
+        ],
+        "x-ms-correlation-request-id": [
+          "8bfe1202-58f3-4a86-9d37-7c1d0739a145"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015534Z:8bfe1202-58f3-4a86-9d37-7c1d0739a145"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:55:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "f8a36bad-2514-4f82-8f1e-c1ef33c8753d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14967"
+        ],
+        "x-ms-correlation-request-id": [
+          "b7ccc194-516e-44c0-8e73-62c1f9a23f5d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015550Z:b7ccc194-516e-44c0-8e73-62c1f9a23f5d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:55:49 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "2cb2b31b-ccbf-48c6-9176-ed6c639953c1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14966"
+        ],
+        "x-ms-correlation-request-id": [
+          "1a0444ac-b9d8-4580-b096-a484c0b75fc8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015606Z:1a0444ac-b9d8-4580-b096-a484c0b75fc8"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:56:05 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4a56b515-69f2-4e5c-86bf-02d797b78411"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14965"
+        ],
+        "x-ms-correlation-request-id": [
+          "807acb36-0688-4fc0-8019-e0b997f02fd3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015621Z:807acb36-0688-4fc0-8019-e0b997f02fd3"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:56:21 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "d0dfad47-3c19-407c-8506-ab96185f4f35"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14964"
+        ],
+        "x-ms-correlation-request-id": [
+          "64a65403-900e-4539-9918-a423193839ab"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015637Z:64a65403-900e-4539-9918-a423193839ab"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:56:37 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "f0502635-a75b-42c1-885f-7e05af31ee02"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14963"
+        ],
+        "x-ms-correlation-request-id": [
+          "40e181e6-281c-480f-b425-3eb28247f1df"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015653Z:40e181e6-281c-480f-b425-3eb28247f1df"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:56:52 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "1d77ea03-d4f0-433f-984e-f510406b40d0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14962"
+        ],
+        "x-ms-correlation-request-id": [
+          "b81a057b-fc30-4547-83f9-513891b6ba81"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015709Z:b81a057b-fc30-4547-83f9-513891b6ba81"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:57:09 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "71b4c9c7-5ebf-40a9-bfdd-0af1bc4ea3d3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14961"
+        ],
+        "x-ms-correlation-request-id": [
+          "d023d26a-7c1f-4d8c-a8c2-4cb40139fc19"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015725Z:d023d26a-7c1f-4d8c-a8c2-4cb40139fc19"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:57:24 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "c76ef5f9-b919-4f4c-b5c9-54eb0e095d70"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-correlation-request-id": [
+          "3409ece0-a4fb-40cb-b5a1-622f0467ea69"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015741Z:3409ece0-a4fb-40cb-b5a1-622f0467ea69"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:57:40 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "5edabd7a-fb73-4d45-9e6b-e16c72f9a7e7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14959"
+        ],
+        "x-ms-correlation-request-id": [
+          "690fdeb2-7ab7-4d31-9e0b-52ae0e33bbf6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015756Z:690fdeb2-7ab7-4d31-9e0b-52ae0e33bbf6"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:57:56 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "eaf7f1bd-6c10-4b83-88bb-70f8a5e38e17"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd2d4c6f-25d9-44a3-a8ad-b18b10498d13"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015812Z:dd2d4c6f-25d9-44a3-a8ad-b18b10498d13"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:58:11 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "54825d7f-aed2-4332-b123-0a2ba3e72bb0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14957"
+        ],
+        "x-ms-correlation-request-id": [
+          "ceea03f7-d7fc-4860-9a2f-c6613873e5d8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015828Z:ceea03f7-d7fc-4860-9a2f-c6613873e5d8"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:58:28 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "9d30519f-0015-418c-8979-928cad179aef"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14956"
+        ],
+        "x-ms-correlation-request-id": [
+          "e253a5c4-8e62-4a18-bc45-2058da8c7293"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015845Z:e253a5c4-8e62-4a18-bc45-2058da8c7293"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:58:45 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "1cc5a860-6091-405e-8d62-f569cb24a6e8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14955"
+        ],
+        "x-ms-correlation-request-id": [
+          "1560ceb7-c2b3-4fa0-994b-7cf2f0cea89a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015900Z:1560ceb7-c2b3-4fa0-994b-7cf2f0cea89a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:59:00 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "1ae7fb1f-de9c-42cd-a34c-fdbbe1019d94"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14954"
+        ],
+        "x-ms-correlation-request-id": [
+          "0377241c-a74b-452f-bf54-867e3e041f9a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015916Z:0377241c-a74b-452f-bf54-867e3e041f9a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:59:16 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "0c8e0727-7930-4d12-9831-ac42dfe8cef7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14953"
+        ],
+        "x-ms-correlation-request-id": [
+          "be0d1c08-476c-48b9-807a-fbbc1cdf3c3c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015932Z:be0d1c08-476c-48b9-807a-fbbc1cdf3c3c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:59:31 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "a0a18173-3c9f-4a78-859b-ac697f2d2c72"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14952"
+        ],
+        "x-ms-correlation-request-id": [
+          "359d8f7e-8053-499d-a4cd-0be9a4b9a9ac"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T015949Z:359d8f7e-8053-499d-a4cd-0be9a4b9a9ac"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 01:59:49 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4ab81292-66df-4812-baab-fd2d4a343c75"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14951"
+        ],
+        "x-ms-correlation-request-id": [
+          "5ff81b58-0be6-420c-8084-29065163b500"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020005Z:5ff81b58-0be6-420c-8084-29065163b500"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:00:05 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "78ad72a9-9926-434b-b03a-885e7e40ab96"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14950"
+        ],
+        "x-ms-correlation-request-id": [
+          "6280d765-fac8-4086-879d-79d4c395a799"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020021Z:6280d765-fac8-4086-879d-79d4c395a799"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:00:20 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "54f9d4c1-b429-4fde-a845-959492d8bd7f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14949"
+        ],
+        "x-ms-correlation-request-id": [
+          "dceb732b-2ed4-4c06-bd72-ef6fdc90d4ae"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020037Z:dceb732b-2ed4-4c06-bd72-ef6fdc90d4ae"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:00:36 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "53b0c590-1369-471e-ae3c-149a381da587"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14948"
+        ],
+        "x-ms-correlation-request-id": [
+          "ec2e72ee-36f9-49d7-8e0c-6013c6d3c4ab"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020053Z:ec2e72ee-36f9-49d7-8e0c-6013c6d3c4ab"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:00:53 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "caf5ad44-2e36-436c-a968-8b3630c77a69"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14947"
+        ],
+        "x-ms-correlation-request-id": [
+          "4cbb6878-e19c-4ade-86a2-7fab7a512b7f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020109Z:4cbb6878-e19c-4ade-86a2-7fab7a512b7f"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:01:09 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "561dd530-81ff-4223-9cd8-b2f86eb93901"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14946"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd1420e1-0778-4511-826a-426f0fd9f508"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020125Z:dd1420e1-0778-4511-826a-426f0fd9f508"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:01:24 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "aa2535a7-aa79-42b6-b0c1-c368597b22bf"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14945"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2c09c74-d0f5-48c8-9bd7-e0799ba5adec"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020140Z:e2c09c74-d0f5-48c8-9bd7-e0799ba5adec"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:01:40 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "33826b25-23de-4abc-a072-9b5d6f6082f6"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14944"
+        ],
+        "x-ms-correlation-request-id": [
+          "801e361e-59bb-426c-af78-dbc6135908e5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020156Z:801e361e-59bb-426c-af78-dbc6135908e5"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:01:55 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "7776d31d-d4a3-4049-8e81-f21c04d5078f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14943"
+        ],
+        "x-ms-correlation-request-id": [
+          "7f5d4163-70e7-474d-aa7a-726d84d9ae11"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020212Z:7f5d4163-70e7-474d-aa7a-726d84d9ae11"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:02:11 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRestoreRequest\",\r\n  \"startTime\": \"2016-02-12T01:50:41.713Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "9e21b8ce-9ec8-4c22-8efc-ece01285a5ce"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/azureAsyncOperation/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14942"
+        ],
+        "x-ms-correlation-request-id": [
+          "33ff2226-a884-4545-ac13-99e29b14ed5b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020228Z:33ff2226-a884-4545-ac13-99e29b14ed5b"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:02:27 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored/operationResults/6b03e57a-d73e-4f66-8478-db0721f61dfb?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAzMTQxNS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtYmFja3VwMzE0MTUvZGF0YWJhc2VzL2NzbS1zcWwtYmFja3VwLWRiMzE0MTVfcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy82YjAzZTU3YS1kNzNlLTRmNjYtODQ3OC1kYjA3MjFmNjFkZmI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup31415/providers/Microsoft.Sql/servers/csm-sql-backup31415/databases/csm-sql-backup-db31415_restored\",\r\n  \"name\": \"csm-sql-backup-db31415_restored\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"70b4c515-90cc-4121-bdf3-de5a16892c8a\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"268435456000\",\r\n    \"creationDate\": \"2016-02-12T01:50:42.98Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": null,\r\n    \"defaultSecondaryLocation\": \"SouthEast Asia\",\r\n    \"earliestRestoreDate\": \"2016-02-12T02:12:00.79Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "884"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "f1337cc3-d91a-4db1-989d-f59b88737aaf"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14941"
+        ],
+        "x-ms-correlation-request-id": [
+          "8eae9e7a-ad51-4192-9c8c-20bbb3202387"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160212T020244Z:8eae9e7a-ad51-4192-9c8c-20bbb3202387"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Feb 2016 02:02:43 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0a496442-635f-4974-bda4-2d339b9a6b3c"
+  }
+}
