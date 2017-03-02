@@ -11,6 +11,8 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Newtonsoft.Json;
 using Microsoft.Azure.Management.Resources;
+using System.Net.Http;
+
 
 namespace Microsoft.Azure.Management.Automation.Testing
 {

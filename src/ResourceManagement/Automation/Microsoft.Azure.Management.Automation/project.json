@@ -28,6 +28,8 @@
         "System.Xml.Linq": "",
         "System.Threading": "",
         "System.Threading.Tasks": ""
+      },
+      "dependencies": {
       }
     },
     "netstandard1.5": {
