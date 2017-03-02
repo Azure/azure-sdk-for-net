@@ -16,6 +16,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.IO;
     using BatchTestCommon;
     using TestUtilities;
     using Xunit;
@@ -35,8 +36,8 @@
         {
             this.testOutputHelper = testOutputHelper;
 
-            this.sourceLocation = @"..\..\..\..\..\src";
-            this.proxySourceLocation = @"..\..\..\..\..\src\" + GeneratedProtocolFolder;
+            this.sourceLocation = @"..\..\..\src\Azure.Batch";
+            this.proxySourceLocation = Path.Combine(this.sourceLocation, GeneratedProtocolFolder);
         }
 
         [Fact]
@@ -71,12 +72,13 @@
                 this.testOutputHelper.WriteLine("{0}", exceptionType);
             }
 
-            IReadOnlyCollection<string> expectedExceptions = new List<string>()
-                                                             {
-                                                                 "ArgumentNullException",
-                                                                 "ValidationException",
-                                                                 "SerializationException"
-                                                             };
+            IEnumerable<string> expectedExceptions = new List<string>()
+            {
+                "ArgumentNullException",
+                "ValidationException",
+                "SerializationException"
+            };
+
             Assert.Equal(expectedExceptions, exceptionSet);
         }
 

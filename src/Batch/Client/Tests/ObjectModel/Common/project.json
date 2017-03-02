@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "description": "Azure Batch test common library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../../../tools/MSSharedLibKey.snk"
+  },
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+      },
+      "frameworkAssemblies": {
+        "System.IO.Compression": "4.0.0.0"
+      }
+    },
+    "netstandard1.5": {
+      "imports": [ "dnxcore50", "portable-net451+win8" ],
+      "buildOptions": {
+        "define": [ "PORTABLE" ]
+      },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "System.Diagnostics.Tools": "4.3.0",
+        "System.Net.Http": "4.3.0",
+        "System.Runtime.Serialization.Primitives": "4.3.0",
+        "System.Threading.Tasks": "4.3.0"
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "3.3.5",
+    "WindowsAzure.Storage": "8.0.1",
+    "Microsoft.Azure.Management.Batch": "3.0.0",
+    "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8"
+  }
+}

@@ -45,7 +45,7 @@ namespace ObjectModelCodeGenerator
                 }
                 seen.Add(type.Name);
 
-                string outputDirectory = "../../../../../src/Generated";
+                string outputDirectory = "../../../../../src/Azure.Batch/Generated";
                 string outputFilePath = Path.Combine(outputDirectory, type.Name + ".cs");
 
                 string innerClassString;
@@ -81,7 +81,7 @@ namespace ObjectModelCodeGenerator
 
         private static void GenerateSomeRoslynFiles()
         {
-            var projectFile = @"..\..\..\..\..\src\Batch.csproj";
+            var projectFile = @"..\..\..\..\..\src\Azure.Batch\Batch.csproj";
             IEnumerable<BatchRequestGroup> batchRequests = BatchRequestTemplateBuilder.GetBatchRequestTemplatesAsync(projectFile).Result;
 
             NamedBatchRequests generator = new NamedBatchRequests(batchRequests);

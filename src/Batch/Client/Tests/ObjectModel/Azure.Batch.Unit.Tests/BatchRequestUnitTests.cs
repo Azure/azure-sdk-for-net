@@ -516,7 +516,7 @@
             IEnumerable<MethodInfo> methods = typeToExamine.GetMethods();
             foreach (MethodInfo method in methods)
             {
-                if (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof (IPagedEnumerable<>))
+                if (method.ReturnType.GetTypeInfo().IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof (IPagedEnumerable<>))
                 {
                     result.Add(method);
                 }
@@ -535,7 +535,7 @@
                     {
                         result = cancellationToken;
                     }
-                    else if (parameter.ParameterType.IsValueType)
+                    else if (parameter.ParameterType.GetTypeInfo().IsValueType)
                     {
                         result = Activator.CreateInstance(parameter.ParameterType);
                     }

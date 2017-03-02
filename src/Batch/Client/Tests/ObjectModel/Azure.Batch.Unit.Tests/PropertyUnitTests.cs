@@ -449,7 +449,7 @@ namespace Azure.Batch.Unit.Tests
             //properties of those objects.
             Type iReadOnlyType = typeof(IReadOnly);
 
-            List<Type> typesWithIReadOnlyBase = GetTypesWhichImplementInterface(iReadOnlyType.Assembly, iReadOnlyType, requirePublicConstructor: false).ToList();
+            List<Type> typesWithIReadOnlyBase = GetTypesWhichImplementInterface(iReadOnlyType.GetTypeInfo().Assembly, iReadOnlyType, requirePublicConstructor: false).ToList();
             foreach (Type type in typesWithIReadOnlyBase)
             {
                 this.testOutputHelper.WriteLine("Reading/Setting properties of type: {0}", type.ToString());
@@ -517,7 +517,7 @@ namespace Azure.Batch.Unit.Tests
             //properties of those objects.
             Type iTransportObjectProviderType = typeof(ITransportObjectProvider<>);
 
-            IEnumerable<Type> types = GetTypesWhichImplementInterface(iTransportObjectProviderType.Assembly, iTransportObjectProviderType, requirePublicConstructor: false);
+            IEnumerable<Type> types = GetTypesWhichImplementInterface(iTransportObjectProviderType.GetTypeInfo().Assembly, iTransportObjectProviderType, requirePublicConstructor: false);
 
             foreach (Type type in types)
             {
@@ -526,9 +526,10 @@ namespace Azure.Batch.Unit.Tests
                 {
                     object o = this.customizedObjectFactory.GenerateNew(type);
                     Type concreteInterfaceType = o.GetType().GetInterfaces().First(iFace =>
-                        iFace.IsGenericType &&
+                        iFace.GetTypeInfo().IsGenericType &&
                         iFace.GetGenericTypeDefinition() == iTransportObjectProviderType);
-                    object protocolObject = concreteInterfaceType.GetMethod("GetTransportObject").Invoke(o, BindingFlags.Instance | BindingFlags.NonPublic, null, null, null);
+                    //object protocolObject = concreteInterfaceType.GetMethod("GetTransportObject").Invoke(o, BindingFlags.Instance | BindingFlags.NonPublic, null, null, null);
+                    object protocolObject = concreteInterfaceType.GetMethod("GetTransportObject").Invoke(o, null);
 
                     ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(o, protocolObject);
                     Assert.True(result.Equal, result.Message);
@@ -548,20 +549,20 @@ namespace Azure.Batch.Unit.Tests
                 requirePublicConstructorFunc = (t => true);
             }
 
-            if (!interfaceType.IsGenericType)
+            if (!interfaceType.GetTypeInfo().IsGenericType)
             {
                 return assembly.GetTypes().Where(t =>
                     interfaceType.IsAssignableFrom(t) &&
-                    !t.IsInterface &&
-                    t.IsVisible &&
+                    !t.GetTypeInfo().IsInterface &&
+                    t.GetTypeInfo().IsVisible &&
                     requirePublicConstructorFunc(t));
             }
             else
             {
                 return assembly.GetTypes().Where(t =>
-                    t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType) &&
-                    !t.IsInterface &&
-                    t.IsVisible &&
+                    t.GetInterfaces().Any(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == interfaceType) &&
+                    !t.GetTypeInfo().IsInterface &&
+                    t.GetTypeInfo().IsVisible &&
                     requirePublicConstructorFunc(t));
             }
         }
