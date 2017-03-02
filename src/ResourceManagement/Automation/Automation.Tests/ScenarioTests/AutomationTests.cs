@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Automation.Testing
                     _testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
 
                     string updatedContent = _testFixture.GetRunbookContent(runbookName);
-                    Assert.Equal(runbookContentV2, updatedContent);
+                    Assert.Equal(runbookContentV2.Replace("\r\n", "\n"), updatedContent.Replace("\r\n", "\n"));
 
                     _testFixture.DeleteRunbook(runbookName);
 
