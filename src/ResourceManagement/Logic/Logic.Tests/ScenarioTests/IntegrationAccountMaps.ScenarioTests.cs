@@ -17,14 +17,8 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts map.
     /// </summary>
     [Collection("IntegrationAccountMapScenarioTests")]
-    public class IntegrationAccountMapScenarioTests : BaseScenarioTests
+    public class IntegrationAccountMapScenarioTests : ScenarioTestsBase
     {
-
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests";
-
         /// <summary>
         /// Map content in string format
         /// </summary>
@@ -45,7 +39,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountMap()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -76,7 +70,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountMapOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -108,7 +102,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountMap()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -149,7 +143,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountMap()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -180,7 +174,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountMaps()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);

@@ -74,6 +74,11 @@ namespace Test.Azure.Management.Logic
         /// </summary>
         public const string IntegrationAccountCertificatePrefix = "IntegrationAccountCertificate";
 
+        /// <summary>
+        /// Test integration account session name prefix
+        /// </summary>
+        public const string IntegrationAccountSessionPrefix = "IntegrationAccountSession";
+
         #endregion Prefix
 
     }
