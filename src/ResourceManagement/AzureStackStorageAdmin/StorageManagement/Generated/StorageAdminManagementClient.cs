@@ -13168,20 +13168,17 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static MigrationResult GetMigrationStatus(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string operationId)
+        public static MigrationResult GetMigrationStatus(this IShareOperations operations, string resourceGroupName, string farmId, string operationId)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IShareOperations)s).GetMigrationStatusAsync(resourceGroupName, farmId, shareName, operationId);
+                return ((IShareOperations)s).GetMigrationStatusAsync(resourceGroupName, farmId, operationId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -13201,18 +13198,15 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<MigrationResult> GetMigrationStatusAsync(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string operationId)
+        public static Task<MigrationResult> GetMigrationStatusAsync(this IShareOperations operations, string resourceGroupName, string farmId, string operationId)
         {
-            return operations.GetMigrationStatusAsync(resourceGroupName, farmId, shareName, operationId, CancellationToken.None);
+            return operations.GetMigrationStatusAsync(resourceGroupName, farmId, operationId, CancellationToken.None);
         }
         
         /// <summary>
@@ -13342,9 +13336,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Required. Your documentation here.
         /// </param>
@@ -13352,11 +13343,11 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse SetMigrateContainerOperationStatus(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string operationId)
+        public static AzureOperationResponse SetMigrateContainerOperationStatus(this IShareOperations operations, string resourceGroupName, string farmId, string operationId)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IShareOperations)s).SetMigrateContainerOperationStatusAsync(resourceGroupName, farmId, shareName, operationId);
+                return ((IShareOperations)s).SetMigrateContainerOperationStatusAsync(resourceGroupName, farmId, operationId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -13376,9 +13367,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Required. Your documentation here.
         /// </param>
@@ -13386,9 +13374,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> SetMigrateContainerOperationStatusAsync(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string operationId)
+        public static Task<AzureOperationResponse> SetMigrateContainerOperationStatusAsync(this IShareOperations operations, string resourceGroupName, string farmId, string operationId)
         {
-            return operations.SetMigrateContainerOperationStatusAsync(resourceGroupName, farmId, shareName, operationId, CancellationToken.None);
+            return operations.SetMigrateContainerOperationStatusAsync(resourceGroupName, farmId, operationId, CancellationToken.None);
         }
     }
     
@@ -13532,9 +13520,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Your documentation here.
         /// </param>
@@ -13544,7 +13529,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<MigrationResult> GetMigrationStatusAsync(string resourceGroupName, string farmId, string shareName, string operationId, CancellationToken cancellationToken);
+        Task<MigrationResult> GetMigrationStatusAsync(string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -13601,9 +13586,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Your documentation here.
         /// </param>
@@ -13614,7 +13596,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> SetMigrateContainerOperationStatusAsync(string resourceGroupName, string farmId, string shareName, string operationId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetMigrateContainerOperationStatusAsync(string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -15027,9 +15009,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Required. Your documentation here.
         /// </param>
@@ -15039,7 +15018,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<MigrationResult> GetMigrationStatusAsync(string resourceGroupName, string farmId, string shareName, string operationId, CancellationToken cancellationToken)
+        public async Task<MigrationResult> GetMigrationStatusAsync(string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -15058,10 +15037,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             {
                 throw new ArgumentNullException("farmId");
             }
-            if (shareName == null)
-            {
-                throw new ArgumentNullException("shareName");
-            }
             if (operationId == null)
             {
                 throw new ArgumentNullException("operationId");
@@ -15076,7 +15051,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
-                tracingParameters.Add("shareName", shareName);
                 tracingParameters.Add("operationId", operationId);
                 TracingAdapter.Enter(invocationId, this, "GetMigrationStatusAsync", tracingParameters);
             }
@@ -15092,9 +15066,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Storage.Admin/farms/";
             url = url + Uri.EscapeDataString(farmId);
-            url = url + "/shares/";
-            url = url + Uri.EscapeDataString(shareName);
-            url = url + "/operationresults/";
+            url = url + "/shares/operationresults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-12-01-preview");
@@ -15777,9 +15749,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='shareName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='operationId'>
         /// Required. Your documentation here.
         /// </param>
@@ -15790,7 +15759,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> SetMigrateContainerOperationStatusAsync(string resourceGroupName, string farmId, string shareName, string operationId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> SetMigrateContainerOperationStatusAsync(string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -15809,10 +15778,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             {
                 throw new ArgumentNullException("farmId");
             }
-            if (shareName == null)
-            {
-                throw new ArgumentNullException("shareName");
-            }
             if (operationId == null)
             {
                 throw new ArgumentNullException("operationId");
@@ -15827,7 +15792,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
-                tracingParameters.Add("shareName", shareName);
                 tracingParameters.Add("operationId", operationId);
                 TracingAdapter.Enter(invocationId, this, "SetMigrateContainerOperationStatusAsync", tracingParameters);
             }
@@ -15843,9 +15807,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Storage.Admin/farms/";
             url = url + Uri.EscapeDataString(farmId);
-            url = url + "/shares/";
-            url = url + Uri.EscapeDataString(shareName);
-            url = url + "/operationresults/";
+            url = url + "/shares/operationresults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-12-01-preview");
