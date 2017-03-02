@@ -264,7 +264,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     string functionName = TestUtilities.GenerateName("function");
 
                     // Create a streaming job
-                    string content = File.ReadAllText(@"Resources\JobDefinition.json");
+                    string content = File.ReadAllText(Path.Combine("Resources", "JobDefinition.json"));
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse =
                         client.StreamingJobs.CreateOrUpdateWithRawJsonContent(resourceGroupName, resourceName,
                             new JobCreateOrUpdateWithRawJsonContentParameters()
@@ -275,7 +275,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.NotNull(jobCreateOrUpdateResponse.Job.Properties.Etag);
 
                     // Create an input for the streaming job
-                    content = File.ReadAllText(@"Resources\InputDefinition.json");
+                    content = File.ReadAllText(Path.Combine("Resources", "InputDefinition.json"));
                     InputCreateOrUpdateResponse inputCreateOrUpdateResponse =
                         client.Inputs.CreateOrUpdateWithRawJsonContent(resourceGroupName, resourceName, inputName,
                             new InputCreateOrUpdateWithRawJsonContentParameters()
@@ -286,7 +286,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.NotNull(inputCreateOrUpdateResponse.Input.Properties.Etag);
 
                     // Create an output for the streaming job
-                    content = File.ReadAllText(@"Resources\OutputDefinition.json");
+                    content = File.ReadAllText(Path.Combine("Resources", "OutputDefinition.json"));
                     OutputCreateOrUpdateResponse outputCreateOrUpdateResponse =
                         client.Outputs.CreateOrUpdateWithRawJsonContent(resourceGroupName, resourceName, outputName,
                             new OutputCreateOrUpdateWithRawJsonContentParameters()
@@ -297,7 +297,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.NotNull(outputCreateOrUpdateResponse.Output.Properties.Etag);
 
                     // Create a tranformation for the streaming job
-                    content = File.ReadAllText(@"Resources\TransformationDefinition.json");
+                    content = File.ReadAllText(Path.Combine("Resources", "TransformationDefinition.json"));
                     TransformationCreateOrUpdateResponse transformationCreateOrUpdateResponse =
                         client.Transformations.CreateOrUpdateWithRawJsonContent(resourceGroupName, resourceName,
                             transformationName, new TransformationCreateOrUpdateWithRawJsonContentParameters()
@@ -307,7 +307,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(HttpStatusCode.OK, transformationCreateOrUpdateResponse.StatusCode);
                     Assert.NotNull(transformationCreateOrUpdateResponse.Transformation.Properties.Etag);
 
-                    content = File.ReadAllText(@"Resources\FunctionDefinition.json");
+                    content = File.ReadAllText(Path.Combine("Resources", "FunctionDefinition.json"));
                     FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse =
                         client.Functions.CreateOrUpdateWithRawJsonContent(resourceGroupName, resourceName, functionName,
                             new FunctionCreateOrUpdateWithRawJsonContentParameters()

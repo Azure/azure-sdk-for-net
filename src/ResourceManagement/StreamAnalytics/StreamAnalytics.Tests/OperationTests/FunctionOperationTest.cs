@@ -423,7 +423,7 @@ namespace StreamAnalytics.Tests.OperationTests
 
                     // Retrieve default definition of the function
                     string functionName = TestUtilities.GenerateName("functiontest");
-                    string content = File.ReadAllText(@"Resources\RetrieveDefaultFunctionDefinitionRequest.json");
+                    string content = File.ReadAllText(Path.Combine("Resources", "RetrieveDefaultFunctionDefinitionRequest.json"));
                     var retrieveDefaultDefinitionParameters = new FunctionRetrieveDefaultDefinitionWithRawJsonContentParameters
                         ()
                     {
