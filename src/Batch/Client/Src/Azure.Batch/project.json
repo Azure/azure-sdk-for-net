@@ -1,5 +1,5 @@
 ﻿{
-  "version": "6.0.1",
+  "version": "6.1.0",
   "name": "Azure.Batch",
   "description": "This client library provides access to the Microsoft Azure Batch service.",
   "authors": [ "Microsoft" ],
@@ -42,9 +42,7 @@
         "Microsoft.NETCore.Platforms": "1.1.0",
         "Microsoft.AspNetCore.WebUtilities": "1.0.0",
         "System.Diagnostics.Tools": "4.3.0",
-        "System.Net.Http": "4.3.0",
-        "System.Runtime.Serialization.Primitives": "4.3.0",
-        "System.Threading.Tasks": "4.3.0"
+        "NETStandard.Library": "1.6.1"
       }
     }
   }
