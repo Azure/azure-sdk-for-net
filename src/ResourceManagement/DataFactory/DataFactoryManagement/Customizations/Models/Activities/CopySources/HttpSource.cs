@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     {
         /// <summary>
         /// Optional. Specifies the timeout for an HTTP client to get a response. 
-        /// The default value is equivalent to <see cref="System.Net.HttpWebRequest.Timeout" />.
         /// </summary>
         public TimeSpan RequestTimeout { get; set; }
 
