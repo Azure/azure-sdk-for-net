@@ -101,7 +101,7 @@ namespace HDInsight.Tests.UnitTests
             }
             catch (Exception e)
             {
-                Assert.Equal(e.Message, msg);
+                Assert.Equal(e.Message.Replace("\r\n", "\n"), msg.Replace("\r\n", "\n"));
                 return;
             }
 
