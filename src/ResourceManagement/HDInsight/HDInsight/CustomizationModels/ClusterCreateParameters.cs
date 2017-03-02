@@ -111,6 +111,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string ZookeeperNodeSize { get; set; }
 
         /// <summary>
+        /// Gets or sets the size of the Edge Node.
+        /// </summary>
+        /// <value>
+        /// The size of the edge node.
+        /// </value>
+        public string EdgeNodeSize { get; set; }
+
+        /// <summary>
         /// Gets additional Azure Blob Storage Account that you want to enable access to.
         /// </summary>
         public Dictionary<string, string> AdditionalStorageAccounts { get; private set; }

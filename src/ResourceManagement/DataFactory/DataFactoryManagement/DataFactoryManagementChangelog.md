@@ -1,4 +1,11 @@
-For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
+﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
+
+## Version 4.11.1
+_Release date: 2017.02.03_ 
+
+### Feature Additions
+
+* Fixing bug with get activity windows operation for named pipeline or activity
 
 ## Version 4.11.0
 _Release date: 2016.09.13_ 

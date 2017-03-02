@@ -763,6 +763,255 @@ namespace Sql2.Tests.ScenarioTests
         }
 
         /// <summary>
+        /// Tests for Server Key CRUD operations
+        /// </summary>
+        [Fact]
+        public void ServerKeyCRUDTest()
+        {
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                // Variables for server create
+                string serverName = TestUtilities.GenerateName("csm-sql-tdeakvcrud");
+                string resGroupName = TestUtilities.GenerateName("csm-rg-tdeakvcrud");
+                string serverLocation = "SouthEast Asia";
+                string adminLogin = "testlogin";
+                string adminPass = "Testp@ssw0rd";
+                string version = "12.0";
+                var defaultDatabaseSize = 1L * 1024L * 1024L * 1024L; // 1 GB
+                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
+                var defaultCollation = "SQL_Latin1_General_CP1_CI_AS";
+                var databaseName = TestUtilities.GenerateName("csm-sql-tdeakv-db");
+                string databaseEdition = "Standard";
+
+                var serverKeyName = "akvtdekeyvault_key1";
+                var akvUri = "https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106";
+
+                // Create the resource group.
+                resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
+                {
+                    Location = serverLocation,
+                });
+
+                try
+                {
+                    //////////////////////////////////////////////////////////////////////
+                    // Create server for test.
+                    var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new ServerCreateOrUpdateProperties()
+                        {
+                            AdministratorLogin = adminLogin,
+                            AdministratorLoginPassword = adminPass,
+                            Version = version,
+                        }
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
+                    VerifyServerInformation(serverName, serverLocation, adminLogin, adminPass, version, createResponse.Server);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Create database test.
+                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new DatabaseCreateOrUpdateProperties()
+                        {
+                            MaxSizeBytes = defaultDatabaseSize,
+                        },
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
+                    VerifyDatabaseInformation(createDbResponse.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dbSloS0, dbSloS0);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Add Server Key test
+                    var serverKeyCreateResponse = sqlClient.ServerKey.CreateOrUpdate(resGroupName, serverName, serverKeyName, new ServerKeyCreateOrUpdateParameters()
+                    {
+                        Properties = new ServerKeyCreateOrUpdateProperties()
+                        {
+                            ServerKeyType = ServerKeyType.AzureKeyVault,
+                            Uri = akvUri
+                        }
+                    });
+
+                    TestUtilities.ValidateOperationResponse(serverKeyCreateResponse, HttpStatusCode.Created);
+                    VerifyServerKeyInformation(ServerKeyType.AzureKeyVault, serverKeyName, akvUri, serverKeyCreateResponse.ServerKey);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Get Server Key tests
+                    var getResponse = sqlClient.ServerKey.Get(resGroupName, serverName, serverKeyName);
+                    TestUtilities.ValidateOperationResponse(getResponse, HttpStatusCode.OK);
+                    VerifyServerKeyInformation(ServerKeyType.AzureKeyVault, serverKeyName, akvUri, getResponse.ServerKey);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // List Server Key tests
+                    var listResponse = sqlClient.ServerKey.List(resGroupName, serverName);
+                    TestUtilities.ValidateOperationResponse(getResponse, HttpStatusCode.OK);
+                    Assert.Equal(2, listResponse.ServerKeys.Count);
+                    VerifyServerKeyInformation(ServerKeyType.AzureKeyVault, serverKeyName, akvUri, listResponse.ServerKeys.Where(s => s.Properties.ServerKeyType == ServerKeyType.AzureKeyVault).First());
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Delete Server Key tests
+                    var deleteResponse = sqlClient.ServerKey.Delete(resGroupName, serverName, serverKeyName);
+                    TestUtilities.ValidateOperationResponse(deleteResponse, HttpStatusCode.OK);
+                    //////////////////////////////////////////////////////////////////////
+                }
+                finally
+                {
+                    resClient.ResourceGroups.Delete(resGroupName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests for Transparent Data Encryption Encryption Protector CRUD operations
+        /// </summary>
+        [Fact]
+        public void TransparentDataEncryptionProtectorCRUDTest()
+        {
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current) 
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                // Variables for server create
+                string serverName = TestUtilities.GenerateName("csm-sql-tdeakvcrud");
+                string resGroupName = TestUtilities.GenerateName("csm-rg-tdeakvcrud");
+                string serverLocation = "SouthEast Asia";
+                string adminLogin = "testlogin";
+                string adminPass = "Testp@ssw0rd";
+                string version = "12.0";
+                var defaultDatabaseSize = 1L * 1024L * 1024L * 1024L; // 1 GB
+                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
+                var defaultCollation = "SQL_Latin1_General_CP1_CI_AS";
+                var databaseName = TestUtilities.GenerateName("csm-sql-tdeakv-db");
+                string databaseEdition = "Standard";
+                var serverKeyName = "akvtdekeyvault_key1";
+                var akvUri = "https://akvtdekeyvault.vault.azure.net/keys/key1/51c2fab9ff3c4a17aab4cd51b932b106";
+
+                // Create the resource group.
+                resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
+                {
+                    Location = serverLocation,
+                });
+
+                try
+                {
+                    //////////////////////////////////////////////////////////////////////
+                    // Create server for test.
+                    var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new ServerCreateOrUpdateProperties()
+                        {
+                            AdministratorLogin = adminLogin,
+                            AdministratorLoginPassword = adminPass,
+                            Version = version,
+                        }
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
+                    VerifyServerInformation(serverName, serverLocation, adminLogin, adminPass, version, createResponse.Server);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Create database test.
+                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new DatabaseCreateOrUpdateProperties()
+                        {
+                            MaxSizeBytes = defaultDatabaseSize,
+                        },
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
+                    VerifyDatabaseInformation(createDbResponse.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dbSloS0, dbSloS0);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Enable Encryption Test
+                    var updateResponse = sqlClient.TransparentDataEncryption.CreateOrUpdate(resGroupName, serverName, databaseName, new TransparentDataEncryptionCreateOrUpdateParameters
+                    {
+                        Properties = new TransparentDataEncryptionCreateOrUpdateProperties()
+                        {
+                            State = TransparentDataEncryptionStates.Enabled,
+                        },
+                    });
+
+                    var getTde = sqlClient.TransparentDataEncryption.Get(resGroupName, serverName, databaseName);
+                    TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);
+                    VerifyTransparentDataEncryptionInformation(TransparentDataEncryptionStates.Enabled, getTde.TransparentDataEncryption);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Get Encryption Protector Test
+                    var getProtector = sqlClient.TransparentDataEncryption.GetEncryptionProtector(resGroupName, serverName);
+                    VerifyEncryptionProtector(EncryptionProtectorType.ServiceManaged, EncryptionProtectorType.ServiceManaged, getProtector.EncryptionProtector);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Add Server Key
+                    var serverKeyCreateResponse = sqlClient.ServerKey.CreateOrUpdate(resGroupName, serverName, serverKeyName, new ServerKeyCreateOrUpdateParameters()
+                    {
+                        Properties = new ServerKeyCreateOrUpdateProperties()
+                        {
+                            ServerKeyType = ServerKeyType.AzureKeyVault,
+                            Uri = akvUri
+                        }
+                    });
+
+                    TestUtilities.ValidateOperationResponse(serverKeyCreateResponse, HttpStatusCode.Created);
+                    VerifyServerKeyInformation(ServerKeyType.AzureKeyVault, serverKeyName, akvUri, serverKeyCreateResponse.ServerKey);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Update Encryption Protector
+                    var updateProtectorResponse = sqlClient.TransparentDataEncryption.CreateOrUpdateEncryptionProtector(resGroupName, serverName, new EncryptionProtectorCreateOrUpdateParameters()
+                    {
+                        Properties = new EncryptionProtectorCreateOrUpdateProperties()
+                        {
+                            ServerKeyType = EncryptionProtectorType.AzureKeyVault,
+                            ServerKeyName = serverKeyName
+                        }
+                    });
+
+                    TestUtilities.ValidateOperationResponse(updateProtectorResponse, HttpStatusCode.OK);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Get Encryption Protector Test
+                    var getProtectorAkv = sqlClient.TransparentDataEncryption.GetEncryptionProtector(resGroupName, serverName);
+                    VerifyEncryptionProtector(EncryptionProtectorType.AzureKeyVault, serverKeyName, getProtectorAkv.EncryptionProtector);
+                    //////////////////////////////////////////////////////////////////////
+                }
+                finally
+                {
+                    resClient.ResourceGroups.Delete(resGroupName);
+                }
+            }
+        }
+
+        /// <summary>
         /// Verifies that the Transparent Data Encryption values match the expected values
         /// </summary>
         /// <param name="state">The expected rule name</param>
@@ -781,6 +1030,32 @@ namespace Sql2.Tests.ScenarioTests
         {
             Assert.Equal(state, tdeActivity.Properties.Status);
             Assert.InRange(tdeActivity.Properties.PercentComplete, 0.00001f, 100f);
+        }
+
+        /// <summary>
+        /// Verifies that the encryption protector values match the expected values
+        /// </summary>
+        /// <param name="type">Expected encryption protector type</param>
+        /// <param name="serverKeyName">Expected encryption protector server key name</param>
+        /// <param name="protector">Actual encryption protector object</param>
+        private static void VerifyEncryptionProtector(string type, string serverKeyName, EncryptionProtector protector)
+        {
+            Assert.Equal(type, protector.Properties.ServerKeyType);
+            Assert.Equal(serverKeyName, protector.Properties.ServerKeyName);
+        }
+
+        /// <summary>
+        /// Verifies that the server key matches the expected values
+        /// </summary>
+        /// <param name="type">Expected server key type</param>
+        /// <param name="serverKeyName">Expected server key name</param>
+        /// <param name="uri">Expected server key uri</param>
+        /// <param name="serverKey">Actual server key object</param>
+        private static void VerifyServerKeyInformation(string type, string serverKeyName, string uri, ServerKey serverKey)
+        {
+            Assert.Equal(type, serverKey.Properties.ServerKeyType);
+            Assert.Equal(serverKeyName, serverKey.Name);
+            Assert.Equal(uri, serverKey.Properties.Uri);
         }
 
         /// <summary>

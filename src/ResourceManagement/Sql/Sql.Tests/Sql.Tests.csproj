@@ -19,6 +19,7 @@
     <Compile Include="ScenarioTests\Sql2.JobAccountScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.SecurityAlertScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.ElasticPoolScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Sql2.FailoverGroupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.LocationCapabilitiesTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedIndexScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServerAdministratorScenarioTests.cs" />
@@ -142,6 +143,12 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ElasticPoolScenarioTests\ElasticPoolDatabaseOperations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupCrud.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupDatabaseOperations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2JobAccountScenarioTest\JobAccountCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -212,6 +219,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\ServerKeyCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionProtectorCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecureConnectionScenarioTest\SecureConnectionPolicyLifecycleTest.json">

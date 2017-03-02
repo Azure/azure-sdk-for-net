@@ -236,7 +236,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             else
             {
                 Assert.Equal(result.Properties.WacInternalState, WacAccountStates.Active);
-                Assert.Equal(result.Properties.AccountId, (ulong)999);
+                Assert.Equal(result.Properties.AccountId, "999");
                 Assert.Equal(result.Properties.Permissions, WacAccountPermissions.Full);
             }
         }

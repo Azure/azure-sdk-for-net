@@ -194,6 +194,8 @@ namespace Microsoft.AzureStack.Management
                         propertiesValue["providerLocation"] = parameters.ProviderRegistration.Properties.ProviderLocation;
                     }
                     
+                    propertiesValue["routingResourceManagerType"] = parameters.ProviderRegistration.Properties.RoutingResourceManagerType.ToString();
+                    
                     if (parameters.ProviderRegistration.Properties.Enabled != null)
                     {
                         propertiesValue["enabled"] = parameters.ProviderRegistration.Properties.Enabled.Value;
@@ -311,6 +313,8 @@ namespace Microsoft.AzureStack.Management
                                 }
                                 
                                 resourceTypeValue["routingType"] = resourceTypesItem.RoutingType.ToString();
+                                
+                                resourceTypeValue["inGlobalLocation"] = resourceTypesItem.InGlobalLocation;
                                 
                                 resourceTypeValue["resourceDeletionPolicy"] = resourceTypesItem.ResourceDeletionPolicy.ToString();
                                 
@@ -514,6 +518,13 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
+                                JToken routingResourceManagerTypeValue = propertiesValue2["routingResourceManagerType"];
+                                if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
+                                {
+                                    ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                    propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
+                                }
+                                
                                 JToken enabledValue = propertiesValue2["enabled"];
                                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                 {
@@ -658,6 +669,13 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                             resourceTypeInstance.RoutingType = routingTypeInstance;
+                                        }
+                                        
+                                        JToken inGlobalLocationValue = resourceTypesValue["inGlobalLocation"];
+                                        if (inGlobalLocationValue != null && inGlobalLocationValue.Type != JTokenType.Null)
+                                        {
+                                            bool inGlobalLocationInstance = ((bool)inGlobalLocationValue);
+                                            resourceTypeInstance.InGlobalLocation = inGlobalLocationInstance;
                                         }
                                         
                                         JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
@@ -1140,6 +1158,13 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
+                                JToken routingResourceManagerTypeValue = propertiesValue["routingResourceManagerType"];
+                                if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
+                                {
+                                    ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                    propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
+                                }
+                                
                                 JToken enabledValue = propertiesValue["enabled"];
                                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                 {
@@ -1284,6 +1309,13 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                             resourceTypeInstance.RoutingType = routingTypeInstance;
+                                        }
+                                        
+                                        JToken inGlobalLocationValue = resourceTypesValue["inGlobalLocation"];
+                                        if (inGlobalLocationValue != null && inGlobalLocationValue.Type != JTokenType.Null)
+                                        {
+                                            bool inGlobalLocationInstance = ((bool)inGlobalLocationValue);
+                                            resourceTypeInstance.InGlobalLocation = inGlobalLocationInstance;
                                         }
                                         
                                         JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
@@ -1614,6 +1646,13 @@ namespace Microsoft.AzureStack.Management
                                             propertiesInstance.ProviderLocation = providerLocationInstance;
                                         }
                                         
+                                        JToken routingResourceManagerTypeValue = propertiesValue["routingResourceManagerType"];
+                                        if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                            propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
+                                        }
+                                        
                                         JToken enabledValue = propertiesValue["enabled"];
                                         if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                         {
@@ -1758,6 +1797,13 @@ namespace Microsoft.AzureStack.Management
                                                 {
                                                     RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                                     resourceTypeInstance.RoutingType = routingTypeInstance;
+                                                }
+                                                
+                                                JToken inGlobalLocationValue = resourceTypesValue["inGlobalLocation"];
+                                                if (inGlobalLocationValue != null && inGlobalLocationValue.Type != JTokenType.Null)
+                                                {
+                                                    bool inGlobalLocationInstance = ((bool)inGlobalLocationValue);
+                                                    resourceTypeInstance.InGlobalLocation = inGlobalLocationInstance;
                                                 }
                                                 
                                                 JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
