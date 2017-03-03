@@ -24,7 +24,7 @@ The next preview version of the Azure Management Libraries for .NET is a work in
 The `Azure` class is the simplest entry point for creating and interacting with Azure resources.
 
 ```csharp
-Azure azure = Azure.Authenticate(credFile).WithDefaultSubscription();
+IAzure azure = Azure.Authenticate(credFile).WithDefaultSubscription();
 ``` 
 
 **Create a Virtual Machine**
