@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>5b42c053-eca0-4ecf-afa7-fe6746430340</ProjectGuid>
+    <ProjectGuid>44bb4174-5ddd-4008-b391-df20db60b490</ProjectGuid>
     <RootNamespace>Microsoft.Azure.Management.RecoveryServices</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
