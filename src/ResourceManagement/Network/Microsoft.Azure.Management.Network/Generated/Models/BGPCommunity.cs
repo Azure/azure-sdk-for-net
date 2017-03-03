@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the BGPCommunity class.
         /// </summary>
-        /// <param name="region">The region which the service support. e.g. For
-        /// O365, region is Global.</param>
+        /// <param name="serviceSupportedRegion">The region which the service
+        /// support. e.g. For O365, region is Global.</param>
         /// <param name="communityName">The name of the bgp community. e.g.
         /// Skype.</param>
         /// <param name="communityValue">The value of the bgp community. For
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.</param>
         /// <param name="communityPrefixes">The prefixes that the bgp community
         /// contains.</param>
-        public BGPCommunity(string region = default(string), string communityName = default(string), string communityValue = default(string), IList<string> communityPrefixes = default(IList<string>))
+        public BGPCommunity(string serviceSupportedRegion = default(string), string communityName = default(string), string communityValue = default(string), IList<string> communityPrefixes = default(IList<string>))
         {
-            Region = region;
+            ServiceSupportedRegion = serviceSupportedRegion;
             CommunityName = communityName;
             CommunityValue = communityValue;
             CommunityPrefixes = communityPrefixes;
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the region which the service support. e.g. For O365,
         /// region is Global.
         /// </summary>
-        [JsonProperty(PropertyName = "region")]
-        public string Region { get; set; }
+        [JsonProperty(PropertyName = "serviceSupportedRegion")]
+        public string ServiceSupportedRegion { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the bgp community. e.g. Skype.
