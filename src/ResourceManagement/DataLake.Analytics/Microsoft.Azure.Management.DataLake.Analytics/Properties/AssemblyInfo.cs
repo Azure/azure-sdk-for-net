@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Lake Analytics management operations including account, catalog and job management.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.1.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
