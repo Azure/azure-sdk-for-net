@@ -677,6 +677,59 @@ namespace DataFactory.Tests.Framework.JsonSamples
             },
             compression:
             {
+                type: ""ZipDeflate"",
+                level: ""Fastest""
+            }
+        }, 
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureSearchIndexDataset = @"
+{ 
+    name: ""TestAzureSearchIndex"", 
+    properties: { 
+        type: ""AzureSearchIndex"", 
+        linkedServiceName: ""fake ls"",
+        structure:
+        [
+            { 
+                name: ""Key"", 
+                type: ""String"" 
+            }
+        ],
+        typeProperties: { 
+            indexName: ""fake index""
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: 1
+        } 
+    }
+}";
+        [JsonSample]
+        public const string AmazonS3DatasetForParquet = @"
+{
+    name: ""AmazonS3DatasetforParquet"",
+    properties:
+    {
+        type: ""AmazonS3"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties: { 
+            bucketName: ""sample bucket"",
+            key: ""sample key"",
+            prefix: ""sample prefix"",
+            version: ""sample version"",
+            format:{
+                type:""ParquetFormat""
+            },
+            compression:
+            {
                 type: ""Deflate"",
                 level: ""Fastest""
             }
@@ -685,6 +738,131 @@ namespace DataFactory.Tests.Framework.JsonSamples
         {
             interval: 1,
             frequency: ""Hour""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string HttpTable = @"
+{ 
+    name: ""HttpTable"", 
+    properties: { 
+        type: ""Http"", 
+        linkedServiceName: ""fake ls"",
+        typeProperties: { 
+            relativeUrl: ""/{PartitionKey}.txt"",
+            requestMethod: ""Post"",
+            requestBody: ""fake body"",
+            additionalHeaders: ""fakeheader1: fake value 1\r\nfakeheader2: fake value 2\r\n"",
+            partitionedBy:
+            [
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+            ],
+            format:
+            {
+                type: ""TextFormat"",
+                columnDelimiter: "","",
+                rowDelimiter: "";"",
+                escapeChar: ""#"",
+                nullValue: ""\\N"",
+                encodingName: ""utf-8""
+            },
+            compression:
+            {
+                type: ""Deflate"",
+                level: ""Fastest""
+            }  
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: 1
+        } 
+    }
+}
+";
+
+        [JsonSample]
+        public const string BlobTableWithJsonArray = @"
+{
+    name: ""MyDemoBlob"",
+    properties:
+    {
+        type: ""AzureBlob"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        structure:
+        [
+            { name: ""PartitionKey"", type: ""Guid"" },
+            { name: ""RowKey"", type: ""String"" }, 
+            { name: ""Timestamp"", type: ""String"" },
+            { name: ""game_id "", type: ""String"" },
+            { name: ""date"", type: ""Datetime"" }
+        ],
+        typeProperties:
+        {        
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time\\{PartitionKey}"",
+            fileName: ""TestBlobName"",       
+
+            format:
+            {
+                type: ""JsonFormat"",
+                jsonNodeReference: ""$.Tags"",
+                jsonPathDefinition: {
+                ""id"": ""$.id"",
+                ""stringData"": ""$.1.stringData"",
+                ""tag"": ""Tag"",
+                ""extension"": ""Extension"",
+                ""team"": ""$.Team""},
+                encodingName: ""utf-8""
+            },
+            partitionedBy:
+            [
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+            ]
+        },
+        availability:
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+            style: ""StartOfInterval""     
+        },
+        policy:
+        {
+            validation:
+            {   
+                minimumSizeMB: 200.0
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string FileTableWithUseBinaryTransfer = @"
+{
+    name: ""FileTableWithUseBinaryTransfer"",
+    properties:
+    {
+        type: ""FileShare"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties:
+        {
+            folderPath: ""Root\\MyFolder"",
+            fileName: ""TestFileName"",
+            useBinaryTransfer: false,
+            format:
+            {
+                type: ""TextFormat"",
+                columnDelimiter: "","",
+                rowDelimiter: "";"",
+                escapeChar: ""#"",
+                nullValue: ""\\N"",
+                encodingName: ""utf-8""
+            }
+        },
+        availability:
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+            style: ""StartOfInterval""     
         }
     }
 }";

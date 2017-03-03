@@ -13,31 +13,27 @@
 // limitations under the License.
 //
 
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Available authentication types for <see cref="ODataLinkedService"/>.
+    /// A copy activity source for an HTTP file.
     /// </summary>
-    public static class ODataAuthenticationType
+    public class HttpSource : CopySource
     {
         /// <summary>
-        /// Basic authentication type.
+        /// Optional. Specifies the timeout for an HTTP client to get a response. 
+        /// The default value is equivalent to <see cref="System.Net.HttpWebRequest.Timeout" />.
         /// </summary>
-        public const string Basic = "Basic";
+        public TimeSpan RequestTimeout { get; set; }
 
         /// <summary>
-        /// Anonymous authentication type.
+        /// Initializes a new instance of the <see cref="HttpSource" />
+        /// class with required arguments.
         /// </summary>
-        public const string Anonymous = "Anonymous";
-
-        /// <summary>
-        /// Windows authentication type.
-        /// </summary>
-        public const string Windows = "Windows";
-
-        /// <summary>
-        /// OAuth authentication type.
-        /// </summary>
-        public const string OAuth = "OAuth";
+        public HttpSource()
+        {
+        }
     }
 }

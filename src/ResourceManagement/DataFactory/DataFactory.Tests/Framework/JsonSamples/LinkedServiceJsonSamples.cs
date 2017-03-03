@@ -472,7 +472,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         {
             userName: ""admin"",
             password : ""fakepassword"",
-            securityToken: ""fakeToken""
+            securityToken: ""fakeToken"",
+            environmentUrl: ""fakeurl.salesforce.com""
         }
     }
 }";
@@ -531,6 +532,183 @@ namespace DataFactory.Tests.Framework.JsonSamples
         {
             accessKeyId : ""fakeaccess"",
             secretAccessKey : ""fakesecret""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureMLLinkedServiceARMJson = @"
+{
+    name: ""Test-ML-LinkedService"",
+    properties:
+    {
+        type: ""AzureML"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            mlEndpoint:""https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs"",
+            apiKey:""jOeOfV4/ujgUvU5DB5cC+poDvHmHE/g=="",
+            updateResourceEndpoint: ""https://management.azure.com/subscriptions/da1d7b9a-a759-41c8-bb73-093a1818e03a/resourceGroups/Default-MachineLearning-SouthCentralUS/providers/Microsoft.MachineLearning/webServices/ARMbasedTrainingForADFTipTests?api-version=2016-05-01-preview"",
+            servicePrincipalId: ""fe273844-c808-40b8-ad85-94a46f737731"",
+            servicePrincipalKey: ""zWa0EEBGlenHRTp2FjtZOspK/WMA2tQ08c8U+gZRBlw="",
+            tenant: ""microsoft.com""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureSearchLinkedService = @"
+{
+    name: ""LinkedService-AzureSearch"",
+    properties:
+    {
+        type: ""AzureSearch"",
+        description: ""test description"",
+        typeProperties:
+        {
+            url : ""https://test.search.windows.net"", 
+            key: ""fake key""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureDataLakeStoreLinkedServiceWithServicePrincipal = @"
+{
+    name: ""LinkedService_AzureDataLakeStore"",
+    properties:
+    {
+        type: ""AzureDataLakeStore"",
+        typeProperties:
+        {
+            servicePrincipalId: ""myServicePrincipalId"",
+            servicePrincipalKey: ""myServicePrincipalKey"",
+            tenant: ""myTenant"",
+            dataLakeStoreUri : ""https://account.azuredatalake.net/webhdfs/v1"",
+            accountName : ""account"",
+            subscriptionId: ""subId"",
+            resourceGroupName:  ""resourceGroup""
+        },
+        description: ""test description""
+    }
+}";
+
+        [JsonSample]
+        public const string HttpLinkedService = @"
+{
+    name: ""HttpLinkedService"",
+    properties:
+    {
+        type: ""Http"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            url : ""https://localhost/"",          
+            username: ""fakeusername"",
+            password : ""fakepassword"",
+            enableServerCertificateValidation : true
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string ODataV2LinkedService = @"
+{
+    name: ""LinkedService-OData"",
+    properties:
+    {
+        type: ""OData"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            url : ""http://localhost/webhdfs/v1/"", 
+            username: ""admin"",
+            password : ""fakepassword"",
+            gatewayName : ""fakegatewayName"",
+            encryptedCredential : ""fakeencryptedCredential""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string ODataLinkedServiceForOAuth = @"
+{
+    name: ""LinkedService-OData"",
+    properties:
+    {
+        type: ""OData"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""OAuth"",
+            url : ""http://localhost/webhdfs/v1/"", 
+            authorizedCredential: ""sfSDFGsfgaSDfASDFAs2345tsgfASDF==""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string OnPremisesOracleLinkedServiceWithODBCDriver = @"
+{
+    name: ""LinkedService-OnPremisesOracleDB"",
+    properties:
+    {
+        type: ""OnPremisesOracle"",
+        typeProperties: {
+            driverType: ""Microsoft"",
+            connectionString: ""MyConnectionString"",
+            gatewayName: ""CherryAgent-01"",
+            userName: ""MyUserName"",
+            password: ""MyPassword""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SftpLinkedService = @"
+{
+    name: ""SftpLinkedService"",
+    properties:
+    {
+        type: ""Sftp"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""SshPublicKey"",
+            host : ""fakeserver.com"", 
+            port : 234,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            privateKeyPath : ""fake file path"",
+            privateKeyContent : ""fake base64string"",
+            passPhrase : ""fake password"",
+            skipHostKeyValidation : false,
+            hostKeyFingerprint : ""fake finger print""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string FtpServerLinkedService = @"
+{
+    name: ""FtpServerLinkedService"",
+    properties:
+    {
+        type: ""FtpServer"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            host : ""fakeserver.com"", 
+            port : 999,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            gatewayName : ""fakegw"",
+            encryptedCredential : ""fakecred"",
+            enableSsl : false,
+            enableServerCertificateValidation : false
         }
     }
 }";

@@ -16,28 +16,25 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Available authentication types for <see cref="ODataLinkedService"/>.
+    /// The ZipDeflate compression method used for a dataset.
     /// </summary>
-    public static class ODataAuthenticationType
+    [AdfTypeName("ZipDeflate")]
+    public class ZipDeflateCompression : Compression
     {
         /// <summary>
-        /// Basic authentication type.
+        /// Optional. The <see cref="T:CompressionLevel" /> used.
         /// </summary>
-        public const string Basic = "Basic";
+        public string Level
+        {
+            get;
+            set;
+        }
 
         /// <summary>
-        /// Anonymous authentication type.
+        /// Initializes a new instance of the <see cref="ZipDeflateCompression" /> class.
         /// </summary>
-        public const string Anonymous = "Anonymous";
-
-        /// <summary>
-        /// Windows authentication type.
-        /// </summary>
-        public const string Windows = "Windows";
-
-        /// <summary>
-        /// OAuth authentication type.
-        /// </summary>
-        public const string OAuth = "OAuth";
+        public ZipDeflateCompression()
+        {
+        }
     }
 }

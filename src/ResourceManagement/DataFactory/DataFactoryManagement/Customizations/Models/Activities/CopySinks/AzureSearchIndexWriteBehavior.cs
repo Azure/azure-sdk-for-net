@@ -16,28 +16,21 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Available authentication types for <see cref="ODataLinkedService"/>.
+    /// Write behavior when upserting documents into an Azure Search Index.
+    /// A property of <see cref="AzureSearchIndexSink"/>.
     /// </summary>
-    public static class ODataAuthenticationType
+    public static class AzureSearchIndexWriteBehavior
     {
         /// <summary>
-        /// Basic authentication type.
+        /// The document will be inserted if it is new and updated/replaced if it exists. 
+        /// If an update is performed, all fields will be replaced.
         /// </summary>
-        public const string Basic = "Basic";
+        public const string Upload = "Upload";
 
         /// <summary>
-        /// Anonymous authentication type.
+        /// Merge updates an existing document with the specified fields. 
+        /// Any field specified in a merge will replace the existing field in the document. 
         /// </summary>
-        public const string Anonymous = "Anonymous";
-
-        /// <summary>
-        /// Windows authentication type.
-        /// </summary>
-        public const string Windows = "Windows";
-
-        /// <summary>
-        /// OAuth authentication type.
-        /// </summary>
-        public const string OAuth = "OAuth";
+        public const string Merge = "Merge";
     }
 }

@@ -44,6 +44,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string UserName { get; set; }
 
         /// <summary>
+        /// Optional. The driver type for an on-premises Oracle server. 
+        /// Specify "Microsoft" to use the ODBC driver for Oracle or "ODP" to use the Oracle driver. 
+        /// If not specified, the Oracle driver will be used.
+        /// </summary>
+        public string DriverType { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the OnPremisesOracleLinkedService
         /// class.
         /// </summary>
