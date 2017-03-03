@@ -1,0 +1,85 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Rdfeproxy.svc/Subscriptions/3e9e6f07-6225-4d10-8fd4-5f0236c28f5a/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/RecoveryServicesVault/integrationTest1/replicationFabrics/azureSite1?api-version=2015-11-10",
+      "EncodedRequestUri": "L1JkZmVwcm94eS5zdmMvU3Vic2NyaXB0aW9ucy8zZTllNmYwNy02MjI1LTRkMTAtOGZkNC01ZjAyMzZjMjhmNWEvcmVzb3VyY2VHcm91cHMvcmcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlc0JWVEQyL1JlY292ZXJ5U2VydmljZXNWYXVsdC9pbnRlZ3JhdGlvblRlc3QxL3JlcGxpY2F0aW9uRmFicmljcy9henVyZVNpdGUxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMTA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"customDetails\": {\r\n      \"instanceType\": \"Azure\",\r\n      \"location\": \"southeastasia\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "126"
+        ],
+        "Accept-Language": [
+          "en"
+        ],
+        "Agent-Authentication": [
+          ""
+        ],
+        "x-ms-client-request-id": [
+          "517da230-243e-4c65-843a-5da3e5d83bb1"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Last-Modified": [
+          "Fri, 26 Aug 2016 14:14:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4f5513dd-d696-414b-8f58-200dbd2a5c94,517da230-243e-4c65-843a-5da3e5d83bb1 26-08-2016 14:14:58"
+        ],
+        "Azure-AsyncOperation": [
+          "https://sriramvu.fareast.corp.microsoft.com:8443/Subscriptions/3e9e6f07-6225-4d10-8fd4-5f0236c28f5a/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/RecoveryServicesVault/integrationTest1/replicationJobs/4f5513dd-d696-414b-8f58-200dbd2a5c94?api-version=2015-11-10"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://sriramvu.fareast.corp.microsoft.com:8443/Rdfeproxy.svc/Subscriptions/3e9e6f07-6225-4d10-8fd4-5f0236c28f5a/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/RecoveryServicesVault/integrationTest1/replicationFabrics/azureSite1/operationresults/4f5513dd-d696-414b-8f58-200dbd2a5c94?api-version=2015-11-10"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Fri, 26 Aug 2016 14:14:58 GMT"
+        ]
+      },
+      "StatusCode": 202
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3e9e6f07-6225-4d10-8fd4-5f0236c28f5a"
+  }
+}

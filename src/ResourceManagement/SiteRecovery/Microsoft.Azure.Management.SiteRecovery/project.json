@@ -1,0 +1,55 @@
+{
+    "version": "2.0.1-preview",
+    "title": "Microsoft Azure Site Recovery Management Library",
+    "description": "Provides site recovery management capabilities.",
+    "authors": [ "Microsoft" ],
+
+    "packOptions": {
+        "summary": "Provides site recovery management capabilities.",
+        "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+        "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+        "tags": [ "Microsoft", "Azure", "site", "recovery", "management", "site management", "REST", "HTTP", "client", "azureofficial", "windowsazureofficial" ],
+        "requireLicenseAcceptance": true
+    },
+
+    "buildOptions": {
+        "delaySign": true,
+        "publicSign": false,
+        "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    },
+
+  "dependencies": {
+    "Microsoft.Azure.Common": "2.1.1"
+  },
+
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "debugType": "portable"
+      },
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    }
+  }
+}

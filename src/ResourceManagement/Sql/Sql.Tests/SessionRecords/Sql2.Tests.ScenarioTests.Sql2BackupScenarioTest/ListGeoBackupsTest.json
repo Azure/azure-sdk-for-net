@@ -1,0 +1,3953 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourcegroups/csm-rg-backup-geo31415seasia?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlZ3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWE/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Southeast Asia\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "36"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia\",\r\n  \"name\": \"csm-rg-backup-geo31415seasia\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "216"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "0249cbd4-58c9-4dec-b578-a5689f4d5da0"
+        ],
+        "x-ms-correlation-request-id": [
+          "0249cbd4-58c9-4dec-b578-a5689f4d5da0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215719Z:0249cbd4-58c9-4dec-b578-a5689f4d5da0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:57:19 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"version\": \"12.0\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"NotYukon!9\"\r\n  },\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "188"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia\",\r\n  \"name\": \"csm-sql-backup-geo31415seasia\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Southeast Asia\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"csm-sql-backup-geo31415seasia.sqltest-eg1.mscds.com\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"NotYukon!9\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "559"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "3c9bedc4-41ea-42f7-b63e-ebbd0f0be478"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "1f17f41e-05bc-4048-8019-8d79e4e59f83"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215745Z:1f17f41e-05bc-4048-8019-8d79e4e59f83"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:57:44 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTU/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"edition\": \"Standard\",\r\n    \"maxSizeBytes\": \"1073741824\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\"\r\n  },\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "214"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"AlterDatabaseOperation\",\r\n  \"startTime\": \"2016-02-19T13:57:48.51-08:00\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "81"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "20f6b8fe-012c-4c32-bb37-aaa139c56966"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415/azureAsyncOperation/20f6b8fe-012c-4c32-bb37-aaa139c56966?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "170f63fa-5ff1-468e-8eb4-a26c4a6a2e5a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215749Z:170f63fa-5ff1-468e-8eb4-a26c4a6a2e5a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:57:49 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415/operationResults/20f6b8fe-012c-4c32-bb37-aaa139c56966?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415/operationResults/20f6b8fe-012c-4c32-bb37-aaa139c56966?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMGY2YjhmZS0wMTJjLTRjMzItYmIzNy1hYWExMzljNTY5NjY/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415\",\r\n  \"name\": \"csm-sql-backup-geo-db31415\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"6ac522a5-1b39-4c92-869a-6e54e4e5aff9\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"1073741824\",\r\n    \"creationDate\": \"2016-02-19T20:09:19.41Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": null,\r\n    \"defaultSecondaryLocation\": \"North Europe\",\r\n    \"earliestRestoreDate\": \"2016-02-19T20:20:36.38Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2\r\n  },\r\n  \"operationId\": \"20f6b8fe-012c-4c32-bb37-aaa139c56966\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "945"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "e7f00d0e-2f1a-4eaf-92c3-2caefef9a2af"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "826dc9ff-0484-4a74-87ad-1ae8c86fe955"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215750Z:826dc9ff-0484-4a74-87ad-1ae8c86fe955"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:57:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/recoverabledatabases?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9yZWNvdmVyYWJsZWRhdGFiYXNlcz9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/recoverabledatabases/csm-sql-backup-geo-db31415\",\r\n      \"name\": \"csm-sql-backup-geo-db31415\",\r\n      \"type\": \"Microsoft.Sql/servers/recoverableDatabases\",\r\n      \"properties\": {\r\n        \"edition\": \"Standard\",\r\n        \"lastAvailableBackupDate\": \"2016-02-19T20:57:55.6333764Z\",\r\n        \"serviceLevelObjective\": \"S0\",\r\n        \"elasticPoolName\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "79e7f6ca-aa51-47fe-a88f-fabe72bc7991"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "cf6fc400-9fe1-405f-a9f9-fb2a69137c8c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215756Z:cf6fc400-9fe1-405f-a9f9-fb2a69137c8c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:57:56 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceDatabaseId\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/recoverabledatabases/csm-sql-backup-geo-db31415\",\r\n    \"createMode\": \"Recovery\"\r\n  },\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "340"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T13:58:11.756-08:00\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "79"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "017f0d41-5079-423f-991f-65d579e33f5b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "e21661b5-e50d-4e53-aef9-8b342fa64fb5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215812Z:e21661b5-e50d-4e53-aef9-8b342fa64fb5"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:58:11 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "06efc62f-8715-4730-be65-9b79bf0dd221"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "a31886ef-96e9-48d8-a7c6-39a1ff4485e8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215813Z:a31886ef-96e9-48d8-a7c6-39a1ff4485e8"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:58:13 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "fd1eef41-601b-4dbe-8572-3614f8571364"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-correlation-request-id": [
+          "e245dc9a-5053-49bf-9d5b-214ad898929a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215845Z:e245dc9a-5053-49bf-9d5b-214ad898929a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:58:44 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "7eda6ef8-da87-42a5-9387-8ecab6c4847b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-correlation-request-id": [
+          "ba58931f-4c90-42b5-babe-dce9fd9b532f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215901Z:ba58931f-4c90-42b5-babe-dce9fd9b532f"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:59:01 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "6f7dc720-7ce1-4c6e-a3ee-3f5b35e7625d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-correlation-request-id": [
+          "3ae8935b-8eaa-4aec-a1a4-16a6a7392320"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215918Z:3ae8935b-8eaa-4aec-a1a4-16a6a7392320"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:59:17 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "afed23f1-dbff-45f4-be6c-c389c65e51b0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-correlation-request-id": [
+          "4ba03ec3-a179-43f9-bcae-4872348b1649"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215934Z:4ba03ec3-a179-43f9-bcae-4872348b1649"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:59:33 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "7837a44c-b5f8-4ec6-8aad-211fc1e9349a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-correlation-request-id": [
+          "77117926-ac09-496a-a23f-64c725d02e59"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T215950Z:77117926-ac09-496a-a23f-64c725d02e59"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 21:59:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "ddf739ba-dbd6-4882-9dc4-2ac60f3025cf"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-correlation-request-id": [
+          "9062baca-8ca7-47cb-8e80-8166b742efe7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220006Z:9062baca-8ca7-47cb-8e80-8166b742efe7"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:00:06 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "e63602c7-5537-456b-b1b7-089ef1b3ea45"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b111c47-3fe6-4dc4-8562-0b59f985a41c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220023Z:9b111c47-3fe6-4dc4-8562-0b59f985a41c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:00:23 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "014485c7-bf4c-40ac-be79-b430d54d4f9a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "x-ms-correlation-request-id": [
+          "85f3b254-a853-470d-a537-212bd5876503"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220039Z:85f3b254-a853-470d-a537-212bd5876503"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:00:39 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "18644e88-602d-492b-9152-37196d5be0cc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-correlation-request-id": [
+          "21565a02-24b8-47b5-8b4d-40fb384ff1dc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220056Z:21565a02-24b8-47b5-8b4d-40fb384ff1dc"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:00:56 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "ba25ecb8-fca1-41a1-9406-1c76dbea9f4e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "05d949d2-cfe8-46bd-a68f-e1179bdfc21f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220112Z:05d949d2-cfe8-46bd-a68f-e1179bdfc21f"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:01:12 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "edb404d8-fd23-4901-897d-03fada787e25"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "98f20842-1dd8-4659-a847-ff25075e720e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220128Z:98f20842-1dd8-4659-a847-ff25075e720e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:01:28 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "66a1bf10-4ed0-4cbb-bb8e-b8aa3c302e29"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14979"
+        ],
+        "x-ms-correlation-request-id": [
+          "a4e9f116-b79e-443d-8fe6-32b4ca2781f6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220145Z:a4e9f116-b79e-443d-8fe6-32b4ca2781f6"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:01:45 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "a6a6ac68-a712-49d5-a577-6ab458f2e60b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14978"
+        ],
+        "x-ms-correlation-request-id": [
+          "1841e218-3453-45b7-bfb0-4fdfbf08e94a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220201Z:1841e218-3453-45b7-bfb0-4fdfbf08e94a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:02:00 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "43699321-a91b-49f1-8950-4f2033436fa0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14977"
+        ],
+        "x-ms-correlation-request-id": [
+          "41ee87df-9884-4fed-a11b-1e0e86e95d9a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220217Z:41ee87df-9884-4fed-a11b-1e0e86e95d9a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:02:17 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "023b61ad-167f-465b-b749-460b641c1ff9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1723d61-2f47-497e-99a1-7b1768629dc7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220234Z:f1723d61-2f47-497e-99a1-7b1768629dc7"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:02:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "8588b600-05b1-464b-b012-7758f4b3362c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
+        ],
+        "x-ms-correlation-request-id": [
+          "0449d17c-f66e-4615-ba24-61fcf9931c6b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220250Z:0449d17c-f66e-4615-ba24-61fcf9931c6b"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:02:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "1c304525-a7da-4d85-9e82-53d0a458cd2f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-correlation-request-id": [
+          "a910e930-cbc8-4705-beff-b727264f5583"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220307Z:a910e930-cbc8-4705-beff-b727264f5583"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:03:06 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "a39e3223-cee7-4aa6-9ca0-b99413315f2e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14973"
+        ],
+        "x-ms-correlation-request-id": [
+          "37d93be8-a91c-489c-a618-4b8419ee8ba9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220323Z:37d93be8-a91c-489c-a618-4b8419ee8ba9"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:03:23 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "e0e6e004-b48e-4b72-88ba-4bf93848d868"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14972"
+        ],
+        "x-ms-correlation-request-id": [
+          "2ae67f49-34ea-4e3f-b3c5-ad87c5f9be2e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220339Z:2ae67f49-34ea-4e3f-b3c5-ad87c5f9be2e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:03:39 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "1b8766a5-080a-4806-88e8-a8fdd52c349e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14971"
+        ],
+        "x-ms-correlation-request-id": [
+          "9eba2da9-2303-40b6-b32b-1d51d9bd006c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220356Z:9eba2da9-2303-40b6-b32b-1d51d9bd006c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:03:55 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "936d8640-ba95-43e6-b366-b1e0ff3a3ccc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14970"
+        ],
+        "x-ms-correlation-request-id": [
+          "2c794dbe-739b-406c-a6d9-5435801f2711"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220412Z:2c794dbe-739b-406c-a6d9-5435801f2711"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:04:12 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "d31aa332-8784-4943-824f-4058077ffe68"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14966"
+        ],
+        "x-ms-correlation-request-id": [
+          "8010403b-6c47-4b53-90cf-888cb7a2f77d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220429Z:8010403b-6c47-4b53-90cf-888cb7a2f77d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:04:28 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "b2abb1ac-8350-4478-847e-e9525e483e16"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14964"
+        ],
+        "x-ms-correlation-request-id": [
+          "b74ac9ad-7ae0-485f-a374-9566c669fc93"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220445Z:b74ac9ad-7ae0-485f-a374-9566c669fc93"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:04:44 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "c2627724-af53-4581-9c6a-270ddfd5d233"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14962"
+        ],
+        "x-ms-correlation-request-id": [
+          "2e24df5b-c2e7-4085-b5d4-14c59ea8e0a9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220501Z:2e24df5b-c2e7-4085-b5d4-14c59ea8e0a9"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:05:01 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "eda7d7ab-dd0e-4cba-a438-bf44d8ccd465"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-correlation-request-id": [
+          "41f3314a-3ba7-4264-86e0-b76fc426385b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220518Z:41f3314a-3ba7-4264-86e0-b76fc426385b"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:05:17 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "bd013d28-6def-4b29-8fe4-03da5ab8483b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-correlation-request-id": [
+          "f351c01d-6cf9-4788-9508-72bd3181e70e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220534Z:f351c01d-6cf9-4788-9508-72bd3181e70e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:05:33 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "03f4ad6a-de68-4c42-a895-23d30190e00c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14956"
+        ],
+        "x-ms-correlation-request-id": [
+          "55d24266-b93a-49eb-a453-fe6ee282bf59"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220550Z:55d24266-b93a-49eb-a453-fe6ee282bf59"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:05:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "6013dd19-e316-461d-9fd4-fe0b295b3209"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14954"
+        ],
+        "x-ms-correlation-request-id": [
+          "365c16dc-0aa0-45bd-a778-5f5bb0aacfb9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220607Z:365c16dc-0aa0-45bd-a778-5f5bb0aacfb9"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:06:07 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "8fca3036-86b3-4eb2-abea-7e612d799ee5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14952"
+        ],
+        "x-ms-correlation-request-id": [
+          "dfe235b6-f8fe-49fe-be7d-c6adb89ebaf3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220623Z:dfe235b6-f8fe-49fe-be7d-c6adb89ebaf3"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:06:23 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "80b9e934-db9c-4df4-85e7-89d8dd70dca1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14951"
+        ],
+        "x-ms-correlation-request-id": [
+          "965b007d-1888-493e-9315-aca156b1bd0d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220640Z:965b007d-1888-493e-9315-aca156b1bd0d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:06:39 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "d79e9396-3278-41f4-a0a4-e09b9cc57ff9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14950"
+        ],
+        "x-ms-correlation-request-id": [
+          "0be67034-e453-4953-b48c-2298627196fa"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220656Z:0be67034-e453-4953-b48c-2298627196fa"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:06:56 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "761fb97e-c45a-4654-9418-5354618cb60a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14949"
+        ],
+        "x-ms-correlation-request-id": [
+          "63a429d0-4add-46b6-8b20-0e9020ab3b6e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220713Z:63a429d0-4add-46b6-8b20-0e9020ab3b6e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:07:12 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "c685a44d-6701-44ed-9bd1-f4b2b2641666"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14948"
+        ],
+        "x-ms-correlation-request-id": [
+          "d1b63468-315b-4f4b-9127-92713fd09e0e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220729Z:d1b63468-315b-4f4b-9127-92713fd09e0e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:07:28 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "71d86f69-9db2-4450-8a63-903314f54637"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14947"
+        ],
+        "x-ms-correlation-request-id": [
+          "f96f1eed-9b00-4fd9-9265-ec4bca80b601"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220745Z:f96f1eed-9b00-4fd9-9265-ec4bca80b601"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:07:45 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "933c5e53-f60b-4bbe-93a1-7d2d9b5984d7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14946"
+        ],
+        "x-ms-correlation-request-id": [
+          "bdc9bebd-c82b-41c6-839f-8861b8af1a6e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220802Z:bdc9bebd-c82b-41c6-839f-8861b8af1a6e"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:08:01 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "4bbcf7ff-0a01-40ae-b1fa-bdbf311c3c4d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14945"
+        ],
+        "x-ms-correlation-request-id": [
+          "442450b9-b4e6-40c7-a501-c6e4a0684380"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220818Z:442450b9-b4e6-40c7-a501-c6e4a0684380"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:08:18 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "8a068914-3bae-496e-a707-96cc1714462c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14942"
+        ],
+        "x-ms-correlation-request-id": [
+          "b585faa4-77d5-41ff-b9b6-759141123b1a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220834Z:b585faa4-77d5-41ff-b9b6-759141123b1a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:08:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "2614cd41-c238-4c3d-89df-9d6ec9c8ca39"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14941"
+        ],
+        "x-ms-correlation-request-id": [
+          "929ae5d3-9480-42bf-9ed2-c304f89d72a2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220851Z:929ae5d3-9480-42bf-9ed2-c304f89d72a2"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:08:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "bf738e53-f20c-4afb-b01a-7dbdccf2b589"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14940"
+        ],
+        "x-ms-correlation-request-id": [
+          "754203b3-f60f-4fbf-b03d-783be49c842c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220907Z:754203b3-f60f-4fbf-b03d-783be49c842c"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:09:07 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "e74613fd-4fb1-43ea-ac80-cb5e1f710a73"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14939"
+        ],
+        "x-ms-correlation-request-id": [
+          "da1175a1-159f-4494-9070-6015a1df41ae"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220923Z:da1175a1-159f-4494-9070-6015a1df41ae"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:09:23 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "0ccebbbf-8514-484c-a49f-e90a27e4d309"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14938"
+        ],
+        "x-ms-correlation-request-id": [
+          "3157002d-76e0-4f3f-8e90-ed837c156574"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220940Z:3157002d-76e0-4f3f-8e90-ed837c156574"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:09:39 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "7a317760-1617-493a-9de4-de5f87dd7896"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14937"
+        ],
+        "x-ms-correlation-request-id": [
+          "e7a4f924-aa37-4bbe-893f-22fa167a7071"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T220956Z:e7a4f924-aa37-4bbe-893f-22fa167a7071"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:09:55 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "41093c96-7b55-4bdc-acb3-7eadf2e4a2b9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14934"
+        ],
+        "x-ms-correlation-request-id": [
+          "56c20ef9-14e0-4a99-8e51-7abaccbd74a5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221013Z:56c20ef9-14e0-4a99-8e51-7abaccbd74a5"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:10:13 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "2a653f05-6c8d-413d-88c6-6f0dc043ff96"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14931"
+        ],
+        "x-ms-correlation-request-id": [
+          "7e57bbf7-87cd-4425-bd68-b7d89f14267f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221029Z:7e57bbf7-87cd-4425-bd68-b7d89f14267f"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:10:28 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "33b2e3b6-1d29-46f1-9aad-43caa7dce9d9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14929"
+        ],
+        "x-ms-correlation-request-id": [
+          "3b16ecf7-a05c-4632-bbfe-1e9a799825d3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221046Z:3b16ecf7-a05c-4632-bbfe-1e9a799825d3"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:10:45 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "a1433122-dc7e-41b5-9120-4d8f7e0f3184"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14927"
+        ],
+        "x-ms-correlation-request-id": [
+          "152e50e0-2b71-487f-ac03-4134c85115df"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221102Z:152e50e0-2b71-487f-ac03-4134c85115df"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:11:02 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "0c206353-508b-4518-b5fa-daf45a6a1b3c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14925"
+        ],
+        "x-ms-correlation-request-id": [
+          "781ee271-6a7a-4d4b-8bad-a39d9f6f465f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221118Z:781ee271-6a7a-4d4b-8bad-a39d9f6f465f"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:11:18 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "40ed7681-fdf7-44e7-8751-46fd2c0dfedb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14923"
+        ],
+        "x-ms-correlation-request-id": [
+          "b0ea6d53-8bce-45d6-b235-a27585681c83"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221135Z:b0ea6d53-8bce-45d6-b235-a27585681c83"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:11:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "b8200911-4fbb-4f85-bb35-a737c3101904"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14921"
+        ],
+        "x-ms-correlation-request-id": [
+          "3c0e065f-da84-47f8-acf2-51d390290185"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221151Z:3c0e065f-da84-47f8-acf2-51d390290185"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:11:51 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "1d1ddea1-b6f3-4c64-ae6e-e559d20915b4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14920"
+        ],
+        "x-ms-correlation-request-id": [
+          "e235baa4-6a88-4f76-a7c2-394079e9a9f2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221208Z:e235baa4-6a88-4f76-a7c2-394079e9a9f2"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:12:07 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "400fbe9a-27b6-4833-8c9a-a886c2d83f74"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14919"
+        ],
+        "x-ms-correlation-request-id": [
+          "a047af69-811f-4af3-bf84-93213bfd1583"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221224Z:a047af69-811f-4af3-bf84-93213bfd1583"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:12:24 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "0cb5f791-c500-48e8-826e-648409d9faf9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14918"
+        ],
+        "x-ms-correlation-request-id": [
+          "9adbc78a-c485-4be3-a3e9-5deb0065fdd0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221242Z:9adbc78a-c485-4be3-a3e9-5deb0065fdd0"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:12:41 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "c5d5967d-f6f9-4ee9-aa4a-923e8dae8695"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14917"
+        ],
+        "x-ms-correlation-request-id": [
+          "6aa3e5f1-bd98-437d-bda5-34165986490d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221258Z:6aa3e5f1-bd98-437d-bda5-34165986490d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:12:58 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "14b210ac-1991-451f-88b1-ef2672842743"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14916"
+        ],
+        "x-ms-correlation-request-id": [
+          "a5a92843-72f9-450b-8990-953453046e5d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221336Z:a5a92843-72f9-450b-8990-953453046e5d"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:13:35 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "ba3d3233-57ee-4382-87fb-0ef443bef490"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14915"
+        ],
+        "x-ms-correlation-request-id": [
+          "68d8f019-0fdb-419d-83a3-b164fa5057b9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221352Z:68d8f019-0fdb-419d-83a3-b164fa5057b9"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:13:52 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "ff88f0c3-345e-490d-a635-7a9bfc94aca1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14913"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef64303e-6dd6-4557-a37f-64b04ff0c8fd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221409Z:ef64303e-6dd6-4557-a37f-64b04ff0c8fd"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:14:08 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "d426d76d-d311-41c9-8eb0-2ed6144ce69b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14912"
+        ],
+        "x-ms-correlation-request-id": [
+          "3c1f0794-8731-4fb7-81df-f87ae31d03ee"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221425Z:3c1f0794-8731-4fb7-81df-f87ae31d03ee"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:14:25 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateRecoverRequest\",\r\n  \"startTime\": \"2016-02-19T21:58:11.727Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-request-id": [
+          "8a116749-9655-4aeb-8652-e8a8d6e3a67e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/azureAsyncOperation/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14911"
+        ],
+        "x-ms-correlation-request-id": [
+          "f213f0f0-2f39-4f39-b373-fb1d744bc75a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221442Z:f213f0f0-2f39-4f39-b373-fb1d744bc75a"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:14:41 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored/operationResults/017f0d41-5079-423f-991f-65d579e33f5b?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGE0OTY0NDItNjM1Zi00OTc0LWJkYTQtMmQzMzliOWE2YjNjL3Jlc291cmNlR3JvdXBzL2NzbS1yZy1iYWNrdXAtZ2VvMzE0MTVzZWFzaWEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9jc20tc3FsLWJhY2t1cC1nZW8zMTQxNXNlYXNpYS9kYXRhYmFzZXMvY3NtLXNxbC1iYWNrdXAtZ2VvLWRiMzE0MTVfZ2VvcmVzdG9yZWQvb3BlcmF0aW9uUmVzdWx0cy8wMTdmMGQ0MS01MDc5LTQyM2YtOTkxZi02NWQ1NzllMzNmNWI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1QcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/0a496442-635f-4974-bda4-2d339b9a6b3c/resourceGroups/csm-rg-backup-geo31415seasia/providers/Microsoft.Sql/servers/csm-sql-backup-geo31415seasia/databases/csm-sql-backup-geo-db31415_georestored\",\r\n  \"name\": \"csm-sql-backup-geo-db31415_georestored\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"e506bfba-5931-4588-8f6f-375c5c24e361\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"268435456000\",\r\n    \"creationDate\": \"2016-02-19T21:58:14.447Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": null,\r\n    \"defaultSecondaryLocation\": \"North Europe\",\r\n    \"earliestRestoreDate\": \"2016-02-19T22:24:23.38Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "919"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "a41e15c0-83ca-4619-a3a3-3b70f26a6e5b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14907"
+        ],
+        "x-ms-correlation-request-id": [
+          "292b1205-7e42-4490-a952-53ba4a112657"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160219T221458Z:292b1205-7e42-4490-a952-53ba4a112657"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Feb 2016 22:14:58 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0a496442-635f-4974-bda4-2d339b9a6b3c"
+  }
+}

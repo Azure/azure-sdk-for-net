@@ -1,6 +1,18 @@
 ﻿
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 using System;
 using Hyak.Common;
@@ -8,18 +20,23 @@ using Microsoft.Azure.Management.Automation.Models;
 using Microsoft.Azure.Test;
 using Newtonsoft.Json;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Microsoft.Azure.Management.Automation.Testing
 {
     public class AutomationTest 
     {
+        public AutomationTest()
+        {
+            HyakTestUtilities.SetHttpMockServerMatcher();
+        }
+
         [Fact]
         public void CanCreateUpdateDeleteRunbook()
         {
-            using (var undoContext = UndoContext.Current)
+            using (var undoContext = HyakMockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(undoContext))
                 {
                     string runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
                     string runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
@@ -46,7 +63,7 @@ namespace Microsoft.Azure.Management.Automation.Testing
                     _testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
 
                     string updatedContent = _testFixture.GetRunbookContent(runbookName);
-                    Assert.Equal(runbookContentV2, updatedContent);
+                    Assert.Equal(runbookContentV2.Replace("\r\n", "\n"), updatedContent.Replace("\r\n", "\n"));
 
                     _testFixture.DeleteRunbook(runbookName);
 
@@ -61,11 +78,9 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteSchedule()
         {
-            using (var undoContext = UndoContext.Current)
+            using (var undoContext = HyakMockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(undoContext))
                 {
                     var scheduleName = TestUtilities.GenerateName("hourlySche");
                     var startTime = DateTimeOffset.Now.AddMinutes(30);
@@ -99,11 +114,9 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteVariable()
         {
-            using (var undoContext = UndoContext.Current)
+            using (var undoContext = HyakMockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(undoContext))
                 {
                     var variableName = TestUtilities.GenerateName("variable");
                     var value = 10;
@@ -138,11 +151,9 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteWebhook()
         {
-            using (var undoContext = UndoContext.Current)
+            using (var undoContext = HyakMockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(undoContext))
                 {
                     var webhookName = TestUtilities.GenerateName("webhook");
                     var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
@@ -188,11 +199,9 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteCredential()
         {
-            using (var undoContext = UndoContext.Current)
+            using (var undoContext = HyakMockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(undoContext))
                 {
                     var credentialName = TestUtilities.GenerateName("credential");
                     var userName = "userName1";
@@ -225,6 +234,24 @@ namespace Microsoft.Azure.Management.Automation.Testing
                 }
             }
         }
+
+        [Fact]
+        public void CanGetUsage()
+        {
+            using (var undoContext = HyakMockContext.Start(this.GetType().FullName))
+            {
+                using (AutomationTestBase _testFixture = new AutomationTestBase(undoContext))
+                {
+                    var usage = _testFixture.GetUsages();
+                    Assert.Equal(3, usage.Count);
+
+                    Assert.Equal(0, usage[0].CurrentValue);
+                    Assert.Equal("AccountUsage", usage[0].Name.Value);
+                    Assert.Equal(-1, usage[0].Limit);
+                }
+            }
+        }
+
     }
 }
 

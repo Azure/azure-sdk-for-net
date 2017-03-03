@@ -1,0 +1,55 @@
+{
+    "version": "0.55.0-prerelease",
+    "title": "Microsoft Azure SQL Management Library",
+    "description": "Provides Microsoft Azure SQL management operations for Microsoft Azure",
+    "authors": [ "Microsoft" ],
+
+    "packOptions": {
+        "summary": "Provides Microsoft Azure SQL management operations for Microsoft Azure",
+        "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+        "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+        "tags": [ "Microsoft", "Microsoft Azure", "Azure", "sql", "database", "SQL database", "REST", "HTTP", "client", "azureofficial" ],
+        "requireLicenseAcceptance": true
+    },
+
+    "buildOptions": {
+        "delaySign": true,
+        "publicSign": false,
+        "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    },
+
+  "dependencies": {
+    "Microsoft.Azure.Common": "2.1.1"
+  },
+
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "debugType": "portable"
+      },
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    }
+  }
+}

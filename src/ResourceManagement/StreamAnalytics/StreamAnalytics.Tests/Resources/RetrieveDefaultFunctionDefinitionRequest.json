@@ -1,0 +1,8 @@
+﻿{
+    "bindingType": "Microsoft.MachineLearning/WebService",
+    "bindingRetrievalProperties": {
+        "executeEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/f80d5d7a77fa4a46bf2a30c63c078dca/services/b7be5e40fd194258896fb602c1858eaf/execute?api-version=2.0&details=true",
+        "udfType": "Scalar"
+    }
+}
+

@@ -1,0 +1,58 @@
+{
+    "version": "1.8.2",
+    "title": "Microsoft Azure Stream Analytics Management Library",
+    "description": "Azure Stream Analytics is a fully managed service providing low latency, highly available, scalable complex event processing over streaming data in the cloud. For more information visit http://azure.microsoft.com/en-us/documentation/articles/stream-analytics-get-started/.",
+    "authors": [ "Microsoft" ],
+
+    "packOptions": {
+        "summary": "Azure Stream Analytics is a fully managed service providing low latency, highly available, scalable complex event processing over streaming data in the cloud. For more information visit http://azure.microsoft.com/en-us/documentation/articles/stream-analytics-get-started/.",
+        "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+        "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+        "tags": [ "Microsoft", "Azure", "Stream", "Analytics", "stream analytics management", "REST", "HTTP", "client", "windowsazureofficial"  ],
+        "requireLicenseAcceptance": true
+    },
+
+    "buildOptions": {
+        "delaySign": true,
+        "publicSign": false,
+        "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    },
+
+  "dependencies": {
+    "Microsoft.Azure.Common": "2.1.1"
+  },
+
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "System.Threading": "4.3.0",
+        "System.Threading.Tasks": "4.3.0"
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "System.Threading": "4.3.0"
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    }
+  }
+}
