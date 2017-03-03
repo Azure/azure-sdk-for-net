@@ -18,6 +18,7 @@ These SDKs depend on Microsoft.Azure.Common
 | HdInsight | Microsoft.Azure.Management.HDInsight, Microsoft.Azure.Management.HDInsight.Job |
 | Insights | Microsoft.Azure.Insights |
 | Media Services | Microsoft.WindowsAzure.Management.MediaServices |
+| Monitor | Microsoft.Azure.Monitor |
 | Monitoring | Microsoft.WindowsAzure.Management.Monitoring |
 | Operational Insights | Microsoft.Azure.Management.OperationalInsights |
 | Recovery Services | Microsoft.Azure.Management.RecoveryServices, Microsoft.Azure.Management.RecoveryServices.Backup |
