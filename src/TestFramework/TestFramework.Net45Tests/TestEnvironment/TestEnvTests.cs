@@ -5,7 +5,6 @@ namespace TestFramework.Net45Tests
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
-    using System.Threading;
     using Xunit;
 
     public class TestEnvTests
@@ -50,7 +49,7 @@ namespace TestFramework.Net45Tests
         // Please update the connection string with the right information and then run the test
         [Theory(Skip = "Interactive Tests, needs to be run manually")]
         [InlineData("SubscriptionId=<subId>;" +
-                "AADTenant=dcfa120f-9293-4f06-b3d2-cf728bcabb10;" +
+                "AADTenant=<tenantId for german cloud>;" +
                 "HttpRecorderMode=Record;" +
                 "Environment=Custom;" +
                 "ResourceManagementUri=https://management.microsoftazure.de/;" +
@@ -70,7 +69,7 @@ namespace TestFramework.Net45Tests
             HttpMockServer.Mode = HttpRecorderMode.Record;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
             string userId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.UserIdKey];
-            Assert.Equal("markcowl@BFDevOpsNonRestricted.onmicrosoft.de", userId);
+            Assert.EndsWith(".onmicrosoft.de", userId);
             Assert.False(string.IsNullOrEmpty(userId));
         }
     }
