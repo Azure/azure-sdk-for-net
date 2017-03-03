@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch.FileStaging", "Src\Az
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch.FileStaging.Tests", "Tests\Batch.FileStaging.Tests\Batch.FileStaging.Tests.csproj", "{C809285A-784D-48E4-9D7A-F5685A19F595}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer", "..\Client\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj", "{48215D6D-DB21-48B8-AB03-1297A94DF696}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer", "..\ClientIntegrationTesting\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj", "{48215D6D-DB21-48B8-AB03-1297A94DF696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

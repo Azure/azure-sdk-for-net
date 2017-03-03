@@ -19,6 +19,7 @@
     using System.Net;
     using System.Threading.Tasks;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.Rest.Azure;
@@ -36,7 +37,7 @@
             string accountName,
             string resourceGroupName)
         {
-            using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
                 IPage<Application> applicationSummaries =
                     await mgmtClient.Application.ListAsync(resourceGroupName, accountName).ConfigureAwait(false);
@@ -54,7 +55,7 @@
                                   .ConfigureAwait(false);
                     var storageUrl = addResponse.StorageUrl;
 
-                    await TestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
+                    await IntegrationTestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
 
                     await
                         mgmtClient.ApplicationPackage.ActivateAsync(
@@ -68,7 +69,7 @@
         }
         public static async Task DeleteApplicationAsync(string applicationPackage, string resourceGroupName, string accountName)
         {
-            using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
                 await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, applicationPackage, Version).ConfigureAwait(false);
 

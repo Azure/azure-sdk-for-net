@@ -21,6 +21,7 @@
     using System.Threading.Tasks;
     using BatchTestCommon;
     using Fixtures;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Common;
     using IntegrationTestUtilities;
@@ -48,8 +49,8 @@
                     //Generate the certificates
                     const string certificatePrefix = "testcertificatecrud";
 
-                    string cerFilePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
-                    string pfxFilePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
+                    string cerFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
+                    string pfxFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
 
                     IEnumerable<Certificate> certificates = GenerateCertificates(batchCli, cerFilePath, pfxFilePath);
 
@@ -126,8 +127,8 @@
                     //Generate the certificates
                     const string certificatePrefix = "poolwithcertificatereferences";
 
-                    string cerFilePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
-                    string pfxFilePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
+                    string cerFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", certificatePrefix));
+                    string pfxFilePath = IntegrationTestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", certificatePrefix));
 
                     IEnumerable<Certificate> certificates = GenerateCertificates(batchCli, cerFilePath, pfxFilePath);
 

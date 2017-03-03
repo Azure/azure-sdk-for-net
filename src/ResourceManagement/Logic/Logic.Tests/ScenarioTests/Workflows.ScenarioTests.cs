@@ -15,12 +15,12 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowsScenarioTests")]
-    public class WorkflowsScenarioTests : BaseScenarioTests
+    public class WorkflowsScenarioTests : ScenarioTestsBase
     {
         [Fact]
         public void CreateAndDeleteWorkflow()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
@@ -51,7 +51,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndEnableDisableWorkflow()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
@@ -94,7 +94,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListWorkflow()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string workflowName2 = TestUtilities.GenerateName("logicwf");
@@ -158,7 +158,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ValidateWorkflow()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
@@ -206,7 +206,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void DeleteAllWorkflows()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 var client = this.GetWorkflowClient(context);
                 
@@ -236,7 +236,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void UpdateWorkflow()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);

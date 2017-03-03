@@ -11,12 +11,12 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowVersionsScenarioTests")]
-    public class WorkflowVersionsScenarioTests : BaseScenarioTests
+    public class WorkflowVersionsScenarioTests : ScenarioTestsBase
     {
         [Fact]
         public void CreateAndGetWorkflowVersion()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowVersionsScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);

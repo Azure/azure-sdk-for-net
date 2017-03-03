@@ -12,12 +12,12 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowTriggersScenarioTests")]
-    public class WorkflowTriggersScenarioTests : BaseScenarioTests
+    public class WorkflowTriggersScenarioTests : ScenarioTestsBase
     {
         [Fact]
         public void ListNoTrigger()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
@@ -46,7 +46,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void GetAndListTriggers()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
@@ -80,7 +80,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void RunTrigger()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);

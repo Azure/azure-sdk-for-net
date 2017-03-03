@@ -18,13 +18,8 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts agreement.
     /// </summary>
     [Collection("IntegrationAccountPartnerScenarioTests")]
-    public class IntegrationAccountAgreementScenarioTests : BaseScenarioTests
+    public class IntegrationAccountAgreementScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests";
-
         /// <summary>
         /// Tests the create and delete operations of the integration account agreement.
         /// https://msazure.visualstudio.com/One/_workitems/edit/587947
@@ -33,7 +28,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountAgreement()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountAgreementName =
@@ -71,7 +66,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountAgreement()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountAgreementName =
@@ -110,7 +105,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountAgreement()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountAgreementName =
@@ -152,7 +147,7 @@ namespace Test.Azure.Management.Logic
         public void CreateIntegrationAccountAgreementWithEnvelopeOverride()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
 
@@ -199,7 +194,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountAgreements()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
 
                 var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
@@ -251,7 +246,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountAgreementOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountAgreementName =
@@ -281,7 +276,7 @@ namespace Test.Azure.Management.Logic
         public void CreateIntegrationAccountAgreementUsingFile()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
 

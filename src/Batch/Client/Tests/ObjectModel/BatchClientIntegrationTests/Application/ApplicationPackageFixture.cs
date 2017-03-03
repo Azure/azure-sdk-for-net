@@ -18,6 +18,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using BatchTestCommon;
+    using IntegrationTestCommon;
 
     public class ApplicationPackageFixture : IDisposable
     {
@@ -26,7 +27,7 @@
 
         public ApplicationPackageFixture()
         {
-            TestCommon.EnableAutoStorageAsync().Wait();
+            IntegrationTestCommon.EnableAutoStorageAsync().Wait();
 
             ApplicationIntegrationCommon.UploadTestApplicationPackageIfNotAlreadyUploadedAsync(
                 ApplicationId,

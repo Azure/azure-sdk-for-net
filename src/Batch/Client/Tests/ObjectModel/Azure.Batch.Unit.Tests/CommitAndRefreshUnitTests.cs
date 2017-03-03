@@ -131,30 +131,23 @@
         {
             using (BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient())
             {
-                string pfxFilePath = TestCommon.GetTemporaryCertificateFilePath("unboundcertificateunittest.pfx");
-                try
-                {
-                    CertificateBuilder.CreateSelfSignedInFile("test", pfxFilePath, CertificateBuilder.Sha1Algorithm, password: CommonResources.CertificatePassword);
+                const string expectedThumbprint = "ABC";
+                var protoCertificate = new Protocol.Models.Certificate(thumbprint: expectedThumbprint);
+                Certificate certificate = new Certificate(
+                    batchClient,
+                    null,
+                    string.Empty,
+                    expectedThumbprint,
+                    "SHA1");
 
-                    const string expectedThumbprint = "ABC";
-                    var protoCertificate = new Protocol.Models.Certificate(thumbprint: expectedThumbprint);
-                    Certificate certificate = batchClient.CertificateOperations.CreateCertificate(
-                        pfxFilePath,
-                        CommonResources.CertificatePassword);
+                Assert.NotNull(certificate.ThumbprintAlgorithm);
 
-                    Assert.NotNull(certificate.ThumbprintAlgorithm);
+                await certificate.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddCertificateRequestInterceptor());
 
-                    await certificate.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddCertificateRequestInterceptor());
+                await certificate.RefreshAsync(additionalBehaviors: InterceptorFactory.CreateGetCertificateRequestInterceptor(protoCertificate));
 
-                    await certificate.RefreshAsync(additionalBehaviors: InterceptorFactory.CreateGetCertificateRequestInterceptor(protoCertificate));
-
-                    Assert.Equal(expectedThumbprint, certificate.Thumbprint);
-                    Assert.Null(certificate.ThumbprintAlgorithm);
-                }
-                finally
-                {
-                    File.Delete(pfxFilePath);
-                }
+                Assert.Equal(expectedThumbprint, certificate.Thumbprint);
+                Assert.Null(certificate.ThumbprintAlgorithm);
             }
         }
 

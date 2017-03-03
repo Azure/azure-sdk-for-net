@@ -142,7 +142,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                             string dirPath = Path.GetDirectoryName(file);
                             string dirName = Path.GetFileName(dirPath);
                             if (dirPath.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
-                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase))
+                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase) ||
+                                dirPath.IndexOf("tests", System.StringComparison.OrdinalIgnoreCase) >= 0)
                             {
                                 testDirectories.Add(dirPath);
                             }
