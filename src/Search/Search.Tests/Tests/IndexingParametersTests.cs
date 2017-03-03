@@ -11,6 +11,15 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class IndexingParametersTests
     {
+        private const string ExpectedParsingModeKey = "parsingMode";
+
+        [Fact]
+        public void ParseJsonSetCorrectly()
+        {
+            var parameters = new IndexingParameters().ParseJson();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "json");
+        }
+
         [Fact]
         public void IndexFileNameExtensionsSetCorrectly()
         {
@@ -68,6 +77,50 @@ namespace Microsoft.Azure.Search.Tests
         {
             var parameters = new IndexingParameters().DoNotFailOnUnsupportedContentType();
             AssertHasConfigItem(parameters, "failOnUnsupportedContentType", false);
+        }
+
+        [Fact]
+        public void ParseJsonArraysWithNullDocumentRootSetCorrectly()
+        {
+            var parameters = new IndexingParameters().ParseJsonArrays();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonArray");
+        }
+
+        [Fact]
+        public void ParseJsonArraysWithEmptyDocumentRootSetCorrectly()
+        {
+            var parameters = new IndexingParameters().ParseJsonArrays(string.Empty);
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonArray");
+        }
+
+        [Fact]
+        public void ParseJsonArraysWithDocumentRootSetCorrectly()
+        {
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseJsonArrays("/my/path");
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonArray", ExpectedCount);
+            AssertHasConfigItem(parameters, "documentRoot", "/my/path", ExpectedCount);
+        }
+
+        [Fact]
+        public void ParseDelimitedTextFilesWithInlineHeadersSetCorrectly()
+        {
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseDelimitedTextFiles();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "delimitedText", ExpectedCount);
+            AssertHasConfigItem(parameters, "firstLineContainsHeaders", true, ExpectedCount);
+        }
+
+        [Fact]
+        public void ParseDelimitedTextFilesWithGivenHeadersSetCorrectly()
+        {
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseDelimitedTextFiles("id", "name", "address");
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "delimitedText", ExpectedCount);
+            AssertHasConfigItem(parameters, "delimitedTextHeaders", "id,name,address", ExpectedCount);
         }
 
         private static void AssertHasConfigItem(
