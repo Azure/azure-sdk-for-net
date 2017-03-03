@@ -5,12 +5,18 @@
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Provides management capabilities for Azure Analysis Services accounts.",
+    "summary": "Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Automation management", "asazure", "REST HTTP client", "azureofficial", "windowsazureofficial", "netcore451511" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "requireLicenseAcceptance": true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
   "dependencies": {
