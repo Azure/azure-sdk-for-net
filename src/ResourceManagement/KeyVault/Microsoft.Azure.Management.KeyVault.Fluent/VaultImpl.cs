@@ -4,17 +4,14 @@
 namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Vault.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
-    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Models;
+    using Vault.Update;
     using System.Threading.Tasks;
     using System.Threading;
     using System.Linq;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Management.KeyVault;
+    using Resource.Fluent;
     using Graph.RBAC.Fluent;
     using System;
 
@@ -35,14 +32,12 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         IDefinition,
         IUpdate
     {
-        private IVaultsOperations client;
         private IGraphRbacManager graphRbacManager;
         private IList<AccessPolicyImpl> accessPolicies;
         ///GENMHASH:E75D6B887F703BA75910BF996B59E45B:30C9A572991D1AB6921DBD5E8344AFAF
-        internal VaultImpl (string name, VaultInner innerObject, IVaultsOperations client, IKeyVaultManager manager, IGraphRbacManager graphRbacManager)
+        internal VaultImpl (string name, VaultInner innerObject, IKeyVaultManager manager, IGraphRbacManager graphRbacManager)
             : base(name, innerObject, manager)
         {
-            this.client = client;
             this.graphRbacManager = graphRbacManager;
             this.accessPolicies = new List<AccessPolicyImpl>();
             if (innerObject != null && innerObject.Properties != null && innerObject.Properties.AccessPolicies != null)
@@ -288,7 +283,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             {
                 parameters.Properties.AccessPolicies.Add(accessPolicy.Inner);
             }
-            var inner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, parameters);
+            var inner = await Manager.Inner.Vaults.CreateOrUpdateAsync(ResourceGroupName, Name, parameters);
             SetInner(inner);
             return this;
         }
@@ -296,7 +291,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:CC9FF17BB935059EB35312593856BE61
         public override IVault Refresh ()
         {
-            var inner = client.Get(ResourceGroupName, Name);
+            var inner = Manager.Inner.Vaults.Get(ResourceGroupName, Name);
             SetInner(inner);
             return this;
         }

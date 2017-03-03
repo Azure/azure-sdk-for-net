@@ -6,11 +6,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using TrafficManagerProfile.Definition;
     using System.Collections.Generic;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Management.TrafficManager.Fluent.Models;
-    using Management.TrafficManager.Fluent;
+    using Resource.Fluent;
+    using Models;
 
     /// <summary>
     /// Implementation for TrafficManagerProfile.
@@ -29,10 +27,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         IDefinition,
         IUpdate
     {
-        private IProfilesOperations innerCollection;
         private const string profileStatusDisabled = "Disabled";
         private const string profileStatusEnabled = "Enabled";
         private TrafficManagerEndpointsImpl endpoints;
+
+        ///GENMHASH:C5CC2EE74F2176AA6473857322F7C248:4D37314EF7F75B745F5D65EF257C1402
+        internal TrafficManagerProfileImpl(string name, ProfileInner innerModel, ITrafficManager trafficManager)
+            : base(name, innerModel, trafficManager)
+        {
+            endpoints = new TrafficManagerEndpointsImpl(this);
+        }
 
         ///GENMHASH:C7D63CAAB4D5C78DCBABA455FA741326:50737CF16CD493FD8BB7A09EF461690C
         public string MonitoringPath()
@@ -72,13 +76,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             return this;
         }
 
-        ///GENMHASH:C5CC2EE74F2176AA6473857322F7C248:4D37314EF7F75B745F5D65EF257C1402
-        internal  TrafficManagerProfileImpl(string name, ProfileInner innerModel, IProfilesOperations innerCollection, IEndpointsOperations endpointsClient, ITrafficManager trafficManager) : base(name, innerModel, trafficManager)
-        {
-            this.innerCollection = innerCollection;
-            this.endpoints = new TrafficManagerEndpointsImpl(endpointsClient, this);
-        }
-
         ///GENMHASH:2C0DB6B1F104247169DC6BCC9246747C:D88E948223FB86124BBB6F6774621201
         public int TimeToLive()
         {
@@ -106,8 +103,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             // method. We cannot update the routing method of the profile until existing endpoints contains the properties
             // required for the new routing method.
             await endpoints.CommitAndGetAllAsync(cancellationToken);
-            ProfileInner profileInner = await innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
-            this.SetInner(profileInner);
+            ProfileInner profileInner = await Manager.Inner.Profiles.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            SetInner(profileInner);
             return this;
         }
 
@@ -116,21 +113,21 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
             if (IsInCreateMode)
             {
-                ProfileInner profileInner = await innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
-                this.SetInner(profileInner);
+                ProfileInner profileInner = await Manager.Inner.Profiles.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+                SetInner(profileInner);
                 await endpoints.CommitAndGetAllAsync(cancellationToken);
                 return this;
             }
             else
             {
-                return await this.UpdateResourceAsync(cancellationToken);
+                return await UpdateResourceAsync(cancellationToken);
             }
         }
 
         ///GENMHASH:655A859AB9D888489CDFDD334146F9D1:176F10BD0111531F78393D5651ABF7C5
         public TrafficManagerProfileImpl WithProfileStatusDisabled()
         {
-            Inner.ProfileStatus = TrafficManagerProfileImpl.profileStatusDisabled;
+            Inner.ProfileStatus = profileStatusDisabled;
             return this;
         }
 
@@ -168,23 +165,23 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:C69FFBA25D969C2C45775433EBFD49EA:01BC02A541C8C945111AEC0AF9DB6FF1
         public TrafficManagerProfileImpl WithPriorityBasedRouting()
         {
-            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.TrafficManager.Fluent.TrafficRoutingMethod.Priority);
+            this.WithTrafficRoutingMethod(Fluent.TrafficRoutingMethod.Priority);
             return this;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:280DEDDFDA82FD8E8EA83F4139D8C99A
         public override ITrafficManagerProfile Refresh()
         {
-            ProfileInner inner = this.innerCollection.Get(this.ResourceGroupName, this.Name);
-            this.SetInner(inner);
-            this.endpoints.Refresh();
+            ProfileInner inner = Manager.Inner.Profiles.Get(ResourceGroupName, Name);
+            SetInner(inner);
+            endpoints.Refresh();
             return this;
         }
 
         ///GENMHASH:4AF52DA6D7309E03BCF9F21C532F19E0:DEF2407DA0E866749EF9CC5952427470
         public TrafficManagerProfileImpl WithPerformanceBasedRouting()
         {
-            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.TrafficManager.Fluent.TrafficRoutingMethod.Performance);
+            WithTrafficRoutingMethod(Fluent.TrafficRoutingMethod.Performance);
             return this;
         }
 

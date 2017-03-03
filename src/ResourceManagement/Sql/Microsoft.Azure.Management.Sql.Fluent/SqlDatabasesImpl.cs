@@ -3,8 +3,8 @@
 
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.CollectionActions;
     using Models;
     using Resource.Fluent.Core.ResourceActions;
     using SqlDatabase.Definition;
@@ -24,19 +24,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsListingByParent<ISqlDatabase, ISqlServer, ISqlManager>
     {
         ///GENMHASH:810ADAE06099EC51B2E3C858F502369C:0FCD47CBCD9128C3D4A03458C5796741
-        internal SqlDatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager)
-            : base(innerCollection, manager)
+        internal SqlDatabasesImpl(ISqlManager manager)
+            : base(manager.Inner.Databases, manager)
         {
         }
 
         ///GENMHASH:16CEA22B57032A6757D8EFC1BF423794:F46E4D0A3CDB6C5AE412BF5B7FB52B09
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(string resourceGroupName, string sqlServerName)
+        public IList<ISqlDatabase> ListBySqlServer(string resourceGroupName, string sqlServerName)
         {
             return new List<ISqlDatabase>(this.ListByParent(resourceGroupName, sqlServerName));
         }
 
         ///GENMHASH:CD989F8A79EC70D56C4F5154E2B8BE11:57462F0C7FF757AFBBFD3B3561C9F9ED
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(ISqlServer sqlServer)
+        public IList<ISqlDatabase> ListBySqlServer(ISqlServer sqlServer)
         {
             return new List<ISqlDatabase>(this.ListByParent(sqlServer));
         }
@@ -76,7 +76,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlDatabaseImpl(
                 databaseName,
                 inner,
-                Inner,
                 Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
         }
 
@@ -99,7 +98,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlDatabaseImpl(
                 name,
                 inner,
-                Inner,
                 Manager);
         }
 
@@ -111,7 +109,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 return null;
             }
 
-            return new SqlWarehouseImpl(inner.Name, inner, Inner, Manager);
+            return new SqlWarehouseImpl(inner.Name, inner, Manager);
         }
     }
 }

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     {
         private ResourceId resourceId;
         private IDatabasesOperations databasesInner;
-        private IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> sloUsageMetrics;
+        private IReadOnlyList<ISloUsageMetric> sloUsageMetrics;
 
         ///GENMHASH:0150BB5F92ED226BF84D3AC5255EFE3F:F8EEA9E1BE10E299F96C7CA9D025C464
         public string CurrentServiceLevelObjective()

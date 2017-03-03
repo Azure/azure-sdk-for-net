@@ -28,8 +28,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         RedisCache.Definition.IDefinition,
         RedisCache.Update.IUpdate
     {
-        private IPatchSchedulesOperations patchSchedulesInner;
-        private IRedisOperations client;
         private IRedisAccessKeys cachedAccessKeys;
         private RedisCreateParametersInner createParameters;
         private RedisUpdateParametersInner updateParameters;
@@ -64,7 +62,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:3D7C4113A3F55E3E31A8AB77D2A98BC2:342BB306A1B89F9C0E62BB6844E58611
         public void DeletePatchSchedule()
         {
-            patchSchedulesInner.Delete(this.ResourceGroupName, this.Name);
+            Manager.Inner.PatchSchedules.Delete(ResourceGroupName, Name);
         }
 
         ///GENMHASH:E0A932BCE095834DF49296A5A1B250F3:9AB43882F1D20579E20CB41390D07940
@@ -150,8 +148,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:6BCE517E09457FF033728269C8936E64:735695BBFA17FB30B54763A64BD24DB2
         public override RedisCache.Update.IUpdate Update()
         {
-            this.updateParameters = new RedisUpdateParametersInner();
-            this.scheduleEntries = new Dictionary<Models.DayOfWeek, ScheduleEntry>();
+            updateParameters = new RedisUpdateParametersInner();
+            scheduleEntries = new Dictionary<Models.DayOfWeek, ScheduleEntry>();
             return this;
         }
 
@@ -162,7 +160,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             {
                 Files = files
             };
-            this.client.ImportData(this.ResourceGroupName, this.Name, parameters);
+            Manager.Inner.Redis.ImportData(this.ResourceGroupName, this.Name, parameters);
         }
 
         ///GENMHASH:797BE61D54080982DA71A130D2628D30:245A7A45CB8ACD07ADC910C1F5C669C3
@@ -173,7 +171,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 Files = files,
                 Format = fileFormat
             };
-            this.client.ImportData(this.ResourceGroupName, this.Name, parameters);
+            Manager.Inner.Redis.ImportData(this.ResourceGroupName, this.Name, parameters);
         }
 
         ///GENMHASH:9456FDB06E5A3C49F9A7BFDDA1938013:A5E2F06B6C6C37916FED3F7329DBBE32
@@ -199,7 +197,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 Container = containerSASUrl,
                 Prefix = prefix
             };
-            this.client.ExportData(this.ResourceGroupName, this.Name, parameters);
+            Manager.Inner.Redis.ExportData(this.ResourceGroupName, this.Name, parameters);
         }
 
         ///GENMHASH:D36720446E1DFBFE86C7D6259BB131A7:96E7F137224736FF0D8B93037CAC1AB4
@@ -211,13 +209,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 Prefix = prefix,
                 Format = fileFormat
             };
-            this.client.ExportData(this.ResourceGroupName, this.Name, parameters);
+            Manager.Inner.Redis.ExportData(this.ResourceGroupName, this.Name, parameters);
         }
 
         ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:0C30EC62BAFB5962817F1799BCD0FA3F
         public IList<Models.ScheduleEntry> ListPatchSchedules()
         {
-            var schedule = patchSchedulesInner.Get(this.ResourceGroupName, this.Name);
+            var schedule = Manager.Inner.PatchSchedules.Get(ResourceGroupName, Name);
             return (schedule == null)? null : schedule.ScheduleEntries;
         }
 
@@ -267,23 +265,23 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:C4C75685A8644A15C4342387354A58BB
         public async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> UpdateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await client.UpdateAsync(this.ResourceGroupName, this.Name, updateParameters, cancellationToken);
+            var inner = await Manager.Inner.Redis.UpdateAsync(ResourceGroupName, Name, updateParameters, cancellationToken);
 
             while (!inner.ProvisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase) &&
                 !cancellationToken.IsCancellationRequested)
             {
                 await SdkContext.DelayProvider.DelayAsync(30 * 1000, cancellationToken);
-                inner = await client.GetAsync(this.ResourceGroupName, this.Name, cancellationToken);
+                inner = await Manager.Inner.Redis.GetAsync(ResourceGroupName, Name, cancellationToken);
             }
-            this.SetInner(inner);
-            await this.UpdatePatchSchedules(cancellationToken);
+            SetInner(inner);
+            await UpdatePatchSchedules(cancellationToken);
             return this;
         }
 
         ///GENMHASH:861E02F6BBA5773E9337D78B346B0D6B:A13471591206DDE563C137910EBF8D1F
         public IRedisAccessKeys RegenerateKey(RedisKeyType keyType)
         {
-            var response = this.client.RegenerateKey(this.ResourceGroupName, this.Name, keyType);
+            var response = Manager.Inner.Redis.RegenerateKey(ResourceGroupName, Name, keyType);
             cachedAccessKeys = new RedisAccessKeysImpl(response);
             return cachedAccessKeys;
         }
@@ -293,11 +291,11 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         {
             if (IsInCreateMode)
             {
-                createParameters.Location = this.RegionName;
+                createParameters.Location = RegionName;
                 createParameters.Tags = Inner.Tags;
-                var inner = await this.client.CreateAsync(this.ResourceGroupName, this.Name, createParameters, cancellationToken);
-                this.SetInner(inner);
-                await this.UpdatePatchSchedules(cancellationToken);
+                var inner = await Manager.Inner.Redis.CreateAsync(ResourceGroupName, Name, createParameters, cancellationToken);
+                SetInner(inner);
+                await UpdatePatchSchedules(cancellationToken);
                 return this;
             }
             else
@@ -321,11 +319,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                     parameters.ScheduleEntries.Add(entry);
                 }
 
-                var scheduleEntriesUpdated = await this.patchSchedulesInner.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
-                this.scheduleEntries.Clear();
+                var scheduleEntriesUpdated = await Manager.Inner.PatchSchedules.CreateOrUpdateAsync(
+                    ResourceGroupName, Name, parameters, cancellationToken);
+                scheduleEntries.Clear();
                 foreach (ScheduleEntry entry in scheduleEntriesUpdated.ScheduleEntries)
                 {
-                    this.scheduleEntries.Add(entry.DayOfWeek, entry);
+                    scheduleEntries.Add(entry.DayOfWeek, entry);
                 }
             }
         }
@@ -333,7 +332,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:36C3CA891B448CCCA6D3BB4C29A31470:A33045316FD527F5E8BD1321B1F93CB2
         public IRedisAccessKeys RefreshKeys()
         {
-            var response = this.client.ListKeys(this.ResourceGroupName, this.Name);
+            var response = Manager.Inner.Redis.ListKeys(this.ResourceGroupName, this.Name);
             cachedAccessKeys = new RedisAccessKeysImpl(response);
             return cachedAccessKeys;
         }
@@ -341,7 +340,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:FEAA566B918E8D6129C37B2AD34F3689
         public override IRedisCache Refresh()
         {
-            var redisResourceInner = this.client.Get(this.ResourceGroupName, this.Name);
+            var redisResourceInner = Manager.Inner.Redis.Get(this.ResourceGroupName, this.Name);
             this.SetInner(redisResourceInner);
             return this;
         }
@@ -412,7 +411,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             {
                 RebootType = rebootType
             };
-            this.client.ForceReboot(this.ResourceGroupName, this.Name, parameters);
+            Manager.Inner.Redis.ForceReboot(ResourceGroupName, Name, parameters);
         }
 
         ///GENMHASH:9514189731558B5E71CF90933A631027:98E14B4429597E5D69A9A512FB31AC81
@@ -423,7 +422,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 RebootType = rebootType,
                 ShardId = shardId
             };
-            this.client.ForceReboot(this.ResourceGroupName, this.Name, parameters);
+            Manager.Inner.Redis.ForceReboot(ResourceGroupName, Name, parameters);
         }
 
         ///GENMHASH:30CB47385D9AC0E9818336B698BEF529:4EF4FC902E838999361E1A71DDDF1772
@@ -535,16 +534,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         internal RedisCacheImpl(
             string name,
             RedisResourceInner innerModel,
-            IPatchSchedulesOperations patchSchedulesInner,
-            IRedisOperations client,
             IRedisManager redisManager)
             : base(name, innerModel, redisManager)
         {
             this.createParameters = new RedisCreateParametersInner();
             this.updateParameters = new RedisUpdateParametersInner();
-            this.patchSchedulesInner = patchSchedulesInner;
             this.scheduleEntries = new Dictionary<Models.DayOfWeek, ScheduleEntry>();
-            this.client = client;
         }
 
         ///GENMHASH:F7A196D3735B12867C5D8141F3638249:ACD54F2F69ECDD6A123AB39BF9034EB6

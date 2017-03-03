@@ -21,12 +21,10 @@ namespace Azure.Tests.Network.ApplicationGateway
         private List<IPublicIPAddress> testPips;
         private ApplicationGatewayHelper applicationGatewayHelper;
 
-        public PublicComplex(IPublicIPAddresses pips,
-            [CallerMemberName] string methodName = "testframework_failed")
+        public PublicComplex([CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             applicationGatewayHelper = new ApplicationGatewayHelper(TestUtilities.GenerateName("", methodName));
-            testPips = new List<IPublicIPAddress>(applicationGatewayHelper.EnsurePIPs(pips));
         }
 
         public override void Print(IApplicationGateway resource)
@@ -36,6 +34,8 @@ namespace Azure.Tests.Network.ApplicationGateway
 
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
+            testPips = new List<IPublicIPAddress>(applicationGatewayHelper.EnsurePIPs(resources.Manager.PublicIPAddresses));
+
             // Create an application gateway
             try
             {

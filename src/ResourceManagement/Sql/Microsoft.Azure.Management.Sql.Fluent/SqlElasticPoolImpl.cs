@@ -25,16 +25,28 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IUpdate,
         IWithParentResource<ISqlElasticPool, ISqlServer>
     {
-        private IElasticPoolsOperations innerCollection;
-        private IDatabasesOperations databasesInner;
         private DatabasesImpl databasesImpl;
         private IDictionary<string, SqlDatabaseImpl> databaseCreatableMap;
 
-        ///GENMHASH:C183D7089E5DF699C59758CC103308DF:9A4ADAD649EDB890CDCEB767D8708E33
-        public IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity> ListActivities()
+        ///GENMHASH:1D60743D6610D89F39BC74DA9C2B8F8B:E99F7FD0EF35FEF2A4996B397160B70D
+        internal SqlElasticPoolImpl(
+            string name,
+            ElasticPoolInner innerObject,
+            DatabasesImpl databasesImpl,
+            ISqlManager manager)
+            : base(name, innerObject, manager)
         {
-            var activities = this.innerCollection.ListActivity(this.ResourceGroupName, this.SqlServerName(),
-                    this.Name);
+            this.databasesImpl = databasesImpl;
+            this.databaseCreatableMap = new Dictionary<string, SqlDatabaseImpl>();
+        }
+
+        ///GENMHASH:C183D7089E5DF699C59758CC103308DF:9A4ADAD649EDB890CDCEB767D8708E33
+        public IList<IElasticPoolActivity> ListActivities()
+        {
+            var activities = Manager.Inner.ElasticPools.ListActivity(
+                ResourceGroupName,
+                SqlServerName(),
+                Name);
 
             var activitiesToReturn = new List<IElasticPoolActivity>();
             foreach (var elasticPoolActivityInner in activities)
@@ -53,22 +65,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 await this.databasesImpl.Databases.CreateAsync(this.databaseCreatableMap.Values.ToArray());
                 this.databaseCreatableMap.Clear();
             }
-        }
-
-        ///GENMHASH:1D60743D6610D89F39BC74DA9C2B8F8B:E99F7FD0EF35FEF2A4996B397160B70D
-        internal SqlElasticPoolImpl(
-            string name,
-            ElasticPoolInner innerObject,
-            IElasticPoolsOperations innerCollection,
-            IDatabasesOperations databasesInner,
-            DatabasesImpl databasesImpl,
-            ISqlManager manager)
-            : base(name, innerObject, manager)
-        {
-            this.innerCollection = innerCollection;
-            this.databasesInner = databasesInner;
-            this.databasesImpl = databasesImpl;
-            this.databaseCreatableMap = new Dictionary<string, SqlDatabaseImpl>();
         }
 
         ///GENMHASH:F018FD6E531156DFCBAA9FAE7F4D8519:4FA6D0F883E9F521846C7A0D28C7480B
@@ -99,7 +95,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:EA721512D35742AECA1CE1F7CBF2BB99
         protected override async Task<ISqlElasticPool> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var elasticPoolInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.SqlServerName(), Name, Inner);
+            var elasticPoolInner = await Manager.Inner.ElasticPools.CreateOrUpdateAsync(
+                ResourceGroupName,
+                SqlServerName(),
+                Name,
+                Inner);
             SetInner(elasticPoolInner);
 
             await CreateOrUpdateDatabaseAsync();
@@ -109,11 +109,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:CD775E31F43CBA6304D6EEA9E01682A1:2A3515CB32DF22200CBB032FFC4BCCFC
         public IList<ISqlDatabase> ListDatabases()
         {
-            var databases = this.innerCollection.ListDatabases(
-                        this.ResourceGroupName,
-                        this.SqlServerName(),
-                        this.Name);
-            return databases.Select((databaseInner) => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner, this.Manager)).ToList();
+            var databases = Manager.Inner.ElasticPools.ListDatabases(
+                        ResourceGroupName,
+                        SqlServerName(),
+                        Name);
+            return databases.Select((databaseInner) => (ISqlDatabase)new SqlDatabaseImpl(
+                databaseInner.Name,
+                databaseInner,
+                Manager)).ToList();
         }
 
         ///GENMHASH:F5BFC9500AE4C04846BAAD2CC50792B3:DA87C4AB3EEB9D4BA746DF610E8BC39F
@@ -125,7 +128,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1ACD6B53BB71F7548B6ACD87115C57CE
         public override ISqlElasticPool Refresh()
         {
-            this.innerCollection.Get(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.ElasticPools.Get(ResourceGroupName, SqlServerName(), Name);
             return this;
         }
 
@@ -138,7 +141,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:EBCADD6850E9711DA91415429B1577E3
         public void Delete()
         {
-            this.innerCollection.Delete(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.ElasticPools.Delete(ResourceGroupName, SqlServerName(), Name);
         }
 
         ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:D78C4C70C8A28CECCD68CF0E66EED127
@@ -152,10 +155,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:DA730BE4F3BEA4D8DCD1631C079435CB:2D0DE4C2F41ED4D39BD2E654A3511EEE
         public IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> ListDatabaseActivities()
         {
-            var databaseActivities = this.innerCollection.ListDatabaseActivity(
-                    this.ResourceGroupName,
-                    this.SqlServerName(),
-                    this.Name);
+            var databaseActivities = Manager.Inner.ElasticPools.ListDatabaseActivity(
+                    ResourceGroupName,
+                    SqlServerName(),
+                    Name);
             return databaseActivities.Select((elasticPoolDatabaseActivityInner) => (IElasticPoolDatabaseActivity)new ElasticPoolDatabaseActivityImpl(elasticPoolDatabaseActivityInner)).ToList();
         }
 
@@ -168,12 +171,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1C25D7B8D9084176A24655682A78634D:ABBCB4CE203E2AC2B27991A84095239D
         public ISqlDatabase GetDatabase(string databaseName)
         {
-            DatabaseInner database = this.innerCollection.GetDatabase(
-                this.ResourceGroupName,
-                this.SqlServerName(),
-                this.Name,
+            DatabaseInner database = Manager.Inner.ElasticPools.GetDatabase(
+                ResourceGroupName,
+                SqlServerName(),
+                Name,
                 databaseName);
-            return new SqlDatabaseImpl(database.Name, database, this.databasesInner, this.Manager);
+            return new SqlDatabaseImpl(database.Name, database, Manager);
         }
 
         ///GENMHASH:B88CB61BDAE447E93768AB406D02A57B:0FE1382F901F74708CFA53CB4FCDAC21

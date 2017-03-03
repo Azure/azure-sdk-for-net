@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:DB7CDF51E063E00F632236B9A1581DD7:A55F357967E86E32E70097D1F0B4D25E
-        internal ApplicationGatewaysImpl(INetworkManagementClient networkClient, INetworkManager networkManager) : base(networkClient.ApplicationGateways, networkManager)
+        internal ApplicationGatewaysImpl(INetworkManager networkManager)
+            : base(networkManager.Inner.ApplicationGateways, networkManager)
         {
         }
 
@@ -60,21 +61,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         protected override ApplicationGatewayImpl WrapModel(string name)
         {
             var inner = new ApplicationGatewayInner();
-            return new ApplicationGatewayImpl(
-                name,
-                inner,
-                Inner,
-                Manager);
+            return new ApplicationGatewayImpl(name, inner, Manager);
         }
 
         ///GENMHASH:0982709B48CC855164CE982B2642C391:0AF033C117570F9A4027C0D7C3ECFFC7
         protected override IApplicationGateway WrapModel(ApplicationGatewayInner inner)
         {
-            return (inner == null) ? null : new ApplicationGatewayImpl(
-                inner.Name,
-                inner,
-                Inner,
-                Manager);
+            return (inner == null) ? null : new ApplicationGatewayImpl(inner.Name, inner, Manager);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D

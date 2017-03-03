@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
 
@@ -19,21 +19,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
             object>,
         IVirtualMachineScaleSetNetworkInterface
     {
-        private INetworkInterfacesOperations client;
         private INetworkManager networkManager;
         private string scaleSetName;
         private string resourceGroupName;
 
-        internal VirtualMachineScaleSetNetworkInterfaceImpl(string name,
-                                                      string scaleSetName,
-                                                      string resourceGroupName,
-                                                      NetworkInterfaceInner innerObject,
-                                                      INetworkInterfacesOperations client,
-                                                      INetworkManager networkManager) : base(name, innerObject)
+        public INetworkManager Manager
+        {
+            get
+            {
+                return networkManager;
+            }
+        }
+
+        internal VirtualMachineScaleSetNetworkInterfaceImpl(
+            string name,
+            string scaleSetName,
+            string resourceGroupName,
+            NetworkInterfaceInner innerObject,
+            INetworkManager networkManager) : base(name, innerObject)
         {
             this.scaleSetName = scaleSetName;
             this.resourceGroupName = resourceGroupName;
-            this.client = client;
             this.networkManager = networkManager;
         }
 
@@ -183,10 +189,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         override public IVirtualMachineScaleSetNetworkInterface Refresh()
         {
-            this.SetInner(this.client.GetVirtualMachineScaleSetNetworkInterface(this.resourceGroupName,
-                    this.scaleSetName,
-                    ResourceUtils.NameFromResourceId(this.VirtualMachineId()),
-                    this.Name));
+            SetInner(Manager.Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface(
+                resourceGroupName,
+                scaleSetName,
+                ResourceUtils.NameFromResourceId(VirtualMachineId()),
+                Name));
             return this;
         }
     }

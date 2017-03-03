@@ -2,22 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Deployment.Definition;
 using Microsoft.Azure.Management.Resource.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class DeploymentsImpl : IDeployments
     {
-        private IDeploymentsOperations client;
-        private IDeploymentOperationsOperations deploymentOperationsClient;
         private IResourceManager resourceManager;
 
         public IResourceManager Manager
@@ -32,20 +27,18 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             get
             {
-                return client;
+                return Manager.Inner.Deployments;
             }
         }
 
-        internal DeploymentsImpl(IDeploymentsOperations client, IDeploymentOperationsOperations deploymentOperationsClient, IResourceManager resourceManager)
+        internal DeploymentsImpl(IResourceManager resourceManager)
         {
-            this.client = client;
-            this.deploymentOperationsClient = deploymentOperationsClient;
             this.resourceManager = resourceManager;
         }
 
         public bool CheckExistence(string resourceGroupName, string deploymentName)
         {
-            return client.CheckExistence(resourceGroupName, deploymentName);
+            return Manager.Deployments.CheckExistence(resourceGroupName, deploymentName);
         }
 
         public IBlank Define(string name)
@@ -70,7 +63,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return client.DeleteAsync(groupName, name, cancellationToken);
+            return Manager.Inner.Deployments.DeleteAsync(groupName, name, cancellationToken);
         }
 
         public IDeployment GetByGroup(string resourceGroupName, string name)
@@ -80,7 +73,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public async Task<IDeployment> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var deploymentExtendedInner = await client.GetAsync(resourceGroupName, name, cancellationToken);
+            var deploymentExtendedInner = await Manager.Inner.Deployments.GetAsync(resourceGroupName, name, cancellationToken);
             return CreateFluentModel(deploymentExtendedInner);
         }
 
@@ -101,7 +94,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 try
                 {
-                    var deploymentExtendedInner = client.Get(resourceGroup.Name, name);
+                    var deploymentExtendedInner = Manager.Inner.Deployments.Get(resourceGroup.Name, name);
                     if (deploymentExtendedInner != null)
                     {
                         return CreateFluentModel(deploymentExtendedInner);
@@ -129,10 +122,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public PagedList<IDeployment> ListByGroup(string resourceGroupName)
         {
-            IPage<DeploymentExtendedInner> firstPage = client.List(resourceGroupName);
+            IPage<DeploymentExtendedInner> firstPage = Manager.Inner.Deployments.List(resourceGroupName);
             var innerList = new PagedList<DeploymentExtendedInner>(firstPage, (string nextPageLink) =>
             {
-                return client.ListNext(nextPageLink);
+                return Manager.Inner.Deployments.ListNext(nextPageLink);
             });
 
             return new PagedList<IDeployment>(new WrappedPage<DeploymentExtendedInner, IDeployment>(innerList.CurrentPage, CreateFluentModel),
@@ -150,7 +143,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         private DeploymentImpl CreateFluentModel(DeploymentExtendedInner deploymentExtendedInner)
         {
-            return new DeploymentImpl(deploymentExtendedInner, client, deploymentOperationsClient, this.resourceManager);
+            return new DeploymentImpl(deploymentExtendedInner, resourceManager);
         }
 
         private DeploymentImpl CreateFluentModel(string name)
@@ -160,8 +153,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                     {
                         Name = name
                     },
-                    client,
-                    deploymentOperationsClient,
                     resourceManager
                 );
         }

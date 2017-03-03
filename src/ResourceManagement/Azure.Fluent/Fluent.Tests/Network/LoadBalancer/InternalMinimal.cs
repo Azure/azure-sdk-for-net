@@ -25,16 +25,11 @@ namespace Azure.Tests.Network.LoadBalancer
         private LoadBalancerHelper loadBalancerHelper;
 
         public InternalMinimal(
-            IVirtualMachines vms,
-            INetworks networks,
-			IAvailabilitySets availabilitySets,
-            [CallerMemberName] string methodName = "testframework_failed")
+            IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
             this.vms = vms;
-            this.networks = networks;
-			this.availabilitySets = availabilitySets;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -44,6 +39,9 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
+            networks = resources.Manager.Networks;
+            availabilitySets = vms.Manager.AvailabilitySets;
+
             var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
             
             // Must use the same VNet as the VMs

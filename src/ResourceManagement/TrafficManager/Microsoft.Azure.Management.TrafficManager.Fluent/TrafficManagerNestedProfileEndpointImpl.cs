@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:ED2AE24D8510FB354BA31316B335750F:2682BD2661D3A018D6E09706819D354F
-        internal  TrafficManagerNestedProfileEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner, client)
+        internal  TrafficManagerNestedProfileEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner) : base(name, parent, inner)
         {
         }
 

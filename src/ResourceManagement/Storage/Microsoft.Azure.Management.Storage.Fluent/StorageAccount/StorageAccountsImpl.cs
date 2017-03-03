@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 IStorageManager>,
         IStorageAccounts
     {
-        internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, IStorageManager manager) : base(innerCollection, manager)
+        internal StorageAccountsImpl(IStorageManager manager) : base(manager.Inner.StorageAccounts, manager)
         { }
 
         #region Actions
@@ -94,10 +94,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         protected override IStorageAccount WrapModel(StorageAccountInner inner)
         {
-            return new StorageAccountImpl(inner.Name,
-                inner,
-                Inner,
-                Manager);
+            return new StorageAccountImpl(inner.Name, inner, Manager);
         }
 
         #endregion Implementation of CreatableWrappers::WrapModel abstract method
@@ -107,10 +104,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         protected override StorageAccountImpl WrapModel(string name)
         {
             Management.Storage.Fluent.Models.StorageAccountInner innerObject = new StorageAccountInner();
-            return new StorageAccountImpl(name,
-                innerObject,
-                Inner,
-                Manager
+            return new StorageAccountImpl(name, innerObject, Manager
             );
         }
 

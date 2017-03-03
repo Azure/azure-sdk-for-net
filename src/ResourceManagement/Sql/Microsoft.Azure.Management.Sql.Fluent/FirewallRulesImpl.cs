@@ -21,11 +21,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private ISqlFirewallRulesCreatable sqlFirewallRules;
 
         ///GENMHASH:C774FCAB1B37C63FDEE465624B3F445E:D7E297FABE48282CD8383D54EA2F45BB
-        internal FirewallRulesImpl(IServersOperations innerCollection, ISqlManager manager, string resourceGroupName, string sqlServerName)
+        internal FirewallRulesImpl(ISqlManager manager, string resourceGroupName, string sqlServerName)
         {
             this.resourceGroupName = resourceGroupName;
             this.sqlServerName = sqlServerName;
-            this.sqlFirewallRules = new SqlFirewallRulesImpl(innerCollection, manager);
+            sqlFirewallRules = new SqlFirewallRulesImpl(manager);
         }
 
         ///GENMHASH:EE286EB18723A14498FD299F1FDB7FE2:C5BF961B57B444CF6E570183CC87564C

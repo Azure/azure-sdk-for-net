@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             {
                 if (redisCaches == null)
                 {
-                    redisCaches = new RedisCachesImpl(Inner.Redis, Inner.PatchSchedules, this);
+                    redisCaches = new RedisCachesImpl(this);
                 }
                 return redisCaches;
             }

@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             {
                 if (storageAccounts == null)
                 {
-                    storageAccounts = new StorageAccountsImpl(Inner.StorageAccounts, this);
+                    storageAccounts = new StorageAccountsImpl(this);
                 }
                 return storageAccounts;
             }

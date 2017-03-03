@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private Dictionary<string, IApplicationGatewayRequestRoutingRule> rules;
         private Dictionary<string, IApplicationGatewaySslCertificate> sslCerts;
         private static string DEFAULT = "default";
-        private IApplicationGatewaysOperations innerCollection;
         private ApplicationGatewayFrontendImpl defaultPrivateFrontend;
         private ApplicationGatewayFrontendImpl defaultPublicFrontend;
         private Dictionary<string, string> creatablePipsByFrontend;
@@ -48,10 +47,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal ApplicationGatewayImpl(
             string name,
             ApplicationGatewayInner innerModel,
-            IApplicationGatewaysOperations innerCollection,
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-            this.innerCollection = innerCollection;
         }
 
         #region Accessors
@@ -1075,7 +1072,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(antecedent => {
-                return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+                return Manager.Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             });
 
             return await appGatewayInnerTask.Result;
@@ -1458,7 +1455,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:96A74C51AAF39DA86E198A67D990E237
         public override IApplicationGateway Refresh()
         {
-            var inner = innerCollection.Get(this.ResourceGroupName, this.Name);
+            var inner = Manager.Inner.ApplicationGateways.Get(this.ResourceGroupName, this.Name);
             SetInner(inner);
             InitializeChildrenFromInner();
             return this;

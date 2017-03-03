@@ -24,19 +24,11 @@ namespace Azure.Tests.Network.LoadBalancer
         private LoadBalancerHelper loadBalancerHelper;
         private IAvailabilitySets availabilitySets;
 
-        public InternetMinimal(
-                IPublicIPAddresses pips,
-                IVirtualMachines vms,
-                INetworks networks,
-                IAvailabilitySets availabilitySets,
-                [CallerMemberName] string methodName = "testframework_failed")
+        public InternetMinimal(IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
-            this.pips = pips;
             this.vms = vms;
-            this.availabilitySets = availabilitySets;
-            this.networks = networks;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -46,6 +38,10 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
+            pips = resources.Manager.PublicIPAddresses;
+            availabilitySets = vms.Manager.AvailabilitySets;
+            networks = resources.Manager.Networks;
+
             var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 

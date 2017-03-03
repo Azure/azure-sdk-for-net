@@ -27,13 +27,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IDefinition,
         IUpdate
     {
-        private IRouteTablesOperations innerCollection;
         private IDictionary<string, IRoute> routes;
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<RouteTableInner> CreateInnerAsync()
         {
-            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return Manager.Inner.RouteTables.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:71D5B4DBFB32B4FF553CCD0A78B871EC:16C831421CFC3F51EA84222302D9DFFE
@@ -82,15 +81,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7D06021127F5495854C63204B8AC2801:55E548B15E635A8197D52049D3FAB8D3
-        internal RouteTableImpl(string name, RouteTableInner innerModel, IRouteTablesOperations innerCollection, INetworkManager networkManager) : base(name, innerModel, networkManager)
+        internal RouteTableImpl(string name, RouteTableInner innerModel, INetworkManager networkManager)
+            : base(name, innerModel, networkManager)
         {
-            this.innerCollection = innerCollection;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:3C24CB44825C9FD8973A23CA91FB4FD1
         public override IRouteTable Refresh()
         {
-            RouteTableInner inner = innerCollection.Get(ResourceGroupName, Name);
+            RouteTableInner inner = Manager.Inner.RouteTables.Get(ResourceGroupName, Name);
             SetInner(inner);
             InitializeChildrenFromInner();
             return this;

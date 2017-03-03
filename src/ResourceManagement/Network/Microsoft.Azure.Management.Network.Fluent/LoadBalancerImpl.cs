@@ -3,11 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
-    using Management.Network.Fluent.Models;
+    using Models;
     using LoadBalancer.Update;
     using Resource.Fluent.Core.ResourceActions;
     using Resource.Fluent.Core;
-    using Management.Network;
     using System.Threading.Tasks;
     using System.Text;
     using System;
@@ -29,8 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancer.Definition.IDefinition,
         IUpdate
     {
-        static string DEFAULT = "default";
-        private ILoadBalancersOperations innerCollection;
+        static string Default = "default";
         private IDictionary<string, string> nicsInBackends = new Dictionary<string, string>();
         private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
 
@@ -47,16 +45,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal  LoadBalancerImpl (
             string name,
             LoadBalancerInner innerModel,
-            ILoadBalancersOperations innerCollection,
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-            this.innerCollection = innerCollection;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:420B9F8BE887CC0E8BEEE7DBFEAED60C
         override public ILoadBalancer Refresh ()
         {
-            var response = this.innerCollection.Get(ResourceGroupName, Name);
+            var response = Manager.Inner.LoadBalancers.Get(ResourceGroupName, Name);
             SetInner(response);
             InitializeChildrenFromInner();
             return this;
@@ -119,7 +115,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update inbound NAT rules
             var innerNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values);
-            if (null == innerNatRules) {
+            if (null == innerNatRules)
+            {
                 innerNatRules = new List<InboundNatRuleInner>();
             }
             Inner.InboundNatRules = innerNatRules;
@@ -134,7 +131,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update inbound NAT pools
             var innerNatPools = InnersFromWrappers<InboundNatPoolInner, ILoadBalancerInboundNatPool>(inboundNatPools.Values);
-            if (null == innerNatPools) {
+            if (null == innerNatPools)
+            {
                 innerNatPools = new List<InboundNatPoolInner>();
             }
             Inner.InboundNatPools = innerNatPools;
@@ -149,7 +147,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update load balancing rules
             var innerRules = InnersFromWrappers<LoadBalancingRuleInner, ILoadBalancingRule>(loadBalancingRules.Values);
-            if (innerRules == null) {
+            if (innerRules == null)
+            {
                 innerRules = new List<LoadBalancingRuleInner>();
             }
             Inner.LoadBalancingRules = innerRules;
@@ -220,7 +219,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<LoadBalancerInner> CreateInnerAsync()
         {
-            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return Manager.Inner.LoadBalancers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:38719597698E42AABAD5A9917188C155:D9C6887E0B146C62C173F2FC8A940200
@@ -424,7 +423,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:FE2FB4C2B86589D7D187246933236472:88C4A2955702F46AE10229A90EB45585
         internal LoadBalancerImpl WithNewPublicIPAddress(ICreatable<IPublicIPAddress> creatablePIP)
         {
-            creatablePIPKeys.Add(creatablePIP.Key, DEFAULT);
+            creatablePIPKeys.Add(creatablePIP.Key, Default);
             AddCreatableDependency(creatablePIP as IResourceCreator<IHasId>);
             return this;
         }
@@ -432,14 +431,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:B6D0870A3BC4BB18331A504A1F279958
         internal LoadBalancerImpl WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return WithExistingPublicIPAddress(publicIPAddress.Id, DEFAULT);
+            return WithExistingPublicIPAddress(publicIPAddress.Id, Default);
         }
 
         ///GENMHASH:864138CFB5238B5203B5286B54C52AE4:11E731FF72BB432C1D5A698D816EB629
         private LoadBalancerImpl WithExistingPublicIPAddress (string resourceId, string frontendName)
         {
             if (frontendName == null) {
-                frontendName = DEFAULT;
+                frontendName = Default;
             }
 
             return DefinePublicFrontend(frontendName)
@@ -449,7 +448,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         internal LoadBalancerImpl WithExistingSubnet (INetwork network, string subnetName)
         {
-            return DefinePrivateFrontend(DEFAULT)
+            return DefinePrivateFrontend(Default)
                 .WithExistingSubnet(network, subnetName)
                 .Attach();
         }
@@ -458,7 +457,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private LoadBalancerImpl WithExistingVirtualMachine (IHasNetworkInterfaces vm, string backendName)
         {
             if (backendName == null) {
-                backendName = DEFAULT;
+                backendName = Default;
             }
 
             DefineBackend(backendName).Attach();
@@ -484,13 +483,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:681EAD9E22B4456AE914816B5A9E04E5:999E5525EF37760D980CB84E6FED7230
         internal LoadBalancerImpl WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
         {
-            DefineLoadBalancingRule(DEFAULT)
+            DefineLoadBalancingRule(Default)
                 .WithFrontendPort(frontendPort)
-                .WithFrontend(DEFAULT)
+                .WithFrontend(Default)
                 .WithBackendPort(backendPort)
-                .WithBackend(DEFAULT)
+                .WithBackend(Default)
                 .WithProtocol(protocol)
-                .WithProbe(DEFAULT)
+                .WithProbe(Default)
                 .Attach();
             return this;
         }
@@ -504,7 +503,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:DFC0B302155195C00C3D13A6B803B984:A090671271F01103B33881CC6A8FD2B5
         internal LoadBalancerImpl WithTcpProbe (int port)
         {
-            return DefineTcpProbe(DEFAULT)
+            return DefineTcpProbe(Default)
                 .WithPort(port)
                 .Attach();
         }
@@ -512,7 +511,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:57438CDF8E0AD1C846578BD2FA407389:BBB570164B1B87E87935A91075A29D9F
         internal LoadBalancerImpl WithHttpProbe (string path)
         {
-            return DefineHttpProbe(DEFAULT)
+            return DefineHttpProbe(Default)
                 .WithRequestPath(path)
                 .WithPort(80)
                 .Attach();
@@ -833,7 +832,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:AF5672F546B4A252E729CBD06FEDA19B:E2981ABD5069A930F56B7E822F9B5AD2
         public LoadBalancerImpl WithFrontendSubnet(INetwork network, string subnetName)
         {
-            return this.DefinePrivateFrontend(DEFAULT)
+            return this.DefinePrivateFrontend(Default)
                 .WithExistingSubnet(network, subnetName)
                 .Attach();
         }
@@ -841,7 +840,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:71CD922059C7BFD8A1A0B94B12F892B7
         public LoadBalancerImpl WithExistingPublicIPAddress(string resourceId)
         {
-            return WithExistingPublicIPAddress(resourceId, DEFAULT);
+            return WithExistingPublicIPAddress(resourceId, Default);
         }
     }
 }

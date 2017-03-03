@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworkInterfaces
     {
         ///GENMHASH:29B7EF31B65B0BDDE2C36E88B44BD866:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal NetworkInterfacesImpl(INetworkManagementClient client, INetworkManager networkManager)
-            : base(client.NetworkInterfaces, networkManager)
+        internal NetworkInterfacesImpl(INetworkManager networkManager)
+            : base(networkManager.Inner.NetworkInterfaces, networkManager)
         {
         }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>(),
                 DnsSettings = new NetworkInterfaceDnsSettings()
             };
-            return new NetworkInterfaceImpl(name, inner, Inner, Manager);
+            return new NetworkInterfaceImpl(name, inner, Manager);
         }
 
         //$TODO: this should return NetworkInterfaceImpl
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0FC0465591EF4D86100A2FF1DC557738:D9F9A024A97F1477B173138B75BCFE13
         override protected INetworkInterface WrapModel(NetworkInterfaceInner inner)
         {
-            return new NetworkInterfaceImpl(inner.Name, inner, Inner, Manager);
+            return new NetworkInterfaceImpl(inner.Name, inner, Manager);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:EA49478191CB500D3891D0EDE475C10E
@@ -92,20 +92,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:CF1C887C1688AB525BA63FD7B4469714:30A2B5D56CBF3A353B0D9EAE1884CE80
         public IVirtualMachineScaleSetNetworkInterface GetByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId, string name)
         {
-            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
+            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(
+                resourceGroupName,
                 scaleSetName,
-                Inner,
-                this.Manager);
+                Manager);
             return scaleSetNetworkInterfaces.GetByVirtualMachineInstanceId(instanceId, name);
         }
 
         ///GENMHASH:FB8BAF1D7A241BC666A03354AD1A59B1:350254D9139C5CB1FCAD7F7F992B74F8
         public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
         {
-            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
+            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(
+                resourceGroupName,
                 scaleSetName,
-                Inner,
-                this.Manager);
+                Manager);
             return scaleSetNetworkInterfaces.List();
         }
 
@@ -118,10 +118,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:DD375F4600A4F5AA88A87C271E21CBDB:77581D23FE59229EE53313A9B4816975
         public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
         {
-            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
+            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(
+                resourceGroupName,
                 scaleSetName,
-                Inner,
-                this.Manager);
+                Manager);
             return scaleSetNetworkInterfaces.ListByVirtualMachineInstanceId(instanceId);
         }
     }

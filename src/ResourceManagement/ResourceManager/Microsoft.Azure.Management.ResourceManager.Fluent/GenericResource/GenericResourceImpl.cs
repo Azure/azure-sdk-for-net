@@ -1,19 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent.GenericResource.Definition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Threading;
 using Microsoft.Azure.Management.Resource.Fluent.GenericResource.Update;
-using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
@@ -30,7 +22,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         GenericResource.Update.IUpdate,
         GenericResource.Update.IWithApiVersion
     {
-        private IResourcesOperations client;
         internal string resourceProviderNamespace;
         internal string parentResourceId;
         internal string resourceType;
@@ -90,17 +81,15 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         internal GenericResourceImpl(string key,
             GenericResourceInner innerModel,
-            IResourcesOperations client,
             IResourceManager resourceManager) : base(key, innerModel, resourceManager)
         {
-            this.client = client;
         }
 
         #region Implementation of IResourceCreator interface
 
         public override async Task<IGenericResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
-            GenericResourceInner inner = await client.CreateOrUpdateAsync(ResourceGroupName,
+            GenericResourceInner inner = await Manager.Inner.Resources.CreateOrUpdateAsync(ResourceGroupName,
                 resourceProviderNamespace,
                 parentResourceId,
                 resourceType,

@@ -33,10 +33,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         SqlServer.Definition.IDefinition,
         IUpdate
     {
-        private IServersOperations innerCollection;
-        private IElasticPoolsOperations elasticPoolsInner;
-        private IDatabasesOperations databasesInner;
-        private IRecommendedElasticPoolsOperations recommendedElasticPoolsInner;
         private IDictionary<string, SqlElasticPool.Definition.IWithCreate> elasticPoolCreatableMap;
         private IDictionary<string, SqlFirewallRule.Definition.IWithCreate> firewallRuleCreatableMap;
         private IDictionary<string, SqlDatabase.Definition.IWithCreate> databaseCreatableMap;
@@ -48,16 +44,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private IList<string> databasesToDelete;
 
         ///GENMHASH:13130EA9D0D51B33AB3979B218BFFA7D:10E44AC4E7806D854C536C98ECFD0C23
-        internal SqlServerImpl(string name, ServerInner innerObject, IServersOperations innerCollection,
-            ISqlManager manager, IElasticPoolsOperations elasticPoolsInner, IDatabasesOperations databasesInner,
-            IRecommendedElasticPoolsOperations recommendedElasticPoolsInner)
+        internal SqlServerImpl(string name, ServerInner innerObject, ISqlManager manager)
             : base(name, innerObject, manager)
         {
-            this.innerCollection = innerCollection;
-            this.elasticPoolsInner = elasticPoolsInner;
-            this.databasesInner = databasesInner;
-            this.recommendedElasticPoolsInner = recommendedElasticPoolsInner;
-
             this.databaseCreatableMap = new Dictionary<string, SqlDatabase.Definition.IWithCreate>();
             this.elasticPoolCreatableMap = new Dictionary<string, SqlElasticPool.Definition.IWithCreate>();
             this.firewallRuleCreatableMap = new Dictionary<string, SqlFirewallRule.Definition.IWithCreate>();
@@ -101,10 +90,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:2A59E18DA93663D485FB24124FE696D7:A9A12F1824E7FC07247043927FEEBFC2
         public IList<IServiceObjective> ListServiceObjectives()
         {
-            var serviceObjectives = this.innerCollection.ListServiceObjectives(
-                this.ResourceGroupName,
-                this.Name);
-            return serviceObjectives.Select((serviceObjectiveInner) => (IServiceObjective)new ServiceObjectiveImpl(serviceObjectiveInner, innerCollection)).ToList();
+            var serviceObjectives = Manager.Inner.Servers.ListServiceObjectives(
+                ResourceGroupName,
+                Name);
+            return serviceObjectives.Select((serviceObjectiveInner) => (IServiceObjective)new ServiceObjectiveImpl(
+                serviceObjectiveInner, Manager.Inner.Servers)).ToList();
         }
 
         ///GENMHASH:2F58B86CF4C09A3821196E375EB636F4:AA91D65BA65D340B46D6B88D4467855D
@@ -124,23 +114,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:42238C96020583EAD41C40C184F554ED:69F489ECA959B263C944C8127108388F
         public IReadOnlyDictionary<string, Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool> ListRecommendedElasticPools()
         {
-            var recommendedElasticPools = this.recommendedElasticPoolsInner.List(
-                this.ResourceGroupName,
-                this.Name);
+            var recommendedElasticPools = Manager.Inner.RecommendedElasticPools.List(
+                ResourceGroupName,
+                Name);
 
             return new ReadOnlyDictionary<string, IRecommendedElasticPool>(recommendedElasticPools.ToDictionary(
                     recommendedElasticPoolInner => recommendedElasticPoolInner.Name,
-                    recommendedElasticPoolInner => (IRecommendedElasticPool)new RecommendedElasticPoolImpl(
-                        recommendedElasticPoolInner,
-                        databasesInner,
-                        recommendedElasticPoolsInner,
-                        Manager)));
+                    recommendedElasticPoolInner => (IRecommendedElasticPool)new RecommendedElasticPoolImpl(recommendedElasticPoolInner, Manager)));
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:3A15AE6B9ADA17FBEC37A8078DA08565
         public override async Task<ISqlServer> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var serverInner = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, Inner);
+            var serverInner = await Manager.Inner.Servers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             SetInner(serverInner);
 
             await DeleteChildResourcesAsync();
@@ -174,11 +160,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:162FCA0A7E0415224BF3AD6DEFD9DC00
         public IDatabases Databases()
         {
-            if (this.databasesImpl == null)
+            if (databasesImpl == null)
             {
-                this.databasesImpl = new DatabasesImpl(this.databasesInner, this.Manager, this.ResourceGroupName, this.Name, this.Region);
+                databasesImpl = new DatabasesImpl(Manager, ResourceGroupName, Name, Region);
             }
-            return this.databasesImpl;
+            return databasesImpl;
         }
 
         ///GENMHASH:39211D199FB6D28F49ADF0BA2BA3CF1E:B4D84A42F3D3231B1FFD5AD6C788EA45
@@ -191,9 +177,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:0E666BFDFC9A666CA31FD735D7839414:2AAE577C01D4088729534C3BC39664A7
         public IList<IServerMetric> ListUsages()
         {
-            var usages = this.innerCollection.ListUsages(
-            this.ResourceGroupName,
-            this.Name);
+            var usages = Manager.Inner.Servers.ListUsages(
+                ResourceGroupName,
+                Name);
             return usages.Select((serverMetricInner) => (IServerMetric)new ServerMetricImpl(serverMetricInner)).ToList();
         }
 
@@ -206,25 +192,25 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:22ED13819FBF2CA919B55726AC1FB656:470E0AF821791A8E1F0273443B706FEA
         public IElasticPools ElasticPools()
         {
-            if (this.elasticPoolsImpl == null)
+            if (elasticPoolsImpl == null)
             {
-                this.elasticPoolsImpl = new ElasticPoolsImpl(
-                this.elasticPoolsInner,
-                this.Manager,
-                this.databasesInner,
-                (DatabasesImpl)this.Databases(),
-                this.ResourceGroupName,
-                this.Name,
-                this.Region);
+                elasticPoolsImpl = new ElasticPoolsImpl(
+                Manager,
+                (DatabasesImpl)Databases(),
+                ResourceGroupName,
+                Name,
+                Region);
             }
-            return this.elasticPoolsImpl;
+            return elasticPoolsImpl;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:62957758FC09C0990CF1236E4DBFE16D
         public override ISqlServer Refresh()
         {
-            var response = this.innerCollection.GetByResourceGroup(this.ResourceGroupName, this.Name);
-            this.SetInner(response);
+            var response = Manager.Inner.Servers.GetByResourceGroup(
+                ResourceGroupName, 
+                Name);
+            SetInner(response);
 
             return this;
         }
@@ -293,8 +279,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public IServiceObjective GetServiceObjective(string serviceObjectiveName)
         {
             return new ServiceObjectiveImpl(
-                this.innerCollection.GetServiceObjective(this.ResourceGroupName, this.Name, serviceObjectiveName),
-                this.innerCollection);
+                Manager.Inner.Servers.GetServiceObjective(ResourceGroupName, Name, serviceObjectiveName),
+                Manager.Inner.Servers);
         }
 
         ///GENMHASH:0E72E9CA1B7053C3FF04E00B992D9096:C708FFD899243CFE1DDD3607C4089B6A
@@ -338,11 +324,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:7DDEADFB2FB27BEC42C0B993AB65C3CB:0D8D2B5DE282DE762F97F0E96C5562F9
         public IFirewallRules FirewallRules()
         {
-            if (this.firewallRulesImpl == null)
+            if (firewallRulesImpl == null)
             {
-                this.firewallRulesImpl = new FirewallRulesImpl(this.innerCollection, this.Manager, this.ResourceGroupName, this.Name);
+                firewallRulesImpl = new FirewallRulesImpl(Manager, ResourceGroupName, Name);
             }
-            return this.firewallRulesImpl;
+            return firewallRulesImpl;
         }
     }
 }

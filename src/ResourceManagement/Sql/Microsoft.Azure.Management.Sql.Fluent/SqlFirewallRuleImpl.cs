@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Definition;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.IndependentChild.Definition;
     using Models;
     using SqlFirewallRule.Definition;
     using SqlFirewallRule.Update;
@@ -21,7 +21,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IUpdate,
         IWithParentResource<ISqlFirewallRule, ISqlServer>
     {
-        private IServersOperations innerCollection;
+        ///GENMHASH:A6DA29F5B33635B6B2AB7A6DA20A0B2B:FC20F8BEAA0D65FFE9DA4206313524DE
+        internal SqlFirewallRuleImpl(string name, ServerFirewallRuleInner innerObject, ISqlManager manager)
+            : base(name, innerObject, manager)
+        {
+        }
 
         ///GENMHASH:86CD1E259A3329513723B4E03EFABB98:15BC15CFDD8106B985088348087483E5
         public SqlFirewallRuleImpl WithIpAddressRange(string startIpAddress, string endIpAddress)
@@ -30,13 +34,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             Inner.EndIpAddress = endIpAddress;
 
             return this;
-        }
-
-        ///GENMHASH:A6DA29F5B33635B6B2AB7A6DA20A0B2B:FC20F8BEAA0D65FFE9DA4206313524DE
-        internal SqlFirewallRuleImpl(string name, ServerFirewallRuleInner innerObject, IServersOperations innerCollection, ISqlManager manager)
-            : base(name, innerObject, manager)
-        {
-            this.innerCollection = innerCollection;
         }
 
         ///GENMHASH:61F5809AB3B985C61AC40B98B1FBC47E:04B212B505D5C86A62596EEEE457DD66
@@ -52,9 +49,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:077B87F3E32DB4F7DBE3AFD7C44190B4
-        protected override async Task<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<ISqlFirewallRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var firewallRuleInner = await this.innerCollection.CreateOrUpdateFirewallRuleAsync(this.ResourceGroupName, this.SqlServerName(), this.Name, Inner);
+            var firewallRuleInner = await Manager.Inner.Servers.CreateOrUpdateFirewallRuleAsync(
+                ResourceGroupName,
+                SqlServerName(),
+                Name,
+                Inner);
             SetInner(firewallRuleInner);
 
             return this;
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:8B499834886805DF649E8FE559911199
         public override ISqlFirewallRule Refresh()
         {
-            this.innerCollection.GetFirewallRule(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.Servers.GetFirewallRule(ResourceGroupName, SqlServerName(), Name);
             return this;
         }
 
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:11CCB9FA7CDA7C4110B5B485953F2C3A
         public void Delete()
         {
-            this.innerCollection.DeleteFirewallRule(this.ResourceGroupName, this.SqlServerName(), this.Name);
+            Manager.Inner.Servers.DeleteFirewallRule(ResourceGroupName, SqlServerName(), Name);
         }
 
         ///GENMHASH:6ADF1ABD01F52EF2AB48EBDB916AC61B:0E617A4FA7C8B0429E44FA81A0CA93AE

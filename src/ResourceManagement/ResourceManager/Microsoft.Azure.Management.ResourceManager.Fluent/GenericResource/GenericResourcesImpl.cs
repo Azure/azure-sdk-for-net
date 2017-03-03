@@ -16,11 +16,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         GroupableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, IResourceManager>,
         IGenericResources
     {
-        private IResourceManagementClient client;
-
-        internal GenericResourcesImpl(IResourceManagementClient client, IResourceManager resourceManager) : base(client.Resources, resourceManager)
+        internal GenericResourcesImpl(IResourceManager resourceManager) : base(resourceManager.Inner.Resources, resourceManager)
         {
-            this.client = client;
         }
 
         public bool CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
@@ -36,7 +33,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public IBlank Define(string name)
         {
-            return new GenericResourceImpl(name, new GenericResourceInner(), this.client.Resources, Manager);
+            return new GenericResourceImpl(name, new GenericResourceInner(), Manager);
         }
 
         public void Delete(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
@@ -62,7 +59,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             GenericResourceImpl resource = new GenericResourceImpl(
                     resourceName,
                     inner,
-                    client.Resources,
                     Manager)
             {
                 resourceProviderNamespace = resourceProviderNamespace,
@@ -106,7 +102,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         protected override IGenericResource WrapModel(GenericResourceInner inner)
         {
-            IGenericResource model = (IGenericResource)new GenericResourceImpl(inner.Id, inner, this.client.Resources, Manager)
+            IGenericResource model = (IGenericResource)new GenericResourceImpl(inner.Id, inner, Manager)
             {
                 resourceProviderNamespace = ResourceUtils.ResourceProviderFromResourceId(inner.Id),
                 parentResourceId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id),
@@ -117,7 +113,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         protected override GenericResourceImpl WrapModel(string id)
         {
-            GenericResourceImpl model = (GenericResourceImpl)new GenericResourceImpl(id, new GenericResourceInner(), this.client.Resources, Manager)
+            GenericResourceImpl model = (GenericResourceImpl)new GenericResourceImpl(id, new GenericResourceInner(), Manager)
             {
                 resourceProviderNamespace = ResourceUtils.ResourceProviderFromResourceId(id),
                 parentResourceId = ResourceUtils.ParentResourcePathFromResourceId(id),

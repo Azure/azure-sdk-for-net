@@ -3,12 +3,13 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
 
     /// <summary>
     /// The base network interface shared across regular and virtual machine scale set network interface.
     /// </summary>
-    public interface INetworkInterfaceBase 
+    public interface INetworkInterfaceBase : IHasInner<NetworkInterfaceInner>, IHasManager<INetworkManager>
     {
         /// <summary>
         /// Gets applied DNS servers.

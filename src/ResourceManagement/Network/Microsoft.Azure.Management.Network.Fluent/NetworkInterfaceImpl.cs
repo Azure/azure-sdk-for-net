@@ -31,8 +31,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             IUpdate
 
     {
-        // the inner collection.
-        private INetworkInterfacesOperations innerCollection;
         // the name of the network interface.
         private string nicName;
         // reference to the primary ip configuration.
@@ -49,13 +47,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         protected IResourceNamer namer;
 
         ///GENMHASH:5C85B818743A5F30E309A5379B6A9A34:C0C9B388307AE67BE8D9EE6E90296330
-        internal NetworkInterfaceImpl(
-            string name,
-            NetworkInterfaceInner innerModel,
-            INetworkInterfacesOperations client,
-            INetworkManager networkManager) : base(name, innerModel, networkManager)
+        internal NetworkInterfaceImpl(string name, NetworkInterfaceInner innerModel, INetworkManager networkManager)
+            : base(name, innerModel, networkManager)
         {
-            innerCollection = client;
             nicName = name;
             namer = SdkContext.CreateResourceNamer(nicName);
             InitializeChildrenFromInner();
@@ -78,7 +72,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:BCF4C230F6F0AA0BE6D9C038631B4B67
         public override INetworkInterface Refresh()
         {
-            var response = innerCollection.Get(ResourceGroupName, nicName);
+            var response = Manager.Inner.NetworkInterfaces.Get(ResourceGroupName, nicName);
             SetInner(response);
             return this;
         }
@@ -477,7 +471,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<NetworkInterfaceInner> CreateInnerAsync()
         {
-            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return Manager.Inner.NetworkInterfaces.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:F91F57741BB7E185BF012523964DEED0:26BB61AD1C4F8E3F1AD2EA55120B6EE2
