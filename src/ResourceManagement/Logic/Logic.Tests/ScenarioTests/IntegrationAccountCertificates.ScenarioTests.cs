@@ -2,34 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Security;
-using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
-
 namespace Test.Azure.Management.Logic
 {
-    using System.IO;
-    using System.Collections.Generic;
+    using System;
+    using System.Globalization;
     using System.Linq;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
+    using System.Security.Cryptography.X509Certificates;
+
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Xunit;
 
     /// <summary>
     /// Scenario tests for the integration accounts certificates.
     /// </summary>
     [Collection("IntegrationAccountCertificateScenarioTests")]
-    public class IntegrationAccountCertificateScenarioTests : BaseScenarioTests
+    public class IntegrationAccountCertificateScenarioTests : ScenarioTestsBase
     {
-
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests";
-
         /// <summary>
         /// Tests the create and delete operations of the integration account certificate.
         /// </summary>
@@ -37,7 +28,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountCertificate()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -70,7 +61,7 @@ namespace Test.Azure.Management.Logic
         public void CreateIntegrationAccountCertificateWithPublicKey()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -111,7 +102,7 @@ namespace Test.Azure.Management.Logic
         public void CreateIntegrationAccountCertificateWithPrivateKey()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -147,7 +138,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountCertificateOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -180,7 +171,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountCertificate()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -219,7 +210,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountCertificate()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -253,7 +244,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountCertificates()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =

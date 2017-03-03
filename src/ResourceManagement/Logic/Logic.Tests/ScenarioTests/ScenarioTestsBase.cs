@@ -2,17 +2,24 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.Globalization;
-using Newtonsoft.Json.Linq;
-
 namespace Test.Azure.Management.Logic
 {
+    using System.Globalization;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Newtonsoft.Json.Linq;
 
-    public class BaseScenarioTests : TestBase
+    /// <summary>
+    /// Base class for scenario tests provides common methods and attributes.
+    /// </summary>
+    abstract public class ScenarioTestsBase : TestBase
     {
+        /// <summary>
+        /// Name of the test class
+        /// </summary>
+        protected string testClassName { get { return this.GetType().FullName; } }
+
         /// <summary>
         /// Default serviceplan Resource id 
         /// </summary>

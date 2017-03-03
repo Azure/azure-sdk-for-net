@@ -1,5 +1,5 @@
 {
-  "version": "2.2.11",
+  "version": "2.2.12",
   "title": "Authentication for Azure Management Clients",
   "description": "Provides ADAL based authentication for Azure management client libraries \nSupported Platforms:\n  -   Portable Class Libraries\n  -   .NET Framework 4.5\n  -   Windows 8\n  -   Windows Phone 8.1\n  -   DotNet Core",
   "authors": [ "Microsoft" ],
@@ -10,7 +10,7 @@
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "projectUrl": "https://github.com/Azure/AutoRest",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "tags": [ "Microsoft AutoRest ClientRuntime REST adal" ],
+    "tags": [ "Microsoft AutoRest ClientRuntime REST adal", "netcore451511" ],
     "requireLicenseAcceptance":  true
   },
 
@@ -42,7 +42,9 @@
       "imports": [ "dnxcore50", "portable-net45+win8" ],
       "dependencies": {
         "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8",
-        "Microsoft.IdentityModel.Tokens":  "5.1.2"
+        "Microsoft.IdentityModel.Tokens": "5.1.2",
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
       }
     },
     "netstandard1.5": {
@@ -53,7 +55,9 @@
       "imports": [ "dnxcore50" ],
       "dependencies": {
         "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8",
-        "Microsoft.IdentityModel.Tokens": "5.1.2"
+        "Microsoft.IdentityModel.Tokens": "5.1.2",
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
       }
     }
   }
