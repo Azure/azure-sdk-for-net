@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a database inside of a recommented elastic pool.
+            /// Returns a list of databases inside a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a database inside of a recommented elastic pool.
+            /// Returns a list of databases inside a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

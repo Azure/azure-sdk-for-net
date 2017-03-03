@@ -81,6 +81,11 @@ namespace Microsoft.Azure.Management.Sql
         IDatabasesOperations Databases { get; }
 
         /// <summary>
+        /// Gets the IImportExportOperations.
+        /// </summary>
+        IImportExportOperations ImportExportOperations { get; }
+
+        /// <summary>
         /// Gets the IElasticPoolsOperations.
         /// </summary>
         IElasticPoolsOperations ElasticPools { get; }

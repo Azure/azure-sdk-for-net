@@ -84,6 +84,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
+        /// Gets the IImportExportOperations.
+        /// </summary>
+        public virtual IImportExportOperations ImportExportOperations { get; private set; }
+
+        /// <summary>
         /// Gets the IElasticPoolsOperations.
         /// </summary>
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
@@ -296,6 +301,7 @@ namespace Microsoft.Azure.Management.Sql
         {
             Servers = new ServersOperations(this);
             Databases = new DatabasesOperations(this);
+            ImportExportOperations = new ImportExportOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
