@@ -20,6 +20,7 @@
     using System.Threading.Tasks;
     using BatchClientIntegrationTests.IntegrationTestUtilities;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch;
 
     using Xunit;
@@ -33,7 +34,7 @@
         {
 
 
-            TestCommon.EnableAutoStorageAsync().Wait();
+            IntegrationTestCommon.EnableAutoStorageAsync().Wait();
 
             ApplicationIntegrationCommon.UploadTestApplicationPackageIfNotAlreadyUploadedAsync(
                 ApplicationId,

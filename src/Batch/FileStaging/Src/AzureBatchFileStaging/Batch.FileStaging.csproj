@@ -16,7 +16,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Analyzer Include="..\..\..\Client\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\$(OutputPath)\ConfigureAwaitAnalyzer.dll" />
+    <Analyzer Include="..\..\..\ClientIntegrationTesting\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\$(OutputPath)\ConfigureAwaitAnalyzer.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.Batch, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -97,7 +97,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Client\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
+    <ProjectReference Include="..\..\..\ClientIntegrationTesting\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
       <Project>{48215d6d-db21-48b8-ab03-1297a94df696}</Project>
       <Name>ConfigureAwaitAnalyzer</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

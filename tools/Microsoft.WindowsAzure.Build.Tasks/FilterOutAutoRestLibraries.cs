@@ -109,24 +109,24 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         solution.SetMetadata("NugetProj", nugetProjects[0]);
                         solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));
-                    }
 
-                    if (nPkgsList != null)
-                    {
-                        //We need to filter out projects from the final output to build and publish limited set of projects
-                        //Here we need to get to the name of the nuget.proj file with .nuget.proj
-                        string nugetProjName = Path.GetFileName(nugetProjects[0]);
-                        string projNameWithoutExt = Path.GetFileNameWithoutExtension(nugetProjName);
-                        projNameWithoutExt = Path.GetFileNameWithoutExtension(projNameWithoutExt);
-                        string match = nPkgsList.Find((pn) => pn.Equals(projNameWithoutExt, System.StringComparison.OrdinalIgnoreCase));
-                        if (!string.IsNullOrEmpty(match))
+                        if (nPkgsList != null)
+                        {
+                            //We need to filter out projects from the final output to build and publish limited set of projects
+                            //Here we need to get to the name of the nuget.proj file with .nuget.proj
+                            string nugetProjName = Path.GetFileName(nugetProjects[0]);
+                            string projNameWithoutExt = Path.GetFileNameWithoutExtension(nugetProjName);
+                            projNameWithoutExt = Path.GetFileNameWithoutExtension(projNameWithoutExt);
+                            string match = nPkgsList.Find((pn) => pn.Equals(projNameWithoutExt, System.StringComparison.OrdinalIgnoreCase));
+                            if (!string.IsNullOrEmpty(match))
+                            {
+                                nonNetCoreAutoRestLibraries.Add(solution);
+                            }
+                        }
+                        else
                         {
                             nonNetCoreAutoRestLibraries.Add(solution);
                         }
-                    }
-                    else
-                    {
-                        nonNetCoreAutoRestLibraries.Add(solution);
                     }
                 }
                 else
@@ -142,7 +142,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                             string dirPath = Path.GetDirectoryName(file);
                             string dirName = Path.GetFileName(dirPath);
                             if (dirPath.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
-                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase))
+                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase) ||
+                                dirPath.IndexOf("tests", System.StringComparison.OrdinalIgnoreCase) >= 0)
                             {
                                 testDirectories.Add(dirPath);
                             }

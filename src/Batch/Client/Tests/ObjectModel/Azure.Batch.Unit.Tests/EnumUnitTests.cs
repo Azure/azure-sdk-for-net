@@ -17,6 +17,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using BatchTestCommon;
     using Microsoft.Azure.Batch.Common;
     using Xunit;
@@ -36,16 +37,16 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestHandcodedEnumsMatchSwaggerGeneratedEnums()
         {
-            Type arbitraryHandcraftedEnum = typeof(JobState);
+            TypeInfo arbitraryHandcraftedEnum = typeof(JobState).GetTypeInfo();
             string handcraftedEnumNamespace = arbitraryHandcraftedEnum.Namespace;
 
             //Gather all handcoded enumerations
-            List<Type> enumTypes = arbitraryHandcraftedEnum.Assembly.GetTypes().Where(t => t.IsEnum && t.Namespace == handcraftedEnumNamespace).OrderBy(t => t.FullName).ToList();
+            List<Type> enumTypes = arbitraryHandcraftedEnum.Assembly.GetTypes().Where(t => t.GetTypeInfo().IsEnum && t.Namespace == handcraftedEnumNamespace).ToList();
 
             //Gather all codegenerated enums
-            Type arbitraryGeneratedEnum = typeof(Protocol.Models.JobState);
+            TypeInfo arbitraryGeneratedEnum = typeof(Protocol.Models.JobState).GetTypeInfo();
             string generatedEnumNamespace = arbitraryGeneratedEnum.Namespace;
-            List<Type> generatedEnumTypes = arbitraryGeneratedEnum.Assembly.GetTypes().Where(t => t.IsEnum && t.Namespace == generatedEnumNamespace).OrderBy(t => t.FullName).ToList();
+            List<Type> generatedEnumTypes = arbitraryGeneratedEnum.Assembly.GetTypes().Where(t => t.GetTypeInfo().IsEnum && t.Namespace == generatedEnumNamespace).ToList();
 
             this.testOutputHelper.WriteLine("Generated types: ");
             foreach (Type generatedEnumType in generatedEnumTypes)
