@@ -21,6 +21,7 @@
     using BatchClientIntegrationTests.Fixtures;
     using BatchClientIntegrationTests.IntegrationTestUtilities;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
@@ -34,7 +35,7 @@
 
         public ApplicationManagementIntegrationTests()
         {
-            TestCommon.EnableAutoStorageAsync().Wait();
+            IntegrationTestCommon.EnableAutoStorageAsync().Wait();
 
             ApplicationIntegrationCommon.UploadTestApplicationPackageIfNotAlreadyUploadedAsync(ApplicationId,
                 ApplicationIntegrationCommon.Version,
@@ -53,7 +54,7 @@
                     var poolId = "app-ref-test" + Guid.NewGuid();
                     using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
                     {
-                        using (var mgmtClient = TestCommon.OpenBatchManagementClient())
+                        using (var mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
                         {
                             // Give the application a display name
                             await mgmtClient.Application.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters

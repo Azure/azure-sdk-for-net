@@ -41,17 +41,21 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="resourceState">Resource status of the custom domain.
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
+        /// <param name="customHttpsProvisioningState">Provisioning state of
+        /// Custom Https of the custom domain. Possible values include:
+        /// 'Enabling', 'Enabled', 'Disabling', 'Disabled', 'Failed'</param>
         /// <param name="validationData">Special validation or data may be
         /// required when delivering CDN to some regions due to local
         /// compliance reasons. E.g. ICP license number of a custom domain is
         /// required to deliver content in China.</param>
         /// <param name="provisioningState">Provisioning status of the custom
         /// domain.</param>
-        public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceState = default(string), string validationData = default(string), string provisioningState = default(string))
+        public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceState = default(string), string customHttpsProvisioningState = default(string), string validationData = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             HostName = hostName;
             ResourceState = resourceState;
+            CustomHttpsProvisioningState = customHttpsProvisioningState;
             ValidationData = validationData;
             ProvisioningState = provisioningState;
         }
@@ -69,6 +73,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceState")]
         public string ResourceState { get; protected set; }
+
+        /// <summary>
+        /// Gets provisioning state of Custom Https of the custom domain.
+        /// Possible values include: 'Enabling', 'Enabled', 'Disabling',
+        /// 'Disabled', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customHttpsProvisioningState")]
+        public string CustomHttpsProvisioningState { get; protected set; }
 
         /// <summary>
         /// Gets or sets special validation or data may be required when

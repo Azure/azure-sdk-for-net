@@ -13,6 +13,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
     public class FilterOutAutoRestLibraries : Task
     {
         [Required]
+        public ITaskItem[] SdkNugetPackageInput { get; set; }
+
+        [Required]
         public ITaskItem[] AllLibraries { get; set; }
 
         [Required]
@@ -37,6 +40,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         [Output]
         public ITaskItem[] NetCore_AutoRestLibraries { get; private set; }
 
+        [Output]
+        public ITaskItem[] SdkNuGetPackageOutput { get; private set; }
+
         public override bool Execute()
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -50,13 +56,30 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             var nonNetCoreAutoRestLibraries = new List<ITaskItem>();
             var netCoreAutoRestLibraries = new List<ITaskItem>();
             var netCoreLibraryTestOnes = new List<ITaskItem>();
+            var SdkNuGetPackage = new List<ITaskItem>(); 
             var others =  new List<ITaskItem>();
             
             List<string> nPkgsList = null;
+            List<string> sdkItemSpec = (from item in SdkNugetPackageInput select item.ItemSpec).ToList<string>();
 
             if (!string.IsNullOrWhiteSpace(NugetPackagesToPublish))
             {
                 nPkgsList = NugetPackagesToPublish.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            }
+
+            if(nPkgsList != null)
+            {
+                List<string> common = nPkgsList.Intersect<string>(sdkItemSpec).ToList<string>();
+                foreach(string projName in common)
+                {
+                    ITaskItem nProj = SdkNugetPackageInput.Where<ITaskItem>((item) => item.ItemSpec.Equals(projName, StringComparison.OrdinalIgnoreCase)).First<ITaskItem>();
+                    if (nProj != null)
+                        SdkNuGetPackage.Add(nProj);
+                }
+            }
+            else
+            {
+                SdkNuGetPackage = SdkNugetPackageInput.ToList<ITaskItem>();
             }
 
             foreach (ITaskItem solution in AllLibraries)
@@ -86,24 +109,24 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         solution.SetMetadata("NugetProj", nugetProjects[0]);
                         solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));
-                    }
 
-                    if (nPkgsList != null)
-                    {
-                        //We need to filter out projects from the final output to build and publish limited set of projects
-                        //Here we need to get to the name of the nuget.proj file with .nuget.proj
-                        string nugetProjName = Path.GetFileName(nugetProjects[0]);
-                        string projNameWithoutExt = Path.GetFileNameWithoutExtension(nugetProjName);
-                        projNameWithoutExt = Path.GetFileNameWithoutExtension(projNameWithoutExt);
-                        string match = nPkgsList.Find((pn) => pn.Equals(projNameWithoutExt, System.StringComparison.OrdinalIgnoreCase));
-                        if (!string.IsNullOrEmpty(match))
+                        if (nPkgsList != null)
+                        {
+                            //We need to filter out projects from the final output to build and publish limited set of projects
+                            //Here we need to get to the name of the nuget.proj file with .nuget.proj
+                            string nugetProjName = Path.GetFileName(nugetProjects[0]);
+                            string projNameWithoutExt = Path.GetFileNameWithoutExtension(nugetProjName);
+                            projNameWithoutExt = Path.GetFileNameWithoutExtension(projNameWithoutExt);
+                            string match = nPkgsList.Find((pn) => pn.Equals(projNameWithoutExt, System.StringComparison.OrdinalIgnoreCase));
+                            if (!string.IsNullOrEmpty(match))
+                            {
+                                nonNetCoreAutoRestLibraries.Add(solution);
+                            }
+                        }
+                        else
                         {
                             nonNetCoreAutoRestLibraries.Add(solution);
                         }
-                    }
-                    else
-                    {
-                        nonNetCoreAutoRestLibraries.Add(solution);
                     }
                 }
                 else
@@ -119,7 +142,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                             string dirPath = Path.GetDirectoryName(file);
                             string dirName = Path.GetFileName(dirPath);
                             if (dirPath.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
-                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase))
+                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase) ||
+                                dirPath.IndexOf("tests", System.StringComparison.OrdinalIgnoreCase) >= 0)
                             {
                                 testDirectories.Add(dirPath);
                             }
@@ -169,10 +193,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             Log.LogMessage(MessageImportance.High, "We have found {0} non netcore autorest libraries.", nonNetCoreAutoRestLibraries.Count);
             Log.LogMessage(MessageImportance.High, "We have found {0} netcore autorest libraries.", netCoreAutoRestLibraries.Count);
-            Log.LogMessage(MessageImportance.High, "we have found {0} Non autorest libraries.", others.Count);
+            Log.LogMessage(MessageImportance.High, "We have found {0} Non autorest libraries.", others.Count);
+            Log.LogMessage(MessageImportance.High, "We have found {0} SdkNuget Packages.", SdkNuGetPackage.Count);
             Non_NetCore_AutoRestLibraries = nonNetCoreAutoRestLibraries.ToArray();
             NetCore_AutoRestLibraries = netCoreAutoRestLibraries.ToArray();
             NonAutoRestLibraries = others.ToArray();
+            SdkNuGetPackageOutput = SdkNuGetPackage.ToArray();
             return true;
         }
     }

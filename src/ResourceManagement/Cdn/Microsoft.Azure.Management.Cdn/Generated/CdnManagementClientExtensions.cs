@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ResourceUsage> CheckResourceUsage(this ICdnManagementClient operations)
+            public static IPage<ResourceUsage> ListResourceUsage(this ICdnManagementClient operations)
             {
-                return operations.CheckResourceUsageAsync().GetAwaiter().GetResult();
+                return operations.ListResourceUsageAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceUsage>> CheckResourceUsageAsync(this ICdnManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsage>> ListResourceUsageAsync(this ICdnManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckResourceUsageWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListResourceUsageWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -125,9 +125,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceUsage> CheckResourceUsageNext(this ICdnManagementClient operations, string nextPageLink)
+            public static IPage<ResourceUsage> ListResourceUsageNext(this ICdnManagementClient operations, string nextPageLink)
             {
-                return operations.CheckResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -143,9 +143,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceUsage>> CheckResourceUsageNextAsync(this ICdnManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsage>> ListResourceUsageNextAsync(this ICdnManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

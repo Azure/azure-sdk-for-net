@@ -2,21 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.Linq;
-
 namespace Test.Azure.Management.Logic
 {
-    using System;
+    using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Azure.Management.Logic;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;
-    using System.IO;
 
-    public class IntegrationAccountAgreementInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountAgreementInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountAgreementInMemoryTests()
         {
@@ -274,7 +272,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateAgreement(IntegrationAccountAgreement agreement)
         {
-            Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/IntegrationAccountSdkTest/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount3696/agreements/IntegrationAccountAgreement8906", agreement.Id);
+            Assert.True(this.ValidateIdFormat(id: agreement.Id, entityTypeName: "integrationAccounts", entitySubtypeName: "agreements"));
             Assert.Equal("IntegrationAccountAgreement8906", agreement.Name);
             Assert.Equal("Microsoft.Logic/integrationAccounts/agreements", agreement.Type);
         }

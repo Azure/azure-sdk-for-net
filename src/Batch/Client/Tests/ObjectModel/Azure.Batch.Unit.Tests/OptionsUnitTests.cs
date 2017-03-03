@@ -17,6 +17,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
     using BatchTestCommon;
@@ -31,7 +32,7 @@
         {
             Type selectedModelType = typeof (Protocol.Models.CertificateAddOptions);
 
-            IEnumerable<Type> optionsTypes = selectedModelType.Assembly.GetTypes().Where(t =>
+            IEnumerable<Type> optionsTypes = selectedModelType.GetTypeInfo().Assembly.GetTypes().Where(t =>
                 t.Namespace == selectedModelType.Namespace &&
                 t.Name.EndsWith("Options") && 
                 !t.Name.Equals("ExitOptions"));

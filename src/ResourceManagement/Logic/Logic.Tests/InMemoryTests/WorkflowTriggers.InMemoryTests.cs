@@ -14,7 +14,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
 
-    public class WorkflowTriggersInMemoryTests : BaseInMemoryTests
+    public class WorkflowTriggersInMemoryTests : InMemoryTestsBase
     {
         #region Constructor
 
@@ -316,7 +316,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateTrigger1(WorkflowTrigger trigger)
         {
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName/triggers/tName", trigger.Id);
+            Assert.True(this.ValidateIdFormat(id: trigger.Id, entityTypeName: "workflows", entitySubtypeName: "triggers"));
             Assert.Equal("tName", trigger.Name);
             Assert.Equal("Microsoft.Logic/workflows/triggers", trigger.Type);
 

@@ -23,9 +23,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <summary>
         /// Initializes a new instance of the BackupConfiguration class.
         /// </summary>
-        /// <param name="storageAccount">The name of storage account for
-        /// backup configuration. It is in the format of 'Resource Group
-        /// Name/Storage Account Name'</param>
+        /// <param name="storageAccount">Storage account full resource id for
+        /// backup configuration</param>
         /// <param name="blobContainer">The name of blob container for backup
         /// configuration</param>
         /// <param name="accessKey">The access key of storage account used for
@@ -38,8 +37,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of storage account for backup configuration.
-        /// It is in the format of 'Resource Group Name/Storage Account Name'
+        /// Gets or sets storage account full resource id for backup
+        /// configuration
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storageAccount")]
         public string StorageAccount { get; set; }
