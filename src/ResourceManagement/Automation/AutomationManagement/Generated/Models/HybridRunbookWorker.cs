@@ -40,6 +40,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._ipAddress = value; }
         }
         
+        private DateTimeOffset _lastSeenDateTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the last seen time of the worker machine.
+        /// </summary>
+        public DateTimeOffset LastSeenDateTime
+        {
+            get { return this._lastSeenDateTime; }
+            set { this._lastSeenDateTime = value; }
+        }
+        
         private string _name;
         
         /// <summary>

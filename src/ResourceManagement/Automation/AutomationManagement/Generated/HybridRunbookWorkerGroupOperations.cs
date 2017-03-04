@@ -413,6 +413,13 @@ namespace Microsoft.Azure.Management.Automation
                                         hybridRunbookWorkerInstance.IpAddress = ipAddressInstance;
                                     }
                                     
+                                    JToken lastSeenValue = hybridRunbookWorkersValue["lastSeen"];
+                                    if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
+                                    {
+                                        DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                        hybridRunbookWorkerInstance.LastSeenDateTime = lastSeenInstance;
+                                    }
+                                    
                                     JToken registrationTimeValue = hybridRunbookWorkersValue["registrationTime"];
                                     if (registrationTimeValue != null && registrationTimeValue.Type != JTokenType.Null)
                                     {
@@ -647,6 +654,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 hybridRunbookWorkerInstance.IpAddress = ipAddressInstance;
                                             }
                                             
+                                            JToken lastSeenValue = hybridRunbookWorkersValue["lastSeen"];
+                                            if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
+                                            {
+                                                DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                                hybridRunbookWorkerInstance.LastSeenDateTime = lastSeenInstance;
+                                            }
+                                            
                                             JToken registrationTimeValue = hybridRunbookWorkersValue["registrationTime"];
                                             if (registrationTimeValue != null && registrationTimeValue.Type != JTokenType.Null)
                                             {
@@ -856,6 +870,13 @@ namespace Microsoft.Azure.Management.Automation
                                             {
                                                 string ipAddressInstance = ((string)ipAddressValue);
                                                 hybridRunbookWorkerInstance.IpAddress = ipAddressInstance;
+                                            }
+                                            
+                                            JToken lastSeenValue = hybridRunbookWorkersValue["lastSeen"];
+                                            if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
+                                            {
+                                                DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                                hybridRunbookWorkerInstance.LastSeenDateTime = lastSeenInstance;
                                             }
                                             
                                             JToken registrationTimeValue = hybridRunbookWorkersValue["registrationTime"];
@@ -1140,6 +1161,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string ipAddressInstance = ((string)ipAddressValue);
                                         hybridRunbookWorkerInstance.IpAddress = ipAddressInstance;
+                                    }
+                                    
+                                    JToken lastSeenValue = hybridRunbookWorkersValue["lastSeen"];
+                                    if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
+                                    {
+                                        DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                        hybridRunbookWorkerInstance.LastSeenDateTime = lastSeenInstance;
                                     }
                                     
                                     JToken registrationTimeValue = hybridRunbookWorkersValue["registrationTime"];
