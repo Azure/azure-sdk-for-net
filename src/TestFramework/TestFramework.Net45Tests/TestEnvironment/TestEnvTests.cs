@@ -42,7 +42,7 @@ namespace TestFramework.Net45Tests
             HttpMockServer.Mode = HttpRecorderMode.Record;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
             string userId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.UserIdKey];
-            Assert.Equal("abhishah@microsoft.com", userId);
+            Assert.EndsWith("microsoft.com", userId);
             Assert.False(string.IsNullOrEmpty(userId));
         }
 
