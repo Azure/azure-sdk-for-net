@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/providers/Microsoft.Network/trafficmanagerprofiles?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/providers/Microsoft.Network/trafficmanagerprofiles?api-version=2017-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzP2FwaS12ZXJzaW9uPTIwMTctMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"values\": []\r\n}",
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "13"
+          "12"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -21,29 +21,29 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "x-ms-request-id": [
-          "b190f31a-2e19-4061-8343-71b90b4a559c"
-        ],
-        "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "10799"
-        ],
-        "x-ms-correlation-request-id": [
-          "4731f08a-1beb-4d7b-9eff-c573d61aa11b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20151113T185447Z:4731f08a-1beb-4d7b-9eff-c573d61aa11b"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b31e77af-58d0-428c-b7ff-2dd8b854e118"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10798"
+        ],
+        "x-ms-correlation-request-id": [
+          "a462c9c9-4738-431b-8dfc-95cb125d5048"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170304T112243Z:a462c9c9-4738-431b-8dfc-95cb125d5048"
         ],
         "Cache-Control": [
           "private"
         ],
         "Date": [
-          "Fri, 13 Nov 2015 18:54:46 GMT"
+          "Sat, 04 Mar 2017 11:22:43 GMT"
         ],
         "Server": [
-          "Microsoft-IIS/7.5"
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"

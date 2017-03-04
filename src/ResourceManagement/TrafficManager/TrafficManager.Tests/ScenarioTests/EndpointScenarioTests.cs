@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 string newTarget = "another." + oldTarget;
                 endpointToUpdate.Properties.Target = newTarget;
 
-                // Create the endpoint
+                // Update the endpoint
                 EndpointUpdateResponse updateEndpoint = trafficManagerClient.Endpoints.Update(
                     resourceGroup.Name,
                     profileName,
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                         Endpoint = endpointToUpdate
                     });
 
-                Assert.Equal(HttpStatusCode.Created, updateEndpoint.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, updateEndpoint.StatusCode);
                 Assert.Equal(newTarget, updateEndpoint.Endpoint.Properties.Target);
 
                 AzureOperationResponse deleteResponse = trafficManagerClient.Endpoints.Delete(
@@ -115,6 +115,74 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                     endpointName);
 
                 Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+            }
+        }
+
+        [Fact]
+        public void CrudEndpointGeographicProfile()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+
+                string profileName = TestUtilities.GenerateName("hydratestwatmv2profile");
+                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
+
+                Profile profile = TrafficManagerHelper.GenerateDefaultProfile(profileName);
+                profile.Properties.TrafficRoutingMethod = "Geographic";
+                profile.Properties.Endpoints = null;
+
+                // Create the profile
+                ProfileCreateOrUpdateResponse createResponse = trafficManagerClient.Profiles.CreateOrUpdate(
+                    resourceGroup.Name,
+                    profileName,
+                    new ProfileCreateOrUpdateParameters
+                    {
+                        Profile = profile
+                    });
+
+                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                Assert.Equal("Geographic", createResponse.Profile.Properties.TrafficRoutingMethod);
+
+                Endpoint endpoint = new Endpoint
+                {
+                    Id = null,
+                    Name = "My external endpoint",
+                    Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
+                    Properties = new EndpointProperties
+                    {
+                        TargetResourceId = null,
+                        Target = "foobar.contoso.com",
+                        EndpointStatus = "Enabled",
+                        GeoMapping = new[] { "GEO-AS", "GEO-AF" },
+                    }
+                };
+
+                // Create the endpoint
+                EndpointCreateOrUpdateResponse createEndpointResponse = trafficManagerClient.Endpoints.CreateOrUpdate(
+                    resourceGroup.Name,
+                    profileName,
+                    "ExternalEndpoints",
+                    endpoint.Name,
+                    new EndpointCreateOrUpdateParameters
+                    {
+                        Endpoint = endpoint
+                    });
+
+                Assert.Equal(HttpStatusCode.Created, createEndpointResponse.StatusCode);
+                Assert.Equal("GEO-AS", createEndpointResponse.Endpoint.Properties.GeoMapping[0]);
+                Assert.Equal("GEO-AF", createEndpointResponse.Endpoint.Properties.GeoMapping[1]);
+
+                // Get the endpoint
+                EndpointGetResponse endpointGetResponse = trafficManagerClient.Endpoints.Get(
+                    resourceGroup.Name,
+                    profileName,
+                    "ExternalEndpoints",
+                    endpoint.Name);
+
+                Assert.Equal("GEO-AS", endpointGetResponse.Endpoint.Properties.GeoMapping[0]);
+                Assert.Equal("GEO-AF", endpointGetResponse.Endpoint.Properties.GeoMapping[1]);
             }
         }
     }
