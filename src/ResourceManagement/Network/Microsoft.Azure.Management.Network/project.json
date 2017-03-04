@@ -27,7 +27,6 @@
   "frameworks": {
     "net45": {
       "dependencies": {
-        "System.Net.Http": "4.3.1"
       }
     },
     "netstandard1.5": {
