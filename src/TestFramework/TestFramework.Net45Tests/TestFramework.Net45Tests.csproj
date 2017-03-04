@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2541F589-7A92-4890-9678-E7D313E27C47}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Net45Tests</RootNamespace>
+    <AssemblyName>Net45Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SrcDir>$(ProjectDir)..\..</SrcDir>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.28.3\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.28.3\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Azure.Test.HttpRecorder">
+      <HintPath>$(SrcDir)\TestFramework\Microsoft.Azure.Test.HttpRecorder\bin\$(Configuration)\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework">
+      <HintPath>$(SrcDir)\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\bin\$(Configuration)\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(SrcDir)\ClientRuntime\Microsoft.Rest.ClientRuntime\bin\$(Configuration)\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(SrcDir)\ClientRuntime\Microsoft.Rest.ClientRuntime.Azure\bin\$(Configuration)\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication">
+      <HintPath>$(SrcDir)\ClientRuntime\Microsoft.Rest.ClientRuntime.Azure.Authentication\bin\$(Configuration)\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.abstractions">
+      <HintPath>..\..\..\..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert">
+      <HintPath>..\..\..\..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core">
+      <HintPath>..\..\..\..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop">
+      <HintPath>..\..\..\..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\tools\DisableTestRunParallel.cs">
+      <Link>DisableTestRunParallel.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestEnvironment\TestEnvTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.TestFramework\TestFramework.xproj">
+      <Project>{c4c4e1c8-b99d-4d90-8c27-6d0c0a268ba5}</Project>
+      <Name>TestFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
