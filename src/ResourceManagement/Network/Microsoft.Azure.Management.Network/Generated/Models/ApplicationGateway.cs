@@ -226,6 +226,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (BackendHttpSettingsCollection != null)
+            {
+                foreach (var element in BackendHttpSettingsCollection)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (WebApplicationFirewallConfiguration != null)
             {
                 WebApplicationFirewallConfiguration.Validate();

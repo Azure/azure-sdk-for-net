@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ApplicationGatewayWebApplicationFirewallConfiguration class.
         /// </summary>
         /// <param name="enabled">Whether the web application firewall is
-        /// enabled.</param>
+        /// enabled or not.</param>
         /// <param name="firewallMode">Web application firewall mode. Possible
         /// values are: 'Detection' and 'Prevention'. Possible values include:
         /// 'Detection', 'Prevention'</param>
@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets whether the web application firewall is enabled.
+        /// Gets or sets whether the web application firewall is enabled or
+        /// not.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool Enabled { get; set; }
