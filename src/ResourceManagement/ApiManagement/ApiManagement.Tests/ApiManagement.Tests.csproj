@@ -27,6 +27,7 @@
     <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiProducts.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Backends.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.IdentityProviders.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Loggers.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.OpenIdConnectProviders.cs" />
@@ -216,7 +217,7 @@
     <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wsdl.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wsdl_SoapToRest.json" >
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wsdl_SoapToRest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\ApiOperationsCreateListUpdateDelete.json">
@@ -231,6 +232,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\AuthorizationServersCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\BackendsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\CertificatesCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -240,7 +244,7 @@
     <None Include="SessionRecords\SmapiFunctionalTests\GroupUsersListAddRemove.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\SmapiFunctionalTests\IdentityProviderCreateListUpdateDelete.json" >
+    <None Include="SessionRecords\SmapiFunctionalTests\IdentityProviderCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\LoggersCreateListUpdateDelete.json">
