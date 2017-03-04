@@ -72,5 +72,30 @@ namespace TestFramework.Net45Tests
             Assert.EndsWith(".onmicrosoft.de", userId);
             Assert.False(string.IsNullOrEmpty(userId));
         }
+
+        // Please update the connection string with the right information and then run the test, do not provide subscription Id
+        [Theory(Skip = "Interactive Tests, needs to be run manually")]
+        [InlineData("AADTenant=<valid German TenantId>;" +
+                "HttpRecorderMode=Record;" +
+                "Environment=Custom;" +
+                "ResourceManagementUri=https://management.microsoftazure.de/;" +
+                "ServiceManagementUri=https://management.core.cloudapi.de/;" +
+                "GalleryUri=https://gallery.cloudapi.de/;" +
+                "GraphUri=https://graph.cloudapi.de/;" +
+                "AADAuthUri=https://login.microsoftonline.de/;" +
+                "IbizaPortalUri=http://portal.microsoftazure.de/;" +
+                "RdfePortalUri=https://management.core.cloudapi.de/;" +
+                "GraphTokenAudienceUri=https://graph.cloudapi.de/;" +
+                "AADTokenAudienceUri=https://management.core.cloudapi.de/"
+            )]
+        public void InteractiveGermanLoginNoSubscription(string connStr)
+        {
+            // Log in for this test case using your alias
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
+            HttpMockServer.Mode = HttpRecorderMode.Record;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string subscriptionId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.SubscriptionIdKey];
+            Assert.False(string.IsNullOrEmpty(subscriptionId));
+        }
     }
 }

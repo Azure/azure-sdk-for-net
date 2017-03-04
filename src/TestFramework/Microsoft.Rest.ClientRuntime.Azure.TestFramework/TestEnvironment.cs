@@ -359,13 +359,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 try { callerId = this.TokenInfo[TokenAudience.Management].CallerId; } catch { }
             }
 
+            List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
+
             if (!(string.IsNullOrEmpty(this.SubscriptionId)) && !(this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase)))
-            {
-                List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
+            {   
                 if (subscriptionList.Any<SubscriptionInfo>())
                 {
                     var matchedSubs = subscriptionList.Where((sub) => sub.SubscriptionId.Equals(this.SubscriptionId, StringComparison.OrdinalIgnoreCase));
-                    if(matchedSubs.IsAny<SubscriptionInfo>())
+                    if (matchedSubs.IsAny<SubscriptionInfo>())
                     {
                         matchedSubscriptionId = matchedSubs.FirstOrDefault().SubscriptionId;
                     }
@@ -388,12 +389,22 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
             else
             {
+                // The idea is in case if no match was found, we check if subscription Id was provided in connection string, if not
+                // we then check if the retrieved subscription list has exactly 1 subscription, if yes we will just use that one.
                 if (string.IsNullOrEmpty(this.SubscriptionId))
                 {
-                    sb.AppendLine(string.Format("'{0}': connection string contains no subscriptionId info", 
-                                                    TestCSMOrgIdConnectionStringKey));
-                    sb.AppendLine("Provide SubcriptionId info in connection string");
-                    throw new Exception(sb.ToString());
+                    if (subscriptionList.Count() == 1)
+                    {
+                       this.ConnectionString.KeyValuePairs[ConnectionStringKeys.SubscriptionIdKey] = subscriptionList.First<SubscriptionInfo>().SubscriptionId;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(this.SubscriptionId))
+                        {
+                            sb.AppendLine("Retrieved subscription list has more than 1 subscription. Connection string has no subscription provided. Provide SubcriptionId info in connection string");
+                            throw new Exception(sb.ToString());
+                        }
+                    }
                 }
                 else if(this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase))
                 {
