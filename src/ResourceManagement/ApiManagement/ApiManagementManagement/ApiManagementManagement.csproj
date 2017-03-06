@@ -30,6 +30,7 @@
     <Compile Include="Customizations\SmapiModels\AuthorizationServerListResponse.cs" />
     <Compile Include="Customizations\SmapiModels\AuthorizationServerPaged.cs" />
     <Compile Include="Customizations\SmapiModels\BackendGetContract.cs" />
+    <Compile Include="Customizations\SmapiModels\BackendListResponse.cs" />
     <Compile Include="Customizations\SmapiModels\BackendPaged.cs" />
     <Compile Include="Customizations\SmapiModels\CertificateContract.cs" />
     <Compile Include="Customizations\SmapiModels\CertificateListResponse.cs" />

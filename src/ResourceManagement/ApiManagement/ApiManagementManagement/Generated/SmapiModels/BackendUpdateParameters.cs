@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
             set { this._protocol = value; }
         }
         
+        private BackendProxyContract _proxy;
+        
+        /// <summary>
+        /// Optional. Gets or sets proxy details.
+        /// </summary>
+        public BackendProxyContract Proxy
+        {
+            get { return this._proxy; }
+            set { this._proxy = value; }
+        }
+        
         private string _resourceId;
         
         /// <summary>

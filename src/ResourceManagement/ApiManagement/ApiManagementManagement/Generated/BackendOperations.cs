@@ -105,17 +105,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Credentials != null)
-            {
-                if (parameters.Credentials.Header == null)
-                {
-                    throw new ArgumentNullException("parameters.Credentials.Header");
-                }
-                if (parameters.Credentials.Query == null)
-                {
-                    throw new ArgumentNullException("parameters.Credentials.Query");
-                }
-            }
             if (parameters.Protocol == null)
             {
                 throw new ArgumentNullException("parameters.Protocol");
@@ -1571,17 +1560,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Credentials != null)
-            {
-                if (parameters.Credentials.Header == null)
-                {
-                    throw new ArgumentNullException("parameters.Credentials.Header");
-                }
-                if (parameters.Credentials.Query == null)
-                {
-                    throw new ArgumentNullException("parameters.Credentials.Query");
-                }
-            }
             if (etag == null)
             {
                 throw new ArgumentNullException("etag");
@@ -1768,6 +1746,27 @@ namespace Microsoft.Azure.Management.ApiManagement
                         {
                             authorizationValue["parameter"] = parameters.Credentials.Authorization.Parameter;
                         }
+                    }
+                }
+                
+                if (parameters.Proxy != null)
+                {
+                    JObject proxyValue = new JObject();
+                    backendUpdateParametersValue["proxy"] = proxyValue;
+                    
+                    if (parameters.Proxy.Url != null)
+                    {
+                        proxyValue["url"] = parameters.Proxy.Url;
+                    }
+                    
+                    if (parameters.Proxy.Username != null)
+                    {
+                        proxyValue["username"] = parameters.Proxy.Username;
+                    }
+                    
+                    if (parameters.Proxy.Password != null)
+                    {
+                        proxyValue["password"] = parameters.Proxy.Password;
                     }
                 }
                 
