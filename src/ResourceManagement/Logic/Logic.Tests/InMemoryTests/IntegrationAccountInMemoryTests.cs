@@ -2,28 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.IO;
-
 namespace Test.Azure.Management.Logic
 {
-    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Azure.Management.Logic;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;
-    using Test.Azure.Management.Logic;    
 
-    public class IntegrationAccountInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountInMemoryTests()
         {
             var content = File.ReadAllText(@"TestData/IntegrationAccountResponseContent.json");
-            var callbackUrlContent = File.ReadAllText(@"TestData/IntegrationAccountCallbackUrlResponseContent.json");            
+            var callbackUrlContent = File.ReadAllText(@"TestData/IntegrationAccountCallbackUrlResponseContent.json");
 
             this.IntegrationAccountsList =
                 new StringContent(string.Format(Constants.ListFormat,

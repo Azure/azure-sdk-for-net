@@ -52,12 +52,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">Provisioning state of the backend
         /// http settings resource. Possible values are: 'Updating',
         /// 'Deleting', and 'Failed'.</param>
+        /// <param name="connectionDraining">Connection draining of the backend
+        /// http settings resource.</param>
         /// <param name="name">Name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), string provisioningState = default(string), ApplicationGatewayConnectionDraining connectionDraining = default(ApplicationGatewayConnectionDraining), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Probe = probe;
             AuthenticationCertificates = authenticationCertificates;
             ProvisioningState = provisioningState;
+            ConnectionDraining = connectionDraining;
             Name = name;
             Etag = etag;
         }
@@ -121,6 +124,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
+        /// Gets or sets connection draining of the backend http settings
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.connectionDraining")]
+        public ApplicationGatewayConnectionDraining ConnectionDraining { get; set; }
+
+        /// <summary>
         /// Gets or sets name of the resource that is unique within a resource
         /// group. This name can be used to access the resource.
         /// </summary>
@@ -134,6 +144,19 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ConnectionDraining != null)
+            {
+                ConnectionDraining.Validate();
+            }
+        }
     }
 }
 
