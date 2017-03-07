@@ -49,7 +49,7 @@ namespace Test.Azure.Management.Logic
                 var getSession = client.Sessions.Get(
                     resourceGroupName: Constants.DefaultResourceGroup,
                     integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName) as IntegrationAccountSession;
+                    sessionName: integrationAccountSessionName);
 
                 Assert.Equal(expected: integrationAccountSessionName, actual: getSession.Name);
                 Assert.Equal(expected: "256", actual: getSession.Content);
@@ -66,15 +66,12 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName: integrationAccountName,
                     sessionName: integrationAccountSessionName);
 
-                // Getting an absent record should not throw, RP returns 404 and error response
-                var errorResponse = client.Sessions.Get(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName) as ErrorResponse;
-                Assert.NotNull(errorResponse);
-                Assert.NotNull(errorResponse.Error);
-                Assert.Equal(expected: "SessionNotFound", actual: errorResponse.Error.Code);
-                Assert.Contains(expectedSubstring: "could not be found in integration account", actualString: errorResponse.Error.Message);
+                // Getting an absent record should throw, RP returns 404 and error response
+                Assert.Throws<ErrorResponseException>(() => client.Sessions
+                    .Get(
+                        resourceGroupName: Constants.DefaultResourceGroup,
+                        integrationAccountName: integrationAccountName,
+                        sessionName: integrationAccountSessionName));
 
                 // Clean-up the integration account.
                 client.IntegrationAccounts.Delete(
@@ -161,7 +158,7 @@ namespace Test.Azure.Management.Logic
                 var getSession = client.Sessions.Get(
                     resourceGroupName: Constants.DefaultResourceGroup,
                     integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName) as IntegrationAccountSession;
+                    sessionName: integrationAccountSessionName);
 
                 Assert.Equal(session.Name, getSession.Name);
                 Assert.Equal(session.Content, "256");
@@ -259,15 +256,11 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(
                     resourceGroupName: Constants.DefaultResourceGroup,
                     integrationAccountName: integrationAccountName);
-                var errorResponse = client.Sessions
-                        .Get(
-                            resourceGroupName: Constants.DefaultResourceGroup,
-                            integrationAccountName: integrationAccountName,
-                            sessionName: integrationAccountSessionName) as ErrorResponse;
-                Assert.NotNull(errorResponse);
-                Assert.NotNull(errorResponse.Error);
-                Assert.Equal(expected: "ResourceNotFound", actual: errorResponse.Error.Code);
-                Assert.Contains(expectedSubstring: "under resource group 'flowrg' was not found.", actualString: errorResponse.Error.Message);
+                Assert.Throws<ErrorResponseException>(() => client.Sessions
+                    .Get(
+                        resourceGroupName: Constants.DefaultResourceGroup,
+                        integrationAccountName: integrationAccountName,
+                        sessionName: integrationAccountSessionName));
             }
         }
 

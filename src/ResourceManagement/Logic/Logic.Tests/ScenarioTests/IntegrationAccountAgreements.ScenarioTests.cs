@@ -502,8 +502,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     CheckDuplicateGroupControlNumber = false,
                                     CheckDuplicateTransactionSetControlNumber = false,
-                                    ValidateEDITypes = true,
-                                    ValidateXSDTypes = false,
+                                    ValidateEdiTypes = true,
+                                    ValidateXsdTypes = false,
                                     AllowLeadingAndTrailingSpacesAndZeroes = false,
                                     TrimLeadingAndTrailingSpacesAndZeroes = false,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.NotAllowed
@@ -603,8 +603,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     CheckDuplicateGroupControlNumber = false,
                                     CheckDuplicateTransactionSetControlNumber = false,
-                                    ValidateEDITypes = true,
-                                    ValidateXSDTypes = false,
+                                    ValidateEdiTypes = true,
+                                    ValidateXsdTypes = false,
                                     AllowLeadingAndTrailingSpacesAndZeroes = false,
                                     TrimLeadingAndTrailingSpacesAndZeroes = false,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.NotAllowed
@@ -748,8 +748,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.Optional,
                                     TrimLeadingAndTrailingSpacesAndZeroes = true,
-                                    ValidateEDITypes = true,
-                                    ValidateXSDTypes = true
+                                    ValidateEdiTypes = true,
+                                    ValidateXsdTypes = true
                                 },
                                 SchemaReferences = new EdifactSchemaReference[0]
 
@@ -861,8 +861,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.Optional,
                                     TrimLeadingAndTrailingSpacesAndZeroes = true,
-                                    ValidateEDITypes = true,
-                                    ValidateXSDTypes = true
+                                    ValidateEdiTypes = true,
+                                    ValidateXsdTypes = true
                                 },
                                 SchemaReferences = new EdifactSchemaReference[0]
 

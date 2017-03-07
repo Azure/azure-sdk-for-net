@@ -40,19 +40,19 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets or sets the AS2 agreement content.
         /// </summary>
-        [JsonProperty(PropertyName = "AS2")]
+        [JsonProperty(PropertyName = "aS2")]
         public AS2AgreementContent AS2 { get; set; }
 
         /// <summary>
         /// Gets or sets the X12 agreement content.
         /// </summary>
-        [JsonProperty(PropertyName = "X12")]
+        [JsonProperty(PropertyName = "x12")]
         public X12AgreementContent X12 { get; set; }
 
         /// <summary>
         /// Gets or sets the EDIFACT agreement content.
         /// </summary>
-        [JsonProperty(PropertyName = "Edifact")]
+        [JsonProperty(PropertyName = "edifact")]
         public EdifactAgreementContent Edifact { get; set; }
 
         /// <summary>
