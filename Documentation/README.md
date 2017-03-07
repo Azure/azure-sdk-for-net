@@ -49,7 +49,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | PowerBI | Microsoft.Azure.Management.PowerBIEmbedded |
 | Redis Cache | Microsoft.Azure.Management.Redis |
 | Resource Manager (ARM) | Microsoft.Azure.Management.ResourceManager |
-| Scheduler | Microsoft.WindowsAzure.Management.Scheduler |
+| Scheduler | Microsoft.Azure.Management.Scheduler |
 | Search | Microsoft.Azure.Search |
 | Storage | Microsoft.Azure.Management.Storage |
 | Traffic Manager | Microsoft.Azure.Management.TrafficManager |
