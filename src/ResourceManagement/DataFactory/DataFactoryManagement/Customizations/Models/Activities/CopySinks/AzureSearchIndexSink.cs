@@ -16,28 +16,14 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Available authentication types for <see cref="ODataLinkedService"/>.
+    /// A copy activity sink for an Azure Search Index.
     /// </summary>
-    public static class ODataAuthenticationType
+    public class AzureSearchIndexSink : CopySink
     {
         /// <summary>
-        /// Basic authentication type.
+        /// Optional. Specifies how to upsert documents into an Azure Search Index.
+        /// Must be one of <see cref="AzureSearchIndexWriteBehavior"/>. The default value is 'Merge' if no value is specified.
         /// </summary>
-        public const string Basic = "Basic";
-
-        /// <summary>
-        /// Anonymous authentication type.
-        /// </summary>
-        public const string Anonymous = "Anonymous";
-
-        /// <summary>
-        /// Windows authentication type.
-        /// </summary>
-        public const string Windows = "Windows";
-
-        /// <summary>
-        /// OAuth authentication type.
-        /// </summary>
-        public const string OAuth = "OAuth";
+        public string WriteBehavior { get; set; }
     }
 }

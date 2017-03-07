@@ -16,28 +16,33 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Available authentication types for <see cref="ODataLinkedService"/>.
+    /// An Index in an Azure Search service.
     /// </summary>
-    public static class ODataAuthenticationType
+    [AdfTypeName("AzureSearchIndex")]
+    public class AzureSearchIndexDataset : DatasetTypeProperties
     {
         /// <summary>
-        /// Basic authentication type.
+        /// The name of the Azure Search Index.
         /// </summary>
-        public const string Basic = "Basic";
+        [AdfRequired]
+        public string IndexName { get; set; }
 
         /// <summary>
-        /// Anonymous authentication type.
+        /// Initializes a new instance of the <see cref="AzureSearchIndexDataset" /> class.
         /// </summary>
-        public const string Anonymous = "Anonymous";
+        public AzureSearchIndexDataset()
+        {
+        }
 
         /// <summary>
-        /// Windows authentication type.
+        /// Initializes a new instance of the <see cref="AzureSearchIndexDataset" />
+        /// class with required arguments.
         /// </summary>
-        public const string Windows = "Windows";
-
-        /// <summary>
-        /// OAuth authentication type.
-        /// </summary>
-        public const string OAuth = "OAuth";
+        public AzureSearchIndexDataset(string indexName)
+        {
+            Ensure.IsNotNullOrEmpty(indexName, "indexName");
+            this.IndexName = indexName;
+        }
     }
 }
+

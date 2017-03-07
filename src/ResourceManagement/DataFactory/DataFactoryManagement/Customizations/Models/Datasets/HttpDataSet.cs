@@ -18,20 +18,31 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// An on-premises file system.
+    /// A file from an HTTP web server.
     /// </summary>
-    [AdfTypeName("FileShare")]
-    public class FileShareDataset : DatasetTypeProperties
+    [AdfTypeName("Http")]
+    public class HttpDataset : DatasetTypeProperties
     {
         /// <summary>
-        /// The name of the file folder.
+        /// The relative URL based on the URL in the <see cref="HttpLinkedService" />, which refers to an HTTP file.
         /// </summary>
-        public string FolderPath { get; set; }
+        public string RelativeUrl { get; set; }
 
         /// <summary>
-        /// The name of the file.
+        /// The HTTP method for the HTTP request.
         /// </summary>
-        public string FileName { get; set; }
+        public string RequestMethod { get; set; }
+
+        /// <summary>
+        /// The body of the HTTP request.
+        /// </summary>
+        public string RequestBody { get; set; }
+
+        /// <summary>
+        /// The headers of the HTTP Request. 
+        /// For example: "header-name1: header-value1 CRLF header-name2: header-value2 CRLF ...".
+        /// </summary>
+        public string AdditionalHeaders { get; set; }
 
         /// <summary>
         /// The partitions to be used by the path.
@@ -44,21 +55,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public StorageFormat Format { get; set; }
 
         /// <summary>
-        /// Files sets filter by wildcard.
-        /// </summary>
-        public string FileFilter { get; set; }
-
-        /// <summary>
-        /// The data compression method used on files.
+        /// The data compression method used on files. 
         /// </summary>
         public Compression Compression { get; set; }
 
         /// <summary>
-        /// Optional. Can only be used when accociated Linked Service is <see cref="FtpServerLinkedService"/>.
-        /// If true, data representation during transmission from FTP server is in Binary mode.
-        /// If false, data representation during transmission from FTP server is in ASCII mode.
-        /// Default value is true.
+        /// Initializes a new instance of the <see cref="HttpDataset" />
+        /// class with required arguments.
         /// </summary>
-        public bool? UseBinaryTransfer { get; set; }
+        public HttpDataset()
+        {
+        }
     }
 }

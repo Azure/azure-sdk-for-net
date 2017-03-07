@@ -57,6 +57,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public bool? EnableStaging { get; set; }
 
         /// <summary>
+        /// The execution region of the Copy Activity. Should be one of the region supported in ADF Data Movement, e.g. "West US". 
+        /// Optional region values are in https://azure.microsoft.com/en-us/documentation/articles/data-factory-data-movement-activities/#global (See values belong to column "Region used for data movement")
+        /// </summary>
+        public string ExecutionLocation { get; set; }
+
+        /// <summary>
         /// Optional. Specifies interim staging settings when EnableStaging is true.
         /// </summary>
         public StagingSettings StagingSettings { get; set; }

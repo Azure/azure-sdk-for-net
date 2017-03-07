@@ -16,9 +16,9 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Available authentication types for <see cref="ODataLinkedService"/>.
+    /// Available authentication types for an <see cref="HttpLinkedService"/>.
     /// </summary>
-    public static class ODataAuthenticationType
+    public static class HttpAuthenticationType
     {
         /// <summary>
         /// Basic authentication type.
@@ -36,8 +36,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public const string Windows = "Windows";
 
         /// <summary>
-        /// OAuth authentication type.
+        /// Digest authentication type.
         /// </summary>
-        public const string OAuth = "OAuth";
+        public const string Digest = "Digest";
+
+        /// <summary>
+        /// ClientCertificate authentication type.
+        /// </summary>
+        public const string ClientCertificate = "ClientCertificate";
     }
 }

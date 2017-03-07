@@ -1,5 +1,34 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.12.0
+_Release date: 2017.03.08_
+
+## Feature Additions
+* The following linked service types have been added:
+    * AzureSearchLinkedService, HttpLinkedService, SftpLinkedService, FtpServerLinkedService
+* The following dataset types have been added: 
+    * AzureSearchIndexDataset, HttpDataSet, FileShareDataset
+* The following storage format type has been added:
+    * ParquetFormat
+* The following compression type has been added:
+    * ZipDeflateCompression
+* The following copy source type has been added:
+    * HttpSource
+* The following copy sink type has been added: 	
+    * AzureSearchIndexSink
+* The following authentication type has been added:
+    * HttpAuthenticationType
+* Add ServicePrincipalId, ServicePrincipalKey and Tenant properties to AzureMLLinkedService:
+    * Support update resource capability for Azure ML web service
+* Rewrite AzureDataLakeStoreLinkedService:
+    * Support service principal-based authentication for ADLS
+* Add GatewayName, EncryptedCredential, Authorization, SessionId, AuthorizedCredential properties to ODataLinkedService
+* Add Windows, OAuth properties to ODataAuthenticationType
+* Add DriverType property to OnPremisesOracleLinkedService:
+    * Support Oracle Source ODBC Connector
+* Add EnvironmentUrl property to SalesforceLinkedService
+* Add JsonNodeReference, JsonPathDefinition properties to JsonFormat
+
 ## Version 4.11.1
 _Release date: 2017.02.03_ 
 
