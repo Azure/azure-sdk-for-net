@@ -20,9 +20,9 @@ namespace Sql.Tests
             string databaseName = "testdb";
             string testPrefix = "sqlcrudtest-";
             Dictionary<string, string> tags = new Dictionary<string, string>();
-            string testName = this.GetType().FullName;
+            string suiteName = this.GetType().FullName;
 
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(testName, "TestCopyDatabase", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCopyDatabase", testPrefix, (resClient, sqlClient, resourceGroup) =>
             {
                 //Create two servers
                 string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
