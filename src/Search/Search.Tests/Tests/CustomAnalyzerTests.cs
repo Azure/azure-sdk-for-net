@@ -162,9 +162,7 @@ namespace Microsoft.Azure.Search.Tests
                 client.Indexes.Create(index);
 
                 AnalyzerName[] allAnalyzerNames = GetAllExtensibleEnumValues<AnalyzerName>();
-    
-                allAnalyzerNames = allAnalyzerNames.Except(new[] { AnalyzerName.StandardLucene }).ToArray();
-
+                    
                 var requests = allAnalyzerNames.Select(an => new AnalyzeRequest() { Text = "One two", Analyzer = an });
 
                 foreach (var req in requests)
