@@ -4,6 +4,7 @@
 
 using System.Reflection;
 using System.Resources;
+using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Logic App Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Logic App management operations.")]

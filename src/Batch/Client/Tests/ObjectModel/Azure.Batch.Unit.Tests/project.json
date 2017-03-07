@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "description": "Azure Batch Unit tests class library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": [ "dnxcore50", "portable-net45+win8" ]
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Azure.Batch": {
+      "target": "project",
+      "version": "6.1.0"
+    },
+    "Common": "1.0.0"
+  }
+}

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Build.Tasks
         /// <summary>
         /// Default timeout
         /// </summary>
-        const int DEFAULT_TASK_TIMEOUT = 20000;
+        const int DEFAULT_TASK_TIMEOUT = 30000;
 
         /// <summary>
         /// Task Timeout

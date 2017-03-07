@@ -75,6 +75,7 @@
 	</Target>
 
 	<Target Name="ListPackages">
+		<Message Text="Nuspec: %(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />		
 		<Message Text="%(SdkNuGetPackage.Identity) %(SdkNuGetPackage.PackageVersion) %(SdkNuGetPackage.Folder)" />
 	</Target>
 
@@ -82,7 +83,7 @@
 	Build NuGet packages
 	-->
 	<Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
-		<CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_NetCore_AutoRestLibraries) != '' or @(NonAutoRestLibraries) != ''" />
+		<CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_NetCore_AutoRestLibraries) != '' or @(SdkNuGetPackage) != ''" />
 
 		<Message Text="Generating NuGet library" Importance="high" />
 		<Exec Condition=" '%(SdkNuGetPackage.Identity)' != '' "
@@ -97,7 +98,7 @@
 	</Target>
 
 	<Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
-		<Error Condition=" '$(Scope)' == 'all' OR '$(Scope)' == '' " Text="Publishing nuget package without specifying scope has now been disabled" />
+		<Error Condition=" ('$(PackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
 		<Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 		<Message Text="Trying to Create directory $(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
 		<MakeDir Directories="$(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(NuGetPublishingSource)', '^(?i)http'))" />

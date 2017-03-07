@@ -25,6 +25,7 @@
     "src/ResourceManagement/Websites/Microsoft.Azure.Management.Websites",
     "src/ResourceManagement/IotHub/Microsoft.Azure.Management.IotHub",
     "src/ResourceManagement/Insights/Microsoft.Azure.Insights",
-    "src/ResourceManagement/AnalysisServices/Microsoft.Azure.Management.Analysis"
+    "src/ResourceManagement/AnalysisServices/Microsoft.Azure.Management.Analysis",
+    "src/ResourceManagement/Monitor/Microsoft.Azure.Monitor"
   ]
 }
