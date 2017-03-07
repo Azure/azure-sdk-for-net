@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private IDictionary<string, List<string>> _header;
         
         /// <summary>
-        /// Required. Gets or sets Custom header authentication.
+        /// Optional. Gets or sets Custom header authentication.
         /// </summary>
         public IDictionary<string, List<string>> Header
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private IDictionary<string, List<string>> _query;
         
         /// <summary>
-        /// Required. Gets or sets Custom query parameter authentication.
+        /// Optional. Gets or sets Custom query parameter authentication.
         /// </summary>
         public IDictionary<string, List<string>> Query
         {
@@ -84,25 +84,6 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
             this.Certificate = new LazyList<string>();
             this.Header = new LazyDictionary<string, List<string>>();
             this.Query = new LazyDictionary<string, List<string>>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BackendCredentialsContract class
-        /// with required arguments.
-        /// </summary>
-        public BackendCredentialsContract(IDictionary<string, List<string>> query, IDictionary<string, List<string>> header)
-            : this()
-        {
-            if (query == null)
-            {
-                throw new ArgumentNullException("query");
-            }
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-            this.Query = query;
-            this.Header = header;
         }
     }
 }
