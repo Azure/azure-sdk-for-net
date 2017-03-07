@@ -261,8 +261,5 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public Uri GraphTokenAudienceUri { get; set; }
 
         public Uri PublishingSettingsFileUri { get; set; }
-
-        //public Uri AADServiceUri { get; set; }
-
     }
 }
