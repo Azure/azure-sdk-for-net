@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Primitives;
     using Xunit;
 
     public class ExpectedMessagingExceptionTests
@@ -14,13 +15,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task MessageLockLostExceptionTest()
         {
             const int messageCount = 2;
-            var queueClient = QueueClient.CreateFromConnectionString(
-                TestUtility.GetEntityConnectionString(Constants.NonPartitionedQueueName));
+            var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
+            var receiver = connection.CreateMessageReceiver(Constants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+            var sender = connection.CreateMessageSender(Constants.NonPartitionedQueueName);
 
             try
             {
-                await TestUtility.SendMessagesAsync(queueClient.InnerSender, messageCount);
-                var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, messageCount);
+                await TestUtility.SendMessagesAsync(sender, messageCount);
+                var receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
 
                 Assert.True(receivedMessages.Count() == messageCount);
 
@@ -28,30 +30,37 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.Delay(TimeSpan.FromMinutes(1));
 
                 // Complete should throw
-                await Assert.ThrowsAsync<MessageLockLostException>(async () => await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, receivedMessages));
+                await
+                    Assert.ThrowsAsync<MessageLockLostException>(
+                        async () => await TestUtility.CompleteMessagesAsync(receiver, receivedMessages));
 
-                receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, messageCount);
+                receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
                 Assert.True(receivedMessages.Count() == messageCount);
 
-                await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, receivedMessages);
+                await TestUtility.CompleteMessagesAsync(receiver, receivedMessages);
             }
             finally
             {
-                await queueClient.CloseAsync();
+                await sender.CloseAsync().ConfigureAwait(false);
+                await receiver.CloseAsync().ConfigureAwait(false);
             }
         }
 
+        // TODO: Update this when Session is implemented
+        /*
         [Fact]
         async Task SessionLockLostExceptionTest()
         {
-            var queueClient = QueueClient.CreateFromConnectionString(
-                TestUtility.GetEntityConnectionString(Constants.SessionNonPartitionedQueueName));
+            var messagingFactory = new ServiceBusClientFactory();
+            var queueClient =
+                (QueueClient)messagingFactory.CreateQueueClientFromConnectionString(
+                    TestUtility.GetEntityConnectionString(Constants.SessionNonPartitionedQueueName));
 
             try
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-            await queueClient.SendAsync(new BrokeredMessage
+            await queueClient.SendAsync(new Message
                 { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
@@ -89,26 +98,31 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await queueClient.CloseAsync();
             }
         }
+        */
 
         [Fact]
         async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
-            var queueClient = QueueClient.CreateFromConnectionString(
-                        TestUtility.GetEntityConnectionString(Constants.NonPartitionedQueueName),
-                        ReceiveMode.ReceiveAndDelete);
+            var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
+            var receiver = connection.CreateMessageReceiver(Constants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
+            var sender = connection.CreateMessageSender(Constants.NonPartitionedQueueName);
+
             try
             {
-                await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                var message = await queueClient.PeekAsync();
+                await TestUtility.SendMessagesAsync(sender, 1);
+                var message = await receiver.PeekAsync();
                 Assert.NotNull(message);
-                await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.CompleteAsync());
+                await
+                    Assert.ThrowsAsync<InvalidOperationException>(
+                        async () => await receiver.CompleteAsync(message.LockToken));
 
-                message = await queueClient.ReceiveAsync();
+                message = await receiver.ReceiveAsync();
                 Assert.NotNull((object)message);
             }
             finally
             {
-                await queueClient.CloseAsync();
+                await sender.CloseAsync().ConfigureAwait(false);
+                await receiver.CloseAsync().ConfigureAwait(false);
             }
         }
     }

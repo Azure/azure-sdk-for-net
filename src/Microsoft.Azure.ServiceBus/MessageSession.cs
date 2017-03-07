@@ -7,8 +7,9 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
+    using Core;
 
-    public abstract class MessageSession : MessageReceiver
+    internal abstract class MessageSession : MessageReceiver, IMessageSession
     {
         /// <summary>Represents a message session that allows grouping of related messages for processing in a single transaction.</summary>
         protected MessageSession(ReceiveMode receiveMode, string sessionId, DateTime lockedUntilUtc, MessageReceiver innerReceiver)
@@ -64,42 +65,42 @@ namespace Microsoft.Azure.ServiceBus
 
         protected abstract Task OnRenewLockAsync();
 
-        protected override Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
+        protected override Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
             return this.InnerMessageReceiver.ReceiveAsync(maxMessageCount, serverWaitTime);
         }
 
-        protected override Task<IList<BrokeredMessage>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
+        protected override Task<IList<Message>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
         {
             return this.InnerMessageReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
         }
 
-        protected override Task OnCompleteAsync(IEnumerable<Guid> lockTokens)
+        protected override Task OnCompleteAsync(IEnumerable<string> lockTokens)
         {
             return this.InnerMessageReceiver.CompleteAsync(lockTokens);
         }
 
-        protected override Task OnAbandonAsync(IEnumerable<Guid> lockTokens)
+        protected override Task OnAbandonAsync(string lockToken)
         {
-            return this.InnerMessageReceiver.AbandonAsync(lockTokens);
+            return this.InnerMessageReceiver.AbandonAsync(lockToken);
         }
 
-        protected override Task OnDeferAsync(IEnumerable<Guid> lockTokens)
+        protected override Task OnDeferAsync(string lockToken)
         {
-            return this.InnerMessageReceiver.DeferAsync(lockTokens);
+            return this.InnerMessageReceiver.DeferAsync(lockToken);
         }
 
-        protected override Task OnDeadLetterAsync(IEnumerable<Guid> lockTokens)
+        protected override Task OnDeadLetterAsync(string lockToken)
         {
-            return this.InnerMessageReceiver.DeadLetterAsync(lockTokens);
+            return this.InnerMessageReceiver.DeadLetterAsync(lockToken);
         }
 
-        protected override Task<DateTime> OnRenewLockAsync(Guid lockToken)
+        protected override Task<DateTime> OnRenewLockAsync(string lockToken)
         {
             return this.InnerMessageReceiver.RenewLockAsync(lockToken);
         }
 
-        protected override Task<IList<BrokeredMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
+        protected override Task<IList<Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
         {
             return this.InnerMessageReceiver.PeekAsync(messageCount);
         }

@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -38,12 +37,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             const int messageCount = 10;
 
-            var entityConnectionString = TestUtility.GetEntityConnectionString(topicName);
-            var topicClient = TopicClient.CreateFromConnectionString(entityConnectionString);
-            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(entityConnectionString, this.SubscriptionName, mode);
+            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+            var subscriptionClient = new SubscriptionClient(
+                TestUtility.NamespaceConnectionString,
+                topicName,
+                this.SubscriptionName,
+                mode);
+
             try
             {
-                await this.OnMessageAsyncTestCase(topicClient.InnerSender, subscriptionClient.InnerReceiver, maxConcurrentCalls, autoComplete, messageCount);
+                await this.OnMessageAsyncTestCase(
+                    topicClient.InnerClient.InnerSender,
+                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                    maxConcurrentCalls,
+                    autoComplete,
+                    messageCount);
             }
             finally
             {

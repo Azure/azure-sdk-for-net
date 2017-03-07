@@ -4,299 +4,75 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Filters;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Amqp;
+    using Core;
+    using Filters;
+    using Primitives;
 
-    public abstract class SubscriptionClient : ClientEntity
+    public sealed class SubscriptionClient : ClientEntity, ISubscriptionClient
     {
         public const string DefaultRule = "$Default";
-        MessageReceiver innerReceiver;
 
-        protected SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string name, ReceiveMode receiveMode)
-            : base($"{nameof(SubscriptionClient)}{ClientEntity.GetNextId()}({name})")
+        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock)
+            : this(new ServiceBusNamespaceConnection(connectionString), topicPath, subscriptionName, receiveMode)
         {
-            this.ServiceBusConnection = serviceBusConnection;
+        }
+
+        private SubscriptionClient(ServiceBusNamespaceConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode)
+            : base($"{nameof(SubscriptionClient)}{ClientEntity.GetNextId()}({subscriptionName})")
+        {
             this.TopicPath = topicPath;
-            this.Name = name;
-            this.SubscriptionPath = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.Name);
-            this.Mode = receiveMode;
+            this.SubscriptionName = subscriptionName;
+            this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
+            this.ReceiveMode = receiveMode;
+            this.InnerSubscriptionClient = new AmqpSubscriptionClient(serviceBusConnection, this.Path, MessagingEntityType.Subscriber, receiveMode);
         }
 
-        public string TopicPath { get; private set; }
+        public string TopicPath { get; }
 
-        public string Name { get; }
+        public string Path { get; }
 
-        public ReceiveMode Mode { get; private set; }
+        public string SubscriptionName { get; }
 
-        public int PrefetchCount
+        public ReceiveMode ReceiveMode { get; }
+
+        internal IInnerSubscriptionClient InnerSubscriptionClient { get; }
+
+        public override async Task CloseAsync()
         {
-            get
-            {
-                return this.InnerReceiver.PrefetchCount;
-            }
-
-            set
-            {
-                this.InnerReceiver.PrefetchCount = value;
-            }
+            await this.InnerSubscriptionClient.CloseAsync().ConfigureAwait(false);
         }
 
-        internal string SubscriptionPath { get; private set; }
-
-        internal MessageReceiver InnerReceiver
+        public Task CompleteAsync(string lockToken)
         {
-            get
-            {
-                if (this.innerReceiver == null)
-                {
-                    lock (this.ThisLock)
-                    {
-                        if (this.innerReceiver == null)
-                        {
-                            this.innerReceiver = this.CreateMessageReceiver();
-                        }
-                    }
-                }
-
-                return this.innerReceiver;
-            }
+            return this.InnerSubscriptionClient.InnerReceiver.CompleteAsync(lockToken);
         }
 
-        protected object ThisLock { get; } = new object();
-
-        protected ServiceBusConnection ServiceBusConnection { get; }
-
-        public static SubscriptionClient CreateFromConnectionString(string topicEntityConnectionString, string subscriptionName)
+        public Task AbandonAsync(string lockToken)
         {
-            return CreateFromConnectionString(topicEntityConnectionString, subscriptionName, ReceiveMode.PeekLock);
+            return this.InnerSubscriptionClient.InnerReceiver.AbandonAsync(lockToken);
         }
 
-        public static SubscriptionClient CreateFromConnectionString(string topicEntityConnectionString, string subscriptionName, ReceiveMode mode)
+        public Task DeadLetterAsync(string lockToken)
         {
-            if (string.IsNullOrWhiteSpace(topicEntityConnectionString))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(topicEntityConnectionString));
-            }
-
-            ServiceBusEntityConnection topicConnection = new ServiceBusEntityConnection(topicEntityConnectionString);
-            return topicConnection.CreateSubscriptionClient(topicConnection.EntityPath, subscriptionName, mode);
-        }
-
-        public static SubscriptionClient Create(ServiceBusNamespaceConnection namespaceConnection, string topicPath, string subscriptionName)
-        {
-            return SubscriptionClient.Create(namespaceConnection, topicPath, subscriptionName, ReceiveMode.PeekLock);
-        }
-
-        public static SubscriptionClient Create(ServiceBusNamespaceConnection namespaceConnection, string topicPath, string subscriptionName, ReceiveMode mode)
-        {
-            if (namespaceConnection == null)
-            {
-                throw Fx.Exception.Argument(nameof(namespaceConnection), "Namespace Connection is null. Create a connection using the NamespaceConnection class");
-            }
-
-            if (string.IsNullOrWhiteSpace(topicPath))
-            {
-                throw Fx.Exception.Argument(nameof(namespaceConnection), "Topic Path is null");
-            }
-
-            return namespaceConnection.CreateSubscriptionClient(topicPath, subscriptionName, mode);
-        }
-
-        public static SubscriptionClient Create(ServiceBusEntityConnection topicConnection, string subscriptionName)
-        {
-            return SubscriptionClient.Create(topicConnection, subscriptionName, ReceiveMode.PeekLock);
-        }
-
-        public static SubscriptionClient Create(ServiceBusEntityConnection topicConnection, string subscriptionName, ReceiveMode mode)
-        {
-            if (topicConnection == null)
-            {
-                throw Fx.Exception.Argument(nameof(topicConnection), "Namespace Connection is null. Create a connection using the NamespaceConnection class");
-            }
-
-            return topicConnection.CreateSubscriptionClient(topicConnection.EntityPath, subscriptionName, mode);
-        }
-
-        public sealed override async Task CloseAsync()
-        {
-            await this.OnCloseAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Receives a message using the <see cref="MessageReceiver" />.
-        /// </summary>
-        /// <returns>The asynchronous operation.</returns>
-        public Task<BrokeredMessage> ReceiveAsync()
-        {
-            return this.InnerReceiver.ReceiveAsync();
-        }
-
-        /// <summary>
-        /// Receives a message using the <see cref="MessageReceiver" />.
-        /// </summary>
-        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
-        /// <returns>The asynchronous operation.</returns>
-        public Task<BrokeredMessage> ReceiveAsync(TimeSpan serverWaitTime)
-        {
-            return this.InnerReceiver.ReceiveAsync(serverWaitTime);
-        }
-
-        /// <summary>
-        /// Receives a message using the <see cref="MessageReceiver" />.
-        /// </summary>
-        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
-        /// <returns>The asynchronous operation.</returns>
-        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
-        {
-            return this.InnerReceiver.ReceiveAsync(maxMessageCount);
-        }
-
-        /// <summary>
-        /// Receives a message using the <see cref="MessageReceiver" />.
-        /// </summary>
-        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
-        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
-        /// <returns>The asynchronous operation.</returns>
-        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
-        {
-            return this.InnerReceiver.ReceiveAsync(maxMessageCount, serverWaitTime);
-        }
-
-        public async Task<BrokeredMessage> ReceiveBySequenceNumberAsync(long sequenceNumber)
-        {
-            IList<BrokeredMessage> messages = await this.ReceiveBySequenceNumberAsync(new[] { sequenceNumber });
-            if (messages != null && messages.Count > 0)
-            {
-                return messages[0];
-            }
-
-            return null;
-        }
-
-        public Task<IList<BrokeredMessage>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
-        {
-            return this.InnerReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
-        }
-
-        /// <summary>
-        /// Asynchronously reads the next message without changing the state of the receiver or the message source.
-        /// </summary>
-        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
-        public Task<BrokeredMessage> PeekAsync()
-        {
-            return this.InnerReceiver.PeekAsync();
-        }
-
-        /// <summary>
-        /// Asynchronously reads the next batch of message without changing the state of the receiver or the message source.
-        /// </summary>
-        /// <param name="maxMessageCount">The number of messages.</param>
-        /// <returns>The asynchronous operation that returns a list of <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> to be read.</returns>
-        public Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
-        {
-            return this.InnerReceiver.PeekAsync(maxMessageCount);
-        }
-
-        /// <summary>
-        /// Asynchronously reads the next message without changing the state of the receiver or the message source.
-        /// </summary>
-        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
-        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
-        public Task<BrokeredMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
-        {
-            return this.InnerReceiver.PeekBySequenceNumberAsync(fromSequenceNumber);
-        }
-
-        /// <summary>Peeks a batch of messages.</summary>
-        /// <param name="fromSequenceNumber">The starting point from which to browse a batch of messages.</param>
-        /// <param name="messageCount">The number of messages.</param>
-        /// <returns>A batch of messages peeked.</returns>
-        public Task<IList<BrokeredMessage>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
-        {
-            return this.InnerReceiver.PeekBySequenceNumberAsync(fromSequenceNumber, messageCount);
-        }
-
-        public Task CompleteAsync(Guid lockToken)
-        {
-            return this.CompleteAsync(new[] { lockToken });
-        }
-
-        public Task CompleteAsync(IEnumerable<Guid> lockTokens)
-        {
-            return this.InnerReceiver.CompleteAsync(lockTokens);
-        }
-
-        public Task AbandonAsync(Guid lockToken)
-        {
-            return this.InnerReceiver.AbandonAsync(new[] { lockToken });
-        }
-
-        public Task<MessageSession> AcceptMessageSessionAsync()
-        {
-            return this.AcceptMessageSessionAsync(null);
-        }
-
-        public Task<MessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime)
-        {
-            return this.AcceptMessageSessionAsync(null, serverWaitTime);
-        }
-
-        public Task<MessageSession> AcceptMessageSessionAsync(string sessionId)
-        {
-            return this.AcceptMessageSessionAsync(sessionId, this.InnerReceiver.OperationTimeout);
-        }
-
-        public async Task<MessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
-        {
-            MessageSession session;
-
-            MessagingEventSource.Log.AcceptMessageSessionStart(this.ClientId, sessionId);
-
-            try
-            {
-                session = await this.OnAcceptMessageSessionAsync(sessionId, serverWaitTime).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                MessagingEventSource.Log.AcceptMessageSessionException(this.ClientId, exception);
-                throw;
-            }
-
-            MessagingEventSource.Log.AcceptMessageSessionStop(this.ClientId);
-            return session;
-        }
-
-        public Task DeferAsync(Guid lockToken)
-        {
-            return this.InnerReceiver.DeferAsync(new[] { lockToken });
-        }
-
-        public Task DeadLetterAsync(Guid lockToken)
-        {
-            return this.InnerReceiver.DeadLetterAsync(new[] { lockToken });
-        }
-
-        public Task<DateTime> RenewMessageLockAsync(Guid lockToken)
-        {
-            return this.InnerReceiver.RenewLockAsync(lockToken);
+            return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken);
         }
 
         /// <summary>Asynchronously processes a message.</summary>
-        /// <param name="callback">The method to invoke when the operation is complete.</param>
-        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback)
+        /// <param name="handler"></param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
         {
-            this.InnerReceiver.OnMessageAsync(callback);
+            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler);
         }
 
         /// <summary>Asynchronously processes a message.</summary>
-        /// <param name="callback">The method to invoke when the operation is complete.</param>
-        /// <param name="onMessageOptions">Calls a message option.</param>
-        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback, OnMessageOptions onMessageOptions)
+        /// <param name="handler"></param>
+        /// <param name="registerHandlerOptions">Calls a message option.</param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterHandlerOptions registerHandlerOptions)
         {
-            this.InnerReceiver.OnMessageAsync(callback, onMessageOptions);
+            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, registerHandlerOptions);
         }
 
         /// <summary>
@@ -327,7 +103,7 @@ namespace Microsoft.Azure.ServiceBus
 
             try
             {
-                await this.OnAddRuleAsync(description).ConfigureAwait(false);
+                await this.InnerSubscriptionClient.OnAddRuleAsync(description).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -354,7 +130,7 @@ namespace Microsoft.Azure.ServiceBus
 
             try
             {
-                await this.OnRemoveRuleAsync(ruleName).ConfigureAwait(false);
+                await this.InnerSubscriptionClient.OnRemoveRuleAsync(ruleName).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -364,20 +140,5 @@ namespace Microsoft.Azure.ServiceBus
 
             MessagingEventSource.Log.RemoveRuleStop(this.ClientId);
         }
-
-        protected MessageReceiver CreateMessageReceiver()
-        {
-            return this.OnCreateMessageReceiver();
-        }
-
-        protected abstract MessageReceiver OnCreateMessageReceiver();
-
-        protected abstract Task<MessageSession> OnAcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime);
-
-        protected abstract Task OnCloseAsync();
-
-        protected abstract Task OnAddRuleAsync(RuleDescription description);
-
-        protected abstract Task OnRemoveRuleAsync(string ruleName);
     }
 }

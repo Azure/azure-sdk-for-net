@@ -59,31 +59,24 @@ In this tutorial, we will write a console application to receive messages from a
 1. Create a new method called `ReceiveMessages` with the following code:
 
     ```csharp
-    // Receives messages from the queue in a loop
-    private static async Task ReceiveMessages()
+    try
     {
-        Console.WriteLine("Press ctrl-c to exit receive loop.");
-        while (true)
-        {
-            try
+        // Register a OnMessage callback
+        queueClient.RegisterMessageHandler(
+            async (message, token) =>
             {
-                // Receive the next message from the queue
-                var message = await queueClient.ReceiveAsync();
-                
-                // Write the message body to the console
-                Console.WriteLine($"Received message: {message.GetBody<string>()}");
+                // Process the message
+                Console.WriteLine($"Received message: SequenceNumber:{message.SequenceNumber} Body:{message.GetBody<string>()}");
 
-                // Complete the messgage so that it is not received again
-                await message.CompleteAsync();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"{DateTime.Now} > Exception: {exception.Message}");
-            }
-
-            // Delay by 10 milliseconds so that the console can keep up
-            await Task.Delay(10);
-        }
+                // Complete the message so that it is not received again.
+                // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
+                await queueClient.CompleteAsync(message.LockToken);
+            },
+            new RegisterHandlerOptions() {MaxConcurrentCalls = 1, AutoComplete = false});
+    }
+    catch (Exception exception)
+    {
+        Console.WriteLine($"{DateTime.Now} > Exception: {exception.Message}");
     }
     ```
 
@@ -92,16 +85,11 @@ In this tutorial, we will write a console application to receive messages from a
     ```csharp
     private static async Task MainAsync(string[] args)
     {
-        // Creates a ServiceBusConnectionStringBuilder object from the connection string, and sets the EntityPath.
-        var connectionStringBuilder = new ServiceBusConnectionStringBuilder(ServiceBusConnectionString)
-        {
-            EntityPath = QueueName
-        };
+        queueClient = new QueueClient(ServiceBusConnectionString, QueueName, ReceiveMode.PeekLock);
+        ReceiveMessages();
 
-        // Initializes the static QueueClient variable that will be used in the ReceiveMessages method.
-        queueClient = QueueClient.CreateFromConnectionString(connectionStringBuilder.ToString());
-
-        await ReceiveMessages();
+        Console.WriteLine("Press any key to stop receiving messages.");
+        Console.ReadKey();
 
         // Close the client after the ReceiveMessages method has exited.
         await queueClient.CloseAsync();

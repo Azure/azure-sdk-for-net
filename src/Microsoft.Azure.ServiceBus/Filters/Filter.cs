@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Filters
 {
     /// <summary>
-    /// Describes a filter expression that is evaluated against a BrokeredMessage.
+    /// Describes a filter expression that is evaluated against a Message.
     /// </summary>
     /// <remarks>
     /// Filter is an abstract class with the following concrete implementations:

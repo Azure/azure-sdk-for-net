@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// TODO: Commenting the whole file. It will be updated once OnSession() is implemented.
+/*
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
@@ -24,17 +26,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task SessionTest(string queueName)
         {
-            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName));
+            var messagingFactory = new ServiceBusClientFactory();
+            var queueClient = (QueueClient)messagingFactory.CreateQueueClientFromConnectionString(TestUtility.GetEntityConnectionString(queueName));
             try
             {
                 var messageId1 = "test-message1";
                 var sessionId1 = "sessionId1";
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId1, SessionId = sessionId1 });
+                await queueClient.SendAsync(new Message() { MessageId = messageId1, SessionId = sessionId1 });
                 TestUtility.Log($"Sent Message: {messageId1} to Session: {sessionId1}");
 
                 var messageId2 = "test-message2";
                 var sessionId2 = "sessionId2";
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId2, SessionId = sessionId2 });
+                await queueClient.SendAsync(new Message() { MessageId = messageId2, SessionId = sessionId2 });
                 TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
 
                 // Receive Message, Complete and Close with SessionId - sessionId 1
@@ -46,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 // Receive Message, Complete and Close - With Null SessionId specified
                 var messageId3 = "test-message3";
                 var sessionId3 = "sessionId3";
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId3, SessionId = sessionId3 });
+                await queueClient.SendAsync(new Message() { MessageId = messageId3, SessionId = sessionId3 });
 
                 await this.AcceptAndCompleteSessionsAsync(queueClient, null, messageId3);
             }
@@ -61,12 +64,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task GetAndSetSessionStateTest(string queueName)
         {
-            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName));
+            var messagingFactory = new ServiceBusClientFactory();
+            var queueClient = (QueueClient)messagingFactory.CreateQueueClientFromConnectionString(TestUtility.GetEntityConnectionString(queueName));
             try
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId, SessionId = sessionId });
+                await queueClient.SendAsync(new Message() { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 var sessionReceiver = await queueClient.AcceptMessageSessionAsync(sessionId);
@@ -118,19 +122,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task SessionRenewLockTest(string queueName)
         {
-            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName));
+            var messagingFactory = new ServiceBusClientFactory();
+            var queueClient = messagingFactory.CreateQueueClientFromConnectionString(TestUtility.GetEntityConnectionString(queueName));
             try
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId, SessionId = sessionId });
+                await queueClient.SendAsync(new Message() { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 var sessionReceiver = await queueClient.AcceptMessageSessionAsync(sessionId);
                 Assert.NotNull(sessionReceiver);
                 DateTime initialSessionLockedUntilTime = sessionReceiver.LockedUntilUtc;
                 TestUtility.Log($"Session LockedUntilUTC: {initialSessionLockedUntilTime} for Session: {sessionReceiver.SessionId}");
-                BrokeredMessage message = await sessionReceiver.ReceiveAsync();
+                Message message = await sessionReceiver.ReceiveAsync();
                 TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
                 Assert.True(message.MessageId == messageId);
 
@@ -163,17 +168,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task PeekSessionAsyncTest(string queueName, int messageCount = 10)
         {
-            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName), ReceiveMode.ReceiveAndDelete);
+            var messagingFactory = new ServiceBusClientFactory();
+            var queueClient = (QueueClient)messagingFactory.CreateQueueClientFromConnectionString(TestUtility.GetEntityConnectionString(queueName), ReceiveMode.ReceiveAndDelete);
             try
             {
                 var messageId1 = "test-message1";
                 var sessionId1 = "sessionId1";
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId1, SessionId = sessionId1 });
+                await queueClient.SendAsync(new Message() { MessageId = messageId1, SessionId = sessionId1 });
                 TestUtility.Log($"Sent Message: {messageId1} to Session: {sessionId1}");
 
                 var messageId2 = "test-message2";
                 var sessionId2 = "sessionId2";
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId2, SessionId = sessionId2 });
+                await queueClient.SendAsync(new Message() { MessageId = messageId2, SessionId = sessionId2 });
                 TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
 
                 // Peek Message, Receive and Delete with SessionId - sessionId 1
@@ -193,7 +199,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task AcceptSessionShouldReturnNoLaterThanServerWaitTimeTestCase(string queueName, int messageCount = 1)
         {
-            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName), ReceiveMode.ReceiveAndDelete);
+            var messagingFactory = new ServiceBusClientFactory();
+            var queueClient = (QueueClient)messagingFactory.CreateQueueClientFromConnectionString(TestUtility.GetEntityConnectionString(queueName), ReceiveMode.ReceiveAndDelete);
             try
             {
                 Stopwatch timer = Stopwatch.StartNew();
@@ -261,3 +268,4 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
     }
 }
+*/

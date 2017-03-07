@@ -8,16 +8,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-    using Microsoft.Azure.Messaging.Amqp;
+    using Azure.Amqp;
+    using Azure.Amqp.Encoding;
+    using Azure.Amqp.Framing;
+    using Core;
+    using Messaging.Amqp;
 
     sealed class AmqpMessageSender : MessageSender
     {
         int deliveryCount;
 
-        internal AmqpMessageSender(string entityName, MessagingEntityType entityType, ServiceBusConnection serviceBusConnection, ICbsTokenProvider cbsTokenProvider)
+        internal AmqpMessageSender(string entityName, MessagingEntityType? entityType, ServiceBusConnection serviceBusConnection, ICbsTokenProvider cbsTokenProvider)
             : base(serviceBusConnection.OperationTimeout)
         {
             this.Path = entityName;
@@ -59,10 +60,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return responseMessage;
         }
 
-        protected override async Task OnSendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
+        protected override async Task OnSendAsync(IList<Message> messageList)
         {
             TimeoutHelper timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
-            using (AmqpMessage amqpMessage = AmqpMessageConverter.BrokeredMessagesToAmqpMessage(brokeredMessages, true))
+            using (AmqpMessage amqpMessage = AmqpMessageConverter.BrokeredMessagesToAmqpMessage(messageList, true))
             {
                 SendingAmqpLink amqpLink = null;
                 try
@@ -94,10 +95,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        protected override async Task<long> OnScheduleMessageAsync(BrokeredMessage brokeredMessage)
+        protected override async Task<long> OnScheduleMessageAsync(Message message)
         {
             // TODO: Ensure System.Transactions.Transaction.Current is null. Transactions are not supported by 1.0.0 version of dotnet core.
-            using (AmqpMessage amqpMessage = AmqpMessageConverter.ClientGetMessage(brokeredMessage))
+            using (AmqpMessage amqpMessage = AmqpMessageConverter.ClientGetMessage(message))
             {
                 var request = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.ScheduleMessageOperation,
@@ -111,16 +112,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 var entry = new AmqpMap();
                 {
                     entry[ManagementConstants.Properties.Message] = value;
-                    entry[ManagementConstants.Properties.MessageId] = brokeredMessage.MessageId;
+                    entry[ManagementConstants.Properties.MessageId] = message.MessageId;
 
-                    if (!string.IsNullOrWhiteSpace(brokeredMessage.SessionId))
+                    if (!string.IsNullOrWhiteSpace(message.SessionId))
                     {
-                        entry[ManagementConstants.Properties.SessionId] = brokeredMessage.SessionId;
+                        entry[ManagementConstants.Properties.SessionId] = message.SessionId;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(brokeredMessage.PartitionKey))
+                    if (!string.IsNullOrWhiteSpace(message.PartitionKey))
                     {
-                        entry[ManagementConstants.Properties.PartitionKey] = brokeredMessage.PartitionKey;
+                        entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
                     }
                 }
 
@@ -176,7 +177,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 Target = new Target { Address = this.Path },
                 Source = new Source { Address = this.ClientId },
             };
-            linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, (int)this.EntityType);
+            if (this.EntityType != null)
+            {
+                linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, (int)this.EntityType);
+            }
 
             AmqpSendReceiveLinkCreator sendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.Path, this.ServiceBusConnection, new[] { ClaimConstants.Send }, this.CbsTokenProvider, linkSettings);
             SendingAmqpLink sendingAmqpLink = (SendingAmqpLink)await sendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);

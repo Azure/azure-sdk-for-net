@@ -5,71 +5,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Messaging.Amqp;
-    using Microsoft.Azure.ServiceBus.Filters;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Azure.Amqp;
+    using Core;
+    using Filters;
+    using Messaging.Amqp;
 
-    public class AmqpSubscriptionClient : SubscriptionClient
+    internal sealed class AmqpSubscriptionClient : AmqpClient, IInnerSubscriptionClient
     {
-        public AmqpSubscriptionClient(ServiceBusConnection servicebusConnection, string topicPath, string subscriptionName, ReceiveMode mode)
-            : base(servicebusConnection, topicPath, subscriptionName, mode)
+        public AmqpSubscriptionClient(
+            ServiceBusConnection servicebusConnection,
+            string entityPath,
+            MessagingEntityType entityType,
+            ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
+            : base(servicebusConnection, entityPath, entityType, mode)
         {
-            this.TokenProvider =
-                TokenProvider.CreateSharedAccessSignatureTokenProvider(
-                    this.ServiceBusConnection.SasKeyName,
-                    this.ServiceBusConnection.SasKey);
-            this.CbsTokenProvider = new TokenProviderAdapter(
-                this.TokenProvider,
-                this.ServiceBusConnection.OperationTimeout);
         }
 
-        internal ICbsTokenProvider CbsTokenProvider { get; }
-
-        TokenProvider TokenProvider { get; }
-
-        protected override MessageReceiver OnCreateMessageReceiver()
-        {
-            return new AmqpMessageReceiver(
-                this.SubscriptionPath,
-                MessagingEntityType.Subscriber,
-                this.Mode,
-                this.ServiceBusConnection.PrefetchCount,
-                this.ServiceBusConnection,
-                this.CbsTokenProvider);
-        }
-
-        protected override async Task<MessageSession> OnAcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
-        {
-            AmqpMessageReceiver receiver = new AmqpMessageReceiver(
-                this.SubscriptionPath,
-                MessagingEntityType.Subscriber,
-                this.Mode,
-                this.ServiceBusConnection.PrefetchCount,
-                this.ServiceBusConnection,
-                this.CbsTokenProvider,
-                sessionId,
-                true);
-            try
-            {
-                await receiver.GetSessionReceiverLinkAsync(serverWaitTime).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                await receiver.CloseAsync().ConfigureAwait(false);
-                throw AmqpExceptionHelper.GetClientException(exception);
-            }
-            MessageSession session = new AmqpMessageSession(receiver.SessionId, receiver.LockedUntilUtc, receiver);
-            return session;
-        }
-
-        protected override Task OnCloseAsync()
-        {
-            // Closing the Connection will also close all Links associated with it.
-            return this.ServiceBusConnection.CloseAsync();
-        }
-
-        protected override async Task OnAddRuleAsync(RuleDescription description)
+        public async Task OnAddRuleAsync(RuleDescription description)
         {
             try
             {
@@ -97,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        protected override async Task OnRemoveRuleAsync(string ruleName)
+        public async Task OnRemoveRuleAsync(string ruleName)
         {
             try
             {

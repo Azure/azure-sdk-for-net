@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -46,12 +45,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             const int messageCount = 10;
 
-            var queueClient = QueueClient.CreateFromConnectionString(
-                TestUtility.GetEntityConnectionString(queueName),
-                mode);
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
             try
             {
-                await this.OnMessageAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, maxConcurrentCalls, autoComplete, messageCount);
+                await this.OnMessageAsyncTestCase(
+                    queueClient.InnerClient.InnerSender,
+                    queueClient.InnerClient.InnerReceiver,
+                    maxConcurrentCalls,
+                    autoComplete,
+                    messageCount);
             }
             finally
             {

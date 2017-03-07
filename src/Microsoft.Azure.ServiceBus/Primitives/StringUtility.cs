@@ -15,10 +15,10 @@ namespace Microsoft.Azure.ServiceBus
             return Guid.NewGuid().ToString().Substring(0, 6);
         }
 
-        public static string GetFormattedLockTokens(IEnumerable<Guid> lockTokens)
+        public static string GetFormattedLockTokens(IEnumerable<string> lockTokens)
         {
             StringBuilder lockTokenBuilder = new StringBuilder();
-            foreach (Guid lockToken in lockTokens)
+            foreach (var lockToken in lockTokens)
             {
                 lockTokenBuilder.AppendFormat(CultureInfo.InvariantCulture, "<LockToken>{0}</LockToken>", lockToken);
             }

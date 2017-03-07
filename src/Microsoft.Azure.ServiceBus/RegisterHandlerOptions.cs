@@ -4,25 +4,24 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
-    using System.Threading;
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
-    /// <see cref="QueueClient.OnMessageAsync(System.Action{BrokeredMessage, CancellationToken})" /> and
-    /// <see cref="SubscriptionClient.OnMessageAsync(System.Action{BrokeredMessage, CancellationToken})" />.</summary>
-    public sealed class OnMessageOptions
+    /// <see cref="QueueClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterHandlerOptions)" /> and
+    /// <see cref="SubscriptionClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterHandlerOptions)" />.</summary>
+    public sealed class RegisterHandlerOptions
     {
         int maxConcurrentCalls;
         TimeSpan autoRenewTimeout;
 
-        /// <summary>Initializes a new instance of the <see cref="OnMessageOptions" /> class.
+        /// <summary>Initializes a new instance of the <see cref="RegisterHandlerOptions" /> class.
         /// Default Values:
         ///     <see cref="MaxConcurrentCalls"/> = 1
         ///     <see cref="AutoComplete"/> = true
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
         ///     <see cref="AutoRenewTimeout"/> = 5 minutes
         /// </summary>
-        public OnMessageOptions()
+        public RegisterHandlerOptions()
         {
             this.MaxConcurrentCalls = 1;
             this.AutoComplete = true;
@@ -55,8 +54,8 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// <see cref="QueueClient.Complete(System.Guid)" /> or
-        /// <see cref="SubscriptionClient.Complete(System.Guid)" /> on messages after the callback has completed processing.</summary>
+        /// <see cref="QueueClient.CompleteAsync(string)" /> or
+        /// <see cref="SubscriptionClient.CompleteAsync(string)" /> on messages after the callback has completed processing.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete { get; set; }
 

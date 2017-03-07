@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
+namespace Microsoft.Azure.ServiceBus.Core
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading;
     using System.Threading.Tasks;
 
-    public abstract class MessageReceiver : ClientEntity
+    internal abstract class MessageReceiver : ClientEntity, IMessageReceiver
     {
         readonly TimeSpan operationTimeout;
         readonly object messageReceivePumpSyncLock;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.ServiceBus
             get { return this.operationTimeout; }
         }
 
-        protected MessagingEntityType EntityType { get; set; }
+        protected MessagingEntityType? EntityType { get; set; }
 
         public override Task CloseAsync()
         {
@@ -81,6 +81,7 @@ namespace Microsoft.Azure.ServiceBus
                 if (this.receivePump != null)
                 {
                     this.receivePumpCancellationTokenSource.Cancel();
+                    this.receivePumpCancellationTokenSource.Dispose();
                     this.receivePump = null;
                 }
             }
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Asynchronously receives a message using the <see cref="MessageReceiver" />.
         /// </summary>
         /// <returns>The asynchronous operation.</returns>
-        public Task<BrokeredMessage> ReceiveAsync()
+        public Task<Message> ReceiveAsync()
         {
             return this.ReceiveAsync(this.OperationTimeout);
         }
@@ -101,9 +102,9 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
         /// <returns>The asynchronous operation.</returns>
-        public async Task<BrokeredMessage> ReceiveAsync(TimeSpan serverWaitTime)
+        public async Task<Message> ReceiveAsync(TimeSpan serverWaitTime)
         {
-            IList<BrokeredMessage> messages = await this.ReceiveAsync(1, serverWaitTime).ConfigureAwait(false);
+            IList<Message> messages = await this.ReceiveAsync(1, serverWaitTime).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];
@@ -117,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <returns>The asynchronous operation.</returns>
-        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
+        public Task<IList<Message>> ReceiveAsync(int maxMessageCount)
         {
             return this.ReceiveAsync(maxMessageCount, this.OperationTimeout);
         }
@@ -128,11 +129,11 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
         /// <returns>The asynchronous operation.</returns>
-        public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
+        public async Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
             MessagingEventSource.Log.MessageReceiveStart(this.ClientId, maxMessageCount);
 
-            IList<BrokeredMessage> messages;
+            IList<Message> messages;
             try
             {
                 messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime).ConfigureAwait(false);
@@ -147,14 +148,25 @@ namespace Microsoft.Azure.ServiceBus
             return messages;
         }
 
-        public async Task<IList<BrokeredMessage>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
+        public async Task<Message> ReceiveBySequenceNumberAsync(long sequenceNumber)
+        {
+            IList<Message> messages = await this.ReceiveBySequenceNumberAsync(new long[] { sequenceNumber });
+            if (messages != null && messages.Count > 0)
+            {
+                return messages[0];
+            }
+
+            return null;
+        }
+
+        public async Task<IList<Message>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
         {
             this.ThrowIfNotPeekLockMode();
             int count = MessageReceiver.ValidateSequenceNumbers(sequenceNumbers);
 
             MessagingEventSource.Log.MessageReceiveBySequenceNumberStart(this.ClientId, count, sequenceNumbers);
 
-            IList<BrokeredMessage> messages;
+            IList<Message> messages;
             try
             {
                 messages = await this.OnReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
@@ -170,7 +182,12 @@ namespace Microsoft.Azure.ServiceBus
             return messages;
         }
 
-        public async Task CompleteAsync(IEnumerable<Guid> lockTokens)
+        public Task CompleteAsync(string lockToken)
+        {
+            return this.CompleteAsync(new[] { lockToken });
+        }
+
+        public async Task CompleteAsync(IEnumerable<string> lockTokens)
         {
             this.ThrowIfNotPeekLockMode();
             int count = MessageReceiver.ValidateLockTokens(lockTokens);
@@ -190,15 +207,14 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageCompleteStop(this.ClientId);
         }
 
-        public async Task AbandonAsync(IEnumerable<Guid> lockTokens)
+        public async Task AbandonAsync(string lockToken)
         {
             this.ThrowIfNotPeekLockMode();
-            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            MessagingEventSource.Log.MessageAbandonStart(this.ClientId, count, lockTokens);
+            MessagingEventSource.Log.MessageAbandonStart(this.ClientId, 1, lockToken);
             try
             {
-                await this.OnAbandonAsync(lockTokens).ConfigureAwait(false);
+                await this.OnAbandonAsync(lockToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -209,16 +225,15 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageAbandonStop(this.ClientId);
         }
 
-        public async Task DeferAsync(IEnumerable<Guid> lockTokens)
+        public async Task DeferAsync(string lockToken)
         {
             this.ThrowIfNotPeekLockMode();
-            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            MessagingEventSource.Log.MessageDeferStart(this.ClientId, count, lockTokens);
+            MessagingEventSource.Log.MessageDeferStart(this.ClientId, 1, lockToken);
 
             try
             {
-                await this.OnDeferAsync(lockTokens).ConfigureAwait(false);
+                await this.OnDeferAsync(lockToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -229,16 +244,15 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageDeferStop(this.ClientId);
         }
 
-        public async Task DeadLetterAsync(IEnumerable<Guid> lockTokens)
+        public async Task DeadLetterAsync(string lockToken)
         {
             this.ThrowIfNotPeekLockMode();
-            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            MessagingEventSource.Log.MessageDeadLetterStart(this.ClientId, count, lockTokens);
+            MessagingEventSource.Log.MessageDeadLetterStart(this.ClientId, 1, lockToken);
 
             try
             {
-                await this.OnDeadLetterAsync(lockTokens).ConfigureAwait(false);
+                await this.OnDeadLetterAsync(lockToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -249,11 +263,11 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageDeadLetterStop(this.ClientId);
         }
 
-        public async Task<DateTime> RenewLockAsync(Guid lockToken)
+        public async Task<DateTime> RenewLockAsync(string lockToken)
         {
             this.ThrowIfNotPeekLockMode();
 
-            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, new[] { lockToken });
+            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
 
             DateTime lockedUntilUtc;
             try
@@ -273,8 +287,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Asynchronously reads the next message without changing the state of the receiver or the message source.
         /// </summary>
-        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
-        public Task<BrokeredMessage> PeekAsync()
+        /// <returns>The asynchronous operation that returns the <see cref="Message" /> that represents the next message to be read.</returns>
+        public Task<Message> PeekAsync()
         {
             return this.PeekBySequenceNumberAsync(this.lastPeekedSequenceNumber + 1);
         }
@@ -283,8 +297,8 @@ namespace Microsoft.Azure.ServiceBus
         /// Asynchronously reads the next batch of message without changing the state of the receiver or the message source.
         /// </summary>
         /// <param name="maxMessageCount">The number of messages.</param>
-        /// <returns>The asynchronous operation that returns a list of <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> to be read.</returns>
-        public Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
+        /// <returns>The asynchronous operation that returns a list of <see cref="Message" /> to be read.</returns>
+        public Task<IList<Message>> PeekAsync(int maxMessageCount)
         {
             return this.PeekBySequenceNumberAsync(this.lastPeekedSequenceNumber + 1, maxMessageCount);
         }
@@ -293,8 +307,8 @@ namespace Microsoft.Azure.ServiceBus
         /// Asynchronously reads the next message without changing the state of the receiver or the message source.
         /// </summary>
         /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
-        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
-        public async Task<BrokeredMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
+        /// <returns>The asynchronous operation that returns the <see cref="Message" /> that represents the next message to be read.</returns>
+        public async Task<Message> PeekBySequenceNumberAsync(long fromSequenceNumber)
         {
             var messages = await this.PeekBySequenceNumberAsync(fromSequenceNumber, 1).ConfigureAwait(false);
             return messages?.FirstOrDefault();
@@ -304,9 +318,9 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="fromSequenceNumber">The starting point from which to browse a batch of messages.</param>
         /// <param name="messageCount">The number of messages.</param>
         /// <returns>A batch of messages peeked.</returns>
-        public async Task<IList<BrokeredMessage>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
+        public async Task<IList<Message>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
         {
-            IList<BrokeredMessage> messages;
+            IList<Message> messages;
 
             MessagingEventSource.Log.MessagePeekStart(this.ClientId, fromSequenceNumber, messageCount);
             try
@@ -323,34 +337,34 @@ namespace Microsoft.Azure.ServiceBus
             return messages;
         }
 
-        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback)
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
         {
-            this.OnMessageAsync(callback, new OnMessageOptions() { ReceiveTimeOut = this.OperationTimeout });
+            this.RegisterMessageHandler(handler, new RegisterHandlerOptions() { ReceiveTimeOut = this.OperationTimeout });
         }
 
-        public void OnMessageAsync(Func<BrokeredMessage, CancellationToken, Task> callback, OnMessageOptions onMessageOptions)
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterHandlerOptions registerHandlerOptions)
         {
-            onMessageOptions.ReceiveTimeOut = this.OperationTimeout;
-            this.OnMessageHandlerAsync(onMessageOptions, callback).GetAwaiter().GetResult();
+            registerHandlerOptions.ReceiveTimeOut = this.OperationTimeout;
+            this.OnMessageHandlerAsync(registerHandlerOptions, handler).GetAwaiter().GetResult();
         }
 
-        protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
+        protected abstract Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
 
-        protected abstract Task<IList<BrokeredMessage>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers);
+        protected abstract Task<IList<Message>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers);
 
-        protected abstract Task OnCompleteAsync(IEnumerable<Guid> lockTokens);
+        protected abstract Task OnCompleteAsync(IEnumerable<string> lockTokens);
 
-        protected abstract Task OnAbandonAsync(IEnumerable<Guid> lockTokens);
+        protected abstract Task OnAbandonAsync(string lockToken);
 
-        protected abstract Task OnDeferAsync(IEnumerable<Guid> lockTokens);
+        protected abstract Task OnDeferAsync(string lockToken);
 
-        protected abstract Task OnDeadLetterAsync(IEnumerable<Guid> lockTokens);
+        protected abstract Task OnDeadLetterAsync(string lockToken);
 
-        protected abstract Task<DateTime> OnRenewLockAsync(Guid lockToken);
+        protected abstract Task<DateTime> OnRenewLockAsync(string lockToken);
 
-        protected abstract Task<IList<BrokeredMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1);
+        protected abstract Task<IList<Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1);
 
-        static int ValidateLockTokens(IEnumerable<Guid> lockTokens)
+        static int ValidateLockTokens(IEnumerable<string> lockTokens)
         {
             int count;
             if (lockTokens == null || (count = lockTokens.Count()) == 0)
@@ -381,10 +395,10 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         async Task OnMessageHandlerAsync(
-            OnMessageOptions onMessageOptions,
-            Func<BrokeredMessage, CancellationToken, Task> callback)
+            RegisterHandlerOptions registerHandlerOptions,
+            Func<Message, CancellationToken, Task> callback)
         {
-            MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, onMessageOptions);
+            MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, registerHandlerOptions);
 
             lock (this.messageReceivePumpSyncLock)
             {
@@ -394,7 +408,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.receivePump = new MessageReceivePump(this, onMessageOptions, callback, this.receivePumpCancellationTokenSource.Token);
+                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.receivePumpCancellationTokenSource.Token);
             }
 
             try
@@ -404,10 +418,16 @@ namespace Microsoft.Azure.ServiceBus
             catch (Exception exception)
             {
                 MessagingEventSource.Log.RegisterOnMessageHandlerException(this.ClientId, exception);
+                lock (this.messageReceivePumpSyncLock)
+                {
+                    if (this.receivePump != null)
+                    {
+                        this.receivePumpCancellationTokenSource.Cancel();
+                        this.receivePumpCancellationTokenSource.Dispose();
+                        this.receivePump = null;
+                    }
+                }
 
-                this.receivePumpCancellationTokenSource.Cancel();
-                this.receivePumpCancellationTokenSource.Dispose();
-                this.receivePump = null;
                 throw;
             }
 
