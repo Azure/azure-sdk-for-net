@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.PowerBIEmbedded
 {
@@ -16,8 +18,8 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
     public static partial class WorkspacesOperationsExtensions
     {
             /// <summary>
-            /// Retrieves all existing Power BI Workspaces in the specified Workspace
-            /// Collection.
+            /// Retrieves all existing Power BI workspaces in the specified workspace
+            /// collection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -26,7 +28,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
             /// Azure resource group
             /// </param>
             /// <param name='workspaceCollectionName'>
-            /// Power BI Embedded workspace collection name
+            /// Power BI Embedded Workspace Collection name
             /// </param>
             public static IEnumerable<Workspace> List(this IWorkspacesOperations operations, string resourceGroupName, string workspaceCollectionName)
             {
@@ -34,8 +36,8 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
             }
 
             /// <summary>
-            /// Retrieves all existing Power BI Workspaces in the specified Workspace
-            /// Collection.
+            /// Retrieves all existing Power BI workspaces in the specified workspace
+            /// collection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +46,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
             /// Azure resource group
             /// </param>
             /// <param name='workspaceCollectionName'>
-            /// Power BI Embedded workspace collection name
+            /// Power BI Embedded Workspace Collection name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

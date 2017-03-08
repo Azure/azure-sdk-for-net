@@ -13,7 +13,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
 
-    public class WorkflowVersionsInMemoryTests : BaseInMemoryTests
+    public class WorkflowVersionsInMemoryTests : InMemoryTestsBase
     {
         #region Constructor
 
@@ -121,6 +121,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.WorkflowVersions.Get("rgName", "wfName", "version"));
         }
 
+        [Fact]
         public void WorkflowVersions_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
@@ -148,10 +149,10 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateWorkflowVersion1(WorkflowVersion workflow)
         {
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName", workflow.Id);
-            Assert.Equal("wfName", workflow.Name);
-            Assert.Equal("Microsoft.Logic/workflows", workflow.Type);
-            Assert.Equal("westus", workflow.Location);
+            Assert.True(this.ValidateIdFormat(id: workflow.Id, entityTypeName: "workflows", entitySubtypeName: "versions"));
+            Assert.Equal("08587668503212262209", workflow.Name);
+            Assert.Equal("Microsoft.Logic/workflows/versions", workflow.Type);
+            Assert.Null(workflow.Location);
 
             // 2015-06-23T21:47:00.0000001Z
             Assert.Equal(2015, workflow.CreatedTime.Value.Year);

@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the firewall rule.
+            /// The name of the Data Lake Store account to add or replace the firewall
+            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to create or update.
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,7 +63,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the firewall rule.
+            /// The name of the Data Lake Store account to add or replace the firewall
+            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to create or update.
@@ -76,6 +78,62 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the specified firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account to which to update the firewall
+            /// rule.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to update.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update the firewall rule.
+            /// </param>
+            public static FirewallRule Update(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters))
+            {
+                return operations.UpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the specified firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account to which to update the firewall
+            /// rule.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to update.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update the firewall rule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FirewallRule> UpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -101,7 +159,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Delete(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
             {
-                Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).DeleteAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -149,7 +207,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).GetAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,7 +255,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).ListByAccountAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -238,7 +296,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<FirewallRule> ListByAccountNext(this IFirewallRulesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).ListByAccountNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

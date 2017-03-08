@@ -35,7 +35,7 @@
                 }
                 else
                 {
-                    if (parameter.ParameterType.IsValueType)
+                    if (parameter.ParameterType.GetTypeInfo().IsValueType)
                     {
                         parameterObject = Activator.CreateInstance(parameter.ParameterType);
                     }

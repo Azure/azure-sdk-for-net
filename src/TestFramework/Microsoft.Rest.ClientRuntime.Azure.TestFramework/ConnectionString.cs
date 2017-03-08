@@ -173,7 +173,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var nonEmptyUriList = KeyValuePairs.Where(item =>
             {
                 return ((item.Key.Contains("uri") || 
-                        (item.Key.Equals(ConnectionStringKeys.AADAuthenticationEndpointKey))) && (!string.IsNullOrEmpty(item.Value)));
+                        (item.Key.Equals(ConnectionStringKeys.AADAuthUriKey))) && (!string.IsNullOrEmpty(item.Value)));
             });
             
             if(nonEmptyUriList.IsAny<KeyValuePair<string,string>>())
@@ -207,7 +207,17 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             return envSet;
         }
-       
+        
+        internal bool HasNonEmptyValue(string connStrKey)
+        {
+            string keyValue = string.Empty;
+            KeyValuePairs.TryGetValue(connStrKey, out keyValue);
+
+            if (string.IsNullOrEmpty(keyValue)) return false;
+
+            return true;
+        }
+
         #endregion
 
         #region Public Functions

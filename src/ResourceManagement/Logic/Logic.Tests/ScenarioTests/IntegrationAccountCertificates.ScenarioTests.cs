@@ -2,34 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Security;
-using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
-
 namespace Test.Azure.Management.Logic
 {
-    using System.IO;
-    using System.Collections.Generic;
+    using System;
+    using System.Globalization;
     using System.Linq;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
+    using System.Security.Cryptography.X509Certificates;
+
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Xunit;
 
     /// <summary>
     /// Scenario tests for the integration accounts certificates.
     /// </summary>
     [Collection("IntegrationAccountCertificateScenarioTests")]
-    public class IntegrationAccountCertificateScenarioTests : BaseScenarioTests
+    public class IntegrationAccountCertificateScenarioTests : ScenarioTestsBase
     {
-
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests";
-
         /// <summary>
         /// Tests the create and delete operations of the integration account certificate.
         /// </summary>
@@ -37,7 +28,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountCertificate()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -48,7 +39,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
@@ -57,7 +48,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountCertificateName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -70,7 +61,7 @@ namespace Test.Azure.Management.Logic
         public void CreateIntegrationAccountCertificateWithPublicKey()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -82,8 +73,7 @@ namespace Test.Azure.Management.Logic
 
                 var certificateInstance = new IntegrationAccountCertificate
                 {
-                    Name = integrationAccountCertificateName,
-                    Location = "brazilsouth",                    
+                    Location = "brazilsouth",
                     PublicCertificate = Convert.ToBase64String(cert.RawData)
                 };
 
@@ -91,7 +81,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     certificateInstance
@@ -99,7 +89,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountCertificateName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -112,7 +102,7 @@ namespace Test.Azure.Management.Logic
         public void CreateIntegrationAccountCertificateWithPrivateKey()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -127,7 +117,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName);
                 certInstance.PublicCertificate = null;
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     certInstance
@@ -135,7 +125,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountCertificateName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -148,7 +138,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountCertificateOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -158,7 +148,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
@@ -169,7 +159,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Certificates.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountCertificateName));
             }
         }
@@ -181,7 +171,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountCertificate()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -190,24 +180,24 @@ namespace Test.Azure.Management.Logic
                 var client = this.GetIntegrationAccountClient(context);
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
                         integrationAccountName));
 
                 var certificate2 = CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                    integrationAccountName);                
+                    integrationAccountName);
 
-                client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName, certificate2);
 
-                var updatedCertificate = client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup,
+                var updatedCertificate = client.Certificates.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName);
 
-                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);                
+                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -220,7 +210,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountCertificate()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -229,7 +219,7 @@ namespace Test.Azure.Management.Logic
                 var client = this.GetIntegrationAccountClient(context);
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var certificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
@@ -237,7 +227,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(certificate.Name, integrationAccountCertificateName);
 
-                var getCertificate = client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup,
+                var getCertificate = client.Certificates.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName);
 
@@ -254,7 +244,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountCertificates()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountCertificateName =
@@ -264,13 +254,13 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountCertificateName,
                     CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
                         integrationAccountName));
 
-                var certificates = client.IntegrationAccountCertificates.List(Constants.DefaultResourceGroup,
+                var certificates = client.Certificates.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
                     integrationAccountName);
 
                 Assert.True(certificates.Any());
@@ -296,7 +286,6 @@ namespace Test.Azure.Management.Logic
 
             var certificate = new IntegrationAccountCertificate
             {
-                Name = integrationAccountCertificateName,
                 Location = "brazilsouth",
                 Key = new KeyVaultKeyReference
                 {
@@ -305,10 +294,10 @@ namespace Test.Azure.Management.Logic
                     {
                         Id =
                             string.Format(CultureInfo.InvariantCulture,
-                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/IntegrationAccountVault",
+                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault",
                                 Constants.DefaultSubscription, Constants.DefaultResourceGroup)
                     },
-                    KeyVersion = "a71cf67368fc473f8d2a40cd8804ac85"
+                    KeyVersion = "87d9764197604449b9b8eb7bd8710868"
                 },
                 PublicCertificate = Convert.ToBase64String(cert.RawData)
             };

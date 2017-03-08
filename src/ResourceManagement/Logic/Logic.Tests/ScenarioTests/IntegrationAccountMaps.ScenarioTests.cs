@@ -17,14 +17,8 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts map.
     /// </summary>
     [Collection("IntegrationAccountMapScenarioTests")]
-    public class IntegrationAccountMapScenarioTests : BaseScenarioTests
+    public class IntegrationAccountMapScenarioTests : ScenarioTestsBase
     {
-
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests";
-
         /// <summary>
         /// Map content in string format
         /// </summary>
@@ -45,7 +39,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountMap()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -55,7 +49,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var map = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var map = client.Maps.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountMapName,
                     CreateIntegrationAccountMapInstance(integrationAccountMapName, integrationAccountName));
@@ -63,7 +57,7 @@ namespace Test.Azure.Management.Logic
                 Assert.Equal(map.Name, integrationAccountMapName);
                 Assert.NotNull(map.ContentLink.Uri);
 
-                client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Maps.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountMapName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -76,7 +70,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountMapOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -85,7 +79,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var map = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var map = client.Maps.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountMapName,
                     CreateIntegrationAccountMapInstance(integrationAccountMapName, integrationAccountName));
@@ -96,7 +90,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Maps.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountMapName));
             }
         }
@@ -108,7 +102,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountMap()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -116,22 +110,21 @@ namespace Test.Azure.Management.Logic
                 var client = this.GetIntegrationAccountClient(context);
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Maps.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountMapName,
                     CreateIntegrationAccountMapInstance(integrationAccountMapName, integrationAccountName));
 
-                client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Maps.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountMapName, new IntegrationAccountMap
                     {
                         ContentType = "application/xml",
                         Location = Constants.DefaultLocation,
-                        Name = integrationAccountMapName,
                         MapType = MapType.Xslt,
                         Content = this.MapContent,
                         Metadata = "meta-data"
                     });
 
-                var updatedMap = client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup,
+                var updatedMap = client.Maps.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountMapName);
 
@@ -150,7 +143,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountMap()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -158,14 +151,14 @@ namespace Test.Azure.Management.Logic
                 var client = this.GetIntegrationAccountClient(context);
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var map = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var map = client.Maps.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountMapName,
                     CreateIntegrationAccountMapInstance(integrationAccountMapName, integrationAccountName));
 
                 Assert.Equal(map.Name, integrationAccountMapName);
 
-                var getMap = client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                var getMap = client.Maps.Get(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountMapName);
 
                 Assert.Equal(map.Name, getMap.Name);
@@ -181,7 +174,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountMaps()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountMapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
@@ -190,11 +183,11 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Maps.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountMapName,
                     CreateIntegrationAccountMapInstance(integrationAccountMapName, integrationAccountName));
 
-                var maps = client.IntegrationAccountMaps.List(Constants.DefaultResourceGroup, integrationAccountName);
+                var maps = client.Maps.ListByIntegrationAccounts(Constants.DefaultResourceGroup, integrationAccountName);
 
                 Assert.True(maps.Any());
 
@@ -219,7 +212,6 @@ namespace Test.Azure.Management.Logic
             {
                 ContentType = "application/xml",
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountMapName,
                 Tags = new Dictionary<string, string>()
                 {
                     {"integrationAccountMapName", integrationAccountMapName}

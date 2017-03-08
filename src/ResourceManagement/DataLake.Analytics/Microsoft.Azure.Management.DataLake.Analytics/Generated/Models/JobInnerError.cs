@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         /// <param name="diagnosticCode">the diagnostic error code.</param>
         /// <param name="severity">the severity level of the failure. Possible
-        /// values include: 'Warning', 'Error', 'Info'</param>
+        /// values include: 'Warning', 'Error', 'Info', 'SevereWarning',
+        /// 'Deprecated', 'UserWarning'</param>
         /// <param name="details">the details of the error message.</param>
         /// <param name="component">the component that failed.</param>
         /// <param name="errorId">the specific identifier for the type of error
@@ -75,7 +76,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
-        /// 'Warning', 'Error', 'Info'
+        /// 'Warning', 'Error', 'Info', 'SevereWarning', 'Deprecated',
+        /// 'UserWarning'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public SeverityTypes? Severity { get; protected set; }

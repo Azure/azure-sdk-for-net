@@ -15,7 +15,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
 
-    public class WorkflowsInMemoryTests : BaseInMemoryTests
+    public class WorkflowsInMemoryTests : InMemoryTestsBase
     {
         #region Constructor
 
@@ -642,11 +642,11 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition(null, "wfName", "2016-04-01-preview"));
-            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", null, "2016-04-01-preview"));
+            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition(null, "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
+            Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", null, new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
             // The Assert is disabled due to the following bug: https://github.com/Azure/autorest/issues/1288.
             // Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", "2016-04-01-preview"));
+            Assert.Throws<CloudException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
         }
 
         [Fact]
@@ -661,7 +661,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Workflow
             };
 
-            client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", "2016-04-01-preview");
+            client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview"));
 
             // Validates requests.
             handler.Request.ValidateAuthorizationHeader();
@@ -672,43 +672,9 @@ namespace Test.Azure.Management.Logic
 
         #region Validation
 
-        private void ValidateWorkflowRun1(WorkflowRun workflowRun)
-        {
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName/runs/run87646872399558047", workflowRun.Id);
-            Assert.Equal("run87646872399558047", workflowRun.Name);
-            Assert.Equal("Microsoft.Logic/workflows/runs", workflowRun.Type);
-
-            Assert.Equal(2015, workflowRun.StartTime.Value.Year);
-            Assert.Equal(06, workflowRun.StartTime.Value.Month);
-            Assert.Equal(23, workflowRun.StartTime.Value.Day);
-            Assert.Equal(21, workflowRun.StartTime.Value.Hour);
-            Assert.Equal(47, workflowRun.StartTime.Value.Minute);
-            Assert.Equal(00, workflowRun.StartTime.Value.Second);
-            Assert.Equal(00, workflowRun.StartTime.Value.Millisecond);
-            Assert.Equal(DateTimeKind.Utc, workflowRun.StartTime.Value.Kind);
-
-            Assert.Equal(2015, workflowRun.EndTime.Value.Year);
-            Assert.Equal(06, workflowRun.EndTime.Value.Month);
-            Assert.Equal(23, workflowRun.EndTime.Value.Day);
-            Assert.Equal(21, workflowRun.EndTime.Value.Hour);
-            Assert.Equal(47, workflowRun.EndTime.Value.Minute);
-            Assert.Equal(30, workflowRun.EndTime.Value.Second);
-            Assert.Equal(130, workflowRun.EndTime.Value.Millisecond);
-            Assert.Equal(DateTimeKind.Utc, workflowRun.EndTime.Value.Kind);
-
-            Assert.Equal(WorkflowStatus.Succeeded, workflowRun.Status.Value);
-            Assert.Equal("a04da054-a1ae-409d-80ff-b09febefc357", workflowRun.CorrelationId);
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName/versions/ver87717906782501130", workflowRun.Workflow.Id);
-            Assert.Equal("Microsoft.Logic/workflows/versions", workflowRun.Workflow.Type);
-            Assert.Equal("wfName/ver87717906782501130", workflowRun.Workflow.Name);
-
-            Assert.Equal("6A65DA9E-CFF8-4D3E-B5FB-691739C7AD61", workflowRun.Trigger.Name);
-            Assert.Equal(0, workflowRun.Outputs.Count);
-        }
-
         private void ValidateWorkflow1(Workflow workflow)
         {
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName", workflow.Id);
+            Assert.True(this.ValidateIdFormat(id: workflow.Id, entityTypeName: "workflows"));
             Assert.Equal("wfName", workflow.Name);
             Assert.Equal("Microsoft.Logic/workflows", workflow.Type);
             Assert.Equal("westus", workflow.Location);

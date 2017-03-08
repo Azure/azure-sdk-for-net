@@ -47,12 +47,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// metadata is retained.</param>
         /// <param name="maxJobCount">the maximum supported jobs running under
         /// the account at the same time.</param>
-        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?))
+        /// <param name="newTier">the commitment tier to use for next month.
+        /// Possible values include: 'Consumption', 'Commitment_100AUHours',
+        /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
+        /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
+        /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
+        /// 'Commitment_500000AUHours'</param>
+        /// <param name="firewallState">The current state of the IP address
+        /// firewall for this Data Lake Analytics account. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="firewallAllowAzureIps">The current state of allowing
+        /// or disallowing IPs originating within Azure through the firewall.
+        /// If the firewall is disabled, this is not enforced. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="firewallRules">The list of firewall rules associated
+        /// with this Data Lake Analytics account.</param>
+        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), TierType? newTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>))
         {
             Tags = tags;
             MaxDegreeOfParallelism = maxDegreeOfParallelism;
             QueryStoreRetention = queryStoreRetention;
             MaxJobCount = maxJobCount;
+            NewTier = newTier;
+            FirewallState = firewallState;
+            FirewallAllowAzureIps = firewallAllowAzureIps;
+            FirewallRules = firewallRules;
         }
 
         /// <summary>
@@ -82,6 +101,41 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? MaxJobCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the commitment tier to use for next month. Possible
+        /// values include: 'Consumption', 'Commitment_100AUHours',
+        /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
+        /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
+        /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
+        /// 'Commitment_500000AUHours'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.newTier")]
+        public TierType? NewTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of the IP address firewall for this
+        /// Data Lake Analytics account. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallState")]
+        public FirewallState? FirewallState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of allowing or disallowing IPs
+        /// originating within Azure through the firewall. If the firewall is
+        /// disabled, this is not enforced. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallAllowAzureIps")]
+        public FirewallAllowAzureIpsState? FirewallAllowAzureIps { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of firewall rules associated with this Data
+        /// Lake Analytics account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallRules")]
+        public IList<FirewallRule> FirewallRules { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -104,6 +158,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             if (MaxJobCount < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxJobCount", 1);
+            }
+            if (FirewallRules != null)
+            {
+                foreach (var element in FirewallRules)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

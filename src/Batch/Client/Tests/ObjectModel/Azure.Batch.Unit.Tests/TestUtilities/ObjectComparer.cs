@@ -102,15 +102,15 @@
                 }
             }
             //Deal with collections
-            else if (o1 is IEnumerable<object>)
+            else if (o1 is IEnumerable)
             {
-                if (!(o2 is IEnumerable<object>))
+                if (!(o2 is IEnumerable))
                 {
-                    return CheckEqualityResult.False("o2 was not IEnumerable<object>");
+                    return CheckEqualityResult.False("o2 was not IEnumerable");
                 }
 
-                IEnumerable<object> o1Enumerable = o1 as IEnumerable<object>;
-                IEnumerable<object> o2Enumerable = o2 as IEnumerable<object>;
+                IEnumerable o1Enumerable = (IEnumerable)o1;
+                IEnumerable o2Enumerable = (IEnumerable)o2;
 
                 return this.CompareEnumerables(o1Enumerable, o2Enumerable);
             }
@@ -190,11 +190,11 @@
             return CheckEqualityResult.True;
         }
 
-        private CheckEqualityResult CompareEnumerables(IEnumerable<object> enumerable1, IEnumerable<object> enumerable2)
+        private CheckEqualityResult CompareEnumerables(IEnumerable enumerable1, IEnumerable enumerable2)
         {
             //Order doesn't matter but should be preserved
-            List<object> list1 = enumerable1.ToList();
-            List<object> list2 = enumerable2.ToList();
+            List<object> list1 = enumerable1.Cast<object>().ToList();
+            List<object> list2 = enumerable2.Cast<object>().ToList();
 
             if (list2.Count != list1.Count)
             {

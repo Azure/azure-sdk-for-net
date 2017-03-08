@@ -16,13 +16,8 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts partner.
     /// </summary>
     [Collection("IntegrationAccountPartnerScenarioTests")]
-    public class IntegrationAccountPartnerScenarioTests : BaseScenarioTests
+    public class IntegrationAccountPartnerScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests";
-
         /// <summary>
         /// Tests the create and delete operations of the integration account partner.
         /// </summary>
@@ -30,7 +25,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountPartner()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -39,13 +34,13 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var partner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountPartnerName,
                     CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
 
                 Assert.Equal(partner.Name, integrationAccountPartnerName);
 
-                client.IntegrationAccountPartners.Delete(Constants.DefaultResourceGroup, integrationAccountName,
+                client.Partners.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountPartnerName);
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -58,7 +53,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountPartnerOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -67,7 +62,7 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var partner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountPartnerName,
                     CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
 
@@ -76,7 +71,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
                 Assert.Throws<CloudException>(
                     () =>
-                        client.IntegrationAccountPartners.Get(Constants.DefaultResourceGroup, integrationAccountName,
+                        client.Partners.Get(Constants.DefaultResourceGroup, integrationAccountName,
                             integrationAccountPartnerName));
             }
         }
@@ -88,7 +83,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndUpdateIntegrationAccountPartner()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -98,7 +93,7 @@ namespace Test.Azure.Management.Logic
                 client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountPartnerName,
                     CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
 
@@ -108,12 +103,11 @@ namespace Test.Azure.Management.Logic
                     new BusinessIdentity() {Qualifier = "XX", Value = "DD"}
                 };
 
-                var updatedPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var updatedPartner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountPartnerName, new IntegrationAccountPartner
                     {
                         Location = Constants.DefaultLocation,
-                        Name = integrationAccountPartnerName,
                         Metadata = "updated",
                         PartnerType = PartnerType.B2B,
                         Content = new PartnerContent
@@ -138,7 +132,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountPartner()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -147,7 +141,7 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var partner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountPartnerName,
                     CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
 
@@ -155,7 +149,7 @@ namespace Test.Azure.Management.Logic
                 Assert.NotNull(partner);
                 Assert.Equal(partner.Name, integrationAccountPartnerName);
 
-                var getPartner = client.IntegrationAccountPartners.Get(Constants.DefaultResourceGroup,
+                var getPartner = client.Partners.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountPartnerName);
 
@@ -172,7 +166,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountPartners()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountPartnerName =
@@ -182,11 +176,11 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var createdSchema = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var createdSchema = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationAccountPartnerName,
                     CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
 
-                var partners = client.IntegrationAccountPartners.List(Constants.DefaultResourceGroup,
+                var partners = client.Partners.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
                     integrationAccountName);
 
                 Assert.True(partners.Any());
@@ -218,7 +212,6 @@ namespace Test.Azure.Management.Logic
             var partner = new IntegrationAccountPartner
             {
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountPartnerName,
                 Tags = tags,
                 PartnerType = PartnerType.B2B,
                 Metadata = integrationAccountPartnerName,

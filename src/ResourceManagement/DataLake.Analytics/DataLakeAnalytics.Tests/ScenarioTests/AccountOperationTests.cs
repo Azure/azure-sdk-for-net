@@ -1,21 +1,10 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -52,12 +41,12 @@ namespace DataLakeAnalytics.Tests
                                     Name = commonData.DataLakeStoreAccountName,
                                     Suffix = commonData.DataLakeStoreAccountSuffix
                                 }
-                            }
-                            ,
+                            },
                             Tags = new Dictionary<string, string>
                             {
                                 { "testkey","testvalue" }
-                            }
+                            },
+                            NewTier = TierType.Commitment100AUHours
                         });
 
                 // verify the account exists
@@ -91,7 +80,8 @@ namespace DataLakeAnalytics.Tests
 
                 // Confirm that the account creation did succeed
                 Assert.True(responseGet.ProvisioningState == DataLakeAnalyticsAccountStatus.Succeeded);
-
+                Assert.Equal(TierType.Commitment100AUHours, responseGet.CurrentTier);
+                Assert.Equal(TierType.Commitment100AUHours, responseGet.NewTier);
                 // Update the account and confirm the updates make it in.
                 var newAccount = responseGet;
                 var firstStorageAccountName = newAccount.DataLakeStoreAccounts.ToList()[0].Name;
@@ -106,7 +96,8 @@ namespace DataLakeAnalytics.Tests
 
                 var updateAccount = new DataLakeAnalyticsAccountUpdateParameters
                 {
-                    Tags = newAccount.Tags
+                    Tags = newAccount.Tags,
+                    NewTier = TierType.Consumption
                 };
 
                 var updateResponse = clientToUse.Account.Update(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, updateAccount);
@@ -126,13 +117,20 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
                 Assert.True(updateResponseGet.DataLakeStoreAccounts.Count == 1);
                 Assert.True(updateResponseGet.DataLakeStoreAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
+                Assert.Equal(TierType.Commitment100AUHours, updateResponseGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
 
                 // Create another account and ensure that list account returns both
                 responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName);
                 var accountToChange = responseGet;
                 var newAcctName = accountToChange.Name + "secondacct";
 
-                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, accountToChange);
+                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, new DataLakeAnalyticsAccount
+                {
+                    Location = accountToChange.Location,
+                    DefaultDataLakeStoreAccount = accountToChange.DefaultDataLakeStoreAccount,
+                    DataLakeStoreAccounts = accountToChange.DataLakeStoreAccounts
+                });
 
                 var listResponse = clientToUse.Account.List();
 
@@ -237,6 +235,111 @@ namespace DataLakeAnalytics.Tests
 
                 // delete the second account that was created to ensure that we properly clean up after ourselves.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, accountToChange.Name);
+            }
+        }
+
+        [Fact]
+        public void FirewallTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
+
+                // Create a an account with trusted ID provider and firewall rules.
+                var firewallStart = "127.0.0.1";
+                var firewallEnd = "127.0.0.2";
+                var firewallRuleName1 = TestUtilities.GenerateName("firerule1");
+                var adlaAcocunt = TestUtilities.GenerateName("adla01");
+                // Create a test account
+                var responseCreate =
+                    clientToUse.Account.Create(commonData.ResourceGroupName, adlaAcocunt,
+                        parameters: new DataLakeAnalyticsAccount
+                        {
+                            Location = commonData.Location,
+                            DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
+                            DataLakeStoreAccounts = new List<DataLakeStoreAccountInfo>
+                            {
+                                new DataLakeStoreAccountInfo
+                                {
+                                    Name = commonData.DataLakeStoreAccountName,
+                                    Suffix = commonData.DataLakeStoreAccountSuffix
+                                }
+                            },
+                            FirewallRules = new List<FirewallRule>
+                            {
+                                new FirewallRule(firewallStart, firewallEnd, name: firewallRuleName1)
+                            },
+                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled,
+                            FirewallState = FirewallState.Enabled
+                        });
+
+                Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, responseCreate.ProvisioningState);
+
+                // get the account and ensure that all the values are properly set.
+                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, adlaAcocunt);
+
+                // validate the account creation process
+                Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, responseGet.ProvisioningState);
+                Assert.NotNull(responseCreate.Id);
+                Assert.NotNull(responseGet.Id);
+                Assert.Contains(adlaAcocunt, responseGet.Id);
+                Assert.Equal(commonData.Location, responseGet.Location);
+                Assert.Equal(adlaAcocunt, responseGet.Name);
+                Assert.Equal("Microsoft.DataLakeAnalytics/accounts", responseGet.Type);
+
+                // validate firewall state
+                Assert.Equal(FirewallState.Enabled, responseGet.FirewallState);
+                Assert.Equal(1, responseGet.FirewallRules.Count());
+                Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
+                Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
+                Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
+                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
+
+                // Test getting the specific firewall rules
+                var firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
+                Assert.Equal(firewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(firewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+
+                var updatedFirewallStart = "192.168.0.0";
+                var updatedFirewallEnd = "192.168.0.1";
+                firewallRule.StartIpAddress = updatedFirewallStart;
+                firewallRule.EndIpAddress = updatedFirewallEnd;
+
+                // Update the firewall rule to change the start/end ip addresses
+                firewallRule = clientToUse.FirewallRules.CreateOrUpdate(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1, firewallRule);
+                Assert.Equal(updatedFirewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+                // just update the firewall rule start IP
+                firewallRule = clientToUse.FirewallRules.Update(
+                    commonData.ResourceGroupName,
+                    adlaAcocunt,
+                    firewallRuleName1,
+                    new UpdateFirewallRuleParameters
+                    {
+                        StartIpAddress = firewallStart
+                    });
+
+                Assert.Equal(firewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+                // Remove the firewall rule and verify it is gone.
+                clientToUse.FirewallRules.Delete(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
+
+                try
+                {
+                    firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
+                    Assert.True(false, "Attempting to retrieve a deleted firewall rule did not throw.");
+                }
+                catch (CloudException e)
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
             }
         }
     }

@@ -57,7 +57,7 @@
 
             if (omPropertyData.IsTypeCollection)
             {
-                return GetProtocolCollectionToObjectModelCollectionString(protocolObjectSimpleGetter, omPropertyData);
+                return GetProtocolCollectionToObjectModelCollectionString(protocolObjectSimpleGetter, omPropertyData, protocolPropertyData);
             }
 
             if (IsTypeComplex(omPropertyData.Type))
@@ -85,7 +85,7 @@
 
             if (omPropertyData.IsTypeCollection)
             {
-                return GetObjectModelToProtocolCollectionString(propertyValueAccessor, omPropertyData);
+                return GetObjectModelToProtocolCollectionString(propertyValueAccessor, omPropertyData, protocolPropertyData);
             }
 
             if (IsTypeComplex(omPropertyData.Type))
@@ -103,8 +103,13 @@
         /// <returns>True if the two properties are a "paired" enum, false otherwise</returns>
         public static bool IsMappedEnumPair(PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+            return IsMappedEnumPair(omPropertyData?.Type, protocolPropertyData?.Type);
+        }
+
+        private static bool IsMappedEnumPair(string omPropertyName, string protocolPropertyName)
+        {
             //TODO: This is super hacky, do a better way
-            return (omPropertyData.Type.StartsWith("Common.") && protocolPropertyData.Type.StartsWith("Models."));
+            return omPropertyName.StartsWith("Common.") && protocolPropertyName.StartsWith("Models.");
         }
 
         public static string GetProtocolPropertyName(PropertyData omPropertyData, PropertyData protocolPropertyData)
@@ -149,8 +154,16 @@
             return result;
         }
 
-        private static string GetProtocolCollectionToObjectModelCollectionString(string protocolObjectSimpleGetter, PropertyData omPropertyData)
+        private static string GetProtocolCollectionToObjectModelCollectionString(string protocolObjectSimpleGetter, PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+            if (IsMappedEnumPair(omPropertyData?.GenericTypeParameter, protocolPropertyData?.GenericTypeParameter))
+            {
+                string omType = StripNullable(omPropertyData.GenericTypeParameter);
+                string protocolType = StripNullable(protocolPropertyData.GenericTypeParameter);
+
+                return "UtilitiesInternal.ConvertEnumCollection<" + protocolType + ", " + omType + ">(" + protocolObjectSimpleGetter + ")";
+            }
+
             if (IsTypeComplex(omPropertyData.GenericTypeParameter))
             {
                 if (omPropertyData.HasPublicSetter)
@@ -174,8 +187,15 @@
             return "UtilitiesInternal.CreateObjectWithNullCheck(" + protocolObjectSimpleGetter + ", o => o.ToList().AsReadOnly())";
         }
 
-        private static string GetObjectModelToProtocolCollectionString(string propertyValueAccessor, PropertyData omPropertyData)
+        private static string GetObjectModelToProtocolCollectionString(string propertyValueAccessor, PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+            if (IsMappedEnumPair(omPropertyData?.GenericTypeParameter, protocolPropertyData?.GenericTypeParameter))
+            {
+                string omType = StripNullable(omPropertyData.GenericTypeParameter);
+                string protocolType = StripNullable(protocolPropertyData.GenericTypeParameter);
+                return "UtilitiesInternal.ConvertEnumCollection<" + omType + ", " + protocolType + ">(" + propertyValueAccessor + ")";
+            }
+
             if (IsTypeComplex(omPropertyData.GenericTypeParameter))
             {
                 return "UtilitiesInternal.ConvertToProtocolCollection(" + propertyValueAccessor + ")";
@@ -214,6 +234,13 @@
             {
                 return string.Format("UtilitiesInternal.MapEnum<{0}, {1}>({2})", rhsEnum.Type, lhsEnum.Type, rhsGetter);
             }
+        }
+
+        private static string StripNullable(string type)
+        {
+            return type.Last() == '?'
+                ? RemoveNullableQuestionmark(type)
+                : type;
         }
 
     }

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Scheduler.Models
 {
@@ -29,13 +31,13 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the http authentication.
+        /// Gets or sets the authentication method of the request.
         /// </summary>
         [JsonProperty(PropertyName = "authentication")]
         public HttpAuthentication Authentication { get; set; }
 
         /// <summary>
-        /// Gets or sets the Uri.
+        /// Gets or sets the URI of the request.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Network;
@@ -199,6 +202,11 @@ namespace Networks.Tests
                             {
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "probes", probeName)
+                            },
+                            ConnectionDraining = new ApplicationGatewayConnectionDraining()
+                            {
+                                Enabled = true,
+                                DrainTimeoutInSec = 42
                             }
                         },
                         new ApplicationGatewayBackendHttpSettings()
@@ -397,6 +405,19 @@ namespace Networks.Tests
             Assert.Equal(gw1.Probes.Count, gw2.Probes.Count);
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
+            for(int i = 0; i < gw1.BackendHttpSettingsCollection.Count; i++)
+            {
+                if(gw1.BackendHttpSettingsCollection[i].ConnectionDraining != null)
+                {
+                    Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                    Assert.Equal(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled); 
+                    Assert.Equal(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec); 
+                } 
+                else
+                {
+                    Assert.Null(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                }
+            }
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
             Assert.Equal(gw1.SslPolicy.DisabledSslProtocols.Count, gw2.SslPolicy.DisabledSslProtocols.Count);
@@ -418,6 +439,9 @@ namespace Networks.Tests
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = "West US";
+
+                var a = HttpMockServer.Mode;
+
 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,

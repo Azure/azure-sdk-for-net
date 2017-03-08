@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Rest;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;

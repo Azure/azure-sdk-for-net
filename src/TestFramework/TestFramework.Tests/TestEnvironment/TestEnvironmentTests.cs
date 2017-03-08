@@ -14,13 +14,13 @@ namespace TestFramework.Tests.TestEnvironment
         public void EmptyTestEnvironment()
         {
             TestEnvironment env = new TestEnvironment();
-            Assert.Equal<int>(4, env.EnvEndpoints.Count);
+            Assert.Equal<int>(5, env.EnvEndpoints.Count);
         }
 
         [Fact]
         public void DefaultTenantInTestEnvironment()
         {
-            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=2c224e7e-57b-e71f4662e3a6;ServicePrincipal=4c9b80e8e4-7c2233383b4e;ServicePrincipalSecret=kzSj3+tSXIdRsX8mxuQe7yZY=;Environment=Prod");
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=2c224e7e-57b-4662e3a6;ServicePrincipal=4c9b80e8e4-73383b4e;ServicePrincipalSecret=kzSjRsX8uQe7yZY=;Environment=Prod");
             HttpMockServer.Mode = HttpRecorderMode.Playback;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
             string tenantId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];
@@ -28,14 +28,48 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<string>("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
         }
 
-        [Fact(Skip = "environmentsetting string needs to be set using credentials from keyvault for domain that still have userName/Password and 2FA disabled")]
-        public void LoginUsnPwd()
+        [Fact]
+        public void LoadCustomEnvironment()
         {
-            //This environmentsetting string needs to be set from credentials from keyvault for domain that still have userName/Password and 2factor Auth is disabled        
-            HttpMockServer.Mode = HttpRecorderMode.Record;
+            string cnnStr = @"SubscriptionId=18b0dcf-550319fa5eac;" +
+                "AADTenant=72f988bf-2d7cd011db47;" +
+                "HttpRecorderMode=Playback;" +
+                "Environment=Custom;" +
+                "ResourceManagementUri=https://brazilus.management.azure.com/;" +
+                "ServiceManagementUri=https://brazilus.management.azure.com/";
+
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", cnnStr);
+            HttpMockServer.Mode = HttpRecorderMode.Playback;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
-            string userName = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.UserIdKey];
-            Assert.False(string.IsNullOrEmpty(userName));
+            string resMgrUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.ResourceManagementUriKey];
+            string SvcMgrUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServiceManagementUriKey];
+            string ibizaUri = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.IbizaPortalUriKey];
+
+            Assert.Equal<string>("https://brazilus.management.azure.com/", resMgrUri);
+            Assert.Equal<string>("https://brazilus.management.azure.com/", SvcMgrUri);
+            Assert.Equal<string>("", ibizaUri);
+        }
+
+        [Theory]
+        [InlineData("SubscriptionId=18b0dcf-550319fa5eac;" +
+                "AADTenant=72f988bf-2d7cd011db47;" +
+                "HttpRecorderMode=Playback;" +
+                "Environment=Prod;" +
+                "ResourceManagementUri=https://brazilus.management.azure.com/;" +
+                "ServiceManagementUri=https://brazilus.management.azure.com/")]
+
+        public void UpdateExistingEnvironmentUri(string connStr)
+        {
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
+            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string resMgrUri = env.Endpoints.ResourceManagementUri.AbsoluteUri;
+            string SvcMgrUri = env.Endpoints.ServiceManagementUri.AbsoluteUri;
+            string ibizaUri = env.Endpoints.IbizaPortalUri.AbsoluteUri;
+
+            Assert.Equal<string>("https://brazilus.management.azure.com/", resMgrUri);
+            Assert.Equal<string>("https://brazilus.management.azure.com/", SvcMgrUri);
+            Assert.Equal<string>("https://portal.azure.com/", ibizaUri);
         }
     }
 }

@@ -2,21 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.Linq;
-
 namespace Test.Azure.Management.Logic
 {
     using System;
+    using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Azure.Management.Logic;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;
-    using System.IO;
 
-    public class IntegrationAccountPartnerInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountPartnerInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountPartnerInMemoryTests()
         {
@@ -44,8 +43,8 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(
-                () => client.IntegrationAccountPartners.List(null, "IntegrationAccount"));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.List(ResourceGroupName, "IntegrationAccount"));
+                () => client.Partners.ListByIntegrationAccounts(null, "IntegrationAccount"));
+            Assert.Throws<CloudException>(() => client.Maps.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
         }
 
         [Fact]
@@ -60,7 +59,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.PartnerList
             };
 
-            var result = client.IntegrationAccountPartners.List(ResourceGroupName, "IntegrationAccount");
+            var result = client.Partners.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -82,8 +81,8 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountPartners.ListNext(Constants.NextPageLink));
+            Assert.Throws<ValidationException>(() => client.Partners.ListByIntegrationAccountsNext(null));
+            Assert.Throws<CloudException>(() => client.Partners.ListByIntegrationAccountsNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -98,7 +97,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.PartnerList
             };
 
-            var result = client.IntegrationAccountPartners.ListNext(Constants.NextPageLink);
+            var result = client.Partners.ListByIntegrationAccountsNext(Constants.NextPageLink);
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -117,14 +116,14 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = new StringContent(string.Empty)
+                Content = new StringContent("Test")
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.CreateOrUpdate(null, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.CreateOrUpdate(ResourceGroupName, null, "PartnerName", new IntegrationAccountPartner()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountPartner()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountPartners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner()));
+            Assert.Throws<ValidationException>(() => client.Partners.CreateOrUpdate(null, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner()));
+            Assert.Throws<ValidationException>(() => client.Partners.CreateOrUpdate(ResourceGroupName, null, "PartnerName", new IntegrationAccountPartner()));
+            Assert.Throws<ValidationException>(() => client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountPartner()));
+            Assert.Throws<ValidationException>(() => client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", null));
+            Assert.Throws<CloudException>(() => client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner(PartnerType.B2B, new PartnerContent())));
         }
 
         [Fact]
@@ -139,7 +138,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Partner
             };
 
-            var result = client.IntegrationAccountPartners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner());
+            var result = client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner(PartnerType.B2B, new PartnerContent()));
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -161,7 +160,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Partner
             };
 
-            var result = client.IntegrationAccountPartners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner());
+            var result = client.Partners.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "PartnerName", new IntegrationAccountPartner(PartnerType.B2B, new PartnerContent()));
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -182,10 +181,10 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NotFound
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.Delete(null, "IntegrationAccountName", "PartnerName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.Delete(ResourceGroupName, null, "PartnerName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.Delete(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountPartners.Delete(ResourceGroupName, "IntegrationAccountName", "PartnerName"));
+            Assert.Throws<ValidationException>(() => client.Partners.Delete(null, "IntegrationAccountName", "PartnerName"));
+            Assert.Throws<ValidationException>(() => client.Partners.Delete(ResourceGroupName, null, "PartnerName"));
+            Assert.Throws<ValidationException>(() => client.Partners.Delete(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Partners.Delete(ResourceGroupName, "IntegrationAccountName", "PartnerName"));
         }
 
         [Fact]
@@ -199,7 +198,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
-            client.IntegrationAccountPartners.Delete(ResourceGroupName, "IntegrationAccountName", "PartnerName");
+            client.Partners.Delete(ResourceGroupName, "IntegrationAccountName", "PartnerName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -217,7 +216,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NoContent
             };
 
-            client.IntegrationAccountPartners.Delete(ResourceGroupName, "IntegrationAccountName", "PartnerName");
+            client.Partners.Delete(ResourceGroupName, "IntegrationAccountName", "PartnerName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -236,10 +235,10 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.Get(null, "IntegrationAccountName", "PartnerName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.Get(ResourceGroupName, null, "PartnerName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountPartners.Get(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountPartners.Get(ResourceGroupName, "IntegrationAccountName", "PartnerName"));
+            Assert.Throws<ValidationException>(() => client.Partners.Get(null, "IntegrationAccountName", "PartnerName"));
+            Assert.Throws<ValidationException>(() => client.Partners.Get(ResourceGroupName, null, "PartnerName"));
+            Assert.Throws<ValidationException>(() => client.Partners.Get(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Partners.Get(ResourceGroupName, "IntegrationAccountName", "PartnerName"));
         }
 
         [Fact]
@@ -254,7 +253,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Partner
             };
 
-            var result = client.IntegrationAccountPartners.Get(ResourceGroupName, "IntegrationAccountName", "PartnerName");
+            var result = client.Partners.Get(ResourceGroupName, "IntegrationAccountName", "PartnerName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -273,7 +272,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidatePartner(IntegrationAccountPartner partner)
         {
-            Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/IntegrationAccountSdkTest/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount7426/partners/IntegrationAccountPartner7353", partner.Id);
+            Assert.True(this.ValidateIdFormat(id: partner.Id, entityTypeName: "integrationAccounts", entitySubtypeName: "partners"));
             Assert.Equal("IntegrationAccountPartner7353", partner.Name);
             Assert.Equal("Microsoft.Logic/integrationAccounts/partners", partner.Type);
 

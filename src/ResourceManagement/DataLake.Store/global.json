@@ -1,3 +1,3 @@
 {
-  "projects": [ "../../ClientRuntime", "../../TestFramework", "Microsoft.Azure.Management.DataLake.Store", "DataLakeStore.Tests" ]
+  "projects": [ "Microsoft.Azure.Management.DataLake.Store", "DataLakeStore.Tests" ]
 }

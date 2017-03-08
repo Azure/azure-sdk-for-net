@@ -36,9 +36,11 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Initializes a new instance of the FirewallRule class.
         /// </summary>
         /// <param name="startIpAddress">the start IP address for the firewall
-        /// rule.</param>
+        /// rule. This can be either ipv4 or ipv6. Start and End should be in
+        /// the same protocol.</param>
         /// <param name="endIpAddress">the end IP address for the firewall
-        /// rule.</param>
+        /// rule. This can be either ipv4 or ipv6. Start and End should be in
+        /// the same protocol.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -50,13 +52,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets the start IP address for the firewall rule.
+        /// Gets or sets the start IP address for the firewall rule. This can
+        /// be either ipv4 or ipv6. Start and End should be in the same
+        /// protocol.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startIpAddress")]
         public string StartIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the end IP address for the firewall rule.
+        /// Gets or sets the end IP address for the firewall rule. This can be
+        /// either ipv4 or ipv6. Start and End should be in the same protocol.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }

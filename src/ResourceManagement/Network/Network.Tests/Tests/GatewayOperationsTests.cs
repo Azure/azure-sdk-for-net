@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using System;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 
@@ -1115,6 +1119,202 @@ namespace Networks.Tests
                 getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
                 Assert.Equal(true, getVirtualNetworkGatewayResponse.ActiveActive);
                 Assert.Equal(2, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
+            }
+        }
+
+        [Fact]
+        public void VirtualNetworkGatewayBgpRouteApiTest()
+        {
+            RecordedDelegatingHandler handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            RecordedDelegatingHandler handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                ResourceManagementClient resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                NetworkManagementClient networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                string location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualnetworkgateways");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
+
+                string gatewaySubnetName = "GatewaySubnet";
+                string gw1Name = TestUtilities.GenerateName();
+                string vnet1Name = TestUtilities.GenerateName();
+                string gw1IpName = TestUtilities.GenerateName();
+                string gw1IpDomainNameLabel = TestUtilities.GenerateName();
+                string gw1IpConfigName = TestUtilities.GenerateName();
+
+                string gw2Name = TestUtilities.GenerateName();
+                string vnet2Name = TestUtilities.GenerateName();
+                string gw2IpName = TestUtilities.GenerateName();
+                string gw2IpDomainNameLabel = TestUtilities.GenerateName();
+                string gw2IpConfigName = TestUtilities.GenerateName();
+
+                // Deploy two virtual networks with VPN gateways, in parallel
+                List<Task> gatewayDeploymentTasks = new List<Task>
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        PublicIPAddress gw1Ip = TestHelper.CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location, networkManagementClient);
+                        VirtualNetwork vnet1 = new VirtualNetwork()
+                        {
+                            Location = location,
+                            AddressSpace = new AddressSpace()
+                            {
+                                AddressPrefixes = new List<string>()
+                                {
+                                    "10.1.0.0/16",
+                                }
+                            },
+                            Subnets = new List<Subnet>()
+                            {
+                                new Subnet()
+                                {
+                                    Name = gatewaySubnetName,
+                                    AddressPrefix = "10.1.1.0/24",
+                                }
+                            }
+                        };
+
+                        vnet1 = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnet1Name, vnet1);
+                        Subnet gw1Subnet = networkManagementClient.Subnets.Get(resourceGroupName, vnet1Name, gatewaySubnetName);
+                        VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
+                        {
+                            Name = gw1IpConfigName,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                            PublicIPAddress = new SubResource() { Id = gw1Ip.Id },
+                            Subnet = new SubResource() { Id = gw1Subnet.Id }
+                        };
+
+                        VirtualNetworkGateway gw1 = new VirtualNetworkGateway()
+                        {
+                            Location = location,
+                            GatewayType = VirtualNetworkGatewayType.Vpn,
+                            VpnType = VpnType.RouteBased,
+                            IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>() { ipconfig1 },
+                            Sku = new VirtualNetworkGatewaySku()
+                            {
+                                Name = VirtualNetworkGatewaySkuName.Standard,
+                                Tier = VirtualNetworkGatewaySkuTier.Standard
+                            },
+                            BgpSettings = new BgpSettings()
+                            {
+                                Asn = 1337,
+                                BgpPeeringAddress = null,
+                                PeerWeight = 5
+                            }
+                        };
+
+                        networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, gw1Name, gw1);
+                    }),
+                    Task.Factory.StartNew(() =>
+                    {
+                        PublicIPAddress gw2Ip = TestHelper.CreateDefaultPublicIpAddress(gw2IpName, resourceGroupName, gw2IpDomainNameLabel, location, networkManagementClient);
+                        VirtualNetwork vnet2 = new VirtualNetwork()
+                        {
+                            Location = location,
+                            AddressSpace = new AddressSpace()
+                            {
+                                AddressPrefixes = new List<string>()
+                                {
+                                    "10.2.0.0/16",
+                                }
+                            },
+                            Subnets = new List<Subnet>()
+                            {
+                                new Subnet()
+                                {
+                                    Name = gatewaySubnetName,
+                                    AddressPrefix = "10.2.1.0/24",
+                                }
+                            }
+                        };
+
+                        vnet2 = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnet2Name, vnet2);
+                        Subnet gw2Subnet = networkManagementClient.Subnets.Get(resourceGroupName, vnet2Name, gatewaySubnetName);
+                        VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
+                        {
+                            Name = gw2IpConfigName,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                            PublicIPAddress = new SubResource() { Id = gw2Ip.Id },
+                            Subnet = new SubResource() { Id = gw2Subnet.Id }
+                        };
+
+                        VirtualNetworkGateway gw2 = new VirtualNetworkGateway()
+                        {
+                            Location = location,
+                            GatewayType = VirtualNetworkGatewayType.Vpn,
+                            VpnType = VpnType.RouteBased,
+                            IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>() { ipconfig1 },
+                            Sku = new VirtualNetworkGatewaySku()
+                            {
+                                Name = VirtualNetworkGatewaySkuName.Standard,
+                                Tier = VirtualNetworkGatewaySkuTier.Standard
+                            },
+                            BgpSettings = new BgpSettings()
+                            {
+                                Asn = 9001,
+                                BgpPeeringAddress = null,
+                                PeerWeight = 5
+                            }
+                        };
+
+                        networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, gw2Name, gw2);
+                    })
+                };
+
+                Task.WaitAll(gatewayDeploymentTasks.ToArray());
+
+                // Create a vnet to vnet connection between the two gateways
+                // configure both gateways in parallel
+                VirtualNetworkGateway gw1GetResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, gw1Name);
+                VirtualNetworkGateway gw2GetResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, gw2Name);
+                PublicIPAddress gw2IpResponse = networkManagementClient.PublicIPAddresses.Get(resourceGroupName, gw1IpName);
+                string sharedKey = "chocolate";
+                List<Task> gatewayConnectionTasks = new List<Task>
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        string conn1Name = TestUtilities.GenerateName();
+                        VirtualNetworkGatewayConnection gw1ToGw2Conn = new VirtualNetworkGatewayConnection()
+                        {
+                            Location = location,
+                            VirtualNetworkGateway1 = gw1GetResponse,
+                            VirtualNetworkGateway2 = gw2GetResponse,
+                            ConnectionType = VirtualNetworkGatewayConnectionType.Vnet2Vnet,
+                            RoutingWeight = 3,
+                            SharedKey = sharedKey,
+                            EnableBgp = true
+                        };
+                        networkManagementClient.VirtualNetworkGatewayConnections.CreateOrUpdate(resourceGroupName, conn1Name, gw1ToGw2Conn);
+                    }),
+                    Task.Factory.StartNew(() =>
+                    {
+                        string conn2Name = TestUtilities.GenerateName();
+                        VirtualNetworkGatewayConnection gw2ToGw1Conn = new VirtualNetworkGatewayConnection()
+                        {
+                            Location = location,
+                            VirtualNetworkGateway1 = gw2GetResponse,
+                            VirtualNetworkGateway2 = gw1GetResponse,
+                            ConnectionType = VirtualNetworkGatewayConnectionType.Vnet2Vnet,
+                            RoutingWeight = 3,
+                            SharedKey = sharedKey,
+                            EnableBgp = true
+                        };
+                        networkManagementClient.VirtualNetworkGatewayConnections.CreateOrUpdate(resourceGroupName, conn2Name, gw2ToGw1Conn);
+                    })
+                };
+
+                Task.WaitAll(gatewayConnectionTasks.ToArray());
+
+                // get bgp info from gw1
+                IEnumerable<GatewayRoute> learnedRoutes = networkManagementClient.VirtualNetworkGateways.GetLearnedRoutes(resourceGroupName, gw1Name).Value;
+                Assert.True(learnedRoutes.Count() > 0, "At least one route should be learned from gw2");
+                IEnumerable<GatewayRoute> advertisedRoutes = networkManagementClient.VirtualNetworkGateways.GetAdvertisedRoutes(resourceGroupName, gw1Name, gw2IpResponse.IpAddress).Value;
+                Assert.True(learnedRoutes.Count() > 0, "At least one route should be advertised to gw2");
+                IEnumerable<BgpPeerStatus> gw1Peers = networkManagementClient.VirtualNetworkGateways.GetBgpPeerStatus(resourceGroupName, gw1Name).Value;
+                Assert.True(gw1Peers.Count() > 0, "At least one peer should be connected");
             }
         }
     }

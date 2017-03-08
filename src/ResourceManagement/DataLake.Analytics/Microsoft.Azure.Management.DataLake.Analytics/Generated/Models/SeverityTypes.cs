@@ -32,7 +32,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [EnumMember(Value = "Error")]
         Error,
         [EnumMember(Value = "Info")]
-        Info
+        Info,
+        [EnumMember(Value = "SevereWarning")]
+        SevereWarning,
+        [EnumMember(Value = "Deprecated")]
+        Deprecated,
+        [EnumMember(Value = "UserWarning")]
+        UserWarning
     }
 }
 

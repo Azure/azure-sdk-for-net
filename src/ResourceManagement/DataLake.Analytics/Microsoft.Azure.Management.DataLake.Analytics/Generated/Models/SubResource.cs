@@ -18,13 +18,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Analytics;
     using Newtonsoft.Json;
     using Rest;
-    using Rest.Azure;
     using System.Linq;
 
     /// <summary>
     /// The Sub Resource model definition.
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.

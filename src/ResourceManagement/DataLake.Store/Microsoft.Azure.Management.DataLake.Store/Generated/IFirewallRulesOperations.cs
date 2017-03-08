@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Store account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account to which to add the
+        /// The name of the Data Lake Store account to add or replace the
         /// firewall rule.
         /// </param>
         /// <param name='firewallRuleName'>
@@ -62,6 +62,39 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<FirewallRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the specified firewall rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group that contains the Data Lake
+        /// Store account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account to which to update the
+        /// firewall rule.
+        /// </param>
+        /// <param name='firewallRuleName'>
+        /// The name of the firewall rule to update.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to update the firewall rule.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<FirewallRule>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified firewall rule from the specified Data Lake
         /// Store account

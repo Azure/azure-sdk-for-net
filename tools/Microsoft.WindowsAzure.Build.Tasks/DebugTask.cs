@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Azure.Build.Tasks
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Azure.Build.Tasks
 {
     using Microsoft.Build.Utilities;
     using System;
@@ -14,7 +17,7 @@
         /// <summary>
         /// Default timeout
         /// </summary>
-        const int DEFAULT_TASK_TIMEOUT = 20000;
+        const int DEFAULT_TASK_TIMEOUT = 30000;
 
         /// <summary>
         /// Task Timeout

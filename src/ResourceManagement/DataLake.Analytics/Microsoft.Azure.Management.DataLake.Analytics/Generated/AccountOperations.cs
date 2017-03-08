@@ -696,9 +696,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(
-                resourceGroupName, accountName, customHeaders, cancellationToken);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -724,11 +723,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DataLakeAnalyticsAccount> _response = await BeginCreateWithHttpMessagesAsync(
-                resourceGroupName, accountName, parameters, customHeaders, cancellationToken);
-            return await Client.GetPutOrPatchOperationResultAsync(_response,
-                customHeaders,
-                cancellationToken);
+            AzureOperationResponse<DataLakeAnalyticsAccount> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -754,11 +750,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DataLakeAnalyticsAccount> _response = await BeginUpdateWithHttpMessagesAsync(
-                resourceGroupName, accountName, parameters, customHeaders, cancellationToken);
-            return await Client.GetPutOrPatchOperationResultAsync(_response,
-                customHeaders,
-                cancellationToken);
+            AzureOperationResponse<DataLakeAnalyticsAccount> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

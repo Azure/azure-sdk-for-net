@@ -4,9 +4,9 @@
 ::
 
 @echo off
-set autoRestVersion=0.17.0-Nightly20160621
+set autoRestVersion=1.0.0-Nightly20170212
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-logic/CompositeLogicClient.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/84cf0b641e5fdc7dc88c209d79f60056a1dc863a/arm-logic/2016-06-01/swagger/logic.json"
 ) else (
     set specFile="%1"
 )
@@ -14,4 +14,4 @@ set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Management.Logic %autoRestVersion% %generateFolder% "-FT 1"
+call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.Logic %autoRestVersion% %generateFolder%

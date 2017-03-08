@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
@@ -52,7 +40,8 @@ namespace DataLakeStore.Tests
                             {
                                 Type = EncryptionConfigType.ServiceManaged
                             },
-                            EncryptionState = EncryptionState.Enabled
+                            EncryptionState = EncryptionState.Enabled,
+                            NewTier = TierType.Commitment1TB
                         });
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
@@ -69,6 +58,8 @@ namespace DataLakeStore.Tests
                 Assert.Equal(commonData.Location, responseGet.Location);
                 Assert.Equal(commonData.DataLakeStoreAccountName, responseGet.Name);
                 Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.Type);
+                Assert.Equal(TierType.Commitment1TB, responseGet.CurrentTier);
+                Assert.Equal(TierType.Commitment1TB, responseGet.NewTier);
 
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -103,7 +94,8 @@ namespace DataLakeStore.Tests
                     Tags = new Dictionary<string, string>
                     {
                         {"updatedKey", "updatedValue"}
-                    }
+                    },
+                    NewTier = TierType.Consumption
                 });
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, updateResponse.ProvisioningState);
@@ -119,11 +111,16 @@ namespace DataLakeStore.Tests
                 // verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
                 Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
 
+                Assert.Equal(TierType.Commitment1TB, updateResponseGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
+
                 // Create another account and ensure that list account returns both
                 var accountToChange = updateResponseGet;
                 var newAcctName = accountToChange.Name + "acct2";
-
-                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, accountToChange);
+                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, new DataLakeStoreAccount
+                {
+                    Location = accountToChange.Location
+                });
 
                 var listResponse = clientToUse.Account.List();
 
@@ -170,7 +167,7 @@ namespace DataLakeStore.Tests
                 var trustedIdName = TestUtilities.GenerateName("trustedrule1");
 
                 var adlsAccountName = TestUtilities.GenerateName("adlsacct");
-                
+
                 var responseCreate =
                     clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: adlsAccountName,
                         parameters: new DataLakeStoreAccount
@@ -183,9 +180,10 @@ namespace DataLakeStore.Tests
                             TrustedIdProviders = new List<TrustedIdProvider>
                             {
                                 new TrustedIdProvider(trustedUrl, name: trustedIdName)
-                            },    
+                            },
                             FirewallState = FirewallState.Enabled,
                             TrustedIdProviderState = TrustedIdProviderState.Enabled,
+                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled
                             
                         });
 
@@ -210,6 +208,7 @@ namespace DataLakeStore.Tests
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
+                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
 
                 // validate trusted identity provider state
                 Assert.Equal(TrustedIdProviderState.Enabled, responseGet.TrustedIdProviderState);
@@ -235,6 +234,20 @@ namespace DataLakeStore.Tests
                 Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
                 Assert.Equal(firewallRuleName1, firewallRule.Name);
 
+                // just update the firewall rule start IP
+                firewallRule = clientToUse.FirewallRules.Update(
+                    commonData.ResourceGroupName,
+                    adlsAccountName,
+                    firewallRuleName1,
+                    new UpdateFirewallRuleParameters
+                    {
+                        StartIpAddress = firewallStart
+                    });
+
+                Assert.Equal(firewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
                 // Remove the firewall rule and verify it is gone.
                 clientToUse.FirewallRules.Delete(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
 
@@ -257,9 +270,22 @@ namespace DataLakeStore.Tests
                 var updatedIdUrl = string.Format("https://sts.windows.net/{0}", TestUtilities.GenerateGuid().ToString());
                 trustedIdProvider.IdProvider = updatedIdUrl;
 
-                // Update the firewall rule to change the start/end ip addresses
+                // Update the trusted id provider
                 trustedIdProvider = clientToUse.TrustedIdProviders.CreateOrUpdate(commonData.ResourceGroupName, adlsAccountName, trustedIdName, trustedIdProvider);
                 Assert.Equal(updatedIdUrl, trustedIdProvider.IdProvider);
+                Assert.Equal(trustedIdName, trustedIdProvider.Name);
+
+                // update it with a patch
+                trustedIdProvider = clientToUse.TrustedIdProviders.Update(
+                    commonData.ResourceGroupName,
+                    adlsAccountName,
+                    trustedIdName,
+                    new UpdateTrustedIdProviderParameters
+                    {
+                        IdProvider = trustedUrl
+                    });
+
+                Assert.Equal(trustedUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
 
                 // Remove the firewall rule and verify it is gone.

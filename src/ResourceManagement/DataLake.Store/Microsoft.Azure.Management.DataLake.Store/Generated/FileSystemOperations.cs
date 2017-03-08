@@ -53,12 +53,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public DataLakeStoreFileSystemManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Appends to the specified file. This method supports multiple concurrent
-        /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
-        /// CANNOT be used interchangeably; once a file has been appended to using
-        /// either of these append options, it can only be appended to using that
-        /// append option. ConcurrentAppend DOES NOT guarantee order and can result in
-        /// duplicated data landing in the target file.
+        /// Appends to the specified file, optionally first creating the file if it
+        /// does not yet exist. This method supports multiple concurrent appends to the
+        /// file. NOTE: The target must not contain data added by Create or normal
+        /// (serial) Append. ConcurrentAppend and Append cannot be used
+        /// interchangeably; once a target file has been modified using either of these
+        /// append options, the other append option cannot be used on the target file.
+        /// ConcurrentAppend does not guarantee order and can result in duplicated data
+        /// landing in the target file.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
@@ -1061,7 +1063,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='streamContents'>
         /// A list of Data Lake Store paths (starting with '/') of the source files.
-        /// Must be in the format: sources=&lt;comma separated list&gt;
+        /// Must be a comma-separated path list in the format:
+        /// sources=/file/path/1.txt,/file/path/2.txt,/file/path/lastfile.csv
         /// </param>
         /// <param name='deleteSourceDirectory'>
         /// Indicates that as an optimization instead of deleting each individual
@@ -1546,7 +1549,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/va/{getContentSummaryFilePath}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{getContentSummaryFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", Client.AdlsFileSystemDnsSuffix);
             _url = _url.Replace("{getContentSummaryFilePath}", System.Uri.EscapeDataString(getContentSummaryFilePath));
@@ -1874,12 +1877,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Appends to the specified file. This method does not support multiple
-        /// concurrent appends to the file. NOTE: Concurrent append and normal (serial)
-        /// append CANNOT be used interchangeably. Once a file has been appended to
-        /// using either append option, it can only be appended to using that append
-        /// option. Use the ConcurrentAppend option if you would like support for
-        /// concurrent appends.
+        /// Appends to the specified file. NOTE: The target must not contain data added
+        /// by ConcurrentAppend. ConcurrentAppend and Append cannot be used
+        /// interchangeably; once a target file has been modified using either of these
+        /// append options, the other append option cannot be used on the target file.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
@@ -2098,7 +2099,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Creates a file with optionally specified content.
+        /// Creates a file with optionally specified content. NOTE: If content is
+        /// provided, the resulting file cannot be modified using ConcurrentAppend.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.

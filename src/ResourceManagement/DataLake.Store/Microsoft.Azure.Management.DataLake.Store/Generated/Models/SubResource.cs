@@ -16,15 +16,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using DataLake;
     using Store;
     using Newtonsoft.Json;
-    using Rest;
-    using Rest.Azure;
     using Store;
     using System.Linq;
 
     /// <summary>
     /// The Resource model definition for a nested resource.
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.

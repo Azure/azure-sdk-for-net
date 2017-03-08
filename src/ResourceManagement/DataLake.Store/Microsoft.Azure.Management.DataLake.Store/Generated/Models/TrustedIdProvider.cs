@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store firewall rule information
+    /// Data Lake Store Trusted Identity Provider information
     /// </summary>
     [JsonTransformation]
     public partial class TrustedIdProvider : SubResource

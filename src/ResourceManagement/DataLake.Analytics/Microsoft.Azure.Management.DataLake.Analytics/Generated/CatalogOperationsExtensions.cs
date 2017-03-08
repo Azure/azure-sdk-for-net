@@ -44,9 +44,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to create the secret (name and password)
             /// </param>
+            [System.Obsolete()]
             public static void CreateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateSecretAsync(accountName, databaseName, secretName, parameters), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.CreateSecretAsync(accountName, databaseName, secretName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -73,6 +74,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete()]
             public static async Task CreateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.CreateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false);
@@ -99,9 +101,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to modify the secret (name and password)
             /// </param>
-            public static USqlSecret UpdateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
+            [System.Obsolete()]
+            public static void UpdateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateSecretAsync(accountName, databaseName, secretName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.UpdateSecretAsync(accountName, databaseName, secretName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,12 +131,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> UpdateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            [System.Obsolete()]
+            public static async Task UpdateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                await operations.UpdateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSecretAsync(accountName, databaseName, secretName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -204,9 +205,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='secretName'>
             /// The name of the secret to delete
             /// </param>
+            [System.Obsolete()]
             public static void DeleteSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteSecretAsync(accountName, databaseName, secretName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -230,6 +232,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete()]
             public static async Task DeleteSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false);
@@ -252,7 +255,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void DeleteAllSecrets(this ICatalogOperations operations, string accountName, string databaseName)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteAllSecretsAsync(accountName, databaseName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAllSecretsAsync(accountName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -300,7 +303,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void CreateCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialCreateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateCredentialAsync(accountName, databaseName, credentialName, parameters), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.CreateCredentialAsync(accountName, databaseName, credentialName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -353,7 +356,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void UpdateCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialUpdateParameters parameters)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateCredentialAsync(accountName, databaseName, credentialName, parameters), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.UpdateCredentialAsync(accountName, databaseName, credentialName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -402,7 +405,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetCredentialAsync(accountName, databaseName, credentialName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetCredentialAsync(accountName, databaseName, credentialName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -459,7 +462,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void DeleteCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteCredentialAsync(accountName, databaseName, credentialName, parameters, cascade), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteCredentialAsync(accountName, databaseName, credentialName, parameters, cascade).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -522,7 +525,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListCredentialsAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -580,7 +583,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlExternalDataSource GetExternalDataSource(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -639,7 +642,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListExternalDataSourcesAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -700,7 +703,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlProcedure GetProcedure(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetProcedureAsync(accountName, databaseName, schemaName, procedureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetProcedureAsync(accountName, databaseName, schemaName, procedureName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -763,7 +766,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlProcedure> odataQuery = default(ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListProceduresAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -826,7 +829,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTable GetTable(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableAsync(accountName, databaseName, schemaName, tableName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetTableAsync(accountName, databaseName, schemaName, tableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -889,7 +892,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTablesAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -952,7 +955,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTableType GetTableType(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableTypeName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableTypeAsync(accountName, databaseName, schemaName, tableTypeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetTableTypeAsync(accountName, databaseName, schemaName, tableTypeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1015,7 +1018,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTableType> ListTableTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableType> odataQuery = default(ODataQuery<USqlTableType>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTableTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1078,7 +1081,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlView GetView(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetViewAsync(accountName, databaseName, schemaName, viewName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetViewAsync(accountName, databaseName, schemaName, viewName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1141,7 +1144,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListViewsAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1208,7 +1211,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTableStatistics GetTableStatistic(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1279,7 +1282,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1350,7 +1353,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTablePartition GetTablePartition(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTablePartitionAsync(accountName, databaseName, schemaName, tableName, partitionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetTablePartitionAsync(accountName, databaseName, schemaName, tableName, partitionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1421,7 +1424,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTablePartition> ListTablePartitions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTablePartition> odataQuery = default(ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTablePartitionsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1498,7 +1501,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlType> ListTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1563,7 +1566,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTableValuedFunction GetTableValuedFunction(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1628,7 +1631,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1689,7 +1692,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlAssembly GetAssembly(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetAssemblyAsync(accountName, databaseName, assemblyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAssemblyAsync(accountName, databaseName, assemblyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1746,7 +1749,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlAssembly> odataQuery = default(ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAssembliesAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1803,7 +1806,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlSchema GetSchema(this ICatalogOperations operations, string accountName, string databaseName, string schemaName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSchemaAsync(accountName, databaseName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetSchemaAsync(accountName, databaseName, schemaName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1860,7 +1863,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlSchema> odataQuery = default(ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListSchemasAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1914,7 +1917,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlDatabase GetDatabase(this ICatalogOperations operations, string accountName, string databaseName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetDatabaseAsync(accountName, databaseName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetDatabaseAsync(accountName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1965,7 +1968,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlDatabase> ListDatabases(this ICatalogOperations operations, string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesAsync(accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListDatabasesAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2012,7 +2015,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlCredential> ListCredentialsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListCredentialsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2047,7 +2050,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlExternalDataSource> ListExternalDataSourcesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListExternalDataSourcesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2082,7 +2085,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlProcedure> ListProceduresNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListProceduresNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2116,7 +2119,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTable> ListTablesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTablesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2150,7 +2153,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTableType> ListTableTypesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableTypesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTableTypesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2184,7 +2187,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlView> ListViewsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListViewsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2219,7 +2222,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTableStatistics> ListTableStatisticsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTableStatisticsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2255,7 +2258,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTablePartition> ListTablePartitionsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTablePartitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2291,7 +2294,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlType> ListTypesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTypesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2327,7 +2330,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlTableValuedFunction> ListTableValuedFunctionsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListTableValuedFunctionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2362,7 +2365,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlAssemblyClr> ListAssembliesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAssembliesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2396,7 +2399,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlSchema> ListSchemasNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListSchemasNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2430,7 +2433,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<USqlDatabase> ListDatabasesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListDatabasesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

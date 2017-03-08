@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="errorMessage">the error message details for the job,
         /// if the job failed.</param>
         /// <param name="degreeOfParallelism">the degree of parallelism used
-        /// for this job. This must be greater than 0.</param>
+        /// for this job. This must be greater than 0, if set to less than 0 it
+        /// will default to 1.</param>
         /// <param name="priority">the priority value for the current job.
         /// Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
@@ -123,7 +124,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets or sets the degree of parallelism used for this job. This must
-        /// be greater than 0.
+        /// be greater than 0, if set to less than 0 it will default to 1.
         /// </summary>
         [JsonProperty(PropertyName = "degreeOfParallelism")]
         public int? DegreeOfParallelism { get; set; }
@@ -214,10 +215,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (DegreeOfParallelism < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "DegreeOfParallelism", 1);
             }
             if (Properties != null)
             {
