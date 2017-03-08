@@ -242,6 +242,32 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> CreateRegionalWebServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string webServiceName, string region, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
+        /// Generate regional web service properties. This is especially
+        /// important to encrypted credential information in parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group in which the web service is located.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The name of the web service.
+        /// </param>
+        /// <param name='region'>
+        /// The region of the web service
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginCreateRegionalWebServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string webServiceName, string region, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
         /// Gets the access keys for the specified web service.
         /// </summary>
         /// <param name='resourceGroupName'>

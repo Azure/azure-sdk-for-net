@@ -135,5 +135,40 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 throw;
             }
         }
+
+        /// <summary>
+        /// Create web service properties for a specific region.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
+        /// <param name='region'>
+        /// The new region of Azure ML web service properties 
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> CreateRegionalPropertiesWithProperRequestIdAsync(string resourceGroupName, string webServiceName, string region, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            AzureOperationResponse _response = await BeginCreateRegionalWebServicePropertiesWithHttpMessagesAsync(
+                resourceGroupName, webServiceName, region, customHeaders, cancellationToken);
+            try
+            {
+                AzureOperationResponse operationResult = await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+                operationResult.RequestId = _response.RequestId;
+                return operationResult;
+            }
+            catch (CloudException cloudEx)
+            {
+                cloudEx.RequestId = _response.RequestId;
+                throw;
+            }
+        }
     }
 }

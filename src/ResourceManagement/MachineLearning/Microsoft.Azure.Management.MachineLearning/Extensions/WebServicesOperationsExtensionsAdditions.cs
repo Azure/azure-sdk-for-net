@@ -167,5 +167,47 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             await operations.RemoveWebServiceWitProperRequestIdAsync(resourceGroupName, webServiceName, null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Create web service properties for a specific region.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
+        /// <param name='region'>
+        /// The new region of Azure ML web service properties.
+        /// </param>
+        public static void CreateRegionalPropertiesWithRequestId(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
+        {
+            Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateRegionalPropertiesWithRequestIdAsync(resourceGroupName, webServiceName, region), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Create web service properties for a specific region.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
+        /// <param name='region'>
+        /// The new region of Azure ML web service properties.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task CreateRegionalPropertiesWithRequestIdAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await operations.CreateRegionalPropertiesWithProperRequestIdAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
