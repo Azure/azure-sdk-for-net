@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Rest.ClientRuntime.Tests.CustomClients;
+using Microsoft.Rest.ClientRuntime.Tests.Fakes;
+using Microsoft.Rest.TransientFaultHandling;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Rest.ClientRuntime.Tests.Fakes;
-using Microsoft.Rest.TransientFaultHandling;
-using Xunit;
 using System.Net.Http.Headers;
-using System.Diagnostics;
-using Microsoft.Rest.ClientRuntime.Tests.SvcClients;
+using Xunit;
 
 namespace Microsoft.Rest.ClientRuntime.Tests
 {
@@ -115,7 +114,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         {
             HttpClient hc = new HttpClient(new ContosoMessageHandler());
             var fakeClient = new FakeServiceClient(hc);
-            HttpResponseMessage response = fakeClient.DoStuffSync("Hello");
+            HttpResponseMessage response = fakeClient.DoStuffSync();
             string responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.Equal("Contoso Rocks", responseContent);
         }
@@ -241,10 +240,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.NotEmpty(osProduct.Product.Name);
             Assert.NotEmpty(osProduct.Product.Version);
         }
-
-
-
-
 #endif
     }
 }

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Microsoft.Rest.ClientRuntime.Tests.SvcClients
+﻿
+namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
 {
+    using System;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Customized client that emulates how partners will use Customized code to extend
     /// generated client.
@@ -77,43 +75,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests.SvcClients
             base.Dispose(disposing);
         }
     }
-
-    public class FabricamServiceClient : ContosoServiceClient
-    {
-        private HttpClient _httpClient;
-        public FabricamServiceClient(HttpClient httpClient) : base(httpClient)
-        {
-
-        }
-
-        public FabricamServiceClient(HttpClientHandler rootHandler, DelegatingHandler[] handlers) 
-            : base(rootHandler, handlers)
-        { }
-
-        /// <summary>
-        /// The idea is to have customized client override Get in the child class inheriting ServiceClient
-        /// And provide an instance of HttpClient.
-        /// This is yet another way for anyone to use their own HttpClient and override default existing client
-        /// </summary>
-        public override HttpClient HttpClient
-        {
-            get
-            {
-                if (_httpClient == null)
-                {
-                    _httpClient = new HttpClient(new DelayedHandler("Delayed User Provided HttpClient after initialization"));
-                }
-
-                return _httpClient;
-            }
-
-            protected set
-            {
-                base.HttpClient = value;
-            }
-        }
-    }
-
+    
     /// <summary>
     /// Custom message handler
     /// </summary>
@@ -133,32 +95,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests.SvcClients
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             StringContent contosoContent = new StringContent("Contoso Rocks");
-            HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            response.Content = contosoContent;
-            return await Task.Run(() => response);
-        }
-    }
-
-    /// <summary>
-    /// Yet another delegating handler for tests    
-    /// </summary>
-    public class DelayedHandler : DelegatingHandler
-    {
-        string _handlerData;
-        private DelayedHandler() : base()
-        {
-            InnerHandler = new HttpClientHandler();
-        }
-
-        public DelayedHandler(string handlerData) 
-            : this()
-        {
-            _handlerData = handlerData;
-        }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            StringContent contosoContent = new StringContent(_handlerData);
             HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             response.Content = contosoContent;
             return await Task.Run(() => response);

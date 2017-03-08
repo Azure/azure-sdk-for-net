@@ -1,14 +1,13 @@
-﻿using Microsoft.Rest.ClientRuntime.Tests.SvcClients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Rest.ClientRuntime.Tests
 {
-    public class SvcClientWithHttpClientTests
+    using Microsoft.Rest.ClientRuntime.Tests.CustomClients;
+    using System.Net.Http;
+    using Xunit;
+
+    public class CustomClientWithHttpClientTests
     {
         [Fact]
         public void InitializeServiceClientWithHttpClient()
