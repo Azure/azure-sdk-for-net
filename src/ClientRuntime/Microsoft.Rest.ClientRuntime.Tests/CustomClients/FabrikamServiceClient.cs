@@ -34,11 +34,16 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
 
                 return _httpClient;
             }
-
-            protected set
+        }
+        
+        protected override void Dispose(bool disposing)
+        {
+            if(_httpClient != null)
             {
-                base.HttpClient = value;
+                _httpClient.Dispose();
             }
+
+            base.Dispose(disposing);
         }
     }
 

@@ -12,7 +12,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
     /// </summary>
     public class ContosoServiceClient : ServiceClient<ContosoServiceClient>
     {
-        HttpClient _httpClient;
         /// <summary>
         /// Constructor that accepts HttpClient
         /// </summary>
@@ -67,12 +66,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
             _httpRequest.Headers.Add("x-ms-version", "2013-11-01");
             
             return await this.HttpClient.SendAsync(_httpRequest, new CancellationToken()).ConfigureAwait(false);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _httpClient.Dispose();
-            base.Dispose(disposing);
         }
     }
     
