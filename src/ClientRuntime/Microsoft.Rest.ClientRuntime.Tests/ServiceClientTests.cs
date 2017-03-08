@@ -10,6 +10,7 @@ using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 using System.Net.Http.Headers;
 using System.Diagnostics;
+using Microsoft.Rest.ClientRuntime.Tests.SvcClients;
 
 namespace Microsoft.Rest.ClientRuntime.Tests
 {
@@ -107,6 +108,16 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             var result = fakeClient.DoStuffSync();
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Equal(2, attemptsFailed);
+        }
+
+        [Fact]
+        public void FakeSvcClientWithHttpClient()
+        {
+            HttpClient hc = new HttpClient(new ContosoMessageHandler());
+            var fakeClient = new FakeServiceClient(hc);
+            HttpResponseMessage response = fakeClient.DoStuffSync("Hello");
+            string responseContent = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.Equal("Contoso Rocks", responseContent);
         }
 
         [Fact]
@@ -214,7 +225,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.True(testProduct.Product.Name.Equals(testProductName));
             Assert.True(testProduct.Product.Version.Equals(testProductVersion));
         }
-
+        
 #if NET451
         [Fact]
         public void VerifyOsInfoInUserAgent()
@@ -230,6 +241,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.NotEmpty(osProduct.Product.Name);
             Assert.NotEmpty(osProduct.Product.Version);
         }
+
+
+
+
 #endif
     }
 }

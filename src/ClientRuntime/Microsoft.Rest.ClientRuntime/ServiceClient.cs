@@ -26,6 +26,7 @@ namespace Microsoft.Rest
         private const string FXVERSION = "FxVersion";
         private const string OSNAME = "OSName";
         private const string OSVERSION = "OSVersion";
+        private HttpClient _httpClient;
 
         /// <summary>
         /// Indicates whether the ServiceClient has been disposed. 
@@ -42,6 +43,7 @@ namespace Microsoft.Rest
         /// </summary>
         private string _fxVersion;
 
+        #region NET45 specific code
 #if NET45
         /// <summary>
         /// Indicates OS Name
@@ -114,6 +116,7 @@ namespace Microsoft.Rest
             catch { return ""; }
         }
 #endif
+        #endregion
 
         /// <summary>
         /// Gets the AssemblyInformationalVersion if available
@@ -196,7 +199,7 @@ namespace Microsoft.Rest
         /// pipeline).
         /// </summary>
         protected HttpClientHandler HttpClientHandler { get; set; }
-
+        
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -209,6 +212,19 @@ namespace Microsoft.Rest
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the ServiceClient class.
+        /// </summary>
+        /// <param name="httpClient">HttpClient</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Reliability",
+            "CA2000:Dispose objects before losing scope",
+            Justification = "The created objects should be disposed on caller's side")]
+        protected ServiceClient(HttpClient httpClient)
+        {
+            InitializeHttpClient(httpClient, CreateRootHandler());
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -253,7 +269,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// Gets the HttpClient used for making HTTP requests.
         /// </summary>
-        public HttpClient HttpClient { get; protected set; }
+        public virtual HttpClient HttpClient { get; protected set; }
 
         /// <summary>
         /// Gets the UserAgent collection which can be augmented with custom
@@ -345,6 +361,17 @@ namespace Microsoft.Rest
             Justification = "We let HttpClient instance dispose")]
         protected void InitializeHttpClient(HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
         {
+            InitializeHttpClient(null, httpClientHandler, handlers);
+        }
+
+        /// <summary>
+        /// Initialize service client with provided HttpClient
+        /// </summary>
+        /// <param name="httpClient">HttpClient</param>
+        /// <param name="httpClientHandler">HttpClientHandler</param>
+        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
+        protected void InitializeHttpClient(HttpClient httpClient, HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
+        {
             HttpClientHandler = httpClientHandler;
             DelegatingHandler currentHandler = new RetryDelegatingHandler();
             currentHandler.InnerHandler = HttpClientHandler;
@@ -360,16 +387,23 @@ namespace Microsoft.Rest
                     {
                         handler = handler.InnerHandler as DelegatingHandler;
                     }
+
                     handler.InnerHandler = currentHandler;
                     currentHandler = handlers[i];
                 }
             }
 
-            var newClient = new HttpClient(currentHandler, false);
+            if (httpClient == null)
+            {
+                HttpClient = new HttpClient(currentHandler, false);
+            }
+            else
+            {
+                HttpClient = httpClient;
+            }
+
             FirstMessageHandler = currentHandler;
-            HttpClient = newClient;
-            Type type = this.GetType();
-            SetUserAgent(type.FullName, ClientVersion);
+            SetUserAgent(this.GetType().FullName, ClientVersion);
         }
         
         /// <summary>
