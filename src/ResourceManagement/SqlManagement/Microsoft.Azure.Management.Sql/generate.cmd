@@ -2,7 +2,7 @@
 :: Microsoft Azure SDK for Net - Generate library code
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
-
+ 
 @echo off
 set autoRestVersion=1.0.0-Nightly20161212
 if  "%1" == "" (
@@ -12,6 +12,7 @@ if  "%1" == "" (
 )
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
+call npm install -g autorest
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Management.Sql %autoRestVersion% %generateFolder% "-FT 1"
+call autorest --version=%autoRestVersion% -Modeler CompositeSwagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Sql -Input %specFile% -outputDirectory %generateFolder% -Header MICROSOFT_MIT -FT 1 -SkipValidation
