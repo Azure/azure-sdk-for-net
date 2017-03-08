@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
     public partial interface IClusters
     {
         /// <summary>
-        /// Update cluster config
+        /// Update cluster configuration
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the server belongs.
@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// The name of the cluster
         /// </param>
         /// <param name='clusterUpdateParameters'>
-        /// Patch Request
+        /// The parameters which contains the property value and property name
+        /// which used to update the cluster configuration
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='clusterName'>
         /// The name of the cluster
         /// </param>
-        /// <param name='clusterUpdateParameters'>
+        /// <param name='clusterresource'>
         /// Put Request
         /// </param>
         /// <param name='customHeaders'>
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster clusterUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster clusterresource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete cluster resource
         /// </summary>

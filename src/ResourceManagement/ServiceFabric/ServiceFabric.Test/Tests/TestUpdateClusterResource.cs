@@ -48,9 +48,7 @@ namespace ServiceFabric.Tests.Tests
                                             }
                                         }
                                     }
-                                },
-
-                                PropertyNames = new[] { "FabricSettings" }
+                                }
                             });
 
                         cluster = serviceFabricClient.Clusters.Get(rg.Name, res.Name);

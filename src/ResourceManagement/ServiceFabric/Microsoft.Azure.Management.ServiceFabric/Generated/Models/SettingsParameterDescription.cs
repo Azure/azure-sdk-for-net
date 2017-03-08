@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         }
 
         /// <summary>
-        /// name
+        /// The name of settings parameter description
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// name
+        /// The value of the property
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

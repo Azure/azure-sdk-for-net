@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         public ServiceFabricClient Client { get; private set; }
 
         /// <summary>
-        /// Update cluster config
+        /// Update cluster configuration
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the server belongs.
@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// The name of the cluster
         /// </param>
         /// <param name='clusterUpdateParameters'>
-        /// Patch Request
+        /// The parameters which contains the property value and property name which
+        /// used to update the cluster configuration
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -389,7 +390,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='clusterName'>
         /// The name of the cluster
         /// </param>
-        /// <param name='clusterUpdateParameters'>
+        /// <param name='clusterresource'>
         /// Put Request
         /// </param>
         /// <param name='customHeaders'>
@@ -401,7 +402,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster clusterUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster clusterresource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -415,13 +416,13 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (clusterUpdateParameters == null)
+            if (clusterresource == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterUpdateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterresource");
             }
-            if (clusterUpdateParameters != null)
+            if (clusterresource != null)
             {
-                clusterUpdateParameters.Validate();
+                clusterresource.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -436,7 +437,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("clusterUpdateParameters", clusterUpdateParameters);
+                tracingParameters.Add("clusterresource", clusterresource);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -475,9 +476,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
 
             // Serialize Request
             string _requestContent = null;
-            if(clusterUpdateParameters != null)
+            if(clusterresource != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(clusterUpdateParameters, this.Client.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(clusterresource, this.Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         }
 
         /// <summary>
-        /// name
+        /// The name of settings section description
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

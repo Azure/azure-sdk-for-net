@@ -25,64 +25,18 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the ClusterUpdateParameters class.
         /// </summary>
-        public ClusterUpdateParameters(IList<ClusterVersionDetails> availableClusterVersions = default(IList<ClusterVersionDetails>), string clusterId = default(string), string clusterState = default(string), string clusterEndpoint = default(string), string clusterCodeVersion = default(string), CertificateDescription certificate = default(CertificateDescription), string reliabilityLevel = default(string), string upgradeMode = default(string), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), CertificateDescription reverseProxyCertificate = default(CertificateDescription), string managementEndpoint = default(string), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), string provisioningState = default(string), string vmImage = default(string), DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default(DiagnosticsStorageAccountConfig), PaasClusterUpgradePolicy upgradeDescription = default(PaasClusterUpgradePolicy), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> propertyNames = default(IList<string>))
+        public ClusterUpdateParameters(string reliabilityLevel = default(string), string upgradeMode = default(string), string clusterCodeVersion = default(string), CertificateDescription certificate = default(CertificateDescription), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), CertificateDescription reverseProxyCertificate = default(CertificateDescription), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            AvailableClusterVersions = availableClusterVersions;
-            ClusterId = clusterId;
-            ClusterState = clusterState;
-            ClusterEndpoint = clusterEndpoint;
-            ClusterCodeVersion = clusterCodeVersion;
-            Certificate = certificate;
             ReliabilityLevel = reliabilityLevel;
             UpgradeMode = upgradeMode;
+            ClusterCodeVersion = clusterCodeVersion;
+            Certificate = certificate;
             ClientCertificateThumbprints = clientCertificateThumbprints;
-            ClientCertificateCommonNames = clientCertificateCommonNames;
             FabricSettings = fabricSettings;
             ReverseProxyCertificate = reverseProxyCertificate;
-            ManagementEndpoint = managementEndpoint;
             NodeTypes = nodeTypes;
-            ProvisioningState = provisioningState;
-            VmImage = vmImage;
-            DiagnosticsStorageAccountConfig = diagnosticsStorageAccountConfig;
-            UpgradeDescription = upgradeDescription;
             Tags = tags;
-            PropertyNames = propertyNames;
         }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.availableClusterVersions")]
-        public IList<ClusterVersionDetails> AvailableClusterVersions { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterId")]
-        public string ClusterId { get; set; }
-
-        /// <summary>
-        /// Possible values include: 'Default', 'WaitingForNodes',
-        /// 'Deploying', 'BaselineUpgrade', 'UpdatingUserConfiguration',
-        /// 'UpdatingUserCertificate', 'UpdatingInfrastructure',
-        /// 'EnforcingClusterVersion', 'UpgradeServiceUnreachable',
-        /// 'Deleting', 'ScaleUp', 'ScaleDown', 'AutoScale', 'Ready', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterState")]
-        public string ClusterState { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterEndpoint")]
-        public string ClusterEndpoint { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterCodeVersion")]
-        public string ClusterCodeVersion { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.certificate")]
-        public CertificateDescription Certificate { get; set; }
 
         /// <summary>
         /// Possible values include: 'Invalid', 'Bronze', 'Silver', 'Gold',
@@ -99,13 +53,18 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientCertificateThumbprints")]
-        public IList<ClientCertificateThumbprint> ClientCertificateThumbprints { get; set; }
+        [JsonProperty(PropertyName = "properties.clusterCodeVersion")]
+        public string ClusterCodeVersion { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientCertificateCommonNames")]
-        public IList<ClientCertificateCommonName> ClientCertificateCommonNames { get; set; }
+        [JsonProperty(PropertyName = "properties.certificate")]
+        public CertificateDescription Certificate { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientCertificateThumbprints")]
+        public IList<ClientCertificateThumbprint> ClientCertificateThumbprints { get; set; }
 
         /// <summary>
         /// </summary>
@@ -119,50 +78,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.managementEndpoint")]
-        public string ManagementEndpoint { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "properties.nodeTypes")]
         public IList<NodeTypeDescription> NodeTypes { get; set; }
 
         /// <summary>
-        /// Possible values include: 'Default', 'WaitingForNodes',
-        /// 'Deploying', 'BaselineUpgrade', 'UpdatingUserConfiguration',
-        /// 'UpdatingUserCertificate', 'UpdatingInfrastructure',
-        /// 'EnforcingClusterVersion', 'UpgradeServiceUnreachable',
-        /// 'Deleting', 'ScaleUp', 'ScaleDown', 'AutoScale', 'Ready', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.vmImage")]
-        public string VmImage { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.diagnosticsStorageAccountConfig")]
-        public DiagnosticsStorageAccountConfig DiagnosticsStorageAccountConfig { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.upgradeDescription")]
-        public PaasClusterUpgradePolicy UpgradeDescription { get; set; }
-
-        /// <summary>
         /// Cluster tags.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tags")]
+        [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Allowed properties
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.propertyNames")]
-        public IList<string> PropertyNames { get; set; }
 
     }
 }
