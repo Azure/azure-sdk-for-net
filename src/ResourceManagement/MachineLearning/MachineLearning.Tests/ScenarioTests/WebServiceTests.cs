@@ -26,7 +26,7 @@ namespace MachineLearning.Tests.ScenarioTests
 {
     public class WebServiceTests : BaseScenarioTests
     {
-        private const string DefaultLocation = "South Central US";
+        private const string DefaultLocation = "West Central US";
         private const string TestServiceNamePrefix = "amlws";
         private const string TestCommitmentPlanNamePrefix = "amlcp";
         private const string TestResourceGroupNamePrefix = "amlrg";
@@ -93,6 +93,13 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.NotNull(expectedCloudException.Body);
                     Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
                 }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
+                }
                 finally
                 {
                     // Remove the web service
@@ -140,6 +147,13 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.NotNull(serviceKeys);
                     Assert.Equal(serviceKeys.Primary, serviceUpdates.Properties.Keys.Primary);
                     Assert.Equal(serviceKeys.Secondary, serviceDefinition.Properties.Keys.Secondary);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
                 }
                 finally
                 {
@@ -199,6 +213,13 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));
                     string otherServiceExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, otherResourceGroupName, otherServiceName);
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, otherServiceExpectedId, StringComparison.OrdinalIgnoreCase)));
+                }
+                catch(Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
                 }
                 finally
                 {
@@ -342,7 +363,7 @@ namespace MachineLearning.Tests.ScenarioTests
 
         private static Tuple<DeploymentExtended, GenericResource> CreateCommitmentPlanResource(string resourceGroupName, string commitmentPlanName, string deploymentName, ResourceManagementClient resourcesClient, string cpApiVersion)
         {
-            string deploymentParams = @"{'planName': {'value': '" + commitmentPlanName + "'}, 'planSkuName': {'value': 'PLAN_SKU_NAME'}, 'planSkuTier': {'value': 'PLAN_SKU_TIER'}, 'apiVersion': {'value': '" + cpApiVersion + "'}}";
+            string deploymentParams = @"{'planName': {'value': '" + commitmentPlanName + "'}, 'planSkuName': {'value': 'S1'}, 'planSkuTier': {'value': 'Standard'}, 'apiVersion': {'value': '" + cpApiVersion + "'}}";
             var deploymentProperties = new DeploymentProperties
             {
                 Template = JObject.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "TestData", "DeployCommitmentPlanTemplate.json"))),
