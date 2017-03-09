@@ -1,0 +1,36 @@
+﻿{
+  "properties": {
+    "title": "Some title (new contract large payload)",
+    "description": "This is some service description (new contract large payload)",
+    "readOnly": false,
+    "exposeSampleData": false,
+    "realtimeConfiguration": {
+      "maxConcurrentCalls": 20
+    },
+    "diagnostics": {
+      "level": "None"
+    },
+    "keys": {
+      "primary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==",
+      "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
+    },
+    "commitmentPlan": {
+      "id": "WILL BE FILLED IN BY THE TEST"
+    },
+    "storageAccount": {
+      "name": "WILL BE FILLED IN BY THE TEST",
+      "key": "WILL BE FILLED IN BY THE TEST"
+    },
+    "PayloadsInBlobStorage": true,
+    "MachineLearningWorkspace": {
+      "Id": "8b841df9d60a4d54bcebd4948b10a5db"
+    },
+    "packageType": "Graph",
+    "payloadsLocation": {
+      "Uri": "https://bohurp.blob.core.windows.net/uploadeddata/payload.json?st=2017-03-09T19%3A18%3A00Z&se=2018-03-10T19%3A18%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=Lj8mGWAcs8TOCAfGZs%2BkgjJaVZ9BmMP9nHIfiA5t6pU%3D",
+      "Credentials": ""
+    }
+  },
+  "location": "West Central US",
+  "tags": {}
+}

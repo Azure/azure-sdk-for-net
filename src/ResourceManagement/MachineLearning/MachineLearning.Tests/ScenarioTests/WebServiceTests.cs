@@ -42,6 +42,7 @@ namespace MachineLearning.Tests.ScenarioTests
         /// is working as expected, re-record the test against Prod before submitting an official pull request.
         /// </summary>
         private readonly string TestServiceDefinitionFile;
+        private readonly string TestServiceDefinitionFileWithLargePayload;
 
         private const int AsyncOperationPollingIntervalSeconds = 5;
 
@@ -56,6 +57,7 @@ namespace MachineLearning.Tests.ScenarioTests
         public WebServiceTests()
         {
             TestServiceDefinitionFile = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_Prod.json");
+            TestServiceDefinitionFileWithLargePayload = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_LargePayload_Prod.json");
         }
 
         [Fact]
@@ -212,6 +214,59 @@ namespace MachineLearning.Tests.ScenarioTests
                 {
                     // Remove the web service
                     BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                }
+            });
+        }
+
+        [Fact]
+        public void CreateGetRemoveGraphWebServiceWithLargePayload()
+        {
+            this.RunAMLWebServiceTestScenario((webServiceName, resourceGroupName, resourcesClient, amlServicesClient, cpResourceId, storageAccount) =>
+            {
+                bool serviceWasRemoved = false;
+                try
+                {
+                    //Validate expected NO-OP behavior on deleting a non existing service
+                    amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName);
+
+                    // Create and validate the AML service resource
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFileWithLargePayload, cpResourceId, storageAccount);
+                    var webService = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService);
+
+                    // Retrieve the AML web service after creation
+                    var retrievedService = amlServicesClient.WebServices.Get(resourceGroupName, webServiceName);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, retrievedService);
+
+                    // Retrieve the AML web service's keys
+                    WebServiceKeys serviceKeys = amlServicesClient.WebServices.ListKeys(resourceGroupName, webServiceName);
+                    Assert.NotNull(serviceKeys);
+                    Assert.Equal(serviceKeys.Primary, serviceDefinition.Properties.Keys.Primary);
+                    Assert.Equal(serviceKeys.Secondary, serviceDefinition.Properties.Keys.Secondary);
+
+                    // Remove the web service
+                    amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName);
+                    serviceWasRemoved = true;
+
+                    //Validate that the expected not found exception is thrown after deletion when trying to access the service
+                    var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName));
+                    Assert.NotNull(expectedCloudException.Body);
+                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
+                }
+                finally
+                {
+                    // Remove the web service
+                    if (!serviceWasRemoved)
+                    {
+                        BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                    }
                 }
             });
         }
