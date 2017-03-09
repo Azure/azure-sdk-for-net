@@ -164,6 +164,59 @@ namespace MachineLearning.Tests.ScenarioTests
         }
 
         [Fact]
+        public void CreateAndPostOnGraphWebService()
+        {
+            const string NewRegion = "southcentralus";
+    
+            this.RunAMLWebServiceTestScenario((webServiceName, resourceGroupName, resourcesClient, amlServicesClient, cpResourceId, storageAccount) =>
+            {
+                try
+                {
+                    // Create and validate the AML service resource
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFile, cpResourceId, storageAccount);
+                    var webService = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService, serviceDefinition);
+
+                    //Validate that the expected not found exception is thrown before create the regional properties
+                    var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName, NewRegion));
+                    Assert.NotNull(expectedCloudException.Body);
+                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+
+                    // Submit some updates to this resource
+                    amlServicesClient.WebServices.CreateRegionalPropertiesWithRequestId(resourceGroupName, webServiceName, NewRegion);
+
+                    // Retrieve the AML web service after POST
+                    var retrievedService = amlServicesClient.WebServices.Get(resourceGroupName, webServiceName, NewRegion);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, retrievedService);
+                    Assert.NotNull(retrievedService.Properties);
+                    var properties = retrievedService.Properties as WebServicePropertiesForGraph;
+                    Assert.NotNull(properties);
+                    Assert.NotNull(properties.Package);
+                    Assert.NotNull(properties.Package.Nodes);
+                    Assert.NotNull(properties.Package.Nodes["node1"]);
+                    Assert.NotNull(properties.Package.Nodes["node1"].Parameters);
+                    Assert.NotNull(properties.Package.Nodes["node1"].Parameters["Account Key"]);
+
+                    WebServiceParameter param = properties.Package.Nodes["node1"].Parameters["Account Key"];
+                    string expectedThumbprint = "AB5C39DB612421C3A3870692316EB19F25BCDE70";
+                    Assert.Equal(expectedThumbprint, param.CertificateThumbprint);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
+                }
+                finally
+                {
+                    // Remove the web service
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                }
+            });
+        }
+
+        [Fact]
         public void CreateAndListWebServices()
         {
             this.RunAMLWebServiceTestScenario((webServiceName, resourceGroupName, resourcesClient, amlServicesClient, cpResourceId, storageAccount) =>
