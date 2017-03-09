@@ -71,6 +71,11 @@ namespace Microsoft.Azure.Management.Sql
 
 
         /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        ICapabilitiesOperations Capabilities { get; }
+
+        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         IServersOperations Servers { get; }

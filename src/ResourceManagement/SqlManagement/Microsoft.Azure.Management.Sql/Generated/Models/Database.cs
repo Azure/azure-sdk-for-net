@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource ID</param>
+        /// <param name="id">The resource ID.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="kind">Kind of database.  This is metadata used for the
@@ -56,10 +56,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// If createMode is not set to Default, sourceDatabaseId must be
         /// specified. If createMode is set to PointInTimeRestore, then
         /// restorePointInTime must be specified. If createMode is set to
-        /// Restore, then sourceDatabaseDeletionDate must be specified.
-        /// Possible values include: 'Copy', 'Default', 'NonReadableSecondary',
-        /// 'OnlineSecondary', 'PointInTimeRestore', 'Recovery',
-        /// 'Restore'</param>
+        /// Restore, then sourceDatabaseDeletionDate must be specified. Copy,
+        /// NonReadableSecondary, and OnlineSecondary are not supported for
+        /// DataWarehouse edition. Possible values include: 'Copy', 'Default',
+        /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
+        /// 'Recovery', 'Restore'</param>
         /// <param name="sourceDatabaseId">Conditional. If createMode is not
         /// set to Default, then this value must be specified. Specifies the
         /// resource ID of the source database. If createMode is
@@ -73,14 +74,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="edition">The edition of the database. The
         /// DatabaseEditions enumeration contains all the valid editions. If
         /// createMode is NonReadableSecondary or OnlineSecondary, this value
-        /// is ignored. Possible values include: 'Web', 'Business', 'Basic',
-        /// 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse',
-        /// 'System'</param>
+        /// is ignored. To see possible values, query the capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'Free',
+        /// 'Stretch', 'DataWarehouse', 'System'</param>
         /// <param name="maxSizeBytes">The max size of the database expressed
-        /// in bytes. If createMode is not Default, this value is ignored.
-        /// Note: Only the following sizes are supported (in addition to
-        /// limitations being placed on each edition): { 100 MB | 500 MB |1 GB
-        /// | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }</param>
+        /// in bytes. If createMode is not Default, this value is ignored. To
+        /// see possible values, query the capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get."</param>
         /// <param name="requestedServiceObjectiveId">The configured service
         /// level objective ID of the database. This is the service level
         /// objective that is in the process of being applied to the database.
@@ -88,14 +91,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// currentServiceObjectiveId property. If requestedServiceObjectiveId
         /// and requestedServiceObjectiveName are both updated, the value of
         /// requestedServiceObjectiveId overrides the value of
-        /// requestedServiceObjectiveName.</param>
+        /// requestedServiceObjectiveName. To see possible values, query the
+        /// capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get."</param>
         /// <param name="requestedServiceObjectiveName">The name of the
         /// configured service level objective of the database. This is the
         /// service level objective that is in the process of being applied to
         /// the database. Once successfully updated, it will match the value of
-        /// serviceLevelObjective property. Possible values include: 'Basic',
-        /// 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15',
-        /// 'System', 'ElasticPool'</param>
+        /// serviceLevelObjective property. To see possible values, query the
+        /// capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4',
+        /// 'P6', 'P11', 'P15', 'System', 'ElasticPool'</param>
         /// <param name="serviceLevelObjective">The current service level
         /// objective of the database. Possible values include: 'Basic', 'S0',
         /// 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15',
@@ -104,7 +113,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="elasticPoolName">The name of the elastic pool the
         /// database is in. If elasticPoolName and
         /// requestedServiceObjectiveName are both updated, the value of
-        /// requestedServiceObjectiveName is ignored.</param>
+        /// requestedServiceObjectiveName is ignored. Not supported for
+        /// DataWarehouse edition.</param>
         /// <param name="defaultSecondaryLocation">The default secondary region
         /// for this database.</param>
         /// <param name="serviceTierAdvisors">The list of service tier advisors
@@ -116,14 +126,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database.</param>
         /// <param name="failoverGroupId">The id indicating the failover group
         /// containing this database.</param>
-        /// <param name="readScale">Conditional.  If the database is a
+        /// <param name="readScale">Conditional. If the database is a
         /// geo-secondary, readScale indicates whether read-only connections
-        /// are allowed to this database or not. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
+        /// are allowed to this database or not. Not supported for
+        /// DataWarehouse edition. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="sampleName">Indicates the name of the sample schema to
         /// apply when creating this database. If createMode is not Default,
-        /// this value is ignored. Possible values include:
-        /// 'AdventureWorksLT'</param>
+        /// this value is ignored. Not supported for DataWarehouse edition.
+        /// Possible values include: 'AdventureWorksLT'</param>
         public Database(string location, string name = default(string), string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<Schema> schemas = default(IList<Schema>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
             : base(location, name, id, type, tags)
         {
@@ -205,9 +216,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// createMode is not set to Default, sourceDatabaseId must be
         /// specified. If createMode is set to PointInTimeRestore, then
         /// restorePointInTime must be specified. If createMode is set to
-        /// Restore, then sourceDatabaseDeletionDate must be specified.
-        /// Possible values include: 'Copy', 'Default', 'NonReadableSecondary',
-        /// 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore'
+        /// Restore, then sourceDatabaseDeletionDate must be specified. Copy,
+        /// NonReadableSecondary, and OnlineSecondary are not supported for
+        /// DataWarehouse edition. Possible values include: 'Copy', 'Default',
+        /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
+        /// 'Recovery', 'Restore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
@@ -235,19 +248,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the edition of the database. The DatabaseEditions
         /// enumeration contains all the valid editions. If createMode is
-        /// NonReadableSecondary or OnlineSecondary, this value is ignored.
-        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
-        /// 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System'
+        /// NonReadableSecondary or OnlineSecondary, this value is ignored. To
+        /// see possible values, query the capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'Free',
+        /// 'Stretch', 'DataWarehouse', 'System'
         /// </summary>
         [JsonProperty(PropertyName = "properties.edition")]
         public string Edition { get; set; }
 
         /// <summary>
         /// Gets or sets the max size of the database expressed in bytes. If
-        /// createMode is not Default, this value is ignored. Note: Only the
-        /// following sizes are supported (in addition to limitations being
-        /// placed on each edition): { 100 MB | 500 MB |1 GB | 5 GB | 10 GB |
-        /// 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }
+        /// createMode is not Default, this value is ignored. To see possible
+        /// values, query the capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get."
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
@@ -260,7 +276,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// property. If requestedServiceObjectiveId and
         /// requestedServiceObjectiveName are both updated, the value of
         /// requestedServiceObjectiveId overrides the value of
-        /// requestedServiceObjectiveName.
+        /// requestedServiceObjectiveName. To see possible values, query the
+        /// capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get."
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedServiceObjectiveId")]
         public System.Guid? RequestedServiceObjectiveId { get; set; }
@@ -270,8 +289,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the database. This is the service level objective that is in the
         /// process of being applied to the database. Once successfully
         /// updated, it will match the value of serviceLevelObjective property.
-        /// Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1',
-        /// 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'ElasticPool'
+        /// To see possible values, query the capabilities API
+        /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
+        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4',
+        /// 'P6', 'P11', 'P15', 'System', 'ElasticPool'
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedServiceObjectiveName")]
         public string RequestedServiceObjectiveName { get; set; }
@@ -293,7 +315,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the name of the elastic pool the database is in. If
         /// elasticPoolName and requestedServiceObjectiveName are both updated,
-        /// the value of requestedServiceObjectiveName is ignored.
+        /// the value of requestedServiceObjectiveName is ignored. Not
+        /// supported for DataWarehouse edition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.elasticPoolName")]
         public string ElasticPoolName { get; set; }
@@ -336,10 +359,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.Guid? FailoverGroupId { get; protected set; }
 
         /// <summary>
-        /// Gets or sets conditional.  If the database is a geo-secondary,
+        /// Gets or sets conditional. If the database is a geo-secondary,
         /// readScale indicates whether read-only connections are allowed to
-        /// this database or not. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// this database or not. Not supported for DataWarehouse edition.
+        /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.readScale")]
         public ReadScale? ReadScale { get; set; }
@@ -347,7 +370,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets indicates the name of the sample schema to apply when
         /// creating this database. If createMode is not Default, this value is
-        /// ignored. Possible values include: 'AdventureWorksLT'
+        /// ignored. Not supported for DataWarehouse edition. Possible values
+        /// include: 'AdventureWorksLT'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sampleName")]
         public string SampleName { get; set; }

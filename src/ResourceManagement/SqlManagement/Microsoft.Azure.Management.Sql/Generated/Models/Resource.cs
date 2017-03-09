@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="name">Resource name</param>
-        /// <param name="id">Resource ID</param>
+        /// <param name="id">The resource ID.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         public Resource(string location, string name = default(string), string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets resource ID
+        /// Gets the resource ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; protected set; }

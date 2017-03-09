@@ -74,6 +74,11 @@ namespace Microsoft.Azure.Management.Sql
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        public virtual ICapabilitiesOperations Capabilities { get; private set; }
+
+        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         public virtual IServersOperations Servers { get; private set; }
@@ -299,6 +304,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         private void Initialize()
         {
+            Capabilities = new CapabilitiesOperations(this);
             Servers = new ServersOperations(this);
             Databases = new DatabasesOperations(this);
             ImportExportOperations = new ImportExportOperations(this);
