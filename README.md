@@ -9,7 +9,7 @@ that take advantage of scalable cloud computing resources.
 * Netstandard 1.5, based on the NetCore framework
 
 ### Prerequisites:
-  Install .Net CoreCLR using [these steps](https://www.microsoft.com/net/core).
+  Install .Net CoreCLR Preview 2 using [these steps](https://github.com/dotnet/core/blob/master/release-notes/download-archives/1.0-preview2-download.md).
 
 ### To build:
 
