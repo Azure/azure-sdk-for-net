@@ -10,10 +10,20 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
     public class FabricamServiceClient : ContosoServiceClient
     {
         private HttpClient _httpClient;
+
+        /// <summary>
+        /// Constructor for FabricamServiceClient
+        /// </summary>
+        /// <param name="httpClient">HttpClient object</param>
         public FabricamServiceClient(HttpClient httpClient) : base(httpClient)
         { }
 
-        public FabricamServiceClient(HttpClientHandler rootHandler, DelegatingHandler[] handlers) 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="rootHandler">HttpClientHandler</param>
+        /// <param name="handlers">DelegatingHandler </param>
+        public FabricamServiceClient(HttpClientHandler rootHandler, DelegatingHandler[] handlers)
             : base(rootHandler, handlers)
         { }
 
