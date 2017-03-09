@@ -24,6 +24,116 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
+            /// Imports a bacpac into an existing database. The existing database must be
+            /// empty.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to import into
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for importing a Bacpac into a database.
+            /// </param>
+            public static ImportExportOperationResponse Import(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ImportExtensionRequestParameters parameters)
+            {
+                return operations.ImportAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Imports a bacpac into an existing database. The existing database must be
+            /// empty.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to import into
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for importing a Bacpac into a database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImportExportOperationResponse> ImportAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ImportExtensionRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Exports a database to a bacpac.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be exported.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for exporting a database.
+            /// </param>
+            public static ImportExportOperationResponse Export(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ExportRequestParameters parameters)
+            {
+                return operations.ExportAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Exports a database to a bacpac.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be exported.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for exporting a database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImportExportOperationResponse> ExportAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ExportRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ExportWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a database replication link. Cannot be done during failover.
             /// </summary>
             /// <param name='operations'>
@@ -578,7 +688,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of databases by server.
+            /// Returns a list of databases in a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -599,7 +709,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of databases by server.
+            /// Returns a list of databases in a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -924,6 +1034,116 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IEnumerable<TransparentDataEncryptionActivity>> ListTransparentDataEncryptionActivityAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListTransparentDataEncryptionActivityWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Imports a bacpac into an existing database. The existing database must be
+            /// empty.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to import into
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for importing a Bacpac into a database.
+            /// </param>
+            public static ImportExportOperationResponse BeginImport(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ImportExtensionRequestParameters parameters)
+            {
+                return operations.BeginImportAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Imports a bacpac into an existing database. The existing database must be
+            /// empty.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to import into
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for importing a Bacpac into a database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImportExportOperationResponse> BeginImportAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ImportExtensionRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginImportWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Exports a database to a bacpac.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be exported.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for exporting a database.
+            /// </param>
+            public static ImportExportOperationResponse BeginExport(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ExportRequestParameters parameters)
+            {
+                return operations.BeginExportAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Exports a database to a bacpac.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be exported.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for exporting a database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImportExportOperationResponse> BeginExportAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ExportRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginExportWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

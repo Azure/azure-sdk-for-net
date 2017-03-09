@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns elastic pools.
+        /// Returns a list of elastic pools in a server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -1263,7 +1263,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns a database inside of an elastic pool.
+        /// Returns a list of databases in an elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain

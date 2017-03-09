@@ -17,8 +17,8 @@ namespace Sql.Tests
         public void TestGetAndListFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetAndListFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create Firewall Rules
                 //
@@ -61,8 +61,8 @@ namespace Sql.Tests
         public void TestCreateAndDropFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateUpdateDropFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateUpdateDropFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create and validate Firewall Rule
                 //
@@ -108,8 +108,8 @@ namespace Sql.Tests
         public void TestCreateAndUpdateFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateAndUpdateFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndUpdateFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create Firewall Rule and Validate
                 //

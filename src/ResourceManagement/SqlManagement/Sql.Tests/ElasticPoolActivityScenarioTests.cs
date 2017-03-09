@@ -17,8 +17,8 @@ namespace Sql.Tests
         public void TestListElasticPoolDatabaseActivity()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestListElasticPoolDatabaseActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestListElasticPoolDatabaseActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -70,8 +70,8 @@ namespace Sql.Tests
         public void TestListElasticPoolActivity()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestListElasticPoolActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestListElasticPoolActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -105,8 +105,8 @@ namespace Sql.Tests
         public void TestMoveBetweenPoolsAndGetActivity()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestMoveBetweenPoolsAndGetActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestMoveBetweenPoolsAndGetActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {

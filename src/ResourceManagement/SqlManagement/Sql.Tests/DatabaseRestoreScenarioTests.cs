@@ -17,8 +17,8 @@ namespace Sql.Tests
             // Warning: This test takes around 20 minutes to run in record mode.
 
             string testPrefix = "sqlrestoretest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create database only required parameters
                 //

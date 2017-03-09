@@ -18,8 +18,8 @@ namespace Sql.Tests
         public void TestCreateDropDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateDropDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateDropDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -105,8 +105,8 @@ namespace Sql.Tests
         public void TestUpdateDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestUpdateDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestUpdateDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -190,8 +190,8 @@ namespace Sql.Tests
         public void TestGetAndListDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Begin creating some small databases to run the get/List tests on.
                 //
@@ -249,8 +249,8 @@ namespace Sql.Tests
         public void TestRemoveDatabaseFromPool()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestRemoveDatabaseFromPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestRemoveDatabaseFromPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
