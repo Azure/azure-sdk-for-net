@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">The unique ID of the Service Objective.</param>
         /// <param name="supportedMaxSizes">The list of supported maximum Azure
         /// SQL Database sizes for this Service Objective.</param>
-        public ServiceObjectiveCapability(string name = default(string), string status = default(string), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), string id = default(string), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>))
+        public ServiceObjectiveCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), string id = default(string), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>))
         {
             Name = name;
             Status = status;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Visible', 'Available', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
+        public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets or sets unit type used to measure SLO performance level.

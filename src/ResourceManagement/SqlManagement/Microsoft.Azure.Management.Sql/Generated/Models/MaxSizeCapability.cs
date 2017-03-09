@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Petabytes'</param>
         /// <param name="status">The status of the maximum size capability.
         /// Possible values include: 'Visible', 'Available', 'Default'</param>
-        public MaxSizeCapability(int? limit = default(int?), string unit = default(string), string status = default(string))
+        public MaxSizeCapability(int? limit = default(int?), MaxSizeUnits? unit = default(MaxSizeUnits?), CapabilityStatus? status = default(CapabilityStatus?))
         {
             Limit = limit;
             Unit = unit;
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public string Unit { get; private set; }
+        public MaxSizeUnits? Unit { get; private set; }
 
         /// <summary>
         /// Gets the status of the maximum size capability. Possible values
         /// include: 'Visible', 'Available', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
+        public CapabilityStatus? Status { get; private set; }
 
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Default'</param>
         /// <param name="supportedServerVersions">The list of supported Azure
         /// SQL Server versions.</param>
-        public LocationCapabilities(string name = default(string), string status = default(string), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
+        public LocationCapabilities(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
         {
             Name = name;
             Status = status;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'Visible', 'Available', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
+        public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the list of supported Azure SQL Server versions.

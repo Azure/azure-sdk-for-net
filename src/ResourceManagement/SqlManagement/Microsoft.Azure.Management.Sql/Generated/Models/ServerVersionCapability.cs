@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Visible', 'Available', 'Default'</param>
         /// <param name="supportedEditions">The list of supported Azure SQL
         /// Server editions.</param>
-        public ServerVersionCapability(string name = default(string), string status = default(string), IList<EditionCapability> supportedEditions = default(IList<EditionCapability>))
+        public ServerVersionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<EditionCapability> supportedEditions = default(IList<EditionCapability>))
         {
             Name = name;
             Status = status;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Visible', 'Available', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
+        public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the list of supported Azure SQL Server editions.

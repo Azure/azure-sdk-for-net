@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Visible', 'Available', 'Default'</param>
         /// <param name="supportedServiceLevelObjectives">The list of supported
         /// Service Objectives for the edition.</param>
-        public EditionCapability(string name = default(string), string status = default(string), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>))
+        public EditionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>))
         {
             Name = name;
             Status = status;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Visible', 'Available', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
+        public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the list of supported Service Objectives for the edition.
