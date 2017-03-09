@@ -241,6 +241,37 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedDoc, response.Results.First().Document);
         }
 
+        protected void TestCanSearchWithSynonyms()
+        {
+            SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+            string synonymMapName = "names";
+            SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "luxury,fancy");
+            searchClient.SynonymMaps.Create(synonymMap);
+
+            SearchIndexClient client = GetClientForQuery();
+            Index index = searchClient.Indexes.Get(client.IndexName);
+            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new String[1] { synonymMapName };
+            searchClient.Indexes.CreateOrUpdate(index);
+
+            var searchParameters =
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Full,
+                    SearchFields = new[] { "hotelName" },
+                    Select = new[] { "hotelName", "baseRate" }
+                };
+
+            DocumentSearchResult<Hotel> response =
+                client.Documents.Search<Hotel>(@"luxury", searchParameters);
+
+            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199 };
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(expectedDoc, response.Results.First().Document);
+        }
+
         protected void TestCanSearchWithRegex()
         {
             SearchIndexClient client = GetClientForQuery();
