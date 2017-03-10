@@ -269,7 +269,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// Gets the HttpClient used for making HTTP requests.
         /// </summary>
-        public virtual HttpClient HttpClient { get; protected set; }
+        public HttpClient HttpClient { get; protected set; }
 
         /// <summary>
         /// Gets the UserAgent collection which can be augmented with custom

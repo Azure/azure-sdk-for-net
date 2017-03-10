@@ -41,7 +41,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         public void ProvideHttpClientAfterInitialization()
         {
             DelegatingHandler[] handlers = new ContosoMessageHandler[] { new ContosoMessageHandler() };
-            ContosoServiceClient contosoClient = new FabricamServiceClient(new HttpClientHandler(), handlers);
+            ContosoServiceClient contosoClient = new ContosoServiceClient();
             HttpResponseMessage response = contosoClient.DoSyncWork();
             string cont = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.Equal("Delayed User Provided HttpClient after initialization", cont);
