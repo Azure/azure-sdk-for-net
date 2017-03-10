@@ -27,32 +27,29 @@ namespace Sql.Tests
                         Location = server.Location,
                     });
 
-                    DatabaseSecurityAlertPolicyResource defaultDatabasePolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName, SecurityConstants.c_DefaultPolicyName);
+                    DatabaseSecurityAlertPolicy defaultDatabasePolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
                     // Verify that the initial Get request contains the default policy.
-                    VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultSecurityAlertProperties(), defaultDatabasePolicyResponse.Properties);
+                    VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultSecurityAlertProperties(), defaultDatabasePolicyResponse);
 
                     // Modify the policy properties, send and receive and see it its still ok
-                    DatabaseSecurityAlertPolicyResource updatedDatabasePolicy = new DatabaseSecurityAlertPolicyResource
+                    DatabaseSecurityAlertPolicy updatedDatabasePolicy = new DatabaseSecurityAlertPolicy
                     {
-                        Properties = new DatabaseSecurityAlertPolicyProperties
-                        {
-                            State = SecurityConstants.c_DisabledValue,
-                            EmailAccountAdmins = SecurityConstants.c_EnabledValue,
-                            EmailAddresses = "testSecurityAlert@microsoft.com",
-                            DisabledAlerts = "Access_Anomaly; Usage_Anomaly",
-                            RetentionDays = 5,
-                            StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                            StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                            UseServerDefault = SecurityConstants.c_DisabledValue,
-                        }
+                        State = SecurityAlertPolicyState.Disabled,
+                        EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
+                        EmailAddresses = "testSecurityAlert@microsoft.com",
+                        DisabledAlerts = "Access_Anomaly; Usage_Anomaly",
+                        RetentionDays = 5,
+                        StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                        StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                        UseServerDefault = SecurityAlertPolicyUseServerDefault.Enabled,
                     };
-                    sqlClient.DatabaseThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, SecurityConstants.c_DefaultPolicyName, updatedDatabasePolicy);
+                    sqlClient.DatabaseThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
 
-                    var getUpdatedPolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName, SecurityConstants.c_DefaultPolicyName);
+                    var getUpdatedPolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
                     // Verify that the Get request contains the updated policy.
-                    VerifyDatabaseSecurityAlertPolicyInformation(updatedDatabasePolicy.Properties, getUpdatedPolicyResponse.Properties);
+                    VerifyDatabaseSecurityAlertPolicyInformation(updatedDatabasePolicy, getUpdatedPolicyResponse);
                 });
 
         }
@@ -63,7 +60,7 @@ namespace Sql.Tests
         /// </summary>
         /// <param name="expected">The expected value of the properties object</param>
         /// <param name="actual">The properties object that needs to be checked</param>
-        private void VerifyDatabaseSecurityAlertPolicyInformation(DatabaseSecurityAlertPolicyProperties expected, DatabaseSecurityAlertPolicyProperties actual)
+        private void VerifyDatabaseSecurityAlertPolicyInformation(DatabaseSecurityAlertPolicy expected, DatabaseSecurityAlertPolicy actual)
         {
             Assert.Equal(expected.State, actual.State);
             Assert.Equal(expected.EmailAccountAdmins, actual.EmailAccountAdmins);
@@ -78,16 +75,16 @@ namespace Sql.Tests
         /// <summary>
         /// Returns a SecurityAlertProperties object that holds the default settings for a database security alert policy
         /// </summary>
-        /// <returns>A DatabaseSecurityAlertPolicyProperties object with the default database security alert policy settings</returns>
-        private DatabaseSecurityAlertPolicyProperties GetDefaultSecurityAlertProperties()
+        /// <returns>A DatabaseSecurityAlertPolicy object with the default database security alert policy settings</returns>
+        private DatabaseSecurityAlertPolicy GetDefaultSecurityAlertProperties()
         {
-            DatabaseSecurityAlertPolicyProperties properties = new DatabaseSecurityAlertPolicyProperties
+            DatabaseSecurityAlertPolicy properties = new DatabaseSecurityAlertPolicy
             {
-                State = SecurityConstants.c_NewValue,
-                EmailAccountAdmins = SecurityConstants.c_EnabledValue,
-                DisabledAlerts = SecurityConstants.c_DisabledAlertsDefault,
+                State = SecurityAlertPolicyState.New,
+                EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
+                DisabledAlerts = SecurityAlert.Preview,
                 EmailAddresses = string.Empty,
-                UseServerDefault = SecurityConstants.c_EnabledValue,
+                UseServerDefault = SecurityAlertPolicyUseServerDefault.Enabled,
                 StorageEndpoint = string.Empty,
                 StorageAccountAccessKey = string.Empty,
                 RetentionDays = 0,

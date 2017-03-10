@@ -33,42 +33,39 @@ namespace Sql.Tests
                          });
                      }
 
-                     ServerSecurityAlertPolicyResource defaultServerPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName);
+                     ServerSecurityAlertPolicy defaultServerPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name);
 
                      // Verify that the initial Get request contains the default policy.
-                     VerifySecurityAlertPolicyInformation(GetDefaultSecurityAlertProperties(), defaultServerPolicyResponse.Properties);
+                     VerifySecurityAlertPolicyInformation(GetDefaultSecurityAlertProperties(), defaultServerPolicyResponse);
 
                      // Modify the policy properties, send and receive and see it its still ok
-                     ServerSecurityAlertPolicyResource updatedServerPolicy = new ServerSecurityAlertPolicyResource
+                     ServerSecurityAlertPolicy updatedServerPolicy = new ServerSecurityAlertPolicy
                      {
-                         Properties = new ServerSecurityAlertPolicyResourceProperties
-                         {
-                             State = SecurityConstants.c_DisabledValue,
-                             EmailAccountAdmins = SecurityConstants.c_EnabledValue,
-                             EmailAddresses = "testSecurityAlert@microsoft.com;testServerPolicy@microsoft.com",
-                             DisabledAlerts = "Sql_Injection",
-                             RetentionDays = 3,
-                             StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                             StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                         }
+                         State = SecurityAlertPolicyState.Enabled,
+                         EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
+                         EmailAddresses = "testSecurityAlert@microsoft.com;testServerPolicy@microsoft.com",
+                         DisabledAlerts = "Sql_Injection",
+                         RetentionDays = 3,
+                         StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                         StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
                      };
 
                      //Set security alert policy for server
-                     sqlClient.ServerThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName, updatedServerPolicy);
+                     sqlClient.ServerThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
                      //Waiting for the operation to start
                      Task.Delay(TimeSpan.FromSeconds(2));
 
-                     SecurityAlertOperationListResult operationResults = sqlClient.ServerThreatDetectionOperationResultsList.Get(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName);
+                     SecurityAlertOperationListResult operationResults = sqlClient.ServerThreatDetectionPolicies.ListOperationResults(resourceGroup.Name, server.Name);
                      if (operationResults != null && operationResults.Value.Any())
                      {
                          //The set policy operation has not finished yet
-                         SecurityAlertOperationResultResource operationStatusResponse = operationResults.Value.First();
-                         string operationId = operationStatusResponse.Properties.OperationId;
+                         SecurityAlertOperationResult operationStatusResponse = operationResults.Value.First();
+                         string operationId = operationStatusResponse.OperationId;
                          for (int i = 0; i < retriesCount; i++)
                          {
-                             operationStatusResponse = sqlClient.ServerThreatDetectionOperationResult.Get(
-                                     resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName, operationId);
-                             if (operationStatusResponse != null && operationStatusResponse.Properties.State == SecurityConstants.c_SucceededOperationStatus)
+                             operationStatusResponse = sqlClient.ServerThreatDetectionPolicies.GetOperationResult(
+                                     resourceGroup.Name, server.Name, operationId);
+                             if (operationStatusResponse != null && operationStatusResponse.State == SecurityConstants.c_SucceededOperationStatus)
                              {
                                  //set operation has finished
                                  break;
@@ -78,9 +75,9 @@ namespace Sql.Tests
                      }
 
                      //Get security alert server policy
-                     var getUpdatedPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName);
+                     var getUpdatedPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name);
                      // Verify that the Get request contains the updated policy.
-                     VerifySecurityAlertPolicyInformation(updatedServerPolicy.Properties, getUpdatedPolicyResponse.Properties);
+                     VerifySecurityAlertPolicyInformation(updatedServerPolicy, getUpdatedPolicyResponse);
                  });
         }
 
@@ -90,7 +87,7 @@ namespace Sql.Tests
         /// </summary>
         /// <param name="expected">The expected value of the properties object</param>
         /// <param name="actual">The properties object that needs to be checked</param>
-        private void VerifySecurityAlertPolicyInformation(ServerSecurityAlertPolicyResourceProperties expected, ServerSecurityAlertPolicyResourceProperties actual)
+        private void VerifySecurityAlertPolicyInformation(ServerSecurityAlertPolicy expected, ServerSecurityAlertPolicy actual)
         {
             Assert.Equal(expected.State, actual.State);
             Assert.Equal(expected.EmailAccountAdmins, actual.EmailAccountAdmins);
@@ -102,16 +99,16 @@ namespace Sql.Tests
         }
 
         /// <summary>
-        /// Returns a ServerSecurityAlertPolicyResourceProperties object that holds the default settings for a server security alert policy
+        /// Returns a ServerSecurityAlertPolicy object that holds the default settings for a server security alert policy
         /// </summary>
-        /// <returns>A ServerSecurityAlertPolicyResourceProperties object with the default server security alert policy settings</returns>
-        private ServerSecurityAlertPolicyResourceProperties GetDefaultSecurityAlertProperties()
+        /// <returns>A ServerSecurityAlertPolicy object with the default server security alert policy settings</returns>
+        private ServerSecurityAlertPolicy GetDefaultSecurityAlertProperties()
         {
-            ServerSecurityAlertPolicyResourceProperties properties = new ServerSecurityAlertPolicyResourceProperties
+            ServerSecurityAlertPolicy properties = new ServerSecurityAlertPolicy
             {
-                State = SecurityConstants.c_NewValue,
-                EmailAccountAdmins = SecurityConstants.c_EnabledValue,
-                DisabledAlerts = SecurityConstants.c_DisabledAlertsDefault,
+                State = SecurityAlertPolicyState.New,
+                EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
+                DisabledAlerts = SecurityAlert.Preview,
                 EmailAddresses = string.Empty,
                 StorageEndpoint = string.Empty,
                 StorageAccountAccessKey = string.Empty,

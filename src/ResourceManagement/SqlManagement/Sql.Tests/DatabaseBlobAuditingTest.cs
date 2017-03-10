@@ -29,31 +29,28 @@ namespace Sql.Tests
                         Location = server.Location,
                     });
 
-                    DatabaseBlobAuditingPolicyResource defaultDatabasePolicyResponse = sqlClient.DatabaseBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, dbName, SecurityConstants.c_DefaultPolicyName);
+                    DatabaseBlobAuditingPolicy defaultDatabasePolicyResponse = sqlClient.DatabaseBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, dbName);
                     
                     // Verify that the initial Get request contains the default policy.
-                    VerifyAuditingPolicyInformation(GetDefaultBlobAuditgProperties(), defaultDatabasePolicyResponse.Properties);
+                    VerifyAuditingPolicyInformation(GetDefaultBlobAuditgProperties(), defaultDatabasePolicyResponse);
 
                     // Modify the policy properties, send and receive and see it its still ok
                     IList<string> auditActionsAndGroups = new List<string> { "SCHEMA_OBJECT_ACCESS_GROUP", "UPDATE on database::testdb by public" };
-                    DatabaseBlobAuditingPolicyResource updatedDatabasePolicy = new DatabaseBlobAuditingPolicyResource
+                    DatabaseBlobAuditingPolicy updatedDatabasePolicy = new DatabaseBlobAuditingPolicy
                     {
-                        Properties = new DatabaseBlobAuditingPolicyResourceProperties
-                        {
-                            State = SecurityConstants.c_DisabledValue,
-                            RetentionDays = 5,
-                            StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                            StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                            AuditActionsAndGroups = auditActionsAndGroups,
-                            StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
-                            IsStorageSecondaryKeyInUse = false
-                        }
+                        State = SecurityConstants.c_DisabledValue,
+                        RetentionDays = 5,
+                        StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                        StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                        AuditActionsAndGroups = auditActionsAndGroups,
+                        StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
+                        IsStorageSecondaryKeyInUse = false
                     };
-                    sqlClient.DatabaseBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, SecurityConstants.c_DefaultPolicyName, updatedDatabasePolicy);
+                    sqlClient.DatabaseBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
 
-                    var getUpdatedPolicyResponse = sqlClient.DatabaseBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, dbName, SecurityConstants.c_DefaultPolicyName); 
+                    var getUpdatedPolicyResponse = sqlClient.DatabaseBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, dbName); 
                     // Verify that the Get request contains the updated policy.
-                    VerifyAuditingPolicyInformation(updatedDatabasePolicy.Properties, getUpdatedPolicyResponse.Properties);
+                    VerifyAuditingPolicyInformation(updatedDatabasePolicy, getUpdatedPolicyResponse);
                 });
 
         }
@@ -64,7 +61,7 @@ namespace Sql.Tests
         /// </summary>
         /// <param name="expected">The expected value of the properties object</param>
         /// <param name="actual">The properties object that needs to be checked</param>
-        private void VerifyAuditingPolicyInformation(DatabaseBlobAuditingPolicyResourceProperties expected, DatabaseBlobAuditingPolicyResourceProperties actual)
+        private void VerifyAuditingPolicyInformation(DatabaseBlobAuditingPolicy expected, DatabaseBlobAuditingPolicy actual)
         {
             Assert.Equal(expected.State, actual.State);
             Assert.Equal(expected.RetentionDays, actual.RetentionDays);
@@ -87,9 +84,9 @@ namespace Sql.Tests
         /// Returns a BlobAuditingProperties object that holds the default settings for a database blob auditing policy
         /// </summary>
         /// <returns>A BlobAuditingProperties object with the default database audit policy settings</returns>
-        private DatabaseBlobAuditingPolicyResourceProperties GetDefaultBlobAuditgProperties()
+        private DatabaseBlobAuditingPolicy GetDefaultBlobAuditgProperties()
         {
-            DatabaseBlobAuditingPolicyResourceProperties properties = new DatabaseBlobAuditingPolicyResourceProperties
+            DatabaseBlobAuditingPolicy properties = new DatabaseBlobAuditingPolicy
             {
                 State = SecurityConstants.c_DisabledValue,
                 RetentionDays = 0,

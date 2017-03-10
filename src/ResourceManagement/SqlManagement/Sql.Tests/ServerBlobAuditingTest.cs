@@ -36,43 +36,40 @@ namespace Sql.Tests
                         });
                     }
 
-                    ServerBlobAuditingPolicyResource defaultServerPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName);
+                    ServerBlobAuditingPolicy defaultServerPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name);
 
                     // Verify that the initial Get request contains the default policy.
-                    VerifyAuditingPolicyInformation(GetDefaultBlobAuditgProperties(), defaultServerPolicyResponse.Properties);
+                    VerifyAuditingPolicyInformation(GetDefaultBlobAuditgProperties(), defaultServerPolicyResponse);
 
                     // Modify the policy properties, send and receive and see it its still ok
                     IList<string> auditActionsAndGroups = new List<string> { "SCHEMA_OBJECT_ACCESS_GROUP", "UPDATE on database::testdb by public" };
-                    ServerBlobAuditingPolicyResource updatedServerPolicy = new ServerBlobAuditingPolicyResource
+                    ServerBlobAuditingPolicy updatedServerPolicy = new ServerBlobAuditingPolicy
                     {
-                        Properties = new ServerBlobAuditingPolicyResourceProperties
-                        {
-                            State = SecurityConstants.c_DisabledValue,
-                            RetentionDays = 8,
-                            StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                            StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                            AuditActionsAndGroups = auditActionsAndGroups,
-                            StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
-                            IsStorageSecondaryKeyInUse = false
-                        }
+                        State = SecurityConstants.c_DisabledValue,
+                        RetentionDays = 8,
+                        StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                        StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                        AuditActionsAndGroups = auditActionsAndGroups,
+                        StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
+                        IsStorageSecondaryKeyInUse = false
                     };
                     
                     //Set blob auditing policy for server
-                    sqlClient.ServerBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName, updatedServerPolicy);
+                    sqlClient.ServerBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
                     //Waiting for the operation to start
                     Task.Delay(TimeSpan.FromSeconds(2));
 
-                    BlobAuditingOperationListResult operationResults = sqlClient.ServerBlobAuditingOperationResultsList.Get(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName);
+                    BlobAuditingOperationListResult operationResults = sqlClient.ServerBlobAuditingPolicies.ListOperationResults(resourceGroup.Name, server.Name);
                     if (operationResults != null && operationResults.Value.Any())
                     {
                         //The set policy operation has not finished yet
-                        BlobAuditingOperationResultResource operationStatusResponse = operationResults.Value.First();
-                        string operationId = operationStatusResponse.Properties.OperationId;
+                        BlobAuditingOperationResult operationStatusResponse = operationResults.Value.First();
+                        string operationId = operationStatusResponse.OperationId;
                         for (int i = 0; i < retriesCount; i++)
                         {
-                            operationStatusResponse = sqlClient.ServerBlobAuditingOperationResult.Get(
-                                    resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName, operationId);
-                            if (operationStatusResponse != null && operationStatusResponse.Properties.State == SecurityConstants.c_SucceededOperationStatus)
+                            operationStatusResponse = sqlClient.ServerBlobAuditingPolicies.GetOperationResult(
+                                    resourceGroup.Name, server.Name, operationId);
+                            if (operationStatusResponse != null && operationStatusResponse.State == SecurityConstants.c_SucceededOperationStatus)
                             {
                                 break;
                             }
@@ -81,9 +78,9 @@ namespace Sql.Tests
                     }
 
                     //Get blob auditing server policy
-                    var getUpdatedPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, SecurityConstants.c_DefaultPolicyName);
+                    var getUpdatedPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name);
                     // Verify that the Get request contains the updated policy.
-                    VerifyAuditingPolicyInformation(updatedServerPolicy.Properties, getUpdatedPolicyResponse.Properties);
+                    VerifyAuditingPolicyInformation(updatedServerPolicy, getUpdatedPolicyResponse);
                 });
         }
 
@@ -93,7 +90,7 @@ namespace Sql.Tests
         /// </summary>
         /// <param name="expected">The expected value of the properties object</param>
         /// <param name="actual">The properties object that needs to be checked</param>
-        private void VerifyAuditingPolicyInformation(ServerBlobAuditingPolicyResourceProperties expected, ServerBlobAuditingPolicyResourceProperties actual)
+        private void VerifyAuditingPolicyInformation(ServerBlobAuditingPolicy expected, ServerBlobAuditingPolicy actual)
         {
             Assert.Equal(expected.State, actual.State);
             Assert.Equal(expected.RetentionDays, actual.RetentionDays);
@@ -113,12 +110,12 @@ namespace Sql.Tests
         }
 
         /// <summary>
-        /// Returns a ServerBlobAuditingPolicyResourceProperties object that holds the default settings for a server blob auditing policy
+        /// Returns a ServerBlobAuditingPolicy object that holds the default settings for a server blob auditing policy
         /// </summary>
-        /// <returns>A ServerBlobAuditingPolicyResourceProperties object with the default server audit policy settings</returns>
-        private ServerBlobAuditingPolicyResourceProperties GetDefaultBlobAuditgProperties()
+        /// <returns>A ServerBlobAuditingPolicy object with the default server audit policy settings</returns>
+        private ServerBlobAuditingPolicy GetDefaultBlobAuditgProperties()
         {
-            ServerBlobAuditingPolicyResourceProperties properties = new ServerBlobAuditingPolicyResourceProperties
+            ServerBlobAuditingPolicy properties = new ServerBlobAuditingPolicy
             {
                 State = SecurityConstants.c_DisabledValue,
                 RetentionDays = 0,
