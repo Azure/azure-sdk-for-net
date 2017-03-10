@@ -1,5 +1,11 @@
 ## Azure.Batch release notes
 
+### Upcoming changes
+These changes are planned but haven't been published yet.
+
+#### License
+Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as DotNet.
+
 ### Changes in 6.1.0
 #### REST API version
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
