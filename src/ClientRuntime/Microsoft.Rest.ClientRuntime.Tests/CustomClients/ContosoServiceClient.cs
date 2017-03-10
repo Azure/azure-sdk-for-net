@@ -14,6 +14,11 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
     /// </summary>
     public class ContosoServiceClient : ServiceClient<ContosoServiceClient>
     {
+        public ContosoServiceClient():base()
+        {
+            HttpClient = new HttpClient(new DelayedHandler("Delayed User Provided HttpClient after initialization"));
+        }
+
         /// <summary>
         /// Constructor that accepts HttpClient
         /// </summary>
@@ -39,7 +44,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
                 return DoStuff(content);
             }).Unwrap().GetAwaiter().GetResult();
         }
-        
 
         /// <summary>
         /// Creates request and sends
@@ -90,6 +94,32 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             StringContent contosoContent = new StringContent("Contoso Rocks");
+            HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+            response.Content = contosoContent;
+            return await Task.Run(() => response);
+        }
+    }
+
+    /// <summary>
+    /// Yet another delegating handler for tests    
+    /// </summary>
+    public class DelayedHandler : DelegatingHandler
+    {
+        string _handlerData;
+        private DelayedHandler() : base()
+        {
+            InnerHandler = new HttpClientHandler();
+        }
+
+        public DelayedHandler(string handlerData)
+            : this()
+        {
+            _handlerData = handlerData;
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            StringContent contosoContent = new StringContent(_handlerData);
             HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             response.Content = contosoContent;
             return await Task.Run(() => response);
