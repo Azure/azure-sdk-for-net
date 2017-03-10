@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<WebService>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string webServiceName, WebService createOrUpdatePayload, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets the Web Service Definiton as specified by a subscription,
+        /// Gets the Web Service Definition as specified by a subscription,
         /// resource group, and name. Note that the storage credentials and
         /// web service keys are not returned by this call. To get the web
         /// service access keys, call List Keys.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// The name of the web service.
         /// </param>
         /// <param name='region'>
-        /// The region of the web service
+        /// The region for which encrypted credential parameters are valid.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -216,8 +216,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginRemoveWithHttpMessagesAsync(string resourceGroupName, string webServiceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Generate regional web service properties. This is especially
-        /// important to encrypted credential information in parameters.
+        /// Creates an encrypted credentials parameter blob for the specified
+        /// region. To get the web service from a region other than the
+        /// region in which it has been created, you must first call Create
+        /// Regional Web Services Properties to create a copy of the
+        /// encrypted credential parameter blob in that region. You only need
+        /// to do this before the first time that you get the web service in
+        /// the new region.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group in which the web service is located.
@@ -226,7 +231,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// The name of the web service.
         /// </param>
         /// <param name='region'>
-        /// The region of the web service
+        /// The region for which encrypted credential parameters are created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -242,8 +247,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> CreateRegionalWebServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string webServiceName, string region, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Generate regional web service properties. This is especially
-        /// important to encrypted credential information in parameters.
+        /// Creates an encrypted credentials parameter blob for the specified
+        /// region. To get the web service from a region other than the
+        /// region in which it has been created, you must first call Create
+        /// Regional Web Services Properties to create a copy of the
+        /// encrypted credential parameter blob in that region. You only need
+        /// to do this before the first time that you get the web service in
+        /// the new region.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group in which the web service is located.
@@ -252,7 +262,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// The name of the web service.
         /// </param>
         /// <param name='region'>
-        /// The region of the web service
+        /// The region for which encrypted credential parameters are created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

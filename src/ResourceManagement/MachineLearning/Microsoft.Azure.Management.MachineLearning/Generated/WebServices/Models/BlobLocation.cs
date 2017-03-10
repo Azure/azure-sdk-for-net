@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the BlobLocation class.
         /// </summary>
-        /// <param name="uri">The URI where the blob is accessible from, (e.g.
-        /// aml://abc for system assets or https://xyz for user asets or
-        /// payload</param>
+        /// <param name="uri">The URI from which the blob is accessible from.
+        /// For example, aml://abc for system assets or https://xyz for user
+        /// assets or payload.</param>
         /// <param name="credentials">Access credentials for the blob, if
         /// applicable (e.g. blob specified by storage account connection
         /// string + blob URI)</param>
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets or sets the URI where the blob is accessible from, (e.g.
-        /// aml://abc for system assets or https://xyz for user asets or
-        /// payload
+        /// Gets or sets the URI from which the blob is accessible from. For
+        /// example, aml://abc for system assets or https://xyz for user
+        /// assets or payload.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }

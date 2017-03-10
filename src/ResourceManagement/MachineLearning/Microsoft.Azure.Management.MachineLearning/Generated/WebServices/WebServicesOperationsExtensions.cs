@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Gets the Web Service Definiton as specified by a subscription, resource
+            /// Gets the Web Service Definition as specified by a subscription, resource
             /// group, and name. Note that the storage credentials and web service keys
             /// are not returned by this call. To get the web service access keys, call
             /// List Keys.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// The name of the web service.
             /// </param>
             /// <param name='region'>
-            /// The region of the web service
+            /// The region for which encrypted credential parameters are valid.
             /// </param>
             public static WebService Get(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region = default(string))
             {
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Gets the Web Service Definiton as specified by a subscription, resource
+            /// Gets the Web Service Definition as specified by a subscription, resource
             /// group, and name. Note that the storage credentials and web service keys
             /// are not returned by this call. To get the web service access keys, call
             /// List Keys.
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// The name of the web service.
             /// </param>
             /// <param name='region'>
-            /// The region of the web service
+            /// The region for which encrypted credential parameters are valid.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -348,8 +348,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Generate regional web service properties. This is especially important to
-            /// encrypted credential information in parameters.
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -361,7 +365,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// The name of the web service.
             /// </param>
             /// <param name='region'>
-            /// The region of the web service
+            /// The region for which encrypted credential parameters are created.
             /// </param>
             public static void CreateRegionalWebServiceProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
             {
@@ -369,8 +373,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Generate regional web service properties. This is especially important to
-            /// encrypted credential information in parameters.
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -382,7 +390,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// The name of the web service.
             /// </param>
             /// <param name='region'>
-            /// The region of the web service
+            /// The region for which encrypted credential parameters are created.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -393,8 +401,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Generate regional web service properties. This is especially important to
-            /// encrypted credential information in parameters.
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -406,7 +418,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// The name of the web service.
             /// </param>
             /// <param name='region'>
-            /// The region of the web service
+            /// The region for which encrypted credential parameters are created.
             /// </param>
             public static void BeginCreateRegionalWebServiceProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
             {
@@ -414,8 +426,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Generate regional web service properties. This is especially important to
-            /// encrypted credential information in parameters.
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -427,7 +443,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// The name of the web service.
             /// </param>
             /// <param name='region'>
-            /// The region of the web service
+            /// The region for which encrypted credential parameters are created.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
