@@ -96,6 +96,11 @@ namespace Microsoft.Azure.Management.Sql
         IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
+        /// Gets the IDatabaseThreatDetectionPoliciesOperations.
+        /// </summary>
+        IDatabaseThreatDetectionPoliciesOperations DatabaseThreatDetectionPolicies { get; }
+
+        /// <summary>
         /// Lists all of the available SQL Rest API operations.
         /// </summary>
         /// <param name='customHeaders'>

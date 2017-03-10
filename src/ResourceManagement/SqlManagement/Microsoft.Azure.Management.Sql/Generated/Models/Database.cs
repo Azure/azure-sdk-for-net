@@ -52,24 +52,68 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="earliestRestoreDate">This records the earliest start
         /// date and time that restore is available for this database (ISO8601
         /// format).</param>
-        /// <param name="createMode">Specifies the type of database to create.
-        /// If createMode is not set to Default, sourceDatabaseId must be
-        /// specified. If createMode is set to PointInTimeRestore, then
-        /// restorePointInTime must be specified. If createMode is set to
-        /// Restore, then sourceDatabaseDeletionDate must be specified.
-        /// Possible values include: 'Copy', 'Default', 'NonReadableSecondary',
-        /// 'OnlineSecondary', 'PointInTimeRestore', 'Recovery',
-        /// 'Restore'</param>
-        /// <param name="sourceDatabaseId">Conditional. If createMode is not
-        /// set to Default, then this value must be specified. Specifies the
+        /// <param name="createMode">Specifies the mode of database creation.
+        ///
+        /// Default: regular database creation.
+        ///
+        /// Copy: creates a database as a copy of an existing database.
+        /// sourceDatabaseId must be specified as the resource ID of the source
+        /// database.
+        ///
+        /// OnlineSecondary/NonReadableSecondary: creates a database as a
+        /// (readable or nonreadable) secondary replica of an existing
+        /// database. sourceDatabaseId must be specified as the resource ID of
+        /// the existing primary database.
+        ///
+        /// PointInTimeRestore: Creates a database by restoring a point in time
+        /// backup of an existing database. sourceDatabaseId must be specified
+        /// as the resource ID of the existing database, and restorePointInTime
+        /// must be specified.
+        ///
+        /// Recovery: Creates a database by restoring a geo-replicated backup.
+        /// sourceDatabaseId must be specified as the recoverable database
+        /// resource ID to restore.
+        ///
+        /// Restore: Creates a database by restoring a backup of a deleted
+        /// database. sourceDatabaseId must be specified. If sourceDatabaseId
+        /// is the database's original resource ID, then
+        /// sourceDatabaseDeletionDate must be specified. Otherwise
+        /// sourceDatabaseId must be the restorable dropped database resource
+        /// ID and sourceDatabaseDeletionDate is ignored. restorePointInTime
+        /// may also be specified to restore from an earlier point in time.
+        ///
+        /// RestoreLongTermRetentionBackup: Creates a database by restoring
+        /// from a long term retention vault.
+        /// recoveryServicesRecoveryPointResourceId must be specified as the
+        /// recovery point resource ID.
+        ///
+        /// Copy, NonReadableSecondary, OnlineSecondary and
+        /// RestoreLongTermRetentionBackup are not supported for DataWarehouse
+        /// edition. Possible values include: 'Copy', 'Default',
+        /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
+        /// 'Recovery', 'Restore', 'RestoreLongTermRetentionBackup'</param>
+        /// <param name="sourceDatabaseId">Conditional. If createMode is Copy,
+        /// NonReadableSecondary, OnlineSecondary, PointInTimeRestore,
+        /// Recovery, or Restore, then this value is required. Specifies the
         /// resource ID of the source database. If createMode is
         /// NonReadableSecondary or OnlineSecondary, the name of the source
-        /// database must be the same as this new database.</param>
-        /// <param name="restorePointInTime">Conditional. If createMode is set
-        /// to PointInTimeRestore, then this value must be specified. Specifies
-        /// the point in time (ISO8601 format) of the source database that will
-        /// be restored to create the new database. Must be greater than or
-        /// equal to the source database's earliestRestoreDate value.</param>
+        /// database must be the same as the new database being
+        /// created.</param>
+        /// <param name="sourceDatabaseDeletionDate">Conditional. If createMode
+        /// is Restore and sourceDatabaseId is the deleted database's original
+        /// resource id when it existed (as opposed to its current restorable
+        /// dropped database id), then this value is required. Specifies the
+        /// time that the database was deleted.</param>
+        /// <param name="restorePointInTime">Conditional. If createMode is
+        /// PointInTimeRestore, this value is required. If createMode is
+        /// Restore, this value is optional. Specifies the point in time
+        /// (ISO8601 format) of the source database that will be restored to
+        /// create the new database. Must be greater than or equal to the
+        /// source database's earliestRestoreDate value.</param>
+        /// <param name="recoveryServicesRecoveryPointResourceId">Conditional.
+        /// If createMode is RestoreLongTermRetentionBackup, then this value is
+        /// required. Specifies the resource ID of the recovery point to
+        /// restore from.</param>
         /// <param name="edition">The edition of the database. The
         /// DatabaseEditions enumeration contains all the valid editions. If
         /// createMode is NonReadableSecondary or OnlineSecondary, this value
@@ -104,7 +148,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="elasticPoolName">The name of the elastic pool the
         /// database is in. If elasticPoolName and
         /// requestedServiceObjectiveName are both updated, the value of
-        /// requestedServiceObjectiveName is ignored.</param>
+        /// requestedServiceObjectiveName is ignored. Not supported for
+        /// DataWarehouse edition.</param>
         /// <param name="defaultSecondaryLocation">The default secondary region
         /// for this database.</param>
         /// <param name="serviceTierAdvisors">The list of service tier advisors
@@ -116,15 +161,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database.</param>
         /// <param name="failoverGroupId">The id indicating the failover group
         /// containing this database.</param>
-        /// <param name="readScale">Conditional.  If the database is a
+        /// <param name="readScale">Conditional. If the database is a
         /// geo-secondary, readScale indicates whether read-only connections
-        /// are allowed to this database or not. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
+        /// are allowed to this database or not. Not supported for
+        /// DataWarehouse edition. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="sampleName">Indicates the name of the sample schema to
         /// apply when creating this database. If createMode is not Default,
-        /// this value is ignored. Possible values include:
-        /// 'AdventureWorksLT'</param>
-        public Database(string location, string name = default(string), string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<Schema> schemas = default(IList<Schema>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
+        /// this value is ignored. Not supported for DataWarehouse edition.
+        /// Possible values include: 'AdventureWorksLT'</param>
+        public Database(string location, string name = default(string), string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? recoveryServicesRecoveryPointResourceId = default(System.DateTime?), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<Schema> schemas = default(IList<Schema>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
             : base(location, name, id, type, tags)
         {
             Kind = kind;
@@ -136,7 +182,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             EarliestRestoreDate = earliestRestoreDate;
             CreateMode = createMode;
             SourceDatabaseId = sourceDatabaseId;
+            SourceDatabaseDeletionDate = sourceDatabaseDeletionDate;
             RestorePointInTime = restorePointInTime;
+            RecoveryServicesRecoveryPointResourceId = recoveryServicesRecoveryPointResourceId;
             Edition = edition;
             MaxSizeBytes = maxSizeBytes;
             RequestedServiceObjectiveId = requestedServiceObjectiveId;
@@ -201,36 +249,89 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.DateTime? EarliestRestoreDate { get; protected set; }
 
         /// <summary>
-        /// Gets or sets specifies the type of database to create. If
-        /// createMode is not set to Default, sourceDatabaseId must be
-        /// specified. If createMode is set to PointInTimeRestore, then
-        /// restorePointInTime must be specified. If createMode is set to
-        /// Restore, then sourceDatabaseDeletionDate must be specified.
-        /// Possible values include: 'Copy', 'Default', 'NonReadableSecondary',
-        /// 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore'
+        /// Gets or sets specifies the mode of database creation.
+        ///
+        /// Default: regular database creation.
+        ///
+        /// Copy: creates a database as a copy of an existing database.
+        /// sourceDatabaseId must be specified as the resource ID of the source
+        /// database.
+        ///
+        /// OnlineSecondary/NonReadableSecondary: creates a database as a
+        /// (readable or nonreadable) secondary replica of an existing
+        /// database. sourceDatabaseId must be specified as the resource ID of
+        /// the existing primary database.
+        ///
+        /// PointInTimeRestore: Creates a database by restoring a point in time
+        /// backup of an existing database. sourceDatabaseId must be specified
+        /// as the resource ID of the existing database, and restorePointInTime
+        /// must be specified.
+        ///
+        /// Recovery: Creates a database by restoring a geo-replicated backup.
+        /// sourceDatabaseId must be specified as the recoverable database
+        /// resource ID to restore.
+        ///
+        /// Restore: Creates a database by restoring a backup of a deleted
+        /// database. sourceDatabaseId must be specified. If sourceDatabaseId
+        /// is the database's original resource ID, then
+        /// sourceDatabaseDeletionDate must be specified. Otherwise
+        /// sourceDatabaseId must be the restorable dropped database resource
+        /// ID and sourceDatabaseDeletionDate is ignored. restorePointInTime
+        /// may also be specified to restore from an earlier point in time.
+        ///
+        /// RestoreLongTermRetentionBackup: Creates a database by restoring
+        /// from a long term retention vault.
+        /// recoveryServicesRecoveryPointResourceId must be specified as the
+        /// recovery point resource ID.
+        ///
+        /// Copy, NonReadableSecondary, OnlineSecondary and
+        /// RestoreLongTermRetentionBackup are not supported for DataWarehouse
+        /// edition. Possible values include: 'Copy', 'Default',
+        /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
+        /// 'Recovery', 'Restore', 'RestoreLongTermRetentionBackup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
 
         /// <summary>
-        /// Gets or sets conditional. If createMode is not set to Default, then
-        /// this value must be specified. Specifies the resource ID of the
-        /// source database. If createMode is NonReadableSecondary or
-        /// OnlineSecondary, the name of the source database must be the same
-        /// as this new database.
+        /// Gets or sets conditional. If createMode is Copy,
+        /// NonReadableSecondary, OnlineSecondary, PointInTimeRestore,
+        /// Recovery, or Restore, then this value is required. Specifies the
+        /// resource ID of the source database. If createMode is
+        /// NonReadableSecondary or OnlineSecondary, the name of the source
+        /// database must be the same as the new database being created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceDatabaseId")]
         public string SourceDatabaseId { get; set; }
 
         /// <summary>
-        /// Gets or sets conditional. If createMode is set to
-        /// PointInTimeRestore, then this value must be specified. Specifies
-        /// the point in time (ISO8601 format) of the source database that will
-        /// be restored to create the new database. Must be greater than or
-        /// equal to the source database's earliestRestoreDate value.
+        /// Gets or sets conditional. If createMode is Restore and
+        /// sourceDatabaseId is the deleted database's original resource id
+        /// when it existed (as opposed to its current restorable dropped
+        /// database id), then this value is required. Specifies the time that
+        /// the database was deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceDatabaseDeletionDate")]
+        public System.DateTime? SourceDatabaseDeletionDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets conditional. If createMode is PointInTimeRestore, this
+        /// value is required. If createMode is Restore, this value is
+        /// optional. Specifies the point in time (ISO8601 format) of the
+        /// source database that will be restored to create the new database.
+        /// Must be greater than or equal to the source database's
+        /// earliestRestoreDate value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorePointInTime")]
         public System.DateTime? RestorePointInTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets conditional. If createMode is
+        /// RestoreLongTermRetentionBackup, then this value is required.
+        /// Specifies the resource ID of the recovery point to restore from.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.recoveryServicesRecoveryPointResourceId")]
+        public System.DateTime? RecoveryServicesRecoveryPointResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the edition of the database. The DatabaseEditions
@@ -293,7 +394,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the name of the elastic pool the database is in. If
         /// elasticPoolName and requestedServiceObjectiveName are both updated,
-        /// the value of requestedServiceObjectiveName is ignored.
+        /// the value of requestedServiceObjectiveName is ignored. Not
+        /// supported for DataWarehouse edition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.elasticPoolName")]
         public string ElasticPoolName { get; set; }
@@ -336,10 +438,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.Guid? FailoverGroupId { get; protected set; }
 
         /// <summary>
-        /// Gets or sets conditional.  If the database is a geo-secondary,
+        /// Gets or sets conditional. If the database is a geo-secondary,
         /// readScale indicates whether read-only connections are allowed to
-        /// this database or not. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// this database or not. Not supported for DataWarehouse edition.
+        /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.readScale")]
         public ReadScale? ReadScale { get; set; }
@@ -347,7 +449,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets indicates the name of the sample schema to apply when
         /// creating this database. If createMode is not Default, this value is
-        /// ignored. Possible values include: 'AdventureWorksLT'
+        /// ignored. Not supported for DataWarehouse edition. Possible values
+        /// include: 'AdventureWorksLT'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sampleName")]
         public string SampleName { get; set; }

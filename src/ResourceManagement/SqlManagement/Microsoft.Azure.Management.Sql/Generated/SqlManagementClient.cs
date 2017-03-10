@@ -99,6 +99,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseThreatDetectionPoliciesOperations.
+        /// </summary>
+        public virtual IDatabaseThreatDetectionPoliciesOperations DatabaseThreatDetectionPolicies { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -304,6 +309,7 @@ namespace Microsoft.Azure.Management.Sql
             ImportExportOperations = new ImportExportOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
+            DatabaseThreatDetectionPolicies = new DatabaseThreatDetectionPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

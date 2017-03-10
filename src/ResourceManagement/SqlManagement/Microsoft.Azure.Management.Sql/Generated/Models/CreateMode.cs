@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string PointInTimeRestore = "PointInTimeRestore";
         public const string Recovery = "Recovery";
         public const string Restore = "Restore";
+        public const string RestoreLongTermRetentionBackup = "RestoreLongTermRetentionBackup";
     }
 }
 
