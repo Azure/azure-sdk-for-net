@@ -104,19 +104,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseThreatDetectionPoliciesOperations DatabaseThreatDetectionPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IServerThreatDetectionPoliciesOperations.
-        /// </summary>
-        public virtual IServerThreatDetectionPoliciesOperations ServerThreatDetectionPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the IDatabaseBlobAuditingPoliciesOperations.
         /// </summary>
         public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -325,9 +315,7 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             DatabaseThreatDetectionPolicies = new DatabaseThreatDetectionPoliciesOperations(this);
-            ServerThreatDetectionPolicies = new ServerThreatDetectionPoliciesOperations(this);
             DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
-            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

@@ -30,34 +30,36 @@ namespace Sql.Tests
 
                     IList<string> auditActionsAndGroups = new List<string> { "SCHEMA_OBJECT_ACCESS_GROUP", "UPDATE on database::testdb by public" };
 
-                    // ******* Server blob auditing *******
-                    // Commented out due to issues with async operation response
-                    //ServerBlobAuditingPolicy defaultServerPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name);
+#if false // Commented out due to issues with async operation response
 
-                    //// Verify that the initial Get request contains the default policy.
-                    //VerifyServerAuditingPolicyInformation(GetDefaultServerBlobAuditingProperties(), defaultServerPolicyResponse);
+                    // ******* Server blob auditing *******                    
+                    ServerBlobAuditingPolicy defaultServerPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name);
 
-                    //// Modify the policy properties, send and receive and see it its still ok
-                    //IList<string> auditActionsAndGroups = new List<string> { "SCHEMA_OBJECT_ACCESS_GROUP", "UPDATE on database::testdb by public" };
-                    //ServerBlobAuditingPolicy updatedServerPolicy = new ServerBlobAuditingPolicy
-                    //{
-                    //    State = BlobAuditingPolicyState.Disabled,
-                    //    RetentionDays = 8,
-                    //    StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                    //    StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                    //    AuditActionsAndGroups = auditActionsAndGroups,
-                    //    StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
-                    //    IsStorageSecondaryKeyInUse = false
-                    //};
+                    // Verify that the initial Get request contains the default policy.
+                    VerifyServerAuditingPolicyInformation(GetDefaultServerBlobAuditingProperties(), defaultServerPolicyResponse);
 
-                    ////Set blob auditing policy for server
-                    //sqlClient.ServerBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
+                    // Modify the policy properties, send and receive and see it its still ok
+                    IList<string> auditActionsAndGroups = new List<string> { "SCHEMA_OBJECT_ACCESS_GROUP", "UPDATE on database::testdb by public" };
+                    ServerBlobAuditingPolicy updatedServerPolicy = new ServerBlobAuditingPolicy
+                    {
+                        State = BlobAuditingPolicyState.Disabled,
+                        RetentionDays = 8,
+                        StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                        StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                        AuditActionsAndGroups = auditActionsAndGroups,
+                        StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
+                        IsStorageSecondaryKeyInUse = false
+                    };
 
-                    ////Get blob auditing server policy
-                    //var getUpdatedServerPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name);
+                    //Set blob auditing policy for server
+                    sqlClient.ServerBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
 
-                    //// Verify that the Get request contains the updated policy.
-                    //VerifyServerAuditingPolicyInformation(updatedServerPolicy, getUpdatedServerPolicyResponse);
+                    //Get blob auditing server policy
+                    var getUpdatedServerPolicyResponse = sqlClient.ServerBlobAuditingPolicies.Get(resourceGroup.Name, server.Name);
+
+                    // Verify that the Get request contains the updated policy.
+                    VerifyServerAuditingPolicyInformation(updatedServerPolicy, getUpdatedServerPolicyResponse);
+#endif
 
                     // ******* Database blob auditing *******
 
@@ -86,6 +88,7 @@ namespace Sql.Tests
                 });
         }
 
+#if false // Commented out due to issues with async operation response
 
         /// <summary>
         /// Verify that the received properties match their expected values
@@ -130,6 +133,8 @@ namespace Sql.Tests
 
             return properties;
         }
+
+#endif
 
         /// <summary>
         /// Verify that the received properties match their expected values

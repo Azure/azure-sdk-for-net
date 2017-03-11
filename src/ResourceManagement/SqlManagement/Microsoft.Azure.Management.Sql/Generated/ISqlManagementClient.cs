@@ -101,19 +101,9 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseThreatDetectionPoliciesOperations DatabaseThreatDetectionPolicies { get; }
 
         /// <summary>
-        /// Gets the IServerThreatDetectionPoliciesOperations.
-        /// </summary>
-        IServerThreatDetectionPoliciesOperations ServerThreatDetectionPolicies { get; }
-
-        /// <summary>
         /// Gets the IDatabaseBlobAuditingPoliciesOperations.
         /// </summary>
         IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; }
 
         /// <summary>
         /// Lists all of the available SQL Rest API operations.

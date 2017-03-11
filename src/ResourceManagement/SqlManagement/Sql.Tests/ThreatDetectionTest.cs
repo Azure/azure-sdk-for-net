@@ -26,32 +26,35 @@ namespace Sql.Tests
                      Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
                         sqlClient, resourceGroup.Name, server, testPrefix, 2).Result;
 
+#if false // Commented out due to issues with async operation response
+
                      // ******* Server threat detection *******
-                     // Commented out due to issues with async operation response
-                     //ServerSecurityAlertPolicy defaultServerPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name);
+                     ServerSecurityAlertPolicy defaultServerPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name);
 
-                     //// Verify that the initial Get request contains the default policy.
-                     //VerifyServerSecurityAlertPolicyInformation(GetDefaultServerSecurityAlertProperties(), defaultServerPolicyResponse);
+                     // Verify that the initial Get request contains the default policy.
+                     VerifyServerSecurityAlertPolicyInformation(GetDefaultServerSecurityAlertProperties(), defaultServerPolicyResponse);
 
-                     //// Modify the policy properties, send and receive and see it its still ok
-                     //ServerSecurityAlertPolicy updatedServerPolicy = new ServerSecurityAlertPolicy
-                     //{
-                     //    State = SecurityAlertPolicyState.Enabled,
-                     //    EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
-                     //    EmailAddresses = "testSecurityAlert@microsoft.com;testServerPolicy@microsoft.com",
-                     //    DisabledAlerts = "Sql_Injection",
-                     //    RetentionDays = 3,
-                     //    StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                     //    StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                     //};
+                     // Modify the policy properties, send and receive and see it its still ok
+                     ServerSecurityAlertPolicy updatedServerPolicy = new ServerSecurityAlertPolicy
+                     {
+                         State = SecurityAlertPolicyState.Enabled,
+                         EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
+                         EmailAddresses = "testSecurityAlert@microsoft.com;testServerPolicy@microsoft.com",
+                         DisabledAlerts = "Sql_Injection",
+                         RetentionDays = 3,
+                         StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                         StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                     };
 
-                     ////Set security alert policy for server
-                     //sqlClient.ServerThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
+                     //Set security alert policy for server
+                     sqlClient.ServerThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
 
-                     ////Get security alert server policy
-                     //var getUpdatedServerPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name);
-                     //// Verify that the Get request contains the updated policy.
-                     //VerifyServerSecurityAlertPolicyInformation(updatedServerPolicy, getUpdatedServerPolicyResponse);
+                     //Get security alert server policy
+                     var getUpdatedServerPolicyResponse = sqlClient.ServerThreatDetectionPolicies.Get(resourceGroup.Name, server.Name);
+                     // Verify that the Get request contains the updated policy.
+                     VerifyServerSecurityAlertPolicyInformation(updatedServerPolicy, getUpdatedServerPolicyResponse);
+
+#endif
 
                      // ******* Database threat detection *******
 
@@ -82,6 +85,7 @@ namespace Sql.Tests
                  });
         }
 
+#if false // Commented out due to issues with async operation response
 
         /// <summary>
         /// Verify that the received properties match their expected values
@@ -118,6 +122,8 @@ namespace Sql.Tests
 
             return properties;
         }
+
+#endif
 
         /// <summary>
         /// Verify that the received properties match their expected values
