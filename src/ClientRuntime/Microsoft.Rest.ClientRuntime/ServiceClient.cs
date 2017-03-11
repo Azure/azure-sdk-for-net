@@ -29,6 +29,11 @@ namespace Microsoft.Rest
         private const string OSVERSION = "OSVersion";
 
         /// <summary>
+        /// List of default UserAgent info that will be added to HttpClient instance
+        /// </summary>
+        private List<ProductInfoHeaderValue> _defaultUserAgentInfoList;
+
+        /// <summary>
         /// Indicates whether the ServiceClient has been disposed. 
         /// </summary>
         private bool _disposed;
@@ -117,6 +122,27 @@ namespace Microsoft.Rest
         }
 #endif
         #endregion
+
+        /// <summary>
+        /// List of default info that gets added to DefaultHeaders.UserAgent of HttpClient
+        /// </summary>
+        private List<ProductInfoHeaderValue> DefaultUserAgentInfoList
+        {
+            get
+            {
+                if(_defaultUserAgentInfoList == null)
+                {
+                    _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
+                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
+#if NET45
+                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
+                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+#endif
+                }
+
+                return _defaultUserAgentInfoList;
+            }
+        }
 
         /// <summary>
         /// Gets the AssemblyInformationalVersion if available
@@ -372,37 +398,39 @@ namespace Microsoft.Rest
         /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
         protected void InitializeHttpClient(HttpClient httpClient, HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
         {
-            HttpClientHandler = httpClientHandler;
-            DelegatingHandler currentHandler = new RetryDelegatingHandler();
-            currentHandler.InnerHandler = HttpClientHandler;
-
-            if (handlers != null)
+           if (httpClient == null)
             {
-                for (int i = handlers.Length - 1; i >= 0; --i)
+                HttpClientHandler = httpClientHandler;
+                DelegatingHandler currentHandler = new RetryDelegatingHandler();
+                currentHandler.InnerHandler = HttpClientHandler;
+
+                if (handlers != null)
                 {
-                    DelegatingHandler handler = handlers[i];
-                    // Non-delegating handlers are ignored since we always 
-                    // have RetryDelegatingHandler as the outer-most handler
-                    while (handler.InnerHandler is DelegatingHandler)
+                    for (int i = handlers.Length - 1; i >= 0; --i)
                     {
-                        handler = handler.InnerHandler as DelegatingHandler;
+                        DelegatingHandler handler = handlers[i];
+                        // Non-delegating handlers are ignored since we always 
+                        // have RetryDelegatingHandler as the outer-most handler
+                        while (handler.InnerHandler is DelegatingHandler)
+                        {
+                            handler = handler.InnerHandler as DelegatingHandler;
+                        }
+
+                        handler.InnerHandler = currentHandler;
+                        currentHandler = handlers[i];
                     }
-
-                    handler.InnerHandler = currentHandler;
-                    currentHandler = handlers[i];
                 }
-            }
 
-            if (httpClient == null)
-            {
                 HttpClient = new HttpClient(currentHandler, false);
+
+                FirstMessageHandler = currentHandler;
             }
             else
             {
                 HttpClient = httpClient;
             }
 
-            FirstMessageHandler = currentHandler;
+            
             SetUserAgent(this.GetType().FullName, ClientVersion);
         }
         
@@ -424,7 +452,7 @@ namespace Microsoft.Rest
         {
             if (!_disposed && HttpClient != null)
             {
-                SetDefaultUserAgentInfo();
+                MergeUserAgentInfo(DefaultUserAgentInfoList);
                 HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productName, version));
                 return true;
             }
@@ -434,18 +462,22 @@ namespace Microsoft.Rest
         }
 
         /// <summary>
-        /// Set Default information in User Agent
+        /// Finds if default UserAgent info is already set in UserAgent collection, if not it will add it
+        /// We do this because, now we accept passed in HttpClient.
+        /// So for any reason the passed HttpClient has our default UserAgent info (based on key name), we will not verify and check the values and will honor those values
         /// </summary>
-        /// <returns></returns>
-        private void SetDefaultUserAgentInfo()
+        private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
         {
-            HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
-#if NET45
             // If you want to log ProductName in userAgent, it has to be without spaces
-            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OSNAME, OsName));
-            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
-#endif
+
+            foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
+            {
+                var prodInfo = HttpClient.DefaultRequestHeaders.UserAgent.Where<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name , StringComparison.OrdinalIgnoreCase));
+                if(!prodInfo.Any<ProductInfoHeaderValue>())
+                {
+                    HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
+                }
+            }
         }
     }
 }

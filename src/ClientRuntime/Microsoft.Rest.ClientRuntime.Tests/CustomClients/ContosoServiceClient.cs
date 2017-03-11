@@ -14,9 +14,28 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
     /// </summary>
     public class ContosoServiceClient : ServiceClient<ContosoServiceClient>
     {
+        /// <summary>
+        /// Initializes with default contosomessage handler
+        /// </summary>
         public ContosoServiceClient():base()
         {
-            HttpClient = new HttpClient(new DelayedHandler("Delayed User Provided HttpClient after initialization"));
+            HttpClient = new HttpClient(new ContosoMessageHandler());
+        }
+
+        /// <summary>
+        /// Overrides default handler (ContosoMessageHandler) with DelayedHandler if specified
+        /// </summary>
+        /// <param name="overRideDefaultHandler"></param>
+        public ContosoServiceClient(bool overRideDefaultHandler)
+        {
+            if(overRideDefaultHandler)
+            {
+                HttpClient = new HttpClient(new DelayedHandler("Delayed User Provided HttpClient after initialization"));
+            }
+            else
+            {
+                HttpClient = new HttpClient(new ContosoMessageHandler());
+            }
         }
 
         /// <summary>
