@@ -193,24 +193,12 @@ namespace Sql.Tests
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                // Begin creating some small databases to run the get/List tests on.
-                //
-                List<Task<Database>> createDbTasks = new List<Task<Database>>();
-                for (int i = 0; i < 4; i++)
-                {
-                    string name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(resourceGroup.Name, server.Name, name,
-                        new Database()
-                        {
-                            Location = server.Location
-                        }));
-                }
+                // Create some small databases to run the get/List tests on.
+                Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
+                    sqlClient, resourceGroup.Name, server, testPrefix, 4).Result;
 
-                // Wait for all databases to be created.
-                IDictionary<string, Database> inputs =
-                    Task.WhenAll(createDbTasks.ToArray())
-                        .Result
-                        .ToDictionary(
+                // Organize into a dictionary for better lookup later
+                IDictionary<string, Database> inputs = databases.ToDictionary(
                             keySelector: d => d.Name,
                             elementSelector: d => d);
 
