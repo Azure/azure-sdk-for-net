@@ -314,6 +314,10 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseBlobAuditingPolicy");
             }
+            if (databaseBlobAuditingPolicy != null)
+            {
+                databaseBlobAuditingPolicy.Validate();
+            }
             string apiVersion = "2015-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

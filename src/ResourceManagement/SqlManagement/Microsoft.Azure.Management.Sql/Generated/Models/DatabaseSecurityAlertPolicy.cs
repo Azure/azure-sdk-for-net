@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DatabaseSecurityAlertPolicy
         /// class.
         /// </summary>
+        /// <param name="state">Specifies the state of the policy. Possible
+        /// values include: 'New', 'Enabled', 'Disabled'</param>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="type">Resource type</param>
-        /// <param name="state">Specifies the state of the policy. Possible
-        /// values include: 'New', 'Enabled', 'Disabled'</param>
         /// <param name="disabledAlerts">Specifies the comma-separated list of
         /// alerts that are disabled, or empty string to disable no alerts.
         /// Possible values include: 'Sql_Injection',
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="useServerDefault">Specifies whether to use the default
         /// server policy. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public DatabaseSecurityAlertPolicy(string name = default(string), string id = default(string), string type = default(string), SecurityAlertPolicyState? state = default(SecurityAlertPolicyState?), string disabledAlerts = default(string), string emailAddresses = default(string), SecurityAlertPolicyEmailAccountAdmins? emailAccountAdmins = default(SecurityAlertPolicyEmailAccountAdmins?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), SecurityAlertPolicyUseServerDefault? useServerDefault = default(SecurityAlertPolicyUseServerDefault?))
+        public DatabaseSecurityAlertPolicy(SecurityAlertPolicyState state, string name = default(string), string id = default(string), string type = default(string), string disabledAlerts = default(string), string emailAddresses = default(string), SecurityAlertPolicyEmailAccountAdmins? emailAccountAdmins = default(SecurityAlertPolicyEmailAccountAdmins?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), SecurityAlertPolicyUseServerDefault? useServerDefault = default(SecurityAlertPolicyUseServerDefault?))
             : base(name, id, type)
         {
             State = state;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'New', 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public SecurityAlertPolicyState? State { get; set; }
+        public SecurityAlertPolicyState State { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the comma-separated list of alerts that are
@@ -129,5 +129,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "properties.useServerDefault")]
         public SecurityAlertPolicyUseServerDefault? UseServerDefault { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

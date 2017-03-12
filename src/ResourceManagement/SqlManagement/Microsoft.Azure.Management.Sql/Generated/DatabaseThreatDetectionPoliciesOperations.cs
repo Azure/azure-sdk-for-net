@@ -312,6 +312,10 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseSecurityAlertPolicy");
             }
+            if (databaseSecurityAlertPolicy != null)
+            {
+                databaseSecurityAlertPolicy.Validate();
+            }
             string apiVersion = "2014-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

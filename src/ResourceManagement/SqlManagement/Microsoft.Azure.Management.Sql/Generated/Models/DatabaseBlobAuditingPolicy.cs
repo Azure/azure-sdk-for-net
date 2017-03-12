@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
         /// </summary>
+        /// <param name="state">Specifies the state of the policy. Possible
+        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="type">Resource type</param>
-        /// <param name="state">Specifies the state of the policy. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net)</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="isStorageSecondaryKeyInUse">Specifies whether
         /// storageAccountAccessKey value is the storage’s secondary
         /// key.</param>
-        public DatabaseBlobAuditingPolicy(string name = default(string), string id = default(string), string type = default(string), BlobAuditingPolicyState? state = default(BlobAuditingPolicyState?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), string storageAccountSubscriptionId = default(string), bool? isStorageSecondaryKeyInUse = default(bool?))
+        public DatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string name = default(string), string id = default(string), string type = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), string storageAccountSubscriptionId = default(string), bool? isStorageSecondaryKeyInUse = default(bool?))
             : base(name, id, type)
         {
             State = state;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public BlobAuditingPolicyState? State { get; set; }
+        public BlobAuditingPolicyState State { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
@@ -109,5 +109,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "properties.isStorageSecondaryKeyInUse")]
         public bool? IsStorageSecondaryKeyInUse { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }
