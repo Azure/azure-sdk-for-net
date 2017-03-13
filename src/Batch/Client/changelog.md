@@ -4,7 +4,7 @@
 These changes are planned but haven't been published yet.
 
 #### License
-Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as DotNet.
+Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as .NET.
 
 ### Changes in 6.1.0
 #### REST API version
