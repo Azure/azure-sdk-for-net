@@ -9,7 +9,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using Hyak.Common.Internals;
-using Hyak.Common.Platform;
 using Hyak.Common.TransientFaultHandling;
 
 namespace Hyak.Common
@@ -22,11 +21,6 @@ namespace Hyak.Common
         : IDisposable
         where T : ServiceClient<T>
     {
-        /// <summary>
-        /// Gets the Platform's IHttpTransportHandlerProvider which gives the
-        /// default HttpHandler for sending web requests.
-        /// </summary>
-        private static IHttpTransportHandlerProvider _transportHandlerProvider = null;
 
         /// <summary>
         /// A value indicating whether or not the ServiceClient has already
@@ -69,13 +63,6 @@ namespace Hyak.Common
             get { return HttpClient.DefaultRequestHeaders.UserAgent; }
         }
 
-        /// <summary>
-        /// Initializes static members of the ServiceClient class.
-        /// </summary>
-        static ServiceClient()
-        {
-            _transportHandlerProvider = PortablePlatformAbstraction.Get<IHttpTransportHandlerProvider>(true);
-        }
 
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
@@ -83,7 +70,11 @@ namespace Hyak.Common
         public ServiceClient()
         {
             // Create our root handler
-            HttpMessageHandler handler = _transportHandlerProvider.CreateHttpTransportHandler();
+#if NET45
+            HttpClientHandler handler = new WebRequestHandler();
+#else
+            HttpClientHandler handler = new HttpClientHandler();
+#endif
             InitializeHttpClient(handler);
         }
 
