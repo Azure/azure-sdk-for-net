@@ -18,6 +18,11 @@
         /// <summary>
         /// The zookeper nodes of the cluster.
         /// </summary>
-        ZookeeperNode
+        ZookeeperNode,
+
+        /// <summary>
+        /// The edge nodes of the cluster.
+        /// </summary>
+        EdgeNode
     }
 }
