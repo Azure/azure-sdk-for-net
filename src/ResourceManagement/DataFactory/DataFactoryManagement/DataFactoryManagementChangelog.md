@@ -1,5 +1,11 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.12.1
+
+### Bug Fixes
+
+* Fixes deserialization of DataSliceRun.ActivityInputProperties
+
 ## Version 4.12.0
 _Release date: 2017.03.08_
 
