@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='sessionName'>
             /// The integration account session name.
             /// </param>
-            public static object Get(this ISessionsOperations operations, string resourceGroupName, string integrationAccountName, string sessionName)
+            public static IntegrationAccountSession Get(this ISessionsOperations operations, string resourceGroupName, string integrationAccountName, string sessionName)
             {
                 return operations.GetAsync(resourceGroupName, integrationAccountName, sessionName).GetAwaiter().GetResult();
             }
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAsync(this ISessionsOperations operations, string resourceGroupName, string integrationAccountName, string sessionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationAccountSession> GetAsync(this ISessionsOperations operations, string resourceGroupName, string integrationAccountName, string sessionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, integrationAccountName, sessionName, null, cancellationToken).ConfigureAwait(false))
                 {

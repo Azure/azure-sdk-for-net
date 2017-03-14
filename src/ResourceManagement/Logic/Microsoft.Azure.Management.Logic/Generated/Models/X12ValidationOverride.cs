@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         /// <param name="messageId">The message id on which the validation
         /// settings has to be applied.</param>
-        /// <param name="validateEDITypes">The value indicating whether to
+        /// <param name="validateEdiTypes">The value indicating whether to
         /// validate EDI types.</param>
-        /// <param name="validateXSDTypes">The value indicating whether to
+        /// <param name="validateXsdTypes">The value indicating whether to
         /// validate XSD types.</param>
         /// <param name="allowLeadingAndTrailingSpacesAndZeroes">The value
         /// indicating whether to allow leading and trailing spaces and
@@ -45,11 +45,11 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="trailingSeparatorPolicy">The trailing separator
         /// policy. Possible values include: 'NotSpecified', 'NotAllowed',
         /// 'Optional', 'Mandatory'</param>
-        public X12ValidationOverride(string messageId, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
+        public X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
             MessageId = messageId;
-            ValidateEDITypes = validateEDITypes;
-            ValidateXSDTypes = validateXSDTypes;
+            ValidateEdiTypes = validateEdiTypes;
+            ValidateXsdTypes = validateXsdTypes;
             AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
             ValidateCharacterSet = validateCharacterSet;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
@@ -66,14 +66,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets or sets the value indicating whether to validate EDI types.
         /// </summary>
-        [JsonProperty(PropertyName = "validateEDITypes")]
-        public bool ValidateEDITypes { get; set; }
+        [JsonProperty(PropertyName = "validateEdiTypes")]
+        public bool ValidateEdiTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to validate XSD types.
         /// </summary>
-        [JsonProperty(PropertyName = "validateXSDTypes")]
-        public bool ValidateXSDTypes { get; set; }
+        [JsonProperty(PropertyName = "validateXsdTypes")]
+        public bool ValidateXsdTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to allow leading and

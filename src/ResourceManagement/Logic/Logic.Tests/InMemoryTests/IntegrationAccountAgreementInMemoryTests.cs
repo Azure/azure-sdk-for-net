@@ -41,8 +41,7 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(
-                () => client.Agreements.ListByIntegrationAccounts(null, "IntegrationAccount"));
+            Assert.Throws<ValidationException>(() => client.Agreements.ListByIntegrationAccounts(null, "IntegrationAccount"));
             Assert.Throws<CloudException>(() => client.Agreements.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
         }
 
