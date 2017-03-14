@@ -23,7 +23,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the RecommendedElasticPoolMetric
         /// class.
         /// </summary>
-        public RecommendedElasticPoolMetric() { }
+        public RecommendedElasticPoolMetric()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RecommendedElasticPoolMetric
@@ -39,7 +42,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             DateTime = dateTime;
             Dtu = dtu;
             SizeGB = sizeGB;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the time of metric (ISO8601 format).

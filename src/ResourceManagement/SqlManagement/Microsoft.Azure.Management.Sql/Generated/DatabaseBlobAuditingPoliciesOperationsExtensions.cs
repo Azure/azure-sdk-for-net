@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabaseBlobAuditingPoliciesOperationsExtensions
     {
             /// <summary>
-            /// Get a blob auditing policy associated with a database.
+            /// Gets a blob auditing policy associated with a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Get a blob auditing policy associated with a database.
+            /// Gets a blob auditing policy associated with a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

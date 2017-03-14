@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the RecommendedElasticPool class.
         /// </summary>
-        public RecommendedElasticPool() { }
+        public RecommendedElasticPool()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RecommendedElasticPool class.
@@ -72,7 +75,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             MaxObservedStorageMB = maxObservedStorageMB;
             Databases = databases;
             Metrics = metrics;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the edition of the recommended elastic pool. The

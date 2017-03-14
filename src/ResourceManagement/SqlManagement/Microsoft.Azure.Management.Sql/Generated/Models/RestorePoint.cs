@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the RestorePoint class.
         /// </summary>
-        public RestorePoint() { }
+        public RestorePoint()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RestorePoint class.
@@ -52,7 +55,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             RestorePointType = restorePointType;
             RestorePointCreationDate = restorePointCreationDate;
             EarliestRestoreDate = earliestRestoreDate;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the restore point type of the database restore point. Possible

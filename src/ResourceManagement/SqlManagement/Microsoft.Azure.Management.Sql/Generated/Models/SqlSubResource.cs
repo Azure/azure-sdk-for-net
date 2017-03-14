@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the SqlSubResource class.
         /// </summary>
-        public SqlSubResource() { }
+        public SqlSubResource()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SqlSubResource class.
@@ -33,7 +36,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             Name = name;
             Id = id;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets resource name

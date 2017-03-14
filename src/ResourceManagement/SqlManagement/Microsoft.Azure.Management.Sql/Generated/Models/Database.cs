@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the Database class.
         /// </summary>
-        public Database() { }
+        public Database()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Database class.
@@ -200,7 +203,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             FailoverGroupId = failoverGroupId;
             ReadScale = readScale;
             SampleName = sampleName;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets kind of database.  This is metadata used for the Azure portal

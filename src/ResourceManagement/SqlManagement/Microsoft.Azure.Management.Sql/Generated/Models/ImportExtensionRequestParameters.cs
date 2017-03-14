@@ -26,7 +26,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ImportExtensionRequestParameters
         /// class.
         /// </summary>
-        public ImportExtensionRequestParameters() { }
+        public ImportExtensionRequestParameters()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ImportExtensionRequestParameters
@@ -56,6 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             AuthenticationType = authenticationType;
+            CustomInit();
         }
         /// <summary>
         /// Static constructor for ImportExtensionRequestParameters class.
@@ -64,6 +68,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             OperationMode = "Import";
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the extension.

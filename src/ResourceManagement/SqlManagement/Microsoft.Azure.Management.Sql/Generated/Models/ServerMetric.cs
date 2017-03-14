@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerMetric class.
         /// </summary>
-        public ServerMetric() { }
+        public ServerMetric()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ServerMetric class.
@@ -44,7 +47,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             Limit = limit;
             Unit = unit;
             NextResetTime = nextResetTime;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets name of the server usage metric.

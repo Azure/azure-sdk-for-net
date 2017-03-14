@@ -26,14 +26,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DatabaseSecurityAlertPolicy
         /// class.
         /// </summary>
-        public DatabaseSecurityAlertPolicy() { }
+        public DatabaseSecurityAlertPolicy()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the DatabaseSecurityAlertPolicy
         /// class.
         /// </summary>
-        /// <param name="state">Specifies the state of the policy. Possible
-        /// values include: 'New', 'Enabled', 'Disabled'</param>
+        /// <param name="state">Specifies the state of the policy. If state is
+        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
+        /// Possible values include: 'New', 'Enabled', 'Disabled'</param>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="type">Resource type</param>
@@ -49,9 +53,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Disabled'</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). This blob storage
-        /// will hold all Threat Detection audit logs.</param>
+        /// will hold all Threat Detection audit logs. If state is Enabled,
+        /// storageEndpoint is required.</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
-        /// of the Threat Detection audit storage account.</param>
+        /// of the Threat Detection audit storage account. If state is Enabled,
+        /// storageAccountAccessKey is required.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
         /// the Threat Detection audit logs.</param>
         /// <param name="useServerDefault">Specifies whether to use the default
@@ -68,11 +74,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
             UseServerDefault = useServerDefault;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets specifies the state of the policy. Possible values
-        /// include: 'New', 'Enabled', 'Disabled'
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets specifies the state of the policy. If state is
+        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
+        /// Possible values include: 'New', 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public SecurityAlertPolicyState State { get; set; }
@@ -103,14 +116,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
         /// https://MyAccount.blob.core.windows.net). This blob storage will
-        /// hold all Threat Detection audit logs.
+        /// hold all Threat Detection audit logs. If state is Enabled,
+        /// storageEndpoint is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the identifier key of the Threat Detection
-        /// audit storage account.
+        /// audit storage account. If state is Enabled, storageAccountAccessKey
+        /// is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }

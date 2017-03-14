@@ -26,7 +26,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the TransparentDataEncryptionActivity
         /// class.
         /// </summary>
-        public TransparentDataEncryptionActivity() { }
+        public TransparentDataEncryptionActivity()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TransparentDataEncryptionActivity
@@ -43,7 +46,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             Status = status;
             PercentComplete = percentComplete;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the status of the database. Possible values include:

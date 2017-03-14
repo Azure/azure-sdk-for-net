@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the TransparentDataEncryption class.
         /// </summary>
-        public TransparentDataEncryption() { }
+        public TransparentDataEncryption()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TransparentDataEncryption class.
@@ -38,7 +41,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             : base(name, id)
         {
             Status = status;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the status of the database transparent data

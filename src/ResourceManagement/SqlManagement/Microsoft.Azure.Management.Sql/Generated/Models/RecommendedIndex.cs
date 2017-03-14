@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the RecommendedIndex class.
         /// </summary>
-        public RecommendedIndex() { }
+        public RecommendedIndex()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RecommendedIndex class.
@@ -79,7 +82,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             IndexScript = indexScript;
             EstimatedImpact = estimatedImpact;
             ReportedImpact = reportedImpact;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the proposed index action. You can create a missing index,

@@ -23,7 +23,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ExportRequestParameters class.
         /// </summary>
-        public ExportRequestParameters() { }
+        public ExportRequestParameters()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ExportRequestParameters class.
@@ -48,7 +51,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             AuthenticationType = authenticationType;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the type of the storage key to use. Valid values are

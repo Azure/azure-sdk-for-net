@@ -27,20 +27,26 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
         /// </summary>
-        public DatabaseBlobAuditingPolicy() { }
+        public DatabaseBlobAuditingPolicy()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
         /// </summary>
-        /// <param name="state">Specifies the state of the policy. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
+        /// <param name="state">Specifies the state of the policy. If state is
+        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="name">Resource name</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="type">Resource type</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
-        /// (e.g. https://MyAccount.blob.core.windows.net)</param>
+        /// (e.g. https://MyAccount.blob.core.windows.net). If state is
+        /// Enabled, storageEndpoint is required.</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
-        /// of the auditing storage account.</param>
+        /// of the auditing storage account. If state is Enabled,
+        /// storageAccountAccessKey is required.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
         /// the audit logs.</param>
         /// <param name="auditActionsAndGroups">Specifies the Actions and
@@ -60,25 +66,33 @@ namespace Microsoft.Azure.Management.Sql.Models
             AuditActionsAndGroups = auditActionsAndGroups;
             StorageAccountSubscriptionId = storageAccountSubscriptionId;
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets specifies the state of the policy. Possible values
-        /// include: 'Enabled', 'Disabled'
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets specifies the state of the policy. If state is
+        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
+        /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public BlobAuditingPolicyState State { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
-        /// https://MyAccount.blob.core.windows.net)
+        /// https://MyAccount.blob.core.windows.net). If state is Enabled,
+        /// storageEndpoint is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the identifier key of the auditing storage
-        /// account.
+        /// account. If state is Enabled, storageAccountAccessKey is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }

@@ -28,7 +28,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ElasticPoolDatabaseActivity
         /// class.
         /// </summary>
-        public ElasticPoolDatabaseActivity() { }
+        public ElasticPoolDatabaseActivity()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ElasticPoolDatabaseActivity
@@ -81,7 +84,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             ServerName = serverName;
             StartTime = startTime;
             State = state;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the database name.

@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the SloUsageMetric class.
         /// </summary>
-        public SloUsageMetric() { }
+        public SloUsageMetric()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SloUsageMetric class.
@@ -40,7 +43,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             ServiceLevelObjective = serviceLevelObjective;
             ServiceLevelObjectiveId = serviceLevelObjectiveId;
             InRangeTimeRatio = inRangeTimeRatio;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the serviceLevelObjective for SLO usage metric.

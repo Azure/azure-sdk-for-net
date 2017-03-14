@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the Table class.
         /// </summary>
-        public Table() { }
+        public Table()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Table class.
@@ -48,7 +51,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             TableType = tableType;
             Columns = columns;
             RecommendedIndexes = recommendedIndexes;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the type of database table. Possible values include:

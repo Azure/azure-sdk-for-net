@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the OperationImpact class.
         /// </summary>
-        public OperationImpact() { }
+        public OperationImpact()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OperationImpact class.
@@ -40,7 +43,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             Unit = unit;
             ChangeValueAbsolute = changeValueAbsolute;
             ChangeValueRelative = changeValueRelative;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the name of the impact dimension.

@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ElasticPoolActivity class.
         /// </summary>
-        public ElasticPoolActivity() { }
+        public ElasticPoolActivity()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ElasticPoolActivity class.
@@ -94,7 +97,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             RequestedDatabaseDtuGuarantee = requestedDatabaseDtuGuarantee;
             RequestedDatabaseDtuCap = requestedDatabaseDtuCap;
             RequestedDtuGuarantee = requestedDtuGuarantee;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the time the operation finished (ISO8601 format).

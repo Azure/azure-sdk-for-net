@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabaseThreatDetectionPoliciesOperationsExtensions
     {
             /// <summary>
-            /// Get a Threat Detection policy associated with a database.
+            /// Gets a Threat Detection policy associated with a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Get a Threat Detection policy associated with a database.
+            /// Gets a Threat Detection policy associated with a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,9 +91,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseSecurityAlertPolicy'>
             /// The database Threat Detection policy.
             /// </param>
-            public static void CreateOrUpdate(this IDatabaseThreatDetectionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy databaseSecurityAlertPolicy)
+            public static DatabaseSecurityAlertPolicy CreateOrUpdate(this IDatabaseThreatDetectionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy databaseSecurityAlertPolicy)
             {
-                operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, databaseSecurityAlertPolicy).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, databaseSecurityAlertPolicy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -119,9 +119,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateOrUpdateAsync(this IDatabaseThreatDetectionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy databaseSecurityAlertPolicy, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseSecurityAlertPolicy> CreateOrUpdateAsync(this IDatabaseThreatDetectionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy databaseSecurityAlertPolicy, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, databaseSecurityAlertPolicy, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, databaseSecurityAlertPolicy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the Schema class.
         /// </summary>
-        public Schema() { }
+        public Schema()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Schema class.
@@ -42,7 +45,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             : base(location, name, id, type, tags)
         {
             Tables = tables;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the tables from this database.

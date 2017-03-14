@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        public Operation() { }
+        public Operation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Operation class.
@@ -35,7 +38,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             Name = name;
             Display = display;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets operation name: {provider}/{resource}/{operation}

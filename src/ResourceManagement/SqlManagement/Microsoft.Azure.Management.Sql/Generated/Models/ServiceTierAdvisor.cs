@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServiceTierAdvisor class.
         /// </summary>
-        public ServiceTierAdvisor() { }
+        public ServiceTierAdvisor()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ServiceTierAdvisor class.
@@ -107,7 +110,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjective;
             OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveId;
             Confidence = confidence;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the observation period start (ISO8601 format).

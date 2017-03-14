@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabaseThreatDetectionPoliciesOperations
     {
         /// <summary>
-        /// Get a Threat Detection policy associated with a database.
+        /// Gets a Threat Detection policy associated with a database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -81,9 +81,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy databaseSecurityAlertPolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DatabaseSecurityAlertPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy databaseSecurityAlertPolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

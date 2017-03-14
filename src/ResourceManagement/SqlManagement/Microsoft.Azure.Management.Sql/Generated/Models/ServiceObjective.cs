@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServiceObjective class.
         /// </summary>
-        public ServiceObjective() { }
+        public ServiceObjective()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ServiceObjective class.
@@ -50,7 +53,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             IsSystem = isSystem;
             Description = description;
             Enabled = enabled;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the name for the service objective.

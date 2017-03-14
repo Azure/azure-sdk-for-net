@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the Server class.
         /// </summary>
-        public Server() { }
+        public Server()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Server class.
@@ -70,7 +73,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             ExternalAdministratorSid = externalAdministratorSid;
             ExternalAdministratorLogin = externalAdministratorLogin;
             State = state;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets kind of sql server.  This is metadata used for the Azure

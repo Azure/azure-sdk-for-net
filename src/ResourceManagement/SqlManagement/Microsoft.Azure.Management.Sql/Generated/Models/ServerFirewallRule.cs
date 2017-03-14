@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerFirewallRule class.
         /// </summary>
-        public ServerFirewallRule() { }
+        public ServerFirewallRule()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ServerFirewallRule class.
@@ -52,7 +55,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             Type = type;
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets kind of server that contains this firewall rule.

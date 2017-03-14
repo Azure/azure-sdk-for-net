@@ -23,7 +23,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the
         /// ImportExportOperationResponsePropertiesModel class.
         /// </summary>
-        public ImportExportOperationResponsePropertiesModel() { }
+        public ImportExportOperationResponsePropertiesModel()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -53,7 +56,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             QueuedTime = queuedTime;
             BlobUri = blobUri;
             ErrorMessage = errorMessage;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the request type of the operation.

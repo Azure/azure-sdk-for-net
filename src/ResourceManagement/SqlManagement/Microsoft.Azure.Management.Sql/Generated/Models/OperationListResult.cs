@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        public OperationListResult() { }
+        public OperationListResult()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OperationListResult class.
@@ -38,7 +41,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             Value = value;
             NextLink = nextLink;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets list of SQL operations supported by the SQL resource

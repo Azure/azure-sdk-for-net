@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the UpgradeHint class.
         /// </summary>
-        public UpgradeHint() { }
+        public UpgradeHint()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the UpgradeHint class.
@@ -37,7 +40,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             TargetServiceLevelObjective = targetServiceLevelObjective;
             TargetServiceLevelObjectiveId = targetServiceLevelObjectiveId;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets targetServiceLevelObjective for upgrade hint.

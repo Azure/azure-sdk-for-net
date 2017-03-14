@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ElasticPool class.
         /// </summary>
-        public ElasticPool() { }
+        public ElasticPool()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ElasticPool class.
@@ -64,7 +67,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             DatabaseDtuMin = databaseDtuMin;
             StorageMB = storageMB;
             Kind = kind;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets the creation date of the elastic pool (ISO8601 format).

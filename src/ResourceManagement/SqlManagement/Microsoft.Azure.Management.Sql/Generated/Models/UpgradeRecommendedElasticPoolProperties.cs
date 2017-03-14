@@ -26,7 +26,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the
         /// UpgradeRecommendedElasticPoolProperties class.
         /// </summary>
-        public UpgradeRecommendedElasticPoolProperties() { }
+        public UpgradeRecommendedElasticPoolProperties()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -60,7 +63,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             DatabaseDtuMax = databaseDtuMax;
             DatabaseCollection = databaseCollection;
             IncludeAllDatabases = includeAllDatabases;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the recommended elastic pool being

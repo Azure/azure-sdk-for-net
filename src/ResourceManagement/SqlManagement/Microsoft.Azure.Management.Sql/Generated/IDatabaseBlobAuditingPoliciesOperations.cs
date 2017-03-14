@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabaseBlobAuditingPoliciesOperations
     {
         /// <summary>
-        /// Get a blob auditing policy associated with a database.
+        /// Gets a blob auditing policy associated with a database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can

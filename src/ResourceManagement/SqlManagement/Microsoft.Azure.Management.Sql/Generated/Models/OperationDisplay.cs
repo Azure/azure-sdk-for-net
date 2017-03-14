@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        public OperationDisplay() { }
+        public OperationDisplay()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
@@ -38,7 +41,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             Provider = provider;
             Resource = resource;
             Operation = operation;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets service provider: Microsoft SQL Database.

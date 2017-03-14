@@ -23,7 +23,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ImportRequestParameters class.
         /// </summary>
-        public ImportRequestParameters() { }
+        public ImportRequestParameters()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ImportRequestParameters class.
@@ -55,7 +58,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             Edition = edition;
             ServiceObjectiveName = serviceObjectiveName;
             MaxSizeBytes = maxSizeBytes;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the database to import.

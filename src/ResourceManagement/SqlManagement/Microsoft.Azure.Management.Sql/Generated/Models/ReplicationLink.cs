@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ReplicationLink class.
         /// </summary>
-        public ReplicationLink() { }
+        public ReplicationLink()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ReplicationLink class.
@@ -73,7 +76,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             StartTime = startTime;
             PercentComplete = percentComplete;
             ReplicationState = replicationState;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets location of the server that contains this firewall rule.
