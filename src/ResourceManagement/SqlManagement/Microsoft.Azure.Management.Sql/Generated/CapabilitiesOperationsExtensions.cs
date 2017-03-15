@@ -22,36 +22,34 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class CapabilitiesOperationsExtensions
     {
             /// <summary>
-            /// Returns information about the Azure SQL capabilities available for the
-            /// specified region.
+            /// Returns the capabilities available for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationID'>
-            /// The Id of the region for which the Azure SQL capabilities are retrieved.
+            /// <param name='locationId'>
+            /// The Id of the location for which the capabilities are retrieved.
             /// </param>
-            public static LocationCapabilities Get(this ICapabilitiesOperations operations, string locationID)
+            public static LocationCapabilities List(this ICapabilitiesOperations operations, string locationId)
             {
-                return operations.GetAsync(locationID).GetAwaiter().GetResult();
+                return operations.ListAsync(locationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns information about the Azure SQL capabilities available for the
-            /// specified region.
+            /// Returns the capabilities available for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationID'>
-            /// The Id of the region for which the Azure SQL capabilities are retrieved.
+            /// <param name='locationId'>
+            /// The Id of the location for which the capabilities are retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocationCapabilities> GetAsync(this ICapabilitiesOperations operations, string locationID, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocationCapabilities> ListAsync(this ICapabilitiesOperations operations, string locationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(locationID, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(locationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the Service Objectives capabilities.
+    /// Represents the service objectives capabilities.
     /// </summary>
     [JsonTransformation]
     public partial class ServiceObjectiveCapability
@@ -32,16 +32,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServiceObjectiveCapability class.
         /// </summary>
-        /// <param name="name">The Service Objective name.</param>
-        /// <param name="status">The status of the Service Objective. Possible
-        /// values include: 'Visible', 'Available', 'Default'</param>
+        /// <param name="name">The service objective name.</param>
+        /// <param name="status">The status of the service objective. Possible
+        /// values include: 'Visible', 'Available', 'Default',
+        /// 'Disabled'</param>
         /// <param name="unit">Unit type used to measure SLO performance level.
         /// Possible values include: 'DTU'</param>
         /// <param name="value">Performance level value.</param>
-        /// <param name="id">The unique ID of the Service Objective.</param>
-        /// <param name="supportedMaxSizes">The list of supported maximum Azure
-        /// SQL Database sizes for this Service Objective.</param>
-        public ServiceObjectiveCapability(string name = default(string), string status = default(string), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), string id = default(string), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>))
+        /// <param name="id">The unique ID of the service objective.</param>
+        /// <param name="supportedMaxSizes">The list of supported maximum
+        /// database sizes for this service objective.</param>
+        public ServiceObjectiveCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), string id = default(string), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>))
         {
             Name = name;
             Status = status;
@@ -52,40 +53,40 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the Service Objective name.
+        /// Gets the service objective name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets the status of the Service Objective. Possible values include:
-        /// 'Visible', 'Available', 'Default'
+        /// Gets the status of the service objective. Possible values include:
+        /// 'Visible', 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; protected set; }
+        public CapabilityStatus? Status { get; protected set; }
 
         /// <summary>
-        /// Gets or sets unit type used to measure SLO performance level.
-        /// Possible values include: 'DTU'
+        /// Gets unit type used to measure SLO performance level. Possible
+        /// values include: 'DTU'
         /// </summary>
         [JsonProperty(PropertyName = "performanceLevel.unit")]
-        public PerformanceLevelUnit? Unit { get; set; }
+        public PerformanceLevelUnit? Unit { get; protected set; }
 
         /// <summary>
-        /// Gets or sets performance level value.
+        /// Gets performance level value.
         /// </summary>
         [JsonProperty(PropertyName = "performanceLevel.value")]
-        public int? Value { get; set; }
+        public int? Value { get; protected set; }
 
         /// <summary>
-        /// Gets the unique ID of the Service Objective.
+        /// Gets the unique ID of the service objective.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; protected set; }
 
         /// <summary>
-        /// Gets the list of supported maximum Azure SQL Database sizes for
-        /// this Service Objective.
+        /// Gets the list of supported maximum database sizes for this service
+        /// objective.
         /// </summary>
         [JsonProperty(PropertyName = "supportedMaxSizes")]
         public IList<MaxSizeCapability> SupportedMaxSizes { get; protected set; }

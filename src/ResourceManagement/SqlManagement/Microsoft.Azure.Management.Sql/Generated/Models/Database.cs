@@ -76,14 +76,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// createMode is NonReadableSecondary or OnlineSecondary, this value
         /// is ignored. To see possible values, query the capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// referred to by operationId: "Capabilities_List.". Possible values
         /// include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'Free',
         /// 'Stretch', 'DataWarehouse', 'System'</param>
         /// <param name="maxSizeBytes">The max size of the database expressed
         /// in bytes. If createMode is not Default, this value is ignored. To
         /// see possible values, query the capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get."</param>
+        /// referred to by operationId: "Capabilities_List."</param>
         /// <param name="requestedServiceObjectiveId">The configured service
         /// level objective ID of the database. This is the service level
         /// objective that is in the process of being applied to the database.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// requestedServiceObjectiveName. To see possible values, query the
         /// capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get."</param>
+        /// referred to by operationId: "Capabilities_List."</param>
         /// <param name="requestedServiceObjectiveName">The name of the
         /// configured service level objective of the database. This is the
         /// service level objective that is in the process of being applied to
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// serviceLevelObjective property. To see possible values, query the
         /// capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// referred to by operationId: "Capabilities_List.". Possible values
         /// include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4',
         /// 'P6', 'P11', 'P15', 'System', 'ElasticPool'</param>
         /// <param name="serviceLevelObjective">The current service level
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// NonReadableSecondary or OnlineSecondary, this value is ignored. To
         /// see possible values, query the capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// referred to by operationId: "Capabilities_List.". Possible values
         /// include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'Free',
         /// 'Stretch', 'DataWarehouse', 'System'
         /// </summary>
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// createMode is not Default, this value is ignored. To see possible
         /// values, query the capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get."
+        /// referred to by operationId: "Capabilities_List."
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// requestedServiceObjectiveName. To see possible values, query the
         /// capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get."
+        /// referred to by operationId: "Capabilities_List."
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedServiceObjectiveId")]
         public System.Guid? RequestedServiceObjectiveId { get; set; }
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// updated, it will match the value of serviceLevelObjective property.
         /// To see possible values, query the capabilities API
         /// (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities)
-        /// referred to by operationId: "Capabilities_Get.". Possible values
+        /// referred to by operationId: "Capabilities_List.". Possible values
         /// include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4',
         /// 'P6', 'P11', 'P15', 'System', 'ElasticPool'
         /// </summary>

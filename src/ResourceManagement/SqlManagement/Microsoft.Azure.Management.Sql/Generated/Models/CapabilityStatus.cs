@@ -11,15 +11,25 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Azure;
     using Management;
     using Sql;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CapabilityStatus.
     /// </summary>
-    public static class CapabilityStatus
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum CapabilityStatus
     {
-        public const string Visible = "Visible";
-        public const string Available = "Available";
-        public const string Default = "Default";
+        [EnumMember(Value = "Visible")]
+        Visible,
+        [EnumMember(Value = "Available")]
+        Available,
+        [EnumMember(Value = "Default")]
+        Default,
+        [EnumMember(Value = "Disabled")]
+        Disabled
     }
 }
 

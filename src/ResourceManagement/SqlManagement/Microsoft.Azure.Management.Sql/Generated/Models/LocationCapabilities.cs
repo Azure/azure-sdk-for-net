@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the Azure SQL capabilities for a region.
+    /// Represents the capabilities for a location.
     /// </summary>
     public partial class LocationCapabilities
     {
@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the LocationCapabilities class.
         /// </summary>
-        /// <param name="name">The region name.</param>
-        /// <param name="status">The status for the region with respect to
+        /// <param name="name">The location name.</param>
+        /// <param name="status">The status for the location with respect to
         /// Azure SQL. Possible values include: 'Visible', 'Available',
-        /// 'Default'</param>
-        /// <param name="supportedServerVersions">The list of supported Azure
-        /// SQL Server versions.</param>
-        public LocationCapabilities(string name = default(string), string status = default(string), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
+        /// 'Default', 'Disabled'</param>
+        /// <param name="supportedServerVersions">The list of supported server
+        /// versions.</param>
+        public LocationCapabilities(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
         {
             Name = name;
             Status = status;
@@ -43,20 +43,21 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
 
         /// <summary>
-        /// Gets the region name.
+        /// Gets the location name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets the status for the region with respect to Azure SQL. Possible
-        /// values include: 'Visible', 'Available', 'Default'
+        /// Gets the status for the location with respect to Azure SQL.
+        /// Possible values include: 'Visible', 'Available', 'Default',
+        /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; protected set; }
+        public CapabilityStatus? Status { get; protected set; }
 
         /// <summary>
-        /// Gets the list of supported Azure SQL Server versions.
+        /// Gets the list of supported server versions.
         /// </summary>
         [JsonProperty(PropertyName = "supportedServerVersions")]
         public IList<ServerVersionCapability> SupportedServerVersions { get; protected set; }

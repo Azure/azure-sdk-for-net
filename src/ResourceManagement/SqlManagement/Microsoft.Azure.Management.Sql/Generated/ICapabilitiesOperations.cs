@@ -24,12 +24,10 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface ICapabilitiesOperations
     {
         /// <summary>
-        /// Returns information about the Azure SQL capabilities available for
-        /// the specified region.
+        /// Returns the capabilities available for the specified location.
         /// </summary>
-        /// <param name='locationID'>
-        /// The Id of the region for which the Azure SQL capabilities are
-        /// retrieved.
+        /// <param name='locationId'>
+        /// The Id of the location for which the capabilities are retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LocationCapabilities>> GetWithHttpMessagesAsync(string locationID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocationCapabilities>> ListWithHttpMessagesAsync(string locationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
 

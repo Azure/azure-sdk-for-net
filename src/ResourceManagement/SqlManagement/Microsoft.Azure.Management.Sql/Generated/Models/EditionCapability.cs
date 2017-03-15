@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the Azure SQL Server edition capabilities.
+    /// Represents the server edition capabilities.
     /// </summary>
     public partial class EditionCapability
     {
@@ -30,11 +30,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the EditionCapability class.
         /// </summary>
         /// <param name="name">The edition name.</param>
-        /// <param name="status">The status of the Azure SQL Server edition.
-        /// Possible values include: 'Visible', 'Available', 'Default'</param>
+        /// <param name="status">The status of the server edition. Possible
+        /// values include: 'Visible', 'Available', 'Default',
+        /// 'Disabled'</param>
         /// <param name="supportedServiceLevelObjectives">The list of supported
-        /// Service Objectives for the edition.</param>
-        public EditionCapability(string name = default(string), string status = default(string), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>))
+        /// service objectives for the edition.</param>
+        public EditionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>))
         {
             Name = name;
             Status = status;
@@ -48,14 +49,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets the status of the Azure SQL Server edition. Possible values
-        /// include: 'Visible', 'Available', 'Default'
+        /// Gets the status of the server edition. Possible values include:
+        /// 'Visible', 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; protected set; }
+        public CapabilityStatus? Status { get; protected set; }
 
         /// <summary>
-        /// Gets the list of supported Service Objectives for the edition.
+        /// Gets the list of supported service objectives for the edition.
         /// </summary>
         [JsonProperty(PropertyName = "supportedServiceLevelObjectives")]
         public IList<ServiceObjectiveCapability> SupportedServiceLevelObjectives { get; protected set; }

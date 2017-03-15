@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the maximum size limits for an Azure SQL Database.
+    /// Represents the maximum size limits for a database.
     /// </summary>
     public partial class MaxSizeCapability
     {
@@ -33,8 +33,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Megabytes', 'Gigabytes', 'Terabytes',
         /// 'Petabytes'</param>
         /// <param name="status">The status of the maximum size capability.
-        /// Possible values include: 'Visible', 'Available', 'Default'</param>
-        public MaxSizeCapability(int? limit = default(int?), string unit = default(string), string status = default(string))
+        /// Possible values include: 'Visible', 'Available', 'Default',
+        /// 'Disabled'</param>
+        public MaxSizeCapability(long? limit = default(long?), MaxSizeUnits? unit = default(MaxSizeUnits?), CapabilityStatus? status = default(CapabilityStatus?))
         {
             Limit = limit;
             Unit = unit;
@@ -45,21 +46,21 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the maximum size of the database (see 'unit' for the units).
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
-        public int? Limit { get; protected set; }
+        public long? Limit { get; protected set; }
 
         /// <summary>
         /// Gets the units that the limit is expressed in. Possible values
         /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public string Unit { get; protected set; }
+        public MaxSizeUnits? Unit { get; protected set; }
 
         /// <summary>
         /// Gets the status of the maximum size capability. Possible values
-        /// include: 'Visible', 'Available', 'Default'
+        /// include: 'Visible', 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; protected set; }
+        public CapabilityStatus? Status { get; protected set; }
 
     }
 }
