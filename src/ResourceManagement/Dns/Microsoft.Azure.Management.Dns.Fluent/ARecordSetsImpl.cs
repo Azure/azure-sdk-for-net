@@ -29,6 +29,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return new ARecordSetImpl(dnsZone, inner);
         }
 
+        private DnsZoneImpl Parent()
+        {
+            return this.dnsZone;
+        }
+
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:9D63E6488572EF04D783581AA61B0F7E
         public IARecordSet GetByName(string name)
         {

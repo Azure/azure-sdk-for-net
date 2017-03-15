@@ -18,6 +18,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     {
         private DnsZoneImpl dnsZone;
         
+        private DnsZoneImpl Parent()
+        {
+            return dnsZone;
+        }
+
         public async Task<IMXRecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
             RecordSetInner inner = await dnsZone.Manager.Inner.RecordSets.GetAsync(

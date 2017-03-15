@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        IWebAppBase Resource.Fluent.Core.IChildResource<IWebAppBase>.Parent
+        IWebAppBase IHasParent<IWebAppBase>.Parent
         {
             get
             {

@@ -14,11 +14,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IIndependentChildResource<IAppServiceManager, SiteInner>,
         IWebAppBase,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
-        IUpdatable<DeploymentSlot.Update.IUpdate>
+        IUpdatable<DeploymentSlot.Update.IUpdate>,
+        IHasParent<IWebApp>
     {
-        /// <summary>
-        /// Gets the web app containing this deployment slot.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IWebApp Parent { get; }
     }
 }

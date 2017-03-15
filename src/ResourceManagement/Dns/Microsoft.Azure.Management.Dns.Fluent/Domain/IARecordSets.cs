@@ -3,13 +3,15 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to A record sets in a DNS zone.
     /// </summary>
     public interface IARecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>,
+        IHasParent<IDnsZone>
     {
     }
 }

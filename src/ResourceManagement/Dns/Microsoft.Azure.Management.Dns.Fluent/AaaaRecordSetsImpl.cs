@@ -2,8 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent.Core;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -27,6 +26,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 RecordType.AAAA,
                 cancellationToken);
             return new AaaaRecordSetImpl(dnsZone, inner);
+        }
+
+        private DnsZoneImpl Parent()
+        {
+            return dnsZone;
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:10EBCE64285B15A348EA16D2076F49EE
