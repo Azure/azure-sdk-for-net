@@ -20,7 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -38,6 +41,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         {
             get { return this._deploymentName; }
             set { this._deploymentName = value; }
+        }
+        
+        private IList<IPTag> _iPTags;
+        
+        /// <summary>
+        /// Optional. The list of IPTags associated with the reserved IP.
+        /// </summary>
+        public IList<IPTag> IPTags
+        {
+            get { return this._iPTags; }
+            set { this._iPTags = value; }
         }
         
         private string _label;
@@ -101,6 +115,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkReservedIPCreateParameters()
         {
+            this.IPTags = new LazyList<IPTag>();
         }
     }
 }
