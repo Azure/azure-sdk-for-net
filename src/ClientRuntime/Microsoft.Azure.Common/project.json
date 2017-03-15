@@ -34,7 +34,6 @@
         "System.Net": "",
         "System.Net.Http": "",
         "System.Net.Http.WebRequest": "",
-        "System.Runtime": "",
         "System.Runtime.Serialization": "",
         "System.Threading": "",
         "System.Threading.Tasks":  "",
