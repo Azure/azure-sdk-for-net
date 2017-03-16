@@ -422,14 +422,12 @@ namespace Microsoft.Rest
                 }
 
                 HttpClient = new HttpClient(currentHandler, false);
-
                 FirstMessageHandler = currentHandler;
             }
             else
             {
                 HttpClient = httpClient;
             }
-
             
             SetUserAgent(this.GetType().FullName, ClientVersion);
         }
@@ -472,8 +470,7 @@ namespace Microsoft.Rest
 
             foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                var prodInfo = HttpClient.DefaultRequestHeaders.UserAgent.Where<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name , StringComparison.OrdinalIgnoreCase));
-                if(!prodInfo.Any<ProductInfoHeaderValue>())
+                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)));
                 {
                     HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
                 }
