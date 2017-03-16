@@ -11,8 +11,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     public interface IChildResource<IParentT> :
         IHasName,
-        IIndexable
+        IIndexable,
+        IHasParent<IParentT>
     {
-        IParentT Parent { get; }
     }
 }

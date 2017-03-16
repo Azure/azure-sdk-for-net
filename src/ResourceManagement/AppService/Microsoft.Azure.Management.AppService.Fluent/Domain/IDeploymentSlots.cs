@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
         ISupportsDeletingByName,
         IHasManager<IAppServiceManager>,
-        IHasInner<IWebAppsOperations>
+        IHasInner<IWebAppsOperations>,
+        IHasParent<IWebApp>
     {
     }
 }

@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return Inner.LastActivationTime.GetValueOrDefault();
         }
 
-        IApplication IChildResource<IApplication>.Parent
+        IApplication IHasParent<IApplication>.Parent
         {
             get
             {

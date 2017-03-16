@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <returns>the parent fluent interface</returns>
-        IParentT IChildResource<IParentT>.Parent
+        IParentT IHasParent<IParentT>.Parent
         {
             get
             {

@@ -3,13 +3,15 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to CNAME record sets in a DNS zone.
     /// </summary>
     public interface ICNameRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSet>
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ICNameRecordSet>,
+        IHasParent<IDnsZone>
     {
     }
 }

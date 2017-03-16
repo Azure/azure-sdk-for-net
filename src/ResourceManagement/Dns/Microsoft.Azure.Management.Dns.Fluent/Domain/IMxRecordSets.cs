@@ -3,13 +3,15 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to MX record sets in a DNS zone.
     /// </summary>
     public interface IMXRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IMXRecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IMXRecordSet>
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IMXRecordSet>,
+        IHasParent<IDnsZone>
     {
     }
 }

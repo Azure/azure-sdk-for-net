@@ -11,6 +11,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal partial class DeploymentSlotsImpl 
     {
+        IWebApp IHasParent<IWebApp>.Parent
+        {
+            get
+            {
+                return this.Parent();
+            }
+        }
+
         /// <summary>
         /// Asynchronously delete a resource from Azure, identifying it by its resource name.
         /// </summary>

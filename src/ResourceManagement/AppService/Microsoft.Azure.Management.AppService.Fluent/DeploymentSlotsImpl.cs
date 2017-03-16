@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DeploymentSlot.Definition;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
     using System;
     using System.Text.RegularExpressions;
     using System.Threading;
@@ -126,6 +126,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return await GetByParentAsync(parent.ResourceGroupName, parent.Name, name);
         }
+
+        private WebAppImpl Parent()
+        {
+            return this.parent;
+        } 
 
         private async Task<IDeploymentSlot> PopulateModelAsync(SiteInner inner, IWebApp parent, CancellationToken cancellationToken = default(CancellationToken))
         {

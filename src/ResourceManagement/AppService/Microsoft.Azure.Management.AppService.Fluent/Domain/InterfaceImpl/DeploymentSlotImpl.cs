@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithConfigurationFromParent() as WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.IWebApp Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot.Parent
+        Microsoft.Azure.Management.AppService.Fluent.IWebApp Resource.Fluent.Core.IHasParent<IWebApp>.Parent
         {
             get
             {

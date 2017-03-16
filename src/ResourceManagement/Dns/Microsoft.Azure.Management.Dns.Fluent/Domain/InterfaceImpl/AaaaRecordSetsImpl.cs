@@ -16,6 +16,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSet>;
         }
 
+        IDnsZone IHasParent<IDnsZone>.Parent
+        {
+            get
+            {
+                return Parent();
+            }
+        }
+
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name within the current resource group.
         /// </summary>

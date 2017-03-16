@@ -3,13 +3,15 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to SRV record sets in a DNS zone.
     /// </summary>
     public interface ISrvRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>,
+        IHasParent<IDnsZone>
     {
     }
 }

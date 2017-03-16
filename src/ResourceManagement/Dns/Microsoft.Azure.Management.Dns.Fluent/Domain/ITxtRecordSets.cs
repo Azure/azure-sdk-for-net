@@ -3,13 +3,15 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to TXT record sets in a DNS zone.
     /// </summary>
     public interface ITxtRecordSets  :
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet>
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet>,
+        IHasParent<IDnsZone>
     {
     }
 }

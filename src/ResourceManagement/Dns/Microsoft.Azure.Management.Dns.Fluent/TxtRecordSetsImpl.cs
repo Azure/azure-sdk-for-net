@@ -17,6 +17,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     {
         private DnsZoneImpl dnsZone;
 
+        private DnsZoneImpl Parent()
+        {
+            return dnsZone;
+        }
+
         ///GENMHASH:70F336C47374A14980F4F5D3557E78E9:93DD647D9AB0DB30D017785882D88829
         internal  TxtRecordSetsImpl(DnsZoneImpl dnsZone)
         {
