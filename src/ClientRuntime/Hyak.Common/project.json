@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1",
+    "version": "1.1.2",
     "title": "Common Library for Hyak Code Generator",
     "description": "Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation for REST clients generated with Hyak.",
     "authors": [ "Microsoft" ],
@@ -27,33 +27,43 @@
       "buildOptions": {
         "debugType": "portable"
       },
-      "dependencies": {
-        "Newtonsoft.Json": "[9.0.1, 10.0.0)",
-        "System.Net.Http": "[4.0.0, 5.0.0)",
-        "System.Xml.Linq": "3.5.21022.801"
-      }
-    },
-    "netstandard1.5": {
-      "buildOptions": {
-        "define": [ "NETSTANDARD15", "PORTABLE" ],
-        "debugType": "portable"
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Net": "",
+        "System.Net.Http": "",
+        "System.Net.Http.WebRequest": "",
+        "System.Runtime.Serialization": "",
+        "System.Security":  "",
+        "System.Xml": "",
+        "System.Xml.Linq": ""
       },
       "dependencies": {
-        "NETStandard.Library": "1.6.1",
-        "Newtonsoft.Json": "[9.0.1, 10.0.0)",
-        "System.Reflection": "[4.3.0, 5.0.0)",
-        "System.Threading": "[4.3.0, 5.0.0)"
-      }
-    },
-    "netstandard1.1": {
-      "buildOptions": {
-        "define": [ "NETSTANDARD11", "PORTABLE" ],
-        "debugType": "portable"
+          "Newtonsoft.Json": "[9.0.1, 10.0.0)",
+        }
       },
-      "dependencies": {
-        "NETStandard.Library": "1.6.1",
-        "Newtonsoft.Json": "[9.0.1, 10.0.0)"
+      "netstandard1.5": {
+        "buildOptions": {
+          "define": [ "NETSTANDARD15", "PORTABLE" ],
+          "debugType": "portable"
+        },
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "[9.0.1, 10.0.0)",
+          "System.Reflection": "[4.3.0, 5.0.0)",
+          "System.Threading": "[4.3.0, 5.0.0)"
+        }
+      },
+      "netstandard1.1": {
+        "buildOptions": {
+          "define": [ "NETSTANDARD11", "PORTABLE" ],
+          "debugType": "portable"
+        },
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Net.Http": "4.3.1",
+          "Newtonsoft.Json": "[9.0.1, 10.0.0)"
+        }
       }
     }
-  }
 }

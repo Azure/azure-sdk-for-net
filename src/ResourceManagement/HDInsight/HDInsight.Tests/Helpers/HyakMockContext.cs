@@ -27,7 +27,7 @@ namespace HDInsight.Tests.Helpers
 {
     public class HyakMockContext : MockContext
     {
-        public static HyakMockContext Start(
+        public static new HyakMockContext Start(
             string className,
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName = "testframework_failed")

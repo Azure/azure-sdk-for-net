@@ -1,5 +1,6 @@
 {
   "projects": [
+    "src/ClientRuntime",
     "src/KeyVault",
     "src/Search/Microsoft.Azure.Search",
     "src/Search/Microsoft.Azure.Management.Search",
