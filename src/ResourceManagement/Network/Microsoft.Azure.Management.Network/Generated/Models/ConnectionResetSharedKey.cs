@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The virtual network connection reset shared key
+    /// </summary>
     public partial class ConnectionResetSharedKey
     {
         /// <summary>
