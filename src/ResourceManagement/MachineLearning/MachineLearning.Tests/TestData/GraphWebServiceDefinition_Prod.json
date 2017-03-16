@@ -318,7 +318,7 @@
             "Account Key": {
               "Value": "MIICZAYJKoZIhvcNAQcDoIICVTCCAlECAQAxggHEMIIBwAIBADCBpzCBjzELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEVMBMGA1UECxMMTWljcm9zb2Z0IElUMSIwIAYDVQQDExlNaWNyb3NvZnQgSVQgSVRPIFNTTCBDQSAxAhMtAAJHUMppd1HUcmi8AAEAAkdQMA0GCSqGSIb3DQEBAQUABIIBAHMOgbmbdTWgsKALDQGvbrWYrxkDIeQ8uPgaussIkPblbdxhPUi/IaMt48Km5KNZnn0YZjZ8TTIrnTTwnWG8D8t9ET9SNrvegEuvi5SzO8Dge8isstcBsUCPcesotunsQLE0Et9eOcTtamMTM33qRqSIKBzs8k5bZKlIkrW1qld6UheJHpt46uzrsSxsuoPGK9elWug4ByQy0cfpbPUypJQdG9zeZRAmNwygIWDg19Xcmz0YlqFrfU2bfl2F9J0hLuR0bbFPNFu65mC+gDCGQxFfjqmdtL6NppKnmS95bsTY4bImhCtDxGR0rOiFrhqSZQOKwo2t5QgoF2SkdQjt0UEwgYMGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQI4F3j5BFiUhKAYO49n2tS9wPuh8d4jROgOg7A8ZfJmaLMm6ZzFu7M+/Rn274cHgwZpin+/Mxl7wkf7UBb3a1hnhvyCnfYYGrM2WcwekvTMF4aF30vJlU0Mzn9a0maevZG7C/bSk3MjXeRqw==",
               //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="It is the thumbprint of certificate for encryption, NOT for auth")]
-              "CertificateThumbprint": "19C7A723C863C127ADC5A71894FF1814329C0C55"
+              "CertificateThumbprint": "SOME_THUMBPRINT"
             },
             "Path to container or directory or blob": {
               "Value": "uploadeddata/adult.data",
