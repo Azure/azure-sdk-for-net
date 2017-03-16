@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="encryptionAlgorithm">The encryption algorithm.
         /// Possible values include: 'NotSpecified', 'None', 'DES3', 'RC2',
         /// 'AES128', 'AES192', 'AES256'</param>
-        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm)
+        /// <param name="signingAlgorithm">The signing algorithm. Possible
+        /// values include: 'NotSpecified', 'Default', 'SHA1'</param>
+        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm, SigningAlgorithm? signingAlgorithm = default(SigningAlgorithm?))
         {
             OverrideMessageProperties = overrideMessageProperties;
             EncryptMessage = encryptMessage;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.Logic.Models
             CheckCertificateRevocationListOnSend = checkCertificateRevocationListOnSend;
             CheckCertificateRevocationListOnReceive = checkCertificateRevocationListOnReceive;
             EncryptionAlgorithm = encryptionAlgorithm;
+            SigningAlgorithm = signingAlgorithm;
         }
 
         /// <summary>
@@ -124,6 +127,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "encryptionAlgorithm")]
         public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
+
+        /// <summary>
+        /// Gets or sets the signing algorithm. Possible values include:
+        /// 'NotSpecified', 'Default', 'SHA1'
+        /// </summary>
+        [JsonProperty(PropertyName = "signingAlgorithm")]
+        public SigningAlgorithm? SigningAlgorithm { get; set; }
 
         /// <summary>
         /// Validate the object.
