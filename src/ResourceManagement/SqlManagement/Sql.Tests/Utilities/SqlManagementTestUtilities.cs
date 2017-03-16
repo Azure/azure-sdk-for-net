@@ -300,5 +300,30 @@ namespace Sql.Tests
                 test(resClient, sqlClient, resGroup, v12Server);
             });
         }
+
+        internal static Task<Database[]> CreateDatabasesAsync(
+            SqlManagementClient sqlClient,
+            string resourceGroupName,
+            Server server,
+            string testPrefix,
+            int count)
+        {
+            List<Task<Database>> createDbTasks = new List<Task<Database>>();
+            for (int i = 0; i < count; i++)
+            {
+                string name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(
+                    resourceGroupName,
+                    server.Name, 
+                    name,
+                    new Database()
+                    {
+                        Location = server.Location
+                    }));
+            }
+
+            // Wait for all databases to be created.
+            return Task.WhenAll(createDbTasks);
+        }
     }
 }

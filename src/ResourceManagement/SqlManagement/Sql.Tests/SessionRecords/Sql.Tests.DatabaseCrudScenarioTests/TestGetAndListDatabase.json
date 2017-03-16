@@ -1750,7 +1750,7 @@
     "RunTestInNewV12Server": [
       "sqlcrudtest-318"
     ],
-    "TestGetAndListDatabase": [
+    "CreateDatabasesAsync": [
       "sqlcrudtest-1856",
       "sqlcrudtest-2783",
       "sqlcrudtest-7851",

@@ -27,5 +27,8 @@
     "src/ResourceManagement/Insights/Microsoft.Azure.Insights",
     "src/ResourceManagement/AnalysisServices/Microsoft.Azure.Management.Analysis",
     "src/ResourceManagement/Monitor/Microsoft.Azure.Monitor"
-  ]
+  ],
+  "sdk": {
+    "version": "1.0.0-preview2-003121"
+  }
 }
