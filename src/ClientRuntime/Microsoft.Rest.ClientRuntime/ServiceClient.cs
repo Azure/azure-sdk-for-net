@@ -248,7 +248,7 @@ namespace Microsoft.Rest
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient(HttpClient httpClient)
         {
-            InitializeHttpClient(httpClient, CreateRootHandler());
+            InitializeHttpClient(httpClient, null);
         }
         
         /// <summary>
@@ -400,6 +400,11 @@ namespace Microsoft.Rest
         {
            if (httpClient == null)
             {
+                if(httpClientHandler == null)
+                {
+                    httpClientHandler = CreateRootHandler();
+                }
+
                 HttpClientHandler = httpClientHandler;
                 DelegatingHandler currentHandler = new RetryDelegatingHandler();
                 currentHandler.InnerHandler = HttpClientHandler;
