@@ -86,10 +86,11 @@ namespace SubscriptionCleaner
                             .GetAwaiter()
                             .GetResult();
 
-                        Console.WriteLine($" - Deleting Resource Group '{rg.Name}'.");
+                        Console.WriteLine($" - Deleted Resource Group '{rg.Name}'.");
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine($" [ERROR]: Exception while deleting Resource Group '{rg.Name}'.");
                         Console.WriteLine(ex);
                     }
                 }
