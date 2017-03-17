@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.2.0",
+  "version": "1.2.0-preview",
   "description": "Microsoft Azure Container Registry Management Library",
   "authors": [ "Microsoft" ],
 
