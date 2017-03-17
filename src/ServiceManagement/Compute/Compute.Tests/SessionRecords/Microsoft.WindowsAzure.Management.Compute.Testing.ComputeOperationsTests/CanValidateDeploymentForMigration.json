@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/f3dc4aaa-f836-4cef-91af-8764f035bfa9/services/hostedservices/azsmnet8120/deployments/azsmnet6716/migration?comp=validate",
-      "EncodedRequestUri": "L2YzZGM0YWFhLWY4MzYtNGNlZi05MWFmLTg3NjRmMDM1YmZhOS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0ODEyMC9kZXBsb3ltZW50cy9henNtbmV0NjcxNi9taWdyYXRpb24/Y29tcD12YWxpZGF0ZQ==",
+      "RequestUri": "/ace9b607-25c7-4695-b94d-9bfc8fde73d9/services/hostedservices/azsmnet724/deployments/azsmnet7729/migration?comp=validate",
+      "EncodedRequestUri": "L2FjZTliNjA3LTI1YzctNDY5NS1iOTRkLTliZmM4ZmRlNzNkOS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NzI0L2RlcGxveW1lbnRzL2F6c21uZXQ3NzI5L21pZ3JhdGlvbj9jb21wPXZhbGlkYXRl",
       "RequestMethod": "POST",
       "RequestBody": "<DeploymentNetworkResource xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ResourceGroupName></ResourceGroupName>\r\n  <VirtualNetworkName></VirtualNetworkName>\r\n  <SubNetName></SubNetName>\r\n  <DestinationVirtualNetwork>New</DestinationVirtualNetwork>\r\n</DeploymentNetworkResource>",
       "RequestHeaders": {
@@ -13,13 +13,13 @@
           "286"
         ],
         "x-ms-version": [
-          "2016-03-01"
+          "2017-01-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/13.0.0.0"
         ]
       },
-      "ResponseBody": "<ValidationMessages xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ValidationMessage>\r\n    <ResourceType>Deployment</ResourceType>\r\n    <ResourceName>azsmnet6716</ResourceName>\r\n    <Category>Error</Category>\r\n    <Message>The deployment name 'azsmnet6716' does not exist.</Message>\r\n  </ValidationMessage>\r\n</ValidationMessages>",
+      "ResponseBody": "<ValidationMessages xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ValidationMessage>\r\n    <ResourceType>Deployment</ResourceType>\r\n    <ResourceName>azsmnet7729</ResourceName>\r\n    <Category>Error</Category>\r\n    <Message>The deployment name 'azsmnet7729' does not exist.</Message>\r\n  </ValidationMessage>\r\n</ValidationMessages>",
       "ResponseHeaders": {
         "Content-Length": [
           "355"
@@ -28,23 +28,24 @@
           "application/xml; charset=utf-8"
         ],
         "x-ms-servedbyregion": [
-          "ussouth3"
+          "ussouth2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f1dce155acc2a5b5b584432561c0a7ea"
+          "ed2ab4ee81c4706cb4b5bedabb82d1ea"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Jul 2016 16:52:40 GMT"
+          "Fri, 17 Mar 2017 18:30:33 GMT"
         ],
         "Server": [
-          "1.0.6198.397",
-          "(rd_rdfe_stable.160624-1024)",
+          "1.0.6198.492",
+          "(rd_rdfe_stable.170314-1904)",
+          "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -53,11 +54,11 @@
   ],
   "Names": {
     "CanValidateDeploymentForMigration": [
-      "azsmnet8120",
-      "azsmnet6716"
+      "azsmnet724",
+      "azsmnet7729"
     ]
   },
   "Variables": {
-    "SubscriptionId": "f3dc4aaa-f836-4cef-91af-8764f035bfa9"
+    "SubscriptionId": "ace9b607-25c7-4695-b94d-9bfc8fde73d9"
   }
 }
