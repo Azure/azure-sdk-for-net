@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
     public class VirtualMachineReproTests : TestBase, IUseFixture<TestFixtureData>
     {
         private TestFixtureData fixture;
-        private const string PLACEHOLDER = "PLACEHOLDER";
+        private const string PLACEHOLDER = "PLACEHOLDER1@";
 
         public void SetFixture(TestFixtureData data)
         {
@@ -2374,9 +2374,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 }
             }
         }
-
+        
         [Fact]
-        public void CanPerformMaintenanceOnVM()
+        public void CanInitiateMaintenanceOnVM()
         {
             TestLogTracingInterceptor.Current.Start();
             using (var undoContext = UndoContext.Current)
@@ -2396,7 +2396,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     string deploymentLabel = deploymentName;
 
                     string location = mgmt.GetDefaultLocation("Storage", "Compute");
-                    const string usWestLocStr = "West US";
+                    //const string usWestLocStr = "East US 2 (Stage)"; // TODO: In stage, "West US" is not available; use "East US 2 (Stage)" or "North Central US (Stage)"instead.
+                    const string usWestLocStr = "Central US EUAP";//"East US 2 EUAP"; //""West US";
                     if (mgmt.Locations.List().Any(
                         c => string.Equals(c.Name, usWestLocStr, StringComparison.OrdinalIgnoreCase)))
                     {
@@ -2428,15 +2429,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
 
                     var hostedService = compute.HostedServices.Get(serviceName);
                     Assert.True(hostedService.Properties.Label == serviceDescription);
-                    Assert.True(hostedService.Properties.Description == serviceDescription);
+                    Assert.True(hostedService.Properties.Description == serviceLabel);
                     Assert.True(hostedService.Properties.ExtendedProperties["foo1"] == "bar");
                     Assert.True(hostedService.Properties.ExtendedProperties["foo2"] == "baz");
 
                     var image = compute.VirtualMachineOSImages.List()
-                        .FirstOrDefault(s => string.Equals(s.OperatingSystemType,
-                            "Windows",
-                            StringComparison.OrdinalIgnoreCase) &&
-                                             s.LogicalSizeInGB < 100);
+                        .FirstOrDefault(s => 
+                        string.Equals(s.OperatingSystemType, "Windows", StringComparison.OrdinalIgnoreCase) &&
+                        s.LogicalSizeInGB < 100 &&
+                        (s.Location.Contains("East US 2 EUAP") ||
+                        s.Location.Contains("Central US EUAP") ||
+                        s.Location.Contains("uscentraleuap") ||
+                        s.Location.Contains("useast2euap")));
 
                     Assert.True(!string.IsNullOrEmpty(image.IOType));
 
@@ -2502,24 +2506,39 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                             },
                         });
 
+                    System.Threading.Thread.Sleep(600000);  // TODO: uncomment here.
                     var debugBlobUri = string.Format("http://{0}.blob.core.windows.net/bootdiagnostics", storageAccountName);
                     var dep = compute.Deployments.GetByName(serviceName, deploymentName);
+                    Assert.NotNull(dep.RoleInstances[0].MaintenanceStatus); 
                     var role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
 
                     // Perform Maintenance
-                    compute.VirtualMachines.PerformMaintenance(
-                        serviceName,
-                        deploymentName,
-                        serviceName);
-
+                    Console.WriteLine("ServiceName={0}, deploymentName={1}", serviceName, deploymentName);
+                    try
+                    {
+                        compute.VirtualMachines.InitiateMaintenance(
+                            serviceName,
+                            deploymentName,
+                            serviceName);
+                    }
+                    catch (Hyak.Common.CloudException e)
+                    {
+                        Assert.Contains(
+                            "User initiated maintenance on the Virtual Machine was successfully completed.", e.Message);
+                    }
+                    catch (Exception e)
+                    {
+                        Assert.True(false,
+                            "The Perform Maintenance operation failed because it threw the exception: " + e.Message);
+                            // If other exceptions shown, the test should fail.
+                    }
                     dep = compute.Deployments.GetByName(serviceName, deploymentName);
                     Assert.Equal(deploymentName, dep.Name);
                     Assert.Equal(deploymentLabel, dep.Label);
                     Assert.NotEqual(dep.CreatedTime, dep.LastModifiedTime);
+                    Assert.NotNull(dep.RoleInstances[0].MaintenanceStatus); //TODO: changed here
                     role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
                     Assert.Equal(serviceName, role1.RoleName);
-                    // TODO: Assert.Contains(MaintenanceStatus, dep.Configuration);
-                    //Assert.True(dep.Roles[0].MaintenanceStatus);
 
                     // Delete all virtual machines
                     compute.Deployments.DeleteByName(serviceName, deploymentName, true);
@@ -2533,6 +2552,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     mgmt.Dispose();
                     compute.Dispose();
                     storage.Dispose();
+                    compute.Dispose();
                     TestLogTracingInterceptor.Current.Stop();
                 }
             }
