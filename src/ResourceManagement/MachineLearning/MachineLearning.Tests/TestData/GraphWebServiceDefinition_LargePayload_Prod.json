@@ -11,8 +11,8 @@
       "level": "None"
     },
     "keys": {
-      "primary": "PREDEFINED_PRIMARY_KEY",
-      "secondary": "PREDEFINED_SECONDARY_KEY"
+      "primary": "SAMPLE_KEY_1",
+      "secondary": "SAMPLE_KEY_2"
     },
     "commitmentPlan": {
       "id": "WILL BE FILLED IN BY THE TEST"
@@ -27,7 +27,7 @@
     },
     "packageType": "Graph",
     "payloadsLocation": {
-      "Uri": "https://bohurp.blob.core.windows.net/uploadeddata/payload.json?st=2017-03-09T19%3A18%3A00Z&se=2018-03-10T19%3A18%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=Lj8mGWAcs8TOCAfGZs%2BkgjJaVZ9BmMP9nHIfiA5t6pU%3D",
+      "Uri": "https://bohurp.blob.core.windows.net/uploadeddata/payload.json?st=2017-03-09T19%3A18%3A00Z&se=2018-03-10T19%3A18%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=SAS_SIGNATURE",
       "Credentials": ""
     }
   },

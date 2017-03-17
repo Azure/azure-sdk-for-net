@@ -4,8 +4,8 @@
     "description": "This is some service description",
     "readOnly": "false",
     "keys": {
-      "primary": "PREDEFINED_PRIMARY_KEY",
-      "secondary": "PREDEFINED_SECONDARY_KEY"
+      "primary": "SAMPLE_KEY_1",
+      "secondary": "SAMPLE_KEY_2"
     },
     "storageAccount": {
       "name": "THIS IS FILLED IN DYNAMICALLY BY THE TEST",

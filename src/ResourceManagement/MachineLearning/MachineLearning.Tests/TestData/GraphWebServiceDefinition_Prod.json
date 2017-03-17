@@ -14,8 +14,8 @@
       "id": "WILL BE FILLED IN BY THE TEST"
     },
     "keys": {
-      "primary": "PREDEFINED_PRIMARY_KEY",
-      "secondary": "PREDEFINED_SECONDARY_KEY"
+      "primary": "SAMPLE_KEY_1",
+      "secondary": "SAMPLE_KEY_2"
     },
     "storageAccount": {
       "name": "WILL BE FILLED IN BY THE TEST",
