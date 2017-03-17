@@ -135,7 +135,7 @@ namespace Sql.Tests
                 //
                 var updateEditionAndSloInput = new Database()
                 {
-                    Edition = DatabaseEditions.Standard,
+                    Edition = DatabaseEdition.Standard,
                     RequestedServiceObjectiveName = ServiceObjectiveName.S0,
                     Location = server.Location
                 };
@@ -157,7 +157,7 @@ namespace Sql.Tests
                 //
                 var updateEditionInput = new Database()
                 {
-                    Edition = DatabaseEditions.Premium,
+                    Edition = DatabaseEdition.Premium,
                     Location = server.Location
                 };
                 var db4 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateEditionInput);
@@ -193,24 +193,12 @@ namespace Sql.Tests
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                // Begin creating some small databases to run the get/List tests on.
-                //
-                List<Task<Database>> createDbTasks = new List<Task<Database>>();
-                for (int i = 0; i < 4; i++)
-                {
-                    string name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(resourceGroup.Name, server.Name, name,
-                        new Database()
-                        {
-                            Location = server.Location
-                        }));
-                }
+                // Create some small databases to run the get/List tests on.
+                Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
+                    sqlClient, resourceGroup.Name, server, testPrefix, 4).Result;
 
-                // Wait for all databases to be created.
-                IDictionary<string, Database> inputs =
-                    Task.WhenAll(createDbTasks.ToArray())
-                        .Result
-                        .ToDictionary(
+                // Organize into a dictionary for better lookup later
+                IDictionary<string, Database> inputs = databases.ToDictionary(
                             keySelector: d => d.Name,
                             elementSelector: d => d);
 
@@ -290,6 +278,33 @@ namespace Sql.Tests
                 var dbResult = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
                 Assert.Equal(null, dbResult.ElasticPoolName);
+            });
+        }
+
+        [Fact]
+        public void TestDatabaseTransparentDataEncryptionConfiguration()
+        {
+            string testPrefix = "sqlcrudtest-";
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabaseTransparentDataEncryptionConfiguration", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            {
+                // Create database only required parameters
+                //
+                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Get TDE config
+                var config = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName);
+                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+
+                // Update TDE config
+                config.Status = TransparentDataEncryptionStatus.Enabled;
+                config = sqlClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName, config);
+                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
             });
         }
     }

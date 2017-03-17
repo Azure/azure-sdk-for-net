@@ -53,7 +53,7 @@ namespace Sql.Tests
                 var ep3Input = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = DatabaseEditions.Standard,
+                    Edition = DatabaseEdition.Standard,
                     Tags = tags,
                 };
                 sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, ep3Input);
@@ -83,7 +83,7 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = DatabaseEditions.Standard,
+                    Edition = DatabaseEdition.Standard,
                     Tags = tags,
                     Dtu = 100,
                     DatabaseDtuMax = 20,
