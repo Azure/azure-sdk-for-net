@@ -1,12 +1,11 @@
-﻿using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Compute.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Rest.ClientRuntime.E2E.Tests.TestAssets
 {
+    using Microsoft.Azure.Management.Compute;
+    using Microsoft.Azure.Management.Compute.Models;
+
     /// <summary>
     /// Class to extend VM class
     /// This class is specifically meant to assign/reinitialize/set protected members
@@ -14,7 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.TestAssets
     public class MyVm : Microsoft.Azure.Management.Compute.Models.VirtualMachine
     {
         /// <summary>
-        /// Constructor
+        /// Constructor for creating MyVm
         /// </summary>
         /// <param name="vm"></param>
         public MyVm(VirtualMachine vm)

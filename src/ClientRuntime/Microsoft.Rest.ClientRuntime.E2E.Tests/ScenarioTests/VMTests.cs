@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
 {
     using Microsoft.Azure.Management.Compute;
     using Microsoft.Azure.Management.Compute.Models;
@@ -24,12 +27,10 @@
         const string vmPrefix = "vm";
 
         /// <summary>
-        /// Constructor
+        /// Constructor for Test class
         /// </summary>
         public VMTests() : base(prefix)
-        {
-
-        }
+        { }
 
         [Fact]
         public void UpdateVM_DoNotSerializeProtected()
@@ -51,7 +52,7 @@
                     resGroup = CreateResourceGroup(resourceGroupName);
                     StorageAccount storageAccount = CreateStorageAccount(resGroup, storageName);
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-                    VirtualMachine vm = CreateVM_NoAsyncTracking(resGroup.Name, vmName, asName, storageAccount, imageRef, out vm1);
+                    VirtualMachine vm = CreateVirtualMachine(resGroup.Name, vmName, asName, storageAccount.Name, imageRef, out vm1);
                     
                     //Create a new VM and Update VmId protected Property
                     MyVm myNewVm = new MyVm(vm);
@@ -59,7 +60,7 @@
                     VirtualMachine updatedVm = myNewVm as VirtualMachine;
 
                     // Update VM
-                    AzureOperationResponse<VirtualMachine> res = Task<AzureOperationResponse<VirtualMachine>>.Run(async () =>
+                    AzureOperationResponse<VirtualMachine> putResponse = Task<AzureOperationResponse<VirtualMachine>>.Run(async () =>
                     {
                         return await ComputeClient.VirtualMachines.BeginCreateOrUpdateWithHttpMessagesAsync(resGroup.Name, updatedVm.Name, updatedVm).ConfigureAwait(false);
                     }).GetAwaiter().GetResult();
@@ -69,7 +70,7 @@
                     Assert.False(requestContentStr.Contains("VmId"));
 
                     //Get VM Object
-                    VirtualMachine getVm = res.Body;
+                    VirtualMachine getVm = putResponse.Body;
 
                     // Verify the vmPutResponse does not contain updated VmId
                     Assert.NotEqual(newVmId, getVm.VmId);
@@ -77,6 +78,7 @@
                 catch(Exception ex)
                 {
                     Debug.WriteLine(ex.ToString());
+                    throw;
                 }
                 finally
                 {

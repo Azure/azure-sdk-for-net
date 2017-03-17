@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
 {
     using Microsoft.Azure.Management.Compute;
     using Microsoft.Azure.Management.Compute.Models;
@@ -17,7 +20,6 @@
     using System.Linq;
     using System.Net;
     using System.Reflection;
-    using System.Threading.Tasks;
     using Xunit;
 
     public class E2ETestBase
@@ -28,13 +30,16 @@
         
         MockContext _mockContext;
         ResourceManagementClient _resourceClient;
-        //ComputeManagementClient _computeClient;
         MyComputeClient _computeClient;
         StorageManagementClient _storageClient;
         NetworkManagementClient _networkClient;
 
         ImageReference m_windowsImageReference, m_linuxImageReference;
 
+        /// <summary>
+        /// Constructor for E2ETestBase class
+        /// </summary>
+        /// <param name="testPrefix"></param>
         public E2ETestBase(string testPrefix = "")
         {
             TEST_PREFIX = testPrefix;
@@ -136,46 +141,38 @@
             try
             {
                 var storageAccountList = StorageClient.StorageAccounts.ListByResourceGroup(rgName);
-                if(storageAccountList.Any())
+                if (storageAccountList.Any())
                 {
                     storageAccountOutput = storageAccountList.Where((sa) => sa.Name.Equals(storageAccountName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                 }
             }
             catch { }
 
-            try
+            if (storageAccountOutput == null)
             {
-                if(storageAccountOutput == null)
+                var stoInput = new StorageAccountCreateParameters
                 {
-                    var stoInput = new StorageAccountCreateParameters
-                    {
-                        Location = DEFAULT_LOCATION,
-                        AccountType = AccountType.StandardGRS
-                    };
+                    Location = DEFAULT_LOCATION,
+                    AccountType = AccountType.StandardGRS
+                };
 
-                    storageAccountOutput = StorageClient.StorageAccounts.Create(rgName,
-                        storageAccountName, stoInput);
-                    bool created = false;
-                    while (!created)
-                    {
-                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-                        var stos = StorageClient.StorageAccounts.ListByResourceGroup(rgName);
-                        created =
-                            stos.Any(
-                                t =>
-                                    StringComparer.OrdinalIgnoreCase.Equals(t.Name, storageAccountName));
-                    }
-
-                    storageAccountOutput = StorageClient.StorageAccounts.GetProperties(rgName, storageAccountName);
+                storageAccountOutput = StorageClient.StorageAccounts.Create(rgName,
+                    storageAccountName, stoInput);
+                bool created = false;
+                while (!created)
+                {
+                    Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(10));
+                    var stos = StorageClient.StorageAccounts.ListByResourceGroup(rgName);
+                    created =
+                        stos.Any(
+                            t =>
+                                StringComparer.OrdinalIgnoreCase.Equals(t.Name, storageAccountName));
                 }
 
-                return storageAccountOutput;
+                storageAccountOutput = StorageClient.StorageAccounts.GetProperties(rgName, storageAccountName);
             }
-            catch
-            {
-                //ResourceClient.ResourceGroups.Delete(rgName);
-                throw;
-            }
+
+            return storageAccountOutput;
         }
 
         protected ResourceGroup CreateResourceGroup(string rgName)
@@ -184,28 +181,19 @@
             try
             {
                 resourceGroup = ResourceClient.ResourceGroups.Get(rgName);
-                //ResourceClient.ResourceGroups.Delete(rgName);
             }
             catch { }
 
-            try
+            if (resourceGroup == null)
             {
-                if (resourceGroup == null)
-                {
-                    resourceGroup = ResourceClient.ResourceGroups.CreateOrUpdate(
-                                 rgName,
-                                 new ResourceGroup
-                                {
-                                    Location = DEFAULT_LOCATION,
-                                    Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
-                                });
-                }
+                resourceGroup = ResourceClient.ResourceGroups.CreateOrUpdate(
+                             rgName,
+                             new ResourceGroup
+                             {
+                                 Location = DEFAULT_LOCATION,
+                                 Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
+                             });
             }
-            catch
-            {
-                throw;
-            }
-
             return resourceGroup;
         }
 
@@ -253,19 +241,7 @@
             };
         }
 
-        protected VirtualMachine CreateVM_NoAsyncTracking(
-                        string rgName, string vmName, string asName, StorageAccount storageAccount, ImageReference imageRef,
-                        out VirtualMachine inputVM,
-                        Action<VirtualMachine> vmCustomizer = null,
-                        bool createWithPublicIpAddress = false,
-                        bool waitOperation = true,
-                        bool hasManagedDisks = false)
-        {
-            return CreateVM_NoAsyncTracking(rgName, vmName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer,
-                createWithPublicIpAddress, waitOperation, hasManagedDisks);
-        }
-
-        protected VirtualMachine CreateVM_NoAsyncTracking(
+        protected VirtualMachine CreateVirtualMachine(
             string rgName, string vmName, string asName, string storageAccountName, ImageReference imageRef,
             out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -308,10 +284,6 @@
                     string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks);
 
                     inputVM = CreateDefaultVMInput(rgName, vmName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks);
-                    //if (vmCustomizer != null)
-                    //{
-                    //    vmCustomizer(inputVM);
-                    //}
 
                     string expectedVMReferenceId = GetVMReferenceId(ComputeClient.SubscriptionId, rgName, inputVM.Name);
 
@@ -717,20 +689,6 @@
                             Uri = osVhduri
                         }
                     }
-                    //DataDisks = !hasManagedDisks ? null : new List<DataDisk>()
-                    //{
-                    //    new DataDisk()
-                    //    {
-                    //        Caching = CachingTypes.None,
-                    //        CreateOption = DiskCreateOptionTypes.Empty,
-                    //        Lun = 0,
-                    //        DiskSizeGB = 30,
-                    //        ManagedDisk = new ManagedDiskParameters()
-                    //        {
-                    //            StorageAccountType = StorageAccountTypes.StandardLRS
-                    //        }
-                    //    }
-                    //},
                 },
                 NetworkProfile = new NetworkProfile
                 {
