@@ -11,8 +11,8 @@
       "level": "None"
     },
     "keys": {
-      "primary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==",
-      "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
+      "primary": "PREDEFINED_PRIMARY_KEY",
+      "secondary": "PREDEFINED_SECONDARY_KEY"
     },
     "commitmentPlan": {
       "id": "WILL BE FILLED IN BY THE TEST"

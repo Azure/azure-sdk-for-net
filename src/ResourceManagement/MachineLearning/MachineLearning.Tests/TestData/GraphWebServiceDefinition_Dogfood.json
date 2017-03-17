@@ -4,8 +4,8 @@
     "description": "This is some service description",
     "readOnly": "false",
     "keys": {
-      "primary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==",
-      "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
+      "primary": "PREDEFINED_PRIMARY_KEY",
+      "secondary": "PREDEFINED_SECONDARY_KEY"
     },
     "storageAccount": {
       "name": "THIS IS FILLED IN DYNAMICALLY BY THE TEST",
