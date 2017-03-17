@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the server edition capabilities.
+    /// The server edition capabilities.
     /// </summary>
     public partial class EditionCapability
     {

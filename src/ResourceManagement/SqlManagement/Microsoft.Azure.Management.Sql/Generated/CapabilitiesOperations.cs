@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Returns the capabilities available for the specified location.
+        /// Gets the capabilities available for the specified location.
         /// </summary>
         /// <param name='locationId'>
-        /// The Id of the location for which the capabilities are retrieved.
+        /// The location id whose capabilities are retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LocationCapabilities>> ListWithHttpMessagesAsync(string locationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("locationId", locationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByLocation", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

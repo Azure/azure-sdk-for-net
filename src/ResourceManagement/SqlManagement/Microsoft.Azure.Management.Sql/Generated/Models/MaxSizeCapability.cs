@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the maximum size limits for a database.
+    /// The maximum size limits for a database.
     /// </summary>
     public partial class MaxSizeCapability
     {

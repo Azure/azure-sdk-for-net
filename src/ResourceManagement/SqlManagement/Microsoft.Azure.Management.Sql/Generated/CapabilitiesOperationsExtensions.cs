@@ -22,34 +22,34 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class CapabilitiesOperationsExtensions
     {
             /// <summary>
-            /// Returns the capabilities available for the specified location.
+            /// Gets the capabilities available for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationId'>
-            /// The Id of the location for which the capabilities are retrieved.
+            /// The location id whose capabilities are retrieved.
             /// </param>
-            public static LocationCapabilities List(this ICapabilitiesOperations operations, string locationId)
+            public static LocationCapabilities ListByLocation(this ICapabilitiesOperations operations, string locationId)
             {
-                return operations.ListAsync(locationId).GetAwaiter().GetResult();
+                return operations.ListByLocationAsync(locationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns the capabilities available for the specified location.
+            /// Gets the capabilities available for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationId'>
-            /// The Id of the location for which the capabilities are retrieved.
+            /// The location id whose capabilities are retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocationCapabilities> ListAsync(this ICapabilitiesOperations operations, string locationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocationCapabilities> ListByLocationAsync(this ICapabilitiesOperations operations, string locationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(locationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByLocationWithHttpMessagesAsync(locationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

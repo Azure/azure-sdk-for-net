@@ -30,7 +30,7 @@ namespace Sql.Tests
                 var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
 
-                LocationCapabilities capabilities = sqlClient.Capabilities.List(SqlManagementTestUtilities.DefaultLocation);
+                LocationCapabilities capabilities = sqlClient.Capabilities.ListByLocation(SqlManagementTestUtilities.DefaultLocation);
 
                 Assert.NotNull(capabilities);
 

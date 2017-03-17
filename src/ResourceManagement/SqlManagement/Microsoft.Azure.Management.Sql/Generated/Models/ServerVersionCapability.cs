@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the server capabilities.
+    /// The server capabilities.
     /// </summary>
     public partial class ServerVersionCapability
     {

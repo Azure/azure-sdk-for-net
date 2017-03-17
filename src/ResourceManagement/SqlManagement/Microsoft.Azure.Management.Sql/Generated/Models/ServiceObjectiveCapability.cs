@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the service objectives capabilities.
+    /// The service objectives capabilities.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ServiceObjectiveCapability
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="status">The status of the service objective. Possible
         /// values include: 'Visible', 'Available', 'Default',
         /// 'Disabled'</param>
-        /// <param name="unit">Unit type used to measure SLO performance level.
-        /// Possible values include: 'DTU'</param>
+        /// <param name="unit">Unit type used to measure service objective
+        /// performance level. Possible values include: 'DTU'</param>
         /// <param name="value">Performance level value.</param>
         /// <param name="id">The unique ID of the service objective.</param>
         /// <param name="supportedMaxSizes">The list of supported maximum
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
-        /// Gets unit type used to measure SLO performance level. Possible
-        /// values include: 'DTU'
+        /// Gets unit type used to measure service objective performance level.
+        /// Possible values include: 'DTU'
         /// </summary>
         [JsonProperty(PropertyName = "performanceLevel.unit")]
         public PerformanceLevelUnit? Unit { get; private set; }

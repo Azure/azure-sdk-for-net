@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the capabilities for a location.
+    /// The capabilities for a location.
     /// </summary>
     public partial class LocationCapabilities
     {
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the LocationCapabilities class.
         /// </summary>
         /// <param name="name">The location name.</param>
-        /// <param name="status">The status for the location with respect to
-        /// Azure SQL. Possible values include: 'Visible', 'Available',
-        /// 'Default', 'Disabled'</param>
+        /// <param name="status">Azure SQL Database's status for the location.
+        /// Possible values include: 'Visible', 'Available', 'Default',
+        /// 'Disabled'</param>
         /// <param name="supportedServerVersions">The list of supported server
         /// versions.</param>
         public LocationCapabilities(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
@@ -58,9 +58,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the status for the location with respect to Azure SQL.
-        /// Possible values include: 'Visible', 'Available', 'Default',
-        /// 'Disabled'
+        /// Gets azure SQL Database's status for the location. Possible values
+        /// include: 'Visible', 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public CapabilityStatus? Status { get; private set; }
