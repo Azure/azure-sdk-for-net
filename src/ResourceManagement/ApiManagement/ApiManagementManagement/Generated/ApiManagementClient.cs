@@ -148,6 +148,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._authorizationServers; }
         }
         
+        private IBackendOperations _backends;
+        
+        /// <summary>
+        /// Operations for managing backend entity.
+        /// </summary>
+        public virtual IBackendOperations Backends
+        {
+            get { return this._backends; }
+        }
+        
         private ICertificatesOperations _certificates;
         
         /// <summary>
@@ -434,6 +444,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._apiProducts = new ApiProductsOperations(this);
             this._apis = new ApisOperations(this);
             this._authorizationServers = new AuthorizationServersOperations(this);
+            this._backends = new BackendOperations(this);
             this._certificates = new CertificatesOperations(this);
             this._groups = new GroupsOperations(this);
             this._groupUsers = new GroupUsersOperations(this);
@@ -532,6 +543,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._apiProducts = new ApiProductsOperations(this);
             this._apis = new ApisOperations(this);
             this._authorizationServers = new AuthorizationServersOperations(this);
+            this._backends = new BackendOperations(this);
             this._certificates = new CertificatesOperations(this);
             this._groups = new GroupsOperations(this);
             this._groupUsers = new GroupUsersOperations(this);

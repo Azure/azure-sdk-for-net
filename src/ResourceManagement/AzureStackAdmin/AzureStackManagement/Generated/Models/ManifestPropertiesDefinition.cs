@@ -156,6 +156,17 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._resourceTypes = value; }
         }
         
+        private ResourceManagerType _routingResourceManagerType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource manager type.
+        /// </summary>
+        public ResourceManagerType RoutingResourceManagerType
+        {
+            get { return this._routingResourceManagerType; }
+            set { this._routingResourceManagerType = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ManifestPropertiesDefinition
         /// class.

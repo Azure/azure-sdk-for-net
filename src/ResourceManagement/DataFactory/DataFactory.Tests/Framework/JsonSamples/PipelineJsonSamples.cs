@@ -1572,5 +1572,151 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string AzureSearchActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to AzureSearch"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                    },
+                    sink:
+                    {
+                        type: ""AzureSearchIndexSink"",
+                        writeBehavior: ""Upload"",
+                        writeBatchSize: 1000,
+                    },
+                    ""parallelCopies"": 8
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputBlobDA""
+                    }
+                ],
+                policy:
+                {
+                    concurrency: 1
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyActivityWithExecutionLocation = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from File to Blob"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""FileSystemSource"",
+                        recursive: true
+                    },
+                    sink: 
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    },
+                    executionLocation: ""West US""
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawFileSource""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""BlobSink""
+                    }
+                ]                
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string HttpActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Http to Blob"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""HttpSource"",
+                        requestTimeout: ""00:01:40"",
+                    },
+                    sink: 
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""HttpSource""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""BlobSink""
+                    }
+                ]
+            }
+        ]
+    }
+}
+";
+
     }
 }

@@ -22,6 +22,20 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class AzureMLLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>
+        /// Optional. The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML web service.
+        /// </summary>
+        public string ServicePrincipalId { get; set; }
+
+        /// <summary>
+        /// Optional. The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML web service.
+        /// </summary>
+        public string ServicePrincipalKey { get; set; }
+
+        /// <summary>
+        /// Optional. The name or ID of the tenant to which the service principal belongs.
+        /// </summary>
+        public string Tenant { get; set; }
+        /// <summary>
         /// Required. The API key for accessing the Azure ML model endpoint.
         /// </summary>
         [AdfRequired]

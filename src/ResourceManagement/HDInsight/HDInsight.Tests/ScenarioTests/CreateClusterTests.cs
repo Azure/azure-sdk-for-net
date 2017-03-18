@@ -422,6 +422,6 @@ namespace HDInsight.Tests
                 Assert.Equal(result.StatusCode, HttpStatusCode.OK);
                 Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
-        }
+        }       
     }
 }

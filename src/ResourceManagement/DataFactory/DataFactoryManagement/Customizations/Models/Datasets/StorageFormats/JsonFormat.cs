@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
+using System.Collections.Generic;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -40,5 +40,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// https://msdn.microsoft.com/library/system.text.encoding.aspx#Anchor_5.
         /// </summary>
         public string EncodingName { get; set; }
+
+        /// <summary>
+        /// Optional. The JSONPath of the JSON array node to be flattened. 
+        /// Reference: http://goessner.net/articles/JsonPath/.
+        /// </summary>
+        public string JsonNodeReference { get; set; }
+
+        /// <summary>
+        /// Optional. The definition of the relative JSONPath in the original JSON objects for the targeted column in the converted row when converting JSON objects to rows. Example: { "Column1": "$.Column1Path"}. 
+        /// The JSONPath of the root items must start with a "$" character. All the other items in the flattened array defined by JsonNodeReference must not.
+        /// </summary>
+        public Dictionary<string, string> JsonPathDefinition { get; set; }
     }
 }

@@ -490,6 +490,24 @@ namespace Microsoft.Azure.Management.HDInsight
 
             //Roles
             var roles = new List<Role>();
+            if ((clusterCreateParameters.OSType == OSType.Linux) &&
+                (clusterCreateParameters.ClusterType.Equals("Sandbox", StringComparison.OrdinalIgnoreCase)))
+            {
+                var sandboxHeadNode = new Role
+                {
+                    Name = "headnode",
+                    TargetInstanceCount = 1,
+                    HardwareProfile = new HardwareProfile
+                    {
+                        VmSize = "Standard_D13_V2"
+                    },
+                    OsProfile = osProfile,
+                    VirtualNetworkProfile = vnetProfile,
+                    ScriptActions = headnodeactions
+                };
+                roles.Add(sandboxHeadNode);
+                return roles;
+            }
             var headNodeSize = GetHeadNodeSize(clusterCreateParameters);
             var headNode = new Role
             {
@@ -552,12 +570,29 @@ namespace Microsoft.Azure.Management.HDInsight
 
             roles.Add(zookeepernode);
 
+            if (clusterCreateParameters.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
+            {
+                var EdgeNodeSize = GetEdgeNodeSize(clusterCreateParameters);
+                var EdgeNode = new Role
+                {
+                    Name = "edgenode",
+                    TargetInstanceCount = 1,
+                    HardwareProfile = new HardwareProfile
+                    {
+                        VmSize = EdgeNodeSize
+                    },
+                    OsProfile = osProfile
+                };
+                roles.Add(EdgeNode);
+            }
+
             return roles;
         }
 
         private static readonly Dictionary<string, string> HeadNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { 
                     {"hadoop", "Standard_D3" },
                     {"spark", "Standard_D12"},
+                    {"rserver", "Standard_D12_v2"},
                     {"InteractiveHive", "Standard_D13_v2"},
                 };
 
@@ -581,6 +616,7 @@ namespace Microsoft.Azure.Management.HDInsight
 
         private static readonly Dictionary<string, string> WorkerNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { 
                     {"spark", "Standard_D12"},
+                    {"rserver", "Standard_D4_v2"},
                     {"InteractiveHive", "Standard_D13_v2"},
                 };
 
@@ -600,6 +636,20 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             return workerNodeSize;
+        }
+
+        private static string GetEdgeNodeSize(ClusterCreateParameters clusterCreateParameters)
+        {
+            string edgeNodeSize;
+            if (!String.IsNullOrEmpty(clusterCreateParameters.EdgeNodeSize))
+            {
+                edgeNodeSize = clusterCreateParameters.EdgeNodeSize;
+            }
+            else
+            {
+                edgeNodeSize = "Standard_D4_v2";
+            }
+            return edgeNodeSize;
         }
     }
 }

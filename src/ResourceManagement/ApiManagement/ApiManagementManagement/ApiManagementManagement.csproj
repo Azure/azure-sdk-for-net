@@ -14,7 +14,9 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.ApiManagement.nuget.proj" />
-    <None Include="Microsoft.Azure.Management.ApiManagement.nuspec" />
+    <None Include="Microsoft.Azure.Management.ApiManagement.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +29,9 @@
     <Compile Include="Customizations\SmapiModels\ApiPaged.cs" />
     <Compile Include="Customizations\SmapiModels\AuthorizationServerListResponse.cs" />
     <Compile Include="Customizations\SmapiModels\AuthorizationServerPaged.cs" />
+    <Compile Include="Customizations\SmapiModels\BackendGetContract.cs" />
+    <Compile Include="Customizations\SmapiModels\BackendListResponse.cs" />
+    <Compile Include="Customizations\SmapiModels\BackendPaged.cs" />
     <Compile Include="Customizations\SmapiModels\CertificateContract.cs" />
     <Compile Include="Customizations\SmapiModels\CertificateListResponse.cs" />
     <Compile Include="Customizations\SmapiModels\CertificatePaged.cs" />
@@ -73,6 +78,8 @@
     <Compile Include="Generated\ApisOperationsExtensions.cs" />
     <Compile Include="Generated\AuthorizationServersOperations.cs" />
     <Compile Include="Generated\AuthorizationServersOperationsExtensions.cs" />
+    <Compile Include="Generated\BackendOperations.cs" />
+    <Compile Include="Generated\BackendOperationsExtensions.cs" />
     <Compile Include="Generated\CertificatesOperations.cs" />
     <Compile Include="Generated\CertificatesOperationsExtensions.cs" />
     <Compile Include="Generated\GroupsOperations.cs" />
@@ -86,6 +93,7 @@
     <Compile Include="Generated\IApiProductsOperations.cs" />
     <Compile Include="Generated\IApisOperations.cs" />
     <Compile Include="Generated\IAuthorizationServersOperations.cs" />
+    <Compile Include="Generated\IBackendOperations.cs" />
     <Compile Include="Generated\ICertificatesOperations.cs" />
     <Compile Include="Generated\IdentityProviderOperations.cs" />
     <Compile Include="Generated\IdentityProviderOperationsExtensions.cs" />
@@ -182,10 +190,19 @@
     <Compile Include="Generated\SmapiModels\ApiTypeContract.cs" />
     <Compile Include="Generated\SmapiModels\AsyncOperationState.cs" />
     <Compile Include="Generated\SmapiModels\AuthenticationSettingsContract.cs" />
+    <Compile Include="Generated\SmapiModels\AuthorizationHeaderCredentialsContract.cs" />
     <Compile Include="Generated\SmapiModels\AuthorizationServerCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\SmapiModels\AuthorizationServerGetResponse.cs" />
     <Compile Include="Generated\SmapiModels\AuthorizationServerListResponse.cs" />
     <Compile Include="Generated\SmapiModels\AuthorizationServerPaged.cs" />
+    <Compile Include="Generated\SmapiModels\BackendCreateParameters.cs" />
+    <Compile Include="Generated\SmapiModels\BackendCredentialsContract.cs" />
+    <Compile Include="Generated\SmapiModels\BackendGetContract.cs" />
+    <Compile Include="Generated\SmapiModels\BackendGetResponse.cs" />
+    <Compile Include="Generated\SmapiModels\BackendListResponse.cs" />
+    <Compile Include="Generated\SmapiModels\BackendPaged.cs" />
+    <Compile Include="Generated\SmapiModels\BackendProxyContract.cs" />
+    <Compile Include="Generated\SmapiModels\BackendUpdateParameters.cs" />
     <Compile Include="Generated\SmapiModels\BearerTokenSendingMethodsContract.cs" />
     <Compile Include="Generated\SmapiModels\CertificateContract.cs" />
     <Compile Include="Generated\SmapiModels\CertificateCreateOrUpdateParameters.cs" />

@@ -1,4 +1,10 @@
-﻿// ----------------------------------------------------------------------------------
+﻿//
+//  <copyright file="FarmTests.cs" company="Microsoft">
+//    Copyright (C) Microsoft. All rights reserved.
+//  </copyright>
+//
+
+// ----------------------------------------------------------------------------------
 //
 // Copyright Microsoft Corporation
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,11 +36,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
         private const string ListUriTemplate =
            "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms?"
            + Constants.ApiVersionParameter;
-
-        private const string GetEventQueryTemplate =
-         "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms/{3}/geteventquery?"
-         + Constants.ApiVersionParameter
-         +"&$filter={4}";
 
         private const string LocationUriTemplate =
             "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms/{3}/nodes/{4}/operationresults/{5}?"
@@ -174,42 +175,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             CompareExpectedResult(result.Farm);
         }
 
-
-        [Fact]
-        public void LogCollect()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.Accepted);
-
-            var subscriptionId = Guid.NewGuid().ToString();
-            string locationUri = string.Format(
-                LocationUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Constants.NodeId,
-                Guid.NewGuid()
-                );
-            response.Headers.Add("Location", locationUri);
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.Accepted,
-                SubsequentStatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-            var result = client.Farms.CollectLog(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                new LogCollectParameters()
-                );
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-
-            Assert.Equal(locationUri, handler.Uri.AbsoluteUri);
-        }
-
         [Fact]
         public void OnDemandGc()
         {
@@ -245,46 +210,5 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 
             Assert.Equal("\\\\localhost\\db1\\settings", result.Properties.SettingsStore);
         }
-
-        [Fact]
-        public void GetEventQuery()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.EventQueryResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-            var filter = "startTime eq '2015-05-10T18:02:00Z' and endTime eq '2015-05-28T18:02:00Z'";
-
-            var result = client.Farms.GetEventQuery(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                filter
-                );
-
-            // validate requestor
-            Assert.Equal(handler.Method, HttpMethod.Post);
-
-            var expectedUri = string.Format(
-                GetEventQueryTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Uri.EscapeDataString(filter));
-
-            Assert.Equal(expectedUri, handler.Uri.AbsoluteUri);
-            EventQueryResultValidator.ValidateGetEventQueryResult(result);
-        }
-
     }
 }

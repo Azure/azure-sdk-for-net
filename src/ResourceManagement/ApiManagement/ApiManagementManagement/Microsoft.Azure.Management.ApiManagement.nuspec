@@ -4,9 +4,9 @@
     <id>Microsoft.Azure.Management.ApiManagement</id>
     <title>Microsoft Azure ApiManagement Service Management Library</title>
     <releaseNotes><![CDATA[
-3.2.0
-  * Updated api-version to 2016-10-10
-  * Added property credentials to Logger Contract
+3.4.0
+  * Fixed the BackendCredentials Contract by making Query and Headers as Optional parameters.
+  * Added support for updating BackendProxy details
 ]]></releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>

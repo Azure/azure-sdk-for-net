@@ -42,6 +42,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string SecurityToken { get; set; }
 
         /// <summary>
+        /// Optional. The Salesforce environment URL.
+        /// </summary>
+        public string EnvironmentUrl { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SalesforceLinkedService" /> class.
         /// </summary>
         public SalesforceLinkedService()

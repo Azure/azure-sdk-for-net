@@ -122,6 +122,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Operations for managing backend entity.
+        /// </summary>
+        IBackendOperations Backends
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Certificates.
         /// </summary>
         ICertificatesOperations Certificates

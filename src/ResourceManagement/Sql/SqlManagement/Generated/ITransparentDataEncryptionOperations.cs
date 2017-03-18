@@ -35,6 +35,30 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface ITransparentDataEncryptionOperations
     {
         /// <summary>
+        /// Begins creating a new or updating an existing Azure SQL Server
+        /// Transparent Data Encryption Protector.To determine the status of
+        /// the operation call GetCreateOrUpdateOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server which will be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating an Encryption
+        /// Protector.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        Task<EncryptionProtectorCreateOrUpdateResponse> BeginCreateOrUpdateEncryptionProtectorAsync(string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Creates or updates an Azure SQL Database Transparent Data
         /// Encryption Operation.
         /// </summary>
@@ -63,6 +87,29 @@ namespace Microsoft.Azure.Management.Sql
         Task<TransparentDataEncryptionGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Creates a new or updates an existing Azure SQL Server Transparent
+        /// Data Encryption Protector.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server which will be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating an Encryption
+        /// Protector.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        Task<EncryptionProtectorCreateOrUpdateResponse> CreateOrUpdateEncryptionProtectorAsync(string resourceGroupName, string serverName, EncryptionProtectorCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Returns an Azure SQL Database Transparent Data Encryption Response.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -84,6 +131,41 @@ namespace Microsoft.Azure.Management.Sql
         /// Transparent Data Encryption request.
         /// </returns>
         Task<TransparentDataEncryptionGetResponse> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Server Transparent Data Encryption
+        /// Protector create or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Azure Sql Database Transparent Data
+        /// Encryption Protector create or update request.
+        /// </returns>
+        Task<EncryptionProtectorCreateOrUpdateResponse> GetCreateOrUpdateEncryptionProtectorOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns an Azure SQL Database Transparent Data Encryption Protector
+        /// Response.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get for a Azure Sql Database
+        /// Transparent Data Encryption EncryptionProtector request.
+        /// </returns>
+        Task<EncryptionProtectorGetResponse> GetEncryptionProtectorAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns an Azure SQL Database Transparent Data Encryption Activity
@@ -108,5 +190,24 @@ namespace Microsoft.Azure.Management.Sql
         /// Data Encryption Activity request.
         /// </returns>
         Task<TransparentDataEncryptionActivityListResponse> ListActivityAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns an Azure SQL Database Transparent Data Encryption
+        /// Encryption Protector List Response.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to an Azure Sql Database Transparent Data
+        /// Encryption Encryption Protector List request.
+        /// </returns>
+        Task<EncryptionProtectorListResponse> ListEncryptionProtectorsAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
     }
 }
