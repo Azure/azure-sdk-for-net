@@ -201,7 +201,6 @@ namespace MachineLearning.Tests.ScenarioTests
 
                     WebServiceParameter param = properties.Package.Nodes["node1"].Parameters["Account Key"];
 
-                    // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="It is the thumbprint of certificate for encryption, NOT for auth")]
                     string expectedThumbprint = "ONE_THUMBPRINT";
                     Assert.Equal(expectedThumbprint, param.CertificateThumbprint);
                 }
