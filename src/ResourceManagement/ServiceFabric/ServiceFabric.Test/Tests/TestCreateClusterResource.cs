@@ -23,7 +23,7 @@ namespace ServiceFabric.Tests.Tests
             {
                 var serviceFabricClient = GetServiceFabricClient(context);
                 var resouceClient = GetResourceManagementClient(context);
-                var resouceGroupName = "testCreaterg1";
+                var resouceGroupName = "TestRG1";
                 var location = "South Central US";
                 var clusterName = "testCreateCluster2";
 

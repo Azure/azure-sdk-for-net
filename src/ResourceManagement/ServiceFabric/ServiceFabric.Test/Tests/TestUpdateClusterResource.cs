@@ -44,7 +44,7 @@ namespace ServiceFabric.Tests.Tests
                                             new SettingsParameterDescription()
                                             {
                                                 Name = "MaxOperationTimeout",
-                                                Value = "8888"
+                                                Value = "1000"
                                             }
                                         }
                                     }
@@ -63,7 +63,7 @@ namespace ServiceFabric.Tests.Tests
                             parameter =>
                             parameter.Name == "MaxOperationTimeout").First();
 
-                        Assert.True(p.Value == "8888");
+                        Assert.True(p.Value == "1000");
 
                         break;
                     }

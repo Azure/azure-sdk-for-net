@@ -56,65 +56,51 @@ namespace ServiceFabric.Tests.Tests
         protected Cluster CreateACluster(
             ResourceManagementClient resouceClient,
             ServiceFabricClient serviceFabricClient,
-            string rg, 
-            string rgLocation, 
+            string rg,
+            string rgLocation,
             string clusterName)
         {
             var clusterId = string.Format(
-                clusterIdFormat, 
+                clusterIdFormat,
                 resouceClient.SubscriptionId,
                 rg,
                 clusterName);
 
             var newCluster = new Cluster(
                    rgLocation,
-                   clusterId,
-                   clusterName,
-                   "Microsoft.ServiceFabric/clusters",
-                   null,
-                   null,
-                   Guid.NewGuid().ToString(),
-                   "Ready",
-                   "https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/8d566293-3508-4d62-ba7b-056fa710c3c9",
-                   null,
-                   null,
                    "Silver",
                    "Automatic",
-                   null,
-                   null,
-                   null,
-                   null,
-                   "http://sdktest.southcentralus.cloudapp.azure.com:19080",
-                   new List<NodeTypeDescription>()
+                   "http://testCluster.southcentralus.cloudapp.azure.com:19080",
+                    new List<NodeTypeDescription>()
                    {
-                                new NodeTypeDescription()
-                                {
-                                    ApplicationPorts = new EndpointRangeDescription()
-                                    {
-                                        StartPort = 1234,
-                                        EndPort = 4321
-                                    },
-                                    DurabilityLevel = "Bronze",
-                                    EphemeralPorts = new EndpointRangeDescription()
-                                    {
-                                        StartPort = 3456,
-                                        EndPort = 6543
-                                    },
-                                    IsPrimary = true,
-                                    Name = "n1",
-                                    ClientConnectionEndpointPort = 19000,
-                                    Capacities =null,
-                                    HttpGatewayEndpointPort = 19080,
-                                    PlacementProperties = null,
-                                    VmInstanceCount = 5,
-                                    ReverseProxyEndpointPort = null
-                                }
-                   }
-                   ,
-                   "Succeeded",
-                  "Windows",
-                   null,
-                   null)
+                      new NodeTypeDescription()
+                      {
+                          ApplicationPorts = new EndpointRangeDescription()
+                          {
+                              StartPort = 1234,
+                              EndPort = 4321
+                          },
+                          DurabilityLevel = "Bronze",
+                          EphemeralPorts = new EndpointRangeDescription()
+                          {
+                              StartPort = 3456,
+                              EndPort = 6543
+                          },
+                          IsPrimary = true,
+                          Name = "n1",
+                          ClientConnectionEndpointPort = 19000,
+                          Capacities =null,
+                          HttpGatewayEndpointPort = 19080,
+                          PlacementProperties = null,
+                          VmInstanceCount = 5,
+                          ReverseProxyEndpointPort = null
+                      }
+                   },
+                   "Windows",
+                   clusterId,
+                   "testCluster",
+                   "Microsoft.ServiceFabric/clusters"
+                  )
             {
             };
 
@@ -123,7 +109,9 @@ namespace ServiceFabric.Tests.Tests
                 new ResourceGroup(rgLocation));
 
             var cluster = serviceFabricClient.Clusters.Create(rg, clusterName, newCluster);
+            Assert.NotNull(cluster);
 
+            cluster = serviceFabricClient.Clusters.Get(rg, clusterName);
             Assert.NotNull(cluster);
             return cluster;
         }
