@@ -28,21 +28,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the IpsecPolicy class.
         /// </summary>
-        /// <param name="saLifeTimeSeconds">The Security Association (SA)
-        /// lifetime in seconds for a site to site VPN tunnel.</param>
-        /// <param name="saDataSizeKilobytes">The Security Association (SA)
-        /// payload size in KB for a site to site VPN tunnel.</param>
+        /// <param name="saLifeTimeSeconds">The IPSec Security Association
+        /// (also called Quick Mode or Phase 2 SA) lifetime in seconds for a
+        /// site to site VPN tunnel.</param>
+        /// <param name="saDataSizeKilobytes">The IPSec Security Association
+        /// (also called Quick Mode or Phase 2 SA) payload size in KB for a
+        /// site to site VPN tunnel.</param>
         /// <param name="ipsecEncryption">The IPSec encryption algorithm (IKE
-        /// phase 2). Possible values include: 'None', 'DES', 'DES3', 'AES128',
+        /// phase 1). Possible values include: 'None', 'DES', 'DES3', 'AES128',
         /// 'AES192', 'AES256', 'GCMAES128', 'GCMAES192', 'GCMAES256'</param>
         /// <param name="ipsecIntegrity">The IPSec integrity algorithm (IKE
-        /// phase 2). Possible values include: 'MD5', 'SHA1', 'SHA256',
+        /// phase 1). Possible values include: 'MD5', 'SHA1', 'SHA256',
         /// 'GCMAES128', 'GCMAES192', 'GCMAES256'</param>
         /// <param name="ikeEncryption">The IKE encryption algorithm (IKE phase
-        /// 1). Possible values include: 'DES', 'DES3', 'AES128', 'AES192',
+        /// 2). Possible values include: 'DES', 'DES3', 'AES128', 'AES192',
         /// 'AES256'</param>
         /// <param name="ikeIntegrity">The IKE integrity algorithm (IKE phase
-        /// 1). Possible values include: 'MD5', 'SHA1', 'SHA256',
+        /// 2). Possible values include: 'MD5', 'SHA1', 'SHA256',
         /// 'SHA384'</param>
         /// <param name="dhGroup">The DH Groups used in IKE Phase 1 for initial
         /// SA. Possible values include: 'None', 'DHGroup1', 'DHGroup2',
@@ -63,21 +65,21 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the Security Association (SA) lifetime in seconds for
-        /// a site to site VPN tunnel.
+        /// Gets or sets the IPSec Security Association (also called Quick Mode
+        /// or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
         /// </summary>
         [JsonProperty(PropertyName = "saLifeTimeSeconds")]
         public int SaLifeTimeSeconds { get; set; }
 
         /// <summary>
-        /// Gets or sets the Security Association (SA) payload size in KB for a
-        /// site to site VPN tunnel.
+        /// Gets or sets the IPSec Security Association (also called Quick Mode
+        /// or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
         /// </summary>
         [JsonProperty(PropertyName = "saDataSizeKilobytes")]
         public int SaDataSizeKilobytes { get; set; }
 
         /// <summary>
-        /// Gets or sets the IPSec encryption algorithm (IKE phase 2). Possible
+        /// Gets or sets the IPSec encryption algorithm (IKE phase 1). Possible
         /// values include: 'None', 'DES', 'DES3', 'AES128', 'AES192',
         /// 'AES256', 'GCMAES128', 'GCMAES192', 'GCMAES256'
         /// </summary>
@@ -85,7 +87,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string IpsecEncryption { get; set; }
 
         /// <summary>
-        /// Gets or sets the IPSec integrity algorithm (IKE phase 2). Possible
+        /// Gets or sets the IPSec integrity algorithm (IKE phase 1). Possible
         /// values include: 'MD5', 'SHA1', 'SHA256', 'GCMAES128', 'GCMAES192',
         /// 'GCMAES256'
         /// </summary>
@@ -93,14 +95,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public string IpsecIntegrity { get; set; }
 
         /// <summary>
-        /// Gets or sets the IKE encryption algorithm (IKE phase 1). Possible
+        /// Gets or sets the IKE encryption algorithm (IKE phase 2). Possible
         /// values include: 'DES', 'DES3', 'AES128', 'AES192', 'AES256'
         /// </summary>
         [JsonProperty(PropertyName = "ikeEncryption")]
         public string IkeEncryption { get; set; }
 
         /// <summary>
-        /// Gets or sets the IKE integrity algorithm (IKE phase 1). Possible
+        /// Gets or sets the IKE integrity algorithm (IKE phase 2). Possible
         /// values include: 'MD5', 'SHA1', 'SHA256', 'SHA384'
         /// </summary>
         [JsonProperty(PropertyName = "ikeIntegrity")]

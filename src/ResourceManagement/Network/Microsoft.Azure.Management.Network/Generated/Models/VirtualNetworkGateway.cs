@@ -37,14 +37,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="gatewayType">The type of this virtual network gateway.
         /// Possible values are: 'Vpn' and 'ExpressRoute'. Possible values
         /// include: 'Vpn', 'ExpressRoute'</param>
+        /// <param name="vpnType">The type of this virtual network gateway.
+        /// Possible values are: 'PolicyBased' and 'RouteBased'. Possible
+        /// values include: 'PolicyBased', 'RouteBased'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="vpnType">The type of this virtual network gateway.
-        /// Possible values are: 'PolicyBased' and 'RouteBased'. Possible
-        /// values include: 'PolicyBased', 'RouteBased'</param>
         /// <param name="enableBgp">Whether BGP is enabled for this virtual
         /// network gateway or not.</param>
         /// <param name="activeActive">ActiveActive flag</param>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetworkGateway(IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, string gatewayType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vpnType = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGateway(IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, string gatewayType, string vpnType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -183,6 +183,10 @@ namespace Microsoft.Azure.Management.Network.Models
             if (GatewayType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "GatewayType");
+            }
+            if (VpnType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VpnType");
             }
             if (IpConfigurations != null)
             {
