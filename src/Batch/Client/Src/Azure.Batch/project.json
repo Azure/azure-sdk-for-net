@@ -19,7 +19,8 @@
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../../../tools/MSSharedLibKey.snk",
-    "define": [ "TESTSIGN" ]
+    "define": [ "TESTSIGN" ], 
+    "xmlDoc": true
   },
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "3.3.5"
