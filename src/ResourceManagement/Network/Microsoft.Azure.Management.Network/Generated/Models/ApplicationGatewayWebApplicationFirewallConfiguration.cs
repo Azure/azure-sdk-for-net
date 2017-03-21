@@ -35,8 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enabled">Whether the web application firewall is
         /// enabled or not.</param>
         /// <param name="firewallMode">Web application firewall mode. Possible
-        /// values are: 'Detection' and 'Prevention'. Possible values include:
-        /// 'Detection', 'Prevention'</param>
+        /// values include: 'Detection', 'Prevention'</param>
         /// <param name="ruleSetType">The type of the web application firewall
         /// rule set. Possible values are: 'OWASP'.</param>
         /// <param name="ruleSetVersion">The version of the rule set
@@ -59,9 +58,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets web application firewall mode. Possible values are:
-        /// 'Detection' and 'Prevention'. Possible values include: 'Detection',
-        /// 'Prevention'
+        /// Gets or sets web application firewall mode. Possible values
+        /// include: 'Detection', 'Prevention'
         /// </summary>
         [JsonProperty(PropertyName = "firewallMode")]
         public string FirewallMode { get; set; }
