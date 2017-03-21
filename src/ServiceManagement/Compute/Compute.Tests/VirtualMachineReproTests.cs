@@ -2374,5 +2374,168 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 }
             }
         }
+
+        [Fact]
+        public void CanPerformMaintenanceOnVM()
+        {
+            TestLogTracingInterceptor.Current.Start();
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = fixture.GetManagementClient();
+                var compute = fixture.GetComputeManagementClient();
+                var storage = fixture.GetStorageManagementClient();
+
+                try
+                {
+                    string storageAccountName = TestUtilities.GenerateName("psteststo").ToLower();
+                    string serviceName = TestUtilities.GenerateName("pstestsvc");
+                    string serviceLabel = serviceName + "1";
+                    string serviceDescription = serviceName + "2";
+                    string deploymentName = string.Format("{0}Prod", serviceName);
+                    string deploymentLabel = deploymentName;
+
+                    string location = mgmt.GetDefaultLocation("Storage", "Compute");
+                    const string usWestLocStr = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, usWestLocStr, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = usWestLocStr;
+                    }
+
+                    storage.StorageAccounts.Create(
+                        new StorageAccountCreateParameters
+                        {
+                            Location = location,
+                            Label = storageAccountName,
+                            Name = storageAccountName,
+                            AccountType = StorageAccountTypes.StandardGRS
+                        });
+
+                    compute.HostedServices.Create(
+                        new HostedServiceCreateParameters
+                        {
+                            Location = location,
+                            Label = serviceDescription,
+                            Description = serviceLabel,
+                            ServiceName = serviceName,
+                            ExtendedProperties = new Dictionary<string, string>
+                            {
+                                {"foo1", "bar"},
+                                {"foo2", "baz"}
+                            }
+                        });
+
+                    var hostedService = compute.HostedServices.Get(serviceName);
+                    Assert.True(hostedService.Properties.Label == serviceDescription);
+                    Assert.True(hostedService.Properties.Description == serviceDescription);
+                    Assert.True(hostedService.Properties.ExtendedProperties["foo1"] == "bar");
+                    Assert.True(hostedService.Properties.ExtendedProperties["foo2"] == "baz");
+
+                    var image = compute.VirtualMachineOSImages.List()
+                        .FirstOrDefault(s => string.Equals(s.OperatingSystemType,
+                            "Windows",
+                            StringComparison.OrdinalIgnoreCase) &&
+                                             s.LogicalSizeInGB < 100);
+
+                    Assert.True(!string.IsNullOrEmpty(image.IOType));
+
+                    var osDiskSourceUri = new Uri(string.Format(
+                        "http://{1}.blob.core.windows.net/myvhds/{0}.vhd",
+                        serviceName,
+                        storageAccountName));
+
+                    var dataDiskSourceUri = new Uri(string.Format(
+                        "http://{1}.blob.core.windows.net/myvhds/{0}5.vhd",
+                        serviceName,
+                        storageAccountName));
+
+                    compute.VirtualMachines.CreateDeployment(
+                        serviceName,
+                        new VirtualMachineCreateDeploymentParameters
+                        {
+                            Name = deploymentName,
+                            DeploymentSlot = DeploymentSlot.Production,
+                            Label = deploymentLabel,
+                            Roles = new List<Role>()
+                            {
+                                new Role()
+                                {
+                                    ProvisionGuestAgent = false,
+                                    ResourceExtensionReferences = null,
+                                    RoleName = serviceName,
+                                    RoleType = VirtualMachineRoleType.PersistentVMRole.ToString(),
+                                    RoleSize = VirtualMachineRoleSize.Large.ToString(),
+                                    OSVirtualHardDisk =
+                                        new OSVirtualHardDisk
+                                        {
+                                            HostCaching = VirtualHardDiskHostCaching.ReadWrite,
+                                            SourceImageName = image.Name,
+                                            MediaLink = osDiskSourceUri,
+                                        },
+                                    DataVirtualHardDisks =
+                                        new List<DataVirtualHardDisk>(
+                                            Enumerable.Repeat(new DataVirtualHardDisk
+                                            {
+                                                Label = "testDataDiskLabel5",
+                                                LogicalUnitNumber = 0,
+                                                LogicalDiskSizeInGB = 1,
+                                                HostCaching = "ReadOnly",
+                                                MediaLink = dataDiskSourceUri,
+                                            }, 1)),
+                                    ConfigurationSets =
+                                        new List<ConfigurationSet>()
+                                        {
+                                            new ConfigurationSet
+                                            {
+                                                AdminUserName = "FooBar12",
+                                                AdminPassword = PLACEHOLDER,
+                                                ConfigurationSetType = ConfigurationSetTypes
+                                                    .WindowsProvisioningConfiguration,
+                                                ComputerName = serviceName,
+                                                HostName = string.Format("{0}.cloudapp.net", serviceName),
+                                                EnableAutomaticUpdates = false,
+                                                TimeZone = "Pacific Standard Time"
+                                            },
+                                        }
+                                }
+                            },
+                        });
+
+                    var debugBlobUri = string.Format("http://{0}.blob.core.windows.net/bootdiagnostics", storageAccountName);
+                    var dep = compute.Deployments.GetByName(serviceName, deploymentName);
+                    var role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
+
+                    // Perform Maintenance
+                    compute.VirtualMachines.PerformMaintenance(
+                        serviceName,
+                        deploymentName,
+                        serviceName);
+
+                    dep = compute.Deployments.GetByName(serviceName, deploymentName);
+                    Assert.Equal(deploymentName, dep.Name);
+                    Assert.Equal(deploymentLabel, dep.Label);
+                    Assert.NotEqual(dep.CreatedTime, dep.LastModifiedTime);
+                    role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
+                    Assert.Equal(serviceName, role1.RoleName);
+                    // TODO: Assert.Contains(MaintenanceStatus, dep.Configuration);
+                    //Assert.True(dep.Roles[0].MaintenanceStatus);
+
+                    // Delete all virtual machines
+                    compute.Deployments.DeleteByName(serviceName, deploymentName, true);
+
+                    // Delete the service
+                    compute.HostedServices.DeleteAll(serviceName);
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    compute.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
     }
 }
