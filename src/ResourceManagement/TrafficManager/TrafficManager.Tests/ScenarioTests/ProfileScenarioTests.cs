@@ -21,15 +21,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
-                string profileName = TestUtilities.GenerateName("atmprofile");
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
+                string profileName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 // Create the profile
                 trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroup.Name, 
                     profileName,
-                    TrafficManagerHelper.GenerateDefaultProfile(profileName));
+                    TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
 
                 // Get the profile
                 trafficManagerClient.Profiles.Get(
@@ -50,11 +50,11 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
-                string profileName = TestUtilities.GenerateName("atmprofile");
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
+                string profileName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
-                Profile profile = TrafficManagerHelper.GenerateDefaultProfile(profileName);
+                Profile profile = TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName);
                 profile.Endpoints = null;
 
                 // Create the profile
@@ -94,17 +94,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 for (int i = 0; i < 5; ++i)
                 {
-                    string profileName = TestUtilities.GenerateName("atmprofile");
+                    string profileName = TrafficManagerHelper.GenerateName();
 
                     trafficManagerClient.Profiles.CreateOrUpdate(
                         resourceGroup.Name,
                         profileName,
-                        TrafficManagerHelper.GenerateDefaultProfile(profileName));
+                        TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
                 }
 
                 List<Profile> listResponse = trafficManagerClient.Profiles.ListAllInResourceGroup(resourceGroup.Name).ToList();
@@ -122,17 +122,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 for (int i = 0; i < 5; ++i)
                 {
-                    string profileName = TestUtilities.GenerateName("atmprofile");
+                    string profileName = TrafficManagerHelper.GenerateName();
 
                     trafficManagerClient.Profiles.CreateOrUpdate(
                         resourceGroup.Name,
                         profileName,
-                        TrafficManagerHelper.GenerateDefaultProfile(profileName));
+                        TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
                 }
 
                 IEnumerable<Profile> listResponse = trafficManagerClient.Profiles.ListAll();

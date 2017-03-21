@@ -15,37 +15,44 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to check Traffic Manager name operation.
+    /// Class representing a region in the Geographic hierarchy used with the
+    /// Geographic traffic routing method.
     /// </summary>
-    public partial class CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+    public partial class Region
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// Initializes a new instance of the Region class.
         /// </summary>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters() { }
+        public Region() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// Initializes a new instance of the Region class.
         /// </summary>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters(string name = default(string), string type = default(string))
+        public Region(string code = default(string), string name = default(string), IList<Region> regions = default(IList<Region>))
         {
+            Code = code;
             Name = name;
-            Type = type;
+            Regions = regions;
         }
 
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// The code of the region
+        /// </summary>
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// The name of the region
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the resource.
+        /// The list of Regions grouped under this Region in the Geographic
+        /// Hierarchy.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "regions")]
+        public IList<Region> Regions { get; set; }
 
     }
 }
