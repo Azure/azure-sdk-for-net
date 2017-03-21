@@ -16,28 +16,28 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// The pricing tier (defines a CDN provider, feature list and rate) of the
-    /// CDN profile.
+    /// CIDR Ip address
     /// </summary>
-    public partial class Sku
+    public partial class CidrIpAddress
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the CidrIpAddress class.
         /// </summary>
-        public Sku()
+        public CidrIpAddress()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the CidrIpAddress class.
         /// </summary>
-        /// <param name="name">Name of the pricing tier. Possible values
-        /// include: 'Standard_Verizon', 'Premium_Verizon', 'Custom_Verizon',
-        /// 'Standard_Akamai', 'Standard_ChinaCdn'</param>
-        public Sku(string name = default(string))
+        /// <param name="baseIpAddress">Ip adress itself.</param>
+        /// <param name="prefixLength">The length of the prefix of the ip
+        /// address.</param>
+        public CidrIpAddress(string baseIpAddress = default(string), int? prefixLength = default(int?))
         {
-            Name = name;
+            BaseIpAddress = baseIpAddress;
+            PrefixLength = prefixLength;
             CustomInit();
         }
 
@@ -47,12 +47,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the pricing tier. Possible values include:
-        /// 'Standard_Verizon', 'Premium_Verizon', 'Custom_Verizon',
-        /// 'Standard_Akamai', 'Standard_ChinaCdn'
+        /// Gets or sets ip adress itself.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "baseIpAddress")]
+        public string BaseIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the length of the prefix of the ip address.
+        /// </summary>
+        [JsonProperty(PropertyName = "prefixLength")]
+        public int? PrefixLength { get; set; }
 
     }
 }
