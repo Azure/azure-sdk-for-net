@@ -6,32 +6,32 @@ var fs = require('fs');
 
 var mappings = {
     'compute': {
-         'dir': 'Compute/Microsoft.Azure.Management.Compute.Fluent',
-        'source': 'arm-compute/CompositeComputeClient.json',
+        'dir': 'Compute/Microsoft.Azure.Management.Compute.Fluent',
+        'source': 'arm-compute/compositeComputeClient.json',
         'package': 'Microsoft.Azure.Management.Compute.Fluent',
         'composite': true,
         'args': '-FT 1'
     },
     'storage': {
-        'dir': 'Storage/Microsoft.Azure.Management.Fluent.Storage',
+        'dir': 'Storage/Microsoft.Azure.Management.Storage.Fluent',
         'source': 'arm-storage/2016-01-01/swagger/storage.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Storage',
+        'package': 'Microsoft.Azure.Management.Storage.Fluent',
         'args': '-FT 2'
     },
     'resources': {
-        'dir': 'ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager',
+        'dir': 'ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent',
         'source': 'arm-resources/resources/2016-02-01/swagger/resources.json',
-        'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
+        'package': 'Microsoft.Azure.Management.ResourceManager.Fluent'
     },
     'subscriptions': {
-        'dir': 'ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager',
+        'dir': 'ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent',
         'source': 'arm-resources/subscriptions/2015-11-01/swagger/subscriptions.json',
-        'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
+        'package': 'Microsoft.Azure.Management.ResourceManager.Fluent'
     },
     'features': {
-        'dir': 'ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager',
+        'dir': 'ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent',
         'source': 'arm-resources/features/2015-12-01/swagger/features.json',
-        'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
+        'package': 'Microsoft.Azure.Management.ResourceManager.Fluent'
     },
     'network': {
         'dir': 'Network/Microsoft.Azure.Management.Network.Fluent',
@@ -41,9 +41,9 @@ var mappings = {
         'composite': true,
     },
     'batch': {
-        'dir': 'Batch/Microsoft.Azure.Management.Fluent.Batch',
+        'dir': 'Batch/Microsoft.Azure.Management.Batch.Fluent',
         'source': 'arm-batch/2015-12-01/swagger/BatchManagement.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Batch',
+        'package': 'Microsoft.Azure.Management.Batch.Fluent',
         'args': '-FT 1'
     },
     'redis': {
@@ -53,14 +53,14 @@ var mappings = {
         'args': '-FT 1'
     },
     'graphrbac': {
-        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Fluent.Graph.RBAC',
+        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Graph.RBAC.Fluent',
         'source': 'arm-graphrbac/1.6/swagger/graphrbac.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Graph.RBAC',
+        'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
     },
     'keyvault': {
-        'dir': 'KeyVault/Microsoft.Azure.Management.Fluent.KeyVault',
+        'dir': 'KeyVault/Microsoft.Azure.Management.KeyVault.Fluent',
         'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
-        'package': 'Microsoft.Azure.Management.Fluent.KeyVault',
+        'package': 'Microsoft.Azure.Management.KeyVault.Fluent',
     },
     'sql': {
         'dir': 'Sql/Microsoft.Azure.Management.Sql.Fluent',
@@ -161,10 +161,10 @@ var codegen = function(project, cb) {
     }
     cmd = autoRestExe + ' -Modeler ' + modeler + 
                         ' -CodeGenerator ' + generator + 
-			' -Namespace ' + mappings[project].package + 
-			' -Input ' + specRoot + '/' + mappings[project].source + 
-			' -outputDirectory ' + mappings[project].dir + '/Generated' + 
-			' -Header MICROSOFT_MIT' +
+                        ' -Namespace ' + mappings[project].package + 
+                        ' -Input ' + specRoot + '/' + mappings[project].source + 
+                        ' -outputDirectory ' + mappings[project].dir + '/Generated' + 
+                        ' -Header MICROSOFT_MIT' +
                         ' -skipValidation true';
     if (mappings[project].args !== undefined) {
         cmd = cmd + ' ' + mappings[project].args;
