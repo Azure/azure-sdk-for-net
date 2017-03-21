@@ -39,7 +39,7 @@
         "System.Xml.Linq": ""
       },
       "dependencies": {
-          "Newtonsoft.Json": "[9.0.1, 10.0.0)",
+          "Newtonsoft.Json": "[6.0.8, 7.0.0)",
         }
       },
       "netstandard1.5": {
