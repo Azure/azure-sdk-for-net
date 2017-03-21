@@ -55,37 +55,15 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._enabled = value; }
         }
         
-        private string _extensionName;
+        private ExtensionCollectionDefinition _extensionCollection;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the extension.
+        /// Optional. Gets or sets the extension collection.
         /// </summary>
-        public string ExtensionName
+        public ExtensionCollectionDefinition ExtensionCollection
         {
-            get { return this._extensionName; }
-            set { this._extensionName = value; }
-        }
-        
-        private IList<Extension> _extensions;
-        
-        /// <summary>
-        /// Optional. Gets or sets the extensions.
-        /// </summary>
-        public IList<Extension> Extensions
-        {
-            get { return this._extensions; }
-            set { this._extensions = value; }
-        }
-        
-        private string _extensionUri;
-        
-        /// <summary>
-        /// Optional. Gets or sets the extension endpoint.
-        /// </summary>
-        public string ExtensionUri
-        {
-            get { return this._extensionUri; }
-            set { this._extensionUri = value; }
+            get { return this._extensionCollection; }
+            set { this._extensionCollection = value; }
         }
         
         private ResourceProviderEndpoint _manifestEndpoint;
@@ -173,7 +151,6 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ManifestPropertiesDefinition()
         {
-            this.Extensions = new LazyList<Extension>();
             this.ResourceTypes = new LazyList<ResourceType>();
         }
     }

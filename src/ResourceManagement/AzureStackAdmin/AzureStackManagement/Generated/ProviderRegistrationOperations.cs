@@ -263,37 +263,54 @@ namespace Microsoft.AzureStack.Management
                         }
                     }
                     
-                    if (parameters.ProviderRegistration.Properties.ExtensionName != null)
+                    if (parameters.ProviderRegistration.Properties.ExtensionCollection != null)
                     {
-                        propertiesValue["extensionName"] = parameters.ProviderRegistration.Properties.ExtensionName;
-                    }
-                    
-                    if (parameters.ProviderRegistration.Properties.ExtensionUri != null)
-                    {
-                        propertiesValue["extensionUri"] = parameters.ProviderRegistration.Properties.ExtensionUri;
-                    }
-                    
-                    if (parameters.ProviderRegistration.Properties.Extensions != null)
-                    {
-                        if (parameters.ProviderRegistration.Properties.Extensions is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.Extensions).IsInitialized)
+                        JObject extensionCollectionValue = new JObject();
+                        propertiesValue["extensionCollection"] = extensionCollectionValue;
+                        
+                        if (parameters.ProviderRegistration.Properties.ExtensionCollection.Version != null)
                         {
-                            JArray extensionsArray = new JArray();
-                            foreach (Extension extensionsItem in parameters.ProviderRegistration.Properties.Extensions)
+                            extensionCollectionValue["version"] = parameters.ProviderRegistration.Properties.ExtensionCollection.Version;
+                        }
+                        
+                        if (parameters.ProviderRegistration.Properties.ExtensionCollection.Extensions != null)
+                        {
+                            if (parameters.ProviderRegistration.Properties.ExtensionCollection.Extensions is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.ExtensionCollection.Extensions).IsInitialized)
                             {
-                                JObject extensionValue = new JObject();
-                                extensionsArray.Add(extensionValue);
-                                
-                                if (extensionsItem.Name != null)
+                                JArray extensionsArray = new JArray();
+                                foreach (ExtensionDefinition extensionsItem in parameters.ProviderRegistration.Properties.ExtensionCollection.Extensions)
                                 {
-                                    extensionValue["name"] = extensionsItem.Name;
+                                    JObject extensionDefinitionValue = new JObject();
+                                    extensionsArray.Add(extensionDefinitionValue);
+                                    
+                                    if (extensionsItem.Name != null)
+                                    {
+                                        extensionDefinitionValue["name"] = extensionsItem.Name;
+                                    }
+                                    
+                                    if (extensionsItem.Uri != null)
+                                    {
+                                        extensionDefinitionValue["uri"] = extensionsItem.Uri;
+                                    }
+                                    
+                                    if (extensionsItem.Properties != null)
+                                    {
+                                        JObject propertiesValue2 = new JObject();
+                                        extensionDefinitionValue["properties"] = propertiesValue2;
+                                        
+                                        if (extensionsItem.Properties.QuotaCreateBladeName != null)
+                                        {
+                                            propertiesValue2["quotaCreateBladeName"] = extensionsItem.Properties.QuotaCreateBladeName;
+                                        }
+                                        
+                                        if (extensionsItem.Properties.ResourceProviderDashboardBladeName != null)
+                                        {
+                                            propertiesValue2["resourceProviderDashboardBladeName"] = extensionsItem.Properties.ResourceProviderDashboardBladeName;
+                                        }
+                                    }
                                 }
-                                
-                                if (extensionsItem.Uri != null)
-                                {
-                                    extensionValue["uri"] = extensionsItem.Uri;
-                                }
+                                extensionCollectionValue["extensions"] = extensionsArray;
                             }
-                            propertiesValue["extensions"] = extensionsArray;
                         }
                     }
                     
@@ -491,48 +508,48 @@ namespace Microsoft.AzureStack.Management
                             ProviderRegistrationModel providerRegistrationInstance = new ProviderRegistrationModel();
                             result.ProviderRegistration = providerRegistrationInstance;
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken propertiesValue3 = responseDoc["properties"];
+                            if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                             {
                                 ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                 providerRegistrationInstance.Properties = propertiesInstance;
                                 
-                                JToken displayNameValue = propertiesValue2["displayName"];
+                                JToken displayNameValue = propertiesValue3["displayName"];
                                 if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                 {
                                     string displayNameInstance = ((string)displayNameValue);
                                     propertiesInstance.DisplayName = displayNameInstance;
                                 }
                                 
-                                JToken namespaceValue = propertiesValue2["namespace"];
+                                JToken namespaceValue = propertiesValue3["namespace"];
                                 if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
                                     string namespaceInstance = ((string)namespaceValue);
                                     propertiesInstance.Namespace = namespaceInstance;
                                 }
                                 
-                                JToken providerLocationValue = propertiesValue2["providerLocation"];
+                                JToken providerLocationValue = propertiesValue3["providerLocation"];
                                 if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
                                 {
                                     string providerLocationInstance = ((string)providerLocationValue);
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
-                                JToken routingResourceManagerTypeValue = propertiesValue2["routingResourceManagerType"];
+                                JToken routingResourceManagerTypeValue = propertiesValue3["routingResourceManagerType"];
                                 if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
                                 {
                                     ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
                                     propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
                                 }
                                 
-                                JToken enabledValue = propertiesValue2["enabled"];
+                                JToken enabledValue = propertiesValue3["enabled"];
                                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                 {
                                     bool enabledInstance = ((bool)enabledValue);
                                     propertiesInstance.Enabled = enabledInstance;
                                 }
                                 
-                                JToken manifestEndpointValue2 = propertiesValue2["manifestEndpoint"];
+                                JToken manifestEndpointValue2 = propertiesValue3["manifestEndpoint"];
                                 if (manifestEndpointValue2 != null && manifestEndpointValue2.Type != JTokenType.Null)
                                 {
                                     ResourceProviderEndpoint manifestEndpointInstance = new ResourceProviderEndpoint();
@@ -590,7 +607,7 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                JToken providerAuthorizationValue2 = propertiesValue2["providerAuthorization"];
+                                JToken providerAuthorizationValue2 = propertiesValue3["providerAuthorization"];
                                 if (providerAuthorizationValue2 != null && providerAuthorizationValue2.Type != JTokenType.Null)
                                 {
                                     ResourceProviderAuthorization providerAuthorizationInstance = new ResourceProviderAuthorization();
@@ -611,45 +628,66 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                JToken extensionNameValue = propertiesValue2["extensionName"];
-                                if (extensionNameValue != null && extensionNameValue.Type != JTokenType.Null)
+                                JToken extensionCollectionValue2 = propertiesValue3["extensionCollection"];
+                                if (extensionCollectionValue2 != null && extensionCollectionValue2.Type != JTokenType.Null)
                                 {
-                                    string extensionNameInstance = ((string)extensionNameValue);
-                                    propertiesInstance.ExtensionName = extensionNameInstance;
-                                }
-                                
-                                JToken extensionUriValue = propertiesValue2["extensionUri"];
-                                if (extensionUriValue != null && extensionUriValue.Type != JTokenType.Null)
-                                {
-                                    string extensionUriInstance = ((string)extensionUriValue);
-                                    propertiesInstance.ExtensionUri = extensionUriInstance;
-                                }
-                                
-                                JToken extensionsArray2 = propertiesValue2["extensions"];
-                                if (extensionsArray2 != null && extensionsArray2.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken extensionsValue in ((JArray)extensionsArray2))
+                                    ExtensionCollectionDefinition extensionCollectionInstance = new ExtensionCollectionDefinition();
+                                    propertiesInstance.ExtensionCollection = extensionCollectionInstance;
+                                    
+                                    JToken versionValue = extensionCollectionValue2["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
                                     {
-                                        Extension extensionInstance = new Extension();
-                                        propertiesInstance.Extensions.Add(extensionInstance);
-                                        
-                                        JToken nameValue = extensionsValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        string versionInstance = ((string)versionValue);
+                                        extensionCollectionInstance.Version = versionInstance;
+                                    }
+                                    
+                                    JToken extensionsArray2 = extensionCollectionValue2["extensions"];
+                                    if (extensionsArray2 != null && extensionsArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken extensionsValue in ((JArray)extensionsArray2))
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            extensionInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken uriValue = extensionsValue["uri"];
-                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                        {
-                                            string uriInstance = ((string)uriValue);
-                                            extensionInstance.Uri = uriInstance;
+                                            ExtensionDefinition extensionDefinitionInstance = new ExtensionDefinition();
+                                            extensionCollectionInstance.Extensions.Add(extensionDefinitionInstance);
+                                            
+                                            JToken nameValue = extensionsValue["name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                extensionDefinitionInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken uriValue = extensionsValue["uri"];
+                                            if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                            {
+                                                string uriInstance = ((string)uriValue);
+                                                extensionDefinitionInstance.Uri = uriInstance;
+                                            }
+                                            
+                                            JToken propertiesValue4 = extensionsValue["properties"];
+                                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                            {
+                                                ExtensionPropertiesDefinition propertiesInstance2 = new ExtensionPropertiesDefinition();
+                                                extensionDefinitionInstance.Properties = propertiesInstance2;
+                                                
+                                                JToken quotaCreateBladeNameValue = propertiesValue4["quotaCreateBladeName"];
+                                                if (quotaCreateBladeNameValue != null && quotaCreateBladeNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string quotaCreateBladeNameInstance = ((string)quotaCreateBladeNameValue);
+                                                    propertiesInstance2.QuotaCreateBladeName = quotaCreateBladeNameInstance;
+                                                }
+                                                
+                                                JToken resourceProviderDashboardBladeNameValue = propertiesValue4["resourceProviderDashboardBladeName"];
+                                                if (resourceProviderDashboardBladeNameValue != null && resourceProviderDashboardBladeNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string resourceProviderDashboardBladeNameInstance = ((string)resourceProviderDashboardBladeNameValue);
+                                                    propertiesInstance2.ResourceProviderDashboardBladeName = resourceProviderDashboardBladeNameInstance;
+                                                }
+                                            }
                                         }
                                     }
                                 }
                                 
-                                JToken resourceTypesArray2 = propertiesValue2["resourceTypes"];
+                                JToken resourceTypesArray2 = propertiesValue3["resourceTypes"];
                                 if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
                                 {
                                     foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray2))
@@ -773,7 +811,7 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                JToken provisioningStateValue = propertiesValue3["provisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
                                     string provisioningStateInstance = ((string)provisioningStateValue);
@@ -1251,40 +1289,61 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                JToken extensionNameValue = propertiesValue["extensionName"];
-                                if (extensionNameValue != null && extensionNameValue.Type != JTokenType.Null)
+                                JToken extensionCollectionValue = propertiesValue["extensionCollection"];
+                                if (extensionCollectionValue != null && extensionCollectionValue.Type != JTokenType.Null)
                                 {
-                                    string extensionNameInstance = ((string)extensionNameValue);
-                                    propertiesInstance.ExtensionName = extensionNameInstance;
-                                }
-                                
-                                JToken extensionUriValue = propertiesValue["extensionUri"];
-                                if (extensionUriValue != null && extensionUriValue.Type != JTokenType.Null)
-                                {
-                                    string extensionUriInstance = ((string)extensionUriValue);
-                                    propertiesInstance.ExtensionUri = extensionUriInstance;
-                                }
-                                
-                                JToken extensionsArray = propertiesValue["extensions"];
-                                if (extensionsArray != null && extensionsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken extensionsValue in ((JArray)extensionsArray))
+                                    ExtensionCollectionDefinition extensionCollectionInstance = new ExtensionCollectionDefinition();
+                                    propertiesInstance.ExtensionCollection = extensionCollectionInstance;
+                                    
+                                    JToken versionValue = extensionCollectionValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
                                     {
-                                        Extension extensionInstance = new Extension();
-                                        propertiesInstance.Extensions.Add(extensionInstance);
-                                        
-                                        JToken nameValue = extensionsValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        string versionInstance = ((string)versionValue);
+                                        extensionCollectionInstance.Version = versionInstance;
+                                    }
+                                    
+                                    JToken extensionsArray = extensionCollectionValue["extensions"];
+                                    if (extensionsArray != null && extensionsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken extensionsValue in ((JArray)extensionsArray))
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            extensionInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken uriValue = extensionsValue["uri"];
-                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                        {
-                                            string uriInstance = ((string)uriValue);
-                                            extensionInstance.Uri = uriInstance;
+                                            ExtensionDefinition extensionDefinitionInstance = new ExtensionDefinition();
+                                            extensionCollectionInstance.Extensions.Add(extensionDefinitionInstance);
+                                            
+                                            JToken nameValue = extensionsValue["name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                extensionDefinitionInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken uriValue = extensionsValue["uri"];
+                                            if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                            {
+                                                string uriInstance = ((string)uriValue);
+                                                extensionDefinitionInstance.Uri = uriInstance;
+                                            }
+                                            
+                                            JToken propertiesValue2 = extensionsValue["properties"];
+                                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                            {
+                                                ExtensionPropertiesDefinition propertiesInstance2 = new ExtensionPropertiesDefinition();
+                                                extensionDefinitionInstance.Properties = propertiesInstance2;
+                                                
+                                                JToken quotaCreateBladeNameValue = propertiesValue2["quotaCreateBladeName"];
+                                                if (quotaCreateBladeNameValue != null && quotaCreateBladeNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string quotaCreateBladeNameInstance = ((string)quotaCreateBladeNameValue);
+                                                    propertiesInstance2.QuotaCreateBladeName = quotaCreateBladeNameInstance;
+                                                }
+                                                
+                                                JToken resourceProviderDashboardBladeNameValue = propertiesValue2["resourceProviderDashboardBladeName"];
+                                                if (resourceProviderDashboardBladeNameValue != null && resourceProviderDashboardBladeNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string resourceProviderDashboardBladeNameInstance = ((string)resourceProviderDashboardBladeNameValue);
+                                                    propertiesInstance2.ResourceProviderDashboardBladeName = resourceProviderDashboardBladeNameInstance;
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -1739,40 +1798,61 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
-                                        JToken extensionNameValue = propertiesValue["extensionName"];
-                                        if (extensionNameValue != null && extensionNameValue.Type != JTokenType.Null)
+                                        JToken extensionCollectionValue = propertiesValue["extensionCollection"];
+                                        if (extensionCollectionValue != null && extensionCollectionValue.Type != JTokenType.Null)
                                         {
-                                            string extensionNameInstance = ((string)extensionNameValue);
-                                            propertiesInstance.ExtensionName = extensionNameInstance;
-                                        }
-                                        
-                                        JToken extensionUriValue = propertiesValue["extensionUri"];
-                                        if (extensionUriValue != null && extensionUriValue.Type != JTokenType.Null)
-                                        {
-                                            string extensionUriInstance = ((string)extensionUriValue);
-                                            propertiesInstance.ExtensionUri = extensionUriInstance;
-                                        }
-                                        
-                                        JToken extensionsArray = propertiesValue["extensions"];
-                                        if (extensionsArray != null && extensionsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken extensionsValue in ((JArray)extensionsArray))
+                                            ExtensionCollectionDefinition extensionCollectionInstance = new ExtensionCollectionDefinition();
+                                            propertiesInstance.ExtensionCollection = extensionCollectionInstance;
+                                            
+                                            JToken versionValue = extensionCollectionValue["version"];
+                                            if (versionValue != null && versionValue.Type != JTokenType.Null)
                                             {
-                                                Extension extensionInstance = new Extension();
-                                                propertiesInstance.Extensions.Add(extensionInstance);
-                                                
-                                                JToken nameValue = extensionsValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                string versionInstance = ((string)versionValue);
+                                                extensionCollectionInstance.Version = versionInstance;
+                                            }
+                                            
+                                            JToken extensionsArray = extensionCollectionValue["extensions"];
+                                            if (extensionsArray != null && extensionsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken extensionsValue in ((JArray)extensionsArray))
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    extensionInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken uriValue = extensionsValue["uri"];
-                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                                {
-                                                    string uriInstance = ((string)uriValue);
-                                                    extensionInstance.Uri = uriInstance;
+                                                    ExtensionDefinition extensionDefinitionInstance = new ExtensionDefinition();
+                                                    extensionCollectionInstance.Extensions.Add(extensionDefinitionInstance);
+                                                    
+                                                    JToken nameValue = extensionsValue["name"];
+                                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance = ((string)nameValue);
+                                                        extensionDefinitionInstance.Name = nameInstance;
+                                                    }
+                                                    
+                                                    JToken uriValue = extensionsValue["uri"];
+                                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                                    {
+                                                        string uriInstance = ((string)uriValue);
+                                                        extensionDefinitionInstance.Uri = uriInstance;
+                                                    }
+                                                    
+                                                    JToken propertiesValue2 = extensionsValue["properties"];
+                                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                    {
+                                                        ExtensionPropertiesDefinition propertiesInstance2 = new ExtensionPropertiesDefinition();
+                                                        extensionDefinitionInstance.Properties = propertiesInstance2;
+                                                        
+                                                        JToken quotaCreateBladeNameValue = propertiesValue2["quotaCreateBladeName"];
+                                                        if (quotaCreateBladeNameValue != null && quotaCreateBladeNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string quotaCreateBladeNameInstance = ((string)quotaCreateBladeNameValue);
+                                                            propertiesInstance2.QuotaCreateBladeName = quotaCreateBladeNameInstance;
+                                                        }
+                                                        
+                                                        JToken resourceProviderDashboardBladeNameValue = propertiesValue2["resourceProviderDashboardBladeName"];
+                                                        if (resourceProviderDashboardBladeNameValue != null && resourceProviderDashboardBladeNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceProviderDashboardBladeNameInstance = ((string)resourceProviderDashboardBladeNameValue);
+                                                            propertiesInstance2.ResourceProviderDashboardBladeName = resourceProviderDashboardBladeNameInstance;
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
