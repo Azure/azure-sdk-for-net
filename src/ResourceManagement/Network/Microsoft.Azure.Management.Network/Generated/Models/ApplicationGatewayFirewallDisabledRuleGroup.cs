@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ruleGroupName">The name of the rule group that will be
         /// disabled.</param>
         /// <param name="rules">The list of rules that will be disabled. If
-        /// empty, all rules of the rule group will be disabled.</param>
+        /// null, all rules of the rule group will be disabled.</param>
         public ApplicationGatewayFirewallDisabledRuleGroup(string ruleGroupName, IList<int?> rules = default(IList<int?>))
         {
             RuleGroupName = ruleGroupName;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RuleGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of rules that will be disabled. If empty, all
+        /// Gets or sets the list of rules that will be disabled. If null, all
         /// rules of the rule group will be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "rules")]
