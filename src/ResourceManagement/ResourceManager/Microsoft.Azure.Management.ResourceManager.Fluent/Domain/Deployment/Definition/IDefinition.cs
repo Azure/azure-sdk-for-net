@@ -3,12 +3,11 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Deployment.Definition
 {
-
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Core;
+    using Management.ResourceManager.Fluent.Models;
 
     /// <summary>
     /// The first stage of deployment definition.

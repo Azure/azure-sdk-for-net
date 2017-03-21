@@ -3,10 +3,10 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-
     using Microsoft.Azure.Management.Resource.Fluent.Deployment.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Core;
+    using Management.ResourceManager.Fluent;
 
     /// <summary>
     /// Entry point to template deployment in Azure.

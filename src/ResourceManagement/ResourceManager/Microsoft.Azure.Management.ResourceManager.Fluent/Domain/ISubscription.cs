@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
+    using Management.ResourceManager.Fluent.Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure subscription.

@@ -3,10 +3,9 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Deployment.Update
 {
-
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Management.ResourceManager.Fluent.Models;
 
     /// <summary>
     /// Grouping of all the deployment updates stages.

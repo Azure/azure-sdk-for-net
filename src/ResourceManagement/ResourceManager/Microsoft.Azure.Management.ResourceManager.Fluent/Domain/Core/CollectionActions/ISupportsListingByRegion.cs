@@ -3,9 +3,7 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
 {
-
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
 
     /// <summary>
     /// Provides access to listing Azure resources of a specific type based on their region.

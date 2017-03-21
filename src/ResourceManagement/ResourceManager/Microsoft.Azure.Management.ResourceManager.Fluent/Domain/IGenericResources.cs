@@ -3,11 +3,10 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.GenericResource.Definition;
     using Core;
+    using Management.ResourceManager.Fluent;
 
     /// <summary>
     /// Entry point to generic resources management API.

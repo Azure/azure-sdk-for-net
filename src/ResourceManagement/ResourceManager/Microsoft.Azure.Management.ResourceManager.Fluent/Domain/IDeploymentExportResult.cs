@@ -3,9 +3,8 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Management.ResourceManager.Fluent.Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure deployment template export result.

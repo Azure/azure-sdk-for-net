@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.Samples.Common;
 using Newtonsoft.Json.Linq;
 using System;
@@ -45,7 +46,7 @@ namespace DeployUsingARMTemplate
                     .WithExistingResourceGroup(rgName)
                     .WithTemplate(templateJson)
                     .WithParameters("{}")
-                    .WithMode(Microsoft.Azure.Management.Resource.Fluent.Models.DeploymentMode.Incremental)
+                    .WithMode(DeploymentMode.Incremental)
                     .Create();
 
                 Utilities.Log("Completed the deployment: " + deploymentName);

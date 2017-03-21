@@ -10,8 +10,8 @@ using System;
 using Microsoft.Azure.Management.Resource.Fluent.ResourceGroup.Definition;
 using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
 using Microsoft.Azure.Management.Resource.Fluent.ResourceGroup.Update;
-using Microsoft.Azure.Management.Resource.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {

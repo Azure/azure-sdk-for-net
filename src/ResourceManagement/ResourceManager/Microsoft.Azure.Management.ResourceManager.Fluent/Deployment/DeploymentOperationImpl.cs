@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
@@ -19,9 +16,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         private string resourceGroupName;
         private string deploymentName;
 
-        private IDeploymentOperationsOperations client;
+        private Management.ResourceManager.Fluent.IDeploymentOperations client;
 
-        internal DeploymentOperationImpl(DeploymentOperationInner innerModel, IDeploymentOperationsOperations client) : base(innerModel.Id, innerModel)
+        internal DeploymentOperationImpl(DeploymentOperationInner innerModel, Management.ResourceManager.Fluent.IDeploymentOperations client) : base(innerModel.Id, innerModel)
         {
             this.client = client;
             var resourceId = ResourceId.FromString(innerModel.Id);

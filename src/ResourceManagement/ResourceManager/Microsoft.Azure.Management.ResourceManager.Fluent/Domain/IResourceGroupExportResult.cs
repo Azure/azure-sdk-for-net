@@ -3,8 +3,7 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
+    using Management.ResourceManager.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>

@@ -5,10 +5,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.ResourceGroup.Update;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Management.ResourceManager.Fluent.Models;
 
     /// <summary>
     /// Grouping of all the resource group update stages.

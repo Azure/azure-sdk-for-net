@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 using System.Linq;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {

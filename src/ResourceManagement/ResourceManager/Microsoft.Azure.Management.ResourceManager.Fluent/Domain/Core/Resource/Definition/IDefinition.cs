@@ -3,8 +3,6 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition
 {
-
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
     using System.Collections.Generic;
 
     /// <summary>

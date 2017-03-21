@@ -3,10 +3,8 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
-
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
 
     /// <summary>
     /// Base interfaces for fluent resources.

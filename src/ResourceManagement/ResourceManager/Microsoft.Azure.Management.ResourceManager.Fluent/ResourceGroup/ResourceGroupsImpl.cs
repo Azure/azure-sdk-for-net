@@ -5,7 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Rest.Azure;
-using Microsoft.Azure.Management.Resource.Fluent.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {

@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         private Azure(RestClient restClient, string subscriptionId, string tenantId, IAuthenticated authenticated)
         {
-            resourceManager = ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
+            resourceManager = Management.Resource.Fluent.ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.Fluent
         protected class Authenticated : IAuthenticated
         {
             private RestClient restClient;
-            private ResourceManager.IAuthenticated resourceManagerAuthenticated;
+            private Management.Resource.Fluent.ResourceManager.IAuthenticated resourceManagerAuthenticated;
             private string defaultSubscription;
             private string tenantId;
 
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Fluent
             public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
-                resourceManagerAuthenticated = ResourceManager.Authenticate(this.restClient);
+                resourceManagerAuthenticated = Management.Resource.Fluent.ResourceManager.Authenticate(this.restClient);
                 this.tenantId = tenantId;
             }
 
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Fluent
                 }
                 else
                 {
-                    var resourceManager = ResourceManager.Authenticate(
+                    var resourceManager = Management.Resource.Fluent.ResourceManager.Authenticate(
                         RestClient.Configure()
                             .WithBaseUri(restClient.BaseUri)
                             .WithCredentials(restClient.Credentials).Build());

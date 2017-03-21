@@ -1,20 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
+    using Models;
+    using Resource.Fluent;
+    using Resource.Fluent.Core;
+    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Models;
     using WebApp.Definition;
     using WebApp.Update;
-    using System.Collections.Generic;
-    using Resource.Fluent.Core.ResourceActions;
-    using System;
-    using System.Linq;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Models;
-    using System.IO;
-    using Resource.Fluent;
 
     /// <summary>
     /// The implementation for WebApp.

@@ -3,10 +3,9 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-
+    using Management.ResourceManager.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure location.
