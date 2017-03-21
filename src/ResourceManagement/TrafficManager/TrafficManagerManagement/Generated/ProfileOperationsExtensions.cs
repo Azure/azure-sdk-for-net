@@ -38,7 +38,8 @@ namespace Microsoft.Azure.Management.TrafficManager
     public static partial class ProfileOperationsExtensions
     {
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Checks if a relative domain name is available to be used for a
+        /// Traffic Manager Profile.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -61,7 +62,8 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Checks if a relative domain name is available to be used for a
+        /// Traffic Manager Profile.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

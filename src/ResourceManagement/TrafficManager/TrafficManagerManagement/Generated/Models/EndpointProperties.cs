@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
@@ -64,6 +65,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         {
             get { return this._endpointStatus; }
             set { this._endpointStatus = value; }
+        }
+        
+        private IList<string> _geoMapping;
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of countries/regions mapped to this
+        /// endpoint when using the ‘Geographic’ traffic routing method.
+        /// Please consult Traffic Manager Geographic documentation for a full
+        /// list of accepted values.
+        /// </summary>
+        public IList<string> GeoMapping
+        {
+            get { return this._geoMapping; }
+            set { this._geoMapping = value; }
         }
         
         private uint? _minChildEndpoints;

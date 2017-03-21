@@ -21,32 +21,35 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class representing a Traffic Manager profile.
+    /// A region in the Traffic Manager Geographic Hierarchy that can be used
+    /// with the Geographic Traffic Routing Method.
     /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial class StateProvince : GeographicEntity
     {
-        private ProfileProperties _properties;
-        
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Initializes a new instance of the StateProvince class.
         /// </summary>
-        public ProfileProperties Properties
+        public StateProvince()
         {
-            get { return this._properties; }
-            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Profile class.
+        /// Initializes a new instance of the StateProvince class with required
+        /// arguments.
         /// </summary>
-        public Profile()
+        public StateProvince(string code)
+            : this()
         {
+            if (code == null)
+            {
+                throw new ArgumentNullException("code");
+            }
+            this.Code = code;
         }
     }
 }

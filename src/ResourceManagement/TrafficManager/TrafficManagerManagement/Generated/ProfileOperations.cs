@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
-        /// Create or update a Traffic Manager endpoint.
+        /// Checks if a relative domain name is available to be used for a
+        /// Traffic Manager Profile.
         /// </summary>
         /// <param name='parameters'>
         /// Required. The Traffic Manager name parameters supplied to the
@@ -109,7 +110,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "Microsoft.Network";
             url = url + "/checkTrafficManagerNameAvailability";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -301,10 +302,6 @@ namespace Microsoft.Azure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.Profile");
             }
-            if (parameters.Profile.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Profile.Location");
-            }
             if (parameters.Profile.Properties != null)
             {
                 if (parameters.Profile.Properties.DnsConfig != null)
@@ -354,7 +351,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -507,6 +504,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 {
                                     propertiesValue2["minChildEndpoints"] = endpointsItem.Properties.MinChildEndpoints.Value;
                                 }
+                                
+                                if (endpointsItem.Properties.GeoMapping != null)
+                                {
+                                    JArray geoMappingArray = new JArray();
+                                    foreach (string geoMappingItem in endpointsItem.Properties.GeoMapping)
+                                    {
+                                        geoMappingArray.Add(geoMappingItem);
+                                    }
+                                    propertiesValue2["geoMapping"] = geoMappingArray;
+                                }
                             }
                         }
                         propertiesValue["endpoints"] = endpointsArray;
@@ -528,7 +535,10 @@ namespace Microsoft.Azure.Management.TrafficManager
                     profileCreateOrUpdateParametersValue["type"] = parameters.Profile.Type;
                 }
                 
-                profileCreateOrUpdateParametersValue["location"] = parameters.Profile.Location;
+                if (parameters.Profile.Location != null)
+                {
+                    profileCreateOrUpdateParametersValue["location"] = parameters.Profile.Location;
+                }
                 
                 if (parameters.Profile.Tags != null)
                 {
@@ -763,6 +773,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                             uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                             propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
                                         }
+                                        
+                                        JToken geoMappingArray2 = propertiesValue4["geoMapping"];
+                                        if (geoMappingArray2 != null && geoMappingArray2.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance2.GeoMapping = new List<string>();
+                                            foreach (JToken geoMappingValue in ((JArray)geoMappingArray2))
+                                            {
+                                                propertiesInstance2.GeoMapping.Add(((string)geoMappingValue));
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -892,7 +912,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1037,7 +1057,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1286,6 +1306,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                             uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                             propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
                                         }
+                                        
+                                        JToken geoMappingArray = propertiesValue2["geoMapping"];
+                                        if (geoMappingArray != null && geoMappingArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance2.GeoMapping = new List<string>();
+                                            foreach (JToken geoMappingValue in ((JArray)geoMappingArray))
+                                            {
+                                                propertiesInstance2.GeoMapping.Add(((string)geoMappingValue));
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1395,7 +1425,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1648,6 +1678,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                                 {
                                                     uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                                     propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                                }
+                                                
+                                                JToken geoMappingArray = propertiesValue2["geoMapping"];
+                                                if (geoMappingArray != null && geoMappingArray.Type != JTokenType.Null)
+                                                {
+                                                    propertiesInstance2.GeoMapping = new List<string>();
+                                                    foreach (JToken geoMappingValue in ((JArray)geoMappingArray))
+                                                    {
+                                                        propertiesInstance2.GeoMapping.Add(((string)geoMappingValue));
+                                                    }
                                                 }
                                             }
                                         }
@@ -1771,7 +1811,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "Microsoft.Network";
             url = url + "/trafficmanagerprofiles";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2025,6 +2065,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                                     uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                                     propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
                                                 }
+                                                
+                                                JToken geoMappingArray = propertiesValue2["geoMapping"];
+                                                if (geoMappingArray != null && geoMappingArray.Type != JTokenType.Null)
+                                                {
+                                                    propertiesInstance2.GeoMapping = new List<string>();
+                                                    foreach (JToken geoMappingValue in ((JArray)geoMappingArray))
+                                                    {
+                                                        propertiesInstance2.GeoMapping.Add(((string)geoMappingValue));
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -2140,10 +2190,6 @@ namespace Microsoft.Azure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.Profile");
             }
-            if (parameters.Profile.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Profile.Location");
-            }
             if (parameters.Profile.Properties != null)
             {
                 if (parameters.Profile.Properties.DnsConfig != null)
@@ -2193,7 +2239,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/trafficmanagerprofiles/";
             url = url + Uri.EscapeDataString(profileName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2017-03-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2346,6 +2392,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 {
                                     propertiesValue2["minChildEndpoints"] = endpointsItem.Properties.MinChildEndpoints.Value;
                                 }
+                                
+                                if (endpointsItem.Properties.GeoMapping != null)
+                                {
+                                    JArray geoMappingArray = new JArray();
+                                    foreach (string geoMappingItem in endpointsItem.Properties.GeoMapping)
+                                    {
+                                        geoMappingArray.Add(geoMappingItem);
+                                    }
+                                    propertiesValue2["geoMapping"] = geoMappingArray;
+                                }
                             }
                         }
                         propertiesValue["endpoints"] = endpointsArray;
@@ -2367,7 +2423,10 @@ namespace Microsoft.Azure.Management.TrafficManager
                     profileUpdateParametersValue["type"] = parameters.Profile.Type;
                 }
                 
-                profileUpdateParametersValue["location"] = parameters.Profile.Location;
+                if (parameters.Profile.Location != null)
+                {
+                    profileUpdateParametersValue["location"] = parameters.Profile.Location;
+                }
                 
                 if (parameters.Profile.Tags != null)
                 {
@@ -2604,6 +2663,16 @@ namespace Microsoft.Azure.Management.TrafficManager
                                         {
                                             uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
                                             propertiesInstance2.MinChildEndpoints = minChildEndpointsInstance;
+                                        }
+                                        
+                                        JToken geoMappingArray2 = propertiesValue4["geoMapping"];
+                                        if (geoMappingArray2 != null && geoMappingArray2.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance2.GeoMapping = new List<string>();
+                                            foreach (JToken geoMappingValue in ((JArray)geoMappingArray2))
+                                            {
+                                                propertiesInstance2.GeoMapping.Add(((string)geoMappingValue));
+                                            }
                                         }
                                     }
                                 }

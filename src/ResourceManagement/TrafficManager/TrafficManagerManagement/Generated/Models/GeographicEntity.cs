@@ -21,32 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
-    /// <summary>
-    /// Class representing a Traffic Manager profile.
-    /// </summary>
-    public partial class Profile : ResourceBaseExtended
+    public partial class GeographicEntity
     {
-        private ProfileProperties _properties;
+        private string _code;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the profile.
+        /// Required. Gets or sets the code of the Region.
         /// </summary>
-        public ProfileProperties Properties
+        public string Code
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._code; }
+            set { this._code = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of the Region.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Profile class.
+        /// Initializes a new instance of the GeographicEntity class.
         /// </summary>
-        public Profile()
+        public GeographicEntity()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GeographicEntity class with
+        /// required arguments.
+        /// </summary>
+        public GeographicEntity(string code)
+            : this()
+        {
+            if (code == null)
+            {
+                throw new ArgumentNullException("code");
+            }
+            this.Code = code;
         }
     }
 }

@@ -85,6 +85,15 @@ namespace Microsoft.Azure.Management.TrafficManager
         }
         
         /// <summary>
+        /// Operations for retrieving the Geographic Hierarchy for use with
+        /// Geographic traffic routing.
+        /// </summary>
+        IGeographicHierarchyOperations GeographicHierarchy
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Traffic Manager profiles.
         /// </summary>
         IProfileOperations Profiles

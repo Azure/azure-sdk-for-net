@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                     } 
                 };
 
-                // Create the profile
+                // Update the profile
                 ProfileCreateOrUpdateResponse updateResponse = trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroup.Name,
                     profileName,
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                         Profile = profile
                     });
 
-                Assert.Equal(HttpStatusCode.Created, updateResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
             }
         }
 
