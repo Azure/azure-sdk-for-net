@@ -14,14 +14,22 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent.Models
     using Microsoft.Azure.Management.KeyVault.Fluent;
 
     /// <summary>
-    /// Defines values for SecretPermissions.
+    /// Defines values for CertificatePermissions.
     /// </summary>
-    public static class SecretPermissions
+    public static class CertificatePermissions
     {
         public const string All = "all";
         public const string Get = "get";
         public const string List = "list";
-        public const string Set = "set";
         public const string Delete = "delete";
+        public const string Create = "create";
+        public const string Import = "import";
+        public const string Update = "update";
+        public const string Managecontacts = "managecontacts";
+        public const string Getissuers = "getissuers";
+        public const string Listissuers = "listissuers";
+        public const string Setissuers = "setissuers";
+        public const string Deleteissuers = "deleteissuers";
+        public const string Manageissuers = "manageissuers";
     }
 }
