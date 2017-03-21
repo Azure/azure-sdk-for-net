@@ -34,6 +34,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayFirewallRuleSet
         /// class.
         /// </summary>
+        /// <param name="ruleSetType">The type of the web application firewall
+        /// rule set.</param>
+        /// <param name="ruleSetVersion">The version of the web application
+        /// firewall rule set type.</param>
+        /// <param name="ruleGroups">The rule groups of the web application
+        /// firewall rule set.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -41,13 +47,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="provisioningState">The provisioning state of the web
         /// application firewall rule set.</param>
-        /// <param name="ruleSetType">The type of the web application firewall
-        /// rule set.</param>
-        /// <param name="ruleSetVersion">The version of the web application
-        /// firewall rule set type.</param>
-        /// <param name="ruleGroups">The rule groups of the web application
-        /// firewall rule set.</param>
-        public ApplicationGatewayFirewallRuleSet(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string ruleSetType = default(string), string ruleSetVersion = default(string), IList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default(IList<ApplicationGatewayFirewallRuleGroup>))
+        public ApplicationGatewayFirewallRuleSet(string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
@@ -83,6 +83,37 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.ruleGroups")]
         public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RuleSetType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetType");
+            }
+            if (RuleSetVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetVersion");
+            }
+            if (RuleGroups == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleGroups");
+            }
+            if (RuleGroups != null)
+            {
+                foreach (var element in RuleGroups)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
 

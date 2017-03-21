@@ -395,7 +395,7 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayFirewallDisabledRuleGroup(
                             "crs_41_sql_injection_attacks",
-                            new List<int?>() { 981318 })
+                            new List<int>() { 981318 })
                     }
                 }
             };
@@ -550,10 +550,8 @@ namespace Networks.Tests
                 Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetType);
                 Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetVersion);
                 Assert.NotEmpty(availableWAFRuleSets.Value[0].RuleGroups);
-                Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Description);
                 Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].RuleGroupName);
                 Assert.NotEmpty(availableWAFRuleSets.Value[0].RuleGroups[0].Rules);
-                Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].Description);
                 Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
 
 

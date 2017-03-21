@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Azure;
     using Management;
     using Network;
+    using Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -33,11 +34,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="ruleGroupName">The name of the web application
         /// firewall rule group.</param>
-        /// <param name="description">The description of the web application
-        /// firewall rule group.</param>
         /// <param name="rules">The rules of the web application firewall rule
         /// group.</param>
-        public ApplicationGatewayFirewallRuleGroup(string ruleGroupName = default(string), string description = default(string), IList<ApplicationGatewayFirewallRule> rules = default(IList<ApplicationGatewayFirewallRule>))
+        /// <param name="description">The description of the web application
+        /// firewall rule group.</param>
+        public ApplicationGatewayFirewallRuleGroup(string ruleGroupName, IList<ApplicationGatewayFirewallRule> rules, string description = default(string))
         {
             RuleGroupName = ruleGroupName;
             Description = description;
@@ -63,6 +64,33 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "rules")]
         public IList<ApplicationGatewayFirewallRule> Rules { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RuleGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleGroupName");
+            }
+            if (Rules == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Rules");
+            }
+            if (Rules != null)
+            {
+                foreach (var element in Rules)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
 

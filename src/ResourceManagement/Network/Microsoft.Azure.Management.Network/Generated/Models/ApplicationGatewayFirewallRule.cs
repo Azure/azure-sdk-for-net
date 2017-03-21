@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// rule.</param>
         /// <param name="description">The description of the web application
         /// firewall rule.</param>
-        public ApplicationGatewayFirewallRule(int? ruleId = default(int?), string description = default(string))
+        public ApplicationGatewayFirewallRule(int ruleId, string description = default(string))
         {
             RuleId = ruleId;
             Description = description;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the identifier of the web application firewall rule.
         /// </summary>
         [JsonProperty(PropertyName = "ruleId")]
-        public int? RuleId { get; set; }
+        public int RuleId { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the web application firewall rule.
@@ -51,6 +51,16 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }
 
