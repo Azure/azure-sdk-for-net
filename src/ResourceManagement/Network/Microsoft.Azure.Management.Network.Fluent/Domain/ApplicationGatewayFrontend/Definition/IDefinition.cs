@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The first stage of an application gateway frontend definition.
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// </summary>
     /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend.

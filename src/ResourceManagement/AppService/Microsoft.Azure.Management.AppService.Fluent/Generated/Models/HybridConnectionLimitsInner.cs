@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// limits of Hybrid Connections.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class HybridConnectionLimitsInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class HybridConnectionLimitsInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the HybridConnectionLimitsInner

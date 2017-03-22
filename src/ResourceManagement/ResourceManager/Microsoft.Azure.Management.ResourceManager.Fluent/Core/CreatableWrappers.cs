@@ -4,9 +4,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public abstract class CreatableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT> :
         ReadableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>,

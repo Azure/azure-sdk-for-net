@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Update
 {
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.Network.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of the subnet update allowing to change the network security group to assign to the subnet.

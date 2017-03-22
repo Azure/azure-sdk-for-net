@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of the update allowing to associate the resource with an existing public IP address.

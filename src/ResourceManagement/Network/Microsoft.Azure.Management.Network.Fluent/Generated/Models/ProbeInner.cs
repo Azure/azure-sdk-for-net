@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// A load balancer probe.
     /// </summary>
     [JsonTransformation]
-    public partial class ProbeInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ProbeInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ProbeInner class.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ProbeInner(string protocol, int port, string id = default(string), IList<Resource.Fluent.SubResource> loadBalancingRules = default(IList<Resource.Fluent.SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ProbeInner(string protocol, int port, string id = default(string), IList<ResourceManager.Fluent.SubResource> loadBalancingRules = default(IList<ResourceManager.Fluent.SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             LoadBalancingRules = loadBalancingRules;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets the load balancer rules that use this probe.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<Resource.Fluent.SubResource> LoadBalancingRules { get; protected set; }
+        public IList<ResourceManager.Fluent.SubResource> LoadBalancingRules { get; protected set; }
 
         /// <summary>
         /// Gets or sets the protocol of the end point. Possible values are:

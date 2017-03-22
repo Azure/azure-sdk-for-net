@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DeploymentSlot.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Models;
 
     /// <summary>

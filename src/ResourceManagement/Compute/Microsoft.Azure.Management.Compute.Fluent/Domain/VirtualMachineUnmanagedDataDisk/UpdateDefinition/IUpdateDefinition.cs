@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     /// <summary>
     /// The stage that allows configure the disk based on existing vhd.

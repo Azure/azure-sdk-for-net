@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of the TCP probe update allowing to modify the number of unsuccessful probes before failure is determined.

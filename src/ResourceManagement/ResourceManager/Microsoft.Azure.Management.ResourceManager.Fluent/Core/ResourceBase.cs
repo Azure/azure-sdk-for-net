@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     /// <summary>
     /// This class uses Reflection, it will be removed once we have a "Resource" from which all resource inherits
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         IResource, IDefinitionWithTags<DefTypeWithTags>, IUpdateWithTags<UTypeWithTags>
         where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
         where IFluentResourceT : class, IResource
-        where InnerResourceT : Microsoft.Azure.Management.Resource.Fluent.Resource
+        where InnerResourceT : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
         where IDefinitionAfterRegion: class
         where DefTypeWithTags : class
         where UTypeWithTags : class

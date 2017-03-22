@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// Represents an Azure SQL Database schema.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class SchemaInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SchemaInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SchemaInner class.

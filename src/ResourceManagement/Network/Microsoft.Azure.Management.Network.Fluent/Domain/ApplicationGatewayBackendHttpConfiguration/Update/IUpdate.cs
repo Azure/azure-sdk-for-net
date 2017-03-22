@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasPort.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of an application gateway backend HTTP configuration allowing to specify the request timeout.

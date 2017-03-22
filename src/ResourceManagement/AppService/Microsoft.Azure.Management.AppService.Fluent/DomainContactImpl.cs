@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DomainContact.Definition;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for DomainContact and its create and update interfaces.

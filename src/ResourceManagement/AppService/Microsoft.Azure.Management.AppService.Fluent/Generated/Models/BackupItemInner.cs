@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Backup description.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class BackupItemInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class BackupItemInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the BackupItemInner class.

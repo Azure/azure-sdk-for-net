@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.KeyVault.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Container interface for all the definitions that need to be implemented.

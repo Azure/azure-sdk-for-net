@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Create or update availability set parameters.
     /// </summary>
     [JsonTransformation]
-    public partial class AvailabilitySetInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class AvailabilitySetInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the AvailabilitySetInner class.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// <param name="managed">If the availability set supports managed
         /// disks.</param>
         /// <param name="sku">Sku of the availability set</param>
-        public AvailabilitySetInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> virtualMachines = default(IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), bool? managed = default(bool?), Sku sku = default(Sku))
+        public AvailabilitySetInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> virtualMachines = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), bool? managed = default(bool?), Sku sku = default(Sku))
             : base(location, id, name, type, tags)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// availability set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachines")]
-        public IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> VirtualMachines { get; set; }
+        public IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> VirtualMachines { get; set; }
 
         /// <summary>
         /// Gets the resource status information.

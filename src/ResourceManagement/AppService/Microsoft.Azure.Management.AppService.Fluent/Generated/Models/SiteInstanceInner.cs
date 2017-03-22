@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Instance of an app.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class SiteInstanceInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SiteInstanceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SiteInstanceInner class.

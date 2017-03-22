@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
     using Graph.RBAC.Fluent;
     using System;

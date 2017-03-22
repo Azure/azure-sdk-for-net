@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Models;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using ResourceManager.Fluent.Models;
     using System;
     using System.Collections.Generic;

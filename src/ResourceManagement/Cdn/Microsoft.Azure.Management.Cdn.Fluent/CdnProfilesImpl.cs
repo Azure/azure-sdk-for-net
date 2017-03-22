@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Threading;
     using Models;
 

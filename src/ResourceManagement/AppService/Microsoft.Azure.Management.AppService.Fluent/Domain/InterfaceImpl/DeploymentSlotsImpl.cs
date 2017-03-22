@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
 
     internal partial class DeploymentSlotsImpl 
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="name">The name of the resource to delete.</param>
         /// <return>An observable of the request.</return>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
         {
  
             await this.DeleteByNameAsync(name, cancellationToken);
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Deletes a resource from Azure, identifying it by its resource name.
         /// </summary>
         /// <param name="name">The name of the resource to delete.</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByName(string name)
+        void Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByName(string name)
         {
  
             this.DeleteByName(name);
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        DeploymentSlot.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<DeploymentSlot.Definition.IBlank>.Define(string name)
+        DeploymentSlot.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<DeploymentSlot.Definition.IBlank>.Define(string name)
         {
             return this.Define(name) as DeploymentSlot.Definition.IBlank;
         }
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.List()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
+            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetByName(string name)
+        Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetByName(string name)
         {
             return this.GetByName(name) as Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot;
         }

@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update;

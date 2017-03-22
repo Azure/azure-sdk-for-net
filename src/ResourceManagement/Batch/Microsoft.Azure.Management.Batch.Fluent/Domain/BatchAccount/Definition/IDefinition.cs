@@ -3,17 +3,17 @@
 namespace Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Batch.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Batch.Fluent.Application.Definition;
     using Microsoft.Azure.Management.Storage.Fluent;
     /// <summary>
     /// A batch account definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreateAndApplication>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreateAndApplication>
     {
     }
     /// <summary>

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// represent the URLs for branding purposes.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class CustomDomainInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class CustomDomainInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CustomDomainInner class.

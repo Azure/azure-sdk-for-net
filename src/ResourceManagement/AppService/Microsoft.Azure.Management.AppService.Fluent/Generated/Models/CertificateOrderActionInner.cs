@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Certificate order action.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class CertificateOrderActionInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class CertificateOrderActionInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CertificateOrderActionInner

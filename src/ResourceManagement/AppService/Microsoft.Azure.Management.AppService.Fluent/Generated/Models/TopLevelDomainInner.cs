@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// A top level domain object.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class TopLevelDomainInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class TopLevelDomainInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the TopLevelDomainInner class.

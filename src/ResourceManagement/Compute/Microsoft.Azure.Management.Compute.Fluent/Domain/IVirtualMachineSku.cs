@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Represents a virtual machine image SKU.
@@ -28,6 +28,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the region where this virtual machine image offer SKU is available.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Region { get; }
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
     }
 }

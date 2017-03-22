@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition;
 
     /// <summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
     /// The stage allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithCreate>
     {
     }
 

@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using SqlFirewallRule.Definition;
     using SqlFirewallRule.Update;
     using Models;
@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets region of SQL Server that contains this firewall rule.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.Region
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.Region
         {
             get
             {
-                return this.Region() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
+                return this.Region() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>.Refresh()
+        Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule;
         }
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the resource ID string.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
             get
             {

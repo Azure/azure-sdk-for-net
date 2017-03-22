@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// VPN client revoked certificate of virtual network gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class VpnClientRevokedCertificateInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class VpnClientRevokedCertificateInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VpnClientRevokedCertificateInner

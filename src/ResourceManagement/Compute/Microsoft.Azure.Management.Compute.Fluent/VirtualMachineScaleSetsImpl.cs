@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Network.Fluent;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Storage.Fluent;
     using Models;
     using System.Collections.Generic;

@@ -9,9 +9,9 @@ using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Redis.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -117,7 +117,7 @@ namespace Fluent.Tests.Common
 
         public static IResourceManager CreateResourceManager()
         {
-            return CreateMockedManager(c => Microsoft.Azure.Management.Resource.Fluent.ResourceManager
+            return CreateMockedManager(c => Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -189,9 +189,9 @@ namespace Fluent.Tests.Common
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
-        public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate()
+        public static Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager.IAuthenticated Authenticate()
         {
-            return CreateMockedManager(c => Microsoft.Azure.Management.Resource.Fluent.ResourceManager
+            return CreateMockedManager(c => Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)

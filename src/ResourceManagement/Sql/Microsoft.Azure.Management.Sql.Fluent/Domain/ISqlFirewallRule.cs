@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using SqlFirewallRule.Update;
     using Models;
 
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets region of SQL Server that contains this firewall rule.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Region { get; }
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
 
         /// <summary>
         /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.

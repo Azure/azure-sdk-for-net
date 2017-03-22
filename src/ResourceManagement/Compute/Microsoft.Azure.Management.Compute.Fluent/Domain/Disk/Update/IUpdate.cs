@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Disk.Update
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of the managed disk definition allowing to specify new size.

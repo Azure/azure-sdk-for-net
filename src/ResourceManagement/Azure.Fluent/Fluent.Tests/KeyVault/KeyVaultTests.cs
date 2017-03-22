@@ -3,8 +3,8 @@
 
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.KeyVault.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.KeyVault.Fluent.Models;
 using System.Linq;
 using Xunit;
@@ -12,7 +12,7 @@ using System;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Fluent.Tests.KeyVault
 {

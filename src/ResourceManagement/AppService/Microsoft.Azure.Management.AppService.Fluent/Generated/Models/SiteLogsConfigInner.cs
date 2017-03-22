@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Configuration of App Service site logs.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class SiteLogsConfigInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SiteLogsConfigInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SiteLogsConfigInner class.

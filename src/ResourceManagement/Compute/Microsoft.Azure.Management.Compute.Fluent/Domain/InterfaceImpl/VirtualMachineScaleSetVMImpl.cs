@@ -4,10 +4,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class VirtualMachineScaleSetVMImpl 
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>.Refresh()
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM;
         }
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the name of the region the resource is in.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.RegionName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
         {
             get
             {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the tags for the resource.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Tags
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
         {
             get
             {
@@ -57,18 +57,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the region the resource is in.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Region
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
         {
             get
             {
-                return this.Region() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
+                return this.Region() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
             }
         }
 
         /// <summary>
         /// Gets the type of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Type
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
         {
             get
             {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the resource ID string.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
             get
             {
@@ -439,9 +439,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>The network interfaces associated with this virtual machine instance.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ListNetworkInterfaces()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ListNetworkInterfaces()
         {
-            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>

@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
     /// The stage of contact definition allowing 2nd line of address to be set.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
         /// </summary>
         /// <param name="country">The country of the address.</param>
         /// <return>The next stage of the contact definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPostalCode<ParentT> WithCountry(Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode country);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPostalCode<ParentT> WithCountry(Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode country);
     }
 
     /// <summary>
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
         /// </summary>
         /// <param name="code">The country code.</param>
         /// <return>The next stage of the contact definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT> WithPhoneCountryCode(Microsoft.Azure.Management.Resource.Fluent.Core.CountryPhoneCode code);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT> WithPhoneCountryCode(Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryPhoneCode code);
     }
 
     /// <summary>

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
 {
     using Management.Network.Fluent;
     using Management.Network.Fluent.Models;
-    using Management.Resource.Fluent.Core;
+    using Management.ResourceManager.Fluent.Core;
 
     internal class NetworkUsagesImpl : ReadableWrappers<INetworkUsage, NetworkUsageImpl, Usage>, INetworkUsages
     {

@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models ;
     using Microsoft.Rest;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using System.Threading;
     using System.Threading.Tasks;
     public partial class UsersImpl 
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>.List() { 
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>;
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>.List() { 
+            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>;
         }
 
     }

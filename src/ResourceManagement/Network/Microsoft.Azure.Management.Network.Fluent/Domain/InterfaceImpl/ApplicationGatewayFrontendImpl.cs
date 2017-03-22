@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using HasPublicIPAddress.Definition;
     using HasPublicIPAddress.UpdateDefinition;
     using HasPublicIPAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     internal partial class ApplicationGatewayFrontendImpl 
     {
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        ApplicationGateway.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions.IInUpdateAlt<ApplicationGateway.Update.IUpdate>.Attach()
+        ApplicationGateway.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInUpdateAlt<ApplicationGateway.Update.IUpdate>.Attach()
         {
             return this.Attach() as ApplicationGateway.Update.IUpdate;
         }
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
             return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
             return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
         }
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the subnet associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasSubnet.SubnetName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.SubnetName
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the resource ID of the virtual network whose subnet is associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasSubnet.NetworkId
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.NetworkId
         {
             get
             {
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definition.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        ApplicationGateway.Definition.IWithListener Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ApplicationGateway.Definition.IWithListener>.Attach()
+        ApplicationGateway.Definition.IWithListener Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ApplicationGateway.Definition.IWithListener>.Attach()
         {
             return this.Attach() as ApplicationGateway.Definition.IWithListener;
         }

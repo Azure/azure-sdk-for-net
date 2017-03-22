@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 {
     using CdnProfile.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Threading;
     using CdnProfile.Definition;
     using Microsoft.Azure.Management.Cdn.Fluent.Models;

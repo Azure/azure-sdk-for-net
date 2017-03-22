@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// ResourceNavigationLink resource.
     /// </summary>
     [JsonTransformation]
-    public partial class ResourceNavigationLinkInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ResourceNavigationLinkInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ResourceNavigationLinkInner

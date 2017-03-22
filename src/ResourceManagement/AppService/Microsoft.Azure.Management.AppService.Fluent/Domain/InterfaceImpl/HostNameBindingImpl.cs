@@ -9,10 +9,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using HostNameBinding.UpdateDefinition;
     using WebAppBase.Definition;
     using WebAppBase.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Rest;
     using System.Collections.Generic;
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithThirdPartyDomain(domain) as HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
-        WebAppBase.Update.IUpdate<FluentT> Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<WebAppBase.Update.IUpdate<FluentT>>.Attach()
+        WebAppBase.Update.IUpdate<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<WebAppBase.Update.IUpdate<FluentT>>.Attach()
         {
             return this.Attach() as WebAppBase.Update.IUpdate<FluentT>;
         }
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Execute the create request.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.Create()
+        Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.Create()
         {
             return this.Create() as Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding;
         }
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Puts the request into the queue and allow the HTTP client to execute
         /// it when system resources are available.
         /// </summary>
-        async Task<IHostNameBinding> Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        async Task<IHostNameBinding> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
             return await this.CreateAsync(cancellationToken);
         }
@@ -172,20 +172,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
-        WebAppBase.Definition.IWithHostNameSslBinding<FluentT> Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.Attach()
+        WebAppBase.Definition.IWithHostNameSslBinding<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.Attach()
         {
             return this.Attach() as WebAppBase.Definition.IWithHostNameSslBinding<FluentT>;
         }
 
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Region
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
         {
             get
             {
-                return this.Region() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
+                return this.Region() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
             }
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Type
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
         {
             get
             {
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Tags
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
         {
             get
             {
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.RegionName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
         {
             get
             {

@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGatewayBackendHttpConfiguration.Definition;
     using ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
     using Models;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for ApplicationGatewayBackendHttpConfiguration.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// Represents an Azure SQL server.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ServerInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class ServerInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ServerInner class.

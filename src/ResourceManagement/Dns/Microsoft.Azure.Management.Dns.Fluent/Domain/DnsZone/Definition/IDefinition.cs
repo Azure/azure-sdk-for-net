@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
 {
     using Microsoft.Azure.Management.Dns.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition;
 
     /// <summary>

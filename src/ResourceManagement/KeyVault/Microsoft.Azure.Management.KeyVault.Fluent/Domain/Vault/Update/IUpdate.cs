@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update
 {
 
     using Microsoft.Azure.Management.KeyVault.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Update;
     using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition;
     /// <summary>

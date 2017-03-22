@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServiceDomain.Definition;
     using AppServiceDomain.Update;
     using Models;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

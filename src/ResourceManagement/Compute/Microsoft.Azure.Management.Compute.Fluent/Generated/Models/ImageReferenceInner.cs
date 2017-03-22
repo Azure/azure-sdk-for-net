@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// <summary>
     /// The image reference.
     /// </summary>
-    public partial class ImageReferenceInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ImageReferenceInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ImageReferenceInner class.

@@ -5,11 +5,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 {
     using Management.Batch;
     using Management.Batch.Fluent.Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for BatchAccount Application and its parent interfaces.

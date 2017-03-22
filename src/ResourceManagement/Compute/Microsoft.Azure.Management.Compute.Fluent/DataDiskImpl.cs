@@ -5,9 +5,9 @@
 //{
 //    using Management.Compute.Fluent.Models;
 //    using System.Collections.Generic;
-//    using Resource.Fluent.Core;
+//    using ResourceManager.Fluent.Core;
 //    using Storage.Fluent;
-//    using Resource.Fluent.Core.ChildResourceActions;
+//    using ResourceManager.Fluent.Core.ChildResourceActions;
 //    using System;
 //    using VirtualMachineDataDisk.UpdateDefinition;
 //    using VirtualMachineDataDisk.Definition;

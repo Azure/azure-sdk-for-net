@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.IndependentChild.Definition;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.IndependentChild.Definition;
     using Models;
     using SqlFirewallRule.Definition;
     using SqlFirewallRule.Update;
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:D48F16C6B9830DCBDCBFBD281C142173
         public Region Region()
         {
-            return Resource.Fluent.Core.Region.Create(Inner.Location);
+            return ResourceManager.Fluent.Core.Region.Create(Inner.Location);
         }
     }
 }

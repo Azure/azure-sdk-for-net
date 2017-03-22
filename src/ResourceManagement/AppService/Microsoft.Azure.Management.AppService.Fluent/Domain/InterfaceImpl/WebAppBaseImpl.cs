@@ -7,11 +7,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using WebAppBase.Definition;
     using WebAppBase.Update;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using System;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     internal abstract partial class WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>
     {

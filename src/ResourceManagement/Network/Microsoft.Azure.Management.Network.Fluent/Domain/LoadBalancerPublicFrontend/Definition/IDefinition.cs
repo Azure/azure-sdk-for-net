@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
     /// The stage of a public frontend definition allowing to specify an existing public IP address.

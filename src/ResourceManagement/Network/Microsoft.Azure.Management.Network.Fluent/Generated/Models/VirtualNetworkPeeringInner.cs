@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Peerings in a virtual network resource.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetworkPeeringInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class VirtualNetworkPeeringInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkPeeringInner class.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkPeeringInner(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), Resource.Fluent.SubResource remoteVirtualNetwork = default(Resource.Fluent.SubResource), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkPeeringInner(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), ResourceManager.Fluent.SubResource remoteVirtualNetwork = default(ResourceManager.Fluent.SubResource), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference of the remote virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "properties.remoteVirtualNetwork")]
-        public Resource.Fluent.SubResource RemoteVirtualNetwork { get; set; }
+        public ResourceManager.Fluent.SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the virtual network peering. Possible

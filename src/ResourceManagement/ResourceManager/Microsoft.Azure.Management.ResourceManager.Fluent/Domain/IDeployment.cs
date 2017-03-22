@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.Resource.Fluent
+namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Deployment.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Deployment.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Management.ResourceManager.Fluent.Models;
 
     /// <summary>

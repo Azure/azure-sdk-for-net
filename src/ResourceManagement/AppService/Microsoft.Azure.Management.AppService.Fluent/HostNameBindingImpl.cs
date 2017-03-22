@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using HostNameBinding.UpdateDefinition;
     using Models;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:A96EEE048AFB7EAC724AC09421CBB824
         public Region Region()
         {
-            return Resource.Fluent.Core.Region.Create(Inner.Location);
+            return ResourceManager.Fluent.Core.Region.Create(Inner.Location);
         }
 
         ///GENMHASH:4B19A5F1B35CA91D20F63FBB66E86252:783B8B84020BF7A1FA8A58B407A27A05

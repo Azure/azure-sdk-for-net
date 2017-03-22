@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using WebAppSourceControl.Definition;
     using WebAppSourceControl.UpdateDefinition;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     internal partial class WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithGitHubAccessToken(personalAccessToken) as WebAppSourceControl.Definition.IGitHubWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
-        string Resource.Fluent.Core.IHasName.Name
+        string ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
-        WebAppBase.Update.IUpdate<FluentT> Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<WebAppBase.Update.IUpdate<FluentT>>.Attach()
+        WebAppBase.Update.IUpdate<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<WebAppBase.Update.IUpdate<FluentT>>.Attach()
         {
             return this.Attach() as WebAppBase.Update.IUpdate<FluentT>;
         }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
-        WebAppBase.Definition.IWithCreate<FluentT> Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<WebAppBase.Definition.IWithCreate<FluentT>>.Attach()
+        WebAppBase.Definition.IWithCreate<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<WebAppBase.Definition.IWithCreate<FluentT>>.Attach()
         {
             return this.Attach() as WebAppBase.Definition.IWithCreate<FluentT>;
         }

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Inbound NAT rule of the load balancer.
     /// </summary>
     [JsonTransformation]
-    public partial class InboundNatRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class InboundNatRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the InboundNatRuleInner class.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public InboundNatRuleInner(string id = default(string), Resource.Fluent.SubResource frontendIPConfiguration = default(Resource.Fluent.SubResource), NetworkInterfaceIPConfigurationInner backendIPConfiguration = default(NetworkInterfaceIPConfigurationInner), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public InboundNatRuleInner(string id = default(string), ResourceManager.Fluent.SubResource frontendIPConfiguration = default(ResourceManager.Fluent.SubResource), NetworkInterfaceIPConfigurationInner backendIPConfiguration = default(NetworkInterfaceIPConfigurationInner), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets a reference to frontend IP addresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
-        public Resource.Fluent.SubResource FrontendIPConfiguration { get; set; }
+        public ResourceManager.Fluent.SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets a reference to a private IP address defined on a network

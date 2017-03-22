@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     /// <summary>
     /// Entry point for Redis Caches management API.
     /// </summary>

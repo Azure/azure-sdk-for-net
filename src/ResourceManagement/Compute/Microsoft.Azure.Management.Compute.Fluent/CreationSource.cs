@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent.Models
 {
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The source from which managed disk or snapshot is created.

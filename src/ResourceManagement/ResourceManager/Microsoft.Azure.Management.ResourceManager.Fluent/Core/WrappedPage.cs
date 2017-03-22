@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public class WrappedPage<InnerT, WrappedT> : IPage<WrappedT>
     {

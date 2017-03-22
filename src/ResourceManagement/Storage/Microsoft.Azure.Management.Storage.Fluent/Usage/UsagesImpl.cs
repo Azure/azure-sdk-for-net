@@ -3,7 +3,7 @@
 
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Storage.Fluent

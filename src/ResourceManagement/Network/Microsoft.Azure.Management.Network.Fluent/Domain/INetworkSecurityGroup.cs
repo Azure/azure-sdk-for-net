@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using NetworkSecurityGroup.Update;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     /// <summary>

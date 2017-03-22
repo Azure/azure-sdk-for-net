@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// Represents the activity on an Azure SQL Elastic Pool.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ElasticPoolDatabaseActivityInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class ElasticPoolDatabaseActivityInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ElasticPoolDatabaseActivityInner

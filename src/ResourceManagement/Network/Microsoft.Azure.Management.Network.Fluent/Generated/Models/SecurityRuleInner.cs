@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Network security rule.
     /// </summary>
     [JsonTransformation]
-    public partial class SecurityRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class SecurityRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SecurityRuleInner class.

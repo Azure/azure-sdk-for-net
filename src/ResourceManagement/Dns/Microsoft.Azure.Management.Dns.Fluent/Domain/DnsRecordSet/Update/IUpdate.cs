@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet;

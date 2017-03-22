@@ -3,10 +3,10 @@
 
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.CollectionActions;
     using Models;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using SqlDatabase.Definition;
     using SqlDatabases.SqlDatabaseCreatable;
     using System.Collections.Generic;

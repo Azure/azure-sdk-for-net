@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Backend Address Pool of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayBackendAddressPoolInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayBackendAddressPoolInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the

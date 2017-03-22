@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
 {
     using Microsoft.Azure.Management.Compute.Fluent;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     /// <summary>
     /// The first stage of a virtual machine extension definition.

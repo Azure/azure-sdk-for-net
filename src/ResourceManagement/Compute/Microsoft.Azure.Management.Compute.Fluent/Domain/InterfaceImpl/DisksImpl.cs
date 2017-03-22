@@ -4,11 +4,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using Disk.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     internal partial class DisksImpl 
     {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        Disk.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<Disk.Definition.IBlank>.Define(string name)
+        Disk.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<Disk.Definition.IBlank>.Define(string name)
         {
             return this.Define(name) as Disk.Definition.IBlank;
         }
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk>;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
             return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IDisk;
         }
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>A completable indicates completion or exception of the request.</return>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IDisk>.List()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IDisk>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk>;
+            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk>;
         }
     }
 }

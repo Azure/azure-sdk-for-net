@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using TrafficManagerEndpoint.UpdateDefinition;
     using TrafficManagerEndpoint.Definition;
     using System.Threading.Tasks;
@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using TrafficManagerEndpoint.UpdateExternalEndpoint;
     using System.Threading;
     using TrafficManagerEndpoint.UpdateAzureEndpoint;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using Models;
 
     /// <summary>

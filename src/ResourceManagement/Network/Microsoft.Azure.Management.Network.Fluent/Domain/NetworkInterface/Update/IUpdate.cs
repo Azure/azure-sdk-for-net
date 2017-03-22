@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update;
     using Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
 
     /// <summary>
     /// The stage of the network interface update allowing to enable or disable IP forwarding.

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public interface IManager<InnerT> : IHasInner<InnerT>, IManagerBase
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
 {
     public class AzureCredentialsFactory
     {

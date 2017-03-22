@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public class EnumNameAttribute : Attribute
     {
