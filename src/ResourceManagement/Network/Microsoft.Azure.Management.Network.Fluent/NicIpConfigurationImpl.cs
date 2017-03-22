@@ -6,12 +6,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using NicIPConfiguration.UpdateDefinition;
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using NicIPConfiguration.Definition;
-    using Resource.Fluent.Core.ResourceActions;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using System;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using Management.Fluent.Network;
 
     /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal NicIPConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
             creatableVirtualNetworkKey = creatable.Key;
-            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IHasId>);
+            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.ResourceManager.Fluent.Core.IHasId>);
             return this;
         }
 
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (creatablePublicIPKey == null)
             {
                 creatablePublicIPKey = creatable.Key;
-                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IHasId>);
+                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.ResourceManager.Fluent.Core.IHasId>);
             }
 
             return this;

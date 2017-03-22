@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using ApplicationGateway.Definition;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to application gateway management API in Azure.

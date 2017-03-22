@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// An immutable client-side representation of a data disk image in an image resource.

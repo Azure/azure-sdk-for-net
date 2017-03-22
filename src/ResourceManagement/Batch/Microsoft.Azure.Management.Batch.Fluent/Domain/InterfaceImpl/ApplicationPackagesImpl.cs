@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 
     using Microsoft.Azure.Management.Batch.Fluent.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     public partial class ApplicationPackagesImpl 
     {
     }

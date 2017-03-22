@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
 {
 
     using Management.Storage.Fluent.Models;
-    using Resource.Fluent.Core.GroupableResource.Definition;
-    using Resource.Fluent.Core.Resource.Definition;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.GroupableResource.Definition;
+    using ResourceManager.Fluent.Core.Resource.Definition;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using Storage;
     /// <summary>
     /// A storage account definition specifying a custom domain to associate with the account.

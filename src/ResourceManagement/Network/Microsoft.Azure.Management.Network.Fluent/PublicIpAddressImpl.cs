@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for PublicIPAddress.

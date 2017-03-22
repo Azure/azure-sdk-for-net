@@ -5,10 +5,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGatewayListener.Definition;
     using ApplicationGatewayListener.UpdateDefinition;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.IO;
-    using Resource.Fluent.Core.ChildResourceActions;
-    using Resource.Fluent;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// Implementation for ApplicationGatewayListener.

@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// its private IP address from.
     /// </summary>
     public interface IWithExistingSubnet  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
     {
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.

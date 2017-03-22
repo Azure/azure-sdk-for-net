@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Disk resource.
     /// </summary>
     [JsonTransformation]
-    public partial class DiskInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class DiskInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DiskInner class.

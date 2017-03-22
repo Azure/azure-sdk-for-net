@@ -5,7 +5,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The implementation for VirtualMachineImages.

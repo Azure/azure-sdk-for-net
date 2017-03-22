@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using TrafficManagerProfile.Definition;
     using TrafficManagerProfile.Update;
     using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>.Refresh()
+        Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile;
         }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Route table resource.
     /// </summary>
     [JsonTransformation]
-    public partial class RouteTableInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class RouteTableInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RouteTableInner class.

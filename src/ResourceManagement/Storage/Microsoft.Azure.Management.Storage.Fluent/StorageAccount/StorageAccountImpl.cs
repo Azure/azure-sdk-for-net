@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Threading;
 using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
 using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;

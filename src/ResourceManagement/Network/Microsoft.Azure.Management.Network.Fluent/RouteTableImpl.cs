@@ -6,9 +6,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using RouteTable.Definition;
     using RouteTable.Update;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// Implementation for RouteTable.

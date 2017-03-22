@@ -6,10 +6,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using CdnEndpoint.UpdatePremiumEndpoint;
     using CdnEndpoint.UpdateStandardEndpoint;
     using CdnProfile.Update;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
-    using Resource.Fluent;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:00FEB5C68B4751719C13C6D6808A9E3D:6B89DE41199AB45D2C541D6B3DBC05CC
-        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode countryCode)
+        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode countryCode)
         {
             var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
 
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:2D7E7C7B6D78F7CD626A30B8C9705502:EFAC4F0A8E7E479378E2D805054B10E9
-        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes)
+        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
 

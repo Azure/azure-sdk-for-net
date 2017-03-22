@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using HasServerNameIndication.UpdateDefinition;
     using HasSslCertificate.Definition;
     using HasSslCertificate.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
     using System.IO;
 
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        ApplicationGateway.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<ApplicationGateway.Update.IUpdate>.Attach()
+        ApplicationGateway.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ApplicationGateway.Update.IUpdate>.Attach()
         {
             return this.Attach() as ApplicationGateway.Update.IUpdate;
         }
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.Attach()
+        ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.Attach()
         {
             return this.Attach() as ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate;
         }
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {

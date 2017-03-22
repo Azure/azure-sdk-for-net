@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using SqlDatabase.Definition;
     using SqlDatabases.SqlDatabaseCreatable;
     using Models;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>An observable to the request.</return>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByParent.DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByParent.DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken)
         {
  
             await this.DeleteByParentAsync(groupName, parentName, name, cancellationToken);

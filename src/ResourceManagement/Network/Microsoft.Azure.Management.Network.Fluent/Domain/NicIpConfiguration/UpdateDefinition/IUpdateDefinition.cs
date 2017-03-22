@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
 {
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     /// <summary>
     /// The stage of the network interface IP configuration definition allowing to associate it with

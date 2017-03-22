@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     internal partial class VirtualMachineScaleSetNetworkInterfacesImpl :
         ReadableWrappers<IVirtualMachineScaleSetNetworkInterface,

@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Models;
 
     /// <summary>

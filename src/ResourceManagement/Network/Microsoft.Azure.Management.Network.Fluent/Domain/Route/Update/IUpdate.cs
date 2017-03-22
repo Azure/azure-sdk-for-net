@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.Route.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.RouteTable.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.Models;
 
     /// <summary>

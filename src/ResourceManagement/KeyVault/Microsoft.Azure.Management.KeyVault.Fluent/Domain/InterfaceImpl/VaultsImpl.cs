@@ -4,11 +4,11 @@
 namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.KeyVault.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank>.Define (string name) {
+        Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank>.Define (string name) {
             return this.Define( name) as Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank;
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// Deletes a resource from Azure, identifying it by its resource ID.
         /// </summary>
         /// <param name="id">id the resource ID of the resource to delete</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingById.DeleteById(string id) {
+        void Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById.DeleteById(string id) {
             this.DeleteById( id);
         }
 
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.ListByGroup (string resourceGroupName) {
-            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault>;
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.ListByGroup (string resourceGroupName) {
+            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault>;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.KeyVault.Fluent.IVault Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.GetByGroup (string resourceGroupName, string name) {
+        Microsoft.Azure.Management.KeyVault.Fluent.IVault Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.GetByGroup (string resourceGroupName, string name) {
             return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.KeyVault.Fluent.IVault;
         }
 
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="groupName">groupName The group the resource is part of</param>
         /// <param name="name">name The name of the resource</param>
-        Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken) {
+        Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken) {
             return this.DeleteByGroupAsync( groupName,  name, cancellationToken);
         }
 
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.List () {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault>;
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.List () {
+            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault>;
         }
 
     }

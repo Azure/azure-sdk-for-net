@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
     using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point for key vaults management API.

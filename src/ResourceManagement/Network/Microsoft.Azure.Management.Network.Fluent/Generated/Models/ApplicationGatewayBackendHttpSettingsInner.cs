@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Backend address pool settings of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayBackendHttpSettingsInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayBackendHttpSettingsInner : ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayBackendHttpSettingsInner(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), Resource.Fluent.SubResource probe = default(Resource.Fluent.SubResource), IList<Resource.Fluent.SubResource> authenticationCertificates = default(IList<Resource.Fluent.SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendHttpSettingsInner(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), ResourceManager.Fluent.SubResource probe = default(ResourceManager.Fluent.SubResource), IList<ResourceManager.Fluent.SubResource> authenticationCertificates = default(IList<ResourceManager.Fluent.SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;
@@ -104,14 +104,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets probe resource of an application gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.probe")]
-        public Resource.Fluent.SubResource Probe { get; set; }
+        public ResourceManager.Fluent.SubResource Probe { get; set; }
 
         /// <summary>
         /// Gets or sets array of references to application gateway
         /// authentication certificates.
         /// </summary>
         [JsonProperty(PropertyName = "properties.authenticationCertificates")]
-        public IList<Resource.Fluent.SubResource> AuthenticationCertificates { get; set; }
+        public IList<ResourceManager.Fluent.SubResource> AuthenticationCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the backend http settings

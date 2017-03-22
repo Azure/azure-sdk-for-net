@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent;
 
     /// <summary>

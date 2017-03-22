@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Description of a restore request.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RestoreRequestInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class RestoreRequestInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RestoreRequestInner class.

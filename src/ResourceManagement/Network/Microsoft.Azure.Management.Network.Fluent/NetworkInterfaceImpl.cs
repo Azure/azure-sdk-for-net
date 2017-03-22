@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using NetworkInterface.Definition;
     using System.Collections.Generic;
-    using Resource.Fluent.Core.ResourceActions;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
 
     /// <summary>

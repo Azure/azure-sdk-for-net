@@ -5,9 +5,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGatewayFrontend.Definition;
     using ApplicationGatewayFrontend.UpdateDefinition;
     using Models;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for ApplicationGatewayFrontend.

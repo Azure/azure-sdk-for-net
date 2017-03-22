@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
     using Disk.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to managed disk management API in Azure.

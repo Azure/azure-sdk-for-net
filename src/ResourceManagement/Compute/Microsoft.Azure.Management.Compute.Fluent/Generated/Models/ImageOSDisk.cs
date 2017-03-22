@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// <param name="diskSizeGB">The initial managed disk size in GB for
         /// blank data disks, and the new desired size for existing OS and Data
         /// disks.</param>
-        public ImageOSDisk(OperatingSystemTypes osType, OperatingSystemStateTypes osState, Microsoft.Azure.Management.Resource.Fluent.SubResource snapshot = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource managedDisk = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?))
+        public ImageOSDisk(OperatingSystemTypes osType, OperatingSystemStateTypes osState, Microsoft.Azure.Management.ResourceManager.Fluent.SubResource snapshot = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource managedDisk = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?))
         {
             OsType = osType;
             OsState = osState;
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// Gets or sets the snapshot.
         /// </summary>
         [JsonProperty(PropertyName = "snapshot")]
-        public Microsoft.Azure.Management.Resource.Fluent.SubResource Snapshot { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource Snapshot { get; set; }
 
         /// <summary>
         /// Gets or sets the managedDisk.
         /// </summary>
         [JsonProperty(PropertyName = "managedDisk")]
-        public Microsoft.Azure.Management.Resource.Fluent.SubResource ManagedDisk { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource ManagedDisk { get; set; }
 
         /// <summary>
         /// Gets or sets the Virtual Hard Disk.

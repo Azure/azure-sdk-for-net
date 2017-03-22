@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Subnet.Update;
     using Subnet.UpdateDefinition;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
 
     internal partial class SubnetImpl 
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        Network.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<Network.Update.IUpdate>.Attach()
+        Network.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<Network.Update.IUpdate>.Attach()
         {
             return this.Attach() as Network.Update.IUpdate;
         }
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        Network.Definition.IWithCreateAndSubnet Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<Network.Definition.IWithCreateAndSubnet>.Attach()
+        Network.Definition.IWithCreateAndSubnet Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<Network.Definition.IWithCreateAndSubnet>.Attach()
         {
             return this.Attach() as Network.Definition.IWithCreateAndSubnet;
         }

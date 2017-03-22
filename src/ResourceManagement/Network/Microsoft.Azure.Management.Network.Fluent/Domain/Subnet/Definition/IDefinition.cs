@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
     /// The stage of the subnet definition allowing to specify the address space for the subnet.

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Reflection;
 
 namespace Azure.Tests

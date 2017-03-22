@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// IP configuration for virtual network gateway
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetworkGatewayIPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class VirtualNetworkGatewayIPConfigurationInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayIPConfigurationInner(Resource.Fluent.SubResource subnet, Resource.Fluent.SubResource publicIPAddress, string id = default(string), string privateIPAllocationMethod = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfigurationInner(ResourceManager.Fluent.SubResource subnet, ResourceManager.Fluent.SubResource publicIPAddress, string id = default(string), string privateIPAllocationMethod = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference of the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
-        public Resource.Fluent.SubResource Subnet { get; set; }
+        public ResourceManager.Fluent.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public Resource.Fluent.SubResource PublicIPAddress { get; set; }
+        public ResourceManager.Fluent.SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the public IP resource. Possible
