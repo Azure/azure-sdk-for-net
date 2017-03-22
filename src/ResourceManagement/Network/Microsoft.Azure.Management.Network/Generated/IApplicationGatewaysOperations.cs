@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ApplicationGatewayBackendHealth>> BackendHealthWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all available web application firewall rule sets.
+        /// Lists all available web application firewall rule sets.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplicationGatewayAvailableWafRuleSetsResult>> GetAvailableWafRuleSetsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplicationGatewayAvailableWafRuleSetsResult>> ListAvailableWafRuleSetsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified application gateway.
         /// </summary>

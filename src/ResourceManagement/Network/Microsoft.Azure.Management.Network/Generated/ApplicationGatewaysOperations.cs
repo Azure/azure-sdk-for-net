@@ -724,7 +724,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets all available web application firewall rule sets.
+        /// Lists all available web application firewall rule sets.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -747,7 +747,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApplicationGatewayAvailableWafRuleSetsResult>> GetAvailableWafRuleSetsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApplicationGatewayAvailableWafRuleSetsResult>> ListAvailableWafRuleSetsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -763,7 +763,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetAvailableWafRuleSets", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListAvailableWafRuleSets", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

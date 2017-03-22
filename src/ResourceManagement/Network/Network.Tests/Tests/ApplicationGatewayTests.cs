@@ -542,8 +542,8 @@ namespace Networks.Tests
                 Assert.Equal(1, backendHealth.BackendAddressPools.Count);
                 Assert.Equal(2, backendHealth.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
 
-                // Get available WAF rule sets (validate first result set)
-                var availableWAFRuleSets = networkManagementClient.ApplicationGateways.GetAvailableWafRuleSets();
+                // Get available WAF rule sets (validate first result set/group)
+                var availableWAFRuleSets = networkManagementClient.ApplicationGateways.ListAvailableWafRuleSets();
                 Assert.NotNull(availableWAFRuleSets);
                 Assert.NotEmpty(availableWAFRuleSets.Value);
                 Assert.NotNull(availableWAFRuleSets.Value[0].Name);
