@@ -1,6 +1,6 @@
 {
 
-  "version": "9.1.0-preview",
+  "version": "10.0.0-preview",
   "description": "Provides management capabilities for Network services.",
   "authors": [ "Microsoft" ],
 
