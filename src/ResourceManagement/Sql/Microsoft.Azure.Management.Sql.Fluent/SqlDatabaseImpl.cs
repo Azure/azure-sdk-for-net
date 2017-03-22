@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.IndependentChild.Definition;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.IndependentChild.Definition;
     using Models;
-    using Resource.Fluent.Core.Resource.Definition;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.Resource.Definition;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using SqlDatabase.Definition;
     using SqlDatabase.Update;
     using System;

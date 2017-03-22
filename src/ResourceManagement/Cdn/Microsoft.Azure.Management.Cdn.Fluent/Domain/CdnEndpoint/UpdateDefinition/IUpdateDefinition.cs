@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition
 {
     using System.Collections.Generic;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The first stage of a CDN profile endpoint definition.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition
         /// <param name="action">The action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
 
         /// <summary>
         /// Specifies origin path.

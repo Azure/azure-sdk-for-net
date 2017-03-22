@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Describes a Virtual Machine Extension Image.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualMachineExtensionImageInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class VirtualMachineExtensionImageInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineExtensionImageInner

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
 {
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of an application gateway backend update allowing to add an address to the backend.

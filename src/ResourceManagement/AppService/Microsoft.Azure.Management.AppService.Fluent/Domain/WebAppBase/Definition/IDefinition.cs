@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition;

@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Redis.Fluent.Models;
     using Microsoft.Azure.Management.Redis.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     /// <summary>
     /// A Redis Cache update allowing Redis configuration to be modified.
     /// </summary>

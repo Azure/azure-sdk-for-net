@@ -4,7 +4,7 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 using System.Linq;
 using Xunit;

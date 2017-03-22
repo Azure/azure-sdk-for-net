@@ -6,9 +6,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineScaleSetUnmanagedDataDisk.DefinitionWithImage;
     using VirtualMachineScaleSetUnmanagedDataDisk.DefinitionWithNewVhd;
     using VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The implementation for VirtualMachineScaleSetUnmanagedDataDisk and its create and update interfaces.

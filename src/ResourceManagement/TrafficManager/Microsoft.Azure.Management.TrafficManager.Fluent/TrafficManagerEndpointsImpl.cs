@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System;
     using Models;
 

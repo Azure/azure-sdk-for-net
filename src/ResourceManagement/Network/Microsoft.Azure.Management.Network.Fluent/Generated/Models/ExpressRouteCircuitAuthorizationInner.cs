@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Authorization in an ExpressRouteCircuit resource.
     /// </summary>
     [JsonTransformation]
-    public partial class ExpressRouteCircuitAuthorizationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ExpressRouteCircuitAuthorizationInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the

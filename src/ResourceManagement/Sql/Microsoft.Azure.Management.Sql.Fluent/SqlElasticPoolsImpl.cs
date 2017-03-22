@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.CollectionActions;
     using Models;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using SqlElasticPool.Definition;
     using SqlElasticPools.SqlElasticPoolsCreatable;
     using System.Collections.Generic;

@@ -7,14 +7,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Batch.Fluent.Models;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Batch.Fluent.Application.Update;
     using Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition;
     using Microsoft.Azure.Management.Batch.Fluent.Application.Definition;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     public partial class ApplicationImpl 
     {
         /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>.Attach() { 
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>.Attach() { 
             return this.Attach() as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate;
         }
 
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage>.Attach() { 
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage>.Attach() { 
             return this.Attach() as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage;
         }
 

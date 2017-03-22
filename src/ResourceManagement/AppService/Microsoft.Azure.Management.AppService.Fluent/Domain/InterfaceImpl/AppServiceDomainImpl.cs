@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServiceDomain.Definition;
     using AppServiceDomain.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using System;
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain;
         }

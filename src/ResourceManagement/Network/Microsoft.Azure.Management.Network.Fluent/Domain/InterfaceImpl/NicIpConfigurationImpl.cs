@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using HasPublicIPAddress.Definition;
     using HasPublicIPAddress.UpdateDefinition;
     using HasPublicIPAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class NicIPConfigurationImpl 
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the subnet associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasSubnet.SubnetName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.SubnetName
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the resource ID of the virtual network whose subnet is associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasSubnet.NetworkId
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.NetworkId
         {
             get
             {
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<NetworkInterface.Update.IUpdate>.Attach()
+        NetworkInterface.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<NetworkInterface.Update.IUpdate>.Attach()
         {
             return this.Attach() as NetworkInterface.Update.IUpdate;
         }
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<NetworkInterface.Definition.IWithCreate>.Attach()
+        NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<NetworkInterface.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as NetworkInterface.Definition.IWithCreate;
         }
@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {

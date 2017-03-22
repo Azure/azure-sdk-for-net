@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// LoadBalancer resource
     /// </summary>
     [JsonTransformation]
-    public partial class LoadBalancerInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class LoadBalancerInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the LoadBalancerInner class.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Hybrid Connection for an App Service app.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RelayServiceConnectionEntityInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class RelayServiceConnectionEntityInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the

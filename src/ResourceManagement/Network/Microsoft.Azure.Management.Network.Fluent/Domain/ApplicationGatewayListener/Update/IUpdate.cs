@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
     using Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasHostName.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of an application gateway frontend listener update allowing to require server name indication (SNI).

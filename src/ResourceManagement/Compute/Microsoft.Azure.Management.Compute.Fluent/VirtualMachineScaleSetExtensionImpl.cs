@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineScaleSetExtension.Definition;
     using Models;
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
 
     /// <summary>

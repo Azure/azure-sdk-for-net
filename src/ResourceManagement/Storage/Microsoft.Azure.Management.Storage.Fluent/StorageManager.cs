@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {

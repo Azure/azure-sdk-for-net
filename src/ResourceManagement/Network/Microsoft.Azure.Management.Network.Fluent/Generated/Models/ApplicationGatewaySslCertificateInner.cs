@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// SSL certificates of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewaySslCertificateInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewaySslCertificateInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the

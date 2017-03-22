@@ -1,22 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Rest.Azure;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent
+namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
     internal class DeploymentOperationsImpl :
-        IDeploymentOperations
+        IDeploymentOperationsFluent
     {
-        private IDeploymentOperationsOperations client;
+        private Management.ResourceManager.Fluent.IDeploymentOperations client;
         private IDeployment deployment;
 
-        internal DeploymentOperationsImpl(IDeploymentOperationsOperations client, IDeployment deployment)
+        internal DeploymentOperationsImpl(Management.ResourceManager.Fluent.IDeploymentOperations client, IDeployment deployment)
         {
             this.client = client;
             this.deployment = deployment;

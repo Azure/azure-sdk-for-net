@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Worker pool of an App Service Environment.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class WorkerPoolInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class WorkerPoolInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the WorkerPoolInner class.

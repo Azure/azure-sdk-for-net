@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Models;
-    using Resource.Fluent;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using SqlServer.Databases;
     using SqlServer.ElasticPools;
     using SqlServer.FirewallRules;

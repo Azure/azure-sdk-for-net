@@ -3,14 +3,14 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     internal partial class VirtualMachineSkuImpl 
     {
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -54,11 +54,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the region where this virtual machine image offer SKU is available.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku.Region
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku.Region
         {
             get
             {
-                return this.Region() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
+                return this.Region() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
             }
         }
     }

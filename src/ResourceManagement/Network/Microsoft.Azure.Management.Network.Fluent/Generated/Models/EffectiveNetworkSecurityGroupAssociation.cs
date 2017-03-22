@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// <param name="subnet">The ID of the subnet if assigned.</param>
         /// <param name="networkInterface">The ID of the network interface if
         /// assigned.</param>
-        public EffectiveNetworkSecurityGroupAssociation(Resource.Fluent.SubResource subnet = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource networkInterface = default(Resource.Fluent.SubResource))
+        public EffectiveNetworkSecurityGroupAssociation(ResourceManager.Fluent.SubResource subnet = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource networkInterface = default(ResourceManager.Fluent.SubResource))
         {
             Subnet = subnet;
             NetworkInterface = networkInterface;
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the ID of the subnet if assigned.
         /// </summary>
         [JsonProperty(PropertyName = "subnet")]
-        public Resource.Fluent.SubResource Subnet { get; set; }
+        public ResourceManager.Fluent.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the network interface if assigned.
         /// </summary>
         [JsonProperty(PropertyName = "networkInterface")]
-        public Resource.Fluent.SubResource NetworkInterface { get; set; }
+        public ResourceManager.Fluent.SubResource NetworkInterface { get; set; }
 
     }
 }

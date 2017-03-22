@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// private IP configuration is allowed.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayIPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayIPConfigurationInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayIPConfigurationInner(string id = default(string), Resource.Fluent.SubResource subnet = default(Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayIPConfigurationInner(string id = default(string), ResourceManager.Fluent.SubResource subnet = default(ResourceManager.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Subnet = subnet;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// application gateway gets its private address.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
-        public Resource.Fluent.SubResource Subnet { get; set; }
+        public ResourceManager.Fluent.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the application gateway subnet

@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
 {
 
     using Management.Storage.Fluent.Models;
-    using Resource.Fluent.Core.Resource.Update;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.Resource.Update;
+    using ResourceManager.Fluent.Core.ResourceActions;
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
     /// </summary>

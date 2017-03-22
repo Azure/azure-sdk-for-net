@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
     using Management.Batch;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;

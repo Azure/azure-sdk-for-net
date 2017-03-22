@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update;
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Threading;
     using System.Collections.Generic;
     public partial class BatchAccountImpl 
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.Batch.Fluent.IBatchAccount Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.Refresh() { 
+        Microsoft.Azure.Management.Batch.Fluent.IBatchAccount Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.Refresh() { 
             return this.Refresh() as Microsoft.Azure.Management.Batch.Fluent.IBatchAccount;
         }
 

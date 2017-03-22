@@ -1,20 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Models;
-    using VirtualMachine.Update;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using System.Collections.Generic;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
     public interface IVirtualMachine  :
         IGroupableResource<IComputeManager, VirtualMachineInner>,
-        IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        IRefreshable<IVirtualMachine>,
         IUpdatable<VirtualMachine.Update.IUpdate>,
         IHasNetworkInterfaces
     {
@@ -160,7 +159,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <return>The virtual machine sizes.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes();
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes();
 
         /// <return>The resource ID of the public IP address associated with this virtual machine's primary network interface.</return>
         string GetPrimaryPublicIPAddressId();

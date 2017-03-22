@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using SqlElasticPool.Definition;
     using SqlElasticPools.SqlElasticPoolsCreatable;
     using SqlServer.ElasticPools;

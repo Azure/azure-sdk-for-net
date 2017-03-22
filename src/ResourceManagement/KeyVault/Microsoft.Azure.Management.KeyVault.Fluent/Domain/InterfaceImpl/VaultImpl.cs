@@ -5,21 +5,21 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
     using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.KeyVault.Fluent.Models;
     using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     internal partial class VaultImpl 
     {
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.KeyVault.Fluent.IVault Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.Refresh () {
+        Microsoft.Azure.Management.KeyVault.Fluent.IVault Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.Refresh () {
             return this.Refresh() as Microsoft.Azure.Management.KeyVault.Fluent.IVault;
         }
 

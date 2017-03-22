@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models ;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Update;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition;

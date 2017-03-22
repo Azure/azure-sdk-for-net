@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// MySQL migration request.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class MigrateMySqlRequestInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class MigrateMySqlRequestInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the MigrateMySqlRequestInner class.

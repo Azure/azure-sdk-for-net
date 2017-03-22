@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;

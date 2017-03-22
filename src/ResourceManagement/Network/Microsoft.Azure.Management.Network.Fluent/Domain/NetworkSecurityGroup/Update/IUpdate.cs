@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition;
 

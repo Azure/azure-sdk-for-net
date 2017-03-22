@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// Represents an Azure SQL Database table.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class TableInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class TableInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the TableInner class.

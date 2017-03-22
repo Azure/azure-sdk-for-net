@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Request routing rule of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayRequestRoutingRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayRequestRoutingRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayRequestRoutingRuleInner(string id = default(string), string ruleType = default(string), Resource.Fluent.SubResource backendAddressPool = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource backendHttpSettings = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource httpListener = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource urlPathMap = default(Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayRequestRoutingRuleInner(string id = default(string), string ruleType = default(string), ResourceManager.Fluent.SubResource backendAddressPool = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource backendHttpSettings = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource httpListener = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource urlPathMap = default(ResourceManager.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             RuleType = ruleType;
@@ -79,25 +79,25 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public Resource.Fluent.SubResource BackendAddressPool { get; set; }
+        public ResourceManager.Fluent.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets frontend port resource of the application gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendHttpSettings")]
-        public Resource.Fluent.SubResource BackendHttpSettings { get; set; }
+        public ResourceManager.Fluent.SubResource BackendHttpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets http listener resource of the application gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpListener")]
-        public Resource.Fluent.SubResource HttpListener { get; set; }
+        public ResourceManager.Fluent.SubResource HttpListener { get; set; }
 
         /// <summary>
         /// Gets or sets URL path map resource of the application gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.urlPathMap")]
-        public Resource.Fluent.SubResource UrlPathMap { get; set; }
+        public ResourceManager.Fluent.SubResource UrlPathMap { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the request routing rule

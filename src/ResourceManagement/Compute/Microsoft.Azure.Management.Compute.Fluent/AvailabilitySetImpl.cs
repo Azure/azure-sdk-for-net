@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
