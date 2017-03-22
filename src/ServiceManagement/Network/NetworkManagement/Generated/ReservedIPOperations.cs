@@ -30,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
@@ -321,7 +322,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -465,7 +466,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -633,7 +634,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -769,7 +770,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -822,6 +823,34 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
                     virtualIPNameElement.Value = parameters.VirtualIPName;
                     reservedIPElement.Add(virtualIPNameElement);
+                }
+                
+                if (parameters.IPTags != null)
+                {
+                    if (parameters.IPTags is ILazyCollection == false || ((ILazyCollection)parameters.IPTags).IsInitialized)
+                    {
+                        XElement iPTagsSequenceElement = new XElement(XName.Get("IPTags", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (IPTag iPTagsItem in parameters.IPTags)
+                        {
+                            XElement iPTagElement = new XElement(XName.Get("IPTag", "http://schemas.microsoft.com/windowsazure"));
+                            iPTagsSequenceElement.Add(iPTagElement);
+                            
+                            if (iPTagsItem.IPTagType != null)
+                            {
+                                XElement iPTagTypeElement = new XElement(XName.Get("IPTagType", "http://schemas.microsoft.com/windowsazure"));
+                                iPTagTypeElement.Value = iPTagsItem.IPTagType;
+                                iPTagElement.Add(iPTagTypeElement);
+                            }
+                            
+                            if (iPTagsItem.Value != null)
+                            {
+                                XElement valueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                valueElement.Value = iPTagsItem.Value;
+                                iPTagElement.Add(valueElement);
+                            }
+                        }
+                        reservedIPElement.Add(iPTagsSequenceElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -951,7 +980,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1097,7 +1126,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1265,7 +1294,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1761,7 +1790,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1875,6 +1904,30 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 string virtualIPNameInstance = virtualIPNameElement.Value;
                                 result.VirtualIPName = virtualIPNameInstance;
                             }
+                            
+                            XElement iPTagsSequenceElement = reservedIPElement.Element(XName.Get("IPTags", "http://schemas.microsoft.com/windowsazure"));
+                            if (iPTagsSequenceElement != null)
+                            {
+                                foreach (XElement iPTagsElement in iPTagsSequenceElement.Elements(XName.Get("IPTag", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    IPTag iPTagInstance = new IPTag();
+                                    result.IPTags.Add(iPTagInstance);
+                                    
+                                    XElement iPTagTypeElement = iPTagsElement.Element(XName.Get("IPTagType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (iPTagTypeElement != null)
+                                    {
+                                        string iPTagTypeInstance = iPTagTypeElement.Value;
+                                        iPTagInstance.IPTagType = iPTagTypeInstance;
+                                    }
+                                    
+                                    XElement valueElement = iPTagsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                    if (valueElement != null)
+                                    {
+                                        string valueInstance = valueElement.Value;
+                                        iPTagInstance.Value = valueInstance;
+                                    }
+                                }
+                            }
                         }
                         
                     }
@@ -1961,7 +2014,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2079,6 +2132,30 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 {
                                     string virtualIPNameInstance = virtualIPNameElement.Value;
                                     reservedIPInstance.VirtualIPName = virtualIPNameInstance;
+                                }
+                                
+                                XElement iPTagsSequenceElement = reservedIPsElement.Element(XName.Get("IPTags", "http://schemas.microsoft.com/windowsazure"));
+                                if (iPTagsSequenceElement != null)
+                                {
+                                    foreach (XElement iPTagsElement in iPTagsSequenceElement.Elements(XName.Get("IPTag", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        IPTag iPTagInstance = new IPTag();
+                                        reservedIPInstance.IPTags.Add(iPTagInstance);
+                                        
+                                        XElement iPTagTypeElement = iPTagsElement.Element(XName.Get("IPTagType", "http://schemas.microsoft.com/windowsazure"));
+                                        if (iPTagTypeElement != null)
+                                        {
+                                            string iPTagTypeInstance = iPTagTypeElement.Value;
+                                            iPTagInstance.IPTagType = iPTagTypeInstance;
+                                        }
+                                        
+                                        XElement valueElement = iPTagsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                        if (valueElement != null)
+                                        {
+                                            string valueInstance = valueElement.Value;
+                                            iPTagInstance.Value = valueInstance;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2272,7 +2349,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

@@ -119,6 +119,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._inUse = value; }
             }
             
+            private IList<IPTag> _iPTags;
+            
+            /// <summary>
+            /// Optional. The list of IPTags associated with the reserved IP.
+            /// </summary>
+            public IList<IPTag> IPTags
+            {
+                get { return this._iPTags; }
+                set { this._iPTags = value; }
+            }
+            
             private string _label;
             
             /// <summary>
@@ -191,6 +202,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public ReservedIP()
             {
+                this.IPTags = new LazyList<IPTag>();
             }
         }
     }

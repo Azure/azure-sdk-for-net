@@ -256,7 +256,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -414,7 +414,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
