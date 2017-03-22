@@ -36,11 +36,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="port">Port</param>
-        /// <param name="protocol">Protocol. Possible values are: 'Http' and
-        /// 'Https'. Possible values include: 'Http', 'Https'</param>
+        /// <param name="protocol">Protocol. Possible values include: 'Http',
+        /// 'Https'</param>
         /// <param name="cookieBasedAffinity">Cookie based affinity. Possible
-        /// values are: 'Enabled' and 'Disabled'. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
+        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="requestTimeout">Request timeout in seconds.
         /// Application Gateway will fail the request if response is not
         /// received within RequestTimeout. Acceptable values are from 1 second
@@ -81,15 +80,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets protocol. Possible values are: 'Http' and 'Https'.
-        /// Possible values include: 'Http', 'Https'
+        /// Gets or sets protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets cookie based affinity. Possible values are: 'Enabled'
-        /// and 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets cookie based affinity. Possible values include:
+        /// 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public string CookieBasedAffinity { get; set; }
