@@ -33,8 +33,8 @@
       "type": "platform",
       "version": "1.0.0"
     },
-    "Hyak.Common": "1.1.1",
-    "Microsoft.Azure.Common": "2.1.1",
+    "Hyak.Common": "1.1.2",
+    "Microsoft.Azure.Common": "2.1.2",
     "Microsoft.Azure.Management.ResourceManager": "1.4.0-preview",
     "Microsoft.Azure.Management.Sql": "0.55.0-prerelease",
     "Microsoft.Azure.Test.HttpRecorder": "1.6.8",

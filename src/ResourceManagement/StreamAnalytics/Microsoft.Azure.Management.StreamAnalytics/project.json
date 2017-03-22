@@ -1,5 +1,5 @@
 {
-    "version": "1.8.2",
+    "version": "1.8.3",
     "title": "Microsoft Azure Stream Analytics Management Library",
     "description": "Azure Stream Analytics is a fully managed service providing low latency, highly available, scalable complex event processing over streaming data in the cloud. For more information visit http://azure.microsoft.com/en-us/documentation/articles/stream-analytics-get-started/.",
     "authors": [ "Microsoft" ],
@@ -20,7 +20,7 @@
     },
 
   "dependencies": {
-    "Microsoft.Azure.Common": "2.1.1"
+    "Microsoft.Azure.Common": "2.1.2"
   },
 
   "frameworks": {
