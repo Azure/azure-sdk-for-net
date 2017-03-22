@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="disabledSslProtocols">SSL protocols to be disabled on
-        /// application gateway. Possible values are: 'TLSv1_0', 'TLSv1_1', and
-        /// 'TLSv1_2'.</param>
+        /// application gateway.</param>
         public ApplicationGatewaySslPolicy(IList<string> disabledSslProtocols = default(IList<string>))
         {
             DisabledSslProtocols = disabledSslProtocols;
@@ -41,7 +40,6 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets SSL protocols to be disabled on application gateway.
-        /// Possible values are: 'TLSv1_0', 'TLSv1_1', and 'TLSv1_2'.
         /// </summary>
         [JsonProperty(PropertyName = "disabledSslProtocols")]
         public IList<string> DisabledSslProtocols { get; set; }

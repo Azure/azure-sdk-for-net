@@ -32,9 +32,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="address">IP address or FQDN of backend server.</param>
         /// <param name="ipConfiguration">Reference of IP configuration of
         /// backend server.</param>
-        /// <param name="health">Health of backend server. Possible values are:
-        /// 'Unknown', 'Up', 'Down', and 'Partial'. Possible values include:
-        /// 'Unknown', 'Up', 'Down', 'Partial'</param>
+        /// <param name="health">Health of backend server. Possible values
+        /// include: 'Unknown', 'Up', 'Down', 'Partial', 'Draining'</param>
         public ApplicationGatewayBackendHealthServer(string address = default(string), SubResource ipConfiguration = default(SubResource), string health = default(string))
         {
             Address = address;
@@ -55,9 +54,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource IpConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets health of backend server. Possible values are:
-        /// 'Unknown', 'Up', 'Down', and 'Partial'. Possible values include:
-        /// 'Unknown', 'Up', 'Down', 'Partial'
+        /// Gets or sets health of backend server. Possible values include:
+        /// 'Unknown', 'Up', 'Down', 'Partial', 'Draining'
         /// </summary>
         [JsonProperty(PropertyName = "health")]
         public string Health { get; set; }
