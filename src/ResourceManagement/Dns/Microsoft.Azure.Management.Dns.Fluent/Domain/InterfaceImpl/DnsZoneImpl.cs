@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading.Tasks;
     using DnsZone.Definition;
     using DnsZone.Update;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class DnsZoneImpl 
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Dns.Fluent.IDnsZone Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.Refresh()
+        Microsoft.Azure.Management.Dns.Fluent.IDnsZone Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Dns.Fluent.IDnsZone;
         }

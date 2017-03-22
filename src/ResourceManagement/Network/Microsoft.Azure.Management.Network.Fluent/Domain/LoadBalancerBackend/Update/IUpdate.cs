@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The entirety of a load balancer backend update as part of a load balancer update.

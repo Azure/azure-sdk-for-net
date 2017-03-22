@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
     using Microsoft.Azure.Management.Cdn.Fluent;
     using System.Collections.Generic;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The final stage of the Premium Verizon endpoint object definition, at which it can be attached to the parent, using AttachableStandard.attach().
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         /// <param name="action">The action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
 
         /// <summary>
         /// Specifies origin path.

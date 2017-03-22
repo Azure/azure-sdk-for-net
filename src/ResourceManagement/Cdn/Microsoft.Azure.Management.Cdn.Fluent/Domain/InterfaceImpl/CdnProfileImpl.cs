@@ -5,10 +5,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using CdnProfile.Update;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Threading;
     using CdnProfile.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Models;
 
     internal partial class CdnProfileImpl 
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>.Refresh()
+        Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile;
         }
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Gets the name of the region the resource is in.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.RegionName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
         {
             get
             {

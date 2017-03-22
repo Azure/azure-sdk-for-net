@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The entirety of an application gateway SSL certificate update as part of an application gateway update.

@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServiceCertificateOrder.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.KeyVault.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System;
 
     internal partial class AppServiceCertificateOrderImpl 
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder;
         }

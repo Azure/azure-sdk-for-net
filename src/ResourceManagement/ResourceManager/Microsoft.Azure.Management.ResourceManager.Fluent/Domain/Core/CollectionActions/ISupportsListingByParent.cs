@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T> ListByParent(string resourceGroupName, string parentName);
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T> ListByParent(string resourceGroupName, string parentName);
 
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.
@@ -28,20 +28,20 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Task<Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T> ListByParent(ParentT parentResource);
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T> ListByParent(ParentT parentResource);
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

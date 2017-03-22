@@ -6,15 +6,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineCustomImage;
     using VirtualMachineCustomImage.CustomImageDataDisk.Definition;
     using VirtualMachineCustomImage.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     internal partial class CustomImageDataDiskImpl 
     {
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings>.Attach()
+        VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings>.Attach()
         {
             return this.Attach() as VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings;
         }

@@ -5,16 +5,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of an application gateway definition allowing to define one or more public, or Internet-facing, frontends.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// The stage of an application gateway definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRule>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRule>
     {
     }
 

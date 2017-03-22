@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     /// <summary>
     /// Child resource abstract implementation.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public abstract string Name();
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {

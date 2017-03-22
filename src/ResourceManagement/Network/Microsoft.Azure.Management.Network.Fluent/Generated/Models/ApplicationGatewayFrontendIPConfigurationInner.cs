@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Frontend IP configuration of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayFrontendIPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayFrontendIPConfigurationInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayFrontendIPConfigurationInner(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Resource.Fluent.SubResource subnet = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource publicIPAddress = default(Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayFrontendIPConfigurationInner(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), ResourceManager.Fluent.SubResource subnet = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource publicIPAddress = default(ResourceManager.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAddress = privateIPAddress;
@@ -81,13 +81,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets reference of the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
-        public Resource.Fluent.SubResource Subnet { get; set; }
+        public ResourceManager.Fluent.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets reference of the PublicIP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public Resource.Fluent.SubResource PublicIPAddress { get; set; }
+        public ResourceManager.Fluent.SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the public IP resource. Possible

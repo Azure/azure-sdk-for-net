@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineScaleSetUnmanagedDataDisk.DefinitionWithNewVhd;
     using VirtualMachineScaleSetUnmanagedDataDisk.Update;
     using VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
 
     internal partial class VirtualMachineScaleSetUnmanagedDataDiskImpl 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<VirtualMachineScaleSet.Update.IWithApply>.Attach()
+        VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<VirtualMachineScaleSet.Update.IWithApply>.Attach()
         {
             return this.Attach() as VirtualMachineScaleSet.Update.IWithApply;
         }
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        VirtualMachineScaleSet.Definition.IWithUnmanagedCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<VirtualMachineScaleSet.Definition.IWithUnmanagedCreate>.Attach()
+        VirtualMachineScaleSet.Definition.IWithUnmanagedCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<VirtualMachineScaleSet.Definition.IWithUnmanagedCreate>.Attach()
         {
             return this.Attach() as VirtualMachineScaleSet.Definition.IWithUnmanagedCreate;
         }

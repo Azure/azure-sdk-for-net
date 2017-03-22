@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Describes definition and update stages of unmanaged data disk of a scale set.

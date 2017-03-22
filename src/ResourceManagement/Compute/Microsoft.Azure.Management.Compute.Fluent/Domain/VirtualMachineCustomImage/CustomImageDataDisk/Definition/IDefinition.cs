@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.Cu
 {
     using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
     /// The stage of the image definition allowing to choose the source of the data disk image.

@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 {
     public abstract class CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT, IUpdatableT> 
         : Creatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT>, 

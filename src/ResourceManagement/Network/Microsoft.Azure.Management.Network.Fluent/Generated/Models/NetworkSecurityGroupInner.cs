@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// NetworkSecurityGroup resource.
     /// </summary>
     [JsonTransformation]
-    public partial class NetworkSecurityGroupInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class NetworkSecurityGroupInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroupInner class.

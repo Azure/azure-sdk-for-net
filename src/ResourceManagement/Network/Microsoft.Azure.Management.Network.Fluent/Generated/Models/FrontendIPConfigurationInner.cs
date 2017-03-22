@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Frontend IP address of the load balancer.
     /// </summary>
     [JsonTransformation]
-    public partial class FrontendIPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class FrontendIPConfigurationInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the FrontendIPConfigurationInner
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public FrontendIPConfigurationInner(string id = default(string), IList<Resource.Fluent.SubResource> inboundNatRules = default(IList<Resource.Fluent.SubResource>), IList<Resource.Fluent.SubResource> inboundNatPools = default(IList<Resource.Fluent.SubResource>), IList<Resource.Fluent.SubResource> outboundNatRules = default(IList<Resource.Fluent.SubResource>), IList<Resource.Fluent.SubResource> loadBalancingRules = default(IList<Resource.Fluent.SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public FrontendIPConfigurationInner(string id = default(string), IList<ResourceManager.Fluent.SubResource> inboundNatRules = default(IList<ResourceManager.Fluent.SubResource>), IList<ResourceManager.Fluent.SubResource> inboundNatPools = default(IList<ResourceManager.Fluent.SubResource>), IList<ResourceManager.Fluent.SubResource> outboundNatRules = default(IList<ResourceManager.Fluent.SubResource>), IList<ResourceManager.Fluent.SubResource> loadBalancingRules = default(IList<ResourceManager.Fluent.SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
@@ -80,25 +80,25 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets read only. Inbound rules URIs that use this frontend IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRules")]
-        public IList<Resource.Fluent.SubResource> InboundNatRules { get; protected set; }
+        public IList<ResourceManager.Fluent.SubResource> InboundNatRules { get; protected set; }
 
         /// <summary>
         /// Gets read only. Inbound pools URIs that use this frontend IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatPools")]
-        public IList<Resource.Fluent.SubResource> InboundNatPools { get; protected set; }
+        public IList<ResourceManager.Fluent.SubResource> InboundNatPools { get; protected set; }
 
         /// <summary>
         /// Gets read only. Outbound rules URIs that use this frontend IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundNatRules")]
-        public IList<Resource.Fluent.SubResource> OutboundNatRules { get; protected set; }
+        public IList<ResourceManager.Fluent.SubResource> OutboundNatRules { get; protected set; }
 
         /// <summary>
         /// Gets load balancing rules URIs that use this frontend IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<Resource.Fluent.SubResource> LoadBalancingRules { get; protected set; }
+        public IList<ResourceManager.Fluent.SubResource> LoadBalancingRules { get; protected set; }
 
         /// <summary>
         /// Gets or sets the private IP address of the IP configuration.

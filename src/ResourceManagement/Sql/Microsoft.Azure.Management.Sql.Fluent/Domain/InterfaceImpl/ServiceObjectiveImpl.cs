@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Models;
 
     internal partial class ServiceObjectiveImpl 
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Sql.Fluent.IServiceObjective Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IServiceObjective>.Refresh()
+        Microsoft.Azure.Management.Sql.Fluent.IServiceObjective Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IServiceObjective>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.IServiceObjective;
         }
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the name of the resource group.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasResourceGroup.ResourceGroupName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the resource ID string.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
             get
             {

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using System.Threading.Tasks;
     using System.Threading;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
 
     /// <summary>

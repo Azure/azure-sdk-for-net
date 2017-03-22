@@ -3,10 +3,10 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System;
     using System.Linq;
-    using Resource.Fluent.Authentication;
+    using ResourceManager.Fluent.Authentication;
 
     public class NetworkManager : Manager<INetworkManagementClient>, INetworkManager
     {

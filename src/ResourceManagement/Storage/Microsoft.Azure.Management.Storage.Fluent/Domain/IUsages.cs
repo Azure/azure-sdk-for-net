@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     /// <summary>
     /// Entry point for storage resource usage management API.
     /// </summary>

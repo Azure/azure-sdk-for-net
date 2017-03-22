@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using VirtualMachineCustomImage;
     using VirtualMachineCustomImage.CustomImageDataDisk.Definition;
-    using Resource.Fluent.Core;
-    using Resource.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// The implementation for VirtualMachineCustomImage.CustomImageDataDisk.

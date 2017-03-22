@@ -3,16 +3,16 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of a private frontend definition allowing to specify a subnet from the selected network.
     /// </summary>
     /// <typeparam name="Parent">The next stage of the parent definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend of an internal load balancer.

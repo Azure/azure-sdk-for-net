@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
 {
     using Microsoft.Azure.Management.Compute.Fluent;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     /// <summary>
     /// The stage of a virtual machine scale set extension definition allowing to specify the type of the virtual machine

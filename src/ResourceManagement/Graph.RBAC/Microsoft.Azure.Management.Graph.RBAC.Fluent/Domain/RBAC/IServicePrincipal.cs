@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models ;
     /// <summary>

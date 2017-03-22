@@ -5,11 +5,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using ApplicationGatewayRequestRoutingRule.Definition;
     using ApplicationGatewayRequestRoutingRule.UpdateDefinition;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System.IO;
-    using Resource.Fluent.Core.ChildResourceActions;
-    using Resource.Fluent;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// Implementation for ApplicationGatewayRequestRoutingRule.

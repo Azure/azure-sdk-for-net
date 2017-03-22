@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Models;
     using WebAppBase.Update;
     using WebAppSourceControl.UpdateDefinition;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Threading;
 
     /// <summary>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// A loag balancing rule for a load balancer.
     /// </summary>
     [JsonTransformation]
-    public partial class LoadBalancingRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class LoadBalancingRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the LoadBalancingRuleInner class.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public LoadBalancingRuleInner(string protocol, int frontendPort, string id = default(string), Resource.Fluent.SubResource frontendIPConfiguration = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource backendAddressPool = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource probe = default(Resource.Fluent.SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public LoadBalancingRuleInner(string protocol, int frontendPort, string id = default(string), ResourceManager.Fluent.SubResource frontendIPConfiguration = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource backendAddressPool = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource probe = default(ResourceManager.Fluent.SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -89,21 +89,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets a reference to frontend IP addresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
-        public Resource.Fluent.SubResource FrontendIPConfiguration { get; set; }
+        public ResourceManager.Fluent.SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to a pool of DIPs. Inbound traffic is
         /// randomly load balanced across IPs in the backend IPs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public Resource.Fluent.SubResource BackendAddressPool { get; set; }
+        public ResourceManager.Fluent.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the load balancer probe used by the
         /// load balancing rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.probe")]
-        public Resource.Fluent.SubResource Probe { get; set; }
+        public ResourceManager.Fluent.SubResource Probe { get; set; }
 
         /// <summary>
         /// Gets or sets the transport protocol for the external endpoint.

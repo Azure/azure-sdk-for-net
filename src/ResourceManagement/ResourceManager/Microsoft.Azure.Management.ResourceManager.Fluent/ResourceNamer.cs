@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Management.Resource.Fluent
+namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
     public class ResourceNamer : IResourceNamer
     {

@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System;
     using System.Collections.ObjectModel;
 

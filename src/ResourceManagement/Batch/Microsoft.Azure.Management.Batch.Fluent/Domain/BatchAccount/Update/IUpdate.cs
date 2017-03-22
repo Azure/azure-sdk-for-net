@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition;
     using Microsoft.Azure.Management.Batch.Fluent.Application.Update;
     using Microsoft.Azure.Management.Batch.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     /// <summary>
     /// The stage of the batch account update definition allowing to specify storage account.
     /// </summary>

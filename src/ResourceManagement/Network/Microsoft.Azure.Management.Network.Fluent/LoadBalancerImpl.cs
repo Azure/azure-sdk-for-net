@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
     using Models;
     using LoadBalancer.Update;
-    using Resource.Fluent.Core.ResourceActions;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System.Text;
     using System;

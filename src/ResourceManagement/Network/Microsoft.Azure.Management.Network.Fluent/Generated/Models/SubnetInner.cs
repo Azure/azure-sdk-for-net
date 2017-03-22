@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// Subnet in a virtual network resource.
     /// </summary>
     [JsonTransformation]
-    public partial class SubnetInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class SubnetInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SubnetInner class.

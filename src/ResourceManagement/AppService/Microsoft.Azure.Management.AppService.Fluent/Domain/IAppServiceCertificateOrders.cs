@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using AppServiceCertificateOrder.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point for app service certificate order management API.

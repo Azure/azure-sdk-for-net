@@ -6,15 +6,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Models;
 
     /// <summary>
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     /// The stage of the load balancer definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithFrontend>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithFrontend>
     {
     }
 }

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
     using Models;

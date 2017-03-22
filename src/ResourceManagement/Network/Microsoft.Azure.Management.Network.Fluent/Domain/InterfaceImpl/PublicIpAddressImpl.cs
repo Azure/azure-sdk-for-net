@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using PublicIPAddress.Definition;
     using PublicIPAddress.Update;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     internal partial class PublicIPAddressImpl 
     {
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.Refresh()
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
         }

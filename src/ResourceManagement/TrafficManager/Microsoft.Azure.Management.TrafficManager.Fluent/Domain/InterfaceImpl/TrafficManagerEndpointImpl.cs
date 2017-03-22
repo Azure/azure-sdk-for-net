@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using TrafficManagerEndpoint.Definition;
     using TrafficManagerEndpoint.UpdateAzureEndpoint;
     using TrafficManagerEndpoint.UpdateDefinition;
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<TrafficManagerProfile.Update.IUpdate>.Attach()
+        TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<TrafficManagerProfile.Update.IUpdate>.Attach()
         {
             return this.Attach() as TrafficManagerProfile.Update.IUpdate;
         }
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<TrafficManagerProfile.Definition.IWithCreate>.Attach()
+        TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<TrafficManagerProfile.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as TrafficManagerProfile.Definition.IWithCreate;
         }

@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.CollectionActions;
     /// <summary>
     /// Entry point for storage accounts management API.
     /// </summary>

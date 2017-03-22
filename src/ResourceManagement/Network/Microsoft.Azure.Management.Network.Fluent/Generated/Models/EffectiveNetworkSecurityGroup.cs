@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// that is applied.</param>
         /// <param name="effectiveSecurityRules">A collection of effective
         /// security rules.</param>
-        public EffectiveNetworkSecurityGroup(Resource.Fluent.SubResource networkSecurityGroup = default(Resource.Fluent.SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRule>))
+        public EffectiveNetworkSecurityGroup(ResourceManager.Fluent.SubResource networkSecurityGroup = default(ResourceManager.Fluent.SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRule>))
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the ID of network security group that is applied.
         /// </summary>
         [JsonProperty(PropertyName = "networkSecurityGroup")]
-        public Resource.Fluent.SubResource NetworkSecurityGroup { get; set; }
+        public ResourceManager.Fluent.SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// </summary>

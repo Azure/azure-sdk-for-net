@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to AD user management API.

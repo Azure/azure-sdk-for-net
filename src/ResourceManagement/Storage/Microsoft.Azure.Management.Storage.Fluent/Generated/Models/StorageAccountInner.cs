@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent.Models
     /// <summary>
     /// The storage account.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class StorageAccountInner : Rest.Azure.Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class StorageAccountInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountInner class.

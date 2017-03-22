@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public abstract class ExternalChildResourcesCached<FluentModelTImpl, IFluentModelT, InnerModelT, IParentT, ParentImplT> :
         ExternalChildResourceCollection<FluentModelTImpl, IFluentModelT, InnerModelT, IParentT, ParentImplT>

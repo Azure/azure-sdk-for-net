@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using VirtualMachine.DefinitionManaged;
     using VirtualMachine.DefinitionManagedOrUnmanaged;
@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Collections.Generic;
@@ -1209,7 +1209,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.Refresh()
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine;
         }
@@ -1369,9 +1369,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <return>The virtual machine sizes.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailableSizes()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailableSizes()
         {
-            return this.AvailableSizes() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
+            return this.AvailableSizes() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
         }
 
         /// <summary>

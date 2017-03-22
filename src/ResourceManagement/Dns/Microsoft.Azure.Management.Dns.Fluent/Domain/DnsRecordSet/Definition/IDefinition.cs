@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
     /// The stage of the A record set definition allowing to add additional A records or

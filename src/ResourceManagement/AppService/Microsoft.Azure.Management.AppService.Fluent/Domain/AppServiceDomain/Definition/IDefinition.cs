@@ -4,10 +4,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// A domain definition allowing billing contact to be set.

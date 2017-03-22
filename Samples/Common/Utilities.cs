@@ -17,7 +17,7 @@ using System.Text;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json.Linq;

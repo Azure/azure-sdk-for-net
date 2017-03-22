@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Usage of the quota resource.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class UsageInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class UsageInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the UsageInner class.

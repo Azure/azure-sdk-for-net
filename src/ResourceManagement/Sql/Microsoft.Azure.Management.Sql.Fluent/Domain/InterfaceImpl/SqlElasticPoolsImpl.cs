@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using SqlElasticPool.Definition;
     using SqlElasticPools.SqlElasticPoolsCreatable;
     using Models;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        SqlElasticPool.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<SqlElasticPool.Definition.IBlank>.Define(string name)
+        SqlElasticPool.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<SqlElasticPool.Definition.IBlank>.Define(string name)
         {
             return this.Define(name) as SqlElasticPool.Definition.IBlank;
         }
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>The list of resources.</return>
         PagedList<ISqlElasticPool> ISupportsListingByParent<ISqlElasticPool, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
         {
-            return this.ListByParent(resourceGroupName, parentName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+            return this.ListByParent(resourceGroupName, parentName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
         }
 
         /// <summary>

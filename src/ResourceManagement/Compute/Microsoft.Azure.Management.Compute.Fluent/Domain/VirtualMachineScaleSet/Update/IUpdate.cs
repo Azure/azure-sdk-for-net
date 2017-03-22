@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition;
