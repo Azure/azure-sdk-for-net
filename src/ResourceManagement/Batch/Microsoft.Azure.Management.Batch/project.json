@@ -11,7 +11,7 @@
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "requireLicenseAcceptance": true,
-    "releaseNotes": "See https://github.com/matthchr/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/Batch/changelog.md for release notes."
+    "releaseNotes": "See https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/Batch/changelog.md for release notes."
   },
 
   "buildOptions": {
