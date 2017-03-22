@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             }
         }
 
-        public IDeploymentOperations DeploymentOperations
+        public IDeploymentOperationsFluent DeploymentOperations
         {
             get
             {

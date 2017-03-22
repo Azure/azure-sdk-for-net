@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class DeploymentOperationsImpl :
-        IDeploymentOperations
+        IDeploymentOperationsFluent
     {
         private Management.ResourceManager.Fluent.IDeploymentOperations client;
         private IDeployment deployment;

@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         DeploymentMode? Mode { get; }
 
         /// <returns>the operations related to this deployment</returns>
-        IDeploymentOperations DeploymentOperations { get; }
+        IDeploymentOperationsFluent DeploymentOperations { get; }
 
         /// <summary>
         /// Cancel a currently running template deployment.
