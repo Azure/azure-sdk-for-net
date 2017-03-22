@@ -19,6 +19,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Rest.ClientRuntim
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Rest.ClientRuntime.Tests", "Microsoft.Rest.ClientRuntime.Tests\Microsoft.Rest.ClientRuntime.Tests.xproj", "{24009A5E-85EC-4EF9-8C22-9F563DF6250F}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Rest.ClientRuntime.E2E.Tests", "Microsoft.Rest.ClientRuntime.E2E.Tests\Microsoft.Rest.ClientRuntime.E2E.Tests.xproj", "{4E9AEB40-026F-4BA1-A2DB-C8E252305157}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HttpRecorder", "..\TestFramework\Microsoft.Azure.Test.HttpRecorder\HttpRecorder.xproj", "{5D12D45A-E55F-410E-B8AF-9DC90E81B237}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestFramework", "..\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\TestFramework.xproj", "{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +63,18 @@ Global
 		{24009A5E-85EC-4EF9-8C22-9F563DF6250F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24009A5E-85EC-4EF9-8C22-9F563DF6250F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24009A5E-85EC-4EF9-8C22-9F563DF6250F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E9AEB40-026F-4BA1-A2DB-C8E252305157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E9AEB40-026F-4BA1-A2DB-C8E252305157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E9AEB40-026F-4BA1-A2DB-C8E252305157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E9AEB40-026F-4BA1-A2DB-C8E252305157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
