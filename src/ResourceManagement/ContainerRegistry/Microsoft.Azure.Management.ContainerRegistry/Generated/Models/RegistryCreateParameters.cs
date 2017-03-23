@@ -19,28 +19,33 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters for updating a container registry.
+    /// The parameters for creating a container registry.
     /// </summary>
     [JsonTransformation]
-    public partial class RegistryUpdateParameters
+    public partial class RegistryCreateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the RegistryUpdateParameters class.
+        /// Initializes a new instance of the RegistryCreateParameters class.
         /// </summary>
-        public RegistryUpdateParameters() { }
+        public RegistryCreateParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the RegistryUpdateParameters class.
+        /// Initializes a new instance of the RegistryCreateParameters class.
         /// </summary>
-        /// <param name="tags">The tags for the container registry.</param>
-        /// <param name="adminUserEnabled">The value that indicates whether the
-        /// admin user is enabled. This value is false by default.</param>
+        /// <param name="location">The location of the container registry. This
+        /// cannot be changed after the resource is created.</param>
+        /// <param name="sku">The SKU of the container registry.</param>
         /// <param name="storageAccount">The parameters of a storage account
         /// for the container registry. If specified, the storage account must
         /// be in the same physical location as the container registry.</param>
-        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? adminUserEnabled = default(bool?), StorageAccountParameters storageAccount = default(StorageAccountParameters))
+        /// <param name="tags">The tags for the container registry.</param>
+        /// <param name="adminUserEnabled">The value that indicates whether the
+        /// admin user is enabled. This value is false by default.</param>
+        public RegistryCreateParameters(string location, Sku sku, StorageAccountParameters storageAccount, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? adminUserEnabled = default(bool?))
         {
             Tags = tags;
+            Location = location;
+            Sku = sku;
             AdminUserEnabled = adminUserEnabled;
             StorageAccount = storageAccount;
         }
@@ -50,6 +55,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the container registry. This cannot be
+        /// changed after the resource is created.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SKU of the container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the value that indicates whether the admin user is
@@ -74,6 +92,22 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (StorageAccount == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccount");
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
             if (StorageAccount != null)
             {
                 StorageAccount.Validate();
