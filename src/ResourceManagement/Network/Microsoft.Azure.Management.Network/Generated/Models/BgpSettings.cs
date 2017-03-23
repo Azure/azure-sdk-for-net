@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// BGP settings details
+    /// </summary>
     public partial class BgpSettings
     {
         /// <summary>
