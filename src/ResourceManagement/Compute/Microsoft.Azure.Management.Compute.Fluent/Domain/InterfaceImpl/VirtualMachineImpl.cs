@@ -650,9 +650,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="listener">The WinRmListener.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithWinRm(WinRMListener listener)
+        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithWinRM(listener) as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -777,11 +777,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the WINRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">The WinRmListener.</param>
+        /// <param name="listener">The WinRMListener.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithWinRm(WinRMListener listener)
+        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachine.Definition.IWithWindowsCreateManaged;
+            return this.WithWinRM(listener) as VirtualMachine.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>

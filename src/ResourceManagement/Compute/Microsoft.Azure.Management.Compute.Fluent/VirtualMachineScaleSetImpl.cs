@@ -1820,7 +1820,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:78969D0BA29AFC39123F017955CEE8EE
-        public VirtualMachineScaleSetImpl WithWinRm(WinRMListener listener)
+        public VirtualMachineScaleSetImpl WithWinRM(WinRMListener listener)
         {
             if (Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
             {

@@ -468,7 +468,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:7AB774480B8E9543A8CAEE7340C4B7B8
-        public VirtualMachineImpl WithWinRm(WinRMListener listener)
+        public VirtualMachineImpl WithWinRM(WinRMListener listener)
         {
             if (Inner.OsProfile.WindowsConfiguration.WinRM == null)
             {

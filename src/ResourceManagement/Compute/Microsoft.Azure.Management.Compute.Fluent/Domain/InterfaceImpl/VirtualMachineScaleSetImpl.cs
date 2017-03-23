@@ -472,11 +472,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithWinRM(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -549,11 +549,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithWinRM(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>

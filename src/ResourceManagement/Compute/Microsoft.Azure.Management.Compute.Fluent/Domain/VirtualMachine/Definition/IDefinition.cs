@@ -307,9 +307,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// Specifies the WINRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">The WinRmListener.</param>
+        /// <param name="listener">The WinRMListener.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithWinRm(WinRMListener listener);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithWinRM(WinRMListener listener);
 
         /// <summary>
         /// Specifies that VM Agent should not be provisioned.
@@ -387,9 +387,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// Specifies the WINRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">The WinRmListener.</param>
+        /// <param name="listener">The WinRMListener.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithWinRm(WinRMListener listener);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithWinRM(WinRMListener listener);
 
         /// <summary>
         /// Specifies that VM Agent should not be provisioned.

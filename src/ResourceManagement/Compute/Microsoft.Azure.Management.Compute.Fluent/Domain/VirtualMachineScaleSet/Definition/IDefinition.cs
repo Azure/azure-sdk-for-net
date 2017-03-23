@@ -148,9 +148,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged WithWinRm(WinRMListener listener);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged WithWinRM(WinRMListener listener);
 
         /// <summary>
         /// Enables automatic updates.
@@ -784,9 +784,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged WithWinRm(WinRMListener listener);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged WithWinRM(WinRMListener listener);
 
         /// <summary>
         /// Enables automatic updates.
