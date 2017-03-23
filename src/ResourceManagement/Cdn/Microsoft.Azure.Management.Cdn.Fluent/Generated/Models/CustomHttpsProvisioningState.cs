@@ -14,13 +14,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     using Microsoft.Azure.Management.Cdn.Fluent;
 
     /// <summary>
-    /// Defines values for ProfileResourceState.
+    /// Defines values for CustomHttpsProvisioningState.
     /// </summary>
-    public static class ProfileResourceState
+    public static class CustomHttpsProvisioningState
     {
-        public const string Creating = "Creating";
-        public const string Active = "Active";
-        public const string Deleting = "Deleting";
+        public const string Enabling = "Enabling";
+        public const string Enabled = "Enabled";
+        public const string Disabling = "Disabling";
         public const string Disabled = "Disabled";
+        public const string Failed = "Failed";
     }
 }

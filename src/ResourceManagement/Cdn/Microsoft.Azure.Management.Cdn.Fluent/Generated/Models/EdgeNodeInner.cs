@@ -13,32 +13,35 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     using Microsoft.Azure.Management.Cdn;
     using Microsoft.Azure.Management.Cdn.Fluent;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters required for content load.
+    /// Edge node of CDN service.
     /// </summary>
-    public partial class LoadParameters
+    [Rest.Serialization.JsonTransformation]
+    public partial class EdgeNodeInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
-        /// Initializes a new instance of the LoadParameters class.
+        /// Initializes a new instance of the EdgeNodeInner class.
         /// </summary>
-        public LoadParameters()
+        public EdgeNodeInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LoadParameters class.
+        /// Initializes a new instance of the EdgeNodeInner class.
         /// </summary>
-        /// <param name="contentPaths">The path to the content to be loaded.
-        /// Path should be a relative file URL of the origin.</param>
-        public LoadParameters(IList<string> contentPaths)
+        /// <param name="ipAddressGroups">List of ip address groups.</param>
+        public EdgeNodeInner(IList<IpAddressGroup> ipAddressGroups, string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(location, id, name, type, tags)
         {
-            ContentPaths = contentPaths;
+            IpAddressGroups = ipAddressGroups;
             CustomInit();
         }
 
@@ -48,11 +51,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the path to the content to be loaded. Path should be a
-        /// relative file URL of the origin.
+        /// Gets or sets list of ip address groups.
         /// </summary>
-        [JsonProperty(PropertyName = "contentPaths")]
-        public IList<string> ContentPaths { get; set; }
+        [JsonProperty(PropertyName = "properties.ipAddressGroups")]
+        public IList<IpAddressGroup> IpAddressGroups { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -62,9 +64,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ContentPaths == null)
+            if (IpAddressGroups == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ContentPaths");
+                throw new ValidationException(ValidationRules.CannotBeNull, "IpAddressGroups");
             }
         }
     }
