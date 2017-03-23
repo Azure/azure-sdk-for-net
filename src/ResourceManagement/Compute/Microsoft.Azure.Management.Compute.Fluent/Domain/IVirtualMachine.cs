@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the virtual machine unique id.
         /// </summary>
-        string VmId { get; }
+        string VMId { get; }
 
         /// <summary>
         /// Power off (stop) the virtual machine.

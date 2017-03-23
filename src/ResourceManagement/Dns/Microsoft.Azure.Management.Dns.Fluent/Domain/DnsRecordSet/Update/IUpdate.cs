@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     public interface IWithNSRecordNameServer 
     {
         /// <summary>
-        /// Rmoves a NS record with the provided name server from this record set.
+        /// Removes a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
