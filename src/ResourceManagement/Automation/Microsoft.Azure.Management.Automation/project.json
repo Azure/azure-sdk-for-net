@@ -1,5 +1,5 @@
 {
-    "version": "2.0.2",
+    "version": "2.0.3",
     "title": "Microsoft Azure Automation Management Library",
     "description": "Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.",
     "authors": [ "Microsoft" ],
@@ -20,7 +20,7 @@
     },
 
   "dependencies": {
-    "Microsoft.Azure.Common": "2.1.1"
+    "Microsoft.Azure.Common": "2.1.2"
   },
 
   "frameworks": {

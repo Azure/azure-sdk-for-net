@@ -1,5 +1,5 @@
 {
-    "version": "2.0.1-preview",
+    "version": "2.0.2-preview",
     "title": "Microsoft Azure Site Recovery Management Library",
     "description": "Provides site recovery management capabilities.",
     "authors": [ "Microsoft" ],
@@ -20,7 +20,7 @@
     },
 
   "dependencies": {
-    "Microsoft.Azure.Common": "2.1.1"
+    "Microsoft.Azure.Common": "2.1.2"
   },
 
   "frameworks": {
