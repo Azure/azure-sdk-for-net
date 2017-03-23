@@ -639,9 +639,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithoutVmAgent()
+        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithoutVMAgent() as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -768,9 +768,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithoutVmAgent()
+        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachine.Definition.IWithWindowsCreateManaged;
+            return this.WithoutVMAgent() as VirtualMachine.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
@@ -1357,11 +1357,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the virtual machine unique id.
         /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.VmId
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.VMId
         {
             get
             {
-                return this.VmId();
+                return this.VMId();
             }
         }
 

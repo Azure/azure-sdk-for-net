@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithoutVmAgent();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithoutVMAgent();
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithoutVmAgent();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithoutVMAgent();
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.

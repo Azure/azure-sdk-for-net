@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:7DBCBEBCFCFF036703E8C4680854445D
-        public VirtualMachineImpl WithoutVmAgent()
+        public VirtualMachineImpl WithoutVMAgent()
         {
             Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
             return this;
@@ -1356,7 +1356,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F91DF44F14D53833479DE592AB2B2890:A44F980B37B6696BA13F0A8DB633DCCA
-        public string VmId()
+        public string VMId()
         {
             return Inner.VmId;
         }

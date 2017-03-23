@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:9F6C057D1401DFDC309A6553A712FD5F:D2CFA0DA4C386F7509555F3479BBB036
-        public bool IsWindowsVmAgentProvisioned()
+        public bool IsWindowsVMAgentProvisioned()
         {
             if (Inner.OsProfile.WindowsConfiguration != null) {
                 return Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent ?? false;

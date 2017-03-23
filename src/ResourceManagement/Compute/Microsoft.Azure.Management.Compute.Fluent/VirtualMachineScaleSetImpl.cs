@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:438AB79E7DABFF084F3F25050C0B0DCB
-        public VirtualMachineScaleSetImpl WithoutVmAgent()
+        public VirtualMachineScaleSetImpl WithoutVMAgent()
         {
             Inner
                 .VirtualMachineProfile
@@ -2016,7 +2016,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:3CAA43EAEEB81309EADF54AA78725296:E14EB64EB306A8F5A0DF21CD2E85782B
-        public VirtualMachineScaleSetImpl WithVmAgent()
+        public VirtualMachineScaleSetImpl WithVMAgent()
         {
             Inner
                     .VirtualMachineProfile
