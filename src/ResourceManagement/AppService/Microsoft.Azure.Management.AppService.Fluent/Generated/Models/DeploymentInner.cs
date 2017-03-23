@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// User crendentials used for publishing activity.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class DeploymentInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class DeploymentInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DeploymentInner class.

@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using System.Collections.Generic;
     using CdnProfile.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point for CDN profile management API.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <return>List of available CDN REST operations.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations();
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations();
 
         /// <summary>
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal.

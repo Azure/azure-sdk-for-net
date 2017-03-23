@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     /// <summary>
     /// The entirety of a application definition as a part of parent update.
     /// @param <ParentT> the return type of the final {@link Attachable#attach()}

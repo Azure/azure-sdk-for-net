@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     /// <summary>
     /// Entry point to batch account management API.
     /// </summary>

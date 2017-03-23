@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     using System.Threading.Tasks;
     using System.Threading;
     using System.Linq;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using Graph.RBAC.Fluent;
     using System;
 

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// selecting pricing tiers and providers.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ProfileInner : Rest.Azure.Resource
+    public partial class ProfileInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ProfileInner class.

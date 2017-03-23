@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
     /// The first stage of an application gateway IP configuration definition.
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfigur
     /// </summary>
     /// <typeparam name="Parent">The stage of the application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Definition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Specifies an existing subnet the application gateway should be part of and get its private IP address from.

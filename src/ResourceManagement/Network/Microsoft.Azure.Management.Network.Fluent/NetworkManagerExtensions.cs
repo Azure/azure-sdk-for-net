@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
-    using Resource.Fluent.Core;
-    using Resource.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent;
     using System.Collections.Generic;
 
     internal static class NetworkManagerExtensions

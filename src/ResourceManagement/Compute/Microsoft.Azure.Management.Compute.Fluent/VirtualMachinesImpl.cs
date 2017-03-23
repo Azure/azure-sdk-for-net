@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading.Tasks;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Threading;
     using Network.Fluent;
     using Storage.Fluent;

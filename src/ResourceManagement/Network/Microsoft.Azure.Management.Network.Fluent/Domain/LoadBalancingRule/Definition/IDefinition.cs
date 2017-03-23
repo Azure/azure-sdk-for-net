@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;

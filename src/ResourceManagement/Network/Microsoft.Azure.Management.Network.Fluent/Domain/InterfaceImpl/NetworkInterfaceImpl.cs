@@ -6,9 +6,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using NetworkInterface.Definition;
     using NetworkInterface.Update;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class NetworkInterfaceImpl 
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetworkInterface Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.Refresh()
+        Microsoft.Azure.Management.Network.Fluent.INetworkInterface Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.INetworkInterface;
         }

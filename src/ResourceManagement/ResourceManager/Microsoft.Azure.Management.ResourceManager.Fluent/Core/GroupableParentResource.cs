@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
 
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Threading.Tasks;
     /// <summary>
     /// The implementation for GroupableResource.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             UTypeWithTags>, IFluentResourceT
         where ManagerT : IManagerBase
         where IFluentResourceT : class, IResource
-        where InnerResourceT : Microsoft.Azure.Management.Resource.Fluent.Resource
+        where InnerResourceT : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
         where IDefinitionAfterRegion : class
         where IDefinitionAfterResourceGroup : class
         where DefTypeWithTags : class

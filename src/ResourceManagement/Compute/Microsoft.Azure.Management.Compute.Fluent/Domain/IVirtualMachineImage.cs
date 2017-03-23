@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the region in which virtual machine image is available.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Location { get; }
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Location { get; }
 
         /// <summary>
         /// Gets the resource id of this image.

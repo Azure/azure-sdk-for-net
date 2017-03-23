@@ -4,7 +4,7 @@
 using System;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
 {
     public class DeviceCredentialInformation
     {

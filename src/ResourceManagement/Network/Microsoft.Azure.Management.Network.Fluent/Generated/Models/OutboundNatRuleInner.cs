@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Outbound NAT pool of the load balancer.
     /// </summary>
     [JsonTransformation]
-    public partial class OutboundNatRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class OutboundNatRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the OutboundNatRuleInner class.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public OutboundNatRuleInner(Resource.Fluent.SubResource backendAddressPool, string id = default(string), int? allocatedOutboundPorts = default(int?), IList<Resource.Fluent.SubResource> frontendIPConfigurations = default(IList<Resource.Fluent.SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public OutboundNatRuleInner(ResourceManager.Fluent.SubResource backendAddressPool, string id = default(string), int? allocatedOutboundPorts = default(int?), IList<ResourceManager.Fluent.SubResource> frontendIPConfigurations = default(IList<ResourceManager.Fluent.SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
@@ -70,14 +70,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the Frontend IP addresses of the load balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
-        public IList<Resource.Fluent.SubResource> FrontendIPConfigurations { get; set; }
+        public IList<ResourceManager.Fluent.SubResource> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to a pool of DIPs. Outbound traffic is
         /// randomly load balanced across IPs in the backend IPs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public Resource.Fluent.SubResource BackendAddressPool { get; set; }
+        public ResourceManager.Fluent.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the PublicIP resource. Possible

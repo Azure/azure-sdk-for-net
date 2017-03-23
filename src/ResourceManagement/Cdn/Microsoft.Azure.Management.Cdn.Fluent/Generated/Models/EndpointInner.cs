@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// &lt;endpointname&gt;.azureedge.net.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class EndpointInner : Rest.Azure.Resource
+    public partial class EndpointInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the EndpointInner class.

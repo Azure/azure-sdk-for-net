@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Source control configuration for an app.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class SiteSourceControlInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SiteSourceControlInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SiteSourceControlInner class.

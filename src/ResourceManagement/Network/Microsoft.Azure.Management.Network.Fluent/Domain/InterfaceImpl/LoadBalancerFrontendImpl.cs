@@ -17,11 +17,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using HasPublicIPAddress.Definition;
     using HasPublicIPAddress.UpdateDefinition;
     using HasPublicIPAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
 
     internal partial class LoadBalancerFrontendImpl 
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions.IInUpdateAlt<LoadBalancer.Update.IUpdate>.Attach()
+        LoadBalancer.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInUpdateAlt<LoadBalancer.Update.IUpdate>.Attach()
         {
             return this.Attach() as LoadBalancer.Update.IUpdate;
         }
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<LoadBalancer.Update.IUpdate>.Attach()
+        LoadBalancer.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<LoadBalancer.Update.IUpdate>.Attach()
         {
             return this.Attach() as LoadBalancer.Update.IUpdate;
         }
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.Attach()
+        LoadBalancer.Definition.IWithPublicFrontendOrBackend Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.Attach()
         {
             return this.Attach() as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
         }
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
             return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the subnet associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasSubnet.SubnetName
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.SubnetName
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the resource ID of the virtual network whose subnet is associated with this resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasSubnet.NetworkId
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.NetworkId
         {
             get
             {
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definition.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithPrivateFrontendOrBackend Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions.IInDefinitionAlt<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>.Attach()
+        LoadBalancer.Definition.IWithPrivateFrontendOrBackend Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>.Attach()
         {
             return this.Attach() as LoadBalancer.Definition.IWithPrivateFrontendOrBackend;
         }

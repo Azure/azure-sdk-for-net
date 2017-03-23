@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
 
     /// <summary>
     /// The stage of the managed disk definition allowing to choose source operating system image.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     /// The stage of the managed snapshot definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithSnapshotSource>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithSnapshotSource>
     {
     }
 

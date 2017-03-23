@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent
+namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
     public class TenantIdDescriptionInner {}
 }

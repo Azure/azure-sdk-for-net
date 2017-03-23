@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServicePlan.Definition;
     using AppServicePlan.Update;
     using Models;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System;
 
     /// <summary>

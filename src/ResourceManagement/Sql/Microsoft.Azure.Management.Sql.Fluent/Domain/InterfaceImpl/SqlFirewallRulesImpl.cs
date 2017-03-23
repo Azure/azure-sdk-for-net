@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core.CollectionActions;
 
     internal partial class SqlFirewallRulesImpl 
     {
@@ -14,9 +15,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Resource.Fluent.Core.PagedList<ISqlFirewallRule> ISupportsListingByParent<ISqlFirewallRule, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
+        ResourceManager.Fluent.Core.PagedList<ISqlFirewallRule> ISupportsListingByParent<ISqlFirewallRule, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
         {
-            return this.ListByParent(resourceGroupName, parentName) as Resource.Fluent.Core.PagedList<ISqlFirewallRule>;
+            return this.ListByParent(resourceGroupName, parentName) as ResourceManager.Fluent.Core.PagedList<ISqlFirewallRule>;
         }
 
         /// <summary>

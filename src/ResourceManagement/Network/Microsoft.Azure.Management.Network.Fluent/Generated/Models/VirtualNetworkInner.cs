@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Virtual Network resource.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetworkInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class VirtualNetworkInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkInner class.

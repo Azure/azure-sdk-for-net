@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// IPConfiguration
     /// </summary>
     [JsonTransformation]
-    public partial class IPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class IPConfigurationInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the IPConfigurationInner class.

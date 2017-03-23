@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// Edge node of CDN service.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class EdgeNodeInner : Rest.Azure.Resource
+    public partial class EdgeNodeInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the EdgeNodeInner class.

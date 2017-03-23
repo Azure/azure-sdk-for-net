@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Key Vault container for a certificate that is purchased through Azure.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class AppServiceCertificateInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class AppServiceCertificateInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the AppServiceCertificateInner class.

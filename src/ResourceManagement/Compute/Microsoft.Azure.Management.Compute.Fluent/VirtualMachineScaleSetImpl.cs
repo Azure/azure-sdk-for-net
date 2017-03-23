@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Network.Fluent;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using Storage.Fluent;
     using Models;
     using System;
@@ -717,7 +717,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
         {
             this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Resource.Fluent.Core.IHasId>);
+            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId>);
             return this;
         }
 

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Container service.
     /// </summary>
     [JsonTransformation]
-    public partial class ContainerServiceInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class ContainerServiceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ContainerServiceInner class.

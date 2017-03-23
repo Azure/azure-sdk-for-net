@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
     using System.Threading;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
     using System.Threading.Tasks;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to service principal management API.

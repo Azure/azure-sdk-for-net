@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update
 {
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
 
     /// <summary>

@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Management.Network.Fluent.Models;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using Rest.Azure;
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2luZ1J1bGVJbXBs
     internal partial class LoadBalancingRuleImpl :

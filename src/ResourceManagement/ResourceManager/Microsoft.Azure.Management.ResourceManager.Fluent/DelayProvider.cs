@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent
+namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
     public class DelayProvider
     {

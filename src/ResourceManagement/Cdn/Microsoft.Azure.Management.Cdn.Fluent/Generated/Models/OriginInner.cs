@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// configured origins.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class OriginInner : Rest.Azure.Resource
+    public partial class OriginInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the OriginInner class.
