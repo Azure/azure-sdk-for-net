@@ -278,17 +278,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the instance view of the virtual machine extension.
-        /// </summary>
-        Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.InstanceView
-        {
-            get
-            {
-                return this.InstanceView() as Models.VirtualMachineExtensionInstanceView;
-            }
-        }
-
-        /// <summary>
         /// Gets the provisioning state of the virtual machine extension.
         /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.ProvisioningState
@@ -466,6 +455,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithSettings<VirtualMachine.Update.IUpdate>.WithProtectedSetting(string key, object value)
         {
             return this.WithProtectedSetting(key, value) as VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate>;
+        }
+
+        /// <return>Observable that emits virtual machine extension instance view.</return>
+        Task<Models.VirtualMachineExtensionInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.GetInstanceViewAsync(CancellationToken cancellationToken)
+        {
+            return this.GetInstanceViewAsync(cancellationToken);
+        }
+
+        /// <return>The instance view of the virtual machine extension.</return>
+        VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.GetInstanceView()
+        {
+            return this.GetInstanceView() as Models.VirtualMachineExtensionInstanceView;
         }
     }
 }

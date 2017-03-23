@@ -8,6 +8,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
@@ -41,11 +43,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Deallocate();
 
         /// <summary>
+        /// Gets entry point to enabling, disabling and querying disk encryption.
+        /// </summary>
+        IVirtualMachineEncryption DiskEncryption { get; }
+
+        /// <summary>
         /// Refreshes the virtual machine instance view to sync with Azure.
         /// this will caches the instance view which can be later retrieved using VirtualMachine.instanceView().
         /// </summary>
         /// <return>The refreshed instance view.</return>
         Models.VirtualMachineInstanceView RefreshInstanceView();
+
+        /// <summary>
+        /// Gets Refreshes the virtual machine instance view to sync with Azure.
+        /// </summary>
+        /// <summary>
+        /// A task that emits the instance view of the virtual machine.
+        /// </summary>
+        Task<Models.VirtualMachineInstanceView> RefreshInstanceViewAsync(CancellationToken cancellationToken= default(CancellationToken));
 
         /// <summary>
         /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
@@ -170,10 +185,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         Models.StorageAccountTypes? OsDiskStorageAccountType { get; }
 
-        /// <summary>
-        /// Gets the extensions attached to the Azure Virtual Machine.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Extensions { get; }
+        /// <return>An observable that emits extensions attached to the virtual machine.</return>
+        Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> GetExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <return>The extensions attached to the Virtual Machine.</return>
+        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> GetExtensions();
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.

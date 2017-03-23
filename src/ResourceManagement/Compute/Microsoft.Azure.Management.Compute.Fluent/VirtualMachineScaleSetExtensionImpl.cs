@@ -209,6 +209,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         VirtualMachineScaleSet.Update.IUpdate ISettable<VirtualMachineScaleSet.Update.IUpdate>.Parent()
         {
+            NullifySettingsIfEmpty();
             return base.Parent;
         }
     }

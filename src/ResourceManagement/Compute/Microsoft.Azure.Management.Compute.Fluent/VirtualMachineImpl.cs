@@ -95,6 +95,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         }
 
+        ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:6AC69BE8BE090CDE9822C84DD5F906F3
+        public VirtualMachineInstanceView RefreshInstanceView()
+        {
+            return RefreshInstanceViewAsync().Result;
+        }
+
+        ///GENMHASH:D97B6272C7E7717C00D4F9B818A713C0:8DD09B90F0555BB3E1AEF7B9AF044379
+        public async Task<Models.VirtualMachineInstanceView> RefreshInstanceViewAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var virtualMachineInner = await this.Manager.Inner.VirtualMachines.GetAsync(this.ResourceGroupName,
+                this.Name,
+                InstanceViewTypes.InstanceView, 
+                cancellationToken);
+            this.virtualMachineInstanceView = virtualMachineInner.InstanceView;
+            return this.virtualMachineInstanceView;
+        }
+
         ///GENMHASH:0745971EF3F2CE7276C7E535722C5E6C:F7A7B3A36B61441CF0850BDE432A2805
         public void Generalize()
         {
@@ -154,15 +171,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return JsonConvert.SerializeObject(captureResult.Output);
         }
 
-        ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:43A87ABD605FCDAA3CA444A643F83DB4
-        public VirtualMachineInstanceView RefreshInstanceView()
-        {
-            this.virtualMachineInstanceView = Manager.Inner.VirtualMachines.Get(this.ResourceGroupName,
-                this.Name,
-                InstanceViewTypes.InstanceView).InstanceView;
-            return this.virtualMachineInstanceView;
-        }
-
         ///GENMHASH:3FAB18211D6DAAAEF5CA426426D16F0C:AD7170076BCB5437E69B77AC63B3373E
         public VirtualMachineImpl WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
@@ -209,6 +217,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIP
                 .WithPrimaryPrivateIPAddressStatic(staticPrivateIPAddress);
             return this;
+        }
+
+        ///GENMHASH:54B52B6B32A26AD456CFB5E00BE4A7E1:A19C73689F2772054260CA742BE6FC13
+        public Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> GetExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.virtualMachineExtensions.ListAsync(cancellationToken);
+        }
+
+        ///GENMHASH:979FFAEA86882618784D4077FB80332F:B79EEB6C251B19AEB675FFF7A365C818
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> GetExtensions()
+        {
+            return this.virtualMachineExtensions.AsMap();
         }
 
         ///GENMHASH:12E96FEFBC60AB582A0B69EBEEFD1E59:C1EAF0B5EE0258D48F9956AEFBA1EA2D
@@ -1031,6 +1051,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:D4842E34F33259DEFED4C90844786E59:39378392E4693029B7DDB841A336DF68
+        public IVirtualMachineEncryption DiskEncryption()
+        {
+            return new VirtualMachineEncryptionImpl(this);
+        }
+
         ///GENMHASH:1B6EFD4FB09DB19A9365B92299382732:6E8FA7A8D0E6C28DD34AA5ED876E9C3F
         public VirtualMachineImpl WithoutSecondaryNetworkInterface(string name)
         {
@@ -1323,12 +1349,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public string LicenseType()
         {
             return Inner.LicenseType;
-        }
-
-        ///GENMHASH:EC363135C0A3366C1FA98226F4AE5D05:B79EEB6C251B19AEB675FFF7A365C818
-        public IDictionary<string, IVirtualMachineExtension> Extensions()
-        {
-            return this.virtualMachineExtensions.AsMap();
         }
 
         ///GENMHASH:283A7CD491ABC476D6646B943D8641A8:BB7251641858D1CBEADD4ABE2AF921D3

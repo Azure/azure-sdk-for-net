@@ -51,8 +51,8 @@ namespace Fluent.Tests.Compute
                     .Attach()
                     .Apply();
 
-                Assert.True(vm.Extensions.Count() > 0);
-                Assert.True(vm.Extensions.ContainsKey("VMAccessForLinux"));
+                Assert.True(vm.GetExtensions().Count() > 0);
+                Assert.True(vm.GetExtensions().ContainsKey("VMAccessForLinux"));
 
                 vm.Update()
                         .UpdateExtension("VMAccessForLinux")
@@ -104,10 +104,10 @@ namespace Fluent.Tests.Compute
                         .Attach()
                         .Create();
 
-                Assert.True(vm.Extensions.Count > 0);
-                Assert.True(vm.Extensions.ContainsKey("CustomScriptForLinux"));
+                Assert.True(vm.GetExtensions().Count > 0);
+                Assert.True(vm.GetExtensions().ContainsKey("CustomScriptForLinux"));
                 IVirtualMachineExtension customScriptExtension;
-                Assert.True(vm.Extensions.TryGetValue("CustomScriptForLinux", out customScriptExtension));
+                Assert.True(vm.GetExtensions().TryGetValue("CustomScriptForLinux", out customScriptExtension));
                 Assert.Equal(customScriptExtension.PublisherName, "Microsoft.OSTCExtensions");
                 Assert.Equal(customScriptExtension.TypeName, "CustomScriptForLinux");
                 Assert.Equal(customScriptExtension.AutoUpgradeMinorVersionEnabled, true);
@@ -118,7 +118,7 @@ namespace Fluent.Tests.Compute
                         .WithoutExtension("CustomScriptForLinux")
                         .Apply();
 
-                Assert.True(vm.Extensions.Count() == 0);
+                Assert.True(vm.GetExtensions().Count() == 0);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Fluent.Tests.Compute
                     .Attach()
                     .Create();
 
-                Assert.True(vm.Extensions.Count() > 0);
+                Assert.True(vm.GetExtensions().Count() > 0);
 
                 // Get the created virtual machine via VM List not by VM GET
                 var virtualMachines = azure.VirtualMachines
@@ -194,7 +194,7 @@ namespace Fluent.Tests.Compute
                 Assert.NotNull(vmWithExtensionReference);
 
                 IVirtualMachineExtension accessExtension = null;
-                foreach (var extension in vmWithExtensionReference.Extensions.Values)
+                foreach (var extension in vmWithExtensionReference.GetExtensions().Values)
                 {
                     if (extension.Name.Equals("VMAccessForLinux", StringComparison.OrdinalIgnoreCase))
                     {

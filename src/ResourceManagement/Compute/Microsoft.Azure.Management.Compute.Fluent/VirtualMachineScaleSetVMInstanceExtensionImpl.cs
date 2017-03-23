@@ -115,5 +115,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.protectedSettings = Inner.ProtectedSettings as IDictionary<string, object>;
             }
         }
+
+        ///GENMHASH:E21E3E6E61153DDD23E28BC18B49F1AC:6FB4182F747416C98B49B59F74185782
+        public VirtualMachineExtensionInstanceView instanceView()
+        {
+            return this.Inner.InstanceView;
+        }
     }
 }

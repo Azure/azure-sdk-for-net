@@ -1149,6 +1149,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Specifies the encryption settings for the OS Disk.
+        /// </summary>
+        /// <param name="settings">The encryption settings.</param>
+        /// <return>The stage representing creatable VM update.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IUpdate.WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
+        {
+            return this.WithOsDiskEncryptionSettings(settings) as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies an existing AvailabilitySet availability set to to associate the virtual machine with.
         /// Adding virtual machines running your application to an availability set ensures that during
         /// maintenance event at least one virtual machine will be available.
@@ -1285,15 +1295,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.DefineNewExtension(name) as VirtualMachineExtension.UpdateDefinition.IBlank<VirtualMachine.Update.IUpdate>;
         }
 
-        /// <summary>
-        /// Gets the extensions attached to the Azure Virtual Machine.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Extensions
+        /// <return>An observable that emits extensions attached to the virtual machine.</return>
+        Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetExtensionsAsync(CancellationToken cancellationToken)
         {
-            get
-            {
-                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
-            }
+            return this.GetExtensionsAsync(cancellationToken);
+        }
+
+        /// <return>The extensions attached to the Virtual Machine.</return>
+        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetExtensions()
+        {
+            return this.GetExtensions() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
         }
 
         /// <summary>
@@ -1362,6 +1373,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.VmId();
+            }
+        }
+
+        /// <summary>
+        /// Gets entry point to enabling, disabling and querying disk encryption.
+        /// </summary>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineEncryption Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.DiskEncryption
+        {
+            get
+            {
+                return this.DiskEncryption() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineEncryption;
             }
         }
 
@@ -1435,6 +1457,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.VirtualMachineInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RefreshInstanceView()
         {
             return this.RefreshInstanceView() as Models.VirtualMachineInstanceView;
+        }
+
+        /// <summary>
+        /// Gets Refreshes the virtual machine instance view to sync with Azure.
+        /// </summary>
+        /// <summary>
+        /// Gets an observable that emits the instance view of the virtual machine.
+        /// </summary>
+        Task<Models.VirtualMachineInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RefreshInstanceViewAsync(CancellationToken cancellationToken)
+        {
+            return this.RefreshInstanceViewAsync(cancellationToken);
         }
 
         /// <summary>

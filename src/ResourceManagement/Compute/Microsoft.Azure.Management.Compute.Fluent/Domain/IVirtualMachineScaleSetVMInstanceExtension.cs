@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an extension associated with virtual machine instance
@@ -12,5 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IVirtualMachineExtensionBase,
         IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>
     {
+        /// <summary>
+        /// Gets the instance view of the scale set virtual machine extension.
+        /// </summary>
+        VirtualMachineExtensionInstanceView InstanceView { get; }
     }
 }
