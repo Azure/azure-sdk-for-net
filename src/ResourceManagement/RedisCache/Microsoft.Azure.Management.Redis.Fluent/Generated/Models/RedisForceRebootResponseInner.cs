@@ -16,28 +16,27 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies which Redis access keys to reset.
+    /// Response to force reboot for Redis cache.
     /// </summary>
-    public partial class RedisRegenerateKeyParameters
+    public partial class RedisForceRebootResponseInner
     {
         /// <summary>
-        /// Initializes a new instance of the RedisRegenerateKeyParameters
+        /// Initializes a new instance of the RedisForceRebootResponseInner
         /// class.
         /// </summary>
-        public RedisRegenerateKeyParameters()
+        public RedisForceRebootResponseInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RedisRegenerateKeyParameters
+        /// Initializes a new instance of the RedisForceRebootResponseInner
         /// class.
         /// </summary>
-        /// <param name="keyType">The Redis access key to regenerate. Possible
-        /// values include: 'Primary', 'Secondary'</param>
-        public RedisRegenerateKeyParameters(RedisKeyType keyType)
+        /// <param name="message">Status message</param>
+        public RedisForceRebootResponseInner(string message = default(string))
         {
-            KeyType = keyType;
+            Message = message;
             CustomInit();
         }
 
@@ -47,20 +46,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Redis access key to regenerate. Possible values
-        /// include: 'Primary', 'Secondary'
+        /// Gets status message
         /// </summary>
-        [JsonProperty(PropertyName = "keyType")]
-        public RedisKeyType KeyType { get; set; }
+        [JsonProperty(PropertyName = "Message")]
+        public string Message { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

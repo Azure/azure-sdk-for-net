@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     using ResourceManager.Fluent;
     using System;
     using System.Collections.ObjectModel;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation for Redis Cache and its parent interfaces.
@@ -215,8 +216,23 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:0C30EC62BAFB5962817F1799BCD0FA3F
         public IList<Models.ScheduleEntry> ListPatchSchedules()
         {
-            var schedule = Manager.Inner.PatchSchedules.Get(ResourceGroupName, Name);
-            return (schedule == null)? null : schedule.ScheduleEntries;
+            RedisPatchScheduleInner patchSchedules = null;
+            try
+            {
+                patchSchedules = Manager.Inner.PatchSchedules.Get(ResourceGroupName, Name);
+            }
+            catch(CloudException ex)
+            {
+                if(ex.Response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                {
+                    throw;
+                }
+            }
+            return (patchSchedules == null ||
+                    patchSchedules.ScheduleEntriesProperty == null) ? null : patchSchedules
+                                                                                .ScheduleEntriesProperty
+                                                                                .Select(ps => new ScheduleEntry(ps))
+                                                                                .ToList();
         }
 
         ///GENMHASH:83D353023D85D6E91BB9A3E8AC689039:DF02D821D2252D83CC2CDE0D9667F24E
@@ -312,19 +328,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             {
                 var parameters = new RedisPatchScheduleInner
                 {
-                    ScheduleEntries = new List<ScheduleEntry>()
+                    ScheduleEntriesProperty = new List<ScheduleEntryInner>()
                 };
                 foreach (ScheduleEntry entry in this.scheduleEntries.Values)
                 {
-                    parameters.ScheduleEntries.Add(entry);
+                    parameters.ScheduleEntriesProperty.Add(entry.Inner);
                 }
 
                 var scheduleEntriesUpdated = await Manager.Inner.PatchSchedules.CreateOrUpdateAsync(
-                    ResourceGroupName, Name, parameters, cancellationToken);
+                    ResourceGroupName, Name, parameters.ScheduleEntriesProperty, cancellationToken);
                 scheduleEntries.Clear();
-                foreach (ScheduleEntry entry in scheduleEntriesUpdated.ScheduleEntries)
+                foreach (ScheduleEntryInner entry in scheduleEntriesUpdated.ScheduleEntriesProperty)
                 {
-                    scheduleEntries.Add(entry.DayOfWeek, entry);
+                    scheduleEntries.Add(entry.DayOfWeek, new ScheduleEntry(entry));
                 }
             }
         }
@@ -581,22 +597,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:28A59E2D7BB5002CC1F16417C4F25FD1:90FDAC2D7F671EE3AF491F69172F0D7E
         public RedisCacheImpl WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc)
         {
-            return this.WithPatchSchedule(new ScheduleEntry
-            {
-                DayOfWeek = dayOfWeek,
-                StartHourUtc = startHourUtc
-            });
+            return this.WithPatchSchedule(
+                new ScheduleEntry(
+                    new ScheduleEntryInner(dayOfWeek, startHourUtc, null)));
         }
 
         ///GENMHASH:6201C51B639713985315AA03C532B541:5848DBA8C0AAE4C5977BD3956E8379ED
         public RedisCacheImpl WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow)
         {
-            return this.WithPatchSchedule(new ScheduleEntry
-            {
-                DayOfWeek = dayOfWeek,
-                StartHourUtc = startHourUtc,
-                MaintenanceWindow = maintenanceWindow
-            });
+            return this.WithPatchSchedule(
+                new ScheduleEntry( 
+                    new ScheduleEntryInner(dayOfWeek, startHourUtc, maintenanceWindow)));
         }
 
         ///GENMHASH:4DC611DFE1B12D88B1FBC380172484A4:5EA2206D23C4D336706EFB8004C25FC1
