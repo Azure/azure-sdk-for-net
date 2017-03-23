@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Describes an Image.
     /// </summary>
     [JsonTransformation]
-    public partial class ImageInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class ImageInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ImageInner class.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// which Image is created.</param>
         /// <param name="storageProfile">The storage profile.</param>
         /// <param name="provisioningState">The provisioning state.</param>
-        public ImageInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Microsoft.Azure.Management.Resource.Fluent.SubResource sourceVirtualMachine = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string))
+        public ImageInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource sourceVirtualMachine = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             SourceVirtualMachine = sourceVirtualMachine;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceVirtualMachine")]
-        public Microsoft.Azure.Management.Resource.Fluent.SubResource SourceVirtualMachine { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource SourceVirtualMachine { get; set; }
 
         /// <summary>
         /// Gets or sets the storage profile.

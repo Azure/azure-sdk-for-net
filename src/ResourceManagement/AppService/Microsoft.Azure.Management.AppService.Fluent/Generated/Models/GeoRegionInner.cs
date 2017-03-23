@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Geographical region.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class GeoRegionInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class GeoRegionInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the GeoRegionInner class.

@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
-    using Resource.Fluent.Core.ChildResourceActions;
-    using Resource.Fluent;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent;
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyUHJvYmVJbXBs
     internal partial class LoadBalancerProbeImpl :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,

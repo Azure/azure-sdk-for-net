@@ -3,8 +3,8 @@
 
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Linq;
 using Xunit;
 

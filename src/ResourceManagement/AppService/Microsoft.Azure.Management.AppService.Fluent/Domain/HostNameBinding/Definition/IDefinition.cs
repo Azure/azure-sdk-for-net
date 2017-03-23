@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
 
     /// <summary>

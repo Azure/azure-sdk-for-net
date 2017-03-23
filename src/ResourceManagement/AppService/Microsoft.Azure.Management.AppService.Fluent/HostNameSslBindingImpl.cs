@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServiceCertificateOrder.Definition;
     using HostNameSslBinding.UpdateDefinition;
     using KeyVault.Fluent;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
     using System;
     using System.Collections.Generic;

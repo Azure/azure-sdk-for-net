@@ -6,9 +6,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition
     using Microsoft.Azure.Management.KeyVault.Fluent.Models;
     using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     /// <summary>
     /// A key vault definition allowing various configurations to be set.
     /// </summary>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition
     /// A key vault definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithAccessPolicy>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithAccessPolicy>
     {
     }
     /// <summary>

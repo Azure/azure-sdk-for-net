@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// Represents an Azure SQL Database restore point.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RestorePointInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class RestorePointInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RestorePointInner class.

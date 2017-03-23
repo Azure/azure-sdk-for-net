@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using WebApp.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// An immutable client-side representation of an Azure Web App.

@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using Models;
 
     /// <summary>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Frontend port of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayFrontendPortInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayFrontendPortInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the

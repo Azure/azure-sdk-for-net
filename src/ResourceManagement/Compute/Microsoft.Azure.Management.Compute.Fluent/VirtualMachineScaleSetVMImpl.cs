@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
     using System.Threading.Tasks;
     using System.Collections.Generic;
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:4208AEB8137598AB1A39881825F4406A
         public Region Region()
         {
-            return Microsoft.Azure.Management.Resource.Fluent.Core.Region.Create(this.RegionName());
+            return Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region.Create(this.RegionName());
         }
 
         ///GENMHASH:AE4C4EDD69D8398105E588BB437DB52F:03C423E26F1CAEDC60B8BCBB1D78DBE6

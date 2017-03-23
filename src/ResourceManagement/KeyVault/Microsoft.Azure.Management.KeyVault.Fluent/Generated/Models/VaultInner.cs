@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent.Models
     /// <summary>
     /// Resource information with extended details.
     /// </summary>
-    public partial class VaultInner : Rest.Azure.Resource
+    public partial class VaultInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VaultInner class.

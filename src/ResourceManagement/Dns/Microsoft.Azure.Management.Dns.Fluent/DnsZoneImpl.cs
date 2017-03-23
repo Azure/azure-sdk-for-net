@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using System.Threading;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using DnsZone.Update;
     using System.Threading.Tasks;
     using System.Collections.Generic;

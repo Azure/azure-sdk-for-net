@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Path rule of URL path map of an application gateway.
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayPathRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
+    public partial class ApplicationGatewayPathRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayPathRuleInner
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayPathRuleInner(string id = default(string), IList<string> paths = default(IList<string>), Resource.Fluent.SubResource backendAddressPool = default(Resource.Fluent.SubResource), Resource.Fluent.SubResource backendHttpSettings = default(Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayPathRuleInner(string id = default(string), IList<string> paths = default(IList<string>), ResourceManager.Fluent.SubResource backendAddressPool = default(ResourceManager.Fluent.SubResource), ResourceManager.Fluent.SubResource backendHttpSettings = default(ResourceManager.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Paths = paths;
@@ -69,13 +69,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets backend address pool resource of URL path map.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public Resource.Fluent.SubResource BackendAddressPool { get; set; }
+        public ResourceManager.Fluent.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets backend http settings resource of URL path map.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendHttpSettings")]
-        public Resource.Fluent.SubResource BackendHttpSettings { get; set; }
+        public ResourceManager.Fluent.SubResource BackendHttpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets path rule of URL path map resource. Possible values

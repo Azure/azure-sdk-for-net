@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Application gateway resource
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class ApplicationGatewayInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayInner class.

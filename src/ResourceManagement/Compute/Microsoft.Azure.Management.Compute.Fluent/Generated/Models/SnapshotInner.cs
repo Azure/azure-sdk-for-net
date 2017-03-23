@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Snapshot resource.
     /// </summary>
     [JsonTransformation]
-    public partial class SnapshotInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SnapshotInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SnapshotInner class.

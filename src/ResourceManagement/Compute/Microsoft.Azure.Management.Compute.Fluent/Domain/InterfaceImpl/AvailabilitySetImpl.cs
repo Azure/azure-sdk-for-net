@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using AvailabilitySet.Definition;
     using AvailabilitySet.Update;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class AvailabilitySetImpl 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.Refresh()
+        Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet;
         }

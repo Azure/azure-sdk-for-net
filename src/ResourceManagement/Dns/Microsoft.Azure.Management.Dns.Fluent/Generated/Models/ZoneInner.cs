@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.Models
     /// Describes a DNS zone.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ZoneInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class ZoneInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ZoneInner class.

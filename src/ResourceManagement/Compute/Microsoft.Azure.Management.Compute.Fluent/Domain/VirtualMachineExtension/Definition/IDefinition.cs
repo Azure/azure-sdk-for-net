@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Compute.Fluent;
 
     /// <summary>

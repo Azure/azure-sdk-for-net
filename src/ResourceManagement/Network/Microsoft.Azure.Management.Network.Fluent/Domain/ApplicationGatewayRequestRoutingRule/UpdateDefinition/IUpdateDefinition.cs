@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
     using Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasHostName.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasServerNameIndication.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasCookieBasedAffinity.UpdateDefinition;
 
     /// <summary>

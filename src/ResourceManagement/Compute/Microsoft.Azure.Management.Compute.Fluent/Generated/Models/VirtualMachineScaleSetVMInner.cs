@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Describes a virtual machine scale set virtual machine.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualMachineScaleSetVMInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class VirtualMachineScaleSetVMInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetVMInner
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// from VM Marketplace images.</param>
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
-        public VirtualMachineScaleSetVMInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), Microsoft.Azure.Management.Resource.Fluent.SubResource availabilitySet = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtensionInner> resources = default(IList<VirtualMachineExtensionInner>))
+        public VirtualMachineScaleSetVMInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource availabilitySet = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtensionInner> resources = default(IList<VirtualMachineExtensionInner>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// virtual machine belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
-        public Microsoft.Azure.Management.Resource.Fluent.SubResource AvailabilitySet { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource AvailabilitySet { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.

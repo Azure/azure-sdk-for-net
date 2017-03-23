@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for Tenant.

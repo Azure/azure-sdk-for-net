@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 {
     using Management.Batch.Fluent;
     using Management.Batch.Fluent.Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System;
     using System.Threading;
     using System.Threading.Tasks;

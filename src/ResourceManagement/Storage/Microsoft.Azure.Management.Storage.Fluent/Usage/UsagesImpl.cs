@@ -3,12 +3,12 @@
 
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    internal class UsagesImpl : ReadableWrappers<IStorageUsage, UsageImpl, UsageInner>,
+    internal class UsagesImpl : ReadableWrappers<IStorageUsage, UsageImpl, Usage>,
         IUsages
     {
         private IUsageOperations client;
@@ -22,15 +22,15 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         {
             if (client.List() == null)
             {
-                return PagedList<UsageInner>.EmptyPagedList<IStorageUsage>();
+                return PagedList<Usage>.EmptyPagedList<IStorageUsage>();
             }
 
-            IEnumerable<UsageInner> usages = client.List();
-            var pagedList = new PagedList<UsageInner>(usages);
+            IEnumerable<Usage> usages = client.List();
+            var pagedList = new PagedList<Usage>(usages);
             return WrapList(pagedList);
         }
 
-        protected override IStorageUsage WrapModel(UsageInner inner)
+        protected override IStorageUsage WrapModel(Usage inner)
         {
             return new UsageImpl(inner);
         }

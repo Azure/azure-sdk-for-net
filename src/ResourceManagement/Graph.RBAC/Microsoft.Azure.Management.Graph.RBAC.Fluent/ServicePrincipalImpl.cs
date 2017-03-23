@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Models;
     using System.Collections.Generic;
     using ServicePrincipal.Definition;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using System.Threading.Tasks;
     using ServicePrincipal.Update;
     using System.Threading;

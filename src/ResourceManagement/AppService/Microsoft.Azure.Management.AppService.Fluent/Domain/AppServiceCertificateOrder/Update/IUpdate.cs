@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update
 {
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// An app service certificate order definition allowing auto-renew settings to be set.

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Definition
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// A resource definition allowing a new resource group to be created.
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Defin
         /// </summary>
         /// <param name="parentResourceCreatable">A creatable definition for the parent resource.</param>
         /// <return>The creatable for the child resource.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<T> WithNewParentResource(ICreatable<ParentT> parentResourceCreatable);
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<T> WithNewParentResource(ICreatable<ParentT> parentResourceCreatable);
 
         /// <summary>
         /// Creates a new child resource under parent resource.
@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Defin
         /// <param name="groupName">The name of the resource group for parent resource.</param>
         /// <param name="parentName">The name of the parent resource.</param>
         /// <return>The creatable for the child resource.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<T> WithExistingParentResource(string groupName, string parentName);
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<T> WithExistingParentResource(string groupName, string parentName);
 
         /// <summary>
         /// Creates a new child resource under parent resource.
         /// </summary>
         /// <param name="existingParentResource">The parent resource under which this resource to be created.</param>
         /// <return>The creatable for the child resource.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<T> WithExistingParentResource(ParentT existingParentResource);
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<T> WithExistingParentResource(ParentT existingParentResource);
     }
 }

@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The entirety of an application gateway frontend definition as part of an application gateway update.
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// </summary>
     /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend.

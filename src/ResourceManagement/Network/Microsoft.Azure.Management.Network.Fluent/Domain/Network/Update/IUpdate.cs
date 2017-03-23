@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
     using Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of the virtual network update allowing to add or remove subnets.

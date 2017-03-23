@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Storage.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    internal class UsageImpl : Wrapper<UsageInner>, IStorageUsage
+    internal class UsageImpl : Wrapper<Usage>, IStorageUsage
     {
-        internal UsageImpl(UsageInner innerObject) : base(innerObject)
+        internal UsageImpl(Usage innerObject) : base(innerObject)
         {}
 
         public int CurrentValue

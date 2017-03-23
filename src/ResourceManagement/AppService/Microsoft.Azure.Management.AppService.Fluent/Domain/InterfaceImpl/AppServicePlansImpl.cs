@@ -4,10 +4,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     internal partial class AppServicePlansImpl 
     {
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// of the resource definition, as an interface in the "fluent interface" style.
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
-        AppServicePlan.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<AppServicePlan.Definition.IBlank>.Define(string name)
+        AppServicePlan.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<AppServicePlan.Definition.IBlank>.Define(string name)
         {
             return this.Define(name) as AppServicePlan.Definition.IBlank;
         }
@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>;
         }
 
         /// <summary>

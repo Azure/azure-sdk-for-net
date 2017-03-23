@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using LoadBalancer.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to load balancer management API in Azure.

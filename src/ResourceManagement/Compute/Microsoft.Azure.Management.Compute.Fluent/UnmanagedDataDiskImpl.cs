@@ -8,10 +8,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineUnmanagedDataDisk.DefinitionWithNewVhd;
     using VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithExistingVhd;
     using VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithNewVhd;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Storage.Fluent;
     using System.Collections.Generic;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using System;
 
     /// <summary>

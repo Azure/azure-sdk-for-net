@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Route.Definition;
     using Route.UpdateDefinition;
     using Models;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation of Route.

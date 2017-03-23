@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     using System;
     using Microsoft.Azure.Management.KeyVault.Fluent.Models;

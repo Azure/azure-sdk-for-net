@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// Vault.</param>
         /// <param name="sourceVault">The relative URL of the Key Vault
         /// containing the key.</param>
-        public KeyVaultKeyReference(string keyUrl, Microsoft.Azure.Management.Resource.Fluent.SubResource sourceVault)
+        public KeyVaultKeyReference(string keyUrl, Microsoft.Azure.Management.ResourceManager.Fluent.SubResource sourceVault)
         {
             KeyUrl = keyUrl;
             SourceVault = sourceVault;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// Gets or sets the relative URL of the Key Vault containing the key.
         /// </summary>
         [JsonProperty(PropertyName = "sourceVault")]
-        public Microsoft.Azure.Management.Resource.Fluent.SubResource SourceVault { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource SourceVault { get; set; }
 
         /// <summary>
         /// Validate the object.

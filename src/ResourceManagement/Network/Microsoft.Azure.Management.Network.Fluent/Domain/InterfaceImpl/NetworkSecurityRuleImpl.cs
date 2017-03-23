@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using NetworkSecurityRule.Update;
     using NetworkSecurityRule.UpdateDefinition;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     internal partial class NetworkSecurityRuleImpl 
     {
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        NetworkSecurityGroup.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<NetworkSecurityGroup.Update.IUpdate>.Attach()
+        NetworkSecurityGroup.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<NetworkSecurityGroup.Update.IUpdate>.Attach()
         {
             return this.Attach() as NetworkSecurityGroup.Update.IUpdate;
         }
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        NetworkSecurityGroup.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<NetworkSecurityGroup.Definition.IWithCreate>.Attach()
+        NetworkSecurityGroup.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<NetworkSecurityGroup.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as NetworkSecurityGroup.Definition.IWithCreate;
         }
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {

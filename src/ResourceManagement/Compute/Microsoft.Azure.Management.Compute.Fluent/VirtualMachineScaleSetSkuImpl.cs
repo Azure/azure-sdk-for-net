@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Management.Compute.Fluent.Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     /// <summary>
     /// implementation of VirtualMachineScaleSetSku.
     /// </summary>

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
 {
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent;
 
     /// <summary>

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDef
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     /// <summary>
     /// The stage of a hostname binding definition allowing DNS record type to be set.

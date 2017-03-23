@@ -7,11 +7,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Models;
     using WebAppBase.Definition;
     using WebAppBase.Update;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System.Collections.Generic;
     using System;
     using System.Linq;
-    using Resource.Fluent.Core.Resource.Update;
+    using ResourceManager.Fluent.Core.Resource.Update;
     using System.Text.RegularExpressions;
     using System.Collections.ObjectModel;
 

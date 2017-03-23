@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Virtual Network information contract.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VnetInfoInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class VnetInfoInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VnetInfoInner class.

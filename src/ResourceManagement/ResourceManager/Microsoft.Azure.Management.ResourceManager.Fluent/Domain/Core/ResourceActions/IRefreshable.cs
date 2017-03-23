@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 {
 
     /// <summary>

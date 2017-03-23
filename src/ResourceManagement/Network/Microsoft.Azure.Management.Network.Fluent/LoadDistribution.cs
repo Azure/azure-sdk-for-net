@@ -4,7 +4,7 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Defines values for LoadDistribution.

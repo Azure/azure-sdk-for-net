@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// A common class for general resource information
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetworkGatewayConnectionInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class VirtualNetworkGatewayConnectionInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// 'Updating', 'Deleting', and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetworkGatewayConnectionInner(VirtualNetworkGatewayInner virtualNetworkGateway1, string connectionType, string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGatewayInner virtualNetworkGateway2 = default(VirtualNetworkGatewayInner), LocalNetworkGatewayInner localNetworkGateway2 = default(LocalNetworkGatewayInner), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), Resource.Fluent.SubResource peer = default(Resource.Fluent.SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayConnectionInner(VirtualNetworkGatewayInner virtualNetworkGateway1, string connectionType, string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGatewayInner virtualNetworkGateway2 = default(VirtualNetworkGatewayInner), LocalNetworkGatewayInner localNetworkGateway2 = default(LocalNetworkGatewayInner), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), ResourceManager.Fluent.SubResource peer = default(ResourceManager.Fluent.SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference to peerings resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peer")]
-        public Resource.Fluent.SubResource Peer { get; set; }
+        public ResourceManager.Fluent.SubResource Peer { get; set; }
 
         /// <summary>
         /// Gets or sets enableBgp flag

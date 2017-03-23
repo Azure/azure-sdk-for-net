@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineExtension.Update;
     using VirtualMachineExtension.UpdateDefinition;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
 
     internal partial class VirtualMachineExtensionImpl 
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<VirtualMachine.Update.IUpdate>.Attach()
+        VirtualMachine.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<VirtualMachine.Update.IUpdate>.Attach()
         {
             return this.Attach() as VirtualMachine.Update.IUpdate;
         }
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<VirtualMachine.Definition.IWithCreate>.Attach()
+        VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<VirtualMachine.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as VirtualMachine.Definition.IWithCreate;
         }

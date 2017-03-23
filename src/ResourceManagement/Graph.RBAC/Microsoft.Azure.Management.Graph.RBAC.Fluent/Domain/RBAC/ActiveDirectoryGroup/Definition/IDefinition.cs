@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition
 {
 
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     /// <summary>
     /// The first stage of the group definition.

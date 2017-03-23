@@ -3,8 +3,8 @@
 
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Models;
     using System;
     using System.Threading;
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        RedisCache.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<RedisCache.Definition.IBlank>.Define(string name)
+        RedisCache.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<RedisCache.Definition.IBlank>.Define(string name)
         {
             return this.Define(name) as RedisCache.Definition.IBlank;
         }
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
             return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Redis.Fluent.IRedisCache;
         }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>An observable to the request.</return>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
  
             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.List()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>;
+            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>;
         }
     }
 }
