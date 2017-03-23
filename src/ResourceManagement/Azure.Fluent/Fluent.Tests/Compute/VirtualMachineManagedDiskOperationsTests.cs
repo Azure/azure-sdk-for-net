@@ -314,7 +314,7 @@ namespace Fluent.Tests.Compute
                             .WithRootPassword(password)
                             // Start: Add bunch of empty managed disks
                             .WithNewDataDisk(100)                                             // CreateOption: EMPTY
-                            .WithNewDataDisk(100, 1, CachingTypes.ReadOnly)                  // CreateOption: EMPTY
+                            .WithNewDataDisk(100, 1, CachingTypes.ReadOnly)                   // CreateOption: EMPTY
                             .WithNewDataDisk(creatableEmptyDisk1)                             // CreateOption: ATTACH
                             .WithNewDataDisk(creatableEmptyDisk2, 2, CachingTypes.None)       // CreateOption: ATTACH
                             .WithNewDataDisk(creatableEmptyDisk3, 3, CachingTypes.None)       // CreateOption: ATTACH
@@ -380,7 +380,7 @@ namespace Fluent.Tests.Compute
                         Assert.True(dataDisks.ContainsKey(imageDataDisk.Lun));
                         var dataDisk = dataDisks[imageDataDisk.Lun];
                         Assert.Equal(dataDisk.CachingType, imageDataDisk.Caching);
-                        Assert.Equal(dataDisk.Size, (long)imageDataDisk.DiskSizeGB);
+                        Assert.Equal(dataDisk.Size, (long)imageDataDisk.DiskSizeGB.Value);
                     }
 
                     // Create virtual machine from the custom image
