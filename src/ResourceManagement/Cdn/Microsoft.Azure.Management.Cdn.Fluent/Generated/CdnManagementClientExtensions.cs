@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Operation> ListOperations(this ICdnManagementClient operations)
+            public static IPage<OperationInner> ListOperations(this ICdnManagementClient operations)
             {
                 return operations.ListOperationsAsync().GetAwaiter().GetResult();
             }
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListOperationsAsync(this ICdnManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OperationInner>> ListOperationsAsync(this ICdnManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Operation> ListOperationsNext(this ICdnManagementClient operations, string nextPageLink)
+            public static IPage<OperationInner> ListOperationsNext(this ICdnManagementClient operations, string nextPageLink)
             {
                 return operations.ListOperationsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListOperationsNextAsync(this ICdnManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OperationInner>> ListOperationsNextAsync(this ICdnManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListOperationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
