@@ -176,14 +176,14 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:458BF8ACE4D00DD896B7979D96F7C2EB:225E1D92A92E81E1982C4A483BC88058
         public AccessPolicyImpl ForObjectId (Guid objectId)
         {
-            Inner.ObjectId = objectId;
+            Inner.ObjectId = objectId.ToString();
             return this;
         }
 
         ///GENMHASH:9D8D39171FFFFE2517D8100304C11862:6A48AA5D0D2710F0A8787D34676538E1
         public AccessPolicyImpl ForUser (IUser user)
         {
-            Inner.ObjectId = Guid.Parse(user.ObjectId);
+            Inner.ObjectId = user.ObjectId;
             return this;
         }
 
@@ -197,14 +197,14 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:498DF2FE8CE61E58CF671C4DCDF1A6D1:B99DEC951B47738BA49B5FC2B737021E
         public AccessPolicyImpl ForGroup (IActiveDirectoryGroup group)
         {
-            Inner.ObjectId = Guid.Parse(group.ObjectId);
+            Inner.ObjectId = group.ObjectId;
             return this;
         }
 
         ///GENMHASH:7B10596856964977EC5E018A031EE6E9:AA2717CDA7300E14A15599831EE2375F
         public AccessPolicyImpl ForServicePrincipal (IServicePrincipal servicePrincipal)
         {
-            Inner.ObjectId = Guid.Parse(servicePrincipal.ObjectId);
+            Inner.ObjectId = servicePrincipal.ObjectId;
             return this;
         }
 

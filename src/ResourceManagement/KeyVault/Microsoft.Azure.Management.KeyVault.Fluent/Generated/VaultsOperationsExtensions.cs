@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             /// <param name='top'>
             /// Maximum number of results to return.
             /// </param>
-            public static IPage<Rest.Azure.Resource> List(this IVaultsOperations operations, int? top = default(int?))
+            public static IPage<VaultInner> List(this IVaultsOperations operations, int? top = default(int?))
             {
                 return operations.ListAsync(top).GetAwaiter().GetResult();
             }
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Rest.Azure.Resource>> ListAsync(this IVaultsOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VaultInner>> ListAsync(this IVaultsOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Rest.Azure.Resource> ListNext(this IVaultsOperations operations, string nextPageLink)
+            public static IPage<VaultInner> ListNext(this IVaultsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Rest.Azure.Resource>> ListNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VaultInner>> ListNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
