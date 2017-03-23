@@ -18,14 +18,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProtocolTypes.
+    /// Defines values for ResourceIdentityType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProtocolTypes
+    public enum ResourceIdentityType
     {
-        [EnumMember(Value = "Http")]
-        Http,
-        [EnumMember(Value = "Https")]
-        Https
+        [EnumMember(Value = "SystemAssigned")]
+        SystemAssigned
     }
 }

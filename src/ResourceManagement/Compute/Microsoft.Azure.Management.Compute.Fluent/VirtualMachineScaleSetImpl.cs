@@ -472,7 +472,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D7A14F2EFF1E4165DA55EF07B6C19534:7212B561D81BB0678D70A3F6EF38FA07
         public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
         {
-            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
+            return new VirtualMachineScaleSetExtensionImpl(new Models.VirtualMachineScaleSetExtension { Name = name }, this);
         }
 
         ///GENMHASH:F2FFAF5448D7DFAFBE00130C62E87053:F7407CEA3D12779F169A4F2984ACFC2B
@@ -1549,7 +1549,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 Inner.VirtualMachineProfile
                     .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
                     {
-                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
+                        Extensions = new List<Models.VirtualMachineScaleSetExtension>()
                     };
                 foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
                 {
