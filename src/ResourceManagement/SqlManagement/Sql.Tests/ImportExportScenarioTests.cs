@@ -47,7 +47,7 @@ namespace Sql.Tests
                     };
 
                 // set server firewall rule
-                sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(testPrefix), new ServerFirewallRule()
+                sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(testPrefix), new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "255.255.255.255"
@@ -87,7 +87,7 @@ namespace Sql.Tests
                 }
 
                 // Export database to bacpac
-                sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, new ExportRequestParameters()
+                sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, new ExportRequest()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
@@ -101,7 +101,7 @@ namespace Sql.Tests
                 if (preexistingDatabase)
                 {
                     // Import bacpac to existing database
-                    sqlClient.Databases.Import(resourceGroup.Name, server.Name, dbName2, new ImportExtensionRequestParameters()
+                    sqlClient.Databases.CreateImportOperation(resourceGroup.Name, server.Name, dbName2, new ImportExtensionRequest()
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
@@ -113,7 +113,7 @@ namespace Sql.Tests
                 }
                 else
                 {
-                    sqlClient.Servers.ImportDatabase(resourceGroup.Name, server.Name, new ImportRequestParameters()
+                    sqlClient.Databases.Import(resourceGroup.Name, server.Name, new ImportRequest()
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
@@ -126,24 +126,6 @@ namespace Sql.Tests
                         ServiceObjectiveName = ServiceObjectiveName.Basic,
                         MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
                     });
-                }
-
-                // List Server import/export operations
-                IEnumerable<ImportExportOperationResponse> listOperationResponse = sqlClient.ImportExportOperations.ListByServer(resourceGroup.Name, server.Name);
-                Assert.Equal(2, listOperationResponse.Count());
-                Assert.Equal(1, listOperationResponse.Count(o => o.RequestType.Equals("Export") && o.DatabaseName.Equals(dbName)));
-                Assert.Equal(1, listOperationResponse.Count(o => o.RequestType.Equals("Import") && o.DatabaseName.Equals(dbName2)));
-
-                // Get Server import/export operation
-                foreach (ImportExportOperationResponse operation in listOperationResponse)
-                {
-                    ImportExportOperationResponse getOperationResponse = sqlClient.ImportExportOperations.GetByServer(resourceGroup.Name, server.Name, 
-                        operation.RequestId.Value);
-                    Assert.NotNull(getOperationResponse);
-
-                    ImportExportOperationResponse getByDbResponse = sqlClient.ImportExportOperations.GetByDatabase(resourceGroup.Name, server.Name, 
-                        getOperationResponse.DatabaseName, operation.RequestId.Value);
-                    Assert.NotNull(getByDbResponse);
                 }
             });
         }
