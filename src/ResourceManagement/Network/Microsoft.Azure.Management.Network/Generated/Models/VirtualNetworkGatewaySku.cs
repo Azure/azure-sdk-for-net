@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Management.Network.Models
     using Azure;
     using Management;
     using Network;
-    using Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// values include: 'Basic', 'HighPerformance', 'Standard',
         /// 'UltraPerformance'</param>
         /// <param name="capacity">The capacity.</param>
-        public VirtualNetworkGatewaySku(string name, string tier, int? capacity = default(int?))
+        public VirtualNetworkGatewaySku(string name = default(string), string tier = default(string), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
@@ -68,23 +67,6 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Tier == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
-            }
-        }
     }
 }
 
