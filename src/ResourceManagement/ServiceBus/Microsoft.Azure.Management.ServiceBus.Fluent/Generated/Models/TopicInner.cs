@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
     /// Description of topic resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TopicInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class TopicInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the TopicInner class.

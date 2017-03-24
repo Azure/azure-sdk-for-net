@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
     /// Description of a namespace resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NamespaceModelInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class NamespaceModelInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the NamespaceModelInner class.
