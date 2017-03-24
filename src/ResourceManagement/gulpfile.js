@@ -93,7 +93,13 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.AppService.Fluent',
         'composite': true,
         'args': '-FT 1'
-    }
+    },
+    'servicebus': {
+        'dir': 'ServiceBus/Microsoft.Azure.Management.Fluent.ServiceBus',
+        'source': 'arm-servicebus\2015-08-01\swagger\servicebus.json',
+        'package': 'Microsoft.Azure.Management.Fluent.ServiceBus',
+        'args': '-FT 1'
+    },
 };
 
 gulp.task('default', function() {
