@@ -3,20 +3,19 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using VirtualMachineScaleSetExtension.UpdateDefinition;
-    using VirtualMachineScaleSetExtension.Definition;
-    using Models;
-    using System.Collections.Generic;
-    using ResourceManager.Fluent.Core;
-    using ResourceManager.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of VirtualMachineScaleSetExtension.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEV4dGVuc2lvbkltcGw=
     internal partial class VirtualMachineScaleSetExtensionImpl :
-        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
+        ChildResource<Models.VirtualMachineScaleSetExtension, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
         IDefinition<VirtualMachineScaleSet.Definition.IWithCreate>,
         IUpdateDefinition<VirtualMachineScaleSet.Update.IWithApply>,
@@ -26,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IDictionary<string,object> protectedSettings;
 
         ///GENMHASH:F8C651BFA96A5C2B1BE72B024FE8AEEF:815BF11DE6127502A0AFCB14BE98F20E
-        internal VirtualMachineScaleSetExtensionImpl(VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner, parent)
+        internal VirtualMachineScaleSetExtensionImpl(Models.VirtualMachineScaleSetExtension inner, VirtualMachineScaleSetImpl parent) : base(inner, parent)
         {
             InitializeSettings();
         }
