@@ -20,9 +20,15 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\VaultUpgrade.Tests.VaultUpgradeTests\VaultUpgrade_CheckPrereqsTests.json" />
-    <None Include="SessionRecords\VaultUpgrade.Tests.VaultUpgradeTests\VaultUpgrade_TrackResourceUpgradationTests.json" />
-    <None Include="SessionRecords\VaultUpgrade.Tests.VaultUpgradeTests\VaultUpgrade_UpgradeResourceTests.json" />
+    <None Include="SessionRecords\VaultUpgrade.Tests.VaultUpgradeTests\VaultUpgrade_CheckPrereqsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\VaultUpgrade.Tests.VaultUpgradeTests\VaultUpgrade_TrackResourceUpgradationTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\VaultUpgrade.Tests.VaultUpgradeTests\VaultUpgrade_UpgradeResourceTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="VaultUpgrade.playlist">
       <SubType>Designer</SubType>
     </None>
