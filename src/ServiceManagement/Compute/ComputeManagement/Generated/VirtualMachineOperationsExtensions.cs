@@ -414,6 +414,66 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Begin Initiating Maintenance on role operation initiates
+        /// maintenance on the specified virtual machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// Required. The name of the virtual machine to initiate maintenance.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginInitiatingMaintenance(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOperations)s).BeginInitiatingMaintenanceAsync(serviceName, deploymentName, virtualMachineName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Initiating Maintenance on role operation initiates
+        /// maintenance on the specified virtual machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// Required. The name of the virtual machine to initiate maintenance.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginInitiatingMaintenanceAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        {
+            return operations.BeginInitiatingMaintenanceAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Redeploying role operation redeploys the specified
         /// virtual machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
@@ -1475,6 +1535,80 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public static Task<VirtualMachineGetRemoteDesktopFileResponse> GetRemoteDesktopFileAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return operations.GetRemoteDesktopFileAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Initiate Maintenance on role operation initiates maintenance on
+        /// the specified virtual machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// Required. The name of the virtual machine to initiate maintenance.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse InitiateMaintenance(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOperations)s).InitiateMaintenanceAsync(serviceName, deploymentName, virtualMachineName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Initiate Maintenance on role operation initiates maintenance on
+        /// the specified virtual machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// Required. The name of the virtual machine to initiate maintenance.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> InitiateMaintenanceAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        {
+            return operations.InitiateMaintenanceAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
         }
         
         /// <summary>

@@ -242,7 +242,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -447,7 +447,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -772,7 +772,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1042,7 +1042,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1253,7 +1253,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1550,7 +1550,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1693,7 +1693,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1849,7 +1849,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2028,7 +2028,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2221,7 +2221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2387,7 +2387,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2557,7 +2557,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2748,7 +2748,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2908,7 +2908,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3082,7 +3082,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3256,7 +3256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3420,7 +3420,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3580,7 +3580,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3732,7 +3732,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3919,7 +3919,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4095,7 +4095,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4353,7 +4353,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4725,7 +4725,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5044,7 +5044,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5242,7 +5242,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6211,7 +6211,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6877,6 +6877,62 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                    
+                                    XElement maintenanceStatusElement = roleInstanceListElement.Element(XName.Get("MaintenanceStatus", "http://schemas.microsoft.com/windowsazure"));
+                                    if (maintenanceStatusElement != null)
+                                    {
+                                        MaintenanceStatus maintenanceStatusInstance = new MaintenanceStatus();
+                                        roleInstanceInstance.MaintenanceStatus = maintenanceStatusInstance;
+                                        
+                                        XElement isCustomerInitiatedMaintenanceAllowedElement = maintenanceStatusElement.Element(XName.Get("IsCustomerInitiatedMaintenanceAllowed", "http://schemas.microsoft.com/windowsazure"));
+                                        if (isCustomerInitiatedMaintenanceAllowedElement != null)
+                                        {
+                                            bool isCustomerInitiatedMaintenanceAllowedInstance = bool.Parse(isCustomerInitiatedMaintenanceAllowedElement.Value);
+                                            maintenanceStatusInstance.IsCustomerInitiatedMaintenanceAllowed = isCustomerInitiatedMaintenanceAllowedInstance;
+                                        }
+                                        
+                                        XElement preMaintenanceWindowStartTimeElement = maintenanceStatusElement.Element(XName.Get("PreMaintenanceWindowStartTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (preMaintenanceWindowStartTimeElement != null && !string.IsNullOrEmpty(preMaintenanceWindowStartTimeElement.Value))
+                                        {
+                                            DateTime preMaintenanceWindowStartTimeInstance = DateTime.Parse(preMaintenanceWindowStartTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.PreMaintenanceWindowStartTime = preMaintenanceWindowStartTimeInstance;
+                                        }
+                                        
+                                        XElement preMaintenanceWindowEndTimeElement = maintenanceStatusElement.Element(XName.Get("PreMaintenanceWindowEndTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (preMaintenanceWindowEndTimeElement != null && !string.IsNullOrEmpty(preMaintenanceWindowEndTimeElement.Value))
+                                        {
+                                            DateTime preMaintenanceWindowEndTimeInstance = DateTime.Parse(preMaintenanceWindowEndTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.PreMaintenanceWindowEndTime = preMaintenanceWindowEndTimeInstance;
+                                        }
+                                        
+                                        XElement maintenanceWindowStartTimeElement = maintenanceStatusElement.Element(XName.Get("MaintenanceWindowStartTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (maintenanceWindowStartTimeElement != null && !string.IsNullOrEmpty(maintenanceWindowStartTimeElement.Value))
+                                        {
+                                            DateTime maintenanceWindowStartTimeInstance = DateTime.Parse(maintenanceWindowStartTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.MaintenanceWindowStartTime = maintenanceWindowStartTimeInstance;
+                                        }
+                                        
+                                        XElement maintenanceWindowEndTimeElement = maintenanceStatusElement.Element(XName.Get("MaintenanceWindowEndTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (maintenanceWindowEndTimeElement != null && !string.IsNullOrEmpty(maintenanceWindowEndTimeElement.Value))
+                                        {
+                                            DateTime maintenanceWindowEndTimeInstance = DateTime.Parse(maintenanceWindowEndTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.MaintenanceWindowEndTime = maintenanceWindowEndTimeInstance;
+                                        }
+                                        
+                                        XElement lastOperationResultCodeElement = maintenanceStatusElement.Element(XName.Get("LastOperationResultCode", "http://schemas.microsoft.com/windowsazure"));
+                                        if (lastOperationResultCodeElement != null)
+                                        {
+                                            string lastOperationResultCodeInstance = lastOperationResultCodeElement.Value;
+                                            maintenanceStatusInstance.LastOperationResultCode = lastOperationResultCodeInstance;
+                                        }
+                                        
+                                        XElement lastOperationMessageElement = maintenanceStatusElement.Element(XName.Get("LastOperationMessage", "http://schemas.microsoft.com/windowsazure"));
+                                        if (lastOperationMessageElement != null)
+                                        {
+                                            string lastOperationMessageInstance = lastOperationMessageElement.Value;
+                                            maintenanceStatusInstance.LastOperationMessage = lastOperationMessageInstance;
                                         }
                                     }
                                 }
@@ -8306,7 +8362,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8972,6 +9028,62 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                    
+                                    XElement maintenanceStatusElement = roleInstanceListElement.Element(XName.Get("MaintenanceStatus", "http://schemas.microsoft.com/windowsazure"));
+                                    if (maintenanceStatusElement != null)
+                                    {
+                                        MaintenanceStatus maintenanceStatusInstance = new MaintenanceStatus();
+                                        roleInstanceInstance.MaintenanceStatus = maintenanceStatusInstance;
+                                        
+                                        XElement isCustomerInitiatedMaintenanceAllowedElement = maintenanceStatusElement.Element(XName.Get("IsCustomerInitiatedMaintenanceAllowed", "http://schemas.microsoft.com/windowsazure"));
+                                        if (isCustomerInitiatedMaintenanceAllowedElement != null)
+                                        {
+                                            bool isCustomerInitiatedMaintenanceAllowedInstance = bool.Parse(isCustomerInitiatedMaintenanceAllowedElement.Value);
+                                            maintenanceStatusInstance.IsCustomerInitiatedMaintenanceAllowed = isCustomerInitiatedMaintenanceAllowedInstance;
+                                        }
+                                        
+                                        XElement preMaintenanceWindowStartTimeElement = maintenanceStatusElement.Element(XName.Get("PreMaintenanceWindowStartTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (preMaintenanceWindowStartTimeElement != null && !string.IsNullOrEmpty(preMaintenanceWindowStartTimeElement.Value))
+                                        {
+                                            DateTime preMaintenanceWindowStartTimeInstance = DateTime.Parse(preMaintenanceWindowStartTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.PreMaintenanceWindowStartTime = preMaintenanceWindowStartTimeInstance;
+                                        }
+                                        
+                                        XElement preMaintenanceWindowEndTimeElement = maintenanceStatusElement.Element(XName.Get("PreMaintenanceWindowEndTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (preMaintenanceWindowEndTimeElement != null && !string.IsNullOrEmpty(preMaintenanceWindowEndTimeElement.Value))
+                                        {
+                                            DateTime preMaintenanceWindowEndTimeInstance = DateTime.Parse(preMaintenanceWindowEndTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.PreMaintenanceWindowEndTime = preMaintenanceWindowEndTimeInstance;
+                                        }
+                                        
+                                        XElement maintenanceWindowStartTimeElement = maintenanceStatusElement.Element(XName.Get("MaintenanceWindowStartTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (maintenanceWindowStartTimeElement != null && !string.IsNullOrEmpty(maintenanceWindowStartTimeElement.Value))
+                                        {
+                                            DateTime maintenanceWindowStartTimeInstance = DateTime.Parse(maintenanceWindowStartTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.MaintenanceWindowStartTime = maintenanceWindowStartTimeInstance;
+                                        }
+                                        
+                                        XElement maintenanceWindowEndTimeElement = maintenanceStatusElement.Element(XName.Get("MaintenanceWindowEndTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (maintenanceWindowEndTimeElement != null && !string.IsNullOrEmpty(maintenanceWindowEndTimeElement.Value))
+                                        {
+                                            DateTime maintenanceWindowEndTimeInstance = DateTime.Parse(maintenanceWindowEndTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            maintenanceStatusInstance.MaintenanceWindowEndTime = maintenanceWindowEndTimeInstance;
+                                        }
+                                        
+                                        XElement lastOperationResultCodeElement = maintenanceStatusElement.Element(XName.Get("LastOperationResultCode", "http://schemas.microsoft.com/windowsazure"));
+                                        if (lastOperationResultCodeElement != null)
+                                        {
+                                            string lastOperationResultCodeInstance = lastOperationResultCodeElement.Value;
+                                            maintenanceStatusInstance.LastOperationResultCode = lastOperationResultCodeInstance;
+                                        }
+                                        
+                                        XElement lastOperationMessageElement = maintenanceStatusElement.Element(XName.Get("LastOperationMessage", "http://schemas.microsoft.com/windowsazure"));
+                                        if (lastOperationMessageElement != null)
+                                        {
+                                            string lastOperationMessageInstance = lastOperationMessageElement.Value;
+                                            maintenanceStatusInstance.LastOperationMessage = lastOperationMessageInstance;
                                         }
                                     }
                                 }
@@ -10630,7 +10742,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10837,7 +10949,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11796,7 +11908,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11975,7 +12087,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -12743,7 +12855,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2017-01-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
