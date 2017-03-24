@@ -128,11 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:749BD8C1D070A6DAE2D9F29DAE294FAE:9DD0E90F3B1A067185751A1074341EAF
         internal SubnetImpl WithExistingNetworkSecurityGroup(string resourceId)
         {
-            // Workaround for REST API's expectation of an object rather than string ID - should be fixed in Swagger specs or REST
-            SubResource reference = new SubResource {
-                Id = resourceId
-            };
-            Inner.NetworkSecurityGroup = reference;
+            Inner.NetworkSecurityGroup = new NetworkSecurityGroupInner(id: resourceId);
             return this;
         }
 
@@ -158,11 +154,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C142A0234F22048E67709B65DD642261:61C2A1A23D6BCA62D6705980C8D1BECE
         public SubnetImpl WithExistingRouteTable(string resourceId)
         {
-            SubResource reference = new SubResource
-            {
-                Id = resourceId
-            };
-            Inner.RouteTable = reference;
+            Inner.RouteTable = new RouteTableInner(id: resourceId);
             return this;
         }
 
