@@ -395,7 +395,8 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayFirewallDisabledRuleGroup(
                             "crs_41_sql_injection_attacks",
-                            new List<int>() { 981318 })
+                            new List<int>() { 981318, 981320 }),
+                        new ApplicationGatewayFirewallDisabledRuleGroup("crs_35_bad_robots")
                     }
                 }
             };
