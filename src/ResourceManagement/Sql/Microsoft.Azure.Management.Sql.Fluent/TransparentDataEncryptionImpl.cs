@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                     this.ResourceGroupName(),
                     this.SqlServerName(),
                     this.DatabaseName(),
-                    Inner));
+                    Inner.Status));
 
             return this;
         }

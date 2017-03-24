@@ -98,13 +98,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets true if this is a Windows virtual machine and Vm agent is provisioned, false otherwise.
+        /// Gets true if this is a Windows virtual machine and VM agent is provisioned, false otherwise.
         /// </summary>
-        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsWindowsVmAgentProvisioned
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsWindowsVMAgentProvisioned
         {
             get
             {
-                return this.IsWindowsVmAgentProvisioned();
+                return this.IsWindowsVMAgentProvisioned();
             }
         }
 

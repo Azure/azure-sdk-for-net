@@ -543,7 +543,7 @@ namespace Fluent.Tests.Compute
                 {
                     // Creates a native virtual machine
                     //
-                    var nativeVm = computeManager.VirtualMachines
+                    var nativeVM = computeManager.VirtualMachines
                             .Define(vmName)
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
@@ -559,11 +559,11 @@ namespace Fluent.Tests.Compute
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
                             .Create();
 
-                    Assert.False(nativeVm.IsManagedDiskEnabled);
-                    var osVhdUri = nativeVm.OsUnmanagedDiskVhdUri;
+                    Assert.False(nativeVM.IsManagedDiskEnabled);
+                    var osVhdUri = nativeVM.OsUnmanagedDiskVhdUri;
                     Assert.NotNull(osVhdUri);
 
-                    computeManager.VirtualMachines.DeleteById(nativeVm.Id);
+                    computeManager.VirtualMachines.DeleteById(nativeVM.Id);
 
                     var diskName = SdkContext.RandomResourceName("dsk-", 15);
                     var osDisk = computeManager.Disks.Define(diskName)
@@ -574,7 +574,7 @@ namespace Fluent.Tests.Compute
 
                     // Creates a managed virtual machine
                     //
-                    var managedVm = computeManager.VirtualMachines
+                    var managedVM = computeManager.VirtualMachines
                             .Define(vmName)
                             .WithRegion(Location)
                             .WithExistingResourceGroup(rgName)
@@ -586,8 +586,8 @@ namespace Fluent.Tests.Compute
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
                             .Create();
 
-                    Assert.True(managedVm.IsManagedDiskEnabled);
-                    Assert.True(managedVm.OsDiskId.Equals(osDisk.Id, StringComparison.OrdinalIgnoreCase));
+                    Assert.True(managedVM.IsManagedDiskEnabled);
+                    Assert.True(managedVM.OsDiskId.Equals(osDisk.Id, StringComparison.OrdinalIgnoreCase));
                 }
                 finally
                 {
@@ -613,7 +613,7 @@ namespace Fluent.Tests.Compute
                 var rgName = TestUtilities.GenerateName("rgfluentchash-");
                 try
                 {
-                    var managedVm = computeManager.VirtualMachines
+                    var managedVM = computeManager.VirtualMachines
                             .Define(vmName)
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
@@ -631,8 +631,8 @@ namespace Fluent.Tests.Compute
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
                             .Create();
 
-                    Assert.NotNull(managedVm.AvailabilitySetId);
-                    var availabilitySet = computeManager.AvailabilitySets.GetById(managedVm.AvailabilitySetId);
+                    Assert.NotNull(managedVM.AvailabilitySetId);
+                    var availabilitySet = computeManager.AvailabilitySets.GetById(managedVM.AvailabilitySetId);
                     Assert.True(availabilitySet.VirtualMachineIds.Count > 0);
                     Assert.Equal(availabilitySet.Sku, AvailabilitySetSkuTypes.Managed);
                 }

@@ -1,0 +1,57 @@
+﻿{
+  "version": "1.0.0-beta51",
+  "title": "Microsoft Azure DNS Management Library",
+  "description": "Provides DNS management (Fluent) capabilities for Microsoft Azure.",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Microsoft Azure Management DNS Library.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure DNS management", "dnszone", "network", "REST HTTP client", "azureofficial", "windowsazureofficial", "Fluent" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net/tree/Fluent",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance": true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5, 4.0)",
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta51, 2.0)"
+  },
+
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "define": [ "NET45" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.1"
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.1"
+      }
+    }
+  }
+}

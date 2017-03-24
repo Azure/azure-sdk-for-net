@@ -14,6 +14,7 @@
       "src/ResourceManagement/Sql",
       "src/ResourceManagement/Storage",
       "src/ResourceManagement/TrafficManager",
+      "src/ResourceManagement/ServiceBus",
       "Samples",
       "Samples/ResourceManagement/AppService",
       "Samples/ResourceManagement/Batch",
@@ -27,5 +28,8 @@
       "Samples/ResourceManagement/Sql",
       "Samples/ResourceManagement/Storage",
       "Samples/ResourceManagement/TrafficManager"
-    ]
+    ],
+    "sdk": {
+      "version": "1.0.0-preview2-003121"
+    }
 }

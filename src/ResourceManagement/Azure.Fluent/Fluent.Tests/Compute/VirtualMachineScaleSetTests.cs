@@ -330,7 +330,7 @@ namespace Fluent.Tests.Compute
                 Assert.True(vm.IsOSBasedOnPlatformImage);
                 Assert.Null(vm.StoredImageUnmanagedVhdUri);
                 Assert.False(vm.IsWindowsAutoUpdateEnabled);
-                Assert.False(vm.IsWindowsVmAgentProvisioned);
+                Assert.False(vm.IsWindowsVMAgentProvisioned);
                 Assert.True(vm.AdministratorUserName.Equals("jvuser", StringComparison.OrdinalIgnoreCase));
                 var vmImage = vm.GetOSPlatformImage();
                 Assert.NotNull(vmImage);
