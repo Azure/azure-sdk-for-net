@@ -11,11 +11,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using System.Collections.Generic;
     using System;
     using Org.Joda.Time;
+    using ResourceManager.Fluent.Core;
+    using Management.Fluent.ServiceBus.Models;
+    using ServiceBus.Fluent;
 
     /// <summary>
     /// Implementation for Topic.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uVG9waWNJbXBs
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uVG9waWNJbXBs
     internal partial class TopicImpl  :
         IndependentChildResourceImpl<Microsoft.Azure.Management.Servicebus.Fluent.ITopic,Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespaceImpl,Microsoft.Azure.Management.Servicebus.Fluent.TopicInner,Microsoft.Azure.Management.Servicebus.Fluent.TopicImpl,Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusManager>,
         ITopic,
@@ -244,7 +247,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:192754CFA0B3938FEF9289BC13D648DC:E384D1DC0323D2359E002A2334C75FD1
-        internal  TopicImpl(string resourceGroupName, string namespaceName, string name, Region region, TopicInner inner, ServiceBusManager manager)
+        internal  TopicImpl(string resourceGroupName, string namespaceName, string name, Region region, TopicInner inner, IServiceBusManager manager)
         {
             //$ {
             //$ super(name, inner, manager);

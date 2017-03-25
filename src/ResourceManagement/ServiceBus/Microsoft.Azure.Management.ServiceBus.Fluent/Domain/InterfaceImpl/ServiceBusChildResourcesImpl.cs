@@ -5,10 +5,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
     using System.Collections.Generic;
+    using ResourceManager.Fluent.Core;
 
     internal abstract partial class ServiceBusChildResourcesImpl<T,ImplT,InnerT,InnerCollectionT,ManagerT,ParentT> 
     {
@@ -16,7 +15,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Deletes a resource from Azure, identifying it by its resource name.
         /// </summary>
         /// <param name="name">The name of the resource to delete.</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByName(string name)
+        void ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByName(string name)
         {
             this.DeleteByName(name);
         }
@@ -25,18 +24,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        async Task<T> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingAsync<T>.ListAsync(CancellationToken cancellationToken)
+        PagedList<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<T>.List()
         {
-            return await this.ListAsync(cancellationToken) as T;
-        }
-
-        /// <summary>
-        /// Lists all the resources of the specified type in the currently selected subscription.
-        /// </summary>
-        /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<T>.List()
-        {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T>;
+            return this.List() as PagedList<T>;
         }
 
         /// <summary>
@@ -54,9 +44,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByNameAsync<T>.GetByNameAsync(string name, CancellationToken cancellationToken)
+        Task<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<T>.GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            return await this.GetByNameAsync(name, cancellationToken) as T;
+            return this.GetByNameAsync(name, cancellationToken);
         }
     }
 }

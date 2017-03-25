@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using NamespaceAuthorizationRule.Definition;
     using NamespaceAuthorizationRule.Update;
 

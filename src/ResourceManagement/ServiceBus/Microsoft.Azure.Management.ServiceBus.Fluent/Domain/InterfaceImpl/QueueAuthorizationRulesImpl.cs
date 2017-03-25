@@ -5,8 +5,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
 
     internal partial class QueueAuthorizationRulesImpl 

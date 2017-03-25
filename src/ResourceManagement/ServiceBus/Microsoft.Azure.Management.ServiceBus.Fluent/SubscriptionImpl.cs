@@ -9,11 +9,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using Subscription.Update;
     using System;
     using Org.Joda.Time;
+    using ResourceManager.Fluent.Core;
+    using ServiceBus.Fluent;
 
     /// <summary>
     /// Implementation for Subscription.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uU3Vic2NyaXB0aW9uSW1wbA==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uU3Vic2NyaXB0aW9uSW1wbA==
     internal partial class SubscriptionImpl  :
         IndependentChildResourceImpl<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription,Microsoft.Azure.Management.Servicebus.Fluent.ITopic,Microsoft.Azure.Management.Servicebus.Fluent.SubscriptionInner,Microsoft.Azure.Management.Servicebus.Fluent.SubscriptionImpl,Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusManager>,
         ISubscription,
@@ -336,7 +338,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:D34AFBD0F174F19A653AA4494C6644CF:FAF1EE7AC452C290A5530A75FBBD6949
-        internal  SubscriptionImpl(string resourceGroupName, string namespaceName, string topicName, string name, Region region, SubscriptionInner inner, ServiceBusManager manager)
+        internal  SubscriptionImpl(string resourceGroupName, string namespaceName, string topicName, string name, Region region, Management.Fluent.ServiceBus.Models.SubscriptionInner inner, IServiceBusManager manager)
         {
             //$ {
             //$ super(name, inner, manager);

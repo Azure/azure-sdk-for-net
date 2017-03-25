@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using ResourceManager.Fluent.Core;
     using Management.Fluent.ServiceBus.Models;
     using ServiceBus.Fluent;
+    using System.Collections.Generic;
+    using Management.Fluent.ServiceBus;
 
     /// <summary>
     /// Implementation for QueueAuthorizationRule.
@@ -19,7 +21,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             Microsoft.Azure.Management.Servicebus.Fluent.QueueImpl,
             SharedAccessAuthorizationRuleInner,
             Microsoft.Azure.Management.Servicebus.Fluent.QueueAuthorizationRuleImpl,
-            QueueAuthorizationRule.Definition.IDefinition,
+            IHasId,
             QueueAuthorizationRule.Update.IUpdate,
             ServiceBus.Fluent.IServiceBusManager>,
         IQueueAuthorizationRule,
@@ -28,6 +30,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     {
         private string namespaceName;
         private Region region;
+
         ///GENMHASH:5F5FAFAB925F6F87A6D566574235368A:8E65EC5E447E2A36F6F4362F1FFB1E59
         internal QueueAuthorizationRuleImpl(string resourceGroupName, 
             string namespaceName, 
@@ -45,18 +48,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             }
         }
 
-        ///GENMHASH:323E13EA523CC5C9992A3C5081E83085:4AB288CC7CC6291048BDCBAFB0110546
-        protected async Task<ResourceListKeysInner> GetKeysInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        ///GENMHASH:D3F702AA57575010CE18E03437B986D8:829C667609783F52ADE8A276408CB6CA
+        public string NamespaceName()
         {
-            using (var _result = await this.Manager.Inner.Queues.ListKeysWithHttpMessagesAsync(this.ResourceGroupName,
-                    this.namespaceName,
-                    this.QueueName(),
-                    this.Name, 
-                    null,
-                    cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
+            return this.namespaceName;
         }
 
         ///GENMHASH:2DE15E5E45FA2E1512DC8E11676126DB:04B212B505D5C86A62596EEEE457DD66
@@ -65,54 +60,108 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return this.parentName;
         }
 
-        ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:46F4637261BEB669A9232C7B41AE2D1A
-        protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        IList<AccessRights> IAuthorizationRule<IQueueAuthorizationRule>.Rights
         {
-            //$ QueueAuthorizationRule self = this;
-            //$ return this.Manager().Inner.Queues().CreateOrUpdateAuthorizationRuleAsync(this.ResourceGroupName(),
-            //$ this.namespaceName(),
-            //$ this.QueueName(),
-            //$ this.Name(),
-            //$ this.Inner.Rights()).Map(new Func1<SharedAccessAuthorizationRuleInner, QueueAuthorizationRule>() {
-            //$ @Override
-            //$ public QueueAuthorizationRule call(SharedAccessAuthorizationRuleInner inner) {
-            //$ setInner(inner);
-            //$ return self;
-            //$ }
-            //$ });
+            get
+            {
+                return base.Rights();
+            }
+        }
 
-            return null;
+        ///GENMHASH:323E13EA523CC5C9992A3C5081E83085:4AB288CC7CC6291048BDCBAFB0110546
+        protected async override Task<ResourceListKeysInner> GetKeysInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await this.Manager.Inner.Queues.ListKeysAsync(this.ResourceGroupName,
+                    this.namespaceName,
+                    this.QueueName(),
+                    this.Name,
+                    cancellationToken);
         }
 
         ///GENMHASH:1475FAC06F3CDD8B38B0B8B1586C3D7E:1E7FCECE5192C64244366E4A469949BB
-        protected async Task<ResourceListKeysInner> RegenerateKeysInnerAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ResourceListKeysInner> RegenerateKeysInnerAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return this.Manager().Inner.Queues()
-            //$ .RegenerateKeysAsync(this.ResourceGroupName(),
-            //$ this.namespaceName(),
-            //$ this.QueueName(),
-            //$ this.Name(),
-            //$ policykey);
-
-            return null;
+            return await this.Manager.Inner.Queues
+                .RegenerateKeysAsync(this.ResourceGroupName,
+                this.namespaceName,
+                this.QueueName(),
+                this.Name,
+                policykey,
+                cancellationToken);
         }
 
-        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:FA8879C614CBDAFC8DA9F2E7FAB9838E
-        protected async Task<SharedAccessAuthorizationRuleInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:46F4637261BEB669A9232C7B41AE2D1A
+        protected async override Task<Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return this.Manager().Inner.Queues()
-            //$ .GetAuthorizationRuleAsync(this.ResourceGroupName(),
-            //$ this.namespaceName(),
-            //$ this.QueueName(),
-            //$ this.Name());
-
-            return null;
+            var inner = await this.Manager.Inner.Queues.CreateOrUpdateAuthorizationRuleAsync(this.ResourceGroupName,
+                this.namespaceName,
+                this.QueueName(),
+                this.Name,
+                this.Inner.Rights,
+                cancellationToken);
+            SetInner(inner);
+            return this;
         }
 
-        ///GENMHASH:D3F702AA57575010CE18E03437B986D8:829C667609783F52ADE8A276408CB6CA
-        public string NamespaceName()
+        /////GENMHASH:5AD91481A0966B059A478CD4E9DD9466:FA8879C614CBDAFC8DA9F2E7FAB9838E
+        protected async override Task<SharedAccessAuthorizationRuleInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.namespaceName;
+            return await this.Manager.Inner.Queues
+                .GetAuthorizationRuleAsync(this.ResourceGroupName,
+                this.namespaceName,
+                this.QueueName(),
+                this.Name,
+                cancellationToken);
+        }
+
+        Task<IAuthorizationKeys> IAuthorizationRule<IQueueAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
+        {
+            return base.RegenerateKeyAsync(policykey, cancellationToken);
+        }
+
+        Task<IAuthorizationKeys> IAuthorizationRule<IQueueAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
+        {
+            return base.GetKeysAsync(cancellationToken);
+        }
+
+        IAuthorizationKeys IAuthorizationRule<IQueueAuthorizationRule>.GetKeys()
+        {
+            return base.GetKeys();
+        }
+
+        IAuthorizationKeys IAuthorizationRule<IQueueAuthorizationRule>.RegenerateKey(Policykey policykey)
+        {
+            return base.RegenerateKey(policykey);
+        }
+
+        IUpdate AuthorizationRule.Update.IWithListen<IUpdate>.WithListeningEnabled()
+        {
+            return base.WithListeningEnabled();
+        }
+
+        IUpdate AuthorizationRule.Update.IWithSend<IUpdate>.WithSendingEnabled()
+        {
+            return base.WithSendingEnabled();
+        }
+
+        IUpdate AuthorizationRule.Update.IWithManage<IUpdate>.WithManagementEnabled()
+        {
+            return base.WithManagementEnabled();
+        }
+
+        IWithCreate AuthorizationRule.Definition.IWithListen<IWithCreate>.WithListeningEnabled()
+        {
+            return base.WithListeningEnabled();
+        }
+
+        IWithCreate AuthorizationRule.Definition.IWithSend<IWithCreate>.WithSendingEnabled()
+        {
+            return base.WithSendingEnabled();
+        }
+
+        IWithCreate AuthorizationRule.Definition.IWithManage<IWithCreate>.WithManagementEnabled()
+        {
+            return base.WithManagementEnabled();
         }
     }
 }
