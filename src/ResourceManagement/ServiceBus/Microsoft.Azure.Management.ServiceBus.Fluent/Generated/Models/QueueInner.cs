@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
     /// Description of queue Resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class QueueInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class QueueInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the QueueInner class.

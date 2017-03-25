@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
     /// Description of a namespace authorization rule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SharedAccessAuthorizationRuleInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SharedAccessAuthorizationRuleInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the

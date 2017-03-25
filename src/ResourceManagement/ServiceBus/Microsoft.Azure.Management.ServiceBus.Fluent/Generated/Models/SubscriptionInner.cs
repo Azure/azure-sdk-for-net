@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
     /// Description of subscription resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SubscriptionInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SubscriptionInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionInner class.

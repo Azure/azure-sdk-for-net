@@ -12,17 +12,18 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Fluent;
     using Microsoft.Azure.Management.Fluent.ServiceBus;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Defines values for UnavailableReason.
     /// </summary>
-    public static class UnavailableReason
+    public class UnavailableReason : ExpandableStringEnum<UnavailableReason>
     {
-        public const string None = "None";
-        public const string InvalidName = "InvalidName";
-        public const string SubscriptionIsDisabled = "SubscriptionIsDisabled";
-        public const string NameInUse = "NameInUse";
-        public const string NameInLockdown = "NameInLockdown";
-        public const string TooManyNamespaceInCurrentSubscription = "TooManyNamespaceInCurrentSubscription";
+        public static readonly UnavailableReason None = Parse("None");
+        public static readonly UnavailableReason InvalidName = Parse("InvalidName");
+        public static readonly UnavailableReason SubscriptionIsDisabled = Parse("SubscriptionIsDisabled");
+        public static readonly UnavailableReason NameInUse = Parse("NameInUse");
+        public static readonly UnavailableReason NameInLockdown = Parse("NameInLockdown");
+        public static readonly UnavailableReason TooManyNamespaceInCurrentSubscription = Parse("TooManyNamespaceInCurrentSubscription");
     }
 }
