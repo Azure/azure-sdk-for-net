@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         internal QueuesImpl(string resourceGroupName, 
             string namespaceName, 
             Region region, 
-            ServiceBusManager manager) : base(manager.Inner.Queues, manager)
+            IServiceBusManager manager) : base(manager.Inner.Queues, manager)
         {
             this.resourceGroupName = resourceGroupName;
             this.namespaceName = namespaceName;

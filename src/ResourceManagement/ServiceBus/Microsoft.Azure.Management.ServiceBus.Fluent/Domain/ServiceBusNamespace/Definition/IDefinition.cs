@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
     /// </summary>
     public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IUpdate>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate>,
         IWithSku,
         IWithQueue,
         IWithTopic,

@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus.Models;
     using Management.Fluent.ServiceBus;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for ServiceBusNamespace.
@@ -38,6 +39,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         private IList<string> topicsToDelete;
         private IList<string> rulesToDelete;
 
+        public override IServiceBusNamespace Refresh()
+        {
+            var inner = this.GetInnerAsync(CancellationToken.None).Result;
+            SetInner(inner);
+            return this as IServiceBusNamespace;
+        }
 
         ///GENMHASH:D5F5D7B4ED6C3CD6D1BC4B193E789ED5:DE0F43E4763FD287984BB053E525DD48
         internal ServiceBusNamespaceImpl(string name, NamespaceModelInner inner, IServiceBusManager manager) : base(name, inner, manager)
@@ -103,7 +110,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:08FB5A6CC72E9C407DAC126C07B38561
-        protected override Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Manager.Inner.Namespaces.GetAsync(this.ResourceGroupName,
             this.Name, cancellationToken);
@@ -129,150 +136,107 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:ED658C324B78DF3F287B5EF364C1FB7E:E3B8199E67E4B270AA8358E7C5767AA5
         public ServiceBusNamespaceImpl WithSku(NamespaceSku namespaceSku)
         {
-            //$ this.Inner.WithSku(new Sku()
-            //$ .WithName(namespaceSku.Name())
-            //$ .WithTier(namespaceSku.Tier())
-            //$ .WithCapacity(namespaceSku.Capacity()));
-            //$ return this;
-
+            this.Inner.Sku = new Sku
+            {
+                Name = namespaceSku.Name.ToString(),
+                Tier = namespaceSku.Tier.ToString(),
+                Capacity = namespaceSku.Capacity
+            };
             return this;
         }
 
         ///GENMHASH:41482A7907F5C3C16FDB1A8E3CEB3B9F:B5BA3212E181BC7B599A722AEFAC04B4
         public ServiceBusNamespaceImpl WithNewSendRule(string name)
         {
-            //$ this.rulesToCreate.Add(this.AuthorizationRules().Define(name).WithSendingEnabled());
-            //$ return this;
-
+            Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
+            this.rulesToCreate.Add(rules.Define(name).WithSendingEnabled());
             return this;
         }
 
         ///GENMHASH:0056597C3B557D2380B446CF23AF2A7B:3ED10B976FB7009877FF91F8B760BA3E
         public ServiceBusNamespaceImpl WithNewQueue(string name, int maxSizeInMB)
         {
-            //$ this.queuesToCreate.Add(queues().Define(name).WithSizeInMB(maxSizeInMB));
-            //$ return this;
-
+            Microsoft.Azure.Management.Servicebus.Fluent.IQueues queues = this.Queues();
+            this.queuesToCreate.Add(queues.Define(name).WithSizeInMB(maxSizeInMB));
             return this;
         }
 
         ///GENMHASH:CF2CF801A7E4A9CAE7624D815E5EE4F4:E6E0C1CF73E25181AD5C0BE989C2DE15
         public ServiceBusNamespaceImpl WithNewListenRule(string name)
         {
-            //$ this.rulesToCreate.Add(this.AuthorizationRules().Define(name).WithListeningEnabled());
-            //$ return this;
-
+            Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
+            this.rulesToCreate.Add(rules.Define(name).WithListeningEnabled());
             return this;
         }
 
         ///GENMHASH:1D23568874BE06880E14E0FB7622F67C:348B5EED59A4609BB5965E7355718218
-        private async Completable SubmitChildrenOperationsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        private async Task SubmitChildrenOperationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ Observable<?> queuesCreateStream = Observable.Empty();
-            //$ if (this.queuesToCreate.Size() > 0) {
-            //$ queuesCreateStream = this.Queues().CreateAsync(this.queuesToCreate);
-            //$ }
-            //$ Observable<?> topicsCreateStream = Observable.Empty();
-            //$ if (this.topicsToCreate.Size() > 0) {
-            //$ topicsCreateStream = this.Topics().CreateAsync(this.topicsToCreate);
-            //$ }
-            //$ Observable<?> rulesCreateStream = Observable.Empty();
-            //$ if (this.rulesToCreate.Size() > 0) {
-            //$ rulesCreateStream = this.AuthorizationRules().CreateAsync(this.rulesToCreate);
-            //$ }
-            //$ Observable<?> queuesDeleteStream = Observable.Empty();
-            //$ if (this.queuesToDelete.Size() > 0) {
-            //$ queuesDeleteStream = this.Queues().DeleteByNameAsync(this.queuesToDelete);
-            //$ }
-            //$ Observable<?> topicsDeleteStream = Observable.Empty();
-            //$ if (this.topicsToDelete.Size() > 0) {
-            //$ topicsDeleteStream = this.Topics().DeleteByNameAsync(this.topicsToDelete);
-            //$ }
-            //$ Observable<?> rulesDeleteStream = Observable.Empty();
-            //$ if (this.rulesToDelete.Size() > 0) {
-            //$ rulesDeleteStream = this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete);
-            //$ }
-            //$ return Completable.MergeDelayError(queuesCreateStream.ToCompletable(),
-            //$ topicsCreateStream.ToCompletable(),
-            //$ rulesCreateStream.ToCompletable(),
-            //$ queuesDeleteStream.ToCompletable(),
-            //$ topicsDeleteStream.ToCompletable(),
-            //$ rulesDeleteStream.ToCompletable());
-            //$ }
-
-            return null;
+            await this.Queues().CreateAsync(this.queuesToCreate.ToArray());
+            await this.Queues().DeleteByNameAsync(this.queuesToDelete);
+            await this.Topics().CreateAsync(this.topicsToCreate.ToArray());
+            await this.Topics().DeleteByNameAsync(this.topicsToDelete);
+            await this.AuthorizationRules().CreateAsync(this.rulesToCreate.ToArray());
+            await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete);
         }
 
         ///GENMHASH:2B6A7C27023EE8442A6D59B3FABB77A4:2413E2F661081FE7F61AA483AFCE848F
         public QueuesImpl Queues()
         {
-            //$ return new QueuesImpl(this.ResourceGroupName(),
-            //$ this.Name(),
-            //$ this.Region(),
-            //$ this.Manager());
-
-            return null;
+            return new QueuesImpl(this.ResourceGroupName,
+                this.Name,
+                this.Region,
+                this.Manager);
         }
 
         ///GENMHASH:4E79F831CA615F31A3B9091C9216E524:61C1065B307679F3800C701AE0D87070
         public string DnsLabel()
         {
-            //$ return this.Inner.Name();
-
-            return null;
+            return this.Inner.Name;
         }
 
         ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:263DC3FB1C12DD6F3B10E185DDDE2F7A
         public NamespaceSku Sku()
         {
-            //$ return new NamespaceSku(this.Inner.Sku());
-
-            return null;
+            return new NamespaceSku(this.Inner.Sku);
         }
 
         ///GENMHASH:98A63A985E9B6B6F14188D0E5238F102:8647FDD47A835E6860B5FD34AEAF4704
         public ServiceBusNamespaceImpl WithNewTopic(string name, int maxSizeInMB)
         {
-            //$ this.topicsToCreate.Add(topics().Define(name).WithSizeInMB(maxSizeInMB));
-            //$ return this;
-
+            Microsoft.Azure.Management.Servicebus.Fluent.ITopics topics = this.Topics();
+            this.topicsToCreate.Add(topics.Define(name).WithSizeInMB(maxSizeInMB));
             return this;
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:BBFCE2924F9633469A6BC7350F5D2F05
-        public async Task<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ Completable createNamespaceCompletable = this.Manager().Inner.Namespaces()
-            //$ .CreateOrUpdateAsync(this.ResourceGroupName(),
-            //$ this.Name(),
-            //$ this.Inner)
-            //$ .Map(new Func1<NamespaceInner, NamespaceInner>() {
-            //$ @Override
-            //$ public NamespaceInner call(NamespaceInner inner) {
-            //$ setInner(inner);
-            //$ return inner;
-            //$ }
-            //$ }).ToCompletable();
-            //$ Completable childrenOperationsCompletable = submitChildrenOperationsAsync();
-            //$ ServiceBusNamespace self = this;
-            //$ return Completable.Concat(createNamespaceCompletable, childrenOperationsCompletable)
-            //$ .DoOnTerminate(new Action0() {
-            //$ @Override
-            //$ public void call() {
-            //$ initChildrenOperationsCache();
-            //$ }
-            //$ })
-            //$ .AndThen(Observable.Just(self));
-
-            return null;
+            try
+            {
+                var inner = await this.Manager.Inner.Namespaces
+                    .CreateOrUpdateAsync(this.ResourceGroupName,
+                        this.Name,
+                        this.Inner,
+                        cancellationToken);
+                SetInner(inner);
+                await SubmitChildrenOperationsAsync();
+            }
+            finally
+            {
+                InitChildrenOperationsCache();
+            }
+            return this;
         }
 
         ///GENMHASH:FAD58514475FBDD5ADFE0AFE4F821FA2:0E94794501F4861D7BC8CF1B8EC0F1E1
         public DateTime UpdatedAt()
         {
-            //$ return this.Inner.UpdatedAt();
-
-            return DateTime.Now;
+            if (this.Inner.UpdatedAt == null || !this.Inner.UpdatedAt.HasValue)
+            {
+                return DateTime.MinValue;
+            }
+            return this.Inner.UpdatedAt.Value;
         }
     }
 }
