@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
 {
-    using Org.Joda.Time;
     using Microsoft.Azure.Management.Servicebus.Fluent;
     using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update;
     using System;

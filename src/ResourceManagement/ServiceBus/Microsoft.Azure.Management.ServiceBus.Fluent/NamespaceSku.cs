@@ -11,11 +11,11 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuTmFtZXNwYWNlU2t1
     public class NamespaceSku
     {
-        public readonly NamespaceSku Basic = new NamespaceSku(new Sku() { Name = SkuName.Basic.ToString(), Tier = SkuTier.Basic.ToString()});
-        public readonly NamespaceSku Standard = new NamespaceSku(new Sku() { Name = SkuName.Standard.ToString(), Tier = SkuTier.Standard.ToString() });
-        public readonly NamespaceSku PremiumCapacity1 = new NamespaceSku(new Sku() { Name = SkuName.Premium.ToString(), Tier = SkuTier.Premium.ToString(), Capacity = 1 });
-        public readonly NamespaceSku PremiumCapacity2 = new NamespaceSku(new Sku() { Name = SkuName.Premium.ToString(), Tier = SkuTier.Premium.ToString(), Capacity = 2 });
-        public readonly NamespaceSku PremiumCapacity4 = new NamespaceSku(new Sku() { Name = SkuName.Premium.ToString(), Tier = SkuTier.Premium.ToString(), Capacity = 4 });
+        public static readonly NamespaceSku Basic = new NamespaceSku(new Sku() { Name = SkuName.Basic.ToString(), Tier = SkuTier.Basic.ToString()});
+        public static readonly NamespaceSku Standard = new NamespaceSku(new Sku() { Name = SkuName.Standard.ToString(), Tier = SkuTier.Standard.ToString() });
+        public static readonly NamespaceSku PremiumCapacity1 = new NamespaceSku(new Sku() { Name = SkuName.Premium.ToString(), Tier = SkuTier.Premium.ToString(), Capacity = 1 });
+        public static readonly NamespaceSku PremiumCapacity2 = new NamespaceSku(new Sku() { Name = SkuName.Premium.ToString(), Tier = SkuTier.Premium.ToString(), Capacity = 2 });
+        public static readonly NamespaceSku PremiumCapacity4 = new NamespaceSku(new Sku() { Name = SkuName.Premium.ToString(), Tier = SkuTier.Premium.ToString(), Capacity = 4 });
 
         private Sku sku;
         /// <summary>

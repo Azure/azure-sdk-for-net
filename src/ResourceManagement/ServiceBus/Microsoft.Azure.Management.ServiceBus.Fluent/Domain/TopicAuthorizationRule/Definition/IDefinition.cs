@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
     using Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition;
     using ResourceManager.Fluent.Core.ResourceActions;

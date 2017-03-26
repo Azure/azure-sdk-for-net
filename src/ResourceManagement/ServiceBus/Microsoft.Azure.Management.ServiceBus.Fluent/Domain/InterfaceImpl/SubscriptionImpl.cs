@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         {
             get
             {
-                return this.DefaultMessageTtlDuration() as TimeSpan;
+                return this.DefaultMessageTtlDuration();
             }
         }
 
