@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         internal TopicsImpl(string resourceGroupName,
             string namespaceName,
             Region region,
-            ServiceBusManager manager) : base(manager.Inner.Topics, manager)
+            IServiceBusManager manager) : base(manager.Inner.Topics, manager)
         {
             this.resourceGroupName = resourceGroupName;
             this.namespaceName = namespaceName;

@@ -4,132 +4,126 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using ServiceBusNamespace.Definition;
     using ServiceBusNamespace.Update;
     using System.Collections.Generic;
     using System;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent;
+    using ServiceBus.Fluent;
+    using Management.Fluent.ServiceBus.Models;
+    using Management.Fluent.ServiceBus;
 
     /// <summary>
     /// Implementation for ServiceBusNamespace.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uU2VydmljZUJ1c05hbWVzcGFjZUltcGw=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uU2VydmljZUJ1c05hbWVzcGFjZUltcGw=
     internal partial class ServiceBusNamespaceImpl  :
-        GroupableResource<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace,Microsoft.Azure.Management.Servicebus.Fluent.NamespaceInner,Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespaceImpl,Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusManager>,
+            GroupableResource<IServiceBusNamespace,
+            NamespaceModelInner,
+            ServiceBusNamespaceImpl,
+            IServiceBusManager,
+            ServiceBusNamespace.Definition.IWithGroup,
+            ServiceBusNamespace.Definition.IWithCreate,
+            ServiceBusNamespace.Definition.IWithCreate,
+            ServiceBusNamespace.Update.IUpdate>,
         IServiceBusNamespace,
         IDefinition,
         IUpdate
     {
-        private IList<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>> queuesToCreate;
-        private IList<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>> topicsToCreate;
-        private IList<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRule>> rulesToCreate;
+        private IList<ICreatable<IQueue>> queuesToCreate;
+        private IList<ICreatable<ITopic>> topicsToCreate;
+        private IList<ICreatable<INamespaceAuthorizationRule>> rulesToCreate;
         private IList<string> queuesToDelete;
         private IList<string> topicsToDelete;
         private IList<string> rulesToDelete;
+
+
+        ///GENMHASH:D5F5D7B4ED6C3CD6D1BC4B193E789ED5:DE0F43E4763FD287984BB053E525DD48
+        internal ServiceBusNamespaceImpl(string name, NamespaceModelInner inner, IServiceBusManager manager) : base(name, inner, manager)
+        {
+            this.InitChildrenOperationsCache();
+        }
+
         ///GENMHASH:A310C258C80DD19DCDBD4A3629B90E97:BDC900789892FBE0EDAA0D38DFC8D3B6
         private void InitChildrenOperationsCache()
         {
-            //$ this.queuesToCreate = new ArrayList<>();
-            //$ this.topicsToCreate = new ArrayList<>();
-            //$ this.rulesToCreate = new ArrayList<>();
-            //$ this.queuesToDelete = new ArrayList<>();
-            //$ this.topicsToDelete = new ArrayList<>();
-            //$ this.rulesToDelete = new ArrayList<>();
-            //$ }
-
+            this.queuesToCreate = new List<ICreatable<IQueue>>();
+            this.topicsToCreate = new List<ICreatable<ITopic>>();
+            this.rulesToCreate = new List<ICreatable<INamespaceAuthorizationRule>>();
+            this.queuesToDelete = new List<string>();
+            this.topicsToDelete = new List<string>();
+            this.rulesToDelete = new List<string>();
         }
 
         ///GENMHASH:577F8437932AEC6E08E1A137969BDB4A:F2E0DA6714F4CBB82BD262DD3FAFD7F0
         public string Fqdn()
         {
-            //$ return this.Inner.ServiceBusEndpoint();
-
-            return null;
+            return this.Inner.ServiceBusEndpoint;
         }
 
         ///GENMHASH:F42F719E077F749448F6083CD4E91B80:D04B4C35FD4C9B52030B2516D8C37D06
         public TopicsImpl Topics()
         {
-            //$ return new TopicsImpl(this.ResourceGroupName(),
-            //$ this.Name(),
-            //$ this.Region(),
-            //$ this.Manager());
-
-            return null;
+            return new TopicsImpl(this.ResourceGroupName,
+                this.Name,
+                this.Region,
+                this.Manager);
         }
 
         ///GENMHASH:897277FEA28BB17BF24A0A7519334860:4F3DA646FA2835C582BCB6BB226D3FA3
         public ServiceBusNamespaceImpl WithoutQueue(string name)
         {
-            //$ this.queuesToDelete.Add(name);
-            //$ return this;
-
+            this.queuesToDelete.Add(name);
             return this;
         }
 
         ///GENMHASH:396C89E2447B0E70C3C95439926DFC1A:E32C091119D6FB6D73E1D3322965866B
         public ServiceBusNamespaceImpl WithNewManageRule(string name)
         {
-            //$ this.rulesToCreate.Add(this.AuthorizationRules().Define(name).WithManagementEnabled());
-            //$ return this;
-
+            Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
+            this.rulesToCreate.Add(rules.Define(name).WithManagementEnabled());
             return this;
-        }
-
-        ///GENMHASH:D5F5D7B4ED6C3CD6D1BC4B193E789ED5:DE0F43E4763FD287984BB053E525DD48
-        internal  ServiceBusNamespaceImpl(string name, NamespaceInner inner, ServiceBusManager manager)
-        {
-            //$ super(name, inner, manager);
-            //$ this.InitChildrenOperationsCache();
-            //$ }
-
         }
 
         ///GENMHASH:8911278EAF12BC5F0E2B7B33F06FAE96:6F2E4EBB9D600893514CE9A2997DFAD0
         public NamespaceAuthorizationRulesImpl AuthorizationRules()
         {
-            //$ return new NamespaceAuthorizationRulesImpl(this.ResourceGroupName(),
-            //$ this.Name(),
-            //$ this.Region(),
-            //$ manager());
-
-            return null;
+            return new NamespaceAuthorizationRulesImpl(this.ResourceGroupName,
+                this.Name,
+                this.Region,
+                Manager);
         }
 
         ///GENMHASH:7701B5E45C28C739B5610C34A2EF5559:5BCC0A5E68F721378DE24C6D3EE350E5
         public ServiceBusNamespaceImpl WithoutAuthorizationRule(string name)
         {
-            //$ this.rulesToDelete.Add(name);
-            //$ return this;
-
+            this.rulesToDelete.Add(name);
             return this;
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:08FB5A6CC72E9C407DAC126C07B38561
-        protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.NamespaceInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return this.Manager().Inner.Namespaces().GetByResourceGroupAsync(this.ResourceGroupName(),
-            //$ this.Name());
-
-            return null;
+            return this.Manager.Inner.Namespaces.GetAsync(this.ResourceGroupName,
+            this.Name, cancellationToken);
         }
 
         ///GENMHASH:D1F1E3A5DB47929D06C249A1D7F38170:3E4EB2C841364DFF671396F0796788FE
         public ServiceBusNamespaceImpl WithoutTopic(string name)
         {
-            //$ this.topicsToDelete.Add(name);
-            //$ return this;
-
+            this.topicsToDelete.Add(name);
             return this;
         }
 
         ///GENMHASH:9157FD0110376DF53A83D529D7A1A4E1:385804CDAC891325C8D939BDF7A1D4FF
         public DateTime CreatedAt()
         {
-            //$ return this.Inner.CreatedAt();
-
-            return DateTime.Now;
+            if (this.Inner.CreatedAt == null || !this.Inner.CreatedAt.HasValue)
+            {
+                return DateTime.MinValue;
+            }
+            return this.Inner.CreatedAt.Value;
         }
 
         ///GENMHASH:ED658C324B78DF3F287B5EF364C1FB7E:E3B8199E67E4B270AA8358E7C5767AA5

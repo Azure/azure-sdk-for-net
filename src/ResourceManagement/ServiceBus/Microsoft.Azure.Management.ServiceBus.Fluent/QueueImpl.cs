@@ -104,7 +104,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:396C89E2447B0E70C3C95439926DFC1A:E32C091119D6FB6D73E1D3322965866B
         public QueueImpl WithNewManageRule(string name)
         {
-            this.rulesToCreate.Add(this.AuthorizationRules().Define(name).WithManagementEnabled());
+            Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
+            this.rulesToCreate.Add(rules.Define(name).WithManagementEnabled());
             return this;
         }
 
@@ -202,7 +203,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:41482A7907F5C3C16FDB1A8E3CEB3B9F:B5BA3212E181BC7B599A722AEFAC04B4
         public QueueImpl WithNewSendRule(string name)
         {
-            this.rulesToCreate.Add(this.AuthorizationRules().Define(name).WithSendingEnabled());
+            Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
+            this.rulesToCreate.Add(rules.Define(name).WithSendingEnabled());
             return this;
         }
 
@@ -459,7 +461,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:CF2CF801A7E4A9CAE7624D815E5EE4F4:E6E0C1CF73E25181AD5C0BE989C2DE15
         public QueueImpl WithNewListenRule(string name)
         {
-            this.rulesToCreate.Add(this.AuthorizationRules().Define(name).WithListeningEnabled());
+            Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
+            this.rulesToCreate.Add(rules.Define(name).WithListeningEnabled());
             return this;
         }
 

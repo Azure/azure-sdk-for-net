@@ -27,16 +27,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         INamespaceAuthorizationRule,
         IDefinition,
         IUpdate
-    /**
-    AuthorizationRuleBaseImpl<Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRule,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespaceImpl,
-        Microsoft.Azure.Management.Servicebus.Fluent.SharedAccessAuthorizationRuleInner,
-        Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRuleImpl,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusManager>,
-    INamespaceAuthorizationRule,
-    IDefinition,
-    IUpdate
-    **/
     {
         private Region region;
 
