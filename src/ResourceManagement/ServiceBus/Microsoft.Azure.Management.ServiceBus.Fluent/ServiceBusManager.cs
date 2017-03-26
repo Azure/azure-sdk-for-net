@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         {
         }
 
-        #region DnsZoneManager builder
+        #region ServiceBusManager builder
 
         public static IServiceBusManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
