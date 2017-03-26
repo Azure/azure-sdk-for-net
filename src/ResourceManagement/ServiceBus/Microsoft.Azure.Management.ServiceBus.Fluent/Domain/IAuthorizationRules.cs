@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// <typeparam name="Rule">The specific rule type.</typeparam>
     public interface IAuthorizationRules<RuleT>  :
         ISupportsGettingByName<RuleT>,
+        ISupportsListing<RuleT>,
         ISupportsDeletingByName,
         IHasManager<IServiceBusManager>
     {

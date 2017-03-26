@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     public interface ITopics  :
         ISupportsCreating<Topic.Definition.IBlank>,
         ISupportsGettingByName<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
+        ISupportsListing<ITopic>,
         ISupportsDeletingByName,
         IHasManager<ServiceBus.Fluent.IServiceBusManager>,
         IHasInner<ITopicsOperations>

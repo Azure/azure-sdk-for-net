@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     public interface ISubscriptions  :
         ISupportsCreating<Subscription.Definition.IBlank>,
         ISupportsGettingByName<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>,
+        ISupportsListing<ISubscription>,
         ISupportsDeletingByName,
         IHasManager<ServiceBus.Fluent.IServiceBusManager>,
         IHasInner<ISubscriptionsOperations>

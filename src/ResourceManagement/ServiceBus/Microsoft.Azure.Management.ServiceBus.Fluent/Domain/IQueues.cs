@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     public interface IQueues  :
         ISupportsCreating<Queue.Definition.IBlank>,
         ISupportsGettingByName<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
+        ISupportsListing<IQueue>,
         ISupportsDeletingByName,
         IHasManager<ServiceBus.Fluent.IServiceBusManager>,
         IHasInner<IQueuesOperations>
