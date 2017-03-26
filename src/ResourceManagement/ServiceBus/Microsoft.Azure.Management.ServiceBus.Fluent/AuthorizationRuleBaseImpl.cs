@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     {
         ///GENMHASH:12060F5A32B0EDDCD1D39FED89E71CAF:B6C6A00BFC93336EDE90DB15B3BEA7B7
         protected AuthorizationRuleBaseImpl(string name, InnerModelT innerObject, ManagerT manager) 
-            : base(innerObject.Name, innerObject, manager)
+            : base(name, innerObject, manager)
         {
         }
 

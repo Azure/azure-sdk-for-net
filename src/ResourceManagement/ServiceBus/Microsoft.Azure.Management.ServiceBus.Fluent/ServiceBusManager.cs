@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         {
             get
             {
-                if (Namespaces == null)
+                if (namespaces == null)
                 {
                     namespaces = new ServiceBusNamespacesImpl(this);
                 }

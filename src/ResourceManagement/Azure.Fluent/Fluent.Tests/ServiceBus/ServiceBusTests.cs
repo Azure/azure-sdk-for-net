@@ -43,15 +43,7 @@ namespace Azure.Tests.ServiceBus
                     var namespaces = serviceBusManager.Namespaces.ListByGroup(rgName);
                     Assert.NotNull(namespaces);
                     Assert.True(namespaces.Count > 0);
-                    var found = false;
-                    foreach (var n in namespaces)
-                    {
-                        if (n.Name.Equals(nspace.Name, StringComparison.OrdinalIgnoreCase))
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
+                    var found = namespaces.Any(n => n.Name.Equals(nspace.Name, StringComparison.OrdinalIgnoreCase));
                     Assert.True(found);
 
                     Assert.NotNull(nspace.DnsLabel);
@@ -160,15 +152,7 @@ namespace Azure.Tests.ServiceBus
                     var queuesInNamespace = nspace.Queues.List();
                     Assert.NotNull(queuesInNamespace);
                     Assert.True(queuesInNamespace.Count() > 0);
-                    IQueue foundQueue = null;
-                    foreach (var q in queuesInNamespace)
-                    {
-                        if (q.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            foundQueue = q;
-                            break;
-                        }
-                    }
+                    IQueue foundQueue = queuesInNamespace.FirstOrDefault(q => q.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundQueue);
                     // Dead lettering disabled by default
                     //
@@ -182,6 +166,16 @@ namespace Azure.Tests.ServiceBus
                     Assert.Equal(120, foundQueue.LockDurationInSeconds);
                     Assert.True(foundQueue.IsDeadLetteringEnabledForExpiredMessages);
                     Assert.Equal(25, foundQueue.MaxDeliveryCountBeforeDeadLetteringMessage);
+
+                    queuesInNamespace = nspace.Queues.List();
+                    Assert.NotNull(queuesInNamespace);
+                    Assert.True(queuesInNamespace.Count() > 0);
+                    foundQueue = queuesInNamespace.FirstOrDefault(q => q.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase));
+                    Assert.NotNull(foundQueue);
+                    Assert.Equal(120, foundQueue.LockDurationInSeconds);
+                    Assert.True(foundQueue.IsDeadLetteringEnabledForExpiredMessages);
+                    Assert.Equal(25, foundQueue.MaxDeliveryCountBeforeDeadLetteringMessage);
+
                     nspace.Queues.DeleteByName(foundQueue.Name);
                 }
                 finally
@@ -232,15 +226,7 @@ namespace Azure.Tests.ServiceBus
                     var queuesInNamespace = nspace.Queues.List();
                     Assert.NotNull(queuesInNamespace);
                     Assert.Equal(1, queuesInNamespace.Count);
-                    IQueue foundQueue = null;
-                    foreach (var q in queuesInNamespace)
-                    {
-                        if (q.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            foundQueue = q;
-                            break;
-                        }
-                    }
+                    IQueue foundQueue = queuesInNamespace.FirstOrDefault(q => q.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundQueue);
                     // Remove Queue
                     //
@@ -323,15 +309,7 @@ namespace Azure.Tests.ServiceBus
                     var topicsInNamespace = nspace.Topics.List();
                     Assert.NotNull(topicsInNamespace);
                     Assert.True(topicsInNamespace.Count > 0);
-                    ITopic foundTopic = null;
-                    foreach (var t in topicsInNamespace)
-                    {
-                        if (t.Name.Equals(topic.Name, StringComparison.OrdinalIgnoreCase))
-                        {
-                            foundTopic = t;
-                            break;
-                        }
-                    }
+                    ITopic foundTopic = topicsInNamespace.FirstOrDefault(t => t.Name.Equals(topic.Name, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundTopic);
                     foundTopic = foundTopic.Update()
                             .WithDefaultMessageTTL(new TimeSpan(0, 20, 0))
@@ -396,15 +374,7 @@ namespace Azure.Tests.ServiceBus
                     var topicsInNamespace = nspace.Topics.List();
                     Assert.NotNull(topicsInNamespace);
                     Assert.Equal(1, topicsInNamespace.Count);
-                    ITopic foundTopic = null;
-                    foreach (var t in topicsInNamespace)
-                    {
-                        if (t.Name.Equals(topicName))
-                        {
-                            foundTopic = t;
-                            break;
-                        }
-                    }
+                    ITopic foundTopic = topicsInNamespace.FirstOrDefault(t => t.Name.Equals(topicName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundTopic);
                     // Remove Topic
                     //
@@ -466,15 +436,7 @@ namespace Azure.Tests.ServiceBus
                     Assert.NotNull(rulesInNamespace);
                     Assert.Equal(2, rulesInNamespace.Count);    // Default + one explicit
 
-                    INamespaceAuthorizationRule foundNsRule = null;
-                    foreach (var rule in rulesInNamespace)
-                    {
-                        if (rule.Name.Equals(nsRuleName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            foundNsRule = rule;
-                            break;
-                        }
-                    }
+                    INamespaceAuthorizationRule foundNsRule = rulesInNamespace.FirstOrDefault(r => r.Name.Equals(nsRuleName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundNsRule);
                     var nsRuleKeys = foundNsRule.GetKeys();
                     Assert.NotNull(nsRuleKeys);
@@ -628,13 +590,7 @@ namespace Azure.Tests.ServiceBus
                     Assert.NotNull(subscription.Inner);
                     var subscriptionsInTopic = topic.Subscriptions.List();
                     Assert.True(subscriptionsInTopic.Count > 0);
-                    var foundSubscription = false;
-                    foreach (var s in subscriptionsInTopic) {
-                        if (s.Name.Equals(subscription.Name, StringComparison.OrdinalIgnoreCase)) {
-                            foundSubscription = true;
-                            break;
-                        }
-                    }
+                    var foundSubscription = subscriptionsInTopic.Any(s => s.Name.Equals(subscription.Name, StringComparison.OrdinalIgnoreCase));
                     Assert.True(foundSubscription);
                     topic.Subscriptions.DeleteByName(subscriptionName);
                     subscriptionsInTopic = topic.Subscriptions.List();
