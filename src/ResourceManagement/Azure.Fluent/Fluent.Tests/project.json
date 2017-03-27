@@ -72,7 +72,10 @@
       "target": "project",
       "type": "build"
     },
-    "SSH.NET": "2016.0.0",
-    "Microsoft.Azure.Management.ServiceBus.Fluent": "1.0.0-beta51"
+    "Microsoft.Azure.Management.ServiceBus.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "SSH.NET": "2016.0.0"
   }
 }

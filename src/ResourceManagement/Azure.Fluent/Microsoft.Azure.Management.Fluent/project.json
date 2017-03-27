@@ -30,6 +30,7 @@
     "Microsoft.Azure.Management.Network.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0, 2.0)",
+    "Microsoft.Azure.Management.ServiceBus.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Sql.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.TrafficManager.Fluent": "[1.0.0, 2.0)"
