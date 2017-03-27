@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{B01BF8E5-AD17-43D2-9F05-3BC5E077D99A}</ProjectGuid>
+    <RootNamespace>Graph.RBAC.Tests</RootNamespace>
+    <AssemblyName>Graph.RBAC.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Tests\ApplicationTests.cs" />
+    <Compile Include="Tests\BasicTests.cs" />
+    <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\GraphTestBase.cs" />
+    <Compile Include="Tests\GroupTests.cs" />
+    <Compile Include="Tests\ServicePrincipalTests.cs" />
+    <Compile Include="Tests\UserTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SampleApplicationCredential.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.ApplicationTests\CreateDeleteApplicationTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.ApplicationTests\GetListApplicationTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.GroupTests\AddRemoveMemberTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.GroupTests\CreateDeleteGroupTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.ServicePrincipalTests\CreateDeleteServicePrincipalTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.UserTests\CreateDeleteUserTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\FilteredListGroupsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\FilteredListUsersTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\GetUserUsingSignInNameTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\GroupMemebersTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\GroupTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\ListGroupsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\ListPagedGroupsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\ListPagedUsersTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\ListUsersTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\ObjectsByObjectIdsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\QueryServicePrincipalTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Graph.RBAC.Tests.BasicTests\UserTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graph.RBAC\Graph.RBAC.csproj">
+      <Project>{dd208fde-059a-40e5-9153-389e04b1ea60}</Project>
+      <Name>Graph.RBAC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+</Project>

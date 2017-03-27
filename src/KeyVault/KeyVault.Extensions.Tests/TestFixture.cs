@@ -1,0 +1,228 @@
+﻿//
+// Copyright © Microsoft Corporation, All Rights Reserved
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+// OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+// ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+// PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+//
+// See the Apache License, Version 2.0 for the specific language
+// governing permissions and limitations under the License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Graph.RBAC;
+using Microsoft.Azure.Graph.RBAC.Models;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Management.KeyVault;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+
+namespace KeyVault.Extensions.Tests
+{
+    public class TestFixture : IDisposable
+    {
+        // Required in test code
+        public string VaultAddress;
+        public ClientCredential _ClientCredential;
+
+        // Required for cleaning up at the end of the test
+        private string rgName, vaultName, appObjectId;
+        private bool fromConfig;
+
+        private bool initialized = false;
+
+        public TestFixture()
+        { }
+
+        public void Initialize( string className )
+        {
+            if ( initialized )
+                return;
+
+            HttpMockServer server;
+
+            try
+            {
+                server = HttpMockServer.CreateInstance();
+            }
+            catch ( ApplicationException )
+            {
+                // mock server has never been initialized, we will need to initialize it.
+                HttpMockServer.Initialize( className, "InitialCreation" );
+                server = HttpMockServer.CreateInstance();
+            }
+
+            if ( HttpMockServer.Mode == HttpRecorderMode.Record )
+            {
+                fromConfig = FromConfiguration();
+
+                if ( !fromConfig )
+                {
+                    var testFactory     = new CSMTestEnvironmentFactory();
+                    var testEnv         = testFactory.GetTestEnvironment();
+                    var secret          = Guid.NewGuid().ToString();
+                    var mgmtClient      = TestBase.GetServiceClient<KeyVaultManagementClient>( testFactory );
+                    var resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>( testFactory );
+                    var tenantId        = testEnv.AuthorizationContext.TenantId;
+                    var graphClient     = TestBase.GetGraphServiceClient<GraphRbacManagementClient>( testFactory, tenantId );
+                    var appDisplayName  = TestUtilities.GenerateName( "sdktestapp" );
+
+                    //Setup things in AAD
+
+                    //Create an application
+                    var app = CreateApplication( graphClient, appDisplayName, secret );
+                    appObjectId = app.Application.ObjectId;
+
+                    //Create a corresponding service principal
+                    var servicePrincipal = CreateServicePrincipal( app, graphClient );
+
+                    //Figure out which locations are available for Key Vault
+                    var location = GetKeyVaultLocation( resourcesClient );
+
+                    //Create a resource group in that location
+                    vaultName = TestUtilities.GenerateName( "sdktestvault" );
+                    rgName    = TestUtilities.GenerateName( "sdktestrg" );
+
+                    resourcesClient.ResourceGroups.CreateOrUpdate( rgName, new ResourceGroup { Location = location } );
+
+                    //Create a key vault in that resource group
+                    var createResponse = CreateVault( mgmtClient, location, tenantId, servicePrincipal );
+
+                    VaultAddress = createResponse.Vault.Properties.VaultUri;
+                    _ClientCredential = new ClientCredential( app.Application.AppId, secret );
+
+                    //Wait a few seconds before trying to authenticate
+                    TestUtilities.Wait( TimeSpan.FromSeconds( 30 ) );
+                }
+            }
+
+            initialized = true;
+        }
+
+        private VaultGetResponse CreateVault( KeyVaultManagementClient mgmtClient, string location, string tenantId, ServicePrincipalGetResult servicePrincipal )
+        {
+            var createResponse = mgmtClient.Vaults.CreateOrUpdate(
+                resourceGroupName: rgName,
+                vaultName: vaultName,
+                parameters: new VaultCreateOrUpdateParameters
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>(),
+                    Properties = new VaultProperties
+                    {
+                        EnabledForDeployment = true,
+                        Sku = new Sku { Family = "A", Name = "Standard" },
+                        TenantId = Guid.Parse( tenantId ),
+                        VaultUri = "",
+                        AccessPolicies = new[]
+                        {
+                            new AccessPolicyEntry
+                            {
+                                TenantId = Guid.Parse(tenantId),
+                                ObjectId = Guid.Parse(servicePrincipal.ServicePrincipal.ObjectId),
+                                PermissionsToKeys = new string[]{"all"},
+                                PermissionsToSecrets = new string[]{"all"}
+                            }
+                        }
+                    }
+                }
+                );
+            return createResponse;
+        }
+
+        private static string GetKeyVaultLocation( ResourceManagementClient resourcesClient )
+        {
+            var providers = resourcesClient.Providers.Get( "Microsoft.KeyVault" );
+            var location = providers.Provider.ResourceTypes.Where(
+                ( resType ) =>
+                {
+                    if ( resType.Name == "vaults" )
+                        return true;
+                    else
+                        return false;
+                }
+                ).First().Locations.FirstOrDefault();
+            return location;
+        }
+
+        private static ServicePrincipalGetResult CreateServicePrincipal( ApplicationGetResult app, GraphRbacManagementClient graphClient )
+        {
+            var parameters = new ServicePrincipalCreateParameters
+            {
+                AccountEnabled = true,
+                AppId = app.Application.AppId
+            };
+            var servicePrincipal = graphClient.ServicePrincipal.Create( parameters );
+            return servicePrincipal;
+        }
+
+        private static ApplicationGetResult CreateApplication( GraphRbacManagementClient graphClient, string appDisplayName, string secret )
+        {
+            return graphClient.Application.Create( new ApplicationCreateParameters
+            {
+                DisplayName = appDisplayName,
+                IdentifierUris = new List<string>() { "http://" + Guid.NewGuid().ToString() + ".com" },
+                Homepage = "http://contoso.com",
+                AvailableToOtherTenants = false,
+                PasswordCredentials = new[]
+                {
+                    new PasswordCredential
+                    {
+                        Value = secret,
+                        StartDate = DateTime.Now - TimeSpan.FromDays(1),
+                        EndDate = DateTime.Now + TimeSpan.FromDays(1),
+                        KeyId = Guid.NewGuid()
+                    }
+                }
+            } );
+        }
+
+        private bool FromConfiguration()
+        {
+            string vault        = TestConfigurationManager.TryGetEnvironmentOrAppSetting( "VaultUrl" );
+            string authClientId = TestConfigurationManager.TryGetEnvironmentOrAppSetting( "AuthClientId" );
+            string authSecret   = TestConfigurationManager.TryGetEnvironmentOrAppSetting( "AuthClientSecret" );
+
+            if ( string.IsNullOrWhiteSpace( vault ) || string.IsNullOrWhiteSpace( authClientId ) || string.IsNullOrWhiteSpace( authSecret ) )
+                return false;
+            else
+            {
+                VaultAddress     = vault;
+                _ClientCredential = new ClientCredential( authClientId, authSecret );
+                
+                return true;
+            }
+        }
+
+        public void Dispose()
+        {
+            if ( HttpMockServer.Mode == HttpRecorderMode.Record && !fromConfig )
+            {
+                var testFactory = new CSMTestEnvironmentFactory();
+                var testEnv = testFactory.GetTestEnvironment();
+                var mgmtClient = TestBase.GetServiceClient<KeyVaultManagementClient>( testFactory );
+                var resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>( testFactory );
+                var tenantId = testEnv.AuthorizationContext.TenantId;
+                var graphClient = TestBase.GetGraphServiceClient<GraphRbacManagementClient>( testFactory, tenantId );
+
+                mgmtClient.Vaults.Delete( rgName, vaultName );
+                graphClient.Application.Delete( appObjectId );
+                resourcesClient.ResourceGroups.Delete( rgName );
+            }
+        }
+    }
+}
