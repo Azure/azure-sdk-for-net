@@ -7,12 +7,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using DeploymentSlot.Definition;
     using DeploymentSlot.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
     internal partial class DeploymentSlotImpl 
     {
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithConfigurationFromParent() as WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.IWebApp Resource.Fluent.Core.IHasParent<IWebApp>.Parent
+        Microsoft.Azure.Management.AppService.Fluent.IWebApp ResourceManager.Fluent.Core.IHasParent<IWebApp>.Parent
         {
             get
             {

@@ -5,9 +5,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Models;
-    using Resource.Fluent.Core;
     using System;
     using System.Collections.Generic;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The implementation for DiskVolumeEncryptionStatus for Windows virtual machine.

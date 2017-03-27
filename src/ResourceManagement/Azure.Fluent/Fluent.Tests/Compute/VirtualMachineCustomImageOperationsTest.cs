@@ -5,8 +5,8 @@ using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;
@@ -29,7 +29,7 @@ namespace Fluent.Tests.Compute
 
                 try
                 {
-                    var linuxVM = PrepareGeneralizedVmWith2EmptyDataDisks(rgName,
+                    var linuxVM = PrepareGeneralizedVMWith2EmptyDataDisks(rgName,
                             SdkContext.RandomResourceName("muldvm", 15),
                             Location,
                             computeManager);
@@ -128,7 +128,7 @@ namespace Fluent.Tests.Compute
                 var resourceManager = TestHelper.CreateRollupClient();
                 var computeManager = TestHelper.CreateComputeManager();
                 var rgName = TestUtilities.GenerateName("rgfluentchash-");
-                var vm = PrepareGeneralizedVmWith2EmptyDataDisks(rgName, vmName, Location, computeManager);
+                var vm = PrepareGeneralizedVMWith2EmptyDataDisks(rgName, vmName, Location, computeManager);
 
                 try
                 {
@@ -188,7 +188,7 @@ namespace Fluent.Tests.Compute
                 var rgName = TestUtilities.GenerateName("rgfluentchash-");
                 try
                 {
-                    var nativeVm = computeManager.VirtualMachines
+                    var nativeVM = computeManager.VirtualMachines
                             .Define(vmName)
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
@@ -209,13 +209,13 @@ namespace Fluent.Tests.Compute
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
                             .Create();
 
-                    Assert.False(nativeVm.IsManagedDiskEnabled);
-                    var osVhdUri = nativeVm.OsUnmanagedDiskVhdUri;
+                    Assert.False(nativeVM.IsManagedDiskEnabled);
+                    var osVhdUri = nativeVM.OsUnmanagedDiskVhdUri;
                     Assert.NotNull(osVhdUri);
-                    var dataDisks = nativeVm.UnmanagedDataDisks;
+                    var dataDisks = nativeVM.UnmanagedDataDisks;
                     Assert.Equal(dataDisks.Count, 2);
 
-                    computeManager.VirtualMachines.DeleteById(nativeVm.Id);
+                    computeManager.VirtualMachines.DeleteById(nativeVM.Id);
 
                     var osDiskName = SdkContext.RandomResourceName("dsk", 15);
                     // Create managed disk with Os from vm's Os disk
@@ -309,7 +309,7 @@ namespace Fluent.Tests.Compute
             }
         }
 
-        private IVirtualMachine PrepareGeneralizedVmWith2EmptyDataDisks(string rgName,
+        private IVirtualMachine PrepareGeneralizedVMWith2EmptyDataDisks(string rgName,
                                                      string vmName,
                                                      Region Location,
                                                      IComputeManager computeManager)

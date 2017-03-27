@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Premier add-on offer.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class PremierAddOnOfferInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class PremierAddOnOfferInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the PremierAddOnOfferInner class.

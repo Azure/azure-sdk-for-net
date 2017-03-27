@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Collections.Generic;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Newtonsoft.Json;
 
     /// <summary>

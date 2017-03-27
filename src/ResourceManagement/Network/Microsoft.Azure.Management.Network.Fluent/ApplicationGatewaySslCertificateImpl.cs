@@ -5,9 +5,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGatewaySslCertificate.Definition;
     using ApplicationGatewaySslCertificate.UpdateDefinition;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.IO;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using System;
 
     /// <summary>

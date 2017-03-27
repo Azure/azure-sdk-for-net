@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using VirtualMachineCustomImage.Definition;
     using Models;
 

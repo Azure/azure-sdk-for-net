@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using Management.TrafficManager.Fluent;
     using Management.TrafficManager.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for TrafficManagerNestedProfileEndpoint.

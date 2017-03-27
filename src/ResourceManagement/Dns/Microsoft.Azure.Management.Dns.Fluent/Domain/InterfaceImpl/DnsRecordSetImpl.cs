@@ -10,16 +10,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using DnsRecordSet.Update;
     using DnsZone.Definition;
     using DnsZone.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
     using Models;
 
     internal abstract partial class DnsRecordSetImpl 
     {
         /// <summary>
-        /// Rmoves a NS record with the provided name server from this record set.
+        /// Removes a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        DnsZone.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<DnsZone.Update.IUpdate>.Attach()
+        DnsZone.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<DnsZone.Update.IUpdate>.Attach()
         {
             return this.Attach() as DnsZone.Update.IUpdate;
         }
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        DnsZone.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<DnsZone.Definition.IWithCreate>.Attach()
+        DnsZone.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<DnsZone.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as DnsZone.Definition.IWithCreate;
         }

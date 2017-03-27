@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System;
     using System.Collections.Generic;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
 

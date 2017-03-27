@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using HasPublicIPAddress.Definition;
     using HasPublicIPAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class LoadBalancerImpl 
@@ -652,7 +652,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancer Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>.Refresh()
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancer Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancer;
         }

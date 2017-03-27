@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet;
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     public interface IWithNSRecordNameServer 
     {
         /// <summary>
-        /// Rmoves a NS record with the provided name server from this record set.
+        /// Removes a NS record with the provided name server from this record set.
         /// </summary>
         /// <param name="nameServerHostName">The name server host name.</param>
         /// <return>The next stage of the record set update.</return>

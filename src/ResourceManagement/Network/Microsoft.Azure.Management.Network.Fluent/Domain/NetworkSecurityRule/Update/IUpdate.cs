@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of the network rule description allowing the direction and the access type to be specified.

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                     this.ResourceGroupName(),
                     this.SqlServerName(),
                     this.DatabaseName(),
-                    Inner));
+                    Inner.Status));
 
             return this;
         }

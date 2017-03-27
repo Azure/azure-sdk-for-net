@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 
     using Microsoft.Azure.Management.Batch.Fluent.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure batch account application.
     /// </summary>

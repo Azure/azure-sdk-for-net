@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Options for app content migration.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class StorageMigrationOptionsInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class StorageMigrationOptionsInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the StorageMigrationOptionsInner

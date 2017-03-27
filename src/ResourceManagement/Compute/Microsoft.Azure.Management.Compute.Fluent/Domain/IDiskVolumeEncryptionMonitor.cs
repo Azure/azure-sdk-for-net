@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Threading;
+    using ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// Type that can be used to monitor encryption enable and disable status of a virtual machine.

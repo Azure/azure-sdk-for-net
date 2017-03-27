@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
@@ -8,15 +9,14 @@ using Microsoft.Azure.Management.Dns.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Redis.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
-using System.Linq;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
-using Microsoft.Azure.Management.AppService.Fluent;
 using System;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         private Azure(RestClient restClient, string subscriptionId, string tenantId, IAuthenticated authenticated)
         {
-            resourceManager = ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
+            resourceManager = ResourceManager.Fluent.ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.Fluent
         protected class Authenticated : IAuthenticated
         {
             private RestClient restClient;
-            private ResourceManager.IAuthenticated resourceManagerAuthenticated;
+            private ResourceManager.Fluent.ResourceManager.IAuthenticated resourceManagerAuthenticated;
             private string defaultSubscription;
             private string tenantId;
 
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Fluent
             public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
-                resourceManagerAuthenticated = ResourceManager.Authenticate(this.restClient);
+                resourceManagerAuthenticated = ResourceManager.Fluent.ResourceManager.Authenticate(this.restClient);
                 this.tenantId = tenantId;
             }
 
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Fluent
                 }
                 else
                 {
-                    var resourceManager = ResourceManager.Authenticate(
+                    var resourceManager = ResourceManager.Fluent.ResourceManager.Authenticate(
                         RestClient.Configure()
                             .WithBaseUri(restClient.BaseUri)
                             .WithCredentials(restClient.Credentials).Build());

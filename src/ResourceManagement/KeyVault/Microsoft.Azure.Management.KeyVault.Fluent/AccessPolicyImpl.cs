@@ -8,15 +8,15 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update;
     using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition;
     using Microsoft.Azure.Management.KeyVault.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Update;
     using System;
     using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for AccessPolicy and its parent interfaces.
@@ -176,14 +176,14 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:458BF8ACE4D00DD896B7979D96F7C2EB:225E1D92A92E81E1982C4A483BC88058
         public AccessPolicyImpl ForObjectId (Guid objectId)
         {
-            Inner.ObjectId = objectId;
+            Inner.ObjectId = objectId.ToString();
             return this;
         }
 
         ///GENMHASH:9D8D39171FFFFE2517D8100304C11862:6A48AA5D0D2710F0A8787D34676538E1
         public AccessPolicyImpl ForUser (IUser user)
         {
-            Inner.ObjectId = Guid.Parse(user.ObjectId);
+            Inner.ObjectId = user.ObjectId;
             return this;
         }
 
@@ -197,14 +197,14 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ///GENMHASH:498DF2FE8CE61E58CF671C4DCDF1A6D1:B99DEC951B47738BA49B5FC2B737021E
         public AccessPolicyImpl ForGroup (IActiveDirectoryGroup group)
         {
-            Inner.ObjectId = Guid.Parse(group.ObjectId);
+            Inner.ObjectId = group.ObjectId;
             return this;
         }
 
         ///GENMHASH:7B10596856964977EC5E018A031EE6E9:AA2717CDA7300E14A15599831EE2375F
         public AccessPolicyImpl ForServicePrincipal (IServicePrincipal servicePrincipal)
         {
-            Inner.ObjectId = Guid.Parse(servicePrincipal.ObjectId);
+            Inner.ObjectId = servicePrincipal.ObjectId;
             return this;
         }
 

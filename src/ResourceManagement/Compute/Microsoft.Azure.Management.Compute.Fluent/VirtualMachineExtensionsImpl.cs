@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;

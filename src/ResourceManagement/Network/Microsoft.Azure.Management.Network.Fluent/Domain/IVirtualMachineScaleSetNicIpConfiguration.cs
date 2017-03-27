@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// An IP configuration in a network interface associated with a virtual machine

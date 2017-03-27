@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure storage resource usage info object.
     /// </summary>
     public interface IStorageUsage  :
-        IHasInner<Management.Storage.Fluent.Models.UsageInner>
+        IHasInner<Management.Storage.Fluent.Models.Usage>
     {
         /// <returns>the unit of measurement. Possible values include: 'Count',</returns>
         /// <returns>'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'.</returns>

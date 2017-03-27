@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using VirtualMachineScaleSet.DefinitionManaged;
     using VirtualMachineScaleSet.DefinitionManagedOrUnmanaged;
@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Collections.Generic;
@@ -463,20 +463,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Disables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithoutVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithWinRM(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -502,9 +502,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVMAgent()
         {
-            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -540,20 +540,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Disables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithoutVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithWinRM(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
@@ -579,9 +579,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVMAgent()
         {
-            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
@@ -745,9 +745,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
         {
-            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <return>
@@ -768,9 +768,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="virtualMachineInstanceId">The instance id.</param>
         /// <return>The network interfaces.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
         {
-            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
@@ -825,9 +825,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </return>
         /// <throws>CloudException thrown for an invalid response from the service.</throws>
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListAvailableSkus()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListAvailableSkus()
         {
-            return this.ListAvailableSkus() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku>;
+            return this.ListAvailableSkus() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku>;
         }
 
         /// <summary>
@@ -1249,7 +1249,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.Refresh()
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
         }

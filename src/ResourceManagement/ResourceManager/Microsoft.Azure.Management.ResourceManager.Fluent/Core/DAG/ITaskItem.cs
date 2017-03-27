@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Core.DAG
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 {
     public interface ITaskItem<TaskResultT>
     {

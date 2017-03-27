@@ -6,9 +6,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading.Tasks;
     using Models;
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
     using System;
     using Newtonsoft.Json.Linq;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The implementation for DiskVolumeEncryptionStatus for Linux virtual machine.

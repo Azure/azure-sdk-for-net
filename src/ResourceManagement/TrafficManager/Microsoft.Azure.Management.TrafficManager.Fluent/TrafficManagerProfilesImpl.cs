@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
     using System.Collections.Generic;
@@ -30,14 +30,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:EA7883DCA673C6F67CCCF6E8828D7D51:4DBFF5109C555E749B7E1943ECE31E34
         public CheckProfileDnsNameAvailabilityResult CheckDnsNameAvailability(string dnsNameLabel)
         {
-            CheckTrafficManagerRelativeDnsNameAvailabilityParametersInner parameter =
-            new CheckTrafficManagerRelativeDnsNameAvailabilityParametersInner
-            {
-                Name = dnsNameLabel,
-                Type = "Microsoft.Network/trafficManagerProfiles"
-            };
             return new CheckProfileDnsNameAvailabilityResult(Inner
-                .CheckTrafficManagerRelativeDnsNameAvailability(parameter));
+                .CheckTrafficManagerRelativeDnsNameAvailability(dnsNameLabel, "Microsoft.Network/trafficManagerProfiles"));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35

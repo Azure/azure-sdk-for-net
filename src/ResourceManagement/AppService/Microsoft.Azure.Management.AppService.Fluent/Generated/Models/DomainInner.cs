@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Information about a domain.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class DomainInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class DomainInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DomainInner class.

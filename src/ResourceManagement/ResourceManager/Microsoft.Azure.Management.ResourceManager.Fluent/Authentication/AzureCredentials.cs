@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
 {
     /// <summary>
     /// Credentials used for authenticating a fluent management client to Azure.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Metadata for a metric.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class MetricDefinitionInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class MetricDefinitionInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the MetricDefinitionInner class.

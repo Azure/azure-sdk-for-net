@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Newtonsoft.Json;
 using System;
@@ -467,7 +467,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:7DBCBEBCFCFF036703E8C4680854445D
-        public VirtualMachineImpl WithoutVmAgent()
+        public VirtualMachineImpl WithoutVMAgent()
         {
             Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
             return this;
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:7AB774480B8E9543A8CAEE7340C4B7B8
-        public VirtualMachineImpl WithWinRm(WinRMListener listener)
+        public VirtualMachineImpl WithWinRM(WinRMListener listener)
         {
             if (Inner.OsProfile.WindowsConfiguration.WinRM == null)
             {
@@ -1376,7 +1376,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F91DF44F14D53833479DE592AB2B2890:A44F980B37B6696BA13F0A8DB633DCCA
-        public string VmId()
+        public string VMId()
         {
             return Inner.VmId;
         }

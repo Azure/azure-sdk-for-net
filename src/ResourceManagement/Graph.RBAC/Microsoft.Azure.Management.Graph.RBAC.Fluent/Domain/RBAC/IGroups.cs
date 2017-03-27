@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition;
     /// <summary>
     /// Entry point to AD group management API.

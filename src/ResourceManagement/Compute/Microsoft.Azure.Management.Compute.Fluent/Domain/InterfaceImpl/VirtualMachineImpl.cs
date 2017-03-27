@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using VirtualMachine.DefinitionManaged;
     using VirtualMachine.DefinitionManagedOrUnmanaged;
@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Collections.Generic;
@@ -639,9 +639,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithoutVmAgent()
+        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithoutVMAgent() as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -650,9 +650,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="listener">The WinRmListener.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithWinRm(WinRMListener listener)
+        VirtualMachine.Definition.IWithWindowsCreateUnmanaged VirtualMachine.Definition.IWithWindowsCreateUnmanaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithWinRM(listener) as VirtualMachine.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -768,20 +768,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithoutVmAgent()
+        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachine.Definition.IWithWindowsCreateManaged;
+            return this.WithoutVMAgent() as VirtualMachine.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
         /// Specifies the WINRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">The WinRmListener.</param>
+        /// <param name="listener">The WinRMListener.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithWinRm(WinRMListener listener)
+        VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachine.Definition.IWithWindowsCreateManaged;
+            return this.WithWinRM(listener) as VirtualMachine.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
@@ -1219,7 +1219,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.Refresh()
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine;
         }
@@ -1368,11 +1368,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the virtual machine unique id.
         /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.VmId
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.VMId
         {
             get
             {
-                return this.VmId();
+                return this.VMId();
             }
         }
 
@@ -1391,9 +1391,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <return>The virtual machine sizes.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailableSizes()
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailableSizes()
         {
-            return this.AvailableSizes() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
+            return this.AvailableSizes() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     internal partial class DomainContactImpl 
     {
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
-        AppServiceDomain.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<AppServiceDomain.Definition.IWithCreate>.Attach()
+        AppServiceDomain.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<AppServiceDomain.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as AppServiceDomain.Definition.IWithCreate;
         }

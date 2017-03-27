@@ -6,10 +6,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGateway.Definition;
     using ApplicationGateway.Update;
     using Models;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System.Text;
 
     /// <summary>

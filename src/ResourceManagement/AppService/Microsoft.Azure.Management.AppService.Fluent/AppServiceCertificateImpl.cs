@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServiceCertificate.Definition;
     using Models;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
     using System;
     using System.Collections.Generic;
     using System.IO;

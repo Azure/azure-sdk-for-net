@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using AppServicePlan.Definition;
     using AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     internal partial class AppServicePlanImpl 
     {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
         }

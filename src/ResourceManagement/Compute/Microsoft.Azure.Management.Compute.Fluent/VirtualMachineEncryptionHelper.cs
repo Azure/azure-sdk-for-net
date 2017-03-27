@@ -3,7 +3,6 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using Resource.Fluent;
     using System;
     using System.Linq;
     using System.Collections.Generic;
@@ -332,7 +331,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     KeyUrl = settings.KeyEncryptionKeyURL()
                 };
                 if (settings.KeyEncryptionKeyVaultId() != null) {
-                    keyEncryptionKey.SourceVault = new SubResource()
+                    keyEncryptionKey.SourceVault = new ResourceManager.Fluent.SubResource()
                     {
                         Id = settings.KeyEncryptionKeyVaultId()
                     };
@@ -344,7 +343,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 KeyEncryptionKey = keyEncryptionKey,
                 DiskEncryptionKey = new KeyVaultSecretReference()
                 {
-                    SourceVault = new SubResource()
+                    SourceVault = new ResourceManager.Fluent.SubResource()
                     {
                         Id = settings.KeyVaultId()
                     }

@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
     using Models;
-    using Resource.Fluent;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// Represents an endpoint collection associated with a CDN manager profile.

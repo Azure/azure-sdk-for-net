@@ -5,7 +5,7 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Runtime.CompilerServices;
 using Azure.Tests;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace Fluent.Tests.Compute
 {
@@ -330,7 +330,7 @@ namespace Fluent.Tests.Compute
                 Assert.True(vm.IsOSBasedOnPlatformImage);
                 Assert.Null(vm.StoredImageUnmanagedVhdUri);
                 Assert.False(vm.IsWindowsAutoUpdateEnabled);
-                Assert.False(vm.IsWindowsVmAgentProvisioned);
+                Assert.False(vm.IsWindowsVMAgentProvisioned);
                 Assert.True(vm.AdministratorUserName.Equals("jvuser", StringComparison.OrdinalIgnoreCase));
                 var vmImage = vm.GetOSPlatformImage();
                 Assert.NotNull(vmImage);

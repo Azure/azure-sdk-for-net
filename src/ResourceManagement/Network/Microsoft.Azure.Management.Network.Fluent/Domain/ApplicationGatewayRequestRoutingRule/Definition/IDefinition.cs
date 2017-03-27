@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasCookieBasedAffinity.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasServerNameIndication.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasHostName.Definition;

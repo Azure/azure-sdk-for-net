@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
     using System.Collections.ObjectModel;
 

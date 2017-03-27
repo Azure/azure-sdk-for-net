@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of the HTTP probe update allowing to modify the probe interval.

@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Network.Fluent;
-    using Resource.Fluent;
-    using Resource.Fluent.Core;
-    using Resource.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using Storage.Fluent;
     using Models;
     using System;
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:438AB79E7DABFF084F3F25050C0B0DCB
-        public VirtualMachineScaleSetImpl WithoutVmAgent()
+        public VirtualMachineScaleSetImpl WithoutVMAgent()
         {
             Inner
                 .VirtualMachineProfile
@@ -472,7 +472,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D7A14F2EFF1E4165DA55EF07B6C19534:7212B561D81BB0678D70A3F6EF38FA07
         public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
         {
-            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
+            return new VirtualMachineScaleSetExtensionImpl(new Models.VirtualMachineScaleSetExtension { Name = name }, this);
         }
 
         ///GENMHASH:F2FFAF5448D7DFAFBE00130C62E87053:F7407CEA3D12779F169A4F2984ACFC2B
@@ -717,7 +717,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
         {
             this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Resource.Fluent.Core.IHasId>);
+            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId>);
             return this;
         }
 
@@ -1549,7 +1549,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 Inner.VirtualMachineProfile
                     .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
                     {
-                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
+                        Extensions = new List<Models.VirtualMachineScaleSetExtension>()
                     };
                 foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
                 {
@@ -1820,7 +1820,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:78969D0BA29AFC39123F017955CEE8EE
-        public VirtualMachineScaleSetImpl WithWinRm(WinRMListener listener)
+        public VirtualMachineScaleSetImpl WithWinRM(WinRMListener listener)
         {
             if (Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
             {
@@ -2016,7 +2016,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:3CAA43EAEEB81309EADF54AA78725296:E14EB64EB306A8F5A0DF21CD2E85782B
-        public VirtualMachineScaleSetImpl WithVmAgent()
+        public VirtualMachineScaleSetImpl WithVMAgent()
         {
             Inner
                     .VirtualMachineProfile

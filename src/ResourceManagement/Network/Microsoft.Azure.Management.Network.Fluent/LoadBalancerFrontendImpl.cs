@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
-    using Resource.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
     using Models;
-    using Resource.Fluent.Core;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for PublicFrontend.

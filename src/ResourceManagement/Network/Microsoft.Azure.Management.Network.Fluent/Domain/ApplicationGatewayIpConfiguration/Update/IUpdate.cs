@@ -3,15 +3,15 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update
 {
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// The stage of an application gateway IP configuration update allowing to modify the subnet the application gateway is part of.
     /// </summary>
     public interface IWithSubnet  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update.IUpdate>
     {
         /// <summary>
         /// Specifies an existing subnet the application gateway should be part of and get its private IP address from.
