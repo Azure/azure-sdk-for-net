@@ -8,5 +8,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     public class ApplicationGatewayTier : ExpandableStringEnum<ApplicationGatewayTier>
     {
         public static readonly ApplicationGatewayTier Standard = Parse("Standard");
+        public static readonly ApplicationGatewayTier WAF = Parse("WAF");
     }
 }

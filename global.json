@@ -11,6 +11,7 @@
       "src/ResourceManagement/Network",
       "src/ResourceManagement/RedisCache",
       "src/ResourceManagement/ResourceManager",
+      "src/ResourceManagement/ServiceBus",
       "src/ResourceManagement/Sql",
       "src/ResourceManagement/Storage",
       "src/ResourceManagement/TrafficManager",

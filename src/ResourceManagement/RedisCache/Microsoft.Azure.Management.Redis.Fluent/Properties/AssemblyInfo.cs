@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Redis Cache Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Redis Cache management APIs.")]
 
-[assembly: AssemblyVersion("1.0.0.51")]
-[assembly: AssemblyFileVersion("1.0.0.51")]
+[assembly: AssemblyVersion("1.0.0.60")]
+[assembly: AssemblyFileVersion("1.0.0.60")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
