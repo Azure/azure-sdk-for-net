@@ -173,9 +173,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string BootDiagnosticStorageAccountUri { get; }
 
         /// <summary>
-        /// Gets true if this is a Windows virtual machine and Vm agent is provisioned, false otherwise.
+        /// Gets true if this is a Windows virtual machine and VM agent is provisioned, false otherwise.
         /// </summary>
-        bool IsWindowsVmAgentProvisioned { get; }
+        bool IsWindowsVMAgentProvisioned { get; }
 
         /// <summary>
         /// Updates the version of the installed operating system in the virtual machine instance.

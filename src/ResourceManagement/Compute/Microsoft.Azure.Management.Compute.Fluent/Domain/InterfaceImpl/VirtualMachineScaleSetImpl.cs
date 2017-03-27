@@ -463,20 +463,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Disables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithoutVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithWinRM(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -502,9 +502,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVMAgent()
         {
-            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -540,20 +540,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Disables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutVMAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithoutVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
-        /// <param name="listener">A WinRm listener.</param>
+        /// <param name="listener">A WinRM listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRM(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithWinRM(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
@@ -579,9 +579,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVMAgent()
         {
-            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
