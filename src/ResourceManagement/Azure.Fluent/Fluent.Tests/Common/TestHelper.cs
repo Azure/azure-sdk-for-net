@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -183,6 +184,15 @@ namespace Fluent.Tests.Common
         public static IStorageManager CreateStorageManager()
         {
             return CreateMockedManager(c => StorageManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(c, c.DefaultSubscriptionId));
+        }
+
+        public static IServiceBusManager CreateServiceBusManager()
+        {
+            return CreateMockedManager(c => ServiceBusManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
