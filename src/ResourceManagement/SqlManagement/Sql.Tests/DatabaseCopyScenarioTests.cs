@@ -34,7 +34,7 @@ namespace Sql.Tests
                     Location = SqlManagementTestUtilities.DefaultLocation,
                     Tags = tags,
                 });
-                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 string serverName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
                 var server2 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName2, new Microsoft.Azure.Management.Sql.Models.Server()
@@ -45,14 +45,14 @@ namespace Sql.Tests
                     Location = SqlManagementTestUtilities.DefaultLocation,
                     Tags = tags,
                 });
-                SqlManagementTestUtilities.ValidateServer(server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 // Create a database with all parameters specified
                 // 
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
                 var dbInput = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Collation = SqlTestConstants.DefaultCollation,
                     Edition = SqlTestConstants.DefaultDatabaseEdition,
 

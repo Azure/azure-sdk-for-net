@@ -28,7 +28,7 @@ namespace Sql.Tests
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                 });
                 Assert.NotNull(db1);
 
@@ -47,7 +47,7 @@ namespace Sql.Tests
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
                 var db2Input = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     CreateMode = "PointInTimeRestore",
                     RestorePointInTime = db1.EarliestRestoreDate.Value,
                     SourceDatabaseId = db1.Id
