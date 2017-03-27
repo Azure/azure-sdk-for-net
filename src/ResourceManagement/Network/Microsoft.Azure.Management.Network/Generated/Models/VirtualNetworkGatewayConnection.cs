@@ -223,18 +223,6 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
             }
-            if (VirtualNetworkGateway1 != null)
-            {
-                VirtualNetworkGateway1.Validate();
-            }
-            if (VirtualNetworkGateway2 != null)
-            {
-                VirtualNetworkGateway2.Validate();
-            }
-            if (LocalNetworkGateway2 != null)
-            {
-                LocalNetworkGateway2.Validate();
-            }
             if (IpsecPolicies != null)
             {
                 foreach (var element in IpsecPolicies)
