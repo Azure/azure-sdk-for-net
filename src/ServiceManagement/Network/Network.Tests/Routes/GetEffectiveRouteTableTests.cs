@@ -80,7 +80,8 @@ namespace Network.Tests.Routes
                         serviceName,
                         deploymentName,
                         NetworkTestConstants.OneWebOneWorkerPkgFilePath,
-                        NetworkTestConstants.VnetOneWebOneWorkerCscfgFilePath);
+                        NetworkTestConstants.VnetOneWebOneWorkerCscfgFilePath,
+                        startDeployment:true);
 
                     try
                     {

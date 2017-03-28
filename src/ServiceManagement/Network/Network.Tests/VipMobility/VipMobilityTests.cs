@@ -260,7 +260,7 @@ namespace Network.Tests
         public void TestReserveIPWithIPTagsSimple()
         {
             using (var undoContext = AZT.UndoContext.Current)
-            {
+          {
                 undoContext.Start();
                 using (NetworkTestBase _testFixture = new NetworkTestBase())
                 {
@@ -268,7 +268,7 @@ namespace Network.Tests
                     bool storageAccountCreated = false;
                     string storageAccountName = HttpMockServer.GetAssetName("tststr1234", "tststr").ToLower();
                     string reserveIpName = HttpMockServer.GetAssetName("res", "testresIPtag").ToLower();
-                    string location = "West Central US";
+                    string location = "West US";
                     bool reservedIpCreated = false;
 
                     IPTag iptag = new IPTag();
@@ -301,7 +301,7 @@ namespace Network.Tests
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        Console.WriteLine("TestReserveIPWithIPTagsSimple test did not succeed with error being ," + ex.Message);
                         throw;
                     }
                     finally
@@ -362,8 +362,9 @@ namespace Network.Tests
 
                         Assert.False(reserveIpCreationResponse.StatusCode == HttpStatusCode.OK);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Console.WriteLine("TestReserveIPWithIPTagsNegative test did not succeed with error being ," + ex.Message);
                         throw;
                     }
                     finally
