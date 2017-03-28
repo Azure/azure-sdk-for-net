@@ -8,18 +8,17 @@
 
 namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
 {
-    using Microsoft.Azure;
-    using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Fluent;
-    using Microsoft.Azure.Management.Fluent.ServiceBus;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Defines values for SkuName.
     /// </summary>
-    public static class SkuName
+    public class SkuTier : ExpandableStringEnum<SkuTier>
     {
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
+        public static readonly SkuTier Basic = Parse("Basic");
+        public static readonly SkuTier Standard = Parse("Standard");
+        public static readonly SkuTier Premium = Parse("Premium");
     }
+
 }
+
