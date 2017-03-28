@@ -12,27 +12,22 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-
 namespace Network.Tests
 {
-    using Microsoft.WindowsAzure;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Microsoft.Azure;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.WindowsAzure.Management;
     using Microsoft.WindowsAzure.Management.Compute;
-    using Microsoft.WindowsAzure.Management.Compute.Models;
+    using Microsoft.WindowsAzure.Management.Network;
     using Microsoft.WindowsAzure.Management.Network.Models;
     using Microsoft.WindowsAzure.Management.Storage;
-    using Microsoft.WindowsAzure.Management.Storage.Models;
     using Microsoft.WindowsAzure.Testing;
-    using System;
-    using System.IO;
-    using System.Net;
     using Xunit;
-    using System.Linq;
-    using Microsoft.Azure.Test.HttpRecorder;
     using AZT = Microsoft.Azure.Test;
-    using Microsoft.Azure;
-    using Microsoft.WindowsAzure.Management.Network;
 
 
     public class VipMobilityTests

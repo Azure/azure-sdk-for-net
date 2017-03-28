@@ -356,20 +356,12 @@ namespace Network.Tests
             this.CreateHostedService(location, serviceName, out hostedServiceCreated);
 
             this.CreatePaaSDeployment(storageAccountName, serviceName, deploymentName, NetworkTestConstants.OneWebOneWorkerPkgFilePath, "OneWebOneWorker.cscfg", true);
-
-
-            IPTag iptag = new IPTag();
-            iptag.IPTagType = "FirstPartyUsage";
-            iptag.Value = "/tagTypes/SystemService/operators/Microsoft/platforms/Azure/services/Microsoft.AzureAD";
-            List<IPTag> iptags = new List<IPTag>();
-            iptags.Add(iptag);
-
+            
             NetworkReservedIPCreateParameters reservedIpCreatePars = new NetworkReservedIPCreateParameters
             {
                 Name = reserveIpName,
                 Location = location,
                 Label = "SampleReserveIPLabel",
-                IPTags = iptags
             };
 
             OperationStatusResponse reserveIpCreate = this.NetworkClient.ReservedIPs.Create(reservedIpCreatePars);
