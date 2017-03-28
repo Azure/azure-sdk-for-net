@@ -32,6 +32,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="ipConfigurations">IP configurations for virtual
         /// network gateway.</param>
         /// <param name="gatewayType">The type of this virtual network gateway.
@@ -40,11 +45,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vpnType">The type of this virtual network gateway.
         /// Possible values are: 'PolicyBased' and 'RouteBased'. Possible
         /// values include: 'PolicyBased', 'RouteBased'</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="location">Resource location.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="enableBgp">Whether BGP is enabled for this virtual
         /// network gateway or not.</param>
         /// <param name="activeActive">ActiveActive flag</param>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetworkGateway(IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, string gatewayType, string vpnType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -168,41 +168,6 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IpConfigurations == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IpConfigurations");
-            }
-            if (GatewayType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "GatewayType");
-            }
-            if (VpnType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VpnType");
-            }
-            if (IpConfigurations != null)
-            {
-                foreach (var element in IpConfigurations)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
-        }
     }
 }
 
