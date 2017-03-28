@@ -268,7 +268,7 @@ namespace Network.Tests
                     bool storageAccountCreated = false;
                     string storageAccountName = HttpMockServer.GetAssetName("tststr1234", "tststr").ToLower();
                     string reserveIpName = HttpMockServer.GetAssetName("res", "testresIPtag").ToLower();
-                    string location = "West US";
+                    string location = "West Central US";
                     bool reservedIpCreated = false;
 
                     IPTag iptag = new IPTag();
@@ -281,7 +281,7 @@ namespace Network.Tests
                     {
                         _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
 
-                        NetworkReservedIPCreateParameters reservedIpCreatePars = new NetworkReservedIPCreateParameters
+                           NetworkReservedIPCreateParameters reservedIpCreatePars = new NetworkReservedIPCreateParameters
                         {
                             Name = reserveIpName,
                             Label = "TestResTagLabel",
@@ -297,7 +297,12 @@ namespace Network.Tests
                             _testFixture.NetworkClient.ReservedIPs.Get(reserveIpName);
 
                         Assert.True(reserveIpCreationResponse.StatusCode == HttpStatusCode.OK);
-                        Assert.True(reserveIpCreationResponse.IPTags == iptags);
+                        Assert.True(reserveIpCreationResponse.IPTags.Count == iptags.Count);
+
+                        foreach (var iptag1 in iptags)
+                        {
+                            Assert.True(reserveIpCreationResponse.IPTags.Any(x => x.IPTagType == iptag1.IPTagType && x.Value == iptag1.Value));
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -355,17 +360,12 @@ namespace Network.Tests
                         };
 
                         OperationStatusResponse reserveIpCreate = _testFixture.NetworkClient.ReservedIPs.Create(reservedIpCreatePars);
-                        Assert.False(reserveIpCreate.StatusCode == HttpStatusCode.OK);
 
-                        NetworkReservedIPGetResponse reserveIpCreationResponse =
-                            _testFixture.NetworkClient.ReservedIPs.Get(reserveIpName);
-
-                        Assert.False(reserveIpCreationResponse.StatusCode == HttpStatusCode.OK);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("TestReserveIPWithIPTagsNegative test did not succeed with error being ," + ex.Message);
-                        throw;
+                        Assert.NotNull(ex);
                     }
                     finally
                     {
@@ -377,65 +377,5 @@ namespace Network.Tests
                 }
             }
         }
-
-        [Fact]
-        [Trait("Feature", "Rnm")]
-        [Trait("Operation", "ReservedIPTests")]
-        public void TestReserveIPWithIncorrectIPTagType()
-        {
-            using (var undoContext = AZT.UndoContext.Current)
-            {
-                undoContext.Start();
-                using (NetworkTestBase _testFixture = new NetworkTestBase())
-                {
-                    var managementClient = _testFixture.ManagementClient;
-                    bool storageAccountCreated = false;
-                    string storageAccountName = HttpMockServer.GetAssetName("tststr1234", "tststr").ToLower();
-                    string reserveIpName = HttpMockServer.GetAssetName("res", "testresIncorrectIPTagType").ToLower();
-                    string location = managementClient.GetDefaultLocation("Storage", "Compute");
-
-                    // Create an IPTagType that doesn't exist
-                    IPTag iptag = new IPTag();
-                    iptag.IPTagType = "RandomTagType";
-                    iptag.Value = "MyVip";
-                    List<IPTag> iptags = new List<IPTag>();
-                    iptags.Add(iptag);
-
-                    try
-                    {
-                        _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
-
-                        NetworkReservedIPCreateParameters reservedIpCreatePars = new NetworkReservedIPCreateParameters
-                        {
-                            Name = reserveIpName,
-                            Label = "TestResTagIncLabel",
-                            Location = location,
-                            IPTags = iptags
-                        };
-
-                        OperationStatusResponse reserveIpCreate = _testFixture.NetworkClient.ReservedIPs.Create(reservedIpCreatePars);
-                        Assert.False(reserveIpCreate.StatusCode == HttpStatusCode.OK);
-
-                        NetworkReservedIPGetResponse reserveIpCreationResponse =
-                            _testFixture.NetworkClient.ReservedIPs.Get(reserveIpName);
-
-                        Assert.False(reserveIpCreationResponse.StatusCode == HttpStatusCode.OK);
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                    finally
-                    {
-                        if (storageAccountCreated)
-                        {
-                            _testFixture.StorageClient.StorageAccounts.Delete(storageAccountName);
-                        }
-                    }
-                }
-            }
-        }
-
-
     }
 }
