@@ -754,8 +754,8 @@ namespace DataLakeStore.Tests
                 using (
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
-                    var currentAcl = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
-                        commonData.DataLakeStoreFileSystemAccountName, "/");
+                    var currentAcl = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                        commonData.DataLakeStoreFileSystemAccountName, "/"));
                     var originalPermission = currentAcl.AclStatus.Permission;
                     var aclToReplaceWith = new List<string>(currentAcl.AclStatus.Entries);
                     var originalOther = string.Empty;
@@ -778,9 +778,9 @@ namespace DataLakeStore.Tests
                         "/",
                         string.Join(",", aclToReplaceWith));
 
-                    var newAcl = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
-                        commonData.DataLakeStoreFileSystemAccountName, "/");
-                    
+                    var newAcl = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                        commonData.DataLakeStoreFileSystemAccountName, "/"));
+
                     // verify the ACL actually changed
                     // Check the access first and assert that it returns OK (note: this is currently only for the user making the request, so it is not testing "other")
                     commonData.DataLakeStoreFileSystemClient.FileSystem.CheckAccess(
@@ -803,8 +803,8 @@ namespace DataLakeStore.Tests
                         originalOther);
 
                     // Now confirm that it equals the original ACL
-                    var finalAclStatus = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
-                        commonData.DataLakeStoreFileSystemAccountName, "/")
+                    var finalAclStatus = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                        commonData.DataLakeStoreFileSystemAccountName, "/"))
                         .AclStatus;
                     var finalEntries = finalAclStatus.Entries;
                     foreach (var entry in finalEntries)
@@ -893,8 +893,8 @@ namespace DataLakeStore.Tests
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
-                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
-                        commonData.DataLakeStoreFileSystemAccountName, "/");
+                    var aclGetResponse = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                        commonData.DataLakeStoreFileSystemAccountName, "/"));
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
@@ -912,9 +912,9 @@ namespace DataLakeStore.Tests
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
-                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                    var aclGetResponse = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName,
-                        "/");
+                        "/"));
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
@@ -930,13 +930,13 @@ namespace DataLakeStore.Tests
                         newAcls);
                     
                     // retrieve the ACL again and confirm the new entry is present
-                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
-                        commonData.DataLakeStoreFileSystemAccountName, "/");
+                    aclGetResponse = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                        commonData.DataLakeStoreFileSystemAccountName, "/"));
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    // this is plus two because we do not have a mask until we add a specific user. Adding the specific user also adds the mask.
-                    Assert.Equal(currentCount + 2, aclGetResponse.AclStatus.Entries.Count);
+                    
+                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
                     Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
                 }
             }
@@ -950,9 +950,9 @@ namespace DataLakeStore.Tests
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
-                    var aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                    var aclGetResponse = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName,
-                        "/");
+                        "/"));
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
@@ -967,15 +967,14 @@ namespace DataLakeStore.Tests
                          newAce);
 
                     // retrieve the ACL again and confirm the new entry is present
-                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                    aclGetResponse = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName,
-                        "/");
+                        "/"));
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
 
-                    // Mask gets created as part of adding the user.
-                    Assert.Equal(currentCount + 2, aclGetResponse.AclStatus.Entries.Count);
+                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
                     Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
 
                     // now remove the entry
@@ -985,16 +984,15 @@ namespace DataLakeStore.Tests
                         "/",
                         aceToRemove);
 
-                    // retrieve the ACL again and confirm the new entry is present
-                    aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                    // retrieve the ACL again and confirm the new entry is gone
+                    aclGetResponse = GetFullAcl(commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName,
-                        "/");
+                        "/"));
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
                     
-                    // Mask does not get removed when the user is removed.
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+                    Assert.Equal(currentCount, aclGetResponse.AclStatus.Entries.Count);
                     Assert.False(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
                 }
             }
@@ -1079,6 +1077,40 @@ namespace DataLakeStore.Tests
         #endregion
 
         #region helpers
+        internal AclStatusResult GetFullAcl(AclStatusResult acl)
+        {
+            if(acl.AclStatus.Entries != null && acl.AclStatus.Permission.HasValue && acl.AclStatus.Permission.Value.ToString().Length >= 3)
+            {
+                var permissionString = acl.AclStatus.Permission.Value.ToString();
+                var permissionLength = permissionString.Length;
+                var ownerOctal = permissionString.ElementAt(permissionLength - 3).ToString();
+                var groupOctal = permissionString.ElementAt(permissionLength - 2).ToString();
+                var otherOctal = permissionString.ElementAt(permissionLength - 1).ToString();
+
+                acl.AclStatus.Entries.Add(string.Format("user::{0}", octalToPermission(int.Parse(ownerOctal))));
+                acl.AclStatus.Entries.Add(string.Format("other::{0}", octalToPermission(int.Parse(otherOctal))));
+
+                if (!string.IsNullOrEmpty(acl.AclStatus.Entries.First(e => e.StartsWith("group::"))))
+                {
+                    acl.AclStatus.Entries.Add(string.Format("mask::{0}", octalToPermission(int.Parse(groupOctal))));
+                }
+                else
+                {
+                    acl.AclStatus.Entries.Add(string.Format("group::{0}", octalToPermission(int.Parse(groupOctal))));
+                }
+            }
+
+            return acl;
+        }
+
+        private string octalToPermission(int octal)
+        {
+            return string.Format("{0}{1}{2}", 
+                (octal & 4) > 0 ? "r" : "-",
+                (octal & 2) > 0 ? "w" : "-",
+                (octal & 1) > 0 ? "x" : "-");
+        }
+
         internal string CreateFolder(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, bool randomName = false)
         {
             // Create a folder

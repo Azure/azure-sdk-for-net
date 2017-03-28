@@ -294,7 +294,9 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
-                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
+                
+                // TODO: re-enable when this is re-enabled on the server side.
+                //Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
 
                 // Test getting the specific firewall rules
                 var firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlaAcocunt, firewallRuleName1);
