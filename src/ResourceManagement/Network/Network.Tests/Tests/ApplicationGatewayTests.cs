@@ -395,7 +395,8 @@ namespace Networks.Tests
                     {
                         new ApplicationGatewayFirewallDisabledRuleGroup(
                             "crs_41_sql_injection_attacks",
-                            new List<int>() { 981318 })
+                            new List<int>() { 981318, 981320 }),
+                        new ApplicationGatewayFirewallDisabledRuleGroup("crs_35_bad_robots")
                     }
                 }
             };
@@ -542,8 +543,8 @@ namespace Networks.Tests
                 Assert.Equal(1, backendHealth.BackendAddressPools.Count);
                 Assert.Equal(2, backendHealth.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
 
-                // Get available WAF rule sets (validate first result set)
-                var availableWAFRuleSets = networkManagementClient.ApplicationGateways.GetAvailableWafRuleSets();
+                // Get available WAF rule sets (validate first result set/group)
+                var availableWAFRuleSets = networkManagementClient.ApplicationGateways.ListAvailableWafRuleSets();
                 Assert.NotNull(availableWAFRuleSets);
                 Assert.NotEmpty(availableWAFRuleSets.Value);
                 Assert.NotNull(availableWAFRuleSets.Value[0].Name);

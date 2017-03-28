@@ -331,18 +331,18 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets all available web application firewall rule sets.
+            /// Lists all available web application firewall rule sets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static ApplicationGatewayAvailableWafRuleSetsResult GetAvailableWafRuleSets(this IApplicationGatewaysOperations operations)
+            public static ApplicationGatewayAvailableWafRuleSetsResult ListAvailableWafRuleSets(this IApplicationGatewaysOperations operations)
             {
-                return operations.GetAvailableWafRuleSetsAsync().GetAwaiter().GetResult();
+                return operations.ListAvailableWafRuleSetsAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets all available web application firewall rule sets.
+            /// Lists all available web application firewall rule sets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -350,9 +350,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationGatewayAvailableWafRuleSetsResult> GetAvailableWafRuleSetsAsync(this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationGatewayAvailableWafRuleSetsResult> ListAvailableWafRuleSetsAsync(this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAvailableWafRuleSetsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAvailableWafRuleSetsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
