@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 new Exception($"VM with name '{vmName}' not found (resource group '{rgName}')");
             }
-            if (virtualMachine.Resources == null)
+            if (virtualMachine.Resources != null)
             {
                 foreach (var extension in virtualMachine.Resources)
                 {
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     }
                 }
             }
-            return null;
+            return await Task.FromResult<Models.VirtualMachineExtensionInner>(null);
         }
 
         ///GENMHASH:6BC2D312A9C6A52A192D8C5304AB76C7:8D5351CEBDDEA6C608931050B58B3338

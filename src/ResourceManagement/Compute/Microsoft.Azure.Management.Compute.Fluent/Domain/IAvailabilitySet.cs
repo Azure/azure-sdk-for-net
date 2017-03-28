@@ -32,6 +32,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         System.Collections.Generic.IList<Models.InstanceViewStatus> Statuses { get; }
 
         /// <summary>
+        /// Gets the virtual machine sizes supported in the availability set.
+        /// </summary>
+        PagedList<IVirtualMachineSize> ListVirtualMachineSizes();
+
+        /// <summary>
         /// Gets the availability set sku.
         /// </summary>
         Models.AvailabilitySetSkuTypes Sku { get; }

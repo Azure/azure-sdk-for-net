@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class VirtualMachineEncryptionHelper  :
         object
     {
-        private string encryptionExtensionPublisher;
+        private string encryptionExtensionPublisher = "Microsoft.Azure.Security";
         private OperatingSystemTypes osType;
         private IVirtualMachine virtualMachine;
         private readonly string ERROR_ENCRYPTION_EXTENSION_NOT_FOUND = "Expected encryption extension not found in the VM";
@@ -49,6 +49,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             IVirtualMachineExtension encryptionExtension = extensions
                 .FirstOrDefault(e => e.PublisherName.Equals(encryptionExtensionPublisher, StringComparison.OrdinalIgnoreCase)
                                         && e.TypeName.Equals(EncryptionExtensionType(), StringComparison.OrdinalIgnoreCase));
+            if (encryptionExtension == null)
+            {
+                return await Task.FromResult<IVirtualMachineExtension>(null);
+            }
             return encryptionExtension;
         }
 
@@ -221,7 +225,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             IVirtualMachineExtension extension = await GetEncryptionExtensionInstalledInVMAsync(cancellationToken);
             if (extension == null)
             {
-                return null;
+                return await Task.FromResult<IVirtualMachine>(null);
             }
             return await virtualMachine.Update()
                 .UpdateExtension(extension.Name)
