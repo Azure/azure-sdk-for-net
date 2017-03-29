@@ -20,11 +20,17 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
+using Microsoft.Azure.Management.Sql.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -690,6 +696,305 @@ namespace Microsoft.Azure.Management.Sql
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Database Failover Group Force
+        /// Failover operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        public async Task<FailoverGroupForceFailoverResponse> GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    FailoverGroupForceFailoverResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FailoverGroupForceFailoverResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                            
+                            FailoverGroup failoverGroupInstance = new FailoverGroup();
+                            result.FailoverGroup = failoverGroupInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                FailoverGroupProperties propertiesInstance = new FailoverGroupProperties();
+                                failoverGroupInstance.Properties = propertiesInstance;
+                                
+                                JToken readOnlyEndpointValue = propertiesValue["readOnlyEndpoint"];
+                                if (readOnlyEndpointValue != null && readOnlyEndpointValue.Type != JTokenType.Null)
+                                {
+                                    ReadOnlyEndpoint readOnlyEndpointInstance = new ReadOnlyEndpoint();
+                                    propertiesInstance.ReadOnlyEndpoint = readOnlyEndpointInstance;
+                                    
+                                    JToken failoverPolicyValue = readOnlyEndpointValue["failoverPolicy"];
+                                    if (failoverPolicyValue != null && failoverPolicyValue.Type != JTokenType.Null)
+                                    {
+                                        string failoverPolicyInstance = ((string)failoverPolicyValue);
+                                        readOnlyEndpointInstance.FailoverPolicy = failoverPolicyInstance;
+                                    }
+                                }
+                                
+                                JToken readWriteEndpointValue = propertiesValue["readWriteEndpoint"];
+                                if (readWriteEndpointValue != null && readWriteEndpointValue.Type != JTokenType.Null)
+                                {
+                                    ReadWriteEndpoint readWriteEndpointInstance = new ReadWriteEndpoint();
+                                    propertiesInstance.ReadWriteEndpoint = readWriteEndpointInstance;
+                                    
+                                    JToken failoverPolicyValue2 = readWriteEndpointValue["failoverPolicy"];
+                                    if (failoverPolicyValue2 != null && failoverPolicyValue2.Type != JTokenType.Null)
+                                    {
+                                        string failoverPolicyInstance2 = ((string)failoverPolicyValue2);
+                                        readWriteEndpointInstance.FailoverPolicy = failoverPolicyInstance2;
+                                    }
+                                    
+                                    JToken failoverWithDataLossGracePeriodMinutesValue = readWriteEndpointValue["failoverWithDataLossGracePeriodMinutes"];
+                                    if (failoverWithDataLossGracePeriodMinutesValue != null && failoverWithDataLossGracePeriodMinutesValue.Type != JTokenType.Null)
+                                    {
+                                        int failoverWithDataLossGracePeriodMinutesInstance = ((int)failoverWithDataLossGracePeriodMinutesValue);
+                                        readWriteEndpointInstance.FailoverWithDataLossGracePeriodMinutes = failoverWithDataLossGracePeriodMinutesInstance;
+                                    }
+                                }
+                                
+                                JToken replicationRoleValue = propertiesValue["replicationRole"];
+                                if (replicationRoleValue != null && replicationRoleValue.Type != JTokenType.Null)
+                                {
+                                    string replicationRoleInstance = ((string)replicationRoleValue);
+                                    propertiesInstance.ReplicationRole = replicationRoleInstance;
+                                }
+                                
+                                JToken replicationStateValue = propertiesValue["replicationState"];
+                                if (replicationStateValue != null && replicationStateValue.Type != JTokenType.Null)
+                                {
+                                    string replicationStateInstance = ((string)replicationStateValue);
+                                    propertiesInstance.ReplicationState = replicationStateInstance;
+                                }
+                                
+                                JToken partnerServersArray = propertiesValue["partnerServers"];
+                                if (partnerServersArray != null && partnerServersArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken partnerServersValue in ((JArray)partnerServersArray))
+                                    {
+                                        FailoverGroupPartnerServer failoverGroupPartnerServerInstance = new FailoverGroupPartnerServer();
+                                        propertiesInstance.PartnerServers.Add(failoverGroupPartnerServerInstance);
+                                        
+                                        JToken idValue = partnerServersValue["id"];
+                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        {
+                                            string idInstance = ((string)idValue);
+                                            failoverGroupPartnerServerInstance.Id = idInstance;
+                                        }
+                                        
+                                        JToken locationValue = partnerServersValue["location"];
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance = ((string)locationValue);
+                                            failoverGroupPartnerServerInstance.Location = locationInstance;
+                                        }
+                                        
+                                        JToken replicationRoleValue2 = partnerServersValue["replicationRole"];
+                                        if (replicationRoleValue2 != null && replicationRoleValue2.Type != JTokenType.Null)
+                                        {
+                                            string replicationRoleInstance2 = ((string)replicationRoleValue2);
+                                            failoverGroupPartnerServerInstance.ReplicationRole = replicationRoleInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken databasesArray = propertiesValue["databases"];
+                                if (databasesArray != null && databasesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken databasesValue in ((JArray)databasesArray))
+                                    {
+                                        propertiesInstance.Databases.Add(((string)databasesValue));
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            {
+                                string idInstance2 = ((string)idValue2);
+                                failoverGroupInstance.Id = idInstance2;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                failoverGroupInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                failoverGroupInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                failoverGroupInstance.Location = locationInstance2;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    failoverGroupInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
             }
         }
     }
