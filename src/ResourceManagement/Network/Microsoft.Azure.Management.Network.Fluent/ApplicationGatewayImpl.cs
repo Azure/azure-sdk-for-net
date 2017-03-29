@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
     using ResourceManager.Fluent;
     using System.Text;
+    using System.Threading;
 
     /// <summary>
     /// Implementation of the ApplicationGateway interface.
@@ -1014,7 +1015,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:257D937A0F04955A15D8633AF5E905F3
-        override protected async Task<ApplicationGatewayInner> CreateInnerAsync()
+        override protected async Task<ApplicationGatewayInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
             var tasks = new List<Task>();
 

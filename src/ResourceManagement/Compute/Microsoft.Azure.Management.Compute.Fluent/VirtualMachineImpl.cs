@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:6AC69BE8BE090CDE9822C84DD5F906F3
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            return RefreshInstanceViewAsync().Result;
+            return RefreshInstanceViewAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:D97B6272C7E7717C00D4F9B818A713C0:8DD09B90F0555BB3E1AEF7B9AF044379
@@ -220,9 +220,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:54B52B6B32A26AD456CFB5E00BE4A7E1:A19C73689F2772054260CA742BE6FC13
-        public Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> GetExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> GetExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.virtualMachineExtensions.ListAsync(cancellationToken);
+            return await this.virtualMachineExtensions.ListAsync(cancellationToken);
         }
 
         ///GENMHASH:979FFAEA86882618784D4077FB80332F:B79EEB6C251B19AEB675FFF7A365C818
@@ -1414,10 +1414,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 UnmanagedDataDiskImpl.SetDataDisksDefaults(this.unmanagedDataDisks, this.vmName);
             }
-            await HandleStorageSettingsAsync();
+            await HandleStorageSettingsAsync(cancellationToken);
             HandleNetworkSettings();
             HandleAvailabilitySettings();
-            var response = await Manager.Inner.VirtualMachines.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner);
+            var response = await Manager.Inner.VirtualMachines.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner, cancellationToken);
             this.SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
@@ -1618,7 +1618,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 .Define(this.namer.RandomName("stg", 24).Replace("-", ""))
                 .WithRegion(this.RegionName)
                 .WithExistingResourceGroup(this.ResourceGroupName)
-                .CreateAsync();
+                .CreateAsync(cancellationToken);
             }
 
             if (!IsManagedDiskEnabled())

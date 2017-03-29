@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 Inner.PlatformUpdateDomainCount = 5;
             }
-            var availabilitySetInner = await Manager.Inner.AvailabilitySets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var availabilitySetInner = await Manager.Inner.AvailabilitySets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;

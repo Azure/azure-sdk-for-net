@@ -65,8 +65,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             var batchAccountCreateParametersInner = new BatchAccountCreateParametersInner();
             if (Inner.AutoStorage != null)
             {
-                batchAccountCreateParametersInner.AutoStorage = new AutoStorageBaseProperties();
-                batchAccountCreateParametersInner.AutoStorage.StorageAccountId = Inner.AutoStorage.StorageAccountId;
+                batchAccountCreateParametersInner.AutoStorage = new AutoStorageBaseProperties
+                                                                {
+                                                                    StorageAccountId = Inner.AutoStorage.StorageAccountId
+                                                                };
             }
             else
             {
@@ -77,11 +79,13 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             batchAccountCreateParametersInner.Tags = Inner.Tags;
 
             var batchAccountInner = await Manager.Inner.BatchAccount.CreateAsync(
-                ResourceGroupName, Name, batchAccountCreateParametersInner, cancellationToken);
+                ResourceGroupName, 
+                Name, 
+                batchAccountCreateParametersInner, 
+                cancellationToken);
             creatableStorageAccountKey = null;
             SetInner(batchAccountInner);
             await applicationsImpl.CommitAndGetAllAsync(cancellationToken);
-
             return this;
         }
 

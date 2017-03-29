@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
     using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for Network
@@ -189,7 +190,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<VirtualNetworkInner> CreateInnerAsync()
+        override protected Task<VirtualNetworkInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
             return Manager.Inner.VirtualNetworks.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }

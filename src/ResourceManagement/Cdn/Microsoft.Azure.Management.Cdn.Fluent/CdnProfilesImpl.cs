@@ -103,7 +103,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
         public PagedList<ICdnProfile> ListByGroup(string groupName)
         {
-            return WrapList(new PagedList<ProfileInner>(Inner.ListByResourceGroup(groupName)));
+            return WrapList(
+                new PagedList<ProfileInner>(
+                    Inner.ListByResourceGroup(groupName), 
+                    (l) => Inner.ListByResourceGroupNext(l)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:80BCE26D6F015BF71C5D9844E17987C3

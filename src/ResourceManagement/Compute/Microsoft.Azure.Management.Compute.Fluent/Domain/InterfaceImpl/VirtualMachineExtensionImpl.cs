@@ -458,9 +458,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>Observable that emits virtual machine extension instance view.</return>
-        Task<Models.VirtualMachineExtensionInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.GetInstanceViewAsync(CancellationToken cancellationToken)
+        async Task<Models.VirtualMachineExtensionInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.GetInstanceViewAsync(CancellationToken cancellationToken)
         {
-            return this.GetInstanceViewAsync(cancellationToken);
+            return await this.GetInstanceViewAsync(cancellationToken);
         }
 
         /// <return>The instance view of the virtual machine extension.</return>

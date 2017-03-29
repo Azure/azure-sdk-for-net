@@ -252,7 +252,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (this.IsReference())
             {
                 string extensionName = ResourceUtils.NameFromResourceId(Inner.Id);
-                var resource = await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(this.Parent.ResourceGroupName, this.Parent.Name, extensionName);
+                var resource = await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(
+                    this.Parent.ResourceGroupName, 
+                    this.Parent.Name, 
+                    extensionName,
+                    cancellationToken: cancellationToken);
                 Inner.Publisher = resource.Publisher;
                 Inner.VirtualMachineExtensionType = resource.VirtualMachineExtensionType;
                 if (Inner.AutoUpgradeMinorVersion == null)
@@ -281,9 +285,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4ECAD0C81AFE0A2718CE4BFF1EC4C29F
-        public override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineExtensions.DeleteAsync(this.Parent.ResourceGroupName, Parent.Name, Name());
+            await Parent.Manager.Inner.VirtualMachineExtensions.DeleteAsync(this.Parent.ResourceGroupName, Parent.Name, Name(), cancellationToken);
         }
 
         /// <returns>true if this is just a reference to the extension.</returns>
@@ -346,14 +350,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var extensionInner = await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(this.Parent.ResourceGroupName,
                 this.Parent.Name,
                 this.Name(),
-                "instanceView");
+                "instanceView",
+                cancellationToken);
             return extensionInner.InstanceView;
         }
 
         ///GENMHASH:955D294F6E1F6B9054F1EABE1AE05EA2:3B40334C37474720957E6C6B24FC2D63
         public VirtualMachineExtensionInstanceView GetInstanceView()
         {
-            return GetInstanceViewAsync().Result;
+            return GetInstanceViewAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }
