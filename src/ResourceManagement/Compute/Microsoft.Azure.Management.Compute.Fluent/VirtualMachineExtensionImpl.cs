@@ -90,12 +90,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return JsonConvert.SerializeObject(this.publicSettings);
         }
 
-        ///GENMHASH:E21E3E6E61153DDD23E28BC18B49F1AC:6FB4182F747416C98B49B59F74185782
-        public VirtualMachineExtensionInstanceView InstanceView()
-        {
-            return Inner.InstanceView;
-        }
-
         ///GENMHASH:4B19A5F1B35CA91D20F63FBB66E86252:497CEBB37227D75C20D80EC55C7C4F14
         public IReadOnlyDictionary<string, string> Tags()
         {
@@ -344,6 +338,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()
         {
             return this.Parent;
+        }
+
+        ///GENMHASH:6B59C2739A29FB6F0BBF714626714133:05527B968431192026F084474E921BE9
+        public async Task<Models.VirtualMachineExtensionInstanceView> GetInstanceViewAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var extensionInner = await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(this.Parent.ResourceGroupName,
+                this.Parent.Name,
+                this.Name(),
+                "instanceView");
+            return extensionInner.InstanceView;
+        }
+
+        ///GENMHASH:955D294F6E1F6B9054F1EABE1AE05EA2:3B40334C37474720957E6C6B24FC2D63
+        public VirtualMachineExtensionInstanceView GetInstanceView()
+        {
+            return GetInstanceViewAsync().Result;
         }
     }
 }

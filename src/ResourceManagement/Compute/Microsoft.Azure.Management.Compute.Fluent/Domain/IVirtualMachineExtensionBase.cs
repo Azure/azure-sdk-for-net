@@ -13,11 +13,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IHasInner<Models.VirtualMachineExtensionInner>
     {
         /// <summary>
-        /// Gets the instance view of the virtual machine extension.
-        /// </summary>
-        Models.VirtualMachineExtensionInstanceView InstanceView { get; }
-
-        /// <summary>
         /// Gets the publisher name of the virtual machine extension image this extension is created from.
         /// </summary>
         string PublisherName { get; }
