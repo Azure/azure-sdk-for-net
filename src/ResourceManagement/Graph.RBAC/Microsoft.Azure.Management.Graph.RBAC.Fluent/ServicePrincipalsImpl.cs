@@ -92,7 +92,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         ///GENMHASH:D5CC1AE1ACFF2AFCB45457F1FE786CA6:27DDEDD37FD80C9C08415FDFC32A607C
         public async Task<IServicePrincipal> GetByServicePrincipalNameAsync (string spn, CancellationToken cancellationToken = default(CancellationToken))
         {
-            IPage<ServicePrincipalInner> spList = await innerCollection.ListAsync(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", spn)), cancellationToken);
+            IPage<ServicePrincipalInner> spList = await innerCollection.ListAsync(
+                new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", spn)), 
+                cancellationToken);
             if (spList == null || spList.Count() == 0)
             {
                 return null;

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:BEDEF34E57C25BFA34A4AB1C8430428E:CEA8F626147E918D12E5D00083090092
         public async Task DeleteAsync(string elasticPoolName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.elasticPools.DeleteByParentAsync(this.resourceGroupName, this.sqlServerName, elasticPoolName);
+            await this.elasticPools.DeleteByParentAsync(this.resourceGroupName, this.sqlServerName, elasticPoolName, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:4696CE89C64991C8EEE3386298E90611

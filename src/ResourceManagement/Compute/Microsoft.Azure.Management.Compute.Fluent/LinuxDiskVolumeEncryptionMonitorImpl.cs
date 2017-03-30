@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:FF7924BFEF46CE7F250D6F5B1A727744
         public IDiskVolumeEncryptionMonitor Refresh()
         {
-            return RefreshAsync().Result;
+            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <return>The instance view status collection associated with the encryption extension.</return>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return await this.computeManager
                     .Inner
                     .VirtualMachineExtensions
-                    .GetAsync(rgName, vmName, extension.Name, "instanceView");
+                    .GetAsync(rgName, vmName, extension.Name, "instanceView", cancellationToken);
         }
 
         ///GENMHASH:CFF730CD005B7D5386D59ADCF7C33D0C:80F0D0455B27E848B9196C7D1768B4DB
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // Refreshes the cached encryption extension installed in the Linux virtual machine.
-            VirtualMachineExtensionInner virtualMachineExtensionInner = await RetrieveEncryptExtensionWithInstanceViewAsync();
+            VirtualMachineExtensionInner virtualMachineExtensionInner = await RetrieveEncryptExtensionWithInstanceViewAsync(cancellationToken);
             if (virtualMachineExtensionInner != null)
             {
                 this.encryptionExtension = virtualMachineExtensionInner;
@@ -165,12 +165,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (encryptionExtension != null) {
                 // If there is already a cached extension simply retrieve it again with instance view.
                 //
-                return await RetrieveExtensionWithInstanceViewAsync(encryptionExtension);
+                return await RetrieveExtensionWithInstanceViewAsync(encryptionExtension, cancellationToken);
             } else {
                 // Extension is not cached already so retrieve name from the virtual machine and
                 // then get the extension with instance view.
                 //
-                return await RetrieveEncryptExtensionWithInstanceViewFromVMAsync();
+                return await RetrieveEncryptExtensionWithInstanceViewFromVMAsync(cancellationToken);
             }
         }
 
@@ -186,7 +186,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             VirtualMachineInner virtualMachine = await this.computeManager
                 .Inner
                 .VirtualMachines
-                .GetAsync(rgName, vmName);
+                .GetAsync(rgName, vmName, cancellationToken: cancellationToken);
+                
             if (virtualMachine == null)
             {
                 new Exception($"VM with name '{vmName}' not found (resource group '{rgName}')");
@@ -198,7 +199,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     if (extension.Publisher.Equals("Microsoft.Azure.Security", StringComparison.OrdinalIgnoreCase)
                         && extension.VirtualMachineExtensionType.Equals("AzureDiskEncryptionForLinux", StringComparison.OrdinalIgnoreCase))
                     {
-                        return await RetrieveExtensionWithInstanceViewAsync(extension);
+                        return await RetrieveExtensionWithInstanceViewAsync(extension, cancellationToken);
                     }
                 }
             }

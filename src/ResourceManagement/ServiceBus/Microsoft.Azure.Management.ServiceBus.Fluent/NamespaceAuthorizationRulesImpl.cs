@@ -45,23 +45,22 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return WrapModel(name);
         }
 
-        protected override Task<IPage<SharedAccessAuthorizationRuleInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<SharedAccessAuthorizationRuleInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListAuthorizationRulesAsync(this.resourceGroupName,
+            return await this.Inner.ListAuthorizationRulesAsync(this.resourceGroupName,
                 this.namespaceName,
                 cancellationToken);
         }
-        protected override Task<IPage<SharedAccessAuthorizationRuleInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<SharedAccessAuthorizationRuleInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListAuthorizationRulesNextAsync(nextLink,
-                cancellationToken);
+            return await this.Inner.ListAuthorizationRulesNextAsync(nextLink, cancellationToken);
 
         }
 
         ///GENMHASH:AD2F63EB9B7A81CCDA7E3A349748EDF7:EBFD426A094C9B824FBCAD2C09993DFE
-        protected override Task<SharedAccessAuthorizationRuleInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<SharedAccessAuthorizationRuleInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.GetAuthorizationRuleAsync(this.resourceGroupName,
+            return await this.Inner.GetAuthorizationRuleAsync(this.resourceGroupName,
                 this.namespaceName,
                 name,
                 cancellationToken);
@@ -90,9 +89,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:0F27C8E3D9C550228EB6462F66EE4FFD
-        public override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.DeleteAuthorizationRuleAsync(this.resourceGroupName,
+            await this.Inner.DeleteAuthorizationRuleAsync(this.resourceGroupName,
                 this.namespaceName,
                 name,
                 cancellationToken);

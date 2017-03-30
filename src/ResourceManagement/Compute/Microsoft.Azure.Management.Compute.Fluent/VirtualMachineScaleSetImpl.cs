@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineScaleSet.DefinitionManagedOrUnmanaged;
     using VirtualMachineScaleSet.DefinitionUnmanaged;
     using VirtualMachineScaleSet.Update;
+    using System.Threading;
 
     /// <summary>
     /// Implementation of VirtualMachineScaleSet.
@@ -1713,7 +1714,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        private async Task HandleOSDiskContainersAsync()
+        private async Task HandleOSDiskContainersAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             VirtualMachineScaleSetStorageProfile storageProfile = Inner
                     .VirtualMachineProfile
@@ -1746,7 +1747,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                         .Define(this.namer.RandomName("stg", 24).Replace("-", ""))
                         .WithRegion(this.RegionName)
                         .WithExistingResourceGroup(this.ResourceGroupName)
-                        .CreateAsync();
+                        .CreateAsync(cancellationToken);
                 String containerName = vhdContainerName;
                 if (containerName == null)
                 {
@@ -1890,7 +1891,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:B8E11C7D3FD0F8058EC1203B18D3671D
-        protected override async Task<VirtualMachineScaleSetInner> CreateInnerAsync()
+        protected async override Task<VirtualMachineScaleSetInner> CreateInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
             {
@@ -1911,8 +1912,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 .DataDisks;
                 VirtualMachineScaleSetUnmanagedDataDiskImpl.SetDataDisksDefaults(dataDisks, Name);
             }
-            await HandleOSDiskContainersAsync();
-            return await Manager.Inner.VirtualMachineScaleSets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            await HandleOSDiskContainersAsync(cancellationToken);
+            return await Manager.Inner.VirtualMachineScaleSets.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
         }
 
         ///GENMHASH:621A22301B3EB5233E9DB4ED5BEC5735:E8427EEC4ACC25554660EF889ECD07A2

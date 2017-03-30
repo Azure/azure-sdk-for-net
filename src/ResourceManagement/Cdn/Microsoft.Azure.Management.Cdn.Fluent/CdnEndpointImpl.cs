@@ -166,7 +166,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     Parent.ResourceGroupName,
                     Parent.Name,
                     Name(),
-                    itemToDelete.Name)));
+                    itemToDelete.Name,
+                    cancellationToken)));
 
             deletedCustomDomainList.Clear();
 
@@ -175,13 +176,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 Parent.Name,
                 Name(),
                 originInner.Name,
-                originParameters);
+                originParameters,
+                cancellationToken);
 
             var endpointInner = await Parent.Manager.Inner.Endpoints.UpdateAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 Name(),
-                updateInner);
+                updateInner,
+                cancellationToken);
             SetInner(endpointInner);
 
             return this;

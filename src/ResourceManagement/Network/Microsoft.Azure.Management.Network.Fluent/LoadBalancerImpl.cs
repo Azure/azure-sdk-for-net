@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
     using System.Text;
     using System;
+    using System.Threading;
 
     /// <summary>
     /// Implementation of the LoadBalancer interface.
@@ -217,9 +218,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<LoadBalancerInner> CreateInnerAsync()
+        protected async override Task<LoadBalancerInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
-            return Manager.Inner.LoadBalancers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return await Manager.Inner.LoadBalancers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
         }
 
         ///GENMHASH:38719597698E42AABAD5A9917188C155:D9C6887E0B146C62C173F2FC8A940200

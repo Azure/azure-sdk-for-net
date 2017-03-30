@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:AAC0A7813BAD48114C2EF153D9E157A1
         public ITxtRecordSet GetByName(string name)
         {
-            return this.GetByNameAsync(name, CancellationToken.None).Result;
+            return this.GetByNameAsync(name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:0A5A4DAF4EB520E3FAB8309AF1336143

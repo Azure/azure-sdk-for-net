@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:5ED127B8B77B3AAFDDD980010252F039
         public IPtrRecordSet GetByName(string name)
         {
-            return this.GetByNameAsync(name, CancellationToken.None).Result;
+            return this.GetByNameAsync(name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:604BDFCBD3E17ED8BD832A9DFD7DF085:93DD647D9AB0DB30D017785882D88829

@@ -43,14 +43,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:885F10CFCF9E6A9547B0702B4BBD8C9E:16F094D018A7AB696812573A607E81FE
         public async Task<T> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await GetInnerByNameAsync(name);
+            var inner = await GetInnerByNameAsync(name, cancellationToken);
             return WrapModel(inner);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:6B6D1D91AC2FCE3076EBD61D0DB099CF
         public T GetByName(string name)
         {
-            return GetByNameAsync(name).Result;
+            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public abstract Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:C2DC9CFAB6C291D220DD4F29AFF1BBEC:7459D8B9F8BB0A1EBD2FC4702A86F2F5
         public void DeleteByName(string name)
         {
-            DeleteByNameAsync(name).Wait();
+            DeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:D3FBF3E757A0D33222555A7D439A3F12:A13124E7BC21C819368C8CFA9F3DBE5F
@@ -76,9 +76,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:874C7A8E3CDF988B4BDA901B0FE62ABD
         public PagedList<T> List()
         {
-            var pagedList = new PagedList<InnerT>(ListInnerFirstPageAsync().Result, (string nextPageLink) =>
+            var pagedList = new PagedList<InnerT>(ListInnerFirstPageAsync().ConfigureAwait(false).GetAwaiter().GetResult(), (string nextPageLink) =>
             {
-                return ListInnerNextPageAsync(nextPageLink).Result;
+                return ListInnerNextPageAsync(nextPageLink).ConfigureAwait(false).GetAwaiter().GetResult();
             });
             return WrapList(pagedList);
         }

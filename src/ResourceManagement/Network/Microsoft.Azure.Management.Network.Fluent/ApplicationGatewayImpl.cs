@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
     using ResourceManager.Fluent;
     using System.Text;
+    using System.Threading;
 
     /// <summary>
     /// Implementation of the ApplicationGateway interface.
@@ -1014,7 +1015,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:257D937A0F04955A15D8633AF5E905F3
-        override protected async Task<ApplicationGatewayInner> CreateInnerAsync()
+        protected async override Task<ApplicationGatewayInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
             var tasks = new List<Task>();
 
@@ -1024,7 +1025,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 // If default public frontend requested but no PIP specified, create one
                 ///GENMHASH:D232B3BB0D86D13CC0B242F4000DBF07:97DF71BC11CE54F5F4736C975A273A63
-                Task pipTask = EnsureDefaultPipDefinition().CreateAsync().ContinueWith(
+                Task pipTask = EnsureDefaultPipDefinition().CreateAsync(cancellationToken).ContinueWith(
                     antecedent => {
                         var publicIP = antecedent.Result;
                         // Attach the created PIP when available
@@ -1051,7 +1052,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 // But if default IP config does not have a subnet specified, then create a default VNet
                 ///GENMHASH:378C5280A44231F5593B789FF6A1BF16:24E45B50AE0887B03C04922FC3F414DC
-                Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync().ContinueWith(antecedent =>
+                Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync(cancellationToken).ContinueWith(antecedent =>
                 {
                     //... and assign the created VNet to the default IP config
                     var network = antecedent.Result;
@@ -1072,7 +1073,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(antecedent => {
-                return Manager.Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+                return Manager.Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             });
 
             return await appGatewayInnerTask.Result;

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:10EBCE64285B15A348EA16D2076F49EE
         public IAaaaRecordSet GetByName(string name)
         {
-            return GetByNameAsync(name, CancellationToken.None).Result;
+            return GetByNameAsync(name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:DA1A37E97601F129EF3AF921419B0A9C:93DD647D9AB0DB30D017785882D88829

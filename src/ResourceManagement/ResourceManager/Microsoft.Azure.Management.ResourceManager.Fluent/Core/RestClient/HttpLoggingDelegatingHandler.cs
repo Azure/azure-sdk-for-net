@@ -24,12 +24,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public Level LogLevel { get; set; }
 
-        public HttpLoggingDelegatingHandler() : base() { }
+        public HttpLoggingDelegatingHandler() 
+            : base() { }
 
-        public HttpLoggingDelegatingHandler(HttpMessageHandler innerHandler) : base(innerHandler)
+        public HttpLoggingDelegatingHandler(HttpMessageHandler innerHandler) 
+            : base(innerHandler)
         { }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (LogLevel == Level.NONE)
             {
@@ -70,11 +72,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
             if (LogLevel == Level.BODY)
             {
-                bool isEncoded = isHeaderExists(response.Content.Headers, "Content-Encoding");
+                bool isEncoded = IsHeaderPresent(response.Content.Headers, "Content-Encoding");
                 if (!isEncoded && response.Content != null)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    string contentType = getHeader(response.Content.Headers, "Content-Type");
+                    string contentType = GetHeader(response.Content.Headers, "Content-Type");
                     if (contentType != null && contentType.Contains("application/json"))
                     {
                         try

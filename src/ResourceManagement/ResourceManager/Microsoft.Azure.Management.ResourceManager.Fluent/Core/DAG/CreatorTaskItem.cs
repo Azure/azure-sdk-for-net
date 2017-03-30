@@ -10,24 +10,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
     internal class CreatorTaskItem<IResourceT> : ITaskItem<IResourceT>
     {
         private IResourceCreator<IResourceT> resourceCreator;
-        private IResourceT createdResource;
 
         public CreatorTaskItem(IResourceCreator<IResourceT> resourceCreator)
         {
             this.resourceCreator = resourceCreator;
         }
 
-        public IResourceT Result
-        {
-            get
-            {
-                return createdResource;
-            }
-        }
+        public IResourceT CreatedResource { get; private set; }
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            createdResource = await resourceCreator.CreateResourceAsync(cancellationToken);
+            CreatedResource = await resourceCreator.CreateResourceAsync(cancellationToken);
         }
     }
 }

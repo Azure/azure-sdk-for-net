@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 
         public override IFluentResourceT Refresh()
         {
-            var inner = this.GetInnerAsync(CancellationToken.None).Result;
+            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             SetInner(inner);
             return this as IFluentResourceT;
         }
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:E4DFA7EA15F8324FB60C810D0C96D2FF:F6AE67E7333EEB65ADB6D0D8BBE8B1A9
         protected IAuthorizationKeys GetKeys()
         {
-            return GetKeysAsync().Result;
+            return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:DF4D523C032086042E747B7880875BA8:FD18BE4C1993EC7B8551146DDA176FAC
         protected IAuthorizationKeys RegenerateKey(Policykey policykey)
         {
-            return RegenerateKeyAsync(policykey).Result;
+            return RegenerateKeyAsync(policykey).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:4A88585D14A1F4B57527C071D5C0C394:8DF2BBCDED7039A4F19381688F737A50
         protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await this.RegenerateKeysInnerAsync(policykey);
+            var inner = await this.RegenerateKeysInnerAsync(policykey, cancellationToken);
             return new AuthorizationKeysImpl(inner);
         }
 
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:2751D8683222AD34691166D915065302:AD0DF6429EFF7A0256E5287F769C0BD5
         protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await this.GetKeysInnerAsync();
+            var inner = await this.GetKeysInnerAsync(cancellationToken);
             return new AuthorizationKeysImpl(inner);
         }
 

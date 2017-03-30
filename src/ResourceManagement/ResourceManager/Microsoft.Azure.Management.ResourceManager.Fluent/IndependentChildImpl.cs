@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 FluentParentModelT parentResource = CreatedResource(creatableParentResourceKey) as FluentParentModelT;
                 WithExistingParentResource(parentResource);
             }
-            return await CreateChildResourceAsync();
+            return await CreateChildResourceAsync(cancellationToken);
         }
 
         /// <summary>

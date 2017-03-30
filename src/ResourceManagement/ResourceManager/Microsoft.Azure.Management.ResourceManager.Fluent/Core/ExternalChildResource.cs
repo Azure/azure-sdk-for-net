@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     /// <summary>
     /// Externalized child resource abstract implementation.
-    /// Inorder to be eligible for an external child resource following criteria must be satisfied:
+    /// In order to be eligible for an external child resource following criteria must be satisfied:
     /// 1. It's is always associated with a parent resource and has no existence without parent
     /// i.e. if you delete parent then child resource will be deleted automatically.
     /// 2. Parent may or may not contain collection of child resources (i.e. as inline collection property).
@@ -65,19 +65,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         /// Creates this external child resource.
         /// </summary>
         /// <returns>the task to track the create action</returns>
-        public abstract Task<FluentModelT> CreateAsync(CancellationToken cancellationToke);
+        public abstract Task<FluentModelT> CreateAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Updates this external child resource.
         /// </summary>
         /// <returns>the task to track the update action</returns>
-        public abstract Task<FluentModelT> UpdateAsync(CancellationToken cancellationToke);
+        public abstract Task<FluentModelT> UpdateAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Deletes this external child resource.
         /// </summary>
         /// <returns>the task to track the delete action</returns>
-        public abstract Task DeleteAsync(CancellationToken cancellationToke);
+        public abstract Task DeleteAsync(CancellationToken cancellationToken);
     }
 
     /// <summary>

@@ -282,10 +282,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:C8D15C8E118FE252D0C33A0277604CB7
-        public override async Task<IVirtualMachineCustomImage> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IVirtualMachineCustomImage> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             EnsureDefaultLuns();
-            var imageInner = await Manager.Inner.Images.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var imageInner = await Manager.Inner.Images.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(imageInner);
             return this;
         }

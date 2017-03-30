@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:1AD3FB2435C046F2F71535A24004CDFD
         public IMXRecordSet GetByName(string name)
         {
-            return this.GetByNameAsync(name, CancellationToken.None).Result;
+            return this.GetByNameAsync(name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:35BF201395273B958A9213F1436D5DD1

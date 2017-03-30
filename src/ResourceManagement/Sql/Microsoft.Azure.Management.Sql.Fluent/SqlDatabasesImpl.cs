@@ -42,10 +42,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:7F70CB1AA5FE23578E360B95D229A1C6
-        public override async Task<PagedList<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<PagedList<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var pagedList = new PagedList<DatabaseInner>(await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken));
-
             return WrapList(pagedList);
         }
 
@@ -62,9 +61,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:1056648A6B4A4D9B6EA5F5AC88AE4C12
-        public override async Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Inner.DeleteAsync(groupName, parentName, name);
+            await Inner.DeleteAsync(groupName, parentName, name, cancellationToken);
         }
 
         ///GENMHASH:E3353FA0F9E79B667402107BE3CC7CC3:0CA4332DE38D32AB72FBE39111235FB6
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:36E87C79062474D6AB62B46DAD7396F9
-        public override async Task<ISqlDatabase> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<ISqlDatabase> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await Inner.GetAsync(resourceGroup, parentName, name, null, cancellationToken));
         }

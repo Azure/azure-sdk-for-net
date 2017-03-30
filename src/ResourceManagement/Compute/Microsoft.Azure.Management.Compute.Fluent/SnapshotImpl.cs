@@ -279,9 +279,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:4862DE76074C3C17570C425395A8E68C
-        public override async Task<ISnapshot> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<ISnapshot> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var snapshotInner = await Manager.Inner.Snapshots.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var snapshotInner = await Manager.Inner.Snapshots.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(snapshotInner);
             return this;
         }

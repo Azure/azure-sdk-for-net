@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #region Implementation of IResourceCreator interface
 
-        public override async Task<IGenericResource> CreateResourceAsync(CancellationToken cancellationToken)
+        public async override Task<IGenericResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
             GenericResourceInner inner = await Manager.Inner.Resources.CreateOrUpdateAsync(ResourceGroupName,
                 resourceProviderNamespace,

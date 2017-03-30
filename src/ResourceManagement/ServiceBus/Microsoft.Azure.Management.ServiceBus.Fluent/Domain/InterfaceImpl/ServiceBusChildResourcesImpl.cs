@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<T>.GetByNameAsync(string name, CancellationToken cancellationToken)
+        async Task<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<T>.GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            return this.GetByNameAsync(name, cancellationToken);
+            return await this.GetByNameAsync(name, cancellationToken);
         }
     }
 }

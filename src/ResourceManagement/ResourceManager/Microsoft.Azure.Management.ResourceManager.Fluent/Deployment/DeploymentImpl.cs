@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #region Implementation of IResourceCreator interface
 
-        public override async Task<IDeployment> CreateResourceAsync(CancellationToken cancellationToken)
+        public async override Task<IDeployment> CreateResourceAsync(CancellationToken cancellationToken)
         {
             DeploymentInner inner = new DeploymentInner
             {
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            await Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner);
+            await Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner, cancellationToken);
             return this;
         }
 

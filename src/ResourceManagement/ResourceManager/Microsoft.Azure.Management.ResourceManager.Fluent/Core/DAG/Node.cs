@@ -46,11 +46,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 
         public void AddChild(string childKey)
         {
-            if (children.Contains(childKey))
-            {
-                throw new ChildExistsException(Key, childKey);
-            }
-
             children.Add(childKey);
         }
     }

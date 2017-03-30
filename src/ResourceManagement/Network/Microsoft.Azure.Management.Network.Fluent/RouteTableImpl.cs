@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using ResourceManager.Fluent;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for RouteTable.
@@ -30,9 +31,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, IRoute> routes;
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<RouteTableInner> CreateInnerAsync()
+        protected async override Task<RouteTableInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
-            return Manager.Inner.RouteTables.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return await Manager.Inner.RouteTables.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
         }
 
         ///GENMHASH:71D5B4DBFB32B4FF553CCD0A78B871EC:16C831421CFC3F51EA84222302D9DFFE

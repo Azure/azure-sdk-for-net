@@ -12,12 +12,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public class DelegatingHandlerBase : DelegatingHandler
     {
-        public DelegatingHandlerBase() : base() { }
+        public DelegatingHandlerBase() 
+            : base()
+        {
+        }
 
-        public DelegatingHandlerBase(HttpMessageHandler innerHandler) : base(innerHandler)
-        { }
+        public DelegatingHandlerBase(HttpMessageHandler innerHandler) 
+            : base(innerHandler)
+        {
+        }
 
-        protected string getHeader(HttpHeaders headers, string name)
+        protected string GetHeader(HttpHeaders headers, string name)
         {
             IEnumerable<string> values;
             var found = headers.TryGetValues(name, out values);
@@ -28,7 +33,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
             return null;
         }
-        protected bool isHeaderExists(HttpHeaders headers, string name)
+        protected bool IsHeaderPresent(HttpHeaders headers, string name)
         {
             return headers.Any(h => h.Key.Equals(name, StringComparison.OrdinalIgnoreCase));
         }

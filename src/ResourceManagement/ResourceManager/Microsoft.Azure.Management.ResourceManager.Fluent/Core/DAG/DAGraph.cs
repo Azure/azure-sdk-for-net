@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
         public void Merge(DAGraph<NodeDataT, NodeT> parent)
         {
             parent.rootNode.AddDependency(rootNode.Key.ToLowerInvariant());
-            foreach(KeyValuePair<string, NodeT> item in this.graph) {
+            foreach(KeyValuePair<string, NodeT> item in this.graph)
+            {
                 if (!parent.graph.ContainsKey(item.Key.ToLowerInvariant()))
                 {
                     parent.graph.Add(item.Key, item.Value);

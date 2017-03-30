@@ -88,7 +88,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 Parent.Name, 
                 Name(),
                 RecordType(),
-                resource);
+                resource,
+                cancellationToken: cancellationToken);
             SetInner(inner);
             return this;
         }
@@ -125,9 +126,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:18B12FED433DF6A1F3CA0DD1940B789C
-        public override async Task<IDnsRecordSet> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IDnsRecordSet> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await CreateOrUpdateAsync(Inner);
+            return await CreateOrUpdateAsync(Inner, cancellationToken);
         }
 
         ///GENMHASH:7126FE6FA387F1E4960F18681C53EC88:B90619A2787B110ED29E0558824FCEEC
@@ -216,7 +217,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:F08598A17ADD014E223DFD77272641FF:0D896236D48569C34CE1A91B25C2906D
-        public override async Task<IDnsRecordSet> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IDnsRecordSet> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             RecordSetInner resource = await Parent.Manager.Inner.RecordSets.GetAsync(
                 Parent.ResourceGroupName,
@@ -225,7 +226,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 RecordType(),
                 cancellationToken);
             resource = Prepare(resource);
-            return await CreateOrUpdateAsync(resource);
+            return await CreateOrUpdateAsync(resource, cancellationToken);
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:43D11CBDAF5A13A288B18B4C8884B621
@@ -299,13 +300,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4983E2059828207A0EBDD76459661F4B
-        public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await Parent.Manager.Inner.RecordSets.DeleteAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 Name(),
-                RecordType());
+                RecordType(),
+                cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:4784E7B75FB76CEEC96CAC590D7BC733:EE061C20B2C852EF45A468E94B59809D

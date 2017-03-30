@@ -9,7 +9,7 @@ using System.Threading;
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 {
     /// <summary>
-    /// The base class for all creatable resource.
+    /// The base class for all creatable resources.
     /// </summary>
     /// <typeparam name="IFluentResourceT">The fluent model type representing the creatable resource</typeparam>
     /// <typeparam name="InnerResourceT">The model inner type that the fluent model type wraps</typeparam>
@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
     {
         public virtual string Name { get; private set; }
 
-        protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
+        protected Creatable(string name, InnerResourceT innerObject) 
+            : base(name, innerObject)
         {
             Name = name;
             IResourceCreator<IResourceT> creator = this as IResourceCreator<IResourceT>;
@@ -38,12 +39,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public IFluentResourceT Create()
         {
-            return CreateAsync(CancellationToken.None).Result;
+            return CreateAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
             TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
+            
             if (CreatorTaskGroup.IsPreparer)
             {
                 CreatorTaskGroup.Prepare();
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
                             taskCompletionSource.SetResult(thisResource);
                         }
                     }
-                });
+                }, TaskContinuationOptions.ExecuteSynchronously);
             }
             else
             {
@@ -86,24 +88,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public virtual IFluentResourceT CreateResource()
         {
-            return this.CreateResourceAsync(CancellationToken.None).Result;
+            return this.CreateResourceAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        Task<IResourceT> IResourceCreator<IResourceT>.CreateResourceAsync(CancellationToken cancellationToken)
+        async Task<IResourceT> IResourceCreator<IResourceT>.CreateResourceAsync(CancellationToken cancellationToken)
         {
-            TaskCompletionSource<IResourceT> taskCompletionSource = new TaskCompletionSource<IResourceT>();
-            this.CreateResourceAsync(cancellationToken).ContinueWith(task =>
-            {
-                if (task.Exception != null)
-                {
-                    taskCompletionSource.SetException(task.Exception);
-                }
-                else
-                {
-                    taskCompletionSource.SetResult(task.Result);
-                }
-            });
-            return taskCompletionSource.Task;
+            return await CreateResourceAsync(cancellationToken);
         }
 
         IResourceT IResourceCreator<IResourceT>.CreateResource()
@@ -115,7 +105,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
     public interface IResourceCreator<IResourceT>
     {
         CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; }
+
         Task<IResourceT> CreateResourceAsync(CancellationToken cancellationToken);
+
         IResourceT CreateResource();
     }
 }

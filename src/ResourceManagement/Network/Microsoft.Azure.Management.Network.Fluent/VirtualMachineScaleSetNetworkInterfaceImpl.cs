@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.VirtualMachine.Id;
         }
 
-        public override async Task<IVirtualMachineScaleSetNetworkInterface> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<IVirtualMachineScaleSetNetworkInterface> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // VMSS NIC is a read-only resource hence this operation is not supported.
             throw new NotSupportedException();

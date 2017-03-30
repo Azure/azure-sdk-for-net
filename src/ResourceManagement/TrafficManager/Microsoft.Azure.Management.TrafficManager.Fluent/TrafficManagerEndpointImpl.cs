@@ -105,7 +105,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 Parent.Name,
                 EndpointType().LocalName,
                 Name(),
-                Inner);
+                Inner,
+                cancellationToken);
             SetInner(endpointInner);
             return this;
         }

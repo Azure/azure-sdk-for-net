@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets observable that emits encryption status once the refresh is done.
         /// </summary>
-        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.RefreshAsync(CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.RefreshAsync(CancellationToken cancellationToken)
         {
-            return this.RefreshAsync(cancellationToken);
+            return await this.RefreshAsync(cancellationToken);
         }
     }
 }
