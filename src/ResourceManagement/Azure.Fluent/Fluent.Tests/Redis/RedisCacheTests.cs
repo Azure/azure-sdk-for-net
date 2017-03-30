@@ -131,8 +131,8 @@ namespace Azure.Tests.Redis
                     catch (AggregateException ex)
                     {
                         if (ex.InnerException == null ||
-                            ex.InnerException.InnerException == null ||
-                            !(ex.InnerException.InnerException is CloudException))
+                            ex.InnerException == null ||
+                            !(ex.InnerException is CloudException))
                         {
                             // expected since Sku downgrade is not supported and the inner exception
                             // should be of type CloudException

@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             ExportTemplateRequestInner inner = new ExportTemplateRequestInner();
             inner.Resources = new List<string>() { "*" };
             inner.Options = EnumNameAttribute.GetName(options);
-            var result = client.ExportTemplateWithHttpMessagesAsync(Name, inner).Result;
+            var result = client.ExportTemplateWithHttpMessagesAsync(Name, inner).ConfigureAwait(false).GetAwaiter().GetResult();
             return new ResourceGroupExportResultImpl(result.Body);
         }
 
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public override IResourceGroup CreateResource()
         {
-            return CreateResourceAsync(CancellationToken.None).Result;
+            return CreateResourceAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public IFluentResourceT GetByGroup(string groupName, string name)
         {
-            return GetByGroupAsync(groupName, name, CancellationToken.None).Result;
+            return GetByGroupAsync(groupName, name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         #endregion
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public IFluentResourceT GetById(string id)
         {
-            return GetByIdAsync(id, CancellationToken.None).Result;
+            return GetByIdAsync(id, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         #endregion
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public void DeleteByGroup(string groupName, string name)
         {
-            this.DeleteByGroupAsync(groupName, name, CancellationToken.None).Wait();
+            this.DeleteByGroupAsync(groupName, name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public override void DeleteById(string id)
         {
-            this.DeleteByIdAsync(id).Wait();
+            this.DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

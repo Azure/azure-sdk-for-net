@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     {
         public ICreatedResources<IFluentResourceT> Create(params ICreatable<IFluentResourceT>[] creatables)
         {
-            return CreateAsync(creatables).Result;
+            return CreateAsync(creatables).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<ICreatedResources<IFluentResourceT>> CreateAsync(params ICreatable<IFluentResourceT>[] creatables)

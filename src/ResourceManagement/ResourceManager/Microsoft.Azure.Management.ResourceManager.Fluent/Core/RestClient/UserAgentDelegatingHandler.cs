@@ -13,12 +13,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     public class UserAgentDelegatingHandler : DelegatingHandlerBase
     {
         private List<string> userAgents;
-        public UserAgentDelegatingHandler() : base()
+        public UserAgentDelegatingHandler() 
+            : base()
         {
             this.userAgents = new List<string>();
         }
 
-        public UserAgentDelegatingHandler(HttpMessageHandler innerHandler) : base(innerHandler)
+        public UserAgentDelegatingHandler(HttpMessageHandler innerHandler) 
+            : base(innerHandler)
         { }
 
         public void SetUserAgent(string userAgent)

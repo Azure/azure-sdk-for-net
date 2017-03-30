@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public override void DeleteById(string id)
         {
-            DeleteByIdAsync(id).Wait();
+            DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:4D33A73A344E127F784620E76B686786:F75A1B8CEFE83AE0B483457A2928324B

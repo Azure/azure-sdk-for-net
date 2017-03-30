@@ -15,24 +15,24 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
         where IResourceT: class
         where IUpdatableT: class
     {
-        protected CreatableUpdatable(string name, InnerResourceT innerObject) : base(name, innerObject) { }
-
-        #region Implementation of IUpdatable interface
-
+        protected CreatableUpdatable(string name, InnerResourceT innerObject) 
+            : base(name, innerObject)
+        {
+        }
+        
         public virtual IUpdatableT Update()
         {
             return this as IUpdatableT;
         }
-
-        #endregion
+        
         public IFluentResourceT Apply()
         {
-            return ApplyAsync(CancellationToken.None, true).Result;
+            return ApplyAsync(CancellationToken.None, true).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public virtual async Task<IFluentResourceT> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            return await CreateAsync(cancellationToken, multiThreaded) as IFluentResourceT;
+            return await CreateAsync(cancellationToken, multiThreaded);
         }
 
     }

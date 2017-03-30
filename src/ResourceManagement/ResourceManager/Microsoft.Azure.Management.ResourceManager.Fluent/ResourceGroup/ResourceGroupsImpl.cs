@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void DeleteByName(string name)
         {
-            DeleteByNameAsync(name).Wait();
+            DeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IResourceGroup GetByName(string name)
         {
-            return GetByNameAsync(name).Result;
+            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<IResourceGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
