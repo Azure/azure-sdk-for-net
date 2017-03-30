@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:AF85C434312924FAA083308209A3AF10:5BC46D00C0259DC73BA821EECB730B17
-        private async Task CreateOrUpdateDatabaseAsync()
+        private async Task CreateOrUpdateDatabaseAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.databaseCreatableMap.Any())
             {
@@ -99,10 +99,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 ResourceGroupName,
                 SqlServerName(),
                 Name,
-                Inner);
+                Inner,
+                cancellationToken);
             SetInner(elasticPoolInner);
 
-            await CreateOrUpdateDatabaseAsync();
+            await CreateOrUpdateDatabaseAsync(cancellationToken);
             return this;
         }
 

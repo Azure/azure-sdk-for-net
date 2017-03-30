@@ -60,8 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>An observable to the request.</return>
         async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
- 
-            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
+             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>

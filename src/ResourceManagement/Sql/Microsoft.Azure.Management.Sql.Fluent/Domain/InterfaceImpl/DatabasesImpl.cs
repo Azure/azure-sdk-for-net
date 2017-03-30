@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>Observable for the delete operation.</return>
         async Task SqlServer.Databases.IDatabases.DeleteAsync(string databaseName, CancellationToken cancellationToken)
         {
- 
             await this.DeleteAsync(databaseName, cancellationToken);
         }
 

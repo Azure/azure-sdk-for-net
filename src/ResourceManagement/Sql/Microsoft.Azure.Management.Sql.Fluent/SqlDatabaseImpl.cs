@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 Inner.RequestedServiceObjectiveId = null;
             }
 
-            var databaseInner = await Manager.Inner.Databases.CreateOrUpdateAsync(ResourceGroupName, SqlServerName(), Name, Inner);
+            var databaseInner = await Manager.Inner.Databases.CreateOrUpdateAsync(ResourceGroupName, SqlServerName(), Name, Inner, cancellationToken);
 
             SetInner(databaseInner);
             elasticPoolCreatableKey = null;

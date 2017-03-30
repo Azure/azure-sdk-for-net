@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 ResourceGroupName,
                 SqlServerName(),
                 Name,
-                Inner);
+                Inner,
+                cancellationToken);
             SetInner(firewallRuleInner);
 
             return this;

@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:1056648A6B4A4D9B6EA5F5AC88AE4C12
         public override async Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Inner.DeleteAsync(groupName, parentName, name);
+            await Inner.DeleteAsync(groupName, parentName, name, cancellationToken);
         }
 
         ///GENMHASH:E3353FA0F9E79B667402107BE3CC7CC3:0CA4332DE38D32AB72FBE39111235FB6

@@ -70,21 +70,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:E8FF0EA4C9A70B28C5CC2D7109717350:1E18DC483BE5652C158841887DD5936F
-        private async Task DeleteChildResourcesAsync()
+        private async Task DeleteChildResourcesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Task.WhenAll(DeleteFirewallRuleAsync(), DeleteDatabasesAndElasticPoolsAsync());
+            await Task.WhenAll(DeleteFirewallRuleAsync(cancellationToken), DeleteDatabasesAndElasticPoolsAsync(cancellationToken));
         }
 
         ///GENMHASH:B78DFDEE870AD37F60EF238FF854629E:6F640C7F45F52AB9BB3143BCD2962AC5
-        private async Task CreateOrUpdateChildResourcesAsync()
+        private async Task CreateOrUpdateChildResourcesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Task.WhenAll(CreateOrUpdateFirewallRulesAsync(), CreateOrUpdateElasticPoolsAndDatabasesAsync());
+            await Task.WhenAll(CreateOrUpdateFirewallRulesAsync(cancellationToken), CreateOrUpdateElasticPoolsAndDatabasesAsync(cancellationToken));
         }
 
         ///GENMHASH:7E50AD9C0C3F4B5336C13F19E4DAF04D:2BA4F314D86877439CDB39BE947335E8
         private async Task DeleteFirewallRuleAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Task.WhenAll(this.firewallRulesToDelete.Select((firewallRuleToDelete) => this.firewallRulesImpl.DeleteAsync(firewallRuleToDelete)));
+            await Task.WhenAll(this.firewallRulesToDelete.Select((firewallRuleToDelete) => this.firewallRulesImpl.DeleteAsync(firewallRuleToDelete, cancellationToken)));
         }
 
         ///GENMHASH:2A59E18DA93663D485FB24124FE696D7:A9A12F1824E7FC07247043927FEEBFC2
@@ -126,11 +126,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:3A15AE6B9ADA17FBEC37A8078DA08565
         public override async Task<ISqlServer> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var serverInner = await Manager.Inner.Servers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var serverInner = await Manager.Inner.Servers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(serverInner);
 
-            await DeleteChildResourcesAsync();
-            await CreateOrUpdateChildResourcesAsync();
+            await DeleteChildResourcesAsync(cancellationToken);
+            await CreateOrUpdateChildResourcesAsync(cancellationToken);
 
             return this;
         }
@@ -243,8 +243,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:E32216D611BFF265A1F25D65E5EFA4A3:5A4B9BD63AA8FEB5746A72A9F3CFED28
         private async Task DeleteDatabasesAndElasticPoolsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Task.WhenAll(databasesToDelete.Select((databaseName) => this.Databases().DeleteAsync(databaseName)));
-            await Task.WhenAll(elasticPoolsToDelete.Select((elasticPoolName) => this.ElasticPools().DeleteAsync(elasticPoolName)));
+            await Task.WhenAll(databasesToDelete.Select((databaseName) => this.Databases().DeleteAsync(databaseName, cancellationToken)));
+            await Task.WhenAll(elasticPoolsToDelete.Select((elasticPoolName) => this.ElasticPools().DeleteAsync(elasticPoolName, cancellationToken)));
         }
 
         ///GENMHASH:493B1EDB88EACA3A476D936362A5B14C:583937857C93CEEDEFD65D6B38E46ADD

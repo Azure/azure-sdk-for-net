@@ -29,7 +29,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>Observable for the delete operation.</return>
         async Task SqlServer.FirewallRules.IFirewallRules.DeleteAsync(string firewallRuleName, CancellationToken cancellationToken)
         {
- 
             await this.DeleteAsync(firewallRuleName, cancellationToken);
         }
 
