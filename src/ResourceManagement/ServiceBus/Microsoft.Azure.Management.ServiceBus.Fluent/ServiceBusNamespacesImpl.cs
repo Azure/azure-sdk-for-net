@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return this.WrapModel(data);
         }
 
-        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Inner.DeleteAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:42E0B61F5AA4A1130D7B90CCBAAE3A5D:9F33885F608914F714E6FA1E746CFA88
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:C4C74C5CA23BE3B4CAFEFD0EF23149A0:B6DE3F3ADD30CF80937F7E47989E73C7
         public ICheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return this.CheckNameAvailabilityAsync(name).Result;
+            return this.CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691

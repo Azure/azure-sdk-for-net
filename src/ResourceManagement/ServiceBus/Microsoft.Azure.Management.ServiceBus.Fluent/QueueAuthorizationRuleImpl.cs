@@ -114,14 +114,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
                 cancellationToken);
         }
 
-        Task<IAuthorizationKeys> IAuthorizationRule<IQueueAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
+        async Task<IAuthorizationKeys> IAuthorizationRule<IQueueAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
         {
-            return base.RegenerateKeyAsync(policykey, cancellationToken);
+            return await base.RegenerateKeyAsync(policykey, cancellationToken);
         }
 
-        Task<IAuthorizationKeys> IAuthorizationRule<IQueueAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
+        async Task<IAuthorizationKeys> IAuthorizationRule<IQueueAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
         {
-            return base.GetKeysAsync(cancellationToken);
+            return await base.GetKeysAsync(cancellationToken);
         }
 
         IAuthorizationKeys IAuthorizationRule<IQueueAuthorizationRule>.GetKeys()

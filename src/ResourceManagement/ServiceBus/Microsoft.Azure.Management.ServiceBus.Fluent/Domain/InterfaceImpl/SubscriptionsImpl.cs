@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// </summary>
         /// <param name="name">The name of the resource to delete.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        Task ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
+        async Task ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
         {
-            return this.DeleteByNameAsync(name);
+            await this.DeleteByNameAsync(name, cancellationToken);
         }
 
         /// <summary>

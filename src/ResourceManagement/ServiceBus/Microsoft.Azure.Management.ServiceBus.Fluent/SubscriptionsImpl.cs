@@ -47,24 +47,24 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return WrapModel(name);
         }
 
-        protected override Task<IPage<Management.Fluent.ServiceBus.Models.SubscriptionInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<Management.Fluent.ServiceBus.Models.SubscriptionInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListByTopicAsync(this.resourceGroupName, 
+            return await this.Inner.ListByTopicAsync(this.resourceGroupName, 
                 this.namespaceName, 
                 this.topicName, 
                 cancellationToken);
         }
-        protected override Task<IPage<Management.Fluent.ServiceBus.Models.SubscriptionInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<Management.Fluent.ServiceBus.Models.SubscriptionInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListByTopicNextAsync(nextLink, 
+            return await this.Inner.ListByTopicNextAsync(nextLink, 
                 cancellationToken);
 
         }
 
         ///GENMHASH:AD2F63EB9B7A81CCDA7E3A349748EDF7:AC7DA12A153C81BA0050657D342ADB13
-        protected override Task<Management.Fluent.ServiceBus.Models.SubscriptionInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Management.Fluent.ServiceBus.Models.SubscriptionInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.GetAsync(this.resourceGroupName, 
+            return await this.Inner.GetAsync(this.resourceGroupName, 
                 this.namespaceName, 
                 this.topicName, 
                 name, 
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:4DBCB8980532AA9B1B33D0E72379F286
-        public override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.DeleteAsync(this.resourceGroupName,
+            await this.Inner.DeleteAsync(this.resourceGroupName,
                 this.namespaceName,
                 this.topicName,
                 name,

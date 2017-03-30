@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 
         public override IQueue Refresh()
         {
-            var inner = this.GetInnerAsync(CancellationToken.None).Result;
+            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             SetInner(inner);
             return this as IQueue;
         }
@@ -166,12 +166,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:338FF71B5ABADE33BE2440EC7B543A5A
-        protected Task<QueueInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<QueueInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Manager.Inner.Queues
+            return await this.Manager.Inner.Queues
                 .GetAsync(this.ResourceGroupName,
                 this.parentName,
-                this.Name);
+                this.Name,
+                cancellationToken);
         }
 
         ///GENMHASH:6FB4FA11D202AAD778571470EBAA0B2E:5AD7D97214C222B06E2C12800013833A
@@ -221,7 +222,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         private async Task SubmitChildrenOperationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.AuthorizationRules().CreateAsync(this.rulesToCreate.ToArray());
-            await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete);
+            await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete, cancellationToken);
         }
 
         ///GENMHASH:E1A70C93622FE40F497284FABDDB605E:E5111569019FB6C2D9B4CECED7418140
@@ -429,7 +430,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
                     this.Inner,
                     cancellationToken);
                 SetInner(inner);
-                await SubmitChildrenOperationsAsync();
+                await SubmitChildrenOperationsAsync(cancellationToken);
             }
             finally
             {
