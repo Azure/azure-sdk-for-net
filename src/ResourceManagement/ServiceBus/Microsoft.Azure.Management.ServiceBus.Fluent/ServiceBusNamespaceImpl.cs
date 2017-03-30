@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 
         public override IServiceBusNamespace Refresh()
         {
-            var inner = this.GetInnerAsync(CancellationToken.None).Result;
+            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             SetInner(inner);
             return this as IServiceBusNamespace;
         }
@@ -110,10 +110,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:08FB5A6CC72E9C407DAC126C07B38561
-        protected Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Manager.Inner.Namespaces.GetAsync(this.ResourceGroupName,
-            this.Name, cancellationToken);
+            return await this.Manager.Inner.Namespaces.GetAsync(
+                this.ResourceGroupName,
+                this.Name, 
+                cancellationToken);
         }
 
         ///GENMHASH:D1F1E3A5DB47929D06C249A1D7F38170:3E4EB2C841364DFF671396F0796788FE
@@ -173,11 +175,11 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         private async Task SubmitChildrenOperationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Queues().CreateAsync(this.queuesToCreate.ToArray());
-            await this.Queues().DeleteByNameAsync(this.queuesToDelete);
+            await this.Queues().DeleteByNameAsync(this.queuesToDelete, cancellationToken);
             await this.Topics().CreateAsync(this.topicsToCreate.ToArray());
-            await this.Topics().DeleteByNameAsync(this.topicsToDelete);
+            await this.Topics().DeleteByNameAsync(this.topicsToDelete, cancellationToken);
             await this.AuthorizationRules().CreateAsync(this.rulesToCreate.ToArray());
-            await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete);
+            await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete, cancellationToken);
         }
 
         ///GENMHASH:2B6A7C27023EE8442A6D59B3FABB77A4:2413E2F661081FE7F61AA483AFCE848F
@@ -220,7 +222,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
                         this.Inner,
                         cancellationToken);
                 SetInner(inner);
-                await SubmitChildrenOperationsAsync();
+                await SubmitChildrenOperationsAsync(cancellationToken);
             }
             finally
             {

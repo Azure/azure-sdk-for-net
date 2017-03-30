@@ -143,8 +143,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 handlers.Add(delegatingHandler);
                 return this;
             }
-
-
+            
             public IBuildable WithDelegatingHandlers(params DelegatingHandler[] delegatingHandlers)
             {
                 handlers.AddRange(delegatingHandlers);

@@ -49,13 +49,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:077B87F3E32DB4F7DBE3AFD7C44190B4
-        protected override async Task<ISqlFirewallRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ISqlFirewallRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var firewallRuleInner = await Manager.Inner.Servers.CreateOrUpdateFirewallRuleAsync(
                 ResourceGroupName,
                 SqlServerName(),
                 Name,
-                Inner);
+                Inner,
+                cancellationToken);
             SetInner(firewallRuleInner);
 
             return this;

@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         #region Implementation of IResourceCreator interface
 
-        public override async Task<IStorageAccount> CreateResourceAsync(CancellationToken cancellationToken)
+        public async override Task<IStorageAccount> CreateResourceAsync(CancellationToken cancellationToken)
         {
             if (this.newGroup != null)
             {
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return this;
         }
 
-        public override async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        public async override Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             // overriding the base.ApplyAsync here since the parameter for update is different from the one for create.
             var response = await Manager.Inner.StorageAccounts.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);

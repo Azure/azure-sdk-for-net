@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public async Task<IDeploymentOperation> GetByIdAsync(string operationId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await client.GetAsync(deployment.ResourceGroupName, deployment.Name, operationId);
+            var inner = await client.GetAsync(deployment.ResourceGroupName, deployment.Name, operationId, cancellationToken);
             return CreateFluentModel(inner);
         }
 

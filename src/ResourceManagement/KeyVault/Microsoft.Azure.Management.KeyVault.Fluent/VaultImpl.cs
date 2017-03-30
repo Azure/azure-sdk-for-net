@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         }
 
         ///GENMHASH:1BFD0AD1E7180AAE5C7C7706268179BD:654FAB1549649BDDA9AAC1BB3468DBFB
-        private Task PopulateAccessPolicies (CancellationToken cancellationToken = default(CancellationToken))
+        private async Task PopulateAccessPolicies(CancellationToken cancellationToken = default(CancellationToken))
         {
             var tasks = new List<Task>();
             foreach (var accessPolicy in accessPolicies)
@@ -265,11 +265,11 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 }
             }
 
-            return Task.WhenAll(tasks);
+            await Task.WhenAll(tasks);
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:6825C2C979F565D012F22FFCBBFAB9ED
-        public override async Task<IVault> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IVault> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
         {
             await PopulateAccessPolicies(cancellationToken);
             VaultCreateOrUpdateParametersInner parameters = new VaultCreateOrUpdateParametersInner()
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             {
                 parameters.Properties.AccessPolicies.Add(accessPolicy.Inner);
             }
-            var inner = await Manager.Inner.Vaults.CreateOrUpdateAsync(ResourceGroupName, Name, parameters);
+            var inner = await Manager.Inner.Vaults.CreateOrUpdateAsync(ResourceGroupName, Name, parameters, cancellationToken);
             SetInner(inner);
             return this;
         }

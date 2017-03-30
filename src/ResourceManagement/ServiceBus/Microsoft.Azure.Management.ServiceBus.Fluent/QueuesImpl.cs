@@ -47,20 +47,20 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return WrapModel(name);
         }
 
-        protected override Task<IPage<QueueInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<QueueInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListByNamespaceAsync(this.resourceGroupName, this.namespaceName, cancellationToken);
+            return await this.Inner.ListByNamespaceAsync(this.resourceGroupName, this.namespaceName, cancellationToken);
         }
-        protected override Task<IPage<QueueInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        
+        protected async override Task<IPage<QueueInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListByNamespaceNextAsync(nextLink, cancellationToken);
-
+            return await this.Inner.ListByNamespaceNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:AD2F63EB9B7A81CCDA7E3A349748EDF7:9C8551ABD03284A4A199719789CA62E6
-        protected override Task<QueueInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<QueueInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.GetAsync(this.resourceGroupName, this.namespaceName, name, cancellationToken);
+            return await this.Inner.GetAsync(this.resourceGroupName, this.namespaceName, name, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:06B731057FF84FCAD43933AB8443E28A
@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:AEBB8A79E16164E35A225D2E6320E053
-        public override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.DeleteAsync(this.resourceGroupName,
+            await this.Inner.DeleteAsync(this.resourceGroupName,
                 this.namespaceName,
                 name, 
                 cancellationToken);
@@ -104,22 +104,20 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:EA1A01CE829067751D1BD24D7AC819DA:DBE309666B1D8BDFE15651BA9A0DD4A1
-        public override async Task<Microsoft.Azure.Management.Servicebus.Fluent.IQueue> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<Microsoft.Azure.Management.Servicebus.Fluent.IQueue> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             // 'IndependentChildResourcesImpl' will be refactoring to remove all 'ByParent' methods
             // This method is not exposed to end user from any of the derived types of IndependentChildResourcesImpl
             //
-            await Task.Yield();
             throw new NotImplementedException();
         }
 
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:DBE309666B1D8BDFE15651BA9A0DD4A1
-        public override async Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             // 'IndependentChildResourcesImpl' will be refactoring to remove all 'ByParent' methods
             // This method is not exposed to end user from any of the derived types of IndependentChildResourcesImpl
             //
-            await Task.Yield();
             throw new NotImplementedException();
         }
     }

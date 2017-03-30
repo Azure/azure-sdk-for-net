@@ -49,27 +49,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void DeleteById(string id)
         {
-            DeleteByIdAsync(id).Wait();
+            DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteByGroup(string groupName, string name)
         {
-            DeleteByGroupAsync(groupName, name).Wait();
+            DeleteByGroupAsync(groupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
-        public Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Manager.Inner.Deployments.DeleteAsync(groupName, name, cancellationToken);
+            await Manager.Inner.Deployments.DeleteAsync(groupName, name, cancellationToken);
         }
 
         public IDeployment GetByGroup(string resourceGroupName, string name)
         {
-            return GetByGroupAsync(resourceGroupName, name).Result;
+            return GetByGroupAsync(resourceGroupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<IDeployment> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -80,12 +80,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeployment GetById(string id)
         {
-            return GetByIdAsync(id).Result;
+            return GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public Task<IDeployment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IDeployment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return GetByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            return await GetByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         public IDeployment GetByName(string name)

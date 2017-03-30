@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:BA170CE7D8B4381095CF80F0B121B545
         public void PowerOff()
         {
-            this.PowerOffAsync().Wait();
+            this.PowerOffAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:E8FB723EB69B1FF154465213A3298460
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:667E734583F577A898C6389A3D9F4C09:E31C3E6AAB81275E957AEE7FFC644CBF
         public void Deallocate()
         {
-            this.DeallocateAsync().Wait();
+            this.DeallocateAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:C6D786A0345B2C4ADB349E573A0BF6C7:424FABAED1A1FB32529BDB97BA59F68B
@@ -174,9 +174,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:58ABB710ED036C0D7836493A79C470A9
-        public Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.StartAsync(
+            await Parent.Manager.Inner.VirtualMachineScaleSetVMs.StartAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 InstanceId(),
@@ -269,9 +269,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C0EB387DE858347CC9ECD61143087BEE:370DCDB672E2ABECD4FA09EF809A2A86
-        public Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.DeallocateAsync(
+            await Parent.Manager.Inner.VirtualMachineScaleSetVMs.DeallocateAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 InstanceId(),
@@ -328,9 +328,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:FEB63CBC1CA7D22A121F19D94AB44052:7E7C3C37B9FF921AE8D5F1C8460403A7
-        public Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.RestartAsync(
+            await Parent.Manager.Inner.VirtualMachineScaleSetVMs.RestartAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 InstanceId(),
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:3AF56414924A2B5C8018E43635C23E6D
         public void Delete()
         {
-            DeleteAsync().Wait();
+            DeleteAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:84A1C38F299C7713046CF6F1527D8F63:1B67F25B1C5584321081FAB1AF143179
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:DB561BC9EF939094412065B65EB3D2EA:EE9FAF4FEA996048F4927C08CF0BBB9F
         public void Reimage()
         {
-            this.ReimageAsync().Wait();
+            this.ReimageAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:8DDA5FB2E9E6E0697D0969997C1BE9C4:9DD8966D7074391F9512E63BBEB93FA9
@@ -455,9 +455,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:D689C0F3639A0E935C55CB38C26FAAFD:E6911DC70A59F96D2F88F3FF5122E38B
-        public Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.PowerOffAsync(
+            await Parent.Manager.Inner.VirtualMachineScaleSetVMs.PowerOffAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 InstanceId(), 
@@ -471,9 +471,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:960A44940EE0E051601BB59CD935FE22:09B1869890AC6095FE0FBE503BBBBFB6
-        public Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.ReimageAsync(
+            await Parent.Manager.Inner.VirtualMachineScaleSetVMs.ReimageAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 InstanceId(),
@@ -483,13 +483,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:8DC054450782B914522C4E063E233AAE
         public void Restart()
         {
-            this.RestartAsync().Wait();
+            this.RestartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:0E335374306A3050322A5D1E4C468CF8
         public void Start()
         {
-            this.StartAsync().Wait();
+            this.StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:882F1CC2224D95370B7A4269ED87EC4F:FA558C03B2F8DB0C8883E9CE9D380464
@@ -513,9 +513,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:C5FE9F038576055F219FB734E49D39D9
-        public Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Parent.Manager.Inner.VirtualMachineScaleSetVMs.DeleteAsync(
+            await Parent.Manager.Inner.VirtualMachineScaleSetVMs.DeleteAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 InstanceId(),

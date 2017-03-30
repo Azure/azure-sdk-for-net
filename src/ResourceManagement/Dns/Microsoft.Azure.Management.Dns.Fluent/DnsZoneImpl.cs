@@ -189,10 +189,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:EF3CE1F98A96F8DA517AE632974073AA
-        public override async Task<IDnsZone> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IDnsZone> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
 
-            var innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            var innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken: cancellationToken);
             SetInner(innerResource);
             await recordSetsImpl.CommitAndGetAllAsync(cancellationToken);
             return this;

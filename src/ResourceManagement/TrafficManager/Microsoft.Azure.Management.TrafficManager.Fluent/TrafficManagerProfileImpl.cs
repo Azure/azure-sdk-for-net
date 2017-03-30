@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             // method. We cannot update the routing method of the profile until existing endpoints contains the properties
             // required for the new routing method.
             await endpoints.CommitAndGetAllAsync(cancellationToken);
-            ProfileInner profileInner = await Manager.Inner.Profiles.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            ProfileInner profileInner = await Manager.Inner.Profiles.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(profileInner);
             return this;
         }
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
             if (IsInCreateMode)
             {
-                ProfileInner profileInner = await Manager.Inner.Profiles.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+                ProfileInner profileInner = await Manager.Inner.Profiles.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
                 SetInner(profileInner);
                 await endpoints.CommitAndGetAllAsync(cancellationToken);
                 return this;

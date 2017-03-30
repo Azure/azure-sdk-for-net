@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>the Observable to the request</returns>
         async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipals.GetByServicePrincipalNameAsync(string spn, CancellationToken cancellationToken = default(CancellationToken)) { 
-            return await this.GetByServicePrincipalNameAsync( spn) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal;
+            return await this.GetByServicePrincipalNameAsync(spn, cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal;
         }
 
         /// <summary>

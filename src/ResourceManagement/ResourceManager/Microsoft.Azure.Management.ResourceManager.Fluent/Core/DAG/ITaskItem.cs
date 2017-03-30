@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 {
     public interface ITaskItem<TaskResultT>
     {
-        TaskResultT Result { get; }
+        TaskResultT CreatedResource { get; }
 
         Task ExecuteAsync(CancellationToken cancellationToken);
     }

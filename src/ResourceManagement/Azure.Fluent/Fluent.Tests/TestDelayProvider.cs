@@ -10,7 +10,7 @@ namespace Azure.Tests
 {
     public class TestDelayProvider : DelayProvider
     {
-        public override async Task DelayAsync(int milliseconds, CancellationToken cancellationToken)
+        public async override Task DelayAsync(int milliseconds, CancellationToken cancellationToken)
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {

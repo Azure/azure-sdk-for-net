@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 {
@@ -15,7 +14,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
         private int toBeResolved;
         internal object LockObject = new object();
 
-        public DAGNode(string key, DataT data) : base(key, data)
+        public DAGNode(string key, DataT data) 
+            : base(key, data)
         {
             dependentKeys = new HashSet<string>();
         }
@@ -30,13 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 
         public void AddDependent(string dependentKey)
         {
-            dependentKey = dependentKey.ToLowerInvariant();
-            if (dependentKeys.Contains(dependentKey))
-            {
-                throw new DependentExistsException(Key, dependentKey);
-            }
-
-            dependentKeys.Add(dependentKey);
+            dependentKeys.Add(dependentKey.ToLowerInvariant());
         }
 
         public IReadOnlyCollection<string> DependencyKeys

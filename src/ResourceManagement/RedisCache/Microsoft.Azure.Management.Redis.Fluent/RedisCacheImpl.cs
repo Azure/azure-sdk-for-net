@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:5E5963AD8180E75B1BDD4665CB491F14
-        public override async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
             {

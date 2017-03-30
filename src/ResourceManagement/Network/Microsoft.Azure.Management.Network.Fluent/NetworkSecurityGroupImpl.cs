@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroup
@@ -39,9 +40,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Helpers
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<NetworkSecurityGroupInner> CreateInnerAsync()
+        protected async override Task<NetworkSecurityGroupInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
-            return Manager.Inner.NetworkSecurityGroups.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return await Manager.Inner.NetworkSecurityGroups.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
         }
 
         ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:A61BAEAFF2676CB74CB2C0A5F49B245E

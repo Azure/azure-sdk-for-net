@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
                 }
                 else
                 {
-                    // Here we are not waiting or checking the result of 'task', anyfailure in this
-                    // 'ExecuteNodeTaskAsync' will be signalled via this.taskCompletionSource.
+                    // Here we are not waiting or checking the result of 'task', any failler in this
+                    // 'ExecuteNodeTaskAsync' will be signaled via this.taskCompletionSource.
                     Task task = ExecuteNodeTaskAsync(nextNode, cancellationToken);
                 }
                 nextNode = DAG.GetNext();
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
         {
             try
             {
-                TaskResultT cachedResult = node.Data.Result;
+                TaskResultT cachedResult = node.Data.CreatedResource;
                 if (cachedResult != null && !DAG.IsRootNode(node))
                 {
                     DAG.ReportCompleted(node);
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 
         public TaskResultT TaskResult(string taskId)
         {
-            return DAG.GetNodeData(taskId).Result;
+            return DAG.GetNodeData(taskId).CreatedResource;
         }
     }
 }

@@ -16,12 +16,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
     public class NodeNotFoundException : Exception {
         public NodeNotFoundException(string key) : base("A node with key '" + key + "' not found in the graph") {}
     }
-
-    public class DependentExistsException : Exception {
-        public DependentExistsException(string dependencyKey, string dependentKey) : base("The node '" + dependentKey + "' is already marked as dependent of the node '" + dependencyKey + "'") {
-        }
-    }
-
+    
     public class CircularDependencyException : Exception {
         public CircularDependencyException() : base("Found circular dependency in the graph") {}
     }

@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 {
-    public class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
+    public class Graph<NodeDataT, NodeT> 
+        where NodeT : Node<NodeDataT>
     {
         protected IDictionary<string, NodeT> graph;
         private HashSet<string> visited;
@@ -29,8 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
 
         public bool Contains(string key)
         {
-            NodeT value;
-            return graph.TryGetValue(key.ToLowerInvariant(), out value);
+            return graph.Keys.Contains(key.ToLowerInvariant());
         }
 
         public NodeT GetNode(string key)

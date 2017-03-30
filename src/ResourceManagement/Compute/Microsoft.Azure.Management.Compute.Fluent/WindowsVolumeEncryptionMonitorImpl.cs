@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:FF7924BFEF46CE7F250D6F5B1A727744
         public IDiskVolumeEncryptionMonitor Refresh()
         {
-            return RefreshAsync().Result;
+            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:061A846F0F7CA8B3F2DF8CA79A8D8B5A
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             // Refreshes the cached Windows virtual machine and installed encryption extension
             //
-            var virtualMachine = await RetrieveVirtualMachineAsync();
+            var virtualMachine = await RetrieveVirtualMachineAsync(cancellationToken);
             this.virtualMachine = virtualMachine;
             if (virtualMachine.Resources != null)
             {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var virtualMachine = await this.computeManager
                 .Inner
                 .VirtualMachines
-                .GetAsync(rgName, vmName);
+                .GetAsync(rgName, vmName, cancellationToken: cancellationToken);
             if (virtualMachine == null)
             {
                 throw new Exception($"VM with name '{vmName}' not found (resource group '{rgName}')");

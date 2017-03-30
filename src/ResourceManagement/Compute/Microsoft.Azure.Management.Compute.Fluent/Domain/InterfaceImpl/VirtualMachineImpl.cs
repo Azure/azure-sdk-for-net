@@ -1296,9 +1296,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>An observable that emits extensions attached to the virtual machine.</return>
-        Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetExtensionsAsync(CancellationToken cancellationToken)
+        async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetExtensionsAsync(CancellationToken cancellationToken)
         {
-            return this.GetExtensionsAsync(cancellationToken);
+            return await this.GetExtensionsAsync(cancellationToken);
         }
 
         /// <return>The extensions attached to the Virtual Machine.</return>
@@ -1465,9 +1465,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets an observable that emits the instance view of the virtual machine.
         /// </summary>
-        Task<Models.VirtualMachineInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RefreshInstanceViewAsync(CancellationToken cancellationToken)
+        async Task<Models.VirtualMachineInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RefreshInstanceViewAsync(CancellationToken cancellationToken)
         {
-            return this.RefreshInstanceViewAsync(cancellationToken);
+            return await this.RefreshInstanceViewAsync(cancellationToken);
         }
 
         /// <summary>

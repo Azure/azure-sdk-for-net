@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Clear NIC references if any
-            var nsg = GetByGroup(groupName, name);
+            var nsg = await GetByGroupAsync(groupName, name, cancellationToken);
             if (nsg != null)
             {
                 var nicIds = nsg.NetworkInterfaceIds;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 {
                     foreach (string nicRef in nicIds)
                     {
-                        var nic = Manager.NetworkInterfaces.GetById(nicRef);
+                        var nic = await Manager.NetworkInterfaces.GetByIdAsync(nicRef, cancellationToken);
                         if (nic == null)
                         {
                             continue;
@@ -77,17 +77,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
                         }
                         else
                         {
-                            nic.Update().WithoutNetworkSecurityGroup().Apply();
+                            await nic.Update().WithoutNetworkSecurityGroup().ApplyAsync(cancellationToken);
                         }
                     }
                 }
             }
 
-            return Inner.DeleteAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public override async Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);

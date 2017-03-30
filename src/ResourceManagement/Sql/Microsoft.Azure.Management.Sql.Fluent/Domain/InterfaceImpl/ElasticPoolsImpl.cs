@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>Observable for the delete operation.</return>
         async Task SqlServer.ElasticPools.IElasticPools.DeleteAsync(string elasticPoolName, CancellationToken cancellationToken)
         {
- 
             await this.DeleteAsync(elasticPoolName, cancellationToken);
         }
 

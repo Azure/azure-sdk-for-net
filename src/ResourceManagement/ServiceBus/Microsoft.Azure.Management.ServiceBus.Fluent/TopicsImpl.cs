@@ -45,20 +45,20 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return WrapModel(name);
         }
 
-        protected override Task<IPage<TopicInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<TopicInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListByNamespaceAsync(this.resourceGroupName, this.namespaceName, cancellationToken);
+            return await this.Inner.ListByNamespaceAsync(this.resourceGroupName, this.namespaceName, cancellationToken);
         }
-        protected override Task<IPage<TopicInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        
+        protected async override Task<IPage<TopicInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.ListByNamespaceNextAsync(nextLink, cancellationToken);
-
+            return await this.Inner.ListByNamespaceNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:AD2F63EB9B7A81CCDA7E3A349748EDF7:9C8551ABD03284A4A199719789CA62E6
-        protected override Task<TopicInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<TopicInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.GetAsync(this.resourceGroupName, this.namespaceName, name, cancellationToken);
+            return await this.Inner.GetAsync(this.resourceGroupName, this.namespaceName, name, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5E542742896671ABF1F76E8F3AD7BB34
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:AEBB8A79E16164E35A225D2E6320E053
-        public override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Inner.DeleteAsync(this.resourceGroupName,
+            await this.Inner.DeleteAsync(this.resourceGroupName,
                 this.namespaceName,
                 name,
                 cancellationToken);
