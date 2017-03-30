@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            await Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner);
+            await Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner, cancellationToken);
             return this;
         }
 

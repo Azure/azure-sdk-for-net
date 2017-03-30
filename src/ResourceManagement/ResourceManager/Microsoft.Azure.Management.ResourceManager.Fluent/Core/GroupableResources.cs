@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             this.DeleteByIdAsync(id).Wait();
         }
 
-        public override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await this.DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         #endregion

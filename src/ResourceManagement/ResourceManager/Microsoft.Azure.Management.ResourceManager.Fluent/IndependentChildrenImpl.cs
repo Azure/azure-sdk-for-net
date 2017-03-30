@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             ResourceId resourceId = ResourceId.FromString(id);
 
-            return await GetByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name);
+            return await GetByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name, cancellationToken);
         }
 
         ///GENMHASH:B1F9F82090ABF692D9645AE6B2D732EE:B8247A96B5B602D0F01FFC494377AA87
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public async Task<T> GetByParentAsync(ParentT parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetByParentAsync(parentResource.ResourceGroupName, parentResource.Name, name);
+            return await GetByParentAsync(parentResource.ResourceGroupName, parentResource.Name, name, cancellationToken);
         }
 
         ///GENMHASH:A0A10EB2FF1149F056003612DA902E09:D8BC76ED0E6FF85C69301F568869AE3D
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public async Task<PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await ListByParentAsync(parentResource.ResourceGroupName, parentResource.Name);
+            return await ListByParentAsync(parentResource.ResourceGroupName, parentResource.Name, cancellationToken);
         }
 
         public override void DeleteById(string id)
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             ResourceId resourceId = ResourceId.FromString(id);
 
-            await DeleteByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name);
+            await DeleteByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name, cancellationToken);
         }
 
         ///GENMHASH:60749B1ABD9ABFE5DA6F2DE13BAF999E:84B11042D38049C213681791B3D8EAEB

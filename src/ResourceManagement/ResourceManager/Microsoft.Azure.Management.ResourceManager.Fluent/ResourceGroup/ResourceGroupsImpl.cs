@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             DeleteByNameAsync(name).Wait();
         }
 
-        public Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Inner.DeleteAsync(name, cancellationToken);
+            await Inner.DeleteAsync(name, cancellationToken);
         }
 
         public override void DeleteById(string id)
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             DeleteByName(ResourceUtils.NameFromResourceId(id));
         }
 
-        public override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DeleteByNameAsync(ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await DeleteByNameAsync(ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         public IResourceGroup GetByName(string name)
