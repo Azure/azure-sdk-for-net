@@ -70,7 +70,7 @@ namespace Relay.Tests.ScenarioTests
                 // Create a namespace AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(RelayManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRule()
+                var createAutorizationRuleParameter = new AuthorizationRule()
                 {
                     Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
                 };
@@ -112,7 +112,7 @@ namespace Relay.Tests.ScenarioTests
 
                 // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRule updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRule();
+                AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
                 var updateNamespaceAuthorizationRuleResponse = RelayManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);

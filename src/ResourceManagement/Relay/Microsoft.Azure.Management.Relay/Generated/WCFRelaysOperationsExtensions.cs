@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='relayName'>
             /// The relay name
             /// </param>
-            public static IPage<SharedAccessAuthorizationRule> ListAuthorizationRules(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
+            public static IPage<AuthorizationRule> ListAuthorizationRules(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
             {
                 return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, relayName).GetAwaiter().GetResult();
             }
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SharedAccessAuthorizationRule>> ListAuthorizationRulesAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -267,9 +267,9 @@ namespace Microsoft.Azure.Management.Relay
             /// The authorizationRule name.
             /// </param>
             /// <param name='parameters'>
-            /// The shared access authorization rule.
+            /// The authorization rule parameters.
             /// </param>
-            public static SharedAccessAuthorizationRule CreateOrUpdateAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, SharedAccessAuthorizationRule parameters)
+            public static AuthorizationRule CreateOrUpdateAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, AuthorizationRule parameters)
             {
                 return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -293,12 +293,12 @@ namespace Microsoft.Azure.Management.Relay
             /// The authorizationRule name.
             /// </param>
             /// <param name='parameters'>
-            /// The shared access authorization rule.
+            /// The authorization rule parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRule> CreateOrUpdateAuthorizationRuleAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, SharedAccessAuthorizationRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthorizationRule> CreateOrUpdateAuthorizationRuleAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, AuthorizationRule parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='authorizationRuleName'>
             /// The authorizationRule name.
             /// </param>
-            public static SharedAccessAuthorizationRule GetAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
+            public static AuthorizationRule GetAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
             {
                 return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -399,7 +399,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRule> GetAuthorizationRuleAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthorizationRule> GetAuthorizationRuleAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -425,7 +425,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='authorizationRuleName'>
             /// The authorizationRule name.
             /// </param>
-            public static ResourceListKeys ListKeys(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
+            public static AuthorizationRuleKeys ListKeys(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
             {
                 return operations.ListKeysAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceListKeys> ListKeysAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthorizationRuleKeys> ListKeysAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -480,7 +480,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='parameters'>
             /// Parameters supplied to regenerate Auth Rule.
             /// </param>
-            public static ResourceListKeys RegenerateKeys(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, RegenerateKeysParameters parameters)
+            public static AuthorizationRuleKeys RegenerateKeys(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, RegenerateKeysParameters parameters)
             {
                 return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceListKeys> RegenerateKeysAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, RegenerateKeysParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthorizationRuleKeys> RegenerateKeysAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, RegenerateKeysParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -560,7 +560,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SharedAccessAuthorizationRule> ListAuthorizationRulesNext(this IWCFRelaysOperations operations, string nextPageLink)
+            public static IPage<AuthorizationRule> ListAuthorizationRulesNext(this IWCFRelaysOperations operations, string nextPageLink)
             {
                 return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -577,7 +577,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SharedAccessAuthorizationRule>> ListAuthorizationRulesNextAsync(this IWCFRelaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesNextAsync(this IWCFRelaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

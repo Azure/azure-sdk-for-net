@@ -17,15 +17,15 @@ namespace Microsoft.Azure.Management.Relay.Models
     /// <summary>
     /// Namespace/Relay Connection String
     /// </summary>
-    public partial class ResourceListKeys
+    public partial class AuthorizationRuleKeys
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceListKeys class.
+        /// Initializes a new instance of the AuthorizationRuleKeys class.
         /// </summary>
-        public ResourceListKeys() { }
+        public AuthorizationRuleKeys() { }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceListKeys class.
+        /// Initializes a new instance of the AuthorizationRuleKeys class.
         /// </summary>
         /// <param name="primaryConnectionString">PrimaryConnectionString of
         /// the created Namespace AuthorizationRule.</param>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// for signing and validating the SAS token</param>
         /// <param name="keyName">A string that describes the authorization
         /// rule</param>
-        public ResourceListKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
+        public AuthorizationRuleKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;

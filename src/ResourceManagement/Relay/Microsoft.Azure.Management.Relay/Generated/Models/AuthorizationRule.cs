@@ -22,23 +22,21 @@ namespace Microsoft.Azure.Management.Relay.Models
     /// Description of a Namespace AuthorizationRules.
     /// </summary>
     [JsonTransformation]
-    public partial class SharedAccessAuthorizationRule : Resource
+    public partial class AuthorizationRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the SharedAccessAuthorizationRule
-        /// class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
-        public SharedAccessAuthorizationRule() { }
+        public AuthorizationRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the SharedAccessAuthorizationRule
-        /// class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
         /// <param name="rights">The rights associated with the rule.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SharedAccessAuthorizationRule(IList<string> rights, string id = default(string), string name = default(string), string type = default(string))
+        public AuthorizationRule(IList<string> rights, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             Rights = rights;

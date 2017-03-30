@@ -46,8 +46,7 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// can be used to store  descriptive data, such as list of teams and
         /// their contact information also user-defined configuration settings
         /// can be stored.</param>
-        /// <param name="path">The path of the HybridConnection.</param>
-        public HybridConnection(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), int? listenerCount = default(int?), bool? requiresClientAuthorization = default(bool?), string userMetadata = default(string), string path = default(string))
+        public HybridConnection(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), int? listenerCount = default(int?), bool? requiresClientAuthorization = default(bool?), string userMetadata = default(string))
             : base(id, name, type)
         {
             CreatedAt = createdAt;
@@ -55,7 +54,6 @@ namespace Microsoft.Azure.Management.Relay.Models
             ListenerCount = listenerCount;
             RequiresClientAuthorization = requiresClientAuthorization;
             UserMetadata = userMetadata;
-            Path = path;
         }
 
         /// <summary>
@@ -92,12 +90,6 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.userMetadata")]
         public string UserMetadata { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path of the HybridConnection.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.path")]
-        public string Path { get; set; }
 
         /// <summary>
         /// Validate the object.
