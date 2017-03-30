@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:F91F57741BB7E185BF012523964DEED0:B855D73B977281A4DC1F154F5A7D4DC5
-        override protected void AfterCreating()
+        protected override void AfterCreating()
         {
             InitializeChildrenFromInner();
         }
@@ -190,9 +190,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<VirtualNetworkInner> CreateInnerAsync(CancellationToken cancellationToken)
+        protected async override Task<VirtualNetworkInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
-            return Manager.Inner.VirtualNetworks.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            return await Manager.Inner.VirtualNetworks.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
         }
     }
 }

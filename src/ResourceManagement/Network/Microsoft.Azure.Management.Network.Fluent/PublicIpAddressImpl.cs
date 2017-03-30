@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:98A779206BCFA2972058346E46E12590
-        override public async Task<IPublicIPAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IPublicIPAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             PublicIPAddressDnsSettings dnsSettings = Inner.DnsSettings;
             if (dnsSettings != null)
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            SetInner(await Manager.Inner.PublicIPAddresses.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
+            SetInner(await Manager.Inner.PublicIPAddresses.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken));
             return this;
         }
 
