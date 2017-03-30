@@ -14,13 +14,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// An immutable client-side representation of a domain.
     /// Domains in Azure are purchased from 3rd party domain providers. By calling
-    /// Creatable.create()} or {.
+    /// Creatable.create() or Creatable.createAsync() you agree to
+    /// the agreements listed in AppServiceDomains#listAgreements(String).
     /// </summary>
-    /// <link>
-    /// Creatable.createAsync() you agree to
-    /// the agreements listed in Creatable.create()} or {.
-    /// </link>
-    /// <link>Creatable.createAsync().</link>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IAppServiceDomain  :
         IGroupableResource<IAppServiceManager, DomainInner>,
         IHasName,

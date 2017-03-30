@@ -6,8 +6,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// A Host name - SSL certificate binding definition.
+    /// An immutable representation of an host name SSL binding.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IHostNameSslBinding  :
         IHasInner<Models.HostNameSslState>,
         IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
