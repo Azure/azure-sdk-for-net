@@ -245,13 +245,14 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-            string synonymMapName = "names";
+            const string synonymMapName = "names";
             SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "luxury,fancy");
             searchClient.SynonymMaps.Create(synonymMap);
 
             SearchIndexClient client = GetClientForQuery();
             Index index = searchClient.Indexes.Get(client.IndexName);
-            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new String[1] { synonymMapName };
+            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { synonymMapName };
+
             searchClient.Indexes.CreateOrUpdate(index);
 
             var searchParameters =
@@ -263,7 +264,7 @@ namespace Microsoft.Azure.Search.Tests
                 };
 
             DocumentSearchResult<Hotel> response =
-                client.Documents.Search<Hotel>(@"luxury", searchParameters);
+                client.Documents.Search<Hotel>("luxury", searchParameters);
 
             var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199 };
 

@@ -4,7 +4,6 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -18,7 +17,11 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void CreateSynonymMapReturnsCorrectDefinition()
         {
-            Run(() => TestAllSynonymMapFormats(CreateAndValidateSynonymMap));
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSynonymMap(searchClient, CreateTestSynonymMap());
+            });
         }
 
         [Fact]
@@ -41,7 +44,11 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void GetSynonymMapReturnsCorrectDefinition()
         {
-            Run(() => TestAllSynonymMapFormats(CreateAndGetSynonymMap));
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndGetSynonymMap(searchClient, CreateTestSynonymMap());
+            });
         }
 
         [Fact]
@@ -312,12 +319,6 @@ namespace Microsoft.Azure.Search.Tests
         {
             synonymMap.Synonyms = "mutated1, mutated2";
             return synonymMap;
-        }
-
-        private void TestAllSynonymMapFormats(Action<SearchServiceClient, SynonymMap> testMethod)
-        {
-            SearchServiceClient searchClient = Data.GetSearchServiceClient();
-            testMethod(searchClient, CreateTestSynonymMap());
         }
     }
 }

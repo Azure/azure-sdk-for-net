@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the StemmerOverrideTokenFilter class.
         /// </summary>
         /// <param name="rules">A list of stemming rules in the following
-        /// format: "word =&gt; stem", for example: "ran =&gt; run"</param>
+        /// format: "word =&gt; stem", for example: "ran =&gt; run".</param>
         public StemmerOverrideTokenFilter(string name, IList<string> rules)
             : base(name)
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a list of stemming rules in the following format:
-        /// "word =&amp;gt; stem", for example: "ran =&amp;gt; run"
+        /// "word =&amp;gt; stem", for example: "ran =&amp;gt; run".
         /// </summary>
         [JsonProperty(PropertyName = "rules")]
         public IList<string> Rules { get; set; }

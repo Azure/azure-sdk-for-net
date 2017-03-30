@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Response from a List SynonymMaps request. If successful, it includes
-    /// the full definitions of all synonymmaps.
+    /// the full definitions of all synonym maps.
     /// </summary>
     public partial class SynonymMapListResult
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the SynonymMapListResult class.
         /// </summary>
-        /// <param name="synonymMaps">The synonymmaps in the Search
+        /// <param name="synonymMaps">The synonym maps in the Search
         /// service.</param>
         public SynonymMapListResult(IList<SynonymMap> synonymMaps = default(IList<SynonymMap>))
         {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets the synonymmaps in the Search service.
+        /// Gets the synonym maps in the Search service.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<SynonymMap> SynonymMaps { get; protected set; }

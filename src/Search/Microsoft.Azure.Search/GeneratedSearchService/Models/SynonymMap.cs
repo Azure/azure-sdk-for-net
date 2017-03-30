@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a synonymmap definition in Azure Search.
+    /// Represents a synonym map definition in Azure Search.
     /// </summary>
     public partial class SynonymMap
     {
@@ -27,11 +27,13 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the SynonymMap class.
         /// </summary>
-        /// <param name="name">The name of the synonymmap</param>
-        /// <param name="format">The format of the synonymmap. Only 'solr'
+        /// <param name="name">The name of the synonym map.</param>
+        /// <param name="format">The format of the synonym map. Only the 'solr'
         /// format is currently supported.</param>
-        /// <param name="synonyms">The content of the synonymmap</param>
-        /// <param name="eTag">The ETag of the synonymmap</param>
+        /// <param name="synonyms">A series of synonym rules in the specified
+        /// synonym map format. The rules must be separated by
+        /// newlines.</param>
+        /// <param name="eTag">The ETag of the synonym map.</param>
         public SynonymMap(string name, SynonymMapFormat format, string synonyms, string eTag = default(string))
         {
             Name = name;
@@ -41,26 +43,27 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of the synonymmap
+        /// Gets or sets the name of the synonym map.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the format of the synonymmap. Only 'solr' format is
-        /// currently supported.
+        /// Gets or sets the format of the synonym map. Only the 'solr' format
+        /// is currently supported.
         /// </summary>
         [JsonProperty(PropertyName = "format")]
         public SynonymMapFormat Format { get; set; }
 
         /// <summary>
-        /// Gets or sets the content of the synonymmap
+        /// Gets or sets a series of synonym rules in the specified synonym map
+        /// format. The rules must be separated by newlines.
         /// </summary>
         [JsonProperty(PropertyName = "synonyms")]
         public string Synonyms { get; set; }
 
         /// <summary>
-        /// Gets or sets the ETag of the synonymmap
+        /// Gets or sets the ETag of the synonym map.
         /// </summary>
         [JsonProperty(PropertyName = "@odata.etag")]
         public string ETag { get; set; }

@@ -50,14 +50,15 @@ namespace Microsoft.Azure.Search
         public SearchServiceClient Client { get; private set; }
 
         /// <summary>
-        /// Creates a new Azure Search synonymmap or updates a synonymmap if it already
-        /// exists.
+        /// Creates a new Azure Search synonym map or updates a synonym map if it
+        /// already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMapName'>
-        /// The name of the synonymmap to create or update.
+        /// The name of the synonym map to create or update.
         /// </param>
         /// <param name='synonymMap'>
-        /// The definition of the synonymmap to create or update.
+        /// The definition of the synonym map to create or update.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -335,10 +336,11 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Deletes an Azure Search synonymmap.
+        /// Deletes an Azure Search synonym map.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMapName'>
-        /// The name of the synonymmap to delete.
+        /// The name of the synonym map to delete.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -544,10 +546,11 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Retrieves a synonymmap definition from Azure Search.
+        /// Retrieves a synonym map definition from Azure Search.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMapName'>
-        /// The name of the synonymmap to retrieve.
+        /// The name of the synonym map to retrieve.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -751,7 +754,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Lists all synonymmaps available for an Azure Search service.
+        /// Lists all synonym maps available for an Azure Search service.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Synonym-Maps" />
         /// </summary>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -949,10 +953,11 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Creates a new Azure Search synonymmap.
+        /// Creates a new Azure Search synonym map.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMap'>
-        /// The definition of the synonymmap to create.
+        /// The definition of the synonym map to create.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation

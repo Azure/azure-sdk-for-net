@@ -273,11 +273,36 @@ namespace Microsoft.Azure.Search.Tests
                 searchClient.SynonymMaps.Create(synonymMap);
 
                 Index index = CreateTestIndex();
-                index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new String[1] { synonymMapName };
+                index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { synonymMapName };
 
                 Index createIndex = searchClient.Indexes.Create(index);
 
                 AssertIndexesEqual(index, createIndex);
+            });
+        }
+
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanUpdateSynonymFieldProperty()
+        {
+            Run(() =>
+            {
+                string synonymMapName = "names";
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "hotel,motel");
+                searchClient.SynonymMaps.Create(synonymMap);
+
+                // create an index
+                Index index = CreateTestIndex();
+                index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { synonymMapName };
+                searchClient.Indexes.Create(index);
+
+                // update an index                
+                index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new string [] { };
+                Index updateIndex = searchClient.Indexes.CreateOrUpdate(index);
+
+                AssertIndexesEqual(index, updateIndex);
             });
         }
 
