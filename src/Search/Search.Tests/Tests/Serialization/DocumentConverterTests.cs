@@ -21,7 +21,16 @@ namespace Microsoft.Azure.Search.Tests
         private readonly JsonSerializerSettings _settings =
             new JsonSerializerSettings()
             {
-                Converters = new JsonConverter[] { new DocumentConverter(), new GeographyPointConverter(), new DateTimeConverter() },
+                Converters =
+                    new JsonConverter[]
+                    {
+                        new DocumentConverter(),
+                        new GeographyPointConverter(),
+                        new DateTimeConverter(),
+                        // DoubleConverter shouldn't make a difference since it only kicks in when deserializing NaN/INF/-INF, and that case
+                        // is currently not covered by DocumentConverter. However, including it for completeness anyway.
+                        new DoubleConverter()
+                    },
                 DateParseHandling = DateParseHandling.DateTimeOffset,
                 NullValueHandling = NullValueHandling.Include
             };
@@ -108,16 +117,16 @@ namespace Microsoft.Azure.Search.Tests
             const string Json =
 @"{
     ""field1"": ""NaN"",
-    ""field2"": ""Infinity"",
-    ""field3"": ""-Infinity""
+    ""field2"": ""INF"",
+    ""field3"": ""-INF""
 }";
 
             Document doc = JsonConvert.DeserializeObject<Document>(Json, _settings);
 
             Assert.Equal(3, doc.Count);
             Assert.Equal("NaN", doc["field1"]);
-            Assert.Equal("Infinity", doc["field2"]);
-            Assert.Equal("-Infinity", doc["field3"]);
+            Assert.Equal("INF", doc["field2"]);
+            Assert.Equal("-INF", doc["field3"]);
         }
 
         // This is a pinning test. It is not ideal behavior, but it's the best we can do without type information.

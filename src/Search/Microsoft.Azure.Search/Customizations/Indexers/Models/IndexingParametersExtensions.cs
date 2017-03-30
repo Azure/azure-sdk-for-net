@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public static class IndexingParametersExtensions
     {
+        private const string ParsingModeKey = "parsingMode";
+
         /// <summary> 
         /// Specifies that the indexer will index only the storage metadata and completely skip the document extraction process. This is useful when 
         /// you don't need the document content, nor do you need any of the content type-specific metadata properties. 
@@ -108,6 +110,21 @@ namespace Microsoft.Azure.Search.Models
         public static IndexingParameters SetBlobExtractionMode(this IndexingParameters parameters, BlobExtractionMode extractionMode)
         {
             return Configure(parameters, "dataToExtract", (string)extractionMode);
+        }
+
+        /// <summary>
+        /// Tells the indexer to assume that all blobs contain JSON, which it will then parse such that each blob's JSON will map to a single
+        /// document in the Azure Search index.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs/" /> for details.
+        /// </summary>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <remarks>
+        /// This option only applies to indexers that index Azure Blob Storage.
+        /// </remarks>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters ParseJson(this IndexingParameters parameters)
+        {
+            return Configure(parameters, ParsingModeKey, "json");
         }
 
         /// <summary>

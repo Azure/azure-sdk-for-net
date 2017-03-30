@@ -11,6 +11,15 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class IndexingParametersTests
     {
+        private const string ExpectedParsingModeKey = "parsingMode";
+
+        [Fact]
+        public void ParseJsonSetCorrectly()
+        {
+            var parameters = new IndexingParameters().ParseJson();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "json");
+        }
+
         [Fact]
         public void IndexFileNameExtensionsSetCorrectly()
         {
