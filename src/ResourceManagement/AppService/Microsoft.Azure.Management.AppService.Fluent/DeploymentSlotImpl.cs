@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private string name;
 
         ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:4C7545D4B87E729AF03CBCFD92BFD349
-        internal override async Task<SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.CreateOrUpdateSlotAsync(ResourceGroupName, parent.Name, site, Name());
         }
@@ -43,13 +43,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:B353870154AE4F874B316FE268431B8E
-        internal override async Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.CreateOrUpdateSourceControlSlotAsync(ResourceGroupName, parent.Name, inner, Name());
         }
 
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:C466CB0A077AFD0746413FA8E50105BA
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.UpdateApplicationSettingsSlotAsync(ResourceGroupName, parent.Name, inner, Name());
         }
@@ -85,19 +85,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:620993DCE6DF78140D8125DD97478452:2CA2963CA04CEA1DDD6D97EE4A2DBA0A
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> ListAppSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> ListAppSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.ListApplicationSettingsSlotAsync(ResourceGroupName, parent.Name, Name());
         }
 
         ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:62654495B4BF32C7D42185FB1022A5EA
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> ListSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> ListSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.ListSlotConfigurationNamesAsync(ResourceGroupName, parent.Name);
         }
 
         ///GENMHASH:807E62B6346803DB90804D0DEBD2FCA6:DE181E1B5D74C99ABFB73A5902B0B888
-        internal override async Task DeleteSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task DeleteSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await Manager.Inner.WebApps.DeleteSourceControlSlotAsync(ResourceGroupName, parent.Name, Name());
         }
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:CC6E0592F0BCD4CD83D832B40167E562:BD6D6B256D3D938F979A97A557F32D5A
-        public override async Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken))
         {
             IdentifierInner identifierInner = new IdentifierInner()
             {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:1FEB5AC5504703AC62EC7802B4BCBC4F
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.CreateOrUpdateConfigurationSlotAsync(ResourceGroupName, parent.Name, siteConfig, Name());
         }
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:62F8B201D885123D1E906E306D144662:2DE252A4E4CB1A03D80BB639D9CC1D63
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.UpdateSlotConfigurationNamesAsync(ResourceGroupName, parent.Name, inner);
         }
@@ -185,13 +185,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:1921F0155028390EDD9DC6464E29986A
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> ListConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> ListConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.ListConnectionStringsSlotAsync(ResourceGroupName, parent.Name, Name());
         }
 
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:4D11AFF71F3B252DAF2FF3516CE8079B
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.UpdateConnectionStringsSlotAsync(ResourceGroupName, parent.Name, inner, Name());
         }
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:256905D5B839C64BFE9830503CB5607B:EEE6F5F14FBF97AB824F4DC5BEE421C9
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.GetConfigurationSlotAsync(ResourceGroupName, parent.Name, Name());
         }
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:44153E55F54D6CEBEDD20C31326CBA9E
-        internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.GetSlotAsync(ResourceGroupName, parent.Name, Name());
         }
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FCAC8C2F8D6E12CB6F5D7787A2837016:6EA475A78A58FF77FEECBC549D8F6A5A
-        internal override async Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Manager.Inner.WebApps.DeleteHostNameBindingSlotAsync(ResourceGroupName, parent.Name, Name(), hostname);
         }

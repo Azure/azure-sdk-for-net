@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:EA721512D35742AECA1CE1F7CBF2BB99
-        protected override async Task<ISqlElasticPool> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ISqlElasticPool> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var elasticPoolInner = await Manager.Inner.ElasticPools.CreateOrUpdateAsync(
                 ResourceGroupName,

@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:88F80234ADBF5F0E8B64015C7A3EF8D0
-        public override async Task<IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var certificateOrder = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             Task verifyDomainOwnerShip = null;

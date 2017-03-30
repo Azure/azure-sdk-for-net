@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:8F640179247B56242D756EB9A20DC705
-        public override async Task<IBatchAccount> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IBatchAccount> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             HandleStorageSettings();
             var batchAccountCreateParametersInner = new BatchAccountCreateParametersInner();

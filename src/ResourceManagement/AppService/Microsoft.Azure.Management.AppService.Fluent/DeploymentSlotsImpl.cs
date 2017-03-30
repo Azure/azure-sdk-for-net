@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:DF6DF1B2A329B554D04700E954A45A08
-        public override async Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.DeleteSlotAsync(groupName, parentName, name);
         }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:1381FA42DE6ECBD284AA54F76A65CC41
-        public override async Task<PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
             Func<SiteInner, IDeploymentSlot> converter = inner =>
             {
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:C7E55DE6EB5DCE4FD47A68B8B1B62F02
-        public override async Task<IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             SiteInner siteInner = await Inner.GetSlotAsync(resourceGroup, parentName, name);
             if (siteInner == null)

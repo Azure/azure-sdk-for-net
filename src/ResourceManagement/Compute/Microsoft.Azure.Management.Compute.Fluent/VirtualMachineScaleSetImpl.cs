@@ -1891,7 +1891,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:B8E11C7D3FD0F8058EC1203B18D3671D
-        protected override async Task<VirtualMachineScaleSetInner> CreateInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<VirtualMachineScaleSetInner> CreateInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
             {

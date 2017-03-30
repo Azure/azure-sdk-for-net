@@ -406,7 +406,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:DF632029F61029FAC5B2195A4AAC92F5
-        public override async Task<FluentT> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<FluentT> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostNameSslStateMap.Count > 0)
             {

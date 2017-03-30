@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:02EEC4EFE8B735CE832BF91D77CEE31E
-        public override async Task<IApplication> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IApplication> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var createParameter = new AddApplicationParametersInner
                                     {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:F08598A17ADD014E223DFD77272641FF:E166AAF3CE55ADF2533B6CBBEC6343E8
-        public override async Task<IApplication> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IApplication> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var updateParameter = new UpdateApplicationParametersInner
                                     {
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:F0565BDDC7B68F770608A54BA76D915F
-        public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await Parent.Manager.Inner.Application.DeleteAsync(Parent.ResourceGroupName, Parent.Name, Name(), cancellationToken);
         }

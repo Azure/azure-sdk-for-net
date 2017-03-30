@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:A096A9B6D504D2EF53E4C2B61224B4A4
-        public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             string[] domainParts = this.Name.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
             string topLevel = domainParts[domainParts.Length - 1];

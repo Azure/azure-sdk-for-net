@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #endregion
 
-        public override async Task<IResourceGroup> CreateResourceAsync(CancellationToken cancellationToken)
+        public async override Task<IResourceGroup> CreateResourceAsync(CancellationToken cancellationToken)
         {
             ResourceGroupInner param = new ResourceGroupInner();
             param.Location = Inner.Location;

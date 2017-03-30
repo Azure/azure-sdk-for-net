@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             this.userAgents.Add(userAgent);
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (this.userAgents.Any())
             {

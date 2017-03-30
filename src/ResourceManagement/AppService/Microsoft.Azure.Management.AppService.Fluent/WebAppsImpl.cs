@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:F6B932DEEE4F4CBE27781F2323DD7232
-        public override async Task<IWebApp> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IWebApp> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await Inner.GetAsync(groupName, name, cancellationToken);
             var webapp = await PopulateModelAsync(inner, cancellationToken);

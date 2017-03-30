@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:3A15AE6B9ADA17FBEC37A8078DA08565
-        public override async Task<ISqlServer> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<ISqlServer> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var serverInner = await Manager.Inner.Servers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             SetInner(serverInner);

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         public HttpLoggingDelegatingHandler(HttpMessageHandler innerHandler) : base(innerHandler)
         { }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (LogLevel == Level.NONE)
             {

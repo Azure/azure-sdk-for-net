@@ -1398,7 +1398,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:272F8DA403745EB8C8C6DCCD8A4778E2
-        public override async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
             {

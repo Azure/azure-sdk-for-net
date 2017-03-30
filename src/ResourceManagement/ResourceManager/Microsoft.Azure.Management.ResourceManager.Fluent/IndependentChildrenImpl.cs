@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         }
 
         ///GENMHASH:4D33A73A344E127F784620E76B686786:F75A1B8CEFE83AE0B483457A2928324B
-        public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             ResourceId resourceId = ResourceId.FromString(id);
 
