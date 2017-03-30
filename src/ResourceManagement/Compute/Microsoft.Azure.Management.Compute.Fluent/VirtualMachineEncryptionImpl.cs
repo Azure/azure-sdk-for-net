@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:60606BD7BB11968C7CA15EA85A54F23D:B21431AE460A6A3EA24A78638D0C7550
         public Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> DisableAsync(DiskVolumeType volumeType, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return virtualMachineEncryptionHelper.DisableEncryptionAsync(volumeType);
+            return virtualMachineEncryptionHelper.DisableEncryptionAsync(volumeType, cancellationToken);
         }
 
         ///GENMHASH:F5C4065BE678A5CA018C264CAFF7901A:1C7F0F2F318A44EF8EF32F689B1ABFB4
@@ -73,22 +73,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(string keyVaultId, string aadClientId, string aadSecret, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.virtualMachine.OsType == OperatingSystemTypes.Linux) {
-                return EnableAsync(new LinuxVMDiskEncryptionConfiguration(keyVaultId, aadClientId, aadSecret));
+                return EnableAsync(new LinuxVMDiskEncryptionConfiguration(keyVaultId, aadClientId, aadSecret), cancellationToken);
             } else {
-                return EnableAsync(new WindowsVMDiskEncryptionConfiguration(keyVaultId, aadClientId, aadSecret));
+                return EnableAsync(new WindowsVMDiskEncryptionConfiguration(keyVaultId, aadClientId, aadSecret), cancellationToken);
             }
         }
 
         ///GENMHASH:759A67E565795A68519740FF52F3799B:B98D2D73AF646442EF7A686C89600CAC
         public Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(WindowsVMDiskEncryptionConfiguration encryptionSettings, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return virtualMachineEncryptionHelper.EnableEncryptionAsync(encryptionSettings);
+            return virtualMachineEncryptionHelper.EnableEncryptionAsync(encryptionSettings, cancellationToken);
         }
 
         ///GENMHASH:FF2DAE678B014FE543F645A74C2F3B6E:B98D2D73AF646442EF7A686C89600CAC
         public Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(LinuxVMDiskEncryptionConfiguration encryptionSettings, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return virtualMachineEncryptionHelper.EnableEncryptionAsync(encryptionSettings);
+            return virtualMachineEncryptionHelper.EnableEncryptionAsync(encryptionSettings, cancellationToken);
         }
 
         ///GENMHASH:C6ABD3D452DBDFE8506CA443FC27C3BF:D1A986AAA62E86256065FD08F6B69054

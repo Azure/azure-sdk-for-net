@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return await this.computeManager
                     .Inner
                     .VirtualMachineExtensions
-                    .GetAsync(rgName, vmName, extension.Name, "instanceView");
+                    .GetAsync(rgName, vmName, extension.Name, "instanceView", cancellationToken);
         }
 
         ///GENMHASH:CFF730CD005B7D5386D59ADCF7C33D0C:80F0D0455B27E848B9196C7D1768B4DB

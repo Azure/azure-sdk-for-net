@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     .WithProtectedSettings(encryptConfig.ExtensionProtectedSettings())
                     .WithMinorVersionAutoUpgrade()
                     .Attach()
-                .ApplyAsync();
+                .ApplyAsync(cancellationToken);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:5D5D4450A8A3676D4AB254F68D0D6E6F:FD676570747D9407B4E5BA65CEA5012A
         private async Task<string> RetrieveEncryptionExtensionStatusStringAsync(string statusEmptyErrorMessage, CancellationToken cancellationToken = default(CancellationToken))
         {
-            IVirtualMachineExtension encryptionExtension = await GetEncryptionExtensionInstalledInVMAsync();
+            IVirtualMachineExtension encryptionExtension = await GetEncryptionExtensionInstalledInVMAsync(cancellationToken);
             if (encryptionExtension == null)
             {
                 throw new Exception(ERROR_ENCRYPTION_EXTENSION_NOT_FOUND);
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             diskEncryptionSettings.DiskEncryptionKey.SecretUrl = encryptionSecretKeyVaultUrl;
             return await virtualMachine.Update()
                 .WithOsDiskEncryptionSettings(diskEncryptionSettings)
-                .ApplyAsync();
+                .ApplyAsync(cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             DiskEncryptionSettings diskEncryptionSettings = encryptConfig.StorageProfileEncryptionSettings();
             return await virtualMachine.Update()
                 .WithOsDiskEncryptionSettings(diskEncryptionSettings)
-                .ApplyAsync();
+                .ApplyAsync(cancellationToken);
         }
 
         /// <return>OS specific encryption extension version.</return>
@@ -195,22 +195,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var encryptConfig = new EnableEncryptConfig<T>(encryptionSettings);
             // Update the encryption extension if already installed
             //
-            IVirtualMachine virtualMachine = await UpdateEncryptionExtensionAsync(encryptConfig);
+            IVirtualMachine virtualMachine = await UpdateEncryptionExtensionAsync(encryptConfig, cancellationToken);
             if (virtualMachine == null)
             {
                 // If encryption extension is not installed then install it
                 //
-                virtualMachine = await InstallEncryptionExtensionAsync(encryptConfig);
+                virtualMachine = await InstallEncryptionExtensionAsync(encryptConfig, cancellationToken);
             }
             // Retrieve the encryption key URL after extension install or update
             //
-            string keyVaultSecretUrl = await RetrieveEncryptionExtensionStatusStringAsync(ERROR_EXPECTED_KEY_VAULT_URL_NOT_FOUND);
+            string keyVaultSecretUrl = await RetrieveEncryptionExtensionStatusStringAsync(ERROR_EXPECTED_KEY_VAULT_URL_NOT_FOUND, cancellationToken);
             // Update the VM's OS Disk (in storage profile) with the encryption metadata
             //
-            virtualMachine = await UpdateVMStorageProfileAsync(encryptConfig, keyVaultSecretUrl);
+            virtualMachine = await UpdateVMStorageProfileAsync(encryptConfig, keyVaultSecretUrl, cancellationToken);
             // Gets the encryption status
             //
-            return await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine);
+            return await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine, cancellationToken);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     .WithPublicSettings(encryptConfig.ExtensionPublicSettings())
                     .WithProtectedSettings(encryptConfig.ExtensionProtectedSettings())
                     .Parent()
-                .ApplyAsync();
+                .ApplyAsync(cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 {
                     throw new Exception(ERROR_ON_LINUX_DECRYPTING_NON_DATA_DISK_IS_NOT_SUPPORTED);
                 }
-                var monitor = await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine);
+                var monitor = await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine, cancellationToken);
                 if (monitor.OsDiskStatus.Equals(EncryptionStatus.Encrypted))
                 {
                     throw new Exception(ERROR_ON_LINUX_DATA_DISK_DECRYPT_NOT_ALLOWED_IF_OS_DISK_IS_ENCRYPTED);
@@ -267,25 +267,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         internal async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> DisableEncryptionAsync(DiskVolumeType volumeType, CancellationToken cancellationToken = default(CancellationToken))
         {
             EnableDisableEncryptConfig encryptConfig = new DisableEncryptConfig(volumeType);
-            await ValidateBeforeDecryptAsync(volumeType);
+            await ValidateBeforeDecryptAsync(volumeType, cancellationToken);
             // Update the encryption extension if already installed
             //
-            IVirtualMachine virtualMachine = await UpdateEncryptionExtensionAsync(encryptConfig);
+            IVirtualMachine virtualMachine = await UpdateEncryptionExtensionAsync(encryptConfig, cancellationToken);
             if (virtualMachine == null)
             {
                 // If encryption extension is not then install it
                 //
-                virtualMachine = await InstallEncryptionExtensionAsync(encryptConfig);
+                virtualMachine = await InstallEncryptionExtensionAsync(encryptConfig, cancellationToken);
             }
             // Validate and retrieve the encryption extension status
             //
-            string status = await RetrieveEncryptionExtensionStatusStringAsync(ERROR_ENCRYPTION_EXTENSION_STATUS_IS_EMPTY);
+            string status = await RetrieveEncryptionExtensionStatusStringAsync(ERROR_ENCRYPTION_EXTENSION_STATUS_IS_EMPTY, cancellationToken);
             // Update the VM's OS profile by marking encryption disabled
             //
-            virtualMachine = await UpdateVMStorageProfileAsync(encryptConfig);
+            virtualMachine = await UpdateVMStorageProfileAsync(encryptConfig, cancellationToken);
             // Gets the encryption status
             //
-            return await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine);
+            return await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine, cancellationToken);
         }
     }
 

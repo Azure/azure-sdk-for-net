@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:885F10CFCF9E6A9547B0702B4BBD8C9E:16F094D018A7AB696812573A607E81FE
         public async Task<T> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await GetInnerByNameAsync(name);
+            var inner = await GetInnerByNameAsync(name, cancellationToken);
             return WrapModel(inner);
         }
 
