@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         #region Implementation of ISupportsDeletingByGroup interface
 
-        public override Task DeleteByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Inner.DeleteAsync(resourceGroupName, name, cancellationToken);
+            await Inner.DeleteAsync(resourceGroupName, name, cancellationToken);
         }
 
         #endregion Implementation of ISupportsDeletingByGroup interface
