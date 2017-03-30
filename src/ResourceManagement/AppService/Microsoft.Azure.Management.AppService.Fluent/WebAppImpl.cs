@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:512E3D0409D7A159D1D192520CB3A8DB
         internal override async Task<StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.UpdateApplicationSettingsAsync(ResourceGroupName, Name, inner);
+            return await Manager.Inner.WebApps.UpdateApplicationSettingsAsync(ResourceGroupName, Name, inner, cancellationToken);
         }
 
         ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:FDA787AD964B4EF34BCD2352730B6528
         internal override async Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.CreateOrUpdateSourceControlAsync(ResourceGroupName, Name, inner);
+            return await Manager.Inner.WebApps.CreateOrUpdateSourceControlAsync(ResourceGroupName, Name, inner, cancellationToken);
         }
 
         ///GENMHASH:620993DCE6DF78140D8125DD97478452:5A132EFB7A05E4DC22E7252CDF660609
@@ -109,13 +109,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Location = "global",
                 IdentifierId = domainVerificationToken
             };
-            await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner);
+            await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner, cancellationToken);
         }
 
         ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:9AA0391980CD01ABEA62130DB5348393
         internal override async Task<SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.CreateOrUpdateConfigurationAsync(ResourceGroupName, Name, siteConfig);
+            return await Manager.Inner.WebApps.CreateOrUpdateConfigurationAsync(ResourceGroupName, Name, siteConfig, cancellationToken);
         }
 
         ///GENMHASH:1AD5C303B4B7C1709305A18733B506B2:B2AAE3FC1D57B875FAA6AD38F9DB069C
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:62F8B201D885123D1E906E306D144662:E1F277FB3368B266611D1FAD9307CC48
         internal override async Task<SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.UpdateSlotConfigurationNamesAsync(ResourceGroupName, Name, inner);
+            return await Manager.Inner.WebApps.UpdateSlotConfigurationNamesAsync(ResourceGroupName, Name, inner, cancellationToken);
         }
 
         ///GENMHASH:924482EE7AA6A01820720743C2A59A72:AA2A43E94B10FDB1A9E9E89ED9CA279B
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:B4D4D99FF69FD9180176D4E47741258C
         internal override async Task<ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.UpdateConnectionStringsAsync(ResourceGroupName, Name, inner);
+            return await Manager.Inner.WebApps.UpdateConnectionStringsAsync(ResourceGroupName, Name, inner, cancellationToken);
         }
 
         ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:1EF461DA96453123EA3CCA0E640170EC
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:FCAC8C2F8D6E12CB6F5D7787A2837016:932BF8229CACF0E669A4DDE8FAEB10D4
         internal override async Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager.Inner.WebApps.DeleteHostNameBindingAsync(ResourceGroupName, Name, hostname);
+            await Manager.Inner.WebApps.DeleteHostNameBindingAsync(ResourceGroupName, Name, hostname, cancellationToken);
         }
     }
 }

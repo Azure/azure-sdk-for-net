@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Inner.DeleteAsync(groupName, name);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:EA7883DCA673C6F67CCCF6E8828D7D51:4DBFF5109C555E749B7E1943ECE31E34
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<ITrafficManagerProfile> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProfileInner profileInner = await Inner.GetAsync(groupName, name);
+            ProfileInner profileInner = await Inner.GetAsync(groupName, name, cancellationToken);
             return WrapModel(profileInner);
         }
 

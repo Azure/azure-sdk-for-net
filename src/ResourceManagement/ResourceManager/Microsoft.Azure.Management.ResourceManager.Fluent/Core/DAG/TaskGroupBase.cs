@@ -56,12 +56,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.DAG
         /// <param name="cancellationToken">Enable cancellation</param>
         /// <param name="multiThreaded"></param>
         /// <returns></returns>
-        public Task ExecuteAsync(CancellationToken cancellationToken, bool multiThreaded)
+        public async Task ExecuteAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
             taskCompletionSource = new TaskCompletionSource<object>();
             this.multiThreaded = multiThreaded; // Right now we run multithreaded TODO: enable non-multithreaded scenario
             ExecuteReadyTasksAsync(cancellationToken);
-            return taskCompletionSource.Task;
+            await taskCompletionSource.Task;
         }
 
         /// <summary>

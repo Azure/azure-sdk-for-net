@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:4A88585D14A1F4B57527C071D5C0C394:8DF2BBCDED7039A4F19381688F737A50
         protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await this.RegenerateKeysInnerAsync(policykey);
+            var inner = await this.RegenerateKeysInnerAsync(policykey, cancellationToken);
             return new AuthorizationKeysImpl(inner);
         }
 

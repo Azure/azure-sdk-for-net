@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <return>A representation of the deferred computation of this call.</return>
         Task ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
         {
-            return this.DeleteByNameAsync(name);
+            return this.DeleteByNameAsync(name, cancellationToken);
         }
 
         /// <summary>

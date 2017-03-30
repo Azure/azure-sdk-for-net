@@ -88,7 +88,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 Parent.Name, 
                 Name(),
                 RecordType(),
-                resource);
+                resource,
+                cancellationToken: cancellationToken);
             SetInner(inner);
             return this;
         }

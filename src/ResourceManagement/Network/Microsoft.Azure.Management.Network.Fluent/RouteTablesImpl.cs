@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Inner.DeleteAsync(groupName, name);
+            return Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:8257BDEA83EA75371BBAD6EFAF87E8AD:27A33792B39BF284AA170EA2D21817BE

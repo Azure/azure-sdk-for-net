@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an Future based service call</returns>
         async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser> Microsoft.Azure.Management.Graph.RBAC.Fluent.IUsers.GetByUserPrincipalNameAsync(string upn, CancellationToken cancellationToken = default(CancellationToken)) { 
-            return await this.GetByUserPrincipalNameAsync( upn) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser;
+            return await this.GetByUserPrincipalNameAsync(upn, cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser;
         }
 
         /// <summary>
