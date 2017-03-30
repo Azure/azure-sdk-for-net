@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Location = "global",
                 OwnershipId = domainVerificationToken
             };
-            await Manager.Inner.Domains.CreateOrUpdateOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner);
+            await Manager.Inner.Domains.CreateOrUpdateOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner, cancellationToken);
         }
 
         ///GENMHASH:EE3A4FAA12095D4EBD752C6D82325EDA:DD8B0DBE8A8402002F39ECC61A75D5BE

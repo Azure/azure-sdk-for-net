@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
 
         ///GENMHASH:E776888E46F8A3FC56D24DF4A74E5B74:938AF55195C22DFA74E6820E73D5DEE3
-        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public new async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var resourceId = ResourceId.FromString(id);
-            return WrapModel(await Inner.GetAsync(resourceId.ResourceGroupName, resourceId.Name));
+            return WrapModel(await Inner.GetAsync(resourceId.ResourceGroupName, resourceId.Name, cancellationToken));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691

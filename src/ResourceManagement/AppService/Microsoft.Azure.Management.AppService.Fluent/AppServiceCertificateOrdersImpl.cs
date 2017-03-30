@@ -30,8 +30,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:D505D44BBE5A66C92A4176DBA1DD5891:68BABEE90E833AD1BFA7F46A8C19127A
         public async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var appServiceCertificateOrderInner = await Inner.GetAsync(resourceGroupName, name);
-
+            var appServiceCertificateOrderInner = await Inner.GetAsync(resourceGroupName, name, cancellationToken);
             return WrapModel(appServiceCertificateOrderInner);
         }
 
@@ -51,7 +50,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:60ECC4D32A4130D4A0971FBE7432E886
         public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Inner.DeleteCertificateOrderAsync(groupName, name);
+            await Inner.DeleteCertificateOrderAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0AA8888F1EA6DA91AC72678639578389

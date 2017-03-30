@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:DF6DF1B2A329B554D04700E954A45A08
         public async override Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Inner.DeleteSlotAsync(groupName, parentName, name);
+            await Inner.DeleteSlotAsync(groupName, parentName, name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:C2DC9CFAB6C291D220DD4F29AFF1BBEC:D92CC0F7821FC3C41ADC1CC35AB9A2E7
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return PopulateModelAsync(inner, parent).GetAwaiter().GetResult();
             };
-            var slots = new WrappedPage<SiteInner, IDeploymentSlot>(await Inner.ListSlotsAsync(resourceGroupName, parentName), converter);
+            var slots = new WrappedPage<SiteInner, IDeploymentSlot>(await Inner.ListSlotsAsync(resourceGroupName, parentName, cancellationToken), converter);
             return new PagedList<IDeploymentSlot>(slots, s =>
             {
                 return new WrappedPage<SiteInner, IDeploymentSlot>(Inner.ListSlotsNext(s), converter);
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:09CA495AE0F4F57BBBBDFC250874B0D4
         public async Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DeleteByParentAsync(parent.ResourceGroupName, parent.Name, name);
+            await DeleteByParentAsync(parent.ResourceGroupName, parent.Name, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:83FC2E4653FE30302201437639E1634A
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:C7E55DE6EB5DCE4FD47A68B8B1B62F02
         public async override Task<IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            SiteInner siteInner = await Inner.GetSlotAsync(resourceGroup, parentName, name);
+            SiteInner siteInner = await Inner.GetSlotAsync(resourceGroup, parentName, name, cancellationToken);
             if (siteInner == null)
             {
                 return null;
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public async Task<IDeploymentSlot> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetByParentAsync(parent.ResourceGroupName, parent.Name, name);
+            return await GetByParentAsync(parent.ResourceGroupName, parent.Name, name, cancellationToken);
         }
 
         private WebAppImpl Parent()
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             inner.SiteConfig = await Inner.GetConfigurationSlotAsync(inner.ResourceGroup, parent.Name, Regex.Replace(inner.Name, ".*/", ""), cancellationToken);
             var slot = WrapModel(inner);
-            await ((DeploymentSlotImpl)slot).CacheAppSettingsAndConnectionStringsAsync();
+            await ((DeploymentSlotImpl)slot).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
             return slot;
         }
     }

@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:6B60EDADBCA134B9C9928244109B6E1B:5781A8E04FCEFEA9CF50B97FD61BE42B
         public async Task VerifyDomainOwnershipAsync(IAppServiceDomain domain, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await domain.VerifyDomainOwnershipAsync(Name, DomainVerificationToken());
+            await domain.VerifyDomainOwnershipAsync(Name, DomainVerificationToken(), cancellationToken);
         }
 
         ///GENMHASH:89B68C3393E544990D0BC1837B4C4C0E:B1CB960E9688630133BF735EE72C4279
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             certInner.KeyVaultSecretName = certificateName;
 
             var appServiceCertificateInner = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateCertificateAsync(
-                ResourceGroupName, Name, certificateName, certInner);
+                ResourceGroupName, Name, certificateName, certInner, cancellationToken);
             return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInner, this);
         }
 

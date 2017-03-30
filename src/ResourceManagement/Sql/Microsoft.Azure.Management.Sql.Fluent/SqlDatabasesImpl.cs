@@ -45,7 +45,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public async override Task<PagedList<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var pagedList = new PagedList<DatabaseInner>(await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken));
-
             return WrapList(pagedList);
         }
 

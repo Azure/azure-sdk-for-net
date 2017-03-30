@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:4C7545D4B87E729AF03CBCFD92BFD349
         internal async override Task<SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.CreateOrUpdateSlotAsync(ResourceGroupName, parent.Name, site, Name());
+            return await Manager.Inner.WebApps.CreateOrUpdateSlotAsync(ResourceGroupName, parent.Name, site, Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:94C2AB2BE809675E6841AE45278C1F00
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:B353870154AE4F874B316FE268431B8E
         internal async override Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.CreateOrUpdateSourceControlSlotAsync(ResourceGroupName, parent.Name, inner, Name());
+            return await Manager.Inner.WebApps.CreateOrUpdateSourceControlSlotAsync(ResourceGroupName, parent.Name, inner, Name(), cancellationToken);
         }
 
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:C466CB0A077AFD0746413FA8E50105BA
         internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.UpdateApplicationSettingsSlotAsync(ResourceGroupName, parent.Name, inner, Name());
+            return await Manager.Inner.WebApps.UpdateApplicationSettingsSlotAsync(ResourceGroupName, parent.Name, inner, Name(), cancellationToken);
         }
 
         ///GENMHASH:16850E2C75364DB3483B86D73CBDEC35:256BDD90CDF5E9C0BF04ED1F7DE5F0E8
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Location = "global"
             };
 
-            await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierSlotAsync(ResourceGroupName, parent.Name, Name(), identifierInner, certificateOrderName);
+            await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierSlotAsync(ResourceGroupName, parent.Name, Name(), identifierInner, certificateOrderName, cancellationToken);
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:2436A145BB7A20817F8EDCB98EB71DCC
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:1FEB5AC5504703AC62EC7802B4BCBC4F
         internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.CreateOrUpdateConfigurationSlotAsync(ResourceGroupName, parent.Name, siteConfig, Name());
+            return await Manager.Inner.WebApps.CreateOrUpdateConfigurationSlotAsync(ResourceGroupName, parent.Name, siteConfig, Name(), cancellationToken);
         }
 
         ///GENMHASH:1AD5C303B4B7C1709305A18733B506B2:F5323F81BCDFCE13F33F49F5F885A65F
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:62F8B201D885123D1E906E306D144662:2DE252A4E4CB1A03D80BB639D9CC1D63
         internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.UpdateSlotConfigurationNamesAsync(ResourceGroupName, parent.Name, inner);
+            return await Manager.Inner.WebApps.UpdateSlotConfigurationNamesAsync(ResourceGroupName, parent.Name, inner, cancellationToken);
         }
 
         ///GENMHASH:924482EE7AA6A01820720743C2A59A72:0D008A2337F69A2F68CE4B453B68C91F
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:4D11AFF71F3B252DAF2FF3516CE8079B
         internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await Manager.Inner.WebApps.UpdateConnectionStringsSlotAsync(ResourceGroupName, parent.Name, inner, Name());
+            return await Manager.Inner.WebApps.UpdateConnectionStringsSlotAsync(ResourceGroupName, parent.Name, inner, Name(), cancellationToken);
         }
 
         ///GENMHASH:7165E4A72787EF020E1C59029B4D2D13:A0244A057D0D2A3944D2A1B6B5FC52D6
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:FCAC8C2F8D6E12CB6F5D7787A2837016:6EA475A78A58FF77FEECBC549D8F6A5A
         internal async override Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager.Inner.WebApps.DeleteHostNameBindingSlotAsync(ResourceGroupName, parent.Name, Name(), hostname);
+            await Manager.Inner.WebApps.DeleteHostNameBindingSlotAsync(ResourceGroupName, parent.Name, Name(), hostname, cancellationToken);
         }
     }
 }

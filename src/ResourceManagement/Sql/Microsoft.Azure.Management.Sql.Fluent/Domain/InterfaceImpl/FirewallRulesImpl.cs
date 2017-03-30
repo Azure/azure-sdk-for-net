@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="firewallRuleName">Name of the firewall rule to delete.</param>
         void SqlServer.FirewallRules.IFirewallRules.Delete(string firewallRuleName)
         {
- 
             this.Delete(firewallRuleName);
         }
 

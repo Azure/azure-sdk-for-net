@@ -157,7 +157,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="domain">The Azure managed domain.</param>
         async Task Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.VerifyDomainOwnershipAsync(IAppServiceDomain domain, CancellationToken cancellationToken)
         {
- 
             await this.VerifyDomainOwnershipAsync(domain, cancellationToken);
         }
 
