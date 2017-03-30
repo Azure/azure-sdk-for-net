@@ -11,12 +11,13 @@
     "projectUrl": "https://github.com/Azure/AutoRest",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "tags": [ "Microsoft AutoRest ClientRuntime REST ETW" ],
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {
     "delaySign": true,
-    "keyFile": "../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../tools/MSSharedLibKey.snk", 
+    "xmlDoc": true
   },
 
   "dependencies": {

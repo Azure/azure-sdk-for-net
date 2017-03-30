@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VpnClientParameters
+    /// Vpn Client Parameters for package generation
     /// </summary>
     public partial class VpnClientParameters
     {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets VPN client Processor Architecture. Possible values
         /// are: 'AMD64' and 'X86'. Possible values include: 'Amd64', 'X86'
         /// </summary>
-        [JsonProperty(PropertyName = "ProcessorArchitecture")]
+        [JsonProperty(PropertyName = "processorArchitecture")]
         public string ProcessorArchitecture { get; set; }
 
         /// <summary>

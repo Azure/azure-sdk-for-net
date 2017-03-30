@@ -18,6 +18,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Fakes
             // Prevent base constructor from executing
         }
 
+        public FakeServiceClient(HttpClient httpClient)
+            : base(httpClient)
+        { }
+        
         public FakeServiceClient(HttpClientHandler httpMessageHandler, params DelegatingHandler[] handlers)
             : base(httpMessageHandler, handlers)
         {

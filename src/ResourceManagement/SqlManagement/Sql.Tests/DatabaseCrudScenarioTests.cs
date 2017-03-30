@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.Sql.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -17,8 +18,8 @@ namespace Sql.Tests
         public void TestCreateDropDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateDropDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateDropDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -46,7 +47,8 @@ namespace Sql.Tests
                     RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
                     RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Tags = tags,
-                    CreateMode = "Default"
+                    CreateMode = "Default",
+                    SampleName = SampleName.AdventureWorksLT
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);
@@ -103,8 +105,8 @@ namespace Sql.Tests
         public void TestUpdateDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestUpdateDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestUpdateDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -133,7 +135,7 @@ namespace Sql.Tests
                 //
                 var updateEditionAndSloInput = new Database()
                 {
-                    Edition = DatabaseEditions.Standard,
+                    Edition = DatabaseEdition.Standard,
                     RequestedServiceObjectiveName = ServiceObjectiveName.S0,
                     Location = server.Location
                 };
@@ -155,7 +157,7 @@ namespace Sql.Tests
                 //
                 var updateEditionInput = new Database()
                 {
-                    Edition = DatabaseEditions.Premium,
+                    Edition = DatabaseEdition.Premium,
                     Location = server.Location
                 };
                 var db4 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateEditionInput);
@@ -188,22 +190,17 @@ namespace Sql.Tests
         public void TestGetAndListDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                Dictionary<string, Database> inputs = new Dictionary<string, Database>();
-
                 // Create some small databases to run the get/List tests on.
-                for (int i = 0; i < 4; i++)
-                {
-                    string name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    inputs.Add(
-                        name,
-                        sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, name, 
-                        new Database() {
-                            Location = server.Location
-                        }));
-                }
+                Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
+                    sqlClient, resourceGroup.Name, server, testPrefix, 4).Result;
+
+                // Organize into a dictionary for better lookup later
+                IDictionary<string, Database> inputs = databases.ToDictionary(
+                            keySelector: d => d.Name,
+                            elementSelector: d => d);
 
                 // Get each database and compare to the results of create database
                 //
@@ -213,16 +210,101 @@ namespace Sql.Tests
                     SqlManagementTestUtilities.ValidateDatabaseEx(db.Value, response);
                 }
 
+                // List all databases
+                //
                 var listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name);
 
                 // Remove master database from the list
                 listResponse = listResponse.Where(db => db.Name != "master");
                 Assert.Equal(inputs.Count(), listResponse.Count());
-                
                 foreach(var db in listResponse)
                 {
                     SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
                 }
+
+                // List databases with filter
+                //
+                listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name, filter: "properties/edition ne 'System'");
+                Assert.Equal(inputs.Count(), listResponse.Count());
+                foreach (var db in listResponse)
+                {
+                    SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
+                }
+            });
+        }
+        
+        [Fact]
+        public void TestRemoveDatabaseFromPool()
+        {
+            string testPrefix = "sqlcrudtest-";
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestRemoveDatabaseFromPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            {
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create an elastic pool
+                // 
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Tags = tags,
+                    Dtu = 100,
+                    DatabaseDtuMax = 5,
+                    DatabaseDtuMin = 0
+                };
+                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+
+                // Create a database in first elastic pool
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    ElasticPoolName = epName
+                };
+                sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                // Remove the database from the pool
+                dbInput = new Database()
+                {
+                    Location = server.Location,
+                    RequestedServiceObjectiveName = ServiceObjectiveName.Basic
+                };
+                var dbResult = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                Assert.Equal(null, dbResult.ElasticPoolName);
+            });
+        }
+
+        [Fact]
+        public void TestDatabaseTransparentDataEncryptionConfiguration()
+        {
+            string testPrefix = "sqlcrudtest-";
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabaseTransparentDataEncryptionConfiguration", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            {
+                // Create database only required parameters
+                //
+                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Get TDE config
+                var config = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName);
+                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+
+                // Update TDE config
+                config.Status = TransparentDataEncryptionStatus.Enabled;
+                config = sqlClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName, config);
+                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
             });
         }
     }

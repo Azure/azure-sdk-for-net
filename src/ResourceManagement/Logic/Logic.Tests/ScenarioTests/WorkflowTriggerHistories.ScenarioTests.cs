@@ -12,12 +12,12 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowTriggerHistoriesScenarioTests")]
-    public class WorkflowTriggerHistoriesScenarioTests : BaseScenarioTests
+    public class WorkflowTriggerHistoriesScenarioTests : ScenarioTestsBase
     {
         [Fact]
         public void ListHistory()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
@@ -51,7 +51,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void GetHistory()
         {
-            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests"))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);

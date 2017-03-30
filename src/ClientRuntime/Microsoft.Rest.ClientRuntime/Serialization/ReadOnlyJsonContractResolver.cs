@@ -28,7 +28,7 @@ namespace Microsoft.Rest.Serialization
             if (propertyInfo != null)
             {
                 jsonProperty.ShouldSerialize = t => 
-                    (propertyInfo.SetMethod != null && !propertyInfo.SetMethod.IsPrivate) || 
+                    (propertyInfo.SetMethod != null && !propertyInfo.SetMethod.IsPrivate && !propertyInfo.SetMethod.IsFamily) || 
                     (propertyInfo.GetMethod != null && propertyInfo.GetMethod.IsStatic);
             }
 

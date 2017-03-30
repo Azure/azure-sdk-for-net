@@ -7,7 +7,7 @@
     "summary": "Network.Tests Tests.",
     "tags": [ "" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
   },
   "buildOptions": {
     "delaySign": true,

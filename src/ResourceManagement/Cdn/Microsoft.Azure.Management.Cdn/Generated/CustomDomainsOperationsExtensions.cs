@@ -230,6 +230,110 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
+            /// Disable https delivery of the custom domain.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            public static CustomDomain DisableCustomHttps(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
+            {
+                return operations.DisableCustomHttpsAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disable https delivery of the custom domain.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CustomDomain> DisableCustomHttpsAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DisableCustomHttpsWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Enable https delivery of the custom domain.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            public static CustomDomain EnableCustomHttps(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
+            {
+                return operations.EnableCustomHttpsAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enable https delivery of the custom domain.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CustomDomain> EnableCustomHttpsAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.EnableCustomHttpsWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates a new custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>

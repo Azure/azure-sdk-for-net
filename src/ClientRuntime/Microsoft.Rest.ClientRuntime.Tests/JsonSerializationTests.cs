@@ -100,8 +100,11 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             serializeSettings.ContractResolver = new ReadOnlyJsonContractResolver();
 
-            var firstAlienJson = JsonConvert.SerializeObject(new Alien("green") { Name = "autorest", Planet = "Mars", Body = JObject.Parse(@"{ ""custom"" : ""json"" }") },
+            var firstAlienJson = JsonConvert.SerializeObject(new Alien("green", "quite decent") { Name = "autorest", Planet = "Mars", Body = JObject.Parse(@"{ ""custom"" : ""json"" }") },
                 Formatting.Indented, serializeSettings);
+
+            Assert.DoesNotContain(@"""color""", firstAlienJson);
+            Assert.DoesNotContain(@"""smell""", firstAlienJson);
 
             var firstAlien = JsonConvert.DeserializeObject<Alien>(firstAlienJson, serializeSettings);
 
@@ -131,7 +134,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             serializeSettings.ContractResolver = new ReadOnlyJsonContractResolver();
 
-            var firstAlienJson = JsonConvert.SerializeObject(new Alien("green") { Name = "autorest", Planet = "Mars" },
+            var firstAlienJson = JsonConvert.SerializeObject(new Alien("green", "quite decent") { Name = "autorest", Planet = "Mars" },
                 Formatting.Indented, serializeSettings);
 
             var firstAlien = JsonConvert.DeserializeObject<Alien>(firstAlienJson, serializeSettings);

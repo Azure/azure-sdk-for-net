@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace Azure.Batch.Unit.Tests
 {
@@ -367,8 +356,8 @@
             request.ServiceRequestFunc = async (token) =>
             {
                 ++serviceRequestFuncCallCount;
-
-                Action throwsAction = () => { throw new StackOverflowException(); };
+                
+                Action throwsAction = () => { throw new InvalidOperationException(); };
                 Task throwsTask1 = Task.Factory.StartNew(throwsAction);
                 Task throwsTask2 = Task.Factory.StartNew(throwsAction);
                 await Task.WhenAll(throwsTask1, throwsTask2); //This will throw
@@ -382,7 +371,7 @@
             Task executeRequestTask = request.ExecuteRequestAsync();
 
             //We will observe only 1 exception (not an Aggregate) from the throw
-            StackOverflowException e = await Assert.ThrowsAsync<StackOverflowException>(async () => { await executeRequestTask; });
+            InvalidOperationException e = await Assert.ThrowsAsync<InvalidOperationException>(async () => { await executeRequestTask; });
 
             //But the task itself should have the full set of exceptions which were hit
             AggregateException aggregateException = executeRequestTask.Exception;
@@ -396,7 +385,7 @@
 
             foreach (RequestResult requestResult in request.OperationContext.RequestResults)
             {
-                Assert.IsType<StackOverflowException>(requestResult.Exception);
+                Assert.IsType<InvalidOperationException>(requestResult.Exception);
                 Assert.Null(requestResult.RequestInformation.BatchError);
                 Assert.Null(requestResult.RequestInformation.HttpStatusCode);
                 Assert.Null(requestResult.RequestInformation.HttpStatusMessage);
