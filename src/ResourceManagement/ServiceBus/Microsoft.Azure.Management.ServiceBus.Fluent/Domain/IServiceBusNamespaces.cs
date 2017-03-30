@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// <summary>
     /// Entry point to Service Bus namespace API in Azure.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IServiceBusNamespaces  :
         ISupportsCreating<ServiceBusNamespace.Definition.IBlank>,
         ISupportsBatchCreation<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
