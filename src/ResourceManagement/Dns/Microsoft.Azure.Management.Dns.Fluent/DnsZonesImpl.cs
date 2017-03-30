@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
         public override async Task<IDnsZone> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await Inner.GetAsync(groupName, name));
+            return WrapModel(await Inner.GetAsync(groupName, name, cancellationToken));
         }
 
         ///GENMHASH:6FA0B6DE5CB193A4650CC6B5966DBC04:345CFB0A0B8A514DED6957391B1D99E5
