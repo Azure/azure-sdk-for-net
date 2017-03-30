@@ -764,7 +764,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public async Task<FailoverGroupForceFailoverResponse> BeginFailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
+        public async Task<FailoverGroupFailoverResponse> BeginFailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -869,9 +869,9 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    FailoverGroupForceFailoverResponse result = null;
+                    FailoverGroupFailoverResponse result = null;
                     // Deserialize Response
-                    result = new FailoverGroupForceFailoverResponse();
+                    result = new FailoverGroupFailoverResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1680,7 +1680,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public async Task<FailoverGroupFailovereResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
+        public async Task<FailoverGroupFailoverResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
         {
             SqlManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1696,9 +1696,13 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            FailoverGroupForceFailoverResponse response = await client.FailoverGroups.BeginFailoverAsync(resourceGroupName, serverName, failoverGroupName, cancellationToken).ConfigureAwait(false);
+            FailoverGroupFailoverResponse response = await client.FailoverGroups.BeginFailoverAsync(resourceGroupName, serverName, failoverGroupName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            FailoverGroupFailovereResponse result = await client.FailoverGroups.GetFailoverGroupFailoverOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            FailoverGroupFailoverResponse result = await client.FailoverGroups.GetFailoverGroupFailoverOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -2293,7 +2297,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public async Task<FailoverGroupFailovereResponse> GetFailoverGroupFailoverOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<FailoverGroupFailoverResponse> GetFailoverGroupFailoverOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -2358,13 +2362,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    FailoverGroupFailovereResponse result = null;
+                    FailoverGroupFailoverResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new FailoverGroupFailovereResponse();
+                        result = new FailoverGroupFailoverResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {

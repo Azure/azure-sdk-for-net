@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        Task<FailoverGroupForceFailoverResponse> BeginFailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken);
+        Task<FailoverGroupFailoverResponse> BeginFailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begins the force failover operation without data loss for the Azure
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        Task<FailoverGroupFailovereResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken);
+        Task<FailoverGroupFailoverResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Issue the forced failover operation with data loss for the Azure
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        Task<FailoverGroupFailovereResponse> GetFailoverGroupFailoverOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<FailoverGroupFailoverResponse> GetFailoverGroupFailoverOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the status of an Azure Sql Database Failover Group create or

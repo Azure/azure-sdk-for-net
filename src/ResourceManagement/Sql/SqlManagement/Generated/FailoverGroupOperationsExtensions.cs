@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public static FailoverGroupForceFailoverResponse BeginFailover(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        public static FailoverGroupFailoverResponse BeginFailover(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public static Task<FailoverGroupForceFailoverResponse> BeginFailoverAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        public static Task<FailoverGroupFailoverResponse> BeginFailoverAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return operations.BeginFailoverAsync(resourceGroupName, serverName, failoverGroupName, CancellationToken.None);
         }
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public static FailoverGroupFailovereResponse Failover(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        public static FailoverGroupFailoverResponse Failover(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -553,7 +553,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public static Task<FailoverGroupFailovereResponse> FailoverAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        public static Task<FailoverGroupFailoverResponse> FailoverAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return operations.FailoverAsync(resourceGroupName, serverName, failoverGroupName, CancellationToken.None);
         }
@@ -737,7 +737,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public static FailoverGroupFailovereResponse GetFailoverGroupFailoverOperationStatus(this IFailoverGroupOperations operations, string operationStatusLink)
+        public static FailoverGroupFailoverResponse GetFailoverGroupFailoverOperationStatus(this IFailoverGroupOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -761,7 +761,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Response for long running Azure Sql Database Failover Group
         /// operation.
         /// </returns>
-        public static Task<FailoverGroupFailovereResponse> GetFailoverGroupFailoverOperationStatusAsync(this IFailoverGroupOperations operations, string operationStatusLink)
+        public static Task<FailoverGroupFailoverResponse> GetFailoverGroupFailoverOperationStatusAsync(this IFailoverGroupOperations operations, string operationStatusLink)
         {
             return operations.GetFailoverGroupFailoverOperationStatusAsync(operationStatusLink, CancellationToken.None);
         }
