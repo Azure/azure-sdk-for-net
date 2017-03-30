@@ -4,6 +4,7 @@ namespace BatchClientIntegrationTests
     using System;
     using System.Threading.Tasks;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
     using Xunit;
@@ -22,7 +23,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task CanAuthenticateToServiceWithAADToken()
         {
-            Func<Task<string>> tokenProvider = () => TestCommon.GetAuthenticationTokenAsync("https://batch.core.windows.net/");
+            Func<Task<string>> tokenProvider = () => IntegrationTestCommon.GetAuthenticationTokenAsync("https://batch.core.windows.net/");
 
             using (var client = await BatchClient.OpenAsync(new BatchTokenCredentials(TestCommon.Configuration.BatchAccountUrl, tokenProvider)))
             {

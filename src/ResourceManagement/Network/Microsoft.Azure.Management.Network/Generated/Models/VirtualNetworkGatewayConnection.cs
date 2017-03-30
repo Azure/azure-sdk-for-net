@@ -58,6 +58,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// in this connection.</param>
         /// <param name="peer">The reference to peerings resource.</param>
         /// <param name="enableBgp">EnableBgp flag</param>
+        /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
+        /// traffic selectors.</param>
+        /// <param name="ipsecPolicies">The IPSec Policies to be considered by
+        /// this connection.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// VirtualNetworkGatewayConnection resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -65,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -81,6 +85,8 @@ namespace Microsoft.Azure.Management.Network.Models
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
             EnableBgp = enableBgp;
+            UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
+            IpsecPolicies = ipsecPolicies;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -167,6 +173,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary>
+        /// Gets or sets enable policy-based traffic selectors.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.usePolicyBasedTrafficSelectors")]
+        public bool? UsePolicyBasedTrafficSelectors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IPSec Policies to be considered by this
+        /// connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipsecPolicies")]
+        public IList<IpsecPolicy> IpsecPolicies { get; set; }
+
+        /// <summary>
         /// Gets or sets the resource GUID property of the
         /// VirtualNetworkGatewayConnection resource.
         /// </summary>
@@ -204,17 +223,15 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
             }
-            if (VirtualNetworkGateway1 != null)
+            if (IpsecPolicies != null)
             {
-                VirtualNetworkGateway1.Validate();
-            }
-            if (VirtualNetworkGateway2 != null)
-            {
-                VirtualNetworkGateway2.Validate();
-            }
-            if (LocalNetworkGateway2 != null)
-            {
-                LocalNetworkGateway2.Validate();
+                foreach (var element in IpsecPolicies)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

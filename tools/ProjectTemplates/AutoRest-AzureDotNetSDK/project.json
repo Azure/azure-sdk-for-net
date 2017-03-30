@@ -12,7 +12,8 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "MSSharedLibKey.snk"
+    "keyFile": "MSSharedLibKey.snk", 
+    "xmlDoc": true
   },
 
   "dependencies": {

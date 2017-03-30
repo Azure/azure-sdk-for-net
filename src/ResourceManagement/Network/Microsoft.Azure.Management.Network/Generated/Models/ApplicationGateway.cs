@@ -41,9 +41,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="sslPolicy">SSL policy of the application gateway
         /// resource.</param>
         /// <param name="operationalState">Operational state of the application
-        /// gateway resource. Possible values are: 'Stopped', 'Started',
-        /// 'Running', and 'Stopping'. Possible values include: 'Stopped',
-        /// 'Starting', 'Running', 'Stopping'</param>
+        /// gateway resource. Possible values include: 'Stopped', 'Starting',
+        /// 'Running', 'Stopping'</param>
         /// <param name="gatewayIPConfigurations">Subnets of application the
         /// gateway resource.</param>
         /// <param name="authenticationCertificates">Authentication
@@ -112,9 +111,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets operational state of the application gateway resource.
-        /// Possible values are: 'Stopped', 'Started', 'Running', and
-        /// 'Stopping'. Possible values include: 'Stopped', 'Starting',
-        /// 'Running', 'Stopping'
+        /// Possible values include: 'Stopped', 'Starting', 'Running',
+        /// 'Stopping'
         /// </summary>
         [JsonProperty(PropertyName = "properties.operationalState")]
         public string OperationalState { get; protected set; }
@@ -226,6 +224,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (BackendHttpSettingsCollection != null)
+            {
+                foreach (var element in BackendHttpSettingsCollection)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (WebApplicationFirewallConfiguration != null)
             {
                 WebApplicationFirewallConfiguration.Validate();

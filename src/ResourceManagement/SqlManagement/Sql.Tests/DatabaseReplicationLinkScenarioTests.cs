@@ -81,7 +81,7 @@ namespace Sql.Tests
         {
             string testPrefix = "sqlcrudtest-";
             string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCreateReplicationLinks", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestGetListFailoverReplicationLink", testPrefix, (resClient, sqlClient, resourceGroup) =>
             {
                 string login = "dummylogin";
                 string password = "Un53cuRE!";

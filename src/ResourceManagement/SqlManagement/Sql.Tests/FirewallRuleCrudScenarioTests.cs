@@ -17,32 +17,32 @@ namespace Sql.Tests
         public void TestGetAndListFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetAndListFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create Firewall Rules
                 //
-                Dictionary<string, ServerFirewallRule> rules = new Dictionary<string, ServerFirewallRule>();
+                Dictionary<string, FirewallRule> rules = new Dictionary<string, FirewallRule>();
 
                 for(int i = 0; i < 4; i++)
                 {
                     string firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    ServerFirewallRule rule = new ServerFirewallRule()
+                    FirewallRule rule = new FirewallRule()
                     {
                         StartIpAddress = string.Format("0.0.0.{0}",i),
                         EndIpAddress = string.Format("0.0.0.{0}", i)
                     };
-                    sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, rule);
+                    sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, rule);
                     rules.Add(firewallRuleName, rule);
                 }
 
                 foreach (var rule in rules)
                 {
-                    ServerFirewallRule response = sqlClient.Servers.GetFirewallRule(resourceGroup.Name, server.Name, rule.Key);
+                    FirewallRule response = sqlClient.FirewallRules.Get(resourceGroup.Name, server.Name, rule.Key);
                     SqlManagementTestUtilities.ValidateFirewallRule(rule.Value, response, rule.Key);
                 }
 
-                var listResponse = sqlClient.Servers.ListFirewallRules(resourceGroup.Name, server.Name);
+                var listResponse = sqlClient.FirewallRules.ListByServer(resourceGroup.Name, server.Name);
                 Assert.Equal(rules.Count(), listResponse.Count());
 
                 foreach (var rule in listResponse)
@@ -61,46 +61,46 @@ namespace Sql.Tests
         public void TestCreateAndDropFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateUpdateDropFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateUpdateDropFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create and validate Firewall Rule
                 //
                 string firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
 
-                ServerFirewallRule toCreate = new ServerFirewallRule()
+                FirewallRule toCreate = new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "0.0.0.0"
                 };
-                var fr1 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr1 = sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
 
                 // Create and validate Firewall Rule
                 //
                 firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                toCreate = new ServerFirewallRule()
+                toCreate = new FirewallRule()
                 {
                     StartIpAddress = "1.1.1.1",
                     EndIpAddress = "1.1.2.2"
                 };
-                var fr2 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr2 = sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr2, firewallRuleName);
 
                 // Create and validate Firewall Rule
                 //
                 firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                toCreate = new ServerFirewallRule()
+                toCreate = new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "255.255.255.255"
                 };
-                var fr3 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr3 = sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr3, firewallRuleName);
 
-                sqlClient.Servers.DeleteFirewallRule(resourceGroup.Name, server.Name, fr1.Name);
-                sqlClient.Servers.DeleteFirewallRule(resourceGroup.Name, server.Name, fr2.Name);
-                sqlClient.Servers.DeleteFirewallRule(resourceGroup.Name, server.Name, fr3.Name);
+                sqlClient.FirewallRules.Delete(resourceGroup.Name, server.Name, fr1.Name);
+                sqlClient.FirewallRules.Delete(resourceGroup.Name, server.Name, fr2.Name);
+                sqlClient.FirewallRules.Delete(resourceGroup.Name, server.Name, fr3.Name);
             });
         }
 
@@ -108,28 +108,28 @@ namespace Sql.Tests
         public void TestCreateAndUpdateFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateAndUpdateFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndUpdateFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create Firewall Rule and Validate
                 //
                 string firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
 
-                ServerFirewallRule toCreate = new ServerFirewallRule()
+                FirewallRule toCreate = new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "0.0.0.0"
                 };
-                var fr1 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr1 = sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
 
                 // Update Firewall Rule and Validate
-                toCreate = new ServerFirewallRule()
+                toCreate = new FirewallRule()
                 {
                     StartIpAddress = "1.1.1.1",
                     EndIpAddress = "255.255.255.255"
                 };
-                fr1 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                fr1 = sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
             });
         }

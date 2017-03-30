@@ -65,7 +65,7 @@
 
 	<ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
 		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
-		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all'  " />
+		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Exclude="$(LibrarySourceFolder)\KeyVault\Microsoft.Azure.KeyVault.Samples\Microsoft.Azure.KeyVault.Samples.sln" Condition=" '$(Scope)' == 'all'  " />
 		<LibraryFxTargetList Include="$(FxTargetList)" />
 		<AutoRestLibraryFxTargetList Include="portable;net45" />
 		<ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj"/>
@@ -121,19 +121,31 @@
 	<Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
   
 	<Target Name="PrepareForAutoRestLibraries">
-		<FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects" NugetPackagesToPublish="$(PackageName)">
+		<Message Text="SdkNugetPackages Before Filter: @(SdkNuGetPackage)" />
+		<FilterOutAutoRestLibraries SdkNugetPackageInput="@(SdkNuGetPackage)" AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects" NugetPackagesToPublish="$(PackageName)">
 		  <Output TaskParameter="Non_NetCore_AutoRestLibraries" ItemName="Non_NetCore_AutoRestLibraries" />
 		  <Output TaskParameter="NetCore_AutoRestLibraries" ItemName="NetCore_AutoRestLibraries" />
+		  <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
+		  <Output TaskParameter="SdkNuGetPackageOutput" ItemName="SdkNuGetPackageItem" />
 		</FilterOutAutoRestLibraries>
-		<Message Text="Non NetCore based AutoRest Libraries: @(Non_NetCore_AutoRestLibraries)" />
+		<Message Text="Non-NetCore based AutoRest Libraries: @(Non_NetCore_AutoRestLibraries)" />
 		<Message Text="NetCore AutoRest Libraries: @(NetCore_AutoRestLibraries)" />
+		<Message Text="NonAutoRestLibraries Libraries: @(NonAutoRestLibraries)" />		
 
 		<!--Do not build old libraries except Authentication, which Azure PowerShell still uses-->
 		<ItemGroup>
+		<!--
 			<NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"	  
 								Condition=" '$(Scope)' == 'all' or '$(Scope)' == 'Authentication' " />    	
+		-->
 		</ItemGroup>
-
+		
+		<!-- Fixing the ability to only publish non-NetCore nugets that are specified in Scope/Package Name -->
+		<ItemGroup>
+			<SdkNuGetPackage Remove="@(SdkNuGetPackage)" />
+			<SdkNuGetPackage Include="@(SdkNuGetPackageItem)" />
+		</ItemGroup>
+		<Message Text="SdkNugetPackages After Filter: @(SdkNuGetPackage)" />
 		<Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />     
 		<Message Text="Ensure 7zip is available" />
 		<Exec
@@ -159,8 +171,8 @@
 
 		<!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
 		<!-- Restoring from root directory when publishing scope packages -->
-		<Exec Command="dotnet restore" WorkingDirectory="$(LibraryRoot)" />
-
+		<Exec Command="dotnet restore" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Scope)' != 'all' "/>
+		<Exec Command="dotnet restore %(NetCore_AutoRestLibraries.RootDir)\%(NetCore_AutoRestLibraries.Directory)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
 		<Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
 		<Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
 

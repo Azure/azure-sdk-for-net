@@ -17,8 +17,8 @@ namespace Sql.Tests
         public void TestCreateDropElasticPool()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateDropElasticPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateDropElasticPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -53,7 +53,7 @@ namespace Sql.Tests
                 var ep3Input = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = DatabaseEditions.Standard,
+                    Edition = DatabaseEdition.Standard,
                     Tags = tags,
                 };
                 sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, ep3Input);
@@ -69,8 +69,8 @@ namespace Sql.Tests
         public void TestUpdateElasticPoolAndListActivity()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestUpdateElasticPoolAndListActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestUpdateElasticPoolAndListActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -83,7 +83,7 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = DatabaseEditions.Standard,
+                    Edition = DatabaseEdition.Standard,
                     Tags = tags,
                     Dtu = 100,
                     DatabaseDtuMax = 20,
@@ -147,8 +147,8 @@ namespace Sql.Tests
         public void TestGetAndListElasticPool()
         {
             string testPrefix = "sqlcrudtest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestGetAndListElasticPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListElasticPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, ElasticPool> inputs = new Dictionary<string, ElasticPool>();
 

@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string Up = "Up";
         public const string Down = "Down";
         public const string Partial = "Partial";
+        public const string Draining = "Draining";
     }
 }
 

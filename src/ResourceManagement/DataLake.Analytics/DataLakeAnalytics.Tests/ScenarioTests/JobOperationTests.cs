@@ -28,8 +28,6 @@ namespace DataLakeAnalytics.Tests
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
                 
-                // TODO: Remove this sleep once defect 5022906 is fixed
-                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
                 var clientToUse = this.GetDataLakeAnalyticsJobManagementClient(context);
 
                 Guid jobId = TestUtilities.GenerateGuid();

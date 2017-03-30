@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// VirtualNetworkGatewayIPConfiguration class.
         /// </summary>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the public IP
-        /// resource.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="privateIPAllocationMethod">The private IP allocation
         /// method. Possible values are: 'Static' and 'Dynamic'. Possible
         /// values include: 'Static', 'Dynamic'</param>
+        /// <param name="subnet">The reference of the subnet resource.</param>
+        /// <param name="publicIPAddress">The reference of the public IP
+        /// resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
         /// and 'Failed'.</param>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayIPConfiguration(SubResource subnet, SubResource publicIPAddress, string id = default(string), string privateIPAllocationMethod = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
@@ -99,23 +99,6 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Subnet == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Subnet");
-            }
-            if (PublicIPAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PublicIPAddress");
-            }
-        }
     }
 }
 
