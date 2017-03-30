@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 
@@ -107,6 +106,68 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<FailoverGroupCreateOrUpdateResponse> BeginCreateOrUpdateAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroupCreateOrUpdateParameters parameters)
         {
             return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, failoverGroupName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Begins deleting an existing Azure SQL Database Failover Group .To
+        /// determine the status of the operation call
+        /// GetFailoverGroupDeleteOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IFailoverGroupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server to which the Azure SQL
+        /// Database Failover Group belongs
+        /// </param>
+        /// <param name='failoverGroupName'>
+        /// Required. The name of the Azure SQL Database Failover Group.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure SQL Database Failover Group delete
+        /// operations.
+        /// </returns>
+        public static FailoverGroupDeleteResponse BeginDelete(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFailoverGroupOperations)s).BeginDeleteAsync(resourceGroupName, serverName, failoverGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins deleting an existing Azure SQL Database Failover Group .To
+        /// determine the status of the operation call
+        /// GetFailoverGroupDeleteOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IFailoverGroupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server to which the Azure SQL
+        /// Database Failover Group belongs
+        /// </param>
+        /// <param name='failoverGroupName'>
+        /// Required. The name of the Azure SQL Database Failover Group.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure SQL Database Failover Group delete
+        /// operations.
+        /// </returns>
+        public static Task<FailoverGroupDeleteResponse> BeginDeleteAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        {
+            return operations.BeginDeleteAsync(resourceGroupName, serverName, failoverGroupName, CancellationToken.None);
         }
         
         /// <summary>
@@ -395,10 +456,10 @@ namespace Microsoft.Azure.Management.Sql
         /// deleted.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure SQL Database Failover Group delete
+        /// operations.
         /// </returns>
-        public static AzureOperationResponse Delete(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        public static FailoverGroupDeleteResponse Delete(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -427,10 +488,10 @@ namespace Microsoft.Azure.Management.Sql
         /// deleted.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure SQL Database Failover Group delete
+        /// operations.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
+        public static Task<FailoverGroupDeleteResponse> DeleteAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return operations.DeleteAsync(resourceGroupName, serverName, failoverGroupName, CancellationToken.None);
         }
@@ -615,6 +676,50 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<FailoverGroupGetResponse> GetAsync(this IFailoverGroupOperations operations, string resourceGroupName, string serverName, string failoverGroupName)
         {
             return operations.GetAsync(resourceGroupName, serverName, failoverGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Database Failover Group delete
+        /// operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IFailoverGroupOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure SQL Database Failover Group delete
+        /// operations.
+        /// </returns>
+        public static FailoverGroupDeleteResponse GetDeleteOperationStatus(this IFailoverGroupOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFailoverGroupOperations)s).GetDeleteOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Database Failover Group delete
+        /// operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IFailoverGroupOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure SQL Database Failover Group delete
+        /// operations.
+        /// </returns>
+        public static Task<FailoverGroupDeleteResponse> GetDeleteOperationStatusAsync(this IFailoverGroupOperations operations, string operationStatusLink)
+        {
+            return operations.GetDeleteOperationStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
