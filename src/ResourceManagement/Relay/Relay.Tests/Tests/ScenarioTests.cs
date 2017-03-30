@@ -43,7 +43,7 @@ namespace Relay.Tests.ScenarioTests
                     if (!m_initialized)
                     {
                         _resourceManagementClient = RelayManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        _relayManagementClient = RelayManagementHelper.GetServiceBusManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _relayManagementClient = RelayManagementHelper.GetRelayManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     }
                 }
             }

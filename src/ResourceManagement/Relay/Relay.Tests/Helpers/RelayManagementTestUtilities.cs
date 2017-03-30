@@ -37,7 +37,7 @@ namespace Relay.Tests.TestHelper
         internal const string HybridPrefix = "sdk-Relay-Hybrid-";
         internal const string WcfPrefix = "sdk-Relay-Wcf-";
 
-        public static RelayManagementClient GetServiceBusManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static RelayManagementClient GetRelayManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             if (handler != null)
             {
