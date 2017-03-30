@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:E9A4DA014B21051979442ACE026C7D1F
-        public override async Task<IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
