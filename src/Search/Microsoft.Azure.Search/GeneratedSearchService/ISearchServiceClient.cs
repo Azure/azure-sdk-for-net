@@ -84,6 +84,11 @@ namespace Microsoft.Azure.Search
         IIndexersOperations Indexers { get; }
 
         /// <summary>
+        /// Gets the ISynonymMapsOperations.
+        /// </summary>
+        ISynonymMapsOperations SynonymMaps { get; }
+
+        /// <summary>
         /// Gets the IIndexesOperations.
         /// </summary>
         IIndexesOperations Indexes { get; }

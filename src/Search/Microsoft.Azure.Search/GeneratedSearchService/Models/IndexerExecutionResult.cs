@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Models
         /// execution.</param>
         /// <param name="endTime">The end time of this indexer execution, if
         /// the execution has already completed.</param>
-        /// <param name="errors">The item-level indexing errors</param>
+        /// <param name="errors">The item-level indexing errors.</param>
         /// <param name="itemCount">The number of items that were processed
         /// during this indexer execution. This includes both successfully
         /// processed items and items where indexing was attempted but
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Search.Models
         public System.DateTimeOffset? EndTime { get; protected set; }
 
         /// <summary>
-        /// Gets the item-level indexing errors
+        /// Gets the item-level indexing errors.
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
         public IList<ItemError> Errors { get; protected set; }

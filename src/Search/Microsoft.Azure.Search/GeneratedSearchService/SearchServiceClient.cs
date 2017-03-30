@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Search
         public virtual IIndexersOperations Indexers { get; private set; }
 
         /// <summary>
+        /// Gets the ISynonymMapsOperations.
+        /// </summary>
+        public virtual ISynonymMapsOperations SynonymMaps { get; private set; }
+
+        /// <summary>
         /// Gets the IIndexesOperations.
         /// </summary>
         public virtual IIndexesOperations Indexes { get; private set; }
@@ -183,6 +188,7 @@ namespace Microsoft.Azure.Search
         {
             DataSources = new DataSourcesOperations(this);
             Indexers = new IndexersOperations(this);
+            SynonymMaps = new SynonymMapsOperations(this);
             Indexes = new IndexesOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}";
             ApiVersion = "2016-09-01-Preview";
