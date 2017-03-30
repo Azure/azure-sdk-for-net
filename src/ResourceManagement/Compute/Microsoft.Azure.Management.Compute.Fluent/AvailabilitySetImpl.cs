@@ -8,6 +8,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using ResourceManager.Fluent.Core;
+    using System;
 
     /// <summary>
     /// The implementation for AvailabilitySet and its create and update interfaces.
@@ -121,6 +123,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
             Inner.Sku.Name = skuType.ToString();
             return this;
+        }
+
+        ///GENMHASH:8FCDE9292B4D0AE6B0FA60BC84DD60E5:0ADB8EF84E7C5EBD42CD3DED6C7CDC38
+        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> ListVirtualMachineSizes()
+        {
+            return PagedListConverter.Convert(this.Manager.Inner.AvailabilitySets.ListAvailableSizes(this.ResourceGroupName, this.Name), inner => new VirtualMachineSizeImpl(inner) as IVirtualMachineSize);
         }
     }
 }

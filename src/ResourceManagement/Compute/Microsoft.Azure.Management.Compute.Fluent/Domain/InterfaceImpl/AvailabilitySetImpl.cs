@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using ResourceManager.Fluent.Core;
 
     internal partial class AvailabilitySetImpl 
     {
@@ -115,6 +116,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         AvailabilitySet.Definition.IWithCreate AvailabilitySet.Definition.IWithSku.WithSku(AvailabilitySetSkuTypes skuType)
         {
             return this.WithSku(skuType) as AvailabilitySet.Definition.IWithCreate;
+        }
+
+        /// <returns>The virtual machine sizes supported in the availability set.</returns>
+        PagedList<IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
+        {
+            return this.ListVirtualMachineSizes();
         }
     }
 }

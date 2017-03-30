@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Represents a extension collection associated with a virtual machine.
@@ -35,23 +37,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The extension as a map indexed by name.</return>
 
         ///GENMHASH:310B2185D2F2431DF2BBDBC06E585C74:F003E4397C7BD6AC051C07C6076BF2D5
-        public IDictionary<string, IVirtualMachineExtension> AsMap()
+        public IReadOnlyDictionary<string, IVirtualMachineExtension> AsMap()
         {
-            IDictionary<string, IVirtualMachineExtension> result = new Dictionary<string, IVirtualMachineExtension>();
-            foreach (var entry in this.Collection)
-            {
-                var extension = entry.Value;
-                var extensionName = entry.Key;
-                if (entry.Value.IsReference())
-                {
-                    extension = new VirtualMachineExtensionImpl(
-                        extensionName,
-                        Parent,
-                        Parent.Manager.Inner.VirtualMachineExtensions.Get(Parent.ResourceGroupName, Parent.Name, extensionName));
-                }
-                result.Add(extensionName, extension);
-            }
-            return new ReadOnlyDictionary<string, IVirtualMachineExtension>(result);
+            return this.AsMapAsync().Result;
         }
 
         /// <summary>
@@ -125,6 +113,40 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             VirtualMachineExtensionImpl extension = VirtualMachineExtensionImpl.NewVirtualMachineExtension(name, Parent);
             return extension;
+        }
+
+        /// <return>An observable emits extensions in this collection as a map indexed by name.</return>
+        ///GENMHASH:8F0A24162CE08C4C74F06A527A9961A6:7E2A0D98F7FF37B726A757DFE36DF931
+        public async Task<IReadOnlyDictionary<string, IVirtualMachineExtension>> AsMapAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            IDictionary<string, IVirtualMachineExtension> map = new Dictionary<string, IVirtualMachineExtension>();
+            var extensions = await ListAsync(cancellationToken);
+            foreach (var extension in extensions)
+            {
+                map.Add(extension.Name, extension);
+            }
+            return new ReadOnlyDictionary<string, IVirtualMachineExtension>(map);
+        }
+
+        /// <return>An observable emits extensions in this collection.</return>
+        ///GENMHASH:7F5BEBF638B801886F5E13E6CCFF6A4E:AD716846445280039AFCFD4C2966F1B7
+        public async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> ListAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            IList<IVirtualMachineExtension> result = new List<IVirtualMachineExtension>();
+            foreach (var entry in this.Collection)
+            {
+                var extension = entry.Value;
+                var extensionName = entry.Key;
+                if (entry.Value.IsReference())
+                {
+                    extension = new VirtualMachineExtensionImpl(
+                        extensionName,
+                        Parent,
+                        await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(Parent.ResourceGroupName, Parent.Name, extensionName, null, cancellationToken));
+                }
+                result.Add(extension);
+            }
+            return new ReadOnlyCollection<IVirtualMachineExtension>(result);
         }
     }
 }

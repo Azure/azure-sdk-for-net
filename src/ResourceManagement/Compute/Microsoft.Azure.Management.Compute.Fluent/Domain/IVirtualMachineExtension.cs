@@ -2,6 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
@@ -12,5 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IVirtualMachineExtensionBase,
         IExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {
+        /// <return>Observable that emits virtual machine extension instance view.</return>
+        Task<VirtualMachineExtensionInstanceView> GetInstanceViewAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <return>The instance view of the virtual machine extension.</return>
+        VirtualMachineExtensionInstanceView GetInstanceView();
     }
 }

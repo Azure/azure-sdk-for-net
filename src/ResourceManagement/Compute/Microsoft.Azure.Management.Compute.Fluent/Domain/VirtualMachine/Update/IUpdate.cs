@@ -66,6 +66,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         /// <param name="size">A size from the list of available sizes for the virtual machine.</param>
         /// <return>The stage representing updatable VM definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithSize(VirtualMachineSizeTypes size);
+
+        /// <summary>
+        /// Specifies the encryption settings for the OS Disk.
+        /// </summary>
+        /// <param name="settings">The encryption settings.</param>
+        /// <return>The stage representing creatable VM update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOsDiskEncryptionSettings(DiskEncryptionSettings settings);
     }
 
     /// <summary>
