@@ -337,9 +337,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>Returns the list of all restore points on the database.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListRestorePoints()
+        IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListRestorePoints()
         {
-            return this.ListRestorePoints() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint>;
+            return this.ListRestorePoints();
         }
 
         /// <summary>
@@ -385,9 +385,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>Returns the list of usages (DatabaseMetrics) of the database.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListUsages()
+        IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListUsages()
         {
-            return this.ListUsages() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric>;
+            return this.ListUsages();
         }
 
         /// <summary>
