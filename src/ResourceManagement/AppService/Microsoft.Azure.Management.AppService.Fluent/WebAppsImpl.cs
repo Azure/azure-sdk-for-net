@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             Func<SiteInner, IWebApp> converter = inner =>
             {
-                return PopulateModelAsync(inner).GetAwaiter().GetResult();
+                return PopulateModelAsync(inner).ConfigureAwait(false).GetAwaiter().GetResult();
             };
 
             return Inner.ListByResourceGroup(resourceGroupName)

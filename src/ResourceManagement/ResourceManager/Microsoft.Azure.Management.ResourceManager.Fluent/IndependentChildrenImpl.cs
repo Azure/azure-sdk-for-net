@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         ///GENMHASH:5002116800CBAC02BBC1B4BF62BC4942:A2A025A9F2772D74D0B8615C6144E641
         public T GetById(string id)
         {
-            return GetByIdAsync(id).GetAwaiter().GetResult();
+            return GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public T GetByParent(string resourceGroup, string parentName, string name)
         {
-            return GetByParentAsync(resourceGroup, parentName, name).GetAwaiter().GetResult();
+            return GetByParentAsync(resourceGroup, parentName, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<T> GetByParentAsync(ParentT parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public IEnumerable<T> ListByParent(string resourceGroupName, string parentName)
         {
-            return ListByParentAsync(resourceGroupName, parentName).GetAwaiter().GetResult();
+            return ListByParentAsync(resourceGroupName, parentName).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<IEnumerable<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))

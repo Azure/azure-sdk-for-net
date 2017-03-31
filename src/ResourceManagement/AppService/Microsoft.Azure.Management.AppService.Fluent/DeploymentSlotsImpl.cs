@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             Func<SiteInner, IDeploymentSlot> converter = inner =>
             {
-                return PopulateModelAsync(inner, parent).GetAwaiter().GetResult();
+                return PopulateModelAsync(inner, parent).ConfigureAwait(false).GetAwaiter().GetResult();
             };
 
             return (await Inner.ListSlotsAsync(resourceGroupName, parentName, cancellationToken))
