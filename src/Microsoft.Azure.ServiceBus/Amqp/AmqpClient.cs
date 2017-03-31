@@ -13,14 +13,22 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         MessageSender innerSender;
         MessageReceiver innerReceiver;
 
-        internal AmqpClient(ServiceBusConnection servicebusConnection, string entityPath, MessagingEntityType entityType, ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
+        internal AmqpClient(
+            ServiceBusConnection servicebusConnection,
+            string entityPath,
+            MessagingEntityType entityType,
+            RetryPolicy retryPolicy,
+            ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
         {
             this.ServiceBusConnection = servicebusConnection;
             this.EntityPath = entityPath;
             this.MessagingEntityType = entityType;
             this.ReceiveMode = mode;
-            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(servicebusConnection.SasKeyName, servicebusConnection.SasKey);
+            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
+                servicebusConnection.SasKeyName,
+                servicebusConnection.SasKey);
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, servicebusConnection.OperationTimeout);
+            this.RetryPolicy = retryPolicy;
         }
 
         public MessageSender InnerSender
@@ -71,6 +79,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         internal ICbsTokenProvider CbsTokenProvider { get; }
 
+        internal RetryPolicy RetryPolicy { get; }
+
         protected object ThisLock { get; } = new object();
 
         TokenProvider TokenProvider { get; }
@@ -85,12 +95,24 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         MessageSender CreateMessageSender()
         {
-            return new AmqpMessageSender(this.EntityPath, this.MessagingEntityType, this.ServiceBusConnection, this.CbsTokenProvider);
+            return new AmqpMessageSender(
+                this.EntityPath,
+                this.MessagingEntityType,
+                this.ServiceBusConnection,
+                this.CbsTokenProvider,
+                this.RetryPolicy);
         }
 
         MessageReceiver CreateMessageReceiver()
         {
-            return new AmqpMessageReceiver(this.EntityPath, this.MessagingEntityType, this.ReceiveMode, this.ServiceBusConnection.PrefetchCount, this.ServiceBusConnection, this.CbsTokenProvider);
+            return new AmqpMessageReceiver(
+                this.EntityPath,
+                this.MessagingEntityType,
+                this.ReceiveMode,
+                this.ServiceBusConnection.PrefetchCount,
+                this.ServiceBusConnection,
+                this.CbsTokenProvider,
+                this.RetryPolicy);
         }
     }
 }

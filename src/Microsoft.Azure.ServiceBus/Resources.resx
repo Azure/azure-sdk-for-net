@@ -192,4 +192,13 @@
   <data name="OnMessageAlreadyCalled" xml:space="preserve">
     <value>The method 'OnMessageAsync' has already been called.</value>
   </data>
+  <data name="DefaultServerBusyException" xml:space="preserve">
+    <value>This request has been blocked because the entity or namespace is being throttled. Please retry the operation, and if condition continues, please slow down your rate of request.</value>
+  </data>
+  <data name="ExponentialRetryBackoffRange" xml:space="preserve">
+    <value>The minimum back off period '{0}' cannot exceed the maximum back off period of '{1}'.</value>
+  </data>
+  <data name="ArgumentMustBePositive" xml:space="preserve">
+    <value>The value of the argument {0} must be positive.</value>
+  </data>
 </root>

@@ -34,5 +34,7 @@ namespace Microsoft.Azure.ServiceBus
         public static readonly TimeSpan MinimumLockDuration = TimeSpan.FromSeconds(5);
 
         public static readonly TimeSpan MaximumRenewBufferDuration = TimeSpan.FromSeconds(10);
+
+        public static readonly TimeSpan DefaultRetryDeltaBackoff = TimeSpan.FromSeconds(3);
     }
 }

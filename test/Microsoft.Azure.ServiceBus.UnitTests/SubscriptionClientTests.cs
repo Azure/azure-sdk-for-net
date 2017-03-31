@@ -14,11 +14,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object> TestPermutations => new object[]
         {
-            new object[] { Constants.NonPartitionedTopicName },
-            new object[] { Constants.PartitionedTopicName }
+            new object[] { TestConstants.NonPartitionedTopicName },
+            new object[] { TestConstants.PartitionedTopicName }
         };
 
-        string SubscriptionName => Constants.SubscriptionName;
+        string SubscriptionName => TestConstants.SubscriptionName;
 
         [Theory]
         [MemberData(nameof(TestPermutations))]

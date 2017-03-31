@@ -5,15 +5,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Core;
     using Xunit;
 
     public sealed class QueueClientTests : SenderReceiverClientTestBase
     {
         public static IEnumerable<object> TestPermutations => new object[]
         {
-            new object[] { Constants.NonPartitionedQueueName },
-            new object[] { Constants.PartitionedQueueName }
+            new object[] { TestConstants.NonPartitionedQueueName },
+            new object[] { TestConstants.PartitionedQueueName }
         };
 
         [Theory]

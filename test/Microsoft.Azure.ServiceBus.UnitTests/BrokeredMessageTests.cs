@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [InlineData(ReceiveMode.PeekLock)]
             async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, Constants.NonPartitionedQueueName, receiveMode);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode);
 
                 try
                 {
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [DisplayTestMethodName]
             async Task Should_return_true_for_peeked_message()
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, Constants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
 
                 try
                 {

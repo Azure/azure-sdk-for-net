@@ -18,8 +18,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     {
         int deliveryCount;
 
-        internal AmqpMessageSender(string entityName, MessagingEntityType? entityType, ServiceBusConnection serviceBusConnection, ICbsTokenProvider cbsTokenProvider)
-            : base(serviceBusConnection.OperationTimeout)
+        internal AmqpMessageSender(string entityName, MessagingEntityType? entityType, ServiceBusConnection serviceBusConnection, ICbsTokenProvider cbsTokenProvider, RetryPolicy retryPolicy)
+            : base(serviceBusConnection.OperationTimeout, retryPolicy)
         {
             this.Path = entityName;
             this.EntityType = entityType;

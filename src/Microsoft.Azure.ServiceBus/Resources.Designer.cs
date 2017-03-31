@@ -78,6 +78,15 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The value of the argument {0} must be positive..
+        /// </summary>
+        public static string ArgumentMustBePositive {
+            get {
+                return ResourceManager.GetString("ArgumentMustBePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The argument {0} is null or white space..
         /// </summary>
         public static string ArgumentNullOrWhiteSpace {
@@ -132,11 +141,29 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to This request has been blocked because the entity or namespace is being throttled. Please retry the operation, and if condition continues, please slow down your rate of request..
+        /// </summary>
+        public static string DefaultServerBusyException {
+            get {
+                return ResourceManager.GetString("DefaultServerBusyException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The entity path/name &apos;{0}&apos; exceeds the &apos;{1}&apos; character limit..
         /// </summary>
         public static string EntityNameLengthExceedsLimit {
             get {
                 return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
+        /// </summary>
+        public static string ExponentialRetryBackoffRange {
+            get {
+                return ResourceManager.GetString("ExponentialRetryBackoffRange", resourceCulture);
             }
         }
         

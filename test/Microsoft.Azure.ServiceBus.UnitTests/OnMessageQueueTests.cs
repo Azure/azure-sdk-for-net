@@ -11,10 +11,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object> TestPermutations => new object[]
         {
-            new object[] { Constants.NonPartitionedQueueName, 1 },
-            new object[] { Constants.NonPartitionedQueueName, 10 },
-            new object[] { Constants.PartitionedQueueName, 1 },
-            new object[] { Constants.PartitionedQueueName, 10 },
+            new object[] { TestConstants.NonPartitionedQueueName, 1 },
+            new object[] { TestConstants.NonPartitionedQueueName, 10 },
+            new object[] { TestConstants.PartitionedQueueName, 1 },
+            new object[] { TestConstants.PartitionedQueueName, 10 },
         };
 
         [Theory]

@@ -15,19 +15,19 @@ namespace Microsoft.Azure.ServiceBus
     {
         public const string DefaultRule = "$Default";
 
-        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock)
-            : this(new ServiceBusNamespaceConnection(connectionString), topicPath, subscriptionName, receiveMode)
+        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
+            : this(new ServiceBusNamespaceConnection(connectionString), topicPath, subscriptionName, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
         }
 
-        private SubscriptionClient(ServiceBusNamespaceConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode)
-            : base($"{nameof(SubscriptionClient)}{ClientEntity.GetNextId()}({subscriptionName})")
+        SubscriptionClient(ServiceBusNamespaceConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, RetryPolicy retryPolicy)
+            : base($"{nameof(SubscriptionClient)}{ClientEntity.GetNextId()}({subscriptionName})", retryPolicy)
         {
             this.TopicPath = topicPath;
             this.SubscriptionName = subscriptionName;
             this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
             this.ReceiveMode = receiveMode;
-            this.InnerSubscriptionClient = new AmqpSubscriptionClient(serviceBusConnection, this.Path, MessagingEntityType.Subscriber, receiveMode);
+            this.InnerSubscriptionClient = new AmqpSubscriptionClient(serviceBusConnection, this.Path, MessagingEntityType.Subscriber, retryPolicy, receiveMode);
         }
 
         public string TopicPath { get; }

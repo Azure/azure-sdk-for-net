@@ -12,8 +12,8 @@ namespace Microsoft.Azure.ServiceBus
     internal abstract class MessageSession : MessageReceiver, IMessageSession
     {
         /// <summary>Represents a message session that allows grouping of related messages for processing in a single transaction.</summary>
-        protected MessageSession(ReceiveMode receiveMode, string sessionId, DateTime lockedUntilUtc, MessageReceiver innerReceiver)
-            : base(receiveMode, innerReceiver.OperationTimeout)
+        protected MessageSession(ReceiveMode receiveMode, string sessionId, DateTime lockedUntilUtc, MessageReceiver innerReceiver, RetryPolicy retryPolicy)
+            : base(receiveMode, innerReceiver.OperationTimeout, retryPolicy)
         {
             if (innerReceiver == null)
             {

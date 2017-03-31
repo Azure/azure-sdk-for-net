@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { Constants.PartitionedSessionTopicName }
         };
 
-        string SubscriptionName => Constants.SessionSubscriptionName;
+        string SubscriptionName => TestConstants.SessionSubscriptionName;
 
         [Theory]
         [MemberData(nameof(TestPermutations))]

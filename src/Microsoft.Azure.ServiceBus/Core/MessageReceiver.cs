@@ -18,8 +18,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         MessageReceivePump receivePump;
         CancellationTokenSource receivePumpCancellationTokenSource;
 
-        protected MessageReceiver(ReceiveMode receiveMode, TimeSpan operationTimeout)
-            : base(nameof(MessageReceiver) + StringUtility.GetRandomString())
+        protected MessageReceiver(ReceiveMode receiveMode, TimeSpan operationTimeout, RetryPolicy retryPolicy)
+            : base(nameof(MessageReceiver) + StringUtility.GetRandomString(), retryPolicy ?? RetryPolicy.Default)
         {
             this.ReceiveMode = receiveMode;
             this.operationTimeout = operationTimeout;
@@ -133,10 +133,15 @@ namespace Microsoft.Azure.ServiceBus.Core
         {
             MessagingEventSource.Log.MessageReceiveStart(this.ClientId, maxMessageCount);
 
-            IList<Message> messages;
+            IList<Message> messages = null;
             try
             {
-                messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime).ConfigureAwait(false);
+                    }, serverWaitTime)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -166,10 +171,15 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageReceiveBySequenceNumberStart(this.ClientId, count, sequenceNumbers);
 
-            IList<Message> messages;
+            IList<Message> messages = null;
             try
             {
-                messages = await this.OnReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        messages = await this.OnReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -196,7 +206,12 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.OnCompleteAsync(lockTokens).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        await this.OnCompleteAsync(lockTokens).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -214,7 +229,12 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.MessageAbandonStart(this.ClientId, 1, lockToken);
             try
             {
-                await this.OnAbandonAsync(lockToken).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        await this.OnAbandonAsync(lockToken).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -233,7 +253,12 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.OnDeferAsync(lockToken).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        await this.OnDeferAsync(lockToken).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -252,7 +277,12 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.OnDeadLetterAsync(lockToken).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        await this.OnDeadLetterAsync(lockToken).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -269,10 +299,15 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
 
-            DateTime lockedUntilUtc;
+            DateTime lockedUntilUtc = DateTime.Now;
             try
             {
-                lockedUntilUtc = await this.OnRenewLockAsync(lockToken).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        lockedUntilUtc = await this.OnRenewLockAsync(lockToken).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -320,12 +355,17 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>A batch of messages peeked.</returns>
         public async Task<IList<Message>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
         {
-            IList<Message> messages;
+            IList<Message> messages = null;
 
             MessagingEventSource.Log.MessagePeekStart(this.ClientId, fromSequenceNumber, messageCount);
             try
             {
-                messages = await this.OnPeekAsync(fromSequenceNumber, messageCount).ConfigureAwait(false);
+                await this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        messages = await this.OnPeekAsync(fromSequenceNumber, messageCount).ConfigureAwait(false);
+                    }, this.OperationTimeout)
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {

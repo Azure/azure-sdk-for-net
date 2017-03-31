@@ -25,13 +25,29 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         string sessionId;
         DateTime lockedUntilUtc;
 
-        internal AmqpMessageReceiver(string entityName, MessagingEntityType? entityType, ReceiveMode mode, int prefetchCount, ServiceBusConnection serviceBusConnection, ICbsTokenProvider cbsTokenProvider)
-            : this(entityName, entityType, mode, prefetchCount, serviceBusConnection, cbsTokenProvider, null)
+        internal AmqpMessageReceiver(
+            string entityName,
+            MessagingEntityType? entityType,
+            ReceiveMode mode,
+            int prefetchCount,
+            ServiceBusConnection serviceBusConnection,
+            ICbsTokenProvider cbsTokenProvider,
+            RetryPolicy retryPolicy)
+            : this(entityName, entityType, mode, prefetchCount, serviceBusConnection, cbsTokenProvider, null, retryPolicy)
         {
         }
 
-        internal AmqpMessageReceiver(string entityName, MessagingEntityType? entityType, ReceiveMode mode, int prefetchCount, ServiceBusConnection serviceBusConnection, ICbsTokenProvider cbsTokenProvider, string sessionId, bool isSessionReceiver = false)
-            : base(mode, serviceBusConnection.OperationTimeout)
+        internal AmqpMessageReceiver(
+            string entityName,
+            MessagingEntityType? entityType,
+            ReceiveMode mode,
+            int prefetchCount,
+            ServiceBusConnection serviceBusConnection,
+            ICbsTokenProvider cbsTokenProvider,
+            string sessionId,
+            RetryPolicy retryPolicy,
+            bool isSessionReceiver = false)
+            : base(mode, serviceBusConnection.OperationTimeout, retryPolicy)
         {
             this.entityName = entityName;
             this.EntityType = entityType;

@@ -12,8 +12,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object> TestPermutations => new object[]
         {
-            new object[] { Constants.NonPartitionedQueueName },
-            new object[] { Constants.PartitionedQueueName }
+            new object[] { TestConstants.NonPartitionedQueueName },
+            new object[] { TestConstants.PartitionedQueueName }
         };
 
         [Theory]

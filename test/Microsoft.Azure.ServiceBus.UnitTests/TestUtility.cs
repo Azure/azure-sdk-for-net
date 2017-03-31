@@ -14,10 +14,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         static TestUtility()
         {
-            var envConnectionString = Environment.GetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariable);
+            var envConnectionString = Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
             if (string.IsNullOrWhiteSpace(envConnectionString))
             {
-                throw new InvalidOperationException($"'{Constants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
+                throw new InvalidOperationException($"'{TestConstants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
             }
 
             // Validate the connection string
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             int receiveAttempts = 0;
             var messagesToReturn = new List<Message>();
 
-            while (receiveAttempts++ < Constants.MaxAttemptsCount && messagesToReturn.Count < messageCount)
+            while (receiveAttempts++ < TestConstants.MaxAttemptsCount && messagesToReturn.Count < messageCount)
             {
                 var messages = await messageReceiver.ReceiveAsync(messageCount - messagesToReturn.Count);
                 if (messages != null)
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             int receiveAttempts = 0;
             var peekedMessages = new List<Message>();
 
-            while (receiveAttempts++ < Constants.MaxAttemptsCount && peekedMessages.Count < messageCount)
+            while (receiveAttempts++ < TestConstants.MaxAttemptsCount && peekedMessages.Count < messageCount)
             {
                 var message = await messageReceiver.PeekAsync(messageCount - peekedMessages.Count);
                 if (message != null)

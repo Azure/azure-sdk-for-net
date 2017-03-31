@@ -16,17 +16,17 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class QueueClient : ClientEntity, IQueueClient
     {
-        public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock)
-            : this(new ServiceBusNamespaceConnection(connectionString), entityPath, receiveMode)
+        public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
+            : this(new ServiceBusNamespaceConnection(connectionString), entityPath, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
         }
 
-        private QueueClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode)
-            : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({entityPath})")
+        QueueClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, RetryPolicy retryPolicy)
+            : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({entityPath})", retryPolicy)
         {
             this.QueueName = entityPath;
             this.ReceiveMode = receiveMode;
-            this.InnerClient = new AmqpClient(serviceBusConnection, entityPath, MessagingEntityType.Queue, receiveMode);
+            this.InnerClient = new AmqpClient(serviceBusConnection, entityPath, MessagingEntityType.Queue, retryPolicy, receiveMode);
         }
 
         public string QueueName { get; }

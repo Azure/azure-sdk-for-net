@@ -16,8 +16,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             const int messageCount = 2;
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(Constants.NonPartitionedQueueName, ReceiveMode.PeekLock);
-            var sender = connection.CreateMessageSender(Constants.NonPartitionedQueueName);
+            var receiver = connection.CreateMessageReceiver(TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+            var sender = connection.CreateMessageSender(TestConstants.NonPartitionedQueueName);
 
             try
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var messagingFactory = new ServiceBusClientFactory();
             var queueClient =
                 (QueueClient)messagingFactory.CreateQueueClientFromConnectionString(
-                    TestUtility.GetEntityConnectionString(Constants.SessionNonPartitionedQueueName));
+                    TestUtility.GetEntityConnectionString(TestConstants.SessionNonPartitionedQueueName));
 
             try
             {
@@ -104,8 +104,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(Constants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
-            var sender = connection.CreateMessageSender(Constants.NonPartitionedQueueName);
+            var receiver = connection.CreateMessageReceiver(TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
+            var sender = connection.CreateMessageSender(TestConstants.NonPartitionedQueueName);
 
             try
             {

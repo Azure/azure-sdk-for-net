@@ -12,8 +12,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     class AmqpMessageSession : MessageSession
     {
-        public AmqpMessageSession(string sessionId, DateTime lockedUntilUtc, MessageReceiver innerMessageReceiver)
-            : base(innerMessageReceiver.ReceiveMode, sessionId, lockedUntilUtc, innerMessageReceiver)
+        public AmqpMessageSession(string sessionId, DateTime lockedUntilUtc, MessageReceiver innerMessageReceiver, RetryPolicy retryPolicy)
+            : base(innerMessageReceiver.ReceiveMode, sessionId, lockedUntilUtc, innerMessageReceiver, retryPolicy)
         {
         }
 

@@ -915,5 +915,20 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.WriteEvent(76, clientId, sequenceNumber, exception);
         }
+
+        [NonEvent]
+        public void RunOperationExceptionEncountered(Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.RunOperationExceptionEncountered(exception.ToString());
+            }
+        }
+
+        [Event(77, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
+        void RunOperationExceptionEncountered(string exception)
+        {
+            this.WriteEvent(77, exception);
+        }
     }
 }
