@@ -23,16 +23,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             return innerList.Select(inner => WrapModel(inner));
         }
-        
-        /*
-        /// <summary>
-        /// This method returns a paged list with single page containing instances that wraps inner resources in the given list.
-        /// </summary>
-        /// <param name="innerList">The list of inner resources</param>
-        /// <returns>The paged list of wrapped resources</returns>
-        protected PagedList<IFluentResourceT> WrapList(IList<InnerResourceT> innerList)
-        {
-            return PagedListConverter.Convert(innerList, WrapModel);
-        }*/
     }
 }
