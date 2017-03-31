@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:9E0CF934F182F50D2FE7A72E02617F94:324B026FB14C16BEDA7B060212E59DE0
         private async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> GetEncryptionExtensionInstalledInVMAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var extensions = await virtualMachine.GetExtensionsAsync(cancellationToken);
+            var extensions = await virtualMachine.ListExtensionsAsync(cancellationToken);
             IVirtualMachineExtension encryptionExtension = extensions
                 .FirstOrDefault(e => e.PublisherName.Equals(encryptionExtensionPublisher, StringComparison.OrdinalIgnoreCase)
                                         && e.TypeName.Equals(EncryptionExtensionType(), StringComparison.OrdinalIgnoreCase));
