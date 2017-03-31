@@ -174,11 +174,11 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:1D23568874BE06880E14E0FB7622F67C:348B5EED59A4609BB5965E7355718218
         private async Task SubmitChildrenOperationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.Queues().CreateAsync(this.queuesToCreate.ToArray());
+            await this.Queues().CreateAsync(this.queuesToCreate, cancellationToken);
             await this.Queues().DeleteByNameAsync(this.queuesToDelete, cancellationToken);
-            await this.Topics().CreateAsync(this.topicsToCreate.ToArray());
+            await this.Topics().CreateAsync(this.topicsToCreate, cancellationToken);
             await this.Topics().DeleteByNameAsync(this.topicsToDelete, cancellationToken);
-            await this.AuthorizationRules().CreateAsync(this.rulesToCreate.ToArray());
+            await this.AuthorizationRules().CreateAsync(this.rulesToCreate, cancellationToken);
             await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete, cancellationToken);
         }
 

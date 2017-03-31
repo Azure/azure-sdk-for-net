@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,22 +16,30 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     /// <typeparam name="IFluentResourceT">the fluent resource interface</typeparam>
     /// <typeparam name="FluentResourceT">the fluent resource implementation</typeparam>
     /// <typeparam name="InnerResourceT">the type that fluent resource wraps</typeparam>
-    public abstract class CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT> :
-        CreatableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>,
+    public abstract class CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT> 
+        : CreatableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>,
         ISupportsBatchCreation<IFluentResourceT>
         where IFluentResourceT : class, IHasId
         where FluentResourceT : IFluentResourceT
     {
+
         public ICreatedResources<IFluentResourceT> Create(params ICreatable<IFluentResourceT>[] creatables)
+        {
+            return Create(creatables as IEnumerable<ICreatable<IFluentResourceT>>);
+        }
+
+        public ICreatedResources<IFluentResourceT> Create(IEnumerable<ICreatable<IFluentResourceT>> creatables)
         {
             return CreateAsync(creatables).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<ICreatedResources<IFluentResourceT>> CreateAsync(params ICreatable<IFluentResourceT>[] creatables)
+        public async Task<ICreatedResources<IFluentResourceT>> CreateAsync(
+            IEnumerable<ICreatable<IFluentResourceT>> creatables,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
-            CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT> rootResource = new CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT>();
+            var rootResource = new CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT>();
             rootResource.AddCreatableDependencies(creatables);
-            var creatableUpdatableResourcesRoot = await rootResource.CreateAsync(CancellationToken.None);
+            var creatableUpdatableResourcesRoot = await rootResource.CreateAsync(cancellationToken);
             return new CreatedResources<IFluentResourceT>(creatableUpdatableResourcesRoot);
         }
     }
