@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:42E5559F93A5ECA057CA5F045A1C8057:C9C1A747426C7D8AEF7280B613F858AE
-        public PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
         {
             return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(this.ResourceGroupName, this.Name, virtualMachineInstanceId);
         }
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:48A72DF34AA591EEC3FD96876F4C2258
-        public PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
         {
             return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSet(this.ResourceGroupName, this.Name);
         }
@@ -1374,18 +1374,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:CAFE3044E63DB355E0097F6FD22A0282:600739A4DD068DBA0CF85CC076E9111F
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus()
+        public IEnumerable<IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
-            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(
-                Manager.Inner.VirtualMachineScaleSets.ListSkus(ResourceGroupName, Name), nextLink =>
-            {
-                return Manager.Inner.VirtualMachineScaleSets.ListSkusNext(nextLink);
-            });
-
-            return PagedListConverter.Convert<VirtualMachineScaleSetSku, IVirtualMachineScaleSetSku>(innerPagedList, inner =>
-            {
-                return new VirtualMachineScaleSetSkuImpl(inner);
-            });
+            return Manager.Inner.VirtualMachineScaleSets.ListSkus(ResourceGroupName, Name)
+                   .AsContinuousCollection(link => Manager.Inner.VirtualMachineScaleSets.ListSkusNext(link))
+                   .Select(inner => new VirtualMachineScaleSetSkuImpl(inner));
         }
 
         ///GENMHASH:B521ECE36A8645ACCD4603A46DF73D20:6C43F204834714CB74740068BED95D98

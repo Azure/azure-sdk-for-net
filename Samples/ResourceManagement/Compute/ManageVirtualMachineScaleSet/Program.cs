@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ManageVirtualMachineScaleSet
 {
@@ -234,7 +235,7 @@ namespace ManageVirtualMachineScaleSet
                     Utilities.Log(instance.Id);
                     var networkInterfaces = instance.ListNetworkInterfaces();
                     // Pick the first NIC
-                    var networkInterface = networkInterfaces[0];
+                    var networkInterface = networkInterfaces.ElementAt(0);
                     foreach (var ipConfig in networkInterface.IPConfigurations.Values)
                     {
                         if (ipConfig.IsPrimary)

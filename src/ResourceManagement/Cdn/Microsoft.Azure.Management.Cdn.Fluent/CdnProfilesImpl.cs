@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ICdnProfiles
     {
         ///GENMHASH:2CEB6E35574F5C7F1D19ADAC97C93D65:4CE4EF96A3377BCB6304539746BB262C
-        public PagedList<Operation> ListOperations()
+        public IEnumerable<Operation> ListOperations()
         {
             return Manager.Profiles.ListOperations();
         }
@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<ICdnProfile> List()
+        public IEnumerable<ICdnProfile> List()
         {
-            var pagedList = new PagedList<ProfileInner>(Inner.List());
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:B76E119E66FC2C5D09617333DC4FF4E3:5E6BF540BD14D5EE37AC38FE28D3AA9F
@@ -101,12 +101,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
-        public PagedList<ICdnProfile> ListByGroup(string groupName)
+        public IEnumerable<ICdnProfile> ListByGroup(string groupName)
         {
-            return WrapList(
-                new PagedList<ProfileInner>(
-                    Inner.ListByResourceGroup(groupName), 
-                    (l) => Inner.ListByResourceGroupNext(l)));
+            return WrapList(Inner.ListByResourceGroup(groupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:80BCE26D6F015BF71C5D9844E17987C3

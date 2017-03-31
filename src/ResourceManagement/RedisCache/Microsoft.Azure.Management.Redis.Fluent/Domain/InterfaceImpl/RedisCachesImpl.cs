@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Models;
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -36,9 +37,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -67,9 +68,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.List()
+        IEnumerable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>;
+            return this.List();
         }
     }
 }

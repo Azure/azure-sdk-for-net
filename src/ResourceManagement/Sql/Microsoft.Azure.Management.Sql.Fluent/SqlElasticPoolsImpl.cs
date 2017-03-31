@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:7F70CB1AA5FE23578E360B95D229A1C6
-        public async override Task<PagedList<ISqlElasticPool>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IEnumerable<ISqlElasticPool>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapList(new PagedList<ElasticPoolInner>(await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken)));
+            return WrapList(await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken));
         }
 
         ///GENMHASH:03C6F391A16F96A5127D98827B5423FA:877F7B73190881879934925547D57EAF

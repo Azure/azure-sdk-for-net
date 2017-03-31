@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Provides access to listing Azure resources of a specific type based on their region.
@@ -19,14 +20,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// </summary>
         /// <param name="region">region the selected Azure region</param>
         /// <returns>list of resources</returns>
-        PagedList<T> ListByRegion (Region region);
+        IEnumerable<T> ListByRegion (Region region);
 
         /// <summary>
         /// List all the resources of the specified type in the specified region.
         /// </summary>
         /// <param name="regionName">regionName the name of an Azure region</param>
         /// <returns>list of resources</returns>
-        PagedList<T> ListByRegion (string regionName);
+        IEnumerable<T> ListByRegion (string regionName);
 
     }
 }

@@ -27,15 +27,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:0812389C333714A6DDA6CD76F7B8FEFC
-        public PagedList<IVirtualMachinePublisher> ListByRegion(string regionName)
+        public IEnumerable<IVirtualMachinePublisher> ListByRegion(string regionName)
         {
-            IEnumerable<VirtualMachineImageResourceInner> innerPublishers = innerCollection.ListPublishers(regionName);
-            var pagedList = new PagedList<VirtualMachineImageResourceInner>(innerPublishers);
-            return WrapList(pagedList);
+            return WrapList(innerCollection.ListPublishers(regionName));
         }
 
         ///GENMHASH:BA2FEDDF9D78BF55786D81F6C85E907C:CD5A589A9B297BE134944F6A531D30E8
-        public PagedList<IVirtualMachinePublisher> ListByRegion(Region region)
+        public IEnumerable<IVirtualMachinePublisher> ListByRegion(Region region)
         {
             return this.ListByRegion(region.Name);
         }

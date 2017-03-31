@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T> ListByParent(string resourceGroupName, string parentName);
+        IEnumerable<T> ListByParent(string resourceGroupName, string parentName);
 
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.
@@ -28,20 +29,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IEnumerable<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T> ListByParent(ParentT parentResource);
+        IEnumerable<T> ListByParent(ParentT parentResource);
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IEnumerable<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

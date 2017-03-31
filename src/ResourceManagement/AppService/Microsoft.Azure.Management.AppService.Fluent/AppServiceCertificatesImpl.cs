@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -34,10 +35,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> ListByGroup(string resourceGroupName)
+        public IEnumerable<IAppServiceCertificate> ListByGroup(string resourceGroupName)
         {
-            return WrapList(new PagedList<CertificateInner>(Inner.ListByResourceGroup(resourceGroupName),
-                nextPageLink => Inner.ListByResourceGroupNext(nextPageLink)));
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20

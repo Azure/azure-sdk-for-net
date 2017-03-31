@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using Management.Network.Fluent;
     using Management.Network.Fluent.Models;
     using Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     internal class NetworkUsagesImpl : ReadableWrappers<INetworkUsage, NetworkUsageImpl, Usage>, INetworkUsages
     {
@@ -15,16 +16,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
             this.client = client;
         }
 
-        public PagedList<INetworkUsage> ListByRegion(string regionName)
+        public IEnumerable<INetworkUsage> ListByRegion(string regionName)
         {
-            var pagedList = new PagedList<Usage>(client.Usages.List(regionName), (string nextPageLink) =>
-            {
-                return client.Usages.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(client.Usages.List(regionName).AsContinuousCollection(link => client.Usages.ListNext(link)));
         }
 
-        public PagedList<INetworkUsage> ListByRegion(Region region)
+        public IEnumerable<INetworkUsage> ListByRegion(Region region)
         {
             return ListByRegion(region.ToString());
         }

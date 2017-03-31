@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Azure.Tests.Common
@@ -57,7 +58,7 @@ namespace Azure.Tests.Common
                 TestHelper.WriteLine("resource id: " + r.Id);
             }
 
-            return resources.Count;
+            return resources.Count();
         }
 
         /**

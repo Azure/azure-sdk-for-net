@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using NetworkInterface.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Entry point to network interface management.
@@ -37,14 +38,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="resourceGroupName">virtual machine scale set resource group name</param>
         /// <param name="scaleSetName">scale set name</param>
         /// <returns>list of network interfaces</returns>
-        PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName);
+        IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName);
 
         /// <summary>
         /// List the network interfaces associated with a virtual machine scale set.
         /// </summary>
         /// <param name="id">id virtual machine scale set resource id</param>
         /// <returns>list of network interfaces</returns>
-        PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetId(string id);
+        IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetId(string id);
 
         /// <summary>
         /// List the network interfaces associated with a specific virtual machine instance in a scale set.
@@ -53,6 +54,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="scaleSetName">scale set name</param>
         /// <param name="instanceId">the virtual machine scale set vm instance id</param>
         /// <returns>list of network interfaces</returns>
-        PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId);
+        IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId);
     }
 }

@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     using System;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation of Vaults and its parent interfaces.
@@ -30,24 +31,23 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<IVault> List ()
+        public IEnumerable<IVault> List ()
         {
-            var pagedList = new PagedList<VaultInner>(Inner.List());
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
-        public PagedList<IVault> ListByGroup (string groupName)
+        public IEnumerable<IVault> ListByGroup (string groupName)
         {
-            var pagedList = new PagedList<VaultInner>(Inner.ListByResourceGroup(groupName));
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(groupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
-        public async Task<PagedList<IVault>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<IVault>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await Inner.ListByResourceGroupAsync(resourceGroupName, cancellationToken: cancellationToken);
-            var pagedList = new PagedList<VaultInner>(inner);
-            return WrapList(pagedList);
+            return WrapList(inner.AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D

@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:67032F38ECA8CBB405D18A2581390A32
-        public async override Task<PagedList<ISqlFirewallRule>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IEnumerable<ISqlFirewallRule>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapList(new PagedList<ServerFirewallRuleInner>(await Inner.ListFirewallRulesAsync(resourceGroupName, parentName, cancellationToken)));
+            return WrapList(await Inner.ListFirewallRulesAsync(resourceGroupName, parentName, cancellationToken));
         }
 
         ///GENMHASH:03C6F391A16F96A5127D98827B5423FA:877F7B73190881879934925547D57EAF

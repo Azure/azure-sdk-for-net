@@ -48,11 +48,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public PagedList<ITrafficManagerProfile> List()
+        public IEnumerable<ITrafficManagerProfile> List()
         {
-            //$ return wrapList(Inner.ListAll());
-            var pagedList = new PagedList<ProfileInner>(Inner.ListAll());
-            return WrapList(pagedList);
+            return WrapList(Inner.ListAll());
         }
 
         ///GENMHASH:ADB150394F552772047E309EF2616501:6EFED76EB6275BD09D4B902BEDDF03D4
@@ -72,9 +70,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:2A90E64B785A8609460D87572CE513A1
-        public PagedList<ITrafficManagerProfile> ListByGroup(string groupName)
+        public IEnumerable<ITrafficManagerProfile> ListByGroup(string groupName)
         {
-            return WrapList(new PagedList<ProfileInner>(Inner.ListAllInResourceGroup(groupName)));
+            return WrapList(Inner.ListAllInResourceGroup(groupName));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:12B839BC780AC48D63D16C362B5E2FF5

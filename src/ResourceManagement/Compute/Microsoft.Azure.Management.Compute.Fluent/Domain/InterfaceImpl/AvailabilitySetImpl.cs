@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <returns>The virtual machine sizes supported in the availability set.</returns>
-        PagedList<IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
+        IEnumerable<IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
         {
             return this.ListVirtualMachineSizes();
         }

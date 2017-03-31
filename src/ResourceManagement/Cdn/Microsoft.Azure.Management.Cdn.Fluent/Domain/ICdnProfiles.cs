@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <return>List of available CDN REST operations.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations();
+        IEnumerable<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations();
 
         /// <summary>
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal.

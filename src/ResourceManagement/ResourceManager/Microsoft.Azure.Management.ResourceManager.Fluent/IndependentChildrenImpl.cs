@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     using System.Threading;
     using System.Threading.Tasks;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         ///GENMHASH:5002116800CBAC02BBC1B4BF62BC4942:A2A025A9F2772D74D0B8615C6144E641
         public T GetById(string id)
         {
-            return GetByIdAsync(id).GetAwaiter().GetResult();
+            return GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public T GetByParent(string resourceGroup, string parentName, string name)
         {
-            return GetByParentAsync(resourceGroup, parentName, name).GetAwaiter().GetResult();
+            return GetByParentAsync(resourceGroup, parentName, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<T> GetByParentAsync(ParentT parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -80,17 +81,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         }
 
         ///GENMHASH:A0A10EB2FF1149F056003612DA902E09:D8BC76ED0E6FF85C69301F568869AE3D
-        public PagedList<T> ListByParent(ParentT parentResource)
+        public IEnumerable<T> ListByParent(ParentT parentResource)
         {
             return ListByParent(parentResource.ResourceGroupName, parentResource.Name);
         }
 
-        public PagedList<T> ListByParent(string resourceGroupName, string parentName)
+        public IEnumerable<T> ListByParent(string resourceGroupName, string parentName)
         {
-            return ListByParentAsync(resourceGroupName, parentName).GetAwaiter().GetResult();
+            return ListByParentAsync(resourceGroupName, parentName).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await ListByParentAsync(parentResource.ResourceGroupName, parentResource.Name, cancellationToken);
         }
@@ -116,7 +117,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public abstract Task<T> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken));
 
-        public abstract Task<PagedList<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task<IEnumerable<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
 
         public abstract Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken));
     }

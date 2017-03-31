@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Models;
     using ResourceManager.Fluent.Core;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
@@ -54,17 +56,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:1381FA42DE6ECBD284AA54F76A65CC41
-        public async override Task<PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IEnumerable<IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
             Func<SiteInner, IDeploymentSlot> converter = inner =>
             {
-                return PopulateModelAsync(inner, parent).GetAwaiter().GetResult();
+                return PopulateModelAsync(inner, parent).ConfigureAwait(false).GetAwaiter().GetResult();
             };
-            var slots = new WrappedPage<SiteInner, IDeploymentSlot>(await Inner.ListSlotsAsync(resourceGroupName, parentName, cancellationToken), converter);
-            return new PagedList<IDeploymentSlot>(slots, s =>
-            {
-                return new WrappedPage<SiteInner, IDeploymentSlot>(Inner.ListSlotsNext(s), converter);
-            });
+
+            return (await Inner.ListSlotsAsync(resourceGroupName, parentName, cancellationToken))
+                              .AsContinuousCollection(link => Inner.ListSlotsNext(link))
+                              .Select(inner => converter(inner));
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:09CA495AE0F4F57BBBBDFC250874B0D4
@@ -74,7 +75,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:83FC2E4653FE30302201437639E1634A
-        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> List()
+        public IEnumerable<IDeploymentSlot> List()
         {
             return ListByParent(parent.ResourceGroupName, parent.Name);
         }

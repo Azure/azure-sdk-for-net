@@ -3,10 +3,10 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
-
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Management.ResourceManager.Fluent.Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// An immutable client-side representation of an Azure subscription.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// List the locations the subscription has access to.
         /// </summary>
         /// <returns>the lazy list of locations</returns>
-        PagedList<ILocation> ListLocations();
+        IEnumerable<ILocation> ListLocations();
 
         /// <summary>
         /// Gets the data center location for the specified region, if the selected subscription has access to it.

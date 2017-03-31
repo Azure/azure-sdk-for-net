@@ -211,11 +211,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public override FluentT Refresh()
         {
             ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
-            SiteInner inner = GetInnerAsync().GetAwaiter().GetResult();
+            SiteInner inner = GetInnerAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
-            inner.SiteConfig = GetConfigInnerAsync().GetAwaiter().GetResult();
+            inner.SiteConfig = GetConfigInnerAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             SetInner(inner);
-            CacheAppSettingsAndConnectionStringsAsync().GetAwaiter().GetResult();
+            CacheAppSettingsAndConnectionStringsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             return this as FluentT;
         }
 

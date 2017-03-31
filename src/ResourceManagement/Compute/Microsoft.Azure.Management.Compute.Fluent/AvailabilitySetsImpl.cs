@@ -5,6 +5,8 @@ using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,24 +42,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E05BE5112BBF24DC07F63B90A384905C
-        public PagedList<IAvailabilitySet> List()
+        public IEnumerable<IAvailabilitySet> List()
         {
-            // There is no API supporting listing of availabiltiy set across subscription so enumerate all RGs and then
-            // flatten the "list of list of availibility sets" as "list of availibility sets" .
-            return new ChildListFlattener<IResourceGroup, IAvailabilitySet>(Manager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
-            {
-                return ListByGroup(resourceGroup.Name);
-            }).Flatten();
+            // There is no API supporting listing of availability set across subscription so enumerate all RGs and then
+            // flatten the "list of list of availability sets" as "list of availability sets" .
+            return Manager.ResourceManager.ResourceGroups.List()
+                                          .SelectMany(rg => ListByGroup(rg.Name));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public PagedList<IAvailabilitySet> ListByGroup(string resourceGroupName)
+        public IEnumerable<IAvailabilitySet> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<AvailabilitySetInner>(Inner.List(resourceGroupName));
-            return WrapList(pagedList);
+            return WrapList(Inner.List(resourceGroupName));
         }
 
-        public Task<PagedList<IAvailabilitySet>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<IAvailabilitySet>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             // ListByGroupAsync sholud be removed
             throw new NotSupportedException();

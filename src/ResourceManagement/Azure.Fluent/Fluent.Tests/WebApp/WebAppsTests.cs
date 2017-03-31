@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
 using Xunit;
 
 namespace Azure.Tests.WebApp
@@ -57,9 +58,9 @@ namespace Azure.Tests.WebApp
 
                 // List
                 var webApps = appServiceManager.WebApps.ListByGroup(GroupName1);
-                Assert.Equal(1, webApps.Count);
+                Assert.Equal(1, webApps.Count());
                 webApps = appServiceManager.WebApps.ListByGroup(GroupName2);
-                Assert.Equal(1, webApps.Count);
+                Assert.Equal(1, webApps.Count());
 
                 // Update
                 webApp1.Update()

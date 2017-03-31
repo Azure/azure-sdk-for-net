@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of SrvRecordSets.
@@ -46,16 +47,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E9415FFDEC272ED3312A39C040C09EFD
-        public PagedList<ISrvRecordSet> List()
+        public IEnumerable<ISrvRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
-                dnsZone.ResourceGroupName,
-                dnsZone.Name,
-                RecordType.SRV), (string nextPageLink) =>
-                {
-                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
-                });
-            return WrapList(pagedList);
+            return WrapList(dnsZone.Manager.Inner.RecordSets
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.SRV)
+                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:03274371FE0B9D92DBF3F1DA42023F15

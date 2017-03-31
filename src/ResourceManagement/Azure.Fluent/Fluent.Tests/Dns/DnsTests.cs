@@ -95,18 +95,18 @@ namespace Azure.Tests.Dns
                     // Check A records
                     var aRecordSets = dnsZone.ARecordSets.List();
                     Assert.True(aRecordSets.Count() == 1);
-                    Assert.True(aRecordSets[0].TimeToLive == 7200);
+                    Assert.True(aRecordSets.ElementAt(0).TimeToLive == 7200);
 
                     // Check AAAA records
                     var aaaaRecordSets = dnsZone.AaaaRecordSets.List();
                     Assert.True(aaaaRecordSets.Count() == 1);
-                    Assert.True(aaaaRecordSets[0].Name.StartsWith("www"));
-                    Assert.True(aaaaRecordSets[0].IPv6Addresses.Count() == 2);
+                    Assert.True(aaaaRecordSets.ElementAt(0).Name.StartsWith("www"));
+                    Assert.True(aaaaRecordSets.ElementAt(0).IPv6Addresses.Count() == 2);
 
                     // Check MX records
                     var mxRecordSets = dnsZone.MXRecordSets.List();
                     Assert.True(mxRecordSets.Count() == 1);
-                    var mxRecordSet = mxRecordSets[0];
+                    var mxRecordSet = mxRecordSets.ElementAt(0);
                     Assert.NotNull(mxRecordSet);
                     Assert.True(mxRecordSet.Name.StartsWith("email"));
                     Assert.True(mxRecordSet.Metadata.Count() == 2);
@@ -197,7 +197,7 @@ namespace Azure.Tests.Dns
                     // Check A records
                     aRecordSets = dnsZone.ARecordSets.List();
                     Assert.Equal(1, aRecordSets.Count());
-                    var aRecordSet = aRecordSets[0];
+                    var aRecordSet = aRecordSets.ElementAt(0);
                     Assert.Equal(2, aRecordSet.IPv4Addresses.Count());
                     foreach (var ipV4Address in aRecordSet.IPv4Addresses)
                     {
@@ -207,7 +207,7 @@ namespace Azure.Tests.Dns
                     // Check SRV records
                     srvRecordSets = dnsZone.SrvRecordSets.List();
                     Assert.True(srvRecordSets.Count() == 1);
-                    var srvRecordSet = srvRecordSets[0];
+                    var srvRecordSet = srvRecordSets.ElementAt(0);
                     Assert.Equal(4, srvRecordSet.Records.Count());
                     foreach (var srvRecord in srvRecordSet.Records)
                     {

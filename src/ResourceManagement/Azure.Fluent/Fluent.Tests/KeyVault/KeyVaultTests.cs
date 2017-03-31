@@ -90,13 +90,13 @@ namespace Fluent.Tests.KeyVault
                     Assert.Equal(3, vault2.AccessPolicies[0].Permissions.Keys.Count);
 
                     var vaults = manager.Vaults.ListByGroup(rgName);
-                    Assert.Equal(2, vaults.Count);
+                    Assert.Equal(2, vaults.Count());
 
                     manager.Vaults.DeleteById(vault1.Id);
                     manager.Vaults.DeleteById(vault2.Id);
 
                     vaults = manager.Vaults.ListByGroup(rgName);
-                    Assert.Equal(0, vaults.Count);
+                    Assert.Equal(0, vaults.Count());
                 }
                 finally
                 {

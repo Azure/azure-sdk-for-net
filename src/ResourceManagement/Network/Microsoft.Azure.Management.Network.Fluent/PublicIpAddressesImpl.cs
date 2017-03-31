@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading;
     using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for PublicIPAddresses.
@@ -50,25 +51,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        internal PagedList<IPublicIPAddress> List()
+        internal IEnumerable<IPublicIPAddress> List()
         {
-            var pagedList = new PagedList<PublicIPAddressInner>(Inner.ListAll(), (string nextPageLink) =>
-            {
-                return Inner.ListAllNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.ListAll()
+                                 .AsContinuousCollection(link => Inner.ListAllNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        internal PagedList<IPublicIPAddress> ListByGroup(string groupName)
+        internal IEnumerable<IPublicIPAddress> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<PublicIPAddressInner>(Inner.List(groupName), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.List(groupName)
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691

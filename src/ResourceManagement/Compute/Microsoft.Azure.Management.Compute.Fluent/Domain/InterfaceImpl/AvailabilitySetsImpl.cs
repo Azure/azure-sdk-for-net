@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Collections.Generic;
 
     internal partial class AvailabilitySetsImpl 
     {
@@ -35,9 +36,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -66,9 +67,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.List()
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>;
+            return this.List();
         }
     }
 }

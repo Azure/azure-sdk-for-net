@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Collections.Generic;
 
     internal partial class AppServiceCertificatesImpl 
     {
@@ -35,9 +36,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>

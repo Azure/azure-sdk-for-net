@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="virtualMachineInstanceId">The instance id.</param>
         /// <return>The network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId);
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId);
 
         /// <summary>
         /// Gets true if managed disk is used for the virtual machine scale set's disks (os, data).
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void PowerOff();
 
         /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
 
         /// <summary>
         /// Shuts down the virtual machines in the scale set and releases its compute resources.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </return>
         /// <throws>CloudException thrown for an invalid response from the service.</throws>
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus();
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus();
 
         /// <summary>
         /// Gets the extensions attached to the virtual machines in the scale set.

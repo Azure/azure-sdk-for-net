@@ -353,7 +353,7 @@ namespace Fluent.Tests.Compute
             {
                 var nics = vmScaleSet.ListNetworkInterfacesByInstanceId(vm.InstanceId);
                 Assert.NotNull(nics);
-                Assert.Equal(nics.Count, 1);
+                Assert.Equal(nics.Count(), 1);
                 var nic = nics.First();
                 Assert.NotNull(nic.VirtualMachineId);
                 Assert.True(string.Compare(nic.VirtualMachineId, vm.Id, true) == 0);

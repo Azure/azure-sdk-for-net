@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for RouteTables.
@@ -42,23 +43,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public PagedList<IRouteTable> List()
+        public IEnumerable<IRouteTable> List()
         {
-            var pagedList = new PagedList<RouteTableInner>(Inner.ListAll(), (string nextPageLink) =>
-            {
-                return Inner.ListAllNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.ListAll().AsContinuousCollection(link => Inner.ListAllNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public PagedList<IRouteTable> ListByGroup(string groupName)
+        public IEnumerable<IRouteTable> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<RouteTableInner>(Inner.List(groupName), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List(groupName).AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:38805A03589651CF73316E5DDCC06E90

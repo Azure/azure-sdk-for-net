@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Collections.Generic;
 
     internal partial class DnsZonesImpl 
     {
@@ -34,9 +35,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -65,9 +66,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.List()
+        IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>;
+            return this.List();
         }
     }
 }

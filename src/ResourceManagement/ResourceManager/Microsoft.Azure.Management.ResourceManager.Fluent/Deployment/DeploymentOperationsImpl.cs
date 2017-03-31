@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Rest.Azure;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -36,20 +36,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return CreateFluentModel(inner);
         }
 
-        public PagedList<IDeploymentOperation> List()
+        public IEnumerable<IDeploymentOperation> List()
         {
-            IPage<DeploymentOperationInner> firstPage = client.List(deployment.ResourceGroupName, deployment.Name);
-            var innerList = new PagedList<DeploymentOperationInner>(firstPage, (string nextPageLink) =>
-            {
-                return client.ListNext(nextPageLink);
-            });
-
-            return new PagedList<IDeploymentOperation>(new WrappedPage<DeploymentOperationInner, IDeploymentOperation>(innerList.CurrentPage, CreateFluentModel),
-            (string nextPageLink) =>
-            {
-                innerList.LoadNextPage();
-                return new WrappedPage<DeploymentOperationInner, IDeploymentOperation>(innerList.CurrentPage, CreateFluentModel);
-            });
+            return client.List(deployment.ResourceGroupName, deployment.Name)
+                         .AsContinuousCollection(link => client.ListNext(link))
+                         .Select(inner => CreateFluentModel(inner));
         }
 
         #endregion

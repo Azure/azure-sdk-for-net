@@ -1391,9 +1391,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <return>The virtual machine sizes.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailableSizes()
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailableSizes()
         {
-            return this.AvailableSizes() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
+            return this.AvailableSizes();
         }
 
         /// <summary>

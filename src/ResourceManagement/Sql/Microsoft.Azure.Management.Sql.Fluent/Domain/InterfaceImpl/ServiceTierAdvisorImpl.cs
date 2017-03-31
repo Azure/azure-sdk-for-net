@@ -182,11 +182,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Gets serviceLevelObjectiveUsageMetrics for the service tier
         /// advisor.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> Microsoft.Azure.Management.Sql.Fluent.IServiceTierAdvisor.ServiceLevelObjectiveUsageMetrics
+        IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> Microsoft.Azure.Management.Sql.Fluent.IServiceTierAdvisor.ServiceLevelObjectiveUsageMetrics
         {
             get
             {
-                return this.ServiceLevelObjectiveUsageMetrics() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric>;
+                return this.ServiceLevelObjectiveUsageMetrics();
             }
         }
 

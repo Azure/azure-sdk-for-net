@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void Delay(int milliseconds)
         {
-            this.DelayAsync(milliseconds, CancellationToken.None).GetAwaiter().GetResult();
+            this.DelayAsync(milliseconds, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

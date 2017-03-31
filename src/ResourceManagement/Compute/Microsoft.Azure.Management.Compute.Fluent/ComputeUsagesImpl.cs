@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using Rest.Azure;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation of ComputeUsages.
@@ -23,20 +24,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:BA2FEDDF9D78BF55786D81F6C85E907C:278D096DC6C27545470C89C8D1259A16
-        public PagedList<IComputeUsage> ListByRegion(Region region)
+        public IEnumerable<IComputeUsage> ListByRegion(Region region)
         {
             return ListByRegion(region.Name);
         }
 
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:34BF45703D53DEAC832C7449858B69FC
-        public PagedList<IComputeUsage> ListByRegion(string regionName)
+        public IEnumerable<IComputeUsage> ListByRegion(string regionName)
         {
-            IPage<Usage> firstPage = client.Usage.List(regionName);
-            var pagedList = new PagedList<Usage>(firstPage, (string nextPageLink) =>
-            {
-                return client.Usage.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(client.Usage.List(regionName)
+                .AsContinuousCollection(link => client.Usage.ListNext(link)));
         }
 
         ///GENMHASH:438AA0AEE9E5AB3F7FB0CB3404AB0062:347158454CE9D4F224065BB056903D09

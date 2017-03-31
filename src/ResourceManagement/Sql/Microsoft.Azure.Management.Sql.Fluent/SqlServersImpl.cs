@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using SqlServer.Definition;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for SqlServers and its parent interfaces.
@@ -41,9 +42,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<ISqlServer> List()
+        public IEnumerable<ISqlServer> List()
         {
-            return WrapList(new PagedList<ServerInner>(Inner.List()));
+            return WrapList(Inner.List());
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4400109B5DDC2A92920D8D598AB5D8B9
@@ -72,9 +73,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public PagedList<ISqlServer> ListByGroup(string resourceGroupName)
+        public IEnumerable<ISqlServer> ListByGroup(string resourceGroupName)
         {
-            return WrapList(new PagedList<ServerInner>(Inner.ListByResourceGroup(resourceGroupName)));
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName));
         }
     }
 }

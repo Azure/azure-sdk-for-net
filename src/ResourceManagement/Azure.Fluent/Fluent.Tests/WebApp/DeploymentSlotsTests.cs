@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
 using Xunit;
 
 namespace Azure.Tests.WebApp
@@ -103,7 +104,7 @@ namespace Azure.Tests.WebApp
 
                 // List
                 var deploymentSlots = webApp.DeploymentSlots.List();
-                Assert.Equal(3, deploymentSlots.Count);
+                Assert.Equal(3, deploymentSlots.Count());
 
                 // Swap
                 slot3.Swap(slot1.Name);

@@ -41,24 +41,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public PagedList<IVirtualMachine> List()
+        public IEnumerable<IVirtualMachine> List()
         {
-            var pagedList = new PagedList<VirtualMachineInner>(Inner.ListAll(), (string nextPageLink) =>
-            {
-                return Inner.ListAllNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.ListAll()
+                .AsContinuousCollection(link => Inner.ListAllNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public PagedList<IVirtualMachine> ListByGroup(string groupName)
+        public IEnumerable<IVirtualMachine> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<VirtualMachineInner>(Inner.List(groupName), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List(groupName)
+                .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
