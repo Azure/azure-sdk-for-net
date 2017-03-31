@@ -31,8 +31,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachineExtensionImage> ListByRegion(string regionName)
         {
             return Publishers().ListByRegion(regionName)
-                .SelectMany(publisher => publisher.ExtensionTypes.List())
-                .SelectMany(type => type.Versions.List())
+                .SelectMany(publisher => publisher.ExtensionTypes
+                                                  .List()
+                                                  .SelectMany(type => type.Versions.List()))
                 .Select(version => version.GetImage());
         }
 

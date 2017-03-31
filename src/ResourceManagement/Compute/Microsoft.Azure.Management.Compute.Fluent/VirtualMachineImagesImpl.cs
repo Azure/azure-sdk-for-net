@@ -43,9 +43,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachineImage> ListByRegion(string regionName)
         {
             return Publishers().ListByRegion(regionName)
-                    .SelectMany(publisher => publisher.Offers.List())
-                    .SelectMany(offer => offer.Skus.List())
-                    .SelectMany(sku => sku.Images.List());
+                    .SelectMany(publisher => publisher.Offers
+                                                      .List()
+                                                      .SelectMany(offer => offer.Skus
+                                                                                .List()
+                                                                                .SelectMany(sku => sku.Images.List())));
         }
 
         ///GENMHASH:0BEBF248F53E3703454D841A5CB0C8BD:F1262C25E062855DE7A22FF21A820919
