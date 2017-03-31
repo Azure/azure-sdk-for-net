@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsCreating<AppServicePlan.Definition.IBlank>,
         ISupportsDeletingById,
         ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
+        ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsDeletingByGroup,

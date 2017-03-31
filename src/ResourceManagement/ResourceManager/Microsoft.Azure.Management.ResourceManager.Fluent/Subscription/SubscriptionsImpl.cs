@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -51,6 +52,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         private ISubscription WrapModel(SubscriptionInner innerModel)
         {
             return new SubscriptionImpl(innerModel, innerCollection);
+        }
+
+        public async Task<IPagedCollection<ISubscription>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<ISubscription, SubscriptionInner>.LoadPage(
+                async (cancellation) => await innerCollection.ListAsync(cancellation),
+                innerCollection.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

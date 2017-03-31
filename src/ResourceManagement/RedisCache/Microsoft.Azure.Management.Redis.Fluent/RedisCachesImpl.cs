@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
+    using Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Redis.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlZGlzLmltcGxlbWVudGF0aW9uLlJlZGlzQ2FjaGVzSW1wbA==
     internal partial class RedisCachesImpl :
-        GroupableResources<IRedisCache,
+        TopLevelModifiableResources<IRedisCache,
             RedisCacheImpl,
             RedisResourceInner,
             IRedisOperations,
@@ -21,7 +23,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         IRedisCaches
     {
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -39,24 +41,32 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IRedisCache> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<RedisResourceInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var RedisResourceInner = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(RedisResourceInner);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public IEnumerable<IRedisCache> List()
+        protected async override Task<IPage<RedisResourceInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(cancellationToken);
         }
 
-        ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
-        public IEnumerable<IRedisCache> ListByGroup(string groupName)
+        protected async override Task<IPage<RedisResourceInner>>ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(groupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
+        }
+
+
+        ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
+        protected async override Task<IPage<RedisResourceInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<RedisResourceInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4A5A2A1EDBB98E8843A388EEBC9C31D6

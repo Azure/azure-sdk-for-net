@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     using System.Threading.Tasks;
     using System;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             return ListByParentAsync(resourceGroupName, parentName).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<IEnumerable<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IPagedCollection<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await ListByParentAsync(parentResource.ResourceGroupName, parentResource.Name, cancellationToken);
         }
@@ -117,7 +118,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public abstract Task<T> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken));
 
-        public abstract Task<IEnumerable<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task<IPagedCollection<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
 
         public abstract Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken));
     }

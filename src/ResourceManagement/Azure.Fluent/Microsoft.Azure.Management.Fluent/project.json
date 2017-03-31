@@ -45,19 +45,9 @@
       "dependencies": {
       }
     },
-    "netstandard1.5": {
+    "netstandard1.3": {
       "buildOptions": {
-        "define": [ "NETSTANDARD15", "PORTABLE" ],
-        "debugType": "portable"
-      },
-      "imports": [ "dnxcore50" ],
-      "dependencies": {
-        "NETStandard.Library": "1.6.1"
-      }
-    },
-    "netstandard1.1": {
-      "buildOptions": {
-        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "define": [ "NETSTANDARD13", "PORTABLE" ],
         "debugType": "portable"
       },
       "imports": [ "dnxcore50" ],

@@ -4,6 +4,10 @@
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -30,6 +34,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachineSku> List()
         {
             return WrapList(innerCollection.ListSkus(offer.Region.Name, offer.Publisher.Name, offer.Name));
+        }
+
+        public async Task<IPagedCollection<IVirtualMachineSku>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IVirtualMachineSku, VirtualMachineImageResourceInner>.LoadPage(
+                async (cancellation) => await innerCollection.ListSkusAsync(offer.Region.Name, offer.Publisher.Name, offer.Name),
+                WrapModel, cancellationToken);
         }
 
         ///GENMHASH:D48BEF4BAC4C0112B6930D731FFC59BD:3D3DBF6D2E250B46C52C216A27E376BA

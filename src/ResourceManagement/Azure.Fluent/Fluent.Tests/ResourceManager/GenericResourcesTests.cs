@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Fluent.Tests.ResourceManager
@@ -17,7 +18,7 @@ namespace Fluent.Tests.ResourceManager
     public class GenericResourcesTests
     {
         [Fact]
-        public void CanCreateUpdateMoveResource()
+        public async Task CanCreateUpdateMoveResource()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
@@ -40,7 +41,7 @@ namespace Fluent.Tests.ResourceManager
                     .Create();
 
                 // List
-                var found = (from r in genericResources.ListByGroup(rgName)
+                var found = (from r in await genericResources.ListByGroupAsync(rgName)
                              where string.Equals(r.Name, resourceName, StringComparison.OrdinalIgnoreCase)
                              select r).FirstOrDefault();
                 Assert.NotNull(found);

@@ -3,8 +3,10 @@
 
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
+    using Management.Fluent.Resource.Core;
     using Models;
     using ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using Storage.Fluent;
     using System;
     using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmJhdGNoLmltcGxlbWVudGF0aW9uLkJhdGNoQWNjb3VudHNJbXBs
     public partial class BatchAccountsImpl :
-        GroupableResources<
+        TopLevelModifiableResources<
             IBatchAccount,
             BatchAccountImpl,
             BatchAccountInner,
@@ -56,17 +58,25 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        internal IEnumerable<IBatchAccount> List()
+        protected async override Task<IPage<BatchAccountInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<BatchAccountInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        internal IEnumerable<IBatchAccount> ListByGroup(string resourceGroupName)
+        protected async override Task<IPage<BatchAccountInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<BatchAccountInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:353632428E49DD5C2FB134FBBB79CA4F:7213377B7C84B2355F61715C95204A42
@@ -91,16 +101,15 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IBatchAccount> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<BatchAccountInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var batchAccount = await Inner.GetAsync(resourceGroupName, name, cancellationToken);
-            return WrapModel(batchAccount);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:F8EF648D033A93895EA3A4E4EB60B9B2:F0DC62FB7F617AF3C57F4F01580CC827

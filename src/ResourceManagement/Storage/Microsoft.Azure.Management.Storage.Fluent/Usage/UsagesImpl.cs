@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
@@ -25,6 +28,11 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 return new List<IStorageUsage>();
             }
             return WrapList(client.List());
+        }
+
+        public async Task<IPagedCollection<IStorageUsage>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IStorageUsage, Usage>.LoadPage(client.ListAsync, WrapModel, cancellationToken);
         }
 
         protected override IStorageUsage WrapModel(Usage inner)
