@@ -186,10 +186,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.StorageAccountTypes? OsDiskStorageAccountType { get; }
 
         /// <return>An observable that emits extensions attached to the virtual machine.</return>
-        Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> GetExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> ListExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <return>The extensions attached to the Virtual Machine.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> GetExtensions();
+        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> ListExtensions();
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.

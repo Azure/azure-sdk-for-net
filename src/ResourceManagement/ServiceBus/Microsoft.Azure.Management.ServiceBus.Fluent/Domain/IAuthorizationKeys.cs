@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// <summary>
     /// Authorization key and connection string of authorization rule associated with Service Bus entities.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IAuthorizationKeys  :
         IHasInner<Management.Fluent.ServiceBus.Models.ResourceListKeysInner>
     {
