@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to virtual machine extension image management API.
+    /// Entry point to virtual machine extension image management.
     /// </summary>
     public interface IVirtualMachineExtensionImages  :
         ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>

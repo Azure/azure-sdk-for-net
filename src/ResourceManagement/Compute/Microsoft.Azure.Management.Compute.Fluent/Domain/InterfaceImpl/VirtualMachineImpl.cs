@@ -1296,13 +1296,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>An observable that emits extensions attached to the virtual machine.</return>
-        async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetExtensionsAsync(CancellationToken cancellationToken)
+        async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ListExtensionsAsync(CancellationToken cancellationToken)
         {
             return await this.GetExtensionsAsync(cancellationToken);
         }
 
         /// <return>The extensions attached to the Virtual Machine.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetExtensions()
+        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ListExtensions()
         {
             return this.GetExtensions() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
         }

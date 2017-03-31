@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
     /// <summary>
-    /// The RedisCache.keys action result.
+    /// The RedisCache.Keys action result.
     /// </summary>
     public interface IRedisAccessKeys 
     {

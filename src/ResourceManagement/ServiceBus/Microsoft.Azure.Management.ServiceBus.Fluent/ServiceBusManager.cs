@@ -6,12 +6,16 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Servicebus.Fluent;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
+    /// <summary>
+    /// Entry point to Azure Service Bus management.
+    /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public class ServiceBusManager : Manager<IServiceBusManagementClient>, IServiceBusManager
     {
         #region Fluent private collections

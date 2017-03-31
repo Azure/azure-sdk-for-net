@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// Entry point for image management API.
+    /// Entry point to custom virtual machine image management..
     /// </summary>
     public interface IVirtualMachineCustomImages  :
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,

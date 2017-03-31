@@ -11,6 +11,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// Entry point for app service certificate order management API.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IAppServiceCertificateOrders  :
         ISupportsCreating<IBlank>,
         ISupportsDeletingById,

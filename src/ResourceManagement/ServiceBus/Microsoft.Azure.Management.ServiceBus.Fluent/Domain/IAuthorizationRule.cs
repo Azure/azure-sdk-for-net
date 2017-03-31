@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// Type representing authorization rule.
     /// </summary>
     /// <typeparam name="Rule">The specific rule type.</typeparam>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IAuthorizationRule<RuleT>  :
         IIndependentChildResource<ServiceBus.Fluent.IServiceBusManager, Management.Fluent.ServiceBus.Models.SharedAccessAuthorizationRuleInner>,
         IRefreshable<RuleT>
