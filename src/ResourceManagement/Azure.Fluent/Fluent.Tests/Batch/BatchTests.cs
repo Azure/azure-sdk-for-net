@@ -164,7 +164,7 @@ namespace Fluent.Tests.Batch
 
                     var batchAccounts = batchManager.BatchAccounts.ListByGroup(rgName);
 
-                    Assert.Equal(batchAccounts.Count, 0);
+                    Assert.Equal(batchAccounts.Count(), 0);
                 }
                 finally
                 {
@@ -230,7 +230,7 @@ namespace Fluent.Tests.Batch
                     }
                     var batchAccounts = batchManager.BatchAccounts.ListByGroup(rgName);
 
-                    Assert.Equal(batchAccounts.Count, 0);
+                    Assert.Equal(batchAccounts.Count(), 0);
                 }
                 finally
                 {

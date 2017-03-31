@@ -8,6 +8,8 @@ using Microsoft.Rest.Azure;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -21,20 +23,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             this.innerCollection = client;
         }
 
-        public PagedList<ISubscription> List()
+        public IEnumerable<ISubscription> List()
         {
-            IPage<SubscriptionInner> firstPage = innerCollection.List();
-            var innerList = new PagedList<SubscriptionInner>(firstPage, (string nextPageLink) =>
-            {
-                return innerCollection.ListNext(nextPageLink);
-            });
-
-            return new PagedList<ISubscription>(new WrappedPage<SubscriptionInner, ISubscription>(innerList.CurrentPage, WrapModel),
-            (string nextPageLink) =>
-            {
-                innerList.LoadNextPage();
-                return new WrappedPage<SubscriptionInner, ISubscription>(innerList.CurrentPage, WrapModel);
-            });
+            return innerCollection.List()
+                                  .AsContinuousCollection(link => innerCollection.ListNext(link))
+                                  .Select(inner => WrapModel(inner));
         }
 
         public ISubscription GetById(string id)

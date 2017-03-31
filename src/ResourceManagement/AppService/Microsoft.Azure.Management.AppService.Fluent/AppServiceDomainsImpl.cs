@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Linq;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for AppServiceDomains.
@@ -31,27 +32,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:C332A900315E8149F8047F02D419C9DC:7655A447C81D4846C50195D4FED8EB4A
-        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement> ListAgreements(string topLevelExtension)
+        public IEnumerable<IDomainLegalAgreement> ListAgreements(string topLevelExtension)
         {
             var topLevelDomains = Manager.Inner.TopLevelDomains;
-            var innerPagedList = new PagedList<TldLegalAgreement>(topLevelDomains.ListAgreements(topLevelExtension),
-                nextLink => topLevelDomains.ListAgreementsNext(nextLink));
 
-            return PagedListConverter.Convert<TldLegalAgreement, IDomainLegalAgreement>(innerPagedList, inner =>
-            {
-                return new DomainLegalAgreementImpl(inner);
-            });
+            return topLevelDomains.ListAgreements(topLevelExtension)
+                                  .AsContinuousCollection(link => topLevelDomains.ListAgreementsNext(link))
+                                  .Select(inner => new DomainLegalAgreementImpl(inner));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> ListByGroup(string resourceGroupName)
+        public IEnumerable<IAppServiceDomain> ListByGroup(string resourceGroupName)
         {
-            var innerPagedList = new PagedList<DomainInner>(Inner.ListByResourceGroup(resourceGroupName), nextLink =>
-            {
-                return Inner.ListByResourceGroupNext(nextLink);
-            });
-
-            return WrapList(innerPagedList);
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
@@ -67,13 +61,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:8CF52FF5A0D0AA245495F311570001AD
-        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> List()
+        public IEnumerable<IAppServiceDomain> List()
         {
-            var innerPagedList = new PagedList<DomainInner>(Inner.List(), nextLink =>
-            {
-                return Inner.ListNext(nextLink);
-            });
-            return WrapList(innerPagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:9303C19C6745E77DCF648A0A5F603980:6058FD68A2D3CB7431C37FFF30958B5E

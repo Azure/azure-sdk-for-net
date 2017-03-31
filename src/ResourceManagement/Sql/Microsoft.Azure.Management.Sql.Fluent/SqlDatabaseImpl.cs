@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System.Collections.ObjectModel;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for SqlDatabase and its parent interfaces.
@@ -193,15 +194,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0E666BFDFC9A666CA31FD735D7839414:F7AAC54BC083EB0E4E1C567F427FB501
-        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages()
+        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages()
         {
             Func<DatabaseMetric, DatabaseMetricImpl> convertor = (databaseMetricInner) => new DatabaseMetricImpl(databaseMetricInner);
 
-            return PagedListConverter.Convert(
-                Manager.Inner.Databases.ListUsages(
-                    ResourceGroupName,
-                    SqlServerName(),
-                    Name), convertor);
+            return Manager.Inner.Databases
+                .ListUsages(ResourceGroupName,SqlServerName(),Name)
+                .Select(inner => convertor(inner));
         }
 
         ///GENMHASH:61F5809AB3B985C61AC40B98B1FBC47E:04B212B505D5C86A62596EEEE457DD66
@@ -271,13 +270,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:37206883074CEB63F8267ADE2545CF11:7A5A0501B5D9CE9FC49981A622109CC5
-        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints()
+        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints()
         {
             Func<RestorePointInner, RestorePointImpl> convertor = (restorePointInner) => new RestorePointImpl(restorePointInner);
 
-            return PagedListConverter.Convert(
-                Manager.Inner.Databases.ListRestorePoints(ResourceGroupName, SqlServerName(), Name),
-                convertor);
+            return Manager.Inner.Databases
+                .ListRestorePoints(ResourceGroupName, SqlServerName(), Name)
+                .Select(inner => convertor(inner));
         }
 
         ///GENMHASH:ED7351448838F0ED89C6E4AE8FB19EAE:E3FFCB76DD3743CD850897669FC40D12

@@ -745,9 +745,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
         {
-            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListNetworkInterfaces();
         }
 
         /// <return>
@@ -768,9 +768,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="virtualMachineInstanceId">The instance id.</param>
         /// <return>The network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
         {
-            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId);
         }
 
         /// <summary>
@@ -825,9 +825,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </return>
         /// <throws>CloudException thrown for an invalid response from the service.</throws>
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListAvailableSkus()
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListAvailableSkus()
         {
-            return this.ListAvailableSkus() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku>;
+            return this.ListAvailableSkus();
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageVersions.
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:DE7A9E25A3A0DA8C686B167840FC2C68
-        public PagedList<IVirtualMachineExtensionImageVersion> List()
+        public IEnumerable<IVirtualMachineExtensionImageVersion> List()
         {
             return WrapList(this.client.ListVersions(
                 type.RegionName,

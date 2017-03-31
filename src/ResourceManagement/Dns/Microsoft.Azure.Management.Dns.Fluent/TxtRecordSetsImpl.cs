@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of TxtRecordSets.
@@ -46,16 +47,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:0A5A4DAF4EB520E3FAB8309AF1336143
-        public PagedList<ITxtRecordSet> List()
+        public IEnumerable<ITxtRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
-                dnsZone.ResourceGroupName,
-                dnsZone.Name,
-                RecordType.TXT), (string nextPageLink) =>
-                {
-                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
-                });
-            return WrapList(pagedList);
+            return WrapList(dnsZone.Manager.Inner.RecordSets
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.TXT)
+                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:C6F06A2EC17D0A1052A28CE3A09D4D83

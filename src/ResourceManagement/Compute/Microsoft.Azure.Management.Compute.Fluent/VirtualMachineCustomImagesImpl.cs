@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using VirtualMachineCustomImage.Definition;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for VirtualMachineCustomImages.
@@ -46,23 +47,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<IVirtualMachineCustomImage> List()
+        public IEnumerable<IVirtualMachineCustomImage> List()
         {
-            var pagedList = new PagedList<ImageInner>(Inner.List(), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public PagedList<IVirtualMachineCustomImage> ListByGroup(string resourceGroupName)
+        public IEnumerable<IVirtualMachineCustomImage> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<ImageInner>(Inner.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
-            {
-                return Inner.ListByResourceGroupNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
+                .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:EB96DF7C77547AEAC01FB2D702838F18

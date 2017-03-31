@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of CNameRecordSets.
@@ -46,16 +47,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:835EB6D00E8349C692B56704F6AE6278
-        public PagedList<ICNameRecordSet> List()
+        public IEnumerable<ICNameRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
-                dnsZone.ResourceGroupName,
-                dnsZone.Name,
-                RecordType.CNAME), (string nextPageLink) =>
-                {
-                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
-                });
-            return WrapList(pagedList);
+            return WrapList(dnsZone.Manager.Inner.RecordSets
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.CNAME)
+                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:3FD60711AC73E456F2C157D4892D9EF5

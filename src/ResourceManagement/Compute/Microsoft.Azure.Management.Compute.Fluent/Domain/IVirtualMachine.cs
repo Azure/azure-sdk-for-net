@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <return>The virtual machine sizes.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes();
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes();
 
         /// <return>The resource ID of the public IP address associated with this virtual machine's primary network interface.</return>
         string GetPrimaryPublicIPAddressId();

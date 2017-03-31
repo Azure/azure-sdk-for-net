@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -29,17 +31,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return new ProviderImpl(inner);
         }
 
-        public PagedList<IProvider> List()
+        public IEnumerable<IProvider> List()
         {
-            PagedList<ProviderInner> innerList = new PagedList<ProviderInner>(client.List(), (string nextLink) =>
-            {
-                return client.ListNext(nextLink);
-            });
-            return new PagedList<IProvider>(new WrappedPage<ProviderInner, IProvider>(innerList.CurrentPage, WrapModel), (string nextLink) =>
-            {
-                innerList.LoadNextPage();
-                return new WrappedPage<ProviderInner, IProvider>(innerList.CurrentPage, WrapModel);
-            });
+            return client.List()
+                         .AsContinuousCollection(link => client.ListNext(link))
+                         .Select(inner => WrapModel(inner));
         }
 
         public IProvider Register(string resourceProviderNamespace)

@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        PagedList<ISqlElasticPool> ISupportsListingByParent<ISqlElasticPool, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
+        IEnumerable<ISqlElasticPool> ISupportsListingByParent<ISqlElasticPool, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
         {
-            return this.ListByParent(resourceGroupName, parentName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+            return this.ListByParent(resourceGroupName, parentName);
         }
 
         /// <summary>

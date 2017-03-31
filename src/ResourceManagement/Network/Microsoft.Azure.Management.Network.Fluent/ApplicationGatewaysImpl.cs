@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for ApplicationGateways.
@@ -30,14 +31,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public PagedList<IApplicationGateway> List()
+        public IEnumerable<IApplicationGateway> List()
         {
-            var pagedList = new PagedList<ApplicationGatewayInner>(Inner.ListAll(), (string nextPageLink) =>
-            {
-                return Inner.ListAllNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.ListAll().AsContinuousCollection(link => Inner.ListAllNext(link)));
         }
 
         ///GENMHASH:DB7CDF51E063E00F632236B9A1581DD7:A55F357967E86E32E70097D1F0B4D25E
@@ -47,14 +43,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public PagedList<IApplicationGateway> ListByGroup(string groupName)
+        public IEnumerable<IApplicationGateway> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<ApplicationGatewayInner>(Inner.List(groupName), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.List(groupName).AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4FD24066BFA6ACCBA6BCD17F67645E2A

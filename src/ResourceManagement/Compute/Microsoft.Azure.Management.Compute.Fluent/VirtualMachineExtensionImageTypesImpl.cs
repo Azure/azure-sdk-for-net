@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageTypes.
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:59EB64D540FD3901775AB588B47D36A4
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType> List()
+        public IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType> List()
         {
             return WrapList(this.client.ListTypes(this.publisher.Region.Name, this.publisher.Name));
         }

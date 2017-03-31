@@ -42,7 +42,7 @@ namespace Azure.Tests.ServiceBus
 
                     var namespaces = serviceBusManager.Namespaces.ListByGroup(rgName);
                     Assert.NotNull(namespaces);
-                    Assert.True(namespaces.Count > 0);
+                    Assert.True(namespaces.Count() > 0);
                     var found = namespaces.Any(n => n.Name.Equals(nspace.Name, StringComparison.OrdinalIgnoreCase));
                     Assert.True(found);
 
@@ -58,13 +58,13 @@ namespace Azure.Tests.ServiceBus
                     Assert.True(nspace.ResourceGroupName.Equals(rgName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(nspace.CreatedAt);
                     Assert.NotNull(nspace.Queues);
-                    Assert.Equal(0, nspace.Queues.List().Count);
+                    Assert.Equal(0, nspace.Queues.List().Count());
                     Assert.NotNull(nspace.Topics);
                     Assert.Equal(0, nspace.Topics.List().Count());
                     Assert.NotNull(nspace.AuthorizationRules);
                     var defaultNsRules = nspace.AuthorizationRules.List();
                     Assert.Equal(1, defaultNsRules.Count());
-                    var defaultNsRule = defaultNsRules[0];
+                    var defaultNsRule = defaultNsRules.ElementAt(0);
                     Assert.True(defaultNsRule.Name.Equals("RootManageSharedAccessKey", StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(defaultNsRule.Rights);
                     Assert.NotNull(defaultNsRule.NamespaceName);
@@ -225,7 +225,7 @@ namespace Azure.Tests.ServiceBus
                     //
                     var queuesInNamespace = nspace.Queues.List();
                     Assert.NotNull(queuesInNamespace);
-                    Assert.Equal(1, queuesInNamespace.Count);
+                    Assert.Equal(1, queuesInNamespace.Count());
                     IQueue foundQueue = queuesInNamespace.FirstOrDefault(q => q.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundQueue);
                     // Remove Queue
@@ -235,7 +235,7 @@ namespace Azure.Tests.ServiceBus
                         .Apply();
                     queuesInNamespace = nspace.Queues.List();
                     Assert.NotNull(queuesInNamespace);
-                    Assert.Equal(0, queuesInNamespace.Count);
+                    Assert.Equal(0, queuesInNamespace.Count());
                 }
                 finally
                 {
@@ -308,7 +308,7 @@ namespace Azure.Tests.ServiceBus
 
                     var topicsInNamespace = nspace.Topics.List();
                     Assert.NotNull(topicsInNamespace);
-                    Assert.True(topicsInNamespace.Count > 0);
+                    Assert.True(topicsInNamespace.Count() > 0);
                     ITopic foundTopic = topicsInNamespace.FirstOrDefault(t => t.Name.Equals(topic.Name, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundTopic);
                     foundTopic = foundTopic.Update()
@@ -373,7 +373,7 @@ namespace Azure.Tests.ServiceBus
                     //
                     var topicsInNamespace = nspace.Topics.List();
                     Assert.NotNull(topicsInNamespace);
-                    Assert.Equal(1, topicsInNamespace.Count);
+                    Assert.Equal(1, topicsInNamespace.Count());
                     ITopic foundTopic = topicsInNamespace.FirstOrDefault(t => t.Name.Equals(topicName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundTopic);
                     // Remove Topic
@@ -383,7 +383,7 @@ namespace Azure.Tests.ServiceBus
                             .Apply();
                     topicsInNamespace = nspace.Topics.List();
                     Assert.NotNull(topicsInNamespace);
-                    Assert.Equal(0, topicsInNamespace.Count);
+                    Assert.Equal(0, topicsInNamespace.Count());
                 }
                 finally
                 {
@@ -434,7 +434,7 @@ namespace Azure.Tests.ServiceBus
                     //
                     var rulesInNamespace = nspace.AuthorizationRules.List();
                     Assert.NotNull(rulesInNamespace);
-                    Assert.Equal(2, rulesInNamespace.Count);    // Default + one explicit
+                    Assert.Equal(2, rulesInNamespace.Count());    // Default + one explicit
 
                     INamespaceAuthorizationRule foundNsRule = rulesInNamespace.FirstOrDefault(r => r.Name.Equals(nsRuleName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(foundNsRule);
@@ -452,8 +452,8 @@ namespace Azure.Tests.ServiceBus
                     //
                     var queuesInNamespace = nspace.Queues.List();
                     Assert.NotNull(queuesInNamespace);
-                    Assert.Equal(1, queuesInNamespace.Count);
-                    var queue = queuesInNamespace[0];
+                    Assert.Equal(1, queuesInNamespace.Count());
+                    var queue = queuesInNamespace.ElementAt(0);
                     Assert.NotNull(queue);
                     Assert.NotNull(queue.Inner);
 
@@ -468,7 +468,7 @@ namespace Azure.Tests.ServiceBus
                         .Apply();
                     Assert.True(qRule.Rights.Contains(AccessRights.Manage));
                     var rulesInQueue = queue.AuthorizationRules.List();
-                    Assert.True(rulesInQueue.Count > 0);
+                    Assert.True(rulesInQueue.Count() > 0);
                     var foundQRule = false;
                     foreach (var r in rulesInQueue)
                     {
@@ -484,8 +484,8 @@ namespace Azure.Tests.ServiceBus
                     //
                     var topicsInNamespace = nspace.Topics.List();
                     Assert.NotNull(topicsInNamespace);
-                    Assert.Equal(1, topicsInNamespace.Count);
-                    var topic = topicsInNamespace[0];
+                    Assert.Equal(1, topicsInNamespace.Count());
+                    var topic = topicsInNamespace.ElementAt(0);
                     Assert.NotNull(topic);
                     Assert.NotNull(topic.Inner);
                     var tRule = topic.AuthorizationRules
@@ -499,7 +499,7 @@ namespace Azure.Tests.ServiceBus
                             .Apply();
                     Assert.True(tRule.Rights.Contains(AccessRights.Manage));
                     var rulesInTopic = topic.AuthorizationRules.List();
-                    Assert.True(rulesInTopic.Count > 0);
+                    Assert.True(rulesInTopic.Count() > 0);
                     var foundTRule = false;
                     foreach (var r in rulesInTopic)
                     {
@@ -589,12 +589,12 @@ namespace Azure.Tests.ServiceBus
                     Assert.NotNull(subscription);
                     Assert.NotNull(subscription.Inner);
                     var subscriptionsInTopic = topic.Subscriptions.List();
-                    Assert.True(subscriptionsInTopic.Count > 0);
+                    Assert.True(subscriptionsInTopic.Count() > 0);
                     var foundSubscription = subscriptionsInTopic.Any(s => s.Name.Equals(subscription.Name, StringComparison.OrdinalIgnoreCase));
                     Assert.True(foundSubscription);
                     topic.Subscriptions.DeleteByName(subscriptionName);
                     subscriptionsInTopic = topic.Subscriptions.List();
-                    Assert.True(subscriptionsInTopic.Count == 0);
+                    Assert.True(subscriptionsInTopic.Count() == 0);
                 }
                 finally
                 {

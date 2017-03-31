@@ -74,7 +74,7 @@ namespace Azure.Tests.Redis
                     {
                         Assert.True(false);
                     }
-                    Assert.Equal(1, redisCaches.Count);
+                    Assert.Equal(1, redisCaches.Count());
 
                     // List all Redis resources
                     redisCaches = redisManager.RedisCaches.List();
@@ -83,7 +83,7 @@ namespace Azure.Tests.Redis
                     {
                         Assert.True(false);
                     }
-                    Assert.Equal(3, redisCaches.Count);
+                    Assert.Equal(3, redisCaches.Count());
 
                     // Get
                     var redisCacheGet = redisManager.RedisCaches.GetByGroup(GroupName, CacheName);

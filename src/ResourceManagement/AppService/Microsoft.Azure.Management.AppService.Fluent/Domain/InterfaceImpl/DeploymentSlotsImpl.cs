@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
+    using System.Collections.Generic;
 
     internal partial class DeploymentSlotsImpl 
     {
@@ -63,9 +64,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.List()
+        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
+            return this.List();
         }
 
         /// <summary>

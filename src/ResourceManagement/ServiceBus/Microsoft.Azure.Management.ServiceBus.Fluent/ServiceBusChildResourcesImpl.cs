@@ -74,13 +74,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         protected abstract Task<IPage<InnerT>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:874C7A8E3CDF988B4BDA901B0FE62ABD
-        public PagedList<T> List()
+        public IEnumerable<T> List()
         {
-            var pagedList = new PagedList<InnerT>(ListInnerFirstPageAsync().ConfigureAwait(false).GetAwaiter().GetResult(), (string nextPageLink) =>
-            {
-                return ListInnerNextPageAsync(nextPageLink).ConfigureAwait(false).GetAwaiter().GetResult();
-            });
-            return WrapList(pagedList);
+            return WrapList(ListInnerFirstPageAsync().ConfigureAwait(false).GetAwaiter().GetResult()
+                            .AsContinuousCollection(link => ListInnerNextPageAsync(link).ConfigureAwait(false).GetAwaiter().GetResult()));
         }
     }
 }

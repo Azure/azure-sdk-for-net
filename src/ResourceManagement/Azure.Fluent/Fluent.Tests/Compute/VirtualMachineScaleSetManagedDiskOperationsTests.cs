@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Fluent.Tests.Compute
@@ -64,7 +65,7 @@ namespace Fluent.Tests.Compute
 
                     var virtualMachineScaleSetVMs = vmScaleSet.VirtualMachines;
                     var virtualMachines = virtualMachineScaleSetVMs.List();
-                    Assert.Equal(virtualMachines.Count, vmScaleSet.Capacity);
+                    Assert.Equal(virtualMachines.Count(), vmScaleSet.Capacity);
                     foreach (var vm in virtualMachines)
                     {
                         Assert.True(vm.IsOSBasedOnPlatformImage);
@@ -83,7 +84,7 @@ namespace Fluent.Tests.Compute
 
                     virtualMachineScaleSetVMs = vmScaleSet.VirtualMachines;
                     virtualMachines = virtualMachineScaleSetVMs.List();
-                    Assert.Equal(virtualMachines.Count, vmScaleSet.Capacity);
+                    Assert.Equal(virtualMachines.Count(), vmScaleSet.Capacity);
                     foreach (var vm in virtualMachines)
                     {
                         Assert.NotNull(vm.DataDisks);
@@ -183,7 +184,7 @@ namespace Fluent.Tests.Compute
 
                     var virtualMachineScaleSetVMs = vmScaleSet.VirtualMachines;
                     var virtualMachines = virtualMachineScaleSetVMs.List();
-                    Assert.Equal(virtualMachines.Count, vmScaleSet.Capacity);
+                    Assert.Equal(virtualMachines.Count(), vmScaleSet.Capacity);
                     foreach (var vm1 in virtualMachines)
                     {
                         Assert.True(vm1.IsOSBasedOnCustomImage);

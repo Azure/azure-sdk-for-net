@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using SqlServer.Definition;
     using Models;
+    using System.Collections.Generic;
 
     internal partial class SqlServersImpl 
     {
@@ -36,9 +37,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlServer> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -67,9 +68,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlServer> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.List()
+        IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>;
+            return this.List();
         }
     }
 }

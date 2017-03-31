@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for VirtualMachineScaleSetVMs.
@@ -38,14 +39,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:1AA7BDC7AB6868AA92F095AC7974525B
-        public PagedList<IVirtualMachineScaleSetVM> List()
+        public IEnumerable<IVirtualMachineScaleSetVM> List()
         {
-            var pagedList = new PagedList<VirtualMachineScaleSetVMInner>(Inner.List(scaleSet.ResourceGroupName, 
-                this.scaleSet.Name), (string nextPageLink) =>
-                    {
-                        return Inner.ListNext(nextPageLink);
-                    });
-            return WrapList(pagedList);
+            return WrapList(Inner.List(scaleSet.ResourceGroupName,this.scaleSet.Name)
+                .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:3231F2649B87EC1E21076533D17E37D1:3FD352500A8609B35E39BD6C990FFB4D

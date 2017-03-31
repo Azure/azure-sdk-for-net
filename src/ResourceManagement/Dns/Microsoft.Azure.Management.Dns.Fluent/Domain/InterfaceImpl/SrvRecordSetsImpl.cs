@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using System.Collections.Generic;
 
     internal partial class SrvRecordSetsImpl 
     {
@@ -11,9 +12,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>.List()
+        IEnumerable<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>;
+            return this.List();
         }
 
         IDnsZone IHasParent<IDnsZone>.Parent

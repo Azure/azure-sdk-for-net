@@ -49,25 +49,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:EA49478191CB500D3891D0EDE475C10E
-        internal PagedList<INetworkInterface> List()
+        internal IEnumerable<INetworkInterface> List()
         {
-            var pagedList = new PagedList<NetworkInterfaceInner>(Inner.ListAll(), (string nextPageLink) =>
-            {
-                return Inner.ListAllNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.ListAll()
+                                 .AsContinuousCollection(link => Inner.ListAllNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:C8F667C9694115E8E2EC05A78BB18EDD
-        internal PagedList<INetworkInterface> ListByGroup(string groupName)
+        internal IEnumerable<INetworkInterface> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<NetworkInterfaceInner>(Inner.List(groupName), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.List(groupName)
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -100,7 +92,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:FB8BAF1D7A241BC666A03354AD1A59B1:350254D9139C5CB1FCAD7F7F992B74F8
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
         {
             VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(
                 resourceGroupName,
@@ -110,13 +102,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:BA50DA09E1FC76012780D58EFCE9A237:FCFAC84F49E66F1F4CEB39A2A782719B
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetId(string id)
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetId(string id)
         {
             return this.ListByVirtualMachineScaleSet(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
         ///GENMHASH:DD375F4600A4F5AA88A87C271E21CBDB:77581D23FE59229EE53313A9B4816975
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
         {
             VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(
                 resourceGroupName,

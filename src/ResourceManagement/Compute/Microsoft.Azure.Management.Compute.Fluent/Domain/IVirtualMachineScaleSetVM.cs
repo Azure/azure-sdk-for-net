@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         bool IsManagedDiskEnabled { get; }
 
         /// <return>The network interfaces associated with this virtual machine instance.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
 
         /// <summary>
         /// Restarts the virtual machine instance.

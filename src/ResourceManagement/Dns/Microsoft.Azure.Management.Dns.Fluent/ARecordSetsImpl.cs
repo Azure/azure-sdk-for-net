@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of ARecordSets.
@@ -41,16 +41,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:8F2ACE161999F511784115AD341D0CF6
-        public PagedList<IARecordSet> List()
+        public IEnumerable<IARecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
-                dnsZone.ResourceGroupName,
-                dnsZone.Name,
-                RecordType.A), (string nextPageLink) =>
-            {
-                return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(dnsZone.Manager.Inner.RecordSets
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.A)
+                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
         ///GENMHASH:A640FDB092C8BFC007EAD13B539088B5:93DD647D9AB0DB30D017785882D88829

@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.Storage.Fluent;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -151,13 +152,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:842FBE4DCB8BFE1B50632DBBE157AEA8:B5262187B60CE486998F800E9A96B659
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes()
+        public IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes()
         {
-            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(Manager.Inner.VirtualMachines.ListAvailableSizes(this.ResourceGroupName,
-            this.Name), innerSize =>
-            {
-                return new VirtualMachineSizeImpl(innerSize);
-            });
+            return Manager.Inner.VirtualMachines.ListAvailableSizes(this.ResourceGroupName,this.Name)
+                .Select(inner => new VirtualMachineSizeImpl(inner));
         }
 
         ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC

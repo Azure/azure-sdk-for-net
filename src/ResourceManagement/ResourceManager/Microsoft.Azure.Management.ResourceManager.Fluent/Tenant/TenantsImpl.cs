@@ -6,6 +6,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Rest.Azure;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -18,20 +20,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             this.innerCollection = client;
         }
 
-        PagedList<ITenant> ISupportsListing<ITenant>.List()
+        IEnumerable<ITenant> ISupportsListing<ITenant>.List()
         {
-            IPage<TenantIdDescription> firstPage = innerCollection.List();
-            var innerList = new PagedList<TenantIdDescription>(firstPage, (string nextPageLink) =>
-            {
-                return innerCollection.ListNext(nextPageLink);
-            });
-
-            return new PagedList<ITenant>(new WrappedPage<TenantIdDescription, ITenant>(innerList.CurrentPage, WrapModel),
-            (string nextPageLink) =>
-            {
-                innerList.LoadNextPage();
-                return new WrappedPage<TenantIdDescription, ITenant>(innerList.CurrentPage, WrapModel);
-            });
+            return innerCollection.List()
+                                  .AsContinuousCollection(link => innerCollection.ListNext(link))
+                                  .Select(inner => WrapModel(inner));
         }
 
         private ITenant WrapModel(TenantIdDescription inner)

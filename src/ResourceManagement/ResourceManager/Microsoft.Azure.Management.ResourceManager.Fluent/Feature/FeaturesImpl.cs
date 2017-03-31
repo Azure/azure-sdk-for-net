@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Feature;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -17,17 +18,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             this.client = client;
         }
 
-        public PagedList<IFeature> List()
+        public IEnumerable<IFeature> List()
         {
-            PagedList<FeatureResultInner> innerList = new PagedList<FeatureResultInner>(client.ListAll(), (string nextLink) =>
-            {
-                return client.ListNext(nextLink);
-            });
-            return new PagedList<IFeature>(new WrappedPage<FeatureResultInner, IFeature>(innerList.CurrentPage, WrapModel), (string nextLink) =>
-            {
-                innerList.LoadNextPage();
-                return new WrappedPage<FeatureResultInner, IFeature>(innerList.CurrentPage, WrapModel);
-            });
+            return client.ListAll()
+                         .AsContinuousCollection(link => client.ListNext(link))
+                         .Select(inner => WrapModel(inner));
         }
 
         public IInResourceProvider ResourceProvider(string resourceProviderName)

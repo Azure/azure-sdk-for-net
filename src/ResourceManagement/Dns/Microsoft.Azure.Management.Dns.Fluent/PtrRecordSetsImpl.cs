@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of PtrRecordSets.
@@ -46,16 +47,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:17F3505BD759D93DD66665661724A896
-        public PagedList<IPtrRecordSet> List()
+        public IEnumerable<IPtrRecordSet> List()
         {
-            var pagedList = new PagedList<RecordSetInner>(dnsZone.Manager.Inner.RecordSets.ListByType(
-                dnsZone.ResourceGroupName,
-                dnsZone.Name,
-                RecordType.PTR), (string nextPageLink) =>
-                {
-                    return dnsZone.Manager.Inner.RecordSets.ListByTypeNext(nextPageLink);
-                });
-            return WrapList(pagedList);
+            return WrapList(dnsZone.Manager.Inner.RecordSets
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.PTR)
+                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:EF08BDD63ECDB2FDEF9A787AACCE6276

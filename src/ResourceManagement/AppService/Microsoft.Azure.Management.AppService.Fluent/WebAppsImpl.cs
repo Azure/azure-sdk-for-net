@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System;
+    using System.Linq;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for WebApps.
@@ -28,17 +30,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IWebApp> ListByGroup(string resourceGroupName)
+        public IEnumerable<IWebApp> ListByGroup(string resourceGroupName)
         {
             Func<SiteInner, IWebApp> converter = inner =>
             {
                 return PopulateModelAsync(inner).GetAwaiter().GetResult();
             };
-            var webApps = new WrappedPage<SiteInner, IWebApp>(Inner.ListByResourceGroup(resourceGroupName), converter);
-            return new PagedList<IWebApp>(webApps, s =>
-            {
-                return new WrappedPage<SiteInner, IWebApp>(Inner.ListByResourceGroupNext(s), converter);
-            });
+
+            return Inner.ListByResourceGroup(resourceGroupName)
+                        .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link))
+                        .Select(inner => converter(inner));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20

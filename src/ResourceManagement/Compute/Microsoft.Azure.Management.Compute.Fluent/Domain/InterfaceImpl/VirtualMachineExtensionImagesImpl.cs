@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using System.Collections.Generic;
 
     internal partial class VirtualMachineExtensionImagesImpl 
     {
@@ -23,9 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="region">The selected Azure region.</param>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>.ListByRegion(Region region)
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>.ListByRegion(Region region)
         {
-            return this.ListByRegion(region) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>;
+            return this.ListByRegion(region);
         }
 
         /// <summary>
@@ -33,9 +34,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="regionName">The name of an Azure region.</param>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>.ListByRegion(string regionName)
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>.ListByRegion(string regionName)
         {
-            return this.ListByRegion(regionName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>;
+            return this.ListByRegion(regionName);
         }
     }
 }

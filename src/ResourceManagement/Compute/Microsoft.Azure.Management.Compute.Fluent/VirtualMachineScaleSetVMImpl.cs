@@ -562,7 +562,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:3CE987DC17F24091C30F014BD1CD86EC
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
         {
             return this.Parent.ListNetworkInterfacesByInstanceId(this.InstanceId());
         }

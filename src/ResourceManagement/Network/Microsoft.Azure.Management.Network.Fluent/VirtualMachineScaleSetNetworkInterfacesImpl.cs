@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System;
     using Models;
     using ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     internal partial class VirtualMachineScaleSetNetworkInterfacesImpl :
         ReadableWrappers<IVirtualMachineScaleSetNetworkInterface,
@@ -57,26 +58,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapModel(networkInterfaceInner);
         }
 
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> List()
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> List()
         {
-            var pagedList = new PagedList<NetworkInterfaceInner>(Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces(
-                resourceGroupName, scaleSetName), (string nextPageLink) =>
-            {
-                return Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Manager.Inner.NetworkInterfaces
+                .ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName, scaleSetName)
+                .AsContinuousCollection(link => Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNext(link)));
         }
 
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId)
+        public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId)
         {
-            var pagedList = new PagedList<NetworkInterfaceInner>(Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces(
-                resourceGroupName,
-                scaleSetName,
-                instanceId), (string nextPageLink) =>
-            {
-                return Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Manager.Inner.NetworkInterfaces
+                .ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName, scaleSetName, instanceId)
+                .AsContinuousCollection(link => Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesNext(link)));
         }
 
         protected override IVirtualMachineScaleSetNetworkInterface WrapModel(NetworkInterfaceInner inner)

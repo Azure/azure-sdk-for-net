@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         public Task<Observable<FluentModelTImpl>> CommitAsync(CancellationToken cacellationToken)
         {
             // This method cannot be implemented as there is no easy way to stream reources due to the 
-            // absense of Rx.Net
+            // absence of Rx.Net
         }
         **/
 

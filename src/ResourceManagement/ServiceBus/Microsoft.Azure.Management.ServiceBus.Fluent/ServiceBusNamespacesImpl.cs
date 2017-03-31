@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using Management.Fluent.ServiceBus.Models;
     using ResourceManager.Fluent.Core;
     using ServiceBus.Fluent;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -72,22 +73,16 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
                 this.Manager);
         }
 
-        public PagedList<IServiceBusNamespace> List()
+        public IEnumerable<IServiceBusNamespace> List()
         {
-            var pagedList = new PagedList<NamespaceModelInner>(Inner.List(), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
-        public PagedList<IServiceBusNamespace> ListByGroup(string resourceGroupName)
+        public IEnumerable<IServiceBusNamespace> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<NamespaceModelInner>(Inner.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
-            {
-                return Inner.ListByResourceGroupNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
     }
 }

@@ -18,16 +18,13 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             this.client = client;
         }
 
-        public PagedList<IStorageUsage> List()
+        public IEnumerable<IStorageUsage> List()
         {
             if (client.List() == null)
             {
-                return PagedList<Usage>.EmptyPagedList<IStorageUsage>();
+                return new List<IStorageUsage>();
             }
-
-            IEnumerable<Usage> usages = client.List();
-            var pagedList = new PagedList<Usage>(usages);
-            return WrapList(pagedList);
+            return WrapList(client.List());
         }
 
         protected override IStorageUsage WrapModel(Usage inner)

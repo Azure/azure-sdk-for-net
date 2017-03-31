@@ -3,10 +3,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
-
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using System.Threading;
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Provides access to listing Azure resources of a specific type in a specific resource group.
@@ -22,6 +19,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        PagedList<T> ListByGroup (string resourceGroupName);
+        IEnumerable<T> ListByGroup (string resourceGroupName);
     }
 }

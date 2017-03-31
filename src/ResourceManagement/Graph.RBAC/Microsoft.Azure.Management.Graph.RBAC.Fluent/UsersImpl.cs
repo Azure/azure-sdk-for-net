@@ -3,15 +3,11 @@
 
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-
-    using Microsoft.Rest;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using System.Threading;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
-    using Management.Graph.RBAC;
-    using System;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
@@ -48,10 +44,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<IUser> List ()
+        public IEnumerable<IUser> List ()
         {
-            var pagedList = new PagedList<UserInner>(innerCollection.List());
-            return WrapList(pagedList);
+            return WrapList(innerCollection.List());
         }
 
         ///GENMHASH:8B08433C196DD61BBDD2BB90A9108032:A264B6A43B1DB71B6549773B10B60787

@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using Rest.Azure;
     using ResourceManager.Fluent.Core;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for Subscriptions.
@@ -106,7 +107,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:DBE309666B1D8BDFE15651BA9A0DD4A1
-        public override Task<PagedList<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<IEnumerable<ISubscription>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
             // 'IndependentChildResourcesImpl' will be refactoring to remove all 'ByParent' methods
             // This method is not exposed to end user from any of the derived types of IndependentChildResourcesImpl

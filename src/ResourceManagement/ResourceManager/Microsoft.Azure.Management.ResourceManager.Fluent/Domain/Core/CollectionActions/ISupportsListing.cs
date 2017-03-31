@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
-
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-
     /// <summary>
     /// Provides access to listing Azure resources of a specific type in a subscription.
     /// <p>
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        PagedList<T> List ();
-
+        IEnumerable<T> List ();
     }
 }
