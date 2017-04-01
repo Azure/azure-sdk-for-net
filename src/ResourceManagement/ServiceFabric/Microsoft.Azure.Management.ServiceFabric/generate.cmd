@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=1.0.0-Nightly20170202
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-servicefabric/2016-09-01/swagger/servicefabric.json"
+    set specFile="https://github.com/Azure/azure-rest-api-specs/blob/c683f6510a689e1629adb5d8e9e21848c68f2ca3/arm-servicefabric/2016-09-01/swagger/servicefabric.json"
 ) else (
     set specFile="%1"
 )
