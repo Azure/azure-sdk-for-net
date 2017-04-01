@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,7 +20,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the ClientCertificateCommonName
         /// class.
         /// </summary>
-        public ClientCertificateCommonName() { }
+        public ClientCertificateCommonName()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ClientCertificateCommonName
@@ -31,19 +35,25 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// granted access; be carefull using wild card common names</param>
         /// <param name="certificateIssuerThumbprint">Certificate issuer
         /// thumbprint</param>
-        public ClientCertificateCommonName(bool? isAdmin = default(bool?), string certificateCommonName = default(string), string certificateIssuerThumbprint = default(string))
+        public ClientCertificateCommonName(bool isAdmin, string certificateCommonName, string certificateIssuerThumbprint = default(string))
         {
             IsAdmin = isAdmin;
             CertificateCommonName = certificateCommonName;
             CertificateIssuerThumbprint = certificateIssuerThumbprint;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets is this certificate used for admin access from the
         /// client, if false , it is used or query only access
         /// </summary>
         [JsonProperty(PropertyName = "isAdmin")]
-        public bool? IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         /// Gets or sets certificate common name to be granted access; be
@@ -58,5 +68,18 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "certificateIssuerThumbprint")]
         public string CertificateIssuerThumbprint { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CertificateCommonName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CertificateCommonName");
+            }
+        }
     }
 }

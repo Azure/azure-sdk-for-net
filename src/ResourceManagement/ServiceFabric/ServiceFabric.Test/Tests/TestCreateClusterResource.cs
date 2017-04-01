@@ -37,9 +37,9 @@ namespace ServiceFabric.Tests.Tests
                     Assert.True(e.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
                 }
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+                TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                var cluster = CreateACluster(resouceClient, serviceFabricClient, resouceGroupName, location, clusterName);
+                var cluster = CreateCluster(resouceClient, serviceFabricClient, resouceGroupName, location, clusterName);
                 cluster = serviceFabricClient.Clusters.Get(resouceGroupName, clusterName);
                 Assert.NotNull(cluster);
             }

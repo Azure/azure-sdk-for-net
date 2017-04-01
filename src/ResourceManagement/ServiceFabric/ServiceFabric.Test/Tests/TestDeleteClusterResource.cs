@@ -27,7 +27,7 @@ namespace ServiceFabric.Tests.Tests
                 var location = "South Central US";
                 var clusterName = "testDeleteCluster";
 
-                var cluster = CreateACluster(resouceClient, serviceFabricClient, resouceGroupName, location, clusterName);
+                var cluster = CreateCluster(resouceClient, serviceFabricClient, resouceGroupName, location, clusterName);
 
                 cluster = serviceFabricClient.Clusters.Get(resouceGroupName, clusterName);
                 Assert.NotNull(cluster);

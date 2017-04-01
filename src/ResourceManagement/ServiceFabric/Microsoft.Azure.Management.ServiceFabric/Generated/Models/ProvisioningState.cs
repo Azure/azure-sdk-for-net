@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     /// </summary>
     public static class ProvisioningState
     {
-        public const string Default = "Default";
         public const string Updating = "Updating";
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";

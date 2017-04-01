@@ -18,7 +18,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the AvailableOperationDisplay class.
         /// </summary>
-        public AvailableOperationDisplay() { }
+        public AvailableOperationDisplay()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AvailableOperationDisplay class.
@@ -33,7 +36,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             Resource = resource;
             Operation = operation;
             Description = description;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets provider name

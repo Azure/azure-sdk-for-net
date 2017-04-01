@@ -18,12 +18,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the OperationResult class.
         /// </summary>
-        public OperationResult() { }
+        public OperationResult()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OperationResult class.
         /// </summary>
         /// <param name="name">Result name</param>
+        /// <param name="display">Dispaly of the result</param>
         /// <param name="origin">Origin result</param>
         /// <param name="nextLink">The URL to use for getting the next set of
         /// results.</param>
@@ -33,7 +37,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             Display = display;
             Origin = origin;
             NextLink = nextLink;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets result name
@@ -42,6 +52,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets dispaly of the result
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public AvailableOperationDisplay Display { get; set; }

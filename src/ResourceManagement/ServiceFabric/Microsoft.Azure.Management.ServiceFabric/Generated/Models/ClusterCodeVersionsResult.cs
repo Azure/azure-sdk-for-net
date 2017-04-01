@@ -7,33 +7,42 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The detail of the ServiceFabric runtime version result
+    /// The result of the ServiceFabric runtime versions
     /// </summary>
-    public partial class ClusterVersionDetails
+    [Rest.Serialization.JsonTransformation]
+    public partial class ClusterCodeVersionsResult
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterVersionDetails class.
+        /// Initializes a new instance of the ClusterCodeVersionsResult class.
         /// </summary>
-        public ClusterVersionDetails()
+        public ClusterCodeVersionsResult()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterVersionDetails class.
+        /// Initializes a new instance of the ClusterCodeVersionsResult class.
         /// </summary>
+        /// <param name="id">The identification of the result</param>
+        /// <param name="name">The name of the result</param>
+        /// <param name="type">The result resource type</param>
         /// <param name="codeVersion">The ServiceFabric runtime version of the
         /// cluster</param>
         /// <param name="supportExpiryUtc">The date of expiry of support of the
         /// version</param>
         /// <param name="environment">Cluster operating system. Possible values
         /// include: 'Windows', 'Linux'</param>
-        public ClusterVersionDetails(string codeVersion = default(string), string supportExpiryUtc = default(string), string environment = default(string))
+        public ClusterCodeVersionsResult(string id = default(string), string name = default(string), string type = default(string), string codeVersion = default(string), string supportExpiryUtc = default(string), string environment = default(string))
         {
+            Id = id;
+            Name = name;
+            Type = type;
             CodeVersion = codeVersion;
             SupportExpiryUtc = supportExpiryUtc;
             Environment = environment;
@@ -46,22 +55,40 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the identification of the result
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the result
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the result resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
         /// Gets or sets the ServiceFabric runtime version of the cluster
         /// </summary>
-        [JsonProperty(PropertyName = "codeVersion")]
+        [JsonProperty(PropertyName = "properties.codeVersion")]
         public string CodeVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the date of expiry of support of the version
         /// </summary>
-        [JsonProperty(PropertyName = "supportExpiryUtc")]
+        [JsonProperty(PropertyName = "properties.supportExpiryUtc")]
         public string SupportExpiryUtc { get; set; }
 
         /// <summary>
         /// Gets or sets cluster operating system. Possible values include:
         /// 'Windows', 'Linux'
         /// </summary>
-        [JsonProperty(PropertyName = "environment")]
+        [JsonProperty(PropertyName = "properties.environment")]
         public string Environment { get; set; }
 
     }

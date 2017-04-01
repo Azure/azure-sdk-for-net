@@ -55,7 +55,7 @@ namespace ServiceFabric.Tests.Tests
                         while (string.Compare(cluster.ClusterState, "ready",true) != 0)
                         {
                             cluster = serviceFabricClient.Clusters.Get(rg.Name, res.Name);
-                            System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
+                            TestUtilities.Wait(TimeSpan.FromMinutes(1));
                         }
 
                         var ns = cluster.FabricSettings.Where(s => s.Name == "NamingService").First();

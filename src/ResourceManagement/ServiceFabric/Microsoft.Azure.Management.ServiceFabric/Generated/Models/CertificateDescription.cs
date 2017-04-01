@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -18,7 +19,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the CertificateDescription class.
         /// </summary>
-        public CertificateDescription() { }
+        public CertificateDescription()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the CertificateDescription class.
@@ -26,17 +30,23 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="thumbprint">Thumbprint of the primary
         /// certificate</param>
         /// <param name="thumbprintSecondary">Thumbprint of the secondary
-        /// certificate </param>
+        /// certificate</param>
         /// <param name="x509StoreName">The local certificate store location.
         /// Possible values include: 'AddressBook', 'AuthRoot',
         /// 'CertificateAuthority', 'Disallowed', 'My', 'Root',
         /// 'TrustedPeople', 'TrustedPublisher'</param>
-        public CertificateDescription(string thumbprint = default(string), string thumbprintSecondary = default(string), string x509StoreName = default(string))
+        public CertificateDescription(string thumbprint, string thumbprintSecondary = default(string), string x509StoreName = default(string))
         {
             Thumbprint = thumbprint;
             ThumbprintSecondary = thumbprintSecondary;
             X509StoreName = x509StoreName;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets thumbprint of the primary certificate
@@ -58,5 +68,18 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "x509StoreName")]
         public string X509StoreName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Thumbprint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Thumbprint");
+            }
+        }
     }
 }

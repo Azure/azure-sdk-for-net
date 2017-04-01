@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,18 +21,29 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the SettingsSectionDescription class.
         /// </summary>
-        public SettingsSectionDescription() { }
+        public SettingsSectionDescription()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SettingsSectionDescription class.
         /// </summary>
         /// <param name="name">The name of settings section</param>
-        /// <param name="parameters">Settings parameter value</param>
-        public SettingsSectionDescription(string name = default(string), IList<SettingsParameterDescription> parameters = default(IList<SettingsParameterDescription>))
+        /// <param name="parameters">Collection of settings in the section,
+        /// each setting is a tuple consisting of setting name and
+        /// value</param>
+        public SettingsSectionDescription(string name, IList<SettingsParameterDescription> parameters)
         {
             Name = name;
             Parameters = parameters;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of settings section
@@ -40,10 +52,38 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets settings parameter value
+        /// Gets or sets collection of settings in the section, each setting is
+        /// a tuple consisting of setting name and value
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IList<SettingsParameterDescription> Parameters { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Parameters");
+            }
+            if (Parameters != null)
+            {
+                foreach (var element in Parameters)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

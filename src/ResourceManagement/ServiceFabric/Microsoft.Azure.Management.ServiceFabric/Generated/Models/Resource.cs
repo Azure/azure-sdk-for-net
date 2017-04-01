@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        public Resource() { }
+        public Resource()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Resource class.
@@ -39,7 +42,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             Type = type;
             Location = location;
             Tags = tags;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets resource ID.

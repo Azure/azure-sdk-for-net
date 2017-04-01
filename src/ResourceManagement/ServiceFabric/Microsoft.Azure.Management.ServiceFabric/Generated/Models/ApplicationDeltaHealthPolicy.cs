@@ -21,7 +21,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the ApplicationDeltaHealthPolicy
         /// class.
         /// </summary>
-        public ApplicationDeltaHealthPolicy() { }
+        public ApplicationDeltaHealthPolicy()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ApplicationDeltaHealthPolicy
@@ -35,7 +38,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         {
             DefaultServiceTypeDeltaHealthPolicy = defaultServiceTypeDeltaHealthPolicy;
             SerivceTypeDeltaHealthPolicies = serivceTypeDeltaHealthPolicies;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets delta health policy for default services
@@ -49,5 +58,28 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "serivceTypeDeltaHealthPolicies")]
         public IDictionary<string, ServiceTypeDeltaHealthPolicy> SerivceTypeDeltaHealthPolicies { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DefaultServiceTypeDeltaHealthPolicy != null)
+            {
+                DefaultServiceTypeDeltaHealthPolicy.Validate();
+            }
+            if (SerivceTypeDeltaHealthPolicies != null)
+            {
+                foreach (var valueElement in SerivceTypeDeltaHealthPolicies.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
+            }
+        }
     }
 }

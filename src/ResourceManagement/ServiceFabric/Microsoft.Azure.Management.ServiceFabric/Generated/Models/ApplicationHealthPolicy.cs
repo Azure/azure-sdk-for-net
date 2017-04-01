@@ -13,39 +13,75 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using System.Linq;
 
     /// <summary>
-    /// Application health policy
+    /// Defines a health policy used to evaluate the health of an application
+    /// or one of its children entities.
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationHealthPolicy class.
         /// </summary>
-        public ApplicationHealthPolicy() { }
+        public ApplicationHealthPolicy()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ApplicationHealthPolicy class.
         /// </summary>
-        /// <param name="defaultServiceTypeHealthPolicy">Health policy for the
-        /// default service</param>
-        /// <param name="serivceTypeHealthPolicies">SerivceType health
-        /// policy</param>
+        /// <param name="defaultServiceTypeHealthPolicy">the health policy used
+        /// by default to evaluate the health of a service type.</param>
+        /// <param name="serivceTypeHealthPolicies"> Defines a
+        /// ServiceTypeHealthPolicy per service type name,the key is the name
+        /// of the application</param>
         public ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default(ServiceTypeHealthPolicy), IDictionary<string, ServiceTypeHealthPolicy> serivceTypeHealthPolicies = default(IDictionary<string, ServiceTypeHealthPolicy>))
         {
             DefaultServiceTypeHealthPolicy = defaultServiceTypeHealthPolicy;
             SerivceTypeHealthPolicies = serivceTypeHealthPolicies;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets health policy for the default service
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the health policy used by default to evaluate the
+        /// health of a service type.
         /// </summary>
         [JsonProperty(PropertyName = "defaultServiceTypeHealthPolicy")]
         public ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets serivceType health policy
+        /// Gets or sets  Defines a ServiceTypeHealthPolicy per service type
+        /// name,the key is the name of the application
         /// </summary>
         [JsonProperty(PropertyName = "serivceTypeHealthPolicies")]
         public IDictionary<string, ServiceTypeHealthPolicy> SerivceTypeHealthPolicies { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DefaultServiceTypeHealthPolicy != null)
+            {
+                DefaultServiceTypeHealthPolicy.Validate();
+            }
+            if (SerivceTypeHealthPolicies != null)
+            {
+                foreach (var valueElement in SerivceTypeHealthPolicies.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
+            }
+        }
     }
 }

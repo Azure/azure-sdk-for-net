@@ -18,30 +18,49 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the EndpointRangeDescription class.
         /// </summary>
-        public EndpointRangeDescription() { }
+        public EndpointRangeDescription()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the EndpointRangeDescription class.
         /// </summary>
         /// <param name="startPort">Starting port of a range of ports</param>
         /// <param name="endPort">End port of a range of ports</param>
-        public EndpointRangeDescription(int? startPort = default(int?), int? endPort = default(int?))
+        public EndpointRangeDescription(int startPort, int endPort)
         {
             StartPort = startPort;
             EndPort = endPort;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets starting port of a range of ports
         /// </summary>
         [JsonProperty(PropertyName = "startPort")]
-        public int? StartPort { get; set; }
+        public int StartPort { get; set; }
 
         /// <summary>
         /// Gets or sets end port of a range of ports
         /// </summary>
         [JsonProperty(PropertyName = "endPort")]
-        public int? EndPort { get; set; }
+        public int EndPort { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

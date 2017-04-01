@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
     /// <summary>
     /// ClustersOperations operations.
     /// </summary>
-    internal partial class ClustersOperations : IServiceOperations<ServiceFabricClient>, IClustersOperations
+    internal partial class ClustersOperations : IServiceOperations<ServiceFabricManagementClient>, IClustersOperations
     {
         /// <summary>
         /// Initializes a new instance of the ClustersOperations class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ClustersOperations(ServiceFabricClient client)
+        internal ClustersOperations(ServiceFabricManagementClient client)
         {
             if (client == null)
             {
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Gets a reference to the ServiceFabricClient
+        /// Gets a reference to the ServiceFabricManagementClient
         /// </summary>
-        public ServiceFabricClient Client { get; private set; }
+        public ServiceFabricManagementClient Client { get; private set; }
 
         /// <summary>
         /// Update cluster configuration

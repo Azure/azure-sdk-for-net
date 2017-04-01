@@ -18,7 +18,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the ErrorModelError class.
         /// </summary>
-        public ErrorModelError() { }
+        public ErrorModelError()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ErrorModelError class.
@@ -29,7 +32,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         {
             Code = code;
             Message = message;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the error code

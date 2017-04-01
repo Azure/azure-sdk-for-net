@@ -23,50 +23,68 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the ClusterUpdateParameters class.
         /// </summary>
-        public ClusterUpdateParameters() { }
+        public ClusterUpdateParameters()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ClusterUpdateParameters class.
         /// </summary>
-        /// <param name="reliabilityLevel">Cluster reliability level indicates
-        /// replica set size of system service. Possible values include:
-        /// 'Invalid', 'Bronze', 'Silver', 'Gold', 'Platinum'</param>
+        /// <param name="reliabilityLevel">This level is used to set the number
+        /// of replicas of the system services. Possible values include:
+        /// 'Bronze', 'Silver', 'Gold'</param>
         /// <param name="upgradeMode">Cluster upgrade mode indicates if fabric
         /// upgrade is initiated automatically by the system or not. Possible
-        /// values include: 'Default', 'Automatic', 'Manual'</param>
+        /// values include: 'Automatic', 'Manual'</param>
         /// <param name="clusterCodeVersion">The ServiceFabric code version, if
         /// set it, please make sure you have set upgradeMode to Manual,
-        /// otherwise ,it will fail</param>
-        /// <param name="certificate">The cluster certificate settings, the new
-        /// certificate should exist in VMSS or KeyVault,before you add it, it
-        /// will override original value</param>
+        /// otherwise ,it will fail, if you are using PUT new cluster, you can
+        /// get the version by using ClusterVersions_List, if you are updating
+        /// existing cluster, you can get the availableClusterVersions from
+        /// Clusters_Get</param>
+        /// <param name="certificate">This primay certificate will be used as
+        /// cluster node to node security, SSL certificate for cluster
+        /// management endpoint and default admin client, the certificate
+        /// should exist in the virtual machine scale sets or Azure key vault,
+        /// before you add it. It will override original value</param>
         /// <param name="clientCertificateThumbprints">The client thumbprint
-        /// details ,it is used for client access for cluter operation, it will
-        /// override existing collection</param>
-        /// <param name="fabricSettings">ServiceFabric section settings, Note,
-        /// it will overwrite existing collection</param>
+        /// details, it is used for client access for cluster operation, it
+        /// will override existing collection</param>
+        /// <param name="clientCertificateCommonNames">List of client
+        /// certificates to whitelist based on common names.</param>
+        /// <param name="fabricSettings">List of custom fabric settings to
+        /// configure the cluster, Note, it will overwrite existing
+        /// collection</param>
         /// <param name="reverseProxyCertificate">Certificate for the reverse
         /// proxy</param>
         /// <param name="nodeTypes">The list of nodetypes that make up the
         /// cluster, it will override</param>
         /// <param name="tags">Cluster update parameters</param>
-        public ClusterUpdateParameters(string reliabilityLevel = default(string), string upgradeMode = default(string), string clusterCodeVersion = default(string), CertificateDescription certificate = default(CertificateDescription), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), CertificateDescription reverseProxyCertificate = default(CertificateDescription), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ClusterUpdateParameters(string reliabilityLevel = default(string), string upgradeMode = default(string), string clusterCodeVersion = default(string), CertificateDescription certificate = default(CertificateDescription), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), CertificateDescription reverseProxyCertificate = default(CertificateDescription), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ReliabilityLevel = reliabilityLevel;
             UpgradeMode = upgradeMode;
             ClusterCodeVersion = clusterCodeVersion;
             Certificate = certificate;
             ClientCertificateThumbprints = clientCertificateThumbprints;
+            ClientCertificateCommonNames = clientCertificateCommonNames;
             FabricSettings = fabricSettings;
             ReverseProxyCertificate = reverseProxyCertificate;
             NodeTypes = nodeTypes;
             Tags = tags;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets cluster reliability level indicates replica set size
-        /// of system service. Possible values include: 'Invalid', 'Bronze',
-        /// 'Silver', 'Gold', 'Platinum'
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets this level is used to set the number of replicas of
+        /// the system services. Possible values include: 'Bronze', 'Silver',
+        /// 'Gold'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reliabilityLevel")]
         public string ReliabilityLevel { get; set; }
@@ -74,36 +92,48 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets cluster upgrade mode indicates if fabric upgrade is
         /// initiated automatically by the system or not. Possible values
-        /// include: 'Default', 'Automatic', 'Manual'
+        /// include: 'Automatic', 'Manual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradeMode")]
         public string UpgradeMode { get; set; }
 
         /// <summary>
         /// Gets or sets the ServiceFabric code version, if set it, please make
-        /// sure you have set upgradeMode to Manual, otherwise ,it will fail
+        /// sure you have set upgradeMode to Manual, otherwise ,it will fail,
+        /// if you are using PUT new cluster, you can get the version by using
+        /// ClusterVersions_List, if you are updating existing cluster, you can
+        /// get the availableClusterVersions from Clusters_Get
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterCodeVersion")]
         public string ClusterCodeVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the cluster certificate settings, the new certificate
-        /// should exist in VMSS or KeyVault,before you add it, it will
-        /// override original value
+        /// Gets or sets this primay certificate will be used as cluster node
+        /// to node security, SSL certificate for cluster management endpoint
+        /// and default admin client, the certificate should exist in the
+        /// virtual machine scale sets or Azure key vault, before you add it.
+        /// It will override original value
         /// </summary>
         [JsonProperty(PropertyName = "properties.certificate")]
         public CertificateDescription Certificate { get; set; }
 
         /// <summary>
-        /// Gets or sets the client thumbprint details ,it is used for client
-        /// access for cluter operation, it will override existing collection
+        /// Gets or sets the client thumbprint details, it is used for client
+        /// access for cluster operation, it will override existing collection
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientCertificateThumbprints")]
         public IList<ClientCertificateThumbprint> ClientCertificateThumbprints { get; set; }
 
         /// <summary>
-        /// Gets or sets serviceFabric section settings, Note, it will
-        /// overwrite existing collection
+        /// Gets or sets list of client certificates to whitelist based on
+        /// common names.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientCertificateCommonNames")]
+        public IList<ClientCertificateCommonName> ClientCertificateCommonNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of custom fabric settings to configure the
+        /// cluster, Note, it will overwrite existing collection
         /// </summary>
         [JsonProperty(PropertyName = "properties.fabricSettings")]
         public IList<SettingsSectionDescription> FabricSettings { get; set; }
@@ -127,5 +157,62 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Certificate != null)
+            {
+                Certificate.Validate();
+            }
+            if (ClientCertificateThumbprints != null)
+            {
+                foreach (var element in ClientCertificateThumbprints)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (ClientCertificateCommonNames != null)
+            {
+                foreach (var element1 in ClientCertificateCommonNames)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (FabricSettings != null)
+            {
+                foreach (var element2 in FabricSettings)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
+            }
+            if (ReverseProxyCertificate != null)
+            {
+                ReverseProxyCertificate.Validate();
+            }
+            if (NodeTypes != null)
+            {
+                foreach (var element3 in NodeTypes)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
+            }
+        }
     }
 }

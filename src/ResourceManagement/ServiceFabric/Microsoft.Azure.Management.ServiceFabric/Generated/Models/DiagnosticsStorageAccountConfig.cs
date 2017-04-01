@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,7 +20,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the DiagnosticsStorageAccountConfig
         /// class.
         /// </summary>
-        public DiagnosticsStorageAccountConfig() { }
+        public DiagnosticsStorageAccountConfig()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the DiagnosticsStorageAccountConfig
@@ -27,10 +31,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         /// <param name="storageAccountName">Diagnostics storage account
         /// name</param>
-        /// <param name="primaryAccessKey">Primary key for the Azure
-        /// Storage</param>
-        /// <param name="secondaryAccessKey">Secondary key for the Azure
-        /// Storage</param>
         /// <param name="protectedAccountKeyName">Protected Diagnostics storage
         /// key name</param>
         /// <param name="blobEndpoint">Diagnostics storage account blob
@@ -39,34 +39,26 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// endpoint</param>
         /// <param name="tableEndpoint">Diagnostics storage account table
         /// endpoint</param>
-        public DiagnosticsStorageAccountConfig(string storageAccountName = default(string), string primaryAccessKey = default(string), string secondaryAccessKey = default(string), string protectedAccountKeyName = default(string), string blobEndpoint = default(string), string queueEndpoint = default(string), string tableEndpoint = default(string))
+        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint)
         {
             StorageAccountName = storageAccountName;
-            PrimaryAccessKey = primaryAccessKey;
-            SecondaryAccessKey = secondaryAccessKey;
             ProtectedAccountKeyName = protectedAccountKeyName;
             BlobEndpoint = blobEndpoint;
             QueueEndpoint = queueEndpoint;
             TableEndpoint = tableEndpoint;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets diagnostics storage account name
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountName")]
         public string StorageAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets primary key for the Azure Storage
-        /// </summary>
-        [JsonProperty(PropertyName = "primaryAccessKey")]
-        public string PrimaryAccessKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets secondary key for the Azure Storage
-        /// </summary>
-        [JsonProperty(PropertyName = "secondaryAccessKey")]
-        public string SecondaryAccessKey { get; set; }
 
         /// <summary>
         /// Gets or sets protected Diagnostics storage key name
@@ -92,5 +84,34 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "tableEndpoint")]
         public string TableEndpoint { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (StorageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountName");
+            }
+            if (ProtectedAccountKeyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProtectedAccountKeyName");
+            }
+            if (BlobEndpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "BlobEndpoint");
+            }
+            if (QueueEndpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "QueueEndpoint");
+            }
+            if (TableEndpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TableEndpoint");
+            }
+        }
     }
 }

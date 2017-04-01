@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.0-preview",
   "description": "Microsoft Azure Management ServiceFabric Library",
   "authors": [
     "Microsoft"

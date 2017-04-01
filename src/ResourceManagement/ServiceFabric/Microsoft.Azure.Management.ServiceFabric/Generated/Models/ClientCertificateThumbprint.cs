@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,27 +20,36 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the ClientCertificateThumbprint
         /// class.
         /// </summary>
-        public ClientCertificateThumbprint() { }
+        public ClientCertificateThumbprint()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ClientCertificateThumbprint
         /// class.
         /// </summary>
         /// <param name="isAdmin">Is this certificate used for admin access
-        /// from the client, if false , it is used or query only access</param>
+        /// from the client, if false, it is used or query only access</param>
         /// <param name="certificateThumbprint">Certificate thumbprint</param>
-        public ClientCertificateThumbprint(bool? isAdmin = default(bool?), string certificateThumbprint = default(string))
+        public ClientCertificateThumbprint(bool isAdmin, string certificateThumbprint)
         {
             IsAdmin = isAdmin;
             CertificateThumbprint = certificateThumbprint;
+            CustomInit();
         }
 
         /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
         /// Gets or sets is this certificate used for admin access from the
-        /// client, if false , it is used or query only access
+        /// client, if false, it is used or query only access
         /// </summary>
         [JsonProperty(PropertyName = "isAdmin")]
-        public bool? IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         /// Gets or sets certificate thumbprint
@@ -47,5 +57,18 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "certificateThumbprint")]
         public string CertificateThumbprint { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CertificateThumbprint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CertificateThumbprint");
+            }
+        }
     }
 }

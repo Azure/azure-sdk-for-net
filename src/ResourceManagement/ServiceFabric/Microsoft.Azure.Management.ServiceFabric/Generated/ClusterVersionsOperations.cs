@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.ServiceFabric
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ClusterVersionsOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<ServiceFabricManagementClient>, IOperations
+    internal partial class ClusterVersionsOperations : IServiceOperations<ServiceFabricManagementClient>, IClusterVersionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the ClusterVersionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(ServiceFabricManagementClient client)
+        internal ClusterVersionsOperations(ServiceFabricManagementClient client)
         {
             if (client == null)
             {
@@ -47,15 +47,23 @@ namespace Microsoft.Azure.Management.ServiceFabric
         public ServiceFabricManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available ServiceFabric REST API operations.
+        /// List cluster code versions by location
         /// </summary>
+        /// <param name='location'>
+        /// The location for the cluster code versions, this is different from cluster
+        /// location
+        /// </param>
+        /// <param name='environment'>
+        /// Cluster operating system, the default means all. Possible values include:
+        /// 'Default', 'Windows', 'Linux'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorModelException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -70,11 +78,23 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<OperationResult>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ClusterCodeVersionsResult>>> ListWithHttpMessagesAsync(string location, string environment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            if (environment == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "environment");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -83,12 +103,17 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("location", location);
+                tracingParameters.Add("environment", environment);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.ServiceFabric/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions").ToString();
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{environment}", System.Uri.EscapeDataString(environment));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -154,13 +179,14 @@ namespace Microsoft.Azure.Management.ServiceFabric
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorModelException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorModel _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorModel>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -170,6 +196,10 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -182,7 +212,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<OperationResult>>();
+            var _result = new AzureOperationResponse<IPage<ClusterCodeVersionsResult>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -195,7 +225,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OperationResult>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ClusterCodeVersionsResult>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -215,7 +245,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Lists all of the available ServiceFabric REST API operations.
+        /// List cluster code versions by location
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -226,7 +256,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorModelException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -241,7 +271,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<OperationResult>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ClusterCodeVersionsResult>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -322,13 +352,14 @@ namespace Microsoft.Azure.Management.ServiceFabric
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorModelException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorModel _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorModel>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -338,6 +369,10 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -350,7 +385,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<OperationResult>>();
+            var _result = new AzureOperationResponse<IPage<ClusterCodeVersionsResult>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -363,7 +398,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OperationResult>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ClusterCodeVersionsResult>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

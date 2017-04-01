@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
     using System.Net;
     using System.Net.Http;
 
-    public partial class ServiceFabricClient : ServiceClient<ServiceFabricClient>, IServiceFabricClient, IAzureClient
+    public partial class ServiceFabricManagementClient : ServiceClient<ServiceFabricManagementClient>, IServiceFabricManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -72,23 +72,28 @@ namespace Microsoft.Azure.Management.ServiceFabric
         public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
+        /// Gets the IClusterVersionsOperations.
+        /// </summary>
+        public virtual IClusterVersionsOperations ClusterVersions { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected ServiceFabricClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected ServiceFabricManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -96,13 +101,13 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected ServiceFabricClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected ServiceFabricManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -113,7 +118,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected ServiceFabricClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected ServiceFabricManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -123,7 +128,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -137,7 +142,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected ServiceFabricClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected ServiceFabricManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -147,7 +152,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -158,7 +163,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ServiceFabricClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ServiceFabricManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -172,7 +177,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -186,7 +191,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ServiceFabricClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ServiceFabricManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -200,7 +205,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -214,7 +219,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ServiceFabricClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ServiceFabricManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -233,7 +238,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceFabricClient class.
+        /// Initializes a new instance of the ServiceFabricManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -250,7 +255,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ServiceFabricClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ServiceFabricManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -278,6 +283,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         private void Initialize()
         {
             Clusters = new ClustersOperations(this);
+            ClusterVersions = new ClusterVersionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2016-09-01";

@@ -29,9 +29,9 @@ namespace ServiceFabric.Tests.Tests
             });
         }
 
-        protected ServiceFabricClient GetServiceFabricClient(MockContext context)
+        protected ServiceFabricManagementClient GetServiceFabricClient(MockContext context)
         {
-            return context.GetServiceClient<ServiceFabricClient>(
+            return context.GetServiceClient<ServiceFabricManagementClient>(
             handlers: new RecordedDelegatingHandler()
             {
                 StatusCodeToReturn = HttpStatusCode.OK,
@@ -53,9 +53,9 @@ namespace ServiceFabric.Tests.Tests
             return resouceClient.ResourceGroups.ListResources(rg.Name, query);
         }
 
-        protected Cluster CreateACluster(
+        protected Cluster CreateCluster(
             ResourceManagementClient resouceClient,
-            ServiceFabricClient serviceFabricClient,
+            ServiceFabricManagementClient serviceFabricClient,
             string rg,
             string rgLocation,
             string clusterName)
@@ -67,11 +67,10 @@ namespace ServiceFabric.Tests.Tests
                 clusterName);
 
             var newCluster = new Cluster(
-                   rgLocation,
-                   "Silver",
-                   "Automatic",
-                   "http://testCluster.southcentralus.cloudapp.azure.com:19080",
-                    new List<NodeTypeDescription>()
+                  location: rgLocation,
+                  reliabilityLevel: "Silver",
+                  managementEndpoint: "http://testCluster.southcentralus.cloudapp.azure.com:19080",
+                  nodeTypes: new List<NodeTypeDescription>()
                    {
                       new NodeTypeDescription()
                       {
@@ -96,10 +95,10 @@ namespace ServiceFabric.Tests.Tests
                           ReverseProxyEndpointPort = null
                       }
                    },
-                   "Windows",
-                   clusterId,
-                   "testCluster",
-                   "Microsoft.ServiceFabric/clusters"
+                  clusterId: clusterId,
+                  name: "testCluster2",
+                  type: "Microsoft.ServiceFabric/clusters",
+                  vmImage: "Windows"
                   )
             {
             };

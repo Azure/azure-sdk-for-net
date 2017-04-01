@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
 
     /// <summary>
     /// </summary>
-    public partial interface IServiceFabricClient : System.IDisposable
+    public partial interface IServiceFabricManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -67,6 +67,11 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
+
+        /// <summary>
+        /// Gets the IClusterVersionsOperations.
+        /// </summary>
+        IClusterVersionsOperations ClusterVersions { get; }
 
         /// <summary>
         /// Gets the IOperations.

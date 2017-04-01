@@ -7,34 +7,64 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceFabric;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Cluster health policy
+    /// Represents the health policy used to evaluate the health of services
+    /// belonging to a service type.
     /// </summary>
     public partial class ServiceTypeHealthPolicy
     {
         /// <summary>
         /// Initializes a new instance of the ServiceTypeHealthPolicy class.
         /// </summary>
-        public ServiceTypeHealthPolicy() { }
+        public ServiceTypeHealthPolicy()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ServiceTypeHealthPolicy class.
         /// </summary>
-        /// <param name="maxPercentUnhealthyServices">Max percent of unhealthy
-        /// services</param>
+        /// <param name="maxPercentUnhealthyServices">The maximum maximum
+        /// allowed percentage of unhealthy services. Allowed values are Byte
+        /// values from zero to 100.</param>
         public ServiceTypeHealthPolicy(int? maxPercentUnhealthyServices = default(int?))
         {
             MaxPercentUnhealthyServices = maxPercentUnhealthyServices;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets max percent of unhealthy services
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the maximum maximum allowed percentage of unhealthy
+        /// services. Allowed values are Byte values from zero to 100.
         /// </summary>
         [JsonProperty(PropertyName = "maxPercentUnhealthyServices")]
         public int? MaxPercentUnhealthyServices { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MaxPercentUnhealthyServices > 100)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxPercentUnhealthyServices", 100);
+            }
+            if (MaxPercentUnhealthyServices < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxPercentUnhealthyServices", 0);
+            }
+        }
     }
 }
