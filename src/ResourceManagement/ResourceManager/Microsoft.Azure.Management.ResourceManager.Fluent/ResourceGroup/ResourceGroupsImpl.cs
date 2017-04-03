@@ -70,9 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             var resourceGroupInner = await Inner.GetAsync(name, cancellationToken);
             return WrapModel(resourceGroupInner);
         }
-
-        #region Implementation of CreatableWrappers abstract methods
-
+        
         protected override ResourceGroupImpl WrapModel(string name)
         {
             return new ResourceGroupImpl(new ResourceGroupInner
@@ -85,7 +83,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         {
             return new ResourceGroupImpl(inner, Inner);
         }
-
-        #endregion
     }
 }
