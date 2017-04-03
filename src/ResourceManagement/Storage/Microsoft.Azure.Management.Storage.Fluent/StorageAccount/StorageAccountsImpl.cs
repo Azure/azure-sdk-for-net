@@ -25,9 +25,14 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         
         public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return new CheckNameAvailabilityResult(Inner.CheckNameAvailability(name));
+            return CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
-        
+
+        public async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return new CheckNameAvailabilityResult(await Inner.CheckNameAvailabilityAsync(name, cancellationToken));
+        }
+
         public StorageAccount.Definition.IBlank Define(string name)
         {
             StorageAccountImpl wrapped = WrapModel(name);
