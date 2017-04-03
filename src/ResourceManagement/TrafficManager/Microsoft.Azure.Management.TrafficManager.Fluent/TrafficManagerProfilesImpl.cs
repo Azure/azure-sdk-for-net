@@ -30,8 +30,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:EA7883DCA673C6F67CCCF6E8828D7D51:4DBFF5109C555E749B7E1943ECE31E34
         public CheckProfileDnsNameAvailabilityResult CheckDnsNameAvailability(string dnsNameLabel)
         {
-            return new CheckProfileDnsNameAvailabilityResult(Inner
-                .CheckTrafficManagerRelativeDnsNameAvailability(dnsNameLabel, "Microsoft.Network/trafficManagerProfiles"));
+            return CheckDnsNameAvailabilityAsync(dnsNameLabel).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<CheckProfileDnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(
+            string dnsNameLabel, 
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return new CheckProfileDnsNameAvailabilityResult(
+                await Inner.CheckTrafficManagerRelativeDnsNameAvailabilityAsync(
+                    dnsNameLabel, 
+                    "Microsoft.Network/trafficManagerProfiles"));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35
