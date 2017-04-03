@@ -49,13 +49,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:16ABBA273C3F791D052D0188B2107D3F:675930B8422D1B7EC65FC1D9BBC5D548
-        public CertificateDetailsImpl Root()
+        public CertificateDetails Root()
         {
-            if (Inner.Root == null)
-            {
-                return null;
-            }
-            return new CertificateDetailsImpl(Inner.Root);
+            return Inner.Root;
         }
 
         ///GENMHASH:C70ACBF55B279BA26BBE5F77DDE46E40:5464228A4B2A39EBA61B99F7033FBFCB
@@ -179,7 +175,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:04406413E97C82F19F013C72D1DD2758:39E496E31AE9087192892138F0910259
         public async Task<IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
         {
-            AppServiceCertificateInner certInner = new AppServiceCertificateInner();
+            AppServiceCertificateResourceInner certInner = new AppServiceCertificateResourceInner();
 
             certInner.Location = vault.RegionName;
             certInner.KeyVaultId = vault.Id;
@@ -230,23 +226,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:6BDAA4A8036F1C03CAA8CE2EB2F9FBE3:FE2E769A2AEA3ACB1FD64758285EBC71
-        public CertificateDetailsImpl Intermediate()
+        public CertificateDetails Intermediate()
         {
-            if (Inner.Intermediate == null)
-            {
-                return null;
-            }
-            return new CertificateDetailsImpl(Inner.Intermediate);
+            return Inner.Intermediate;
         }
 
         ///GENMHASH:90FC937E60E521C5C15FEEEA8CB6CCB8:C2904A9EF2F5A312DA01425F79F55AA4
-        public CertificateDetailsImpl SignedCertificate()
+        public CertificateDetails SignedCertificate()
         {
-            if (Inner.SignedCertificate == null)
-            {
-                return null;
-            }
-            return new CertificateDetailsImpl(Inner.SignedCertificate);
+            return Inner.SignedCertificate;
         }
 
         ///GENMHASH:998ED679562660847C6B644CE156D46C:BD8EDAEE21E0A80A3794CA1BF6C8293A

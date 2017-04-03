@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the root certificate.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Root { get; }
+        CertificateDetails Root { get; }
 
         /// <summary>
         /// Gets if the certificate should be automatically renewed upon expiration.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the intermediate certificate.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Intermediate { get; }
+        CertificateDetails Intermediate { get; }
 
         /// <summary>
         /// Gets the domain verification token.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the signed certificate.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails SignedCertificate { get; }
+        CertificateDetails SignedCertificate { get; }
 
         /// <summary>
         /// Gets the certificate product type.

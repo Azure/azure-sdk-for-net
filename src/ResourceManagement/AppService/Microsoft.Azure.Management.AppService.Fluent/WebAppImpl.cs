@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:9AA0391980CD01ABEA62130DB5348393
-        internal async override Task<SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteConfigResourceInner> CreateOrUpdateSiteConfigAsync(SiteConfigResourceInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.CreateOrUpdateConfigurationAsync(ResourceGroupName, Name, siteConfig, cancellationToken);
         }
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:256905D5B839C64BFE9830503CB5607B:7AC64BDE9A6045728A97AD3B7E256F87
-        internal async override Task<SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteConfigResourceInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.GetConfigurationAsync(ResourceGroupName, Name);
         }
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal WebAppImpl(
             string name,
             SiteInner innerObject,
-            SiteConfigInner configObject,
+            SiteConfigResourceInner configObject,
             IAppServiceManager manager)
             : base (name, innerObject, configObject, manager)
         {

@@ -33,6 +33,12 @@
         "debugType": "portable"
       },
       "dependencies": {
+      },
+      "frameworkAssemblies": {
+        "System": "",
+        "System.Xml.XDocument": "",
+        "System.Xml.Linq": "",
+        "mscorlib": ""
       }
     },
     "netstandard1.5": {
@@ -42,7 +48,8 @@
       },
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "NETStandard.Library": "1.6.1"
+        "NETStandard.Library": "1.6.1",
+        "System.Xml.XDocument": "4.3.0"
       }
     },
     "netstandard1.1": {
@@ -52,7 +59,8 @@
       },
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "NETStandard.Library": "1.6.1"
+        "NETStandard.Library": "1.6.1",
+        "System.Xml.XDocument": "4.3.0"
       }
     }
   }

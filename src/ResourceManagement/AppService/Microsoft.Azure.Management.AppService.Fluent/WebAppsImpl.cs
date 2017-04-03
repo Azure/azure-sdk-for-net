@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         private async Task<IWebApp> PopulateModelAsync(SiteInner inner, CancellationToken cancellationToken = default(CancellationToken)) {
-            inner.SiteConfig = await Inner.GetConfigurationAsync(inner.ResourceGroup, inner.Name, cancellationToken);
-            var webApp = WrapModel(inner);
+            var siteConfig = await Inner.GetConfigurationAsync(inner.ResourceGroup, inner.Name, cancellationToken);
+            var webApp = WrapModel(inner, siteConfig);
             await ((WebAppImpl)webApp).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
             return webApp;
         }
@@ -80,8 +80,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             if (inner == null) {
                 return null;
             }
-            var configInner = inner.SiteConfig;
-            return new WebAppImpl(inner.Name, inner, configInner, Manager);
+            return new WebAppImpl(inner.Name, inner, null, Manager);
+        }
+
+        private IWebApp WrapModel(SiteInner inner, SiteConfigResourceInner siteConfigInner)
+        {
+            if (inner == null)
+            {
+                return null;
+            }
+            return new WebAppImpl(inner.Name, inner, siteConfigInner, Manager);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IndependentChildResourceImpl<
             IAppServiceCertificateKeyVaultBinding,
             IAppServiceCertificateOrder,
-            AppServiceCertificateInner,
+            AppServiceCertificateResourceInner,
             AppServiceCertificateKeyVaultBindingImpl,
             object,
             object,
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B9EDBDEBBAFF9FA1B965F82D94B7D20D:D717DAAD2288A48502D0DF6C7AA6562A
-        internal AppServiceCertificateKeyVaultBindingImpl(AppServiceCertificateInner innerObject, AppServiceCertificateOrderImpl parent)
+        internal AppServiceCertificateKeyVaultBindingImpl(AppServiceCertificateResourceInner innerObject, AppServiceCertificateOrderImpl parent)
             : base(innerObject.Name, innerObject, (parent != null) ? parent.Manager : null)
         {
             this.parent = parent;

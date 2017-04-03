@@ -97,7 +97,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new DeploymentSlotImpl(inner.Name, inner, inner.SiteConfig, parent, Manager);
+            return new DeploymentSlotImpl(inner.Name, inner, null, parent, Manager);
+        }
+
+        private IDeploymentSlot WrapModel(SiteInner inner, SiteConfigResourceInner siteConfigInner)
+        {
+            if (inner == null)
+            {
+                return null;
+            }
+            return new DeploymentSlotImpl(inner.Name, inner, siteConfigInner, parent, Manager);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:03C8C385071EDDC2007A3CC169E2B327
@@ -114,9 +123,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            siteInner.SiteConfig = await Inner.GetConfigurationSlotAsync(resourceGroup, parentName, name, cancellationToken);
+            var siteConfig = await Inner.GetConfigurationSlotAsync(resourceGroup, parentName, name, cancellationToken);
 
-            var result = WrapModel(siteInner);
+            var result = WrapModel(siteInner, siteConfig);
             await ((DeploymentSlotImpl)result).CacheAppSettingsAndConnectionStringsAsync();
 
             return result;
@@ -134,8 +143,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         private async Task<IDeploymentSlot> PopulateModelAsync(SiteInner inner, IWebApp parent, CancellationToken cancellationToken = default(CancellationToken))
         {
-            inner.SiteConfig = await Inner.GetConfigurationSlotAsync(inner.ResourceGroup, parent.Name, Regex.Replace(inner.Name, ".*/", ""), cancellationToken);
-            var slot = WrapModel(inner);
+            var siteConfig = await Inner.GetConfigurationSlotAsync(inner.ResourceGroup, parent.Name, Regex.Replace(inner.Name, ".*/", ""), cancellationToken);
+            var slot = WrapModel(inner, siteConfig);
             await ((DeploymentSlotImpl)slot).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
             return slot;
         }

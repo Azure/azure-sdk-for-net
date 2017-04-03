@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
     {
+        private SiteConfigResourceInner _siteConfig;
         private IDictionary<string, IAppSetting> cachedAppSettings;
         private IDictionary<string, IConnectionString> cachedConnectionStrings;
         private ISet<string> hostNamesSet;
@@ -59,6 +60,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IDictionary<string, bool> connectionStringStickiness;
         private WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl;
         private bool sourceControlToDelete;
+
+        internal SiteConfigResourceInner SiteConfig
+        {
+            get
+            {
+                return _siteConfig;
+            }
+            set
+            {
+                _siteConfig = value;
+            }
+        }
 
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
@@ -147,11 +160,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:5091CF7FBD481F6A80C8200D77B918B5:86CEE108C820B076B77DA76828966EDD
         public string JavaContainerVersion()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
                 return null;
             }
-            return Inner.SiteConfig.JavaContainerVersion;
+            return this.SiteConfig.JavaContainerVersion;
         }
 
         ///GENMHASH:807E62B6346803DB90804D0DEBD2FCA6:27E486AB74A10242FF421C0798DDC450
@@ -172,11 +185,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0BD0140B6FBB6AA6B83FE90F95878549:855FB47B5269DBB806FE536172AD4F91
         public PythonVersion PythonVersion()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.PythonVersion == null)
+            if (this.SiteConfig == null || this.SiteConfig.PythonVersion == null)
             {
                 return Fluent.PythonVersion.Off;
             }
-            return Fluent.PythonVersion.Parse(Inner.SiteConfig.PythonVersion);
+            return Fluent.PythonVersion.Parse(this.SiteConfig.PythonVersion);
         }
 
         ///GENMHASH:C03B1FAF31FB94362C083BAA7332E4A4:516E9ADDDB1B086B94A185F8CA729E6B
@@ -188,22 +201,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:3A0791A760CE20BB60B662E45E1B5A20:AC8556A885DA9E1351FB1A6C074AA07E
         public FluentImplT WithPythonVersion(PythonVersion version)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.PythonVersion = version.ToString();
+            this.SiteConfig.PythonVersion = version.ToString();
             return (FluentImplT)this;
         }
 
         ///GENMHASH:E45783E7B404EC0F4EBC4EE6BA7EF55A:5ECDDE741F87F4634B0FDC94904B2771
         public FluentImplT WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.ManagedPipelineMode = managedPipelineMode;
+            this.SiteConfig.ManagedPipelineMode = managedPipelineMode;
             return (FluentImplT)this;
         }
 
@@ -213,7 +226,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
             SiteInner inner = GetInnerAsync().GetAwaiter().GetResult();
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
-            inner.SiteConfig = GetConfigInnerAsync().GetAwaiter().GetResult();
+            this.SiteConfig = GetConfigInnerAsync().GetAwaiter().GetResult();
             SetInner(inner);
             CacheAppSettingsAndConnectionStringsAsync().GetAwaiter().GetResult();
             return this as FluentT;
@@ -228,11 +241,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:4380B7AB34BB7338E16329242A2DB73A:399A7EDDE163BD102BD7A221C0EF6472
         public bool WebSocketsEnabled()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.WebSocketsEnabled == null)
+            if (this.SiteConfig == null || this.SiteConfig.WebSocketsEnabled == null)
             {
                 return false;
             }
-            return (bool)Inner.SiteConfig.WebSocketsEnabled;
+            return (bool)this.SiteConfig.WebSocketsEnabled;
         }
 
         ///GENMHASH:994878BE86A846414AFCBD6D6A774106:7DFE5AF818EC3EFB7C159495BCF92C41
@@ -312,15 +325,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C41BC129D11DD290512802D4F95ED197:C6674CAD927602613E222F438F228B47
         public FluentImplT WithDefaultDocument(string document)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            if (Inner.SiteConfig.DefaultDocuments == null)
+            if (this.SiteConfig.DefaultDocuments == null)
             {
-                Inner.SiteConfig.DefaultDocuments = new List<string>();
+                this.SiteConfig.DefaultDocuments = new List<string>();
             }
-            Inner.SiteConfig.DefaultDocuments.Add(document);
+            this.SiteConfig.DefaultDocuments.Add(document);
             return (FluentImplT)this;
         }
 
@@ -340,25 +353,25 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:28D9C85008A5FA42084A6F7E18E27138:AD25C9D393389A67F8973FC859A1C1D2
         public FluentImplT WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.RemoteDebuggingEnabled = true;
-            Inner.SiteConfig.RemoteDebuggingVersion = remoteVisualStudioVersion.ToString();
+            this.SiteConfig.RemoteDebuggingEnabled = true;
+            this.SiteConfig.RemoteDebuggingVersion = remoteVisualStudioVersion.ToString();
             return (FluentImplT)this;
         }
 
         ///GENMHASH:7889230A4E9E7272A9D70286DB690D8E:53F488EBDEDD2F8F38BF84028D4A7680
         public FluentImplT WithoutDefaultDocument(string document)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            if (Inner.SiteConfig.DefaultDocuments == null)
+            if (this.SiteConfig.DefaultDocuments == null)
             {
-                Inner.SiteConfig.DefaultDocuments.Remove(document);
+                this.SiteConfig.DefaultDocuments.Remove(document);
             }
             return (FluentImplT)this;
         }
@@ -373,11 +386,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:843B1707D5538E1793853BD38DCDFC52:E68D654B4C771392BAED7DFAFD6DE33F
         public FluentImplT WithLocalGitSourceControl()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.ScmType = "LocalGit";
+            this.SiteConfig.ScmType = "LocalGit";
             return (FluentImplT)this;
         }
 
@@ -397,11 +410,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:7B9E90726FF47A7DBBBA2ECDEF2A3EA5:D06B68E3D50C3AA8EE45FF306EE6CF8F
         public FluentImplT WithRemoteDebuggingDisabled()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.RemoteDebuggingEnabled = false;
+            this.SiteConfig.RemoteDebuggingEnabled = false;
             return (FluentImplT)this;
         }
 
@@ -412,24 +425,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 Inner.HostNameSslStates = new List<HostNameSslState>(hostNameSslStateMap.Values);
             }
-            bool emptyConfig = Inner.SiteConfig == null;
-            if (emptyConfig)
-            {
-                Inner.SiteConfig = new SiteConfigInner
-                {
-                    Location = RegionName
-                };
-            }
 
             // Web app creation
-            ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:27E486AB74A10242FF421C0798DDC450
+            Inner.SiteConfig = new Models.SiteConfig();
             var site = await CreateOrUpdateInnerAsync(Inner, cancellationToken).ContinueWith<SiteInner>(t =>
             {
                 var innerSite = t.Result;
-                if (emptyConfig)
-                {
-                    Inner.SiteConfig = null;
-                }
+                Inner.SiteConfig = null;
                 return innerSite;
             }).ContinueWith(t =>
             {
@@ -474,11 +476,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }).Unwrap();
             
             // Submit site config
-            if (Inner.SiteConfig != null)
+            if (this.SiteConfig != null)
             {
                 ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:27E486AB74A10242FF421C0798DDC450
-                SiteConfigInner configInner = await CreateOrUpdateSiteConfigAsync(Inner.SiteConfig, cancellationToken);
-                site.SiteConfig = configInner;
+                SiteConfigResourceInner configInner = await CreateOrUpdateSiteConfigAsync(this.SiteConfig, cancellationToken);
+                this.SiteConfig = configInner;
             }
 
             // App settings
@@ -602,15 +604,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:339A48BAE1EB5ED9A9975C86986C944F:C86BE9E21375ED5DE08698ADE36B0A6F
         public FluentImplT WithDefaultDocuments(IList<string> documents)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            if (Inner.SiteConfig.DefaultDocuments == null)
+            if (this.SiteConfig.DefaultDocuments == null)
             {
-                Inner.SiteConfig.DefaultDocuments = new List<string>();
+                this.SiteConfig.DefaultDocuments = new List<string>();
             }
-            ((List<string>) Inner.SiteConfig.DefaultDocuments).AddRange(documents);
+            ((List<string>) this.SiteConfig.DefaultDocuments).AddRange(documents);
             return (FluentImplT)this;
         }
 
@@ -644,10 +646,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:D101C73F080409B39A67AF00AD9821C6:6F295C3A8A7CB5E19AB918210E36BC1D
         public ManagedPipelineMode ManagedPipelineMode()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.ManagedPipelineMode == null) {
+            if (this.SiteConfig == null || this.SiteConfig.ManagedPipelineMode == null) {
                 return Models.ManagedPipelineMode.Classic;
             }
-            return (ManagedPipelineMode) Inner.SiteConfig.ManagedPipelineMode;
+            return (ManagedPipelineMode) this.SiteConfig.ManagedPipelineMode;
         }
 
         ///GENMHASH:04BAD2602CA77ACE8B99D7FDF38E6CF1:2CECFA457ECE4652D16C54B3FE56ACBA
@@ -675,10 +677,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:19DC73910D23C00F8667540D0CBD0AEC:5D6124142B08C7816B4D9A638C461920
         public JavaVersion JavaVersion()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.JavaVersion == null) {
+            if (this.SiteConfig == null || this.SiteConfig.JavaVersion == null) {
                 return Fluent.JavaVersion.Off;
             }
-            return Fluent.JavaVersion.Parse(Inner.SiteConfig.JavaVersion);
+            return Fluent.JavaVersion.Parse(this.SiteConfig.JavaVersion);
         }
 
         ///GENMHASH:16DA81E02BFF9B1983571901E1CA6AB9:D68A946D17769FFBF0FF5DAAE2212551
@@ -700,10 +702,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:CFB093F74965BAD2150F4041715B9A85:26C83F8A1A14CE55546ED814DB69FDDC
         public string JavaContainer()
         {
-            if (Inner.SiteConfig == null) {
+            if (this.SiteConfig == null) {
                 return null;
             }
-            return Inner.SiteConfig.JavaContainer;
+            return this.SiteConfig.JavaContainer;
         }
 
         ///GENMHASH:BFDA79902F6BE9566899DA86DF88D0D8:DF03AD72AC444A097819590079C05599
@@ -722,11 +724,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:23406BAAD05E75776B2C2D57DAD6EC31:20D62AB87640E86D7C2ED3CD5286A461
         public IList<string> DefaultDocuments()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
                 return null;
             }
-            return Inner.SiteConfig.DefaultDocuments;
+            return this.SiteConfig.DefaultDocuments;
         }
 
         ///GENMHASH:48A4E53CFF08718D61958E4C92100018:A9C012D7912C454FA087C8D68B4B602F
@@ -738,22 +740,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:8B6374B8DE9FB105A8A4FE1AC98E0A32:26E0CCD0FFBC820C6C211AAEFBB00D18
         public FluentImplT WithPlatformArchitecture(PlatformArchitecture platform)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.Use32BitWorkerProcess = PlatformArchitecture.X86.Equals(platform);
+            this.SiteConfig.Use32BitWorkerProcess = PlatformArchitecture.X86.Equals(platform);
             return (FluentImplT) this;
         }
 
         ///GENMHASH:0326165974AFF6C272DF7A9B97057A14:A5822AF23DD5553DE60CAAA635E71F67
         public FluentImplT WithNetFrameworkVersion(NetFrameworkVersion version)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.NetFrameworkVersion = version.ToString();
+            this.SiteConfig.NetFrameworkVersion = version.ToString();
             return (FluentImplT) this;
         }
 
@@ -781,11 +783,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C8FAEA7DC8B31D619F885C64E56A6686:9896B5012319AD936FC829F4017BFCF9
         public PhpVersion PhpVersion()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.PhpVersion == null)
+            if (this.SiteConfig == null || this.SiteConfig.PhpVersion == null)
             {
                 return Fluent.PhpVersion.Off;
             }
-            return Fluent.PhpVersion.Parse(Inner.SiteConfig.PhpVersion);
+            return Fluent.PhpVersion.Parse(this.SiteConfig.PhpVersion);
         }
 
         ///GENMHASH:AED7BB300F28210D7E0EDA08BF191BDC:140BC7A2AF1C0E354A00FC241D95FE70
@@ -835,11 +837,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:F49A26C57ADD85EB4F774AACF7455EA0:8C65401DDB5F058E55EDB8D8C3E3DFAA
         public RemoteVisualStudioVersion RemoteDebuggingVersion()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
                 return null;
             }
-            return RemoteVisualStudioVersion.Parse(Inner.SiteConfig.RemoteDebuggingVersion);
+            return RemoteVisualStudioVersion.Parse(this.SiteConfig.RemoteDebuggingVersion);
         }
 
         ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:B4CE82C3129D4304A7C71A600E1CA97C
@@ -865,11 +867,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:78FD17A2E22E150AD12AA226D4123829:29A4403ED56D639EA144EEEF29FB711D
         public FluentImplT WithJavaVersion(JavaVersion version)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.JavaVersion = version.ToString();
+            this.SiteConfig.JavaVersion = version.ToString();
             return (FluentImplT) this;
         }
 
@@ -881,7 +883,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new ReadOnlyDictionary<string, IAppSetting>(cachedAppSettings);
         }
 
-        internal abstract Task<SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SiteConfigResourceInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:F76B0B1D4816856D9C8EA506F611C03D:91C46F0ECB5CC2D51804D2C0710E6211
         public FluentImplT WithoutSslBinding(string hostname)
@@ -916,11 +918,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C102774B5B56F13DBA5095A48DC5F846:1886C5FB5632B7468462889794AFEA08
         public NetFrameworkVersion NetFrameworkVersion()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
                 return null;
             }
-            return Fluent.NetFrameworkVersion.Parse(Inner.SiteConfig.NetFrameworkVersion);
+            return Fluent.NetFrameworkVersion.Parse(this.SiteConfig.NetFrameworkVersion);
         }
 
         ///GENMHASH:0A3B342EB54A6BB9B919686055C77154:D71C3ABF670D7D6382F65A18153CE77F
@@ -936,22 +938,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:EDB4EABD52D790D7204DF4CACC39D04A:4469898682437D64D221DD7583D2B354
         public FluentImplT WithAutoSwapSlotName(string slotName)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.AutoSwapSlotName = slotName;
+            this.SiteConfig.AutoSwapSlotName = slotName;
             return (FluentImplT) this;
         }
 
         ///GENMHASH:750A632B5F062E375E30024C56379A8E:39DCD28D9DEDDE14FCCB5F803750A6BE
         public string NodeVersion()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
                 return null;
             }
-            return Inner.SiteConfig.NodeVersion;
+            return this.SiteConfig.NodeVersion;
         }
 
         internal abstract Task<SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken));
@@ -968,11 +970,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal  WebAppBaseImpl(
             string name,
             SiteInner innerObject,
-            SiteConfigInner configObject,
+            SiteConfigResourceInner configObject,
             IAppServiceManager manager)
             : base (name, innerObject, manager)
         {
-            Inner.SiteConfig = configObject;
+            this.SiteConfig = configObject;
             NormalizeProperties();
         }
 
@@ -986,21 +988,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:88FB986A040F70D62E535B947213D4C9:872EB6D779CA1F073EAE994BA5E1A2D8
         public string AutoSwapSlotName()
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
                 return null;
             }
-            return Inner.SiteConfig.AutoSwapSlotName;
+            return this.SiteConfig.AutoSwapSlotName;
         }
 
         ///GENMHASH:C3A15726A3EC798F48295A8FF0867A0B:7C9DD6C2A7609244E63D0353EBF87B3B
         public FluentImplT WithPhpVersion(PhpVersion version)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.PhpVersion = version.ToString();
+            this.SiteConfig.PhpVersion = version.ToString();
             return (FluentImplT) this;
         }
 
@@ -1034,25 +1036,25 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:B1A8B6AF0882F87FF978C572DA7F4B5C:CA993290F5DD317A425ED88E1175A1D9
         public FluentImplT WithWebSocketsEnabled(bool enabled)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.WebSocketsEnabled = enabled;
+            this.SiteConfig.WebSocketsEnabled = enabled;
             return (FluentImplT) this;
         }
 
         ///GENMHASH:DBBC1639A411401B52B0F804284263EE:473779DF0D6351D3FEF135C14773DB4F
         public bool AlwaysOn()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.AlwaysOn == null)
+            if (this.SiteConfig == null || this.SiteConfig.AlwaysOn == null)
             {
                 return false;
             }
-            return (bool)Inner.SiteConfig.AlwaysOn;
+            return (bool)this.SiteConfig.AlwaysOn;
         }
 
-        internal abstract Task<SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken));
+        internal abstract Task<SiteConfigResourceInner> CreateOrUpdateSiteConfigAsync(SiteConfigResourceInner siteConfig, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:FA11486B840C0E86D3D1A446BF2A3C96:AA358901B07077B2692CB317CAFFF60D
         public FluentImplT WithStickyAppSetting(string key, string value)
@@ -1081,30 +1083,30 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:F63CA8A7D8722945AE86442FAAE62963:837E0749902A7C8B46678D5899F91E3A
         public bool RemoteDebuggingEnabled()
         {
-            if (Inner.SiteConfig == null || Inner.SiteConfig.RemoteDebuggingEnabled == null)
+            if (this.SiteConfig == null || this.SiteConfig.RemoteDebuggingEnabled == null)
             {
                 return false;
             }
-            return (bool)Inner.SiteConfig.RemoteDebuggingEnabled;
+            return (bool)this.SiteConfig.RemoteDebuggingEnabled;
         }
 
         ///GENMHASH:13FED596F6C9DDEA581391D2291A4AB1:7DD021B685AC511232E39D9D870512E3
         public FluentImplT WithWebContainer(WebContainer webContainer)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
             if (webContainer == null)
             {
-                Inner.SiteConfig.JavaContainer = null;
-                Inner.SiteConfig.JavaContainerVersion = null;
+                this.SiteConfig.JavaContainer = null;
+                this.SiteConfig.JavaContainerVersion = null;
             }
             else
             {
                 string[] containerInfo = webContainer.ToString().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                Inner.SiteConfig.JavaContainer = containerInfo[0];
-                Inner.SiteConfig.JavaContainerVersion = containerInfo[1];
+                this.SiteConfig.JavaContainer = containerInfo[0];
+                this.SiteConfig.JavaContainerVersion = containerInfo[1];
             }
             return (FluentImplT) this;
         }
@@ -1127,11 +1129,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C82AC013C402054BF54C48891EAC7C4E:09A97DDE352A5FE05FF05D87BB65FB03
         public FluentImplT WithWebAppAlwaysOn(bool alwaysOn)
         {
-            if (Inner.SiteConfig == null)
+            if (this.SiteConfig == null)
             {
-                Inner.SiteConfig = new SiteConfigInner();
+                this.SiteConfig = new SiteConfigResourceInner();
             }
-            Inner.SiteConfig.AlwaysOn = alwaysOn;
+            this.SiteConfig.AlwaysOn = alwaysOn;
             return (FluentImplT) this;
         }
 

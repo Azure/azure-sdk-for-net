@@ -53,11 +53,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithWebAppVerification(webApp) as AppServiceCertificateOrder.Definition.IWithKeyVault;
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.SignedCertificate
+        CertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.SignedCertificate
         {
             get
             {
-                return this.SignedCertificate() as Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails;
+                return this.SignedCertificate() as CertificateDetails;
             }
         }
 
@@ -168,19 +168,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Root
+        CertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Root
         {
             get
             {
-                return this.Root() as Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails;
+                return this.Root() as CertificateDetails;
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Intermediate
+        CertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Intermediate
         {
             get
             {
-                return this.Intermediate() as Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails;
+                return this.Intermediate() as CertificateDetails;
             }
         }
 
