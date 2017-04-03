@@ -34,6 +34,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the MappingCharFilter class.
         /// </summary>
+        /// <param name="name">The name of the char filter. It must only
+        /// contain letters, digits, spaces, dashes or underscores, can only
+        /// start and end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="mappings">A list of mappings of the following format:
         /// "a=&gt;b" (all occurrences of the character "a" will be replaced
         /// with character "b").</param>

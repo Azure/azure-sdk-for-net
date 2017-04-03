@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the PatternTokenizer class.
         /// </summary>
+        /// <param name="name">The name of the tokenizer. It must only contain
+        /// letters, digits, spaces, dashes or underscores, can only start and
+        /// end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="pattern">A regular expression pattern to match token
         /// separators. Default is an expression that matches one or more
         /// whitespace characters.</param>

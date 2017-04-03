@@ -31,6 +31,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the CjkBigramTokenFilter class.
         /// </summary>
+        /// <param name="name">The name of the token filter. It must only
+        /// contain letters, digits, spaces, dashes or underscores, can only
+        /// start and end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="ignoreScripts">The scripts to ignore.</param>
         /// <param name="outputUnigrams">A value indicating whether to output
         /// both unigrams and bigrams (if true), or just bigrams (if false).

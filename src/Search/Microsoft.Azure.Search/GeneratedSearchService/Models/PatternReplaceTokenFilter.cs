@@ -34,6 +34,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the PatternReplaceTokenFilter class.
         /// </summary>
+        /// <param name="name">The name of the token filter. It must only
+        /// contain letters, digits, spaces, dashes or underscores, can only
+        /// start and end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="pattern">A regular expression pattern.</param>
         /// <param name="replacement">The replacement text.</param>
         public PatternReplaceTokenFilter(string name, string pattern, string replacement)

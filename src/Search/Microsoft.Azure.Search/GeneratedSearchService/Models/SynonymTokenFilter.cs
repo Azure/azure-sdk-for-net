@@ -32,6 +32,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the SynonymTokenFilter class.
         /// </summary>
+        /// <param name="name">The name of the token filter. It must only
+        /// contain letters, digits, spaces, dashes or underscores, can only
+        /// start and end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="synonyms">A list of synonyms in following one of two
         /// formats: 1. incredible, unbelievable, fabulous =&gt; amazing - all
         /// terms on the left side of =&gt; symbol will be replaced with all
