@@ -32,6 +32,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the ElisionTokenFilter class.
         /// </summary>
+        /// <param name="name">The name of the token filter. It must only
+        /// contain letters, digits, spaces, dashes or underscores, can only
+        /// start and end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="articles">The set of articles to remove.</param>
         public ElisionTokenFilter(string name, IList<string> articles = default(IList<string>))
             : base(name)

@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the SnowballTokenFilter class.
         /// </summary>
+        /// <param name="name">The name of the token filter. It must only
+        /// contain letters, digits, spaces, dashes or underscores, can only
+        /// start and end with alphanumeric characters, and is limited to 128
+        /// characters.</param>
         /// <param name="language">The language to use. Possible values
         /// include: 'armenian', 'basque', 'catalan', 'danish', 'dutch',
         /// 'english', 'finnish', 'french', 'german', 'german2', 'hungarian',
