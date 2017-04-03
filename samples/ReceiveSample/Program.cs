@@ -4,6 +4,7 @@
 namespace ReceiveSample
 {
     using System;
+    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus;
 
@@ -40,11 +41,11 @@ namespace ReceiveSample
                     async (message, token) =>
                     {
                         // Process the message
-                        Console.WriteLine($"Received message: SequenceNumber:{message.SequenceNumber} Body:{message.GetBody<string>()}");
+                        Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
 
                         // Complete the message so that it is not received again.
                         // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
-                        await queueClient.CompleteAsync(message.LockToken);
+                        await queueClient.CompleteAsync(message.SystemProperties.LockToken);
                     },
                     new RegisterHandlerOptions() {MaxConcurrentCalls = 1, AutoComplete = false});
             }

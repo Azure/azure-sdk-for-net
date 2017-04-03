@@ -196,7 +196,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock)
                 {
-                    await this.messageReceiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
+                    await this.messageReceiver.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.ServiceBus
                 if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock &&
                     this.registerHandlerOptions.AutoComplete)
                 {
-                    await this.messageReceiver.CompleteAsync(new[] { message.LockToken }).ConfigureAwait(false);
+                    await this.messageReceiver.CompleteAsync(new[] { message.SystemProperties.LockToken }).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -228,14 +228,14 @@ namespace Microsoft.Azure.ServiceBus
             {
                 try
                 {
-                    TimeSpan amount = MessagingUtilities.CalculateRenewAfterDuration(message.LockedUntilUtc);
+                    TimeSpan amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientId, message, amount);
                     await Task.Delay(amount, renewLockCancellationToken).ConfigureAwait(false);
 
                     if (!this.pumpCancellationToken.IsCancellationRequested &&
                         !renewLockCancellationToken.IsCancellationRequested)
                     {
-                        await this.messageReceiver.RenewLockAsync(message.LockToken).ConfigureAwait(false);
+                        await this.messageReceiver.RenewLockAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
                         MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
                     }
                     else

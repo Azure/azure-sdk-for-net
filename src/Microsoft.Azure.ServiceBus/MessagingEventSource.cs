@@ -729,7 +729,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpInitialMessageReceived(clientId, message.SequenceNumber);
+                this.MessageReceiverPumpInitialMessageReceived(clientId, message.SystemProperties.SequenceNumber);
             }
         }
 
@@ -765,7 +765,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpTaskStart(clientId, message?.SequenceNumber ?? -1, currentSemaphoreCount);
+                this.MessageReceiverPumpTaskStart(clientId, message?.SystemProperties.SequenceNumber ?? -1, currentSemaphoreCount);
             }
         }
 
@@ -801,7 +801,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpDispatchTaskStart(clientId, message?.SequenceNumber ?? -1);
+                this.MessageReceiverPumpDispatchTaskStart(clientId, message?.SystemProperties.SequenceNumber ?? -1);
             }
         }
 
@@ -816,7 +816,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpDispatchTaskStop(clientId, message?.SequenceNumber ?? -1, currentSemaphoreCount);
+                this.MessageReceiverPumpDispatchTaskStop(clientId, message?.SystemProperties.SequenceNumber ?? -1, currentSemaphoreCount);
             }
         }
 
@@ -831,7 +831,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackStart(clientId, message?.SequenceNumber ?? -1);
+                this.MessageReceiverPumpUserCallbackStart(clientId, message?.SystemProperties.SequenceNumber ?? -1);
             }
         }
 
@@ -846,7 +846,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackStop(clientId, message?.SequenceNumber ?? -1);
+                this.MessageReceiverPumpUserCallbackStop(clientId, message?.SystemProperties.SequenceNumber ?? -1);
             }
         }
 
@@ -861,7 +861,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackException(clientId, message?.SequenceNumber ?? -1, exception.ToString());
+                this.MessageReceiverPumpUserCallbackException(clientId, message?.SystemProperties.SequenceNumber ?? -1, exception.ToString());
             }
         }
 
@@ -876,7 +876,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageStart(clientId, message?.SequenceNumber ?? -1, (long)renewAfterTimeSpan.TotalSeconds);
+                this.MessageReceiverPumpRenewMessageStart(clientId, message?.SystemProperties.SequenceNumber ?? -1, (long)renewAfterTimeSpan.TotalSeconds);
             }
         }
 
@@ -891,7 +891,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageStop(clientId, message?.SequenceNumber ?? -1);
+                this.MessageReceiverPumpRenewMessageStop(clientId, message?.SystemProperties.SequenceNumber ?? -1);
             }
         }
 
@@ -906,7 +906,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageException(clientId, message?.SequenceNumber ?? -1, exception.ToString());
+                this.MessageReceiverPumpRenewMessageException(clientId, message?.SystemProperties.SequenceNumber ?? -1, exception.ToString());
             }
         }
 

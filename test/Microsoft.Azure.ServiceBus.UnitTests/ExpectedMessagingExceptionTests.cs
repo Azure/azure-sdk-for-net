@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.NotNull(message);
                 await
                     Assert.ThrowsAsync<InvalidOperationException>(
-                        async () => await receiver.CompleteAsync(message.LockToken));
+                        async () => await receiver.CompleteAsync(message.SystemProperties.LockToken));
 
                 message = await receiver.ReceiveAsync();
                 Assert.NotNull((object)message);

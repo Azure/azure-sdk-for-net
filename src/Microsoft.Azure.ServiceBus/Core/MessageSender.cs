@@ -137,7 +137,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         static void ValidateMessage(Message message)
         {
-            if (message.IsLockTokenSet)
+            if (message.SystemProperties.IsLockTokenSet)
             {
                 throw Fx.Exception.Argument(nameof(message), "Cannot send a message that was already received.");
             }

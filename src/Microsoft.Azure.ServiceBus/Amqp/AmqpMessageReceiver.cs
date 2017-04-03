@@ -179,8 +179,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
                         }
 
-                        Message message = AmqpMessageConverter.ClientGetMessage(amqpMessage);
-                        message.Receiver = this; // Associate the Message with this Receiver.
+                        Message message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         brokeredMessages.Add(message);
                     }
 
@@ -225,13 +224,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         AmqpMessage amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        message = AmqpMessageConverter.ClientGetMessage(amqpMessage);
+                        message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         messages.Add(message);
                     }
 
                     if (message != null)
                     {
-                        this.LastPeekedSequenceNumber = message.SequenceNumber;
+                        this.LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
                     }
 
                     return messages;
@@ -270,13 +269,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         ArraySegment<byte> payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         AmqpMessage amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        Message message = AmqpMessageConverter.ClientGetMessage(amqpMessage);
-                        message.Receiver = this; // Associate the Message with this Receiver.
+                        Message message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         Guid lockToken;
                         if (entry.TryGetValue(ManagementConstants.Properties.LockToken, out lockToken))
                         {
-                            message.LockTokenGuid = lockToken;
-                            this.requestResponseLockedMessages.AddOrUpdate(lockToken, message.LockedUntilUtc);
+                            message.SystemProperties.LockTokenGuid = lockToken;
+                            this.requestResponseLockedMessages.AddOrUpdate(lockToken, message.SystemProperties.LockedUntilUtc);
                         }
 
                         messages.Add(message);
