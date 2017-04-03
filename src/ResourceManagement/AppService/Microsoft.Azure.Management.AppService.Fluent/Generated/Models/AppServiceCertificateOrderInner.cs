@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// SSL certificate purchase order.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServiceCertificateOrderInner : Rest.Azure.Resource
+    public partial class AppServiceCertificateOrderInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the AppServiceCertificateOrderInner

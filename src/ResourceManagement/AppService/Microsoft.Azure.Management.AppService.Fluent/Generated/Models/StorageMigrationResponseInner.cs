@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Response for a migration of app content request.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageMigrationResponseInner : Rest.Azure.Resource
+    public partial class StorageMigrationResponseInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the StorageMigrationResponseInner

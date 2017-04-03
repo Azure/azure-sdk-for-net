@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// App Service Environment ARM resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServiceEnvironmentResourceInner : Rest.Azure.Resource
+    public partial class AppServiceEnvironmentResourceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Used for getting PHP error logging flag.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SitePhpErrorLogFlagInner : Rest.Azure.Resource
+    public partial class SitePhpErrorLogFlagInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SitePhpErrorLogFlagInner class.

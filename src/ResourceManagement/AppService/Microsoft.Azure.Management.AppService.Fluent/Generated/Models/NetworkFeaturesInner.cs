@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// and Hybrid Connections).
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NetworkFeaturesInner : Rest.Azure.Resource
+    public partial class NetworkFeaturesInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkFeaturesInner class.

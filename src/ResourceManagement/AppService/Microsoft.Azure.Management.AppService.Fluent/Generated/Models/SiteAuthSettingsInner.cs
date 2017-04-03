@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Authorization feature.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SiteAuthSettingsInner : Rest.Azure.Resource
+    public partial class SiteAuthSettingsInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SiteAuthSettingsInner class.

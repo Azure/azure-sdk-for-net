@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Certificate signing request.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CsrInner : Rest.Azure.Resource
+    public partial class CsrInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CsrInner class.

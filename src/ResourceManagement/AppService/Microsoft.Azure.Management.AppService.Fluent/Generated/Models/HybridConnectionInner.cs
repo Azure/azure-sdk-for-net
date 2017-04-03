@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Connection.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class HybridConnectionInner : Rest.Azure.Resource
+    public partial class HybridConnectionInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the HybridConnectionInner class.
