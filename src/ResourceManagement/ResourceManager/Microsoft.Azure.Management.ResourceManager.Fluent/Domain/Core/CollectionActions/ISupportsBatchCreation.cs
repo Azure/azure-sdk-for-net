@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
@@ -18,6 +20,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// </summary>
         /// <param name="creatables">the creatables in the batch</param>
         /// <returns></returns>
+        ICreatedResources<IFluentResourceT> Create(IEnumerable<ICreatable<IFluentResourceT>> creatables);
+
+        /// <summary>
+        /// Creates a set (batch) of resources.
+        /// </summary>
+        /// <param name="creatables">the creatables in the batch</param>
         ICreatedResources<IFluentResourceT> Create(params ICreatable<IFluentResourceT>[] creatables);
 
         /// <summary>
@@ -25,6 +33,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// </summary>
         /// <param name="creatables">the creatables in the batch</param>
         /// <returns></returns>
-        Task<ICreatedResources<IFluentResourceT>> CreateAsync(params ICreatable<IFluentResourceT>[] creatables);
+        Task<ICreatedResources<IFluentResourceT>> CreateAsync(
+            IEnumerable<ICreatable<IFluentResourceT>> creatables,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

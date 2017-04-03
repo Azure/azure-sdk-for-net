@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             this.keys = new List<string>();
         }
 
-        internal void AddCreatableDependencies(params ICreatable<IFluentResourceT>[] creatables)
+        internal void AddCreatableDependencies(IEnumerable<ICreatable<IFluentResourceT>> creatables)
         {
             foreach (ICreatable<IFluentResourceT> item in creatables)
             {
