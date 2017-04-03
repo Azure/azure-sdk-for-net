@@ -456,11 +456,11 @@ namespace Microsoft.Azure.KeyVault
         /// List deleted keys in the specified vault
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return in a page. If not specified
-        /// the service will return up to 25 results.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.KeyVault
         /// Retrieves the deleted key information plus its attributes
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='keyName'>
         /// The name of the key
@@ -488,10 +488,10 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<DeletedKeyBundle>> GetDeletedKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes the specified key forever. aka purges the key.
+        /// Permanently deletes the specified key. aka purges the key.
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='keyName'>
         /// The name of the key
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.KeyVault
         /// Recovers the deleted key back to its current version under /keys
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='keyName'>
         /// The name of the deleted key
@@ -522,7 +522,7 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<KeyBundle>> RecoverDeletedKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Sets a secret in the specified vault.
+        /// Sets a secret in a specified key vault.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -660,11 +660,11 @@ namespace Microsoft.Azure.KeyVault
         /// List deleted secrets in the specified vault
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return in a page. If not specified
-        /// the service will return up to 25 results.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.KeyVault
         /// Retrieves the deleted secret information plus its attributes
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='secretName'>
         /// The name of the secret
@@ -692,10 +692,10 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<DeletedSecretBundle>> GetDeletedSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes the specified secret forever. aka purges the secret.
+        /// Permanently deletes the specified secret. aka purges the secret.
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='secretName'>
         /// The name of the secret
@@ -713,7 +713,7 @@ namespace Microsoft.Azure.KeyVault
         /// /secrets
         /// </summary>
         /// <param name='vaultBaseUrl'>
-        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
         /// <param name='secretName'>
         /// The name of the deleted secret
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<SecretBundle>> RecoverDeletedSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List certificates in the specified vault
+        /// List certificates in a specified key vault
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1213,7 +1213,7 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<DeletedKeyItem>>> GetDeletedKeysNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List secrets in the specified vault
+        /// List secrets in a specified key vault
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1255,7 +1255,7 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<DeletedSecretItem>>> GetDeletedSecretsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List certificates in the specified vault
+        /// List certificates in a specified key vault
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
