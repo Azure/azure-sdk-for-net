@@ -1,0 +1,431 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL3Rlc3REZWxldGVyZz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "x-ms-client-request-id": [
+          "f0b2beb2-bfe0-4968-bd25-c5c02a85ed80"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg\",\r\n  \"name\": \"testDeleterg\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "185"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:21:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "2e8bb922-3186-40b0-9a8c-67ac43666ee6"
+        ],
+        "x-ms-correlation-request-id": [
+          "2e8bb922-3186-40b0-9a8c-67ac43666ee6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142158Z:2e8bb922-3186-40b0-9a8c-67ac43666ee6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"durabilityLevel\": \"Bronze\",\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1234,\r\n          \"endPort\": 4321\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 3456,\r\n          \"endPort\": 6543\r\n        },\r\n        \"isPrimary\": true,\r\n        \"vmInstanceCount\": 5\r\n      }\r\n    ],\r\n    \"vmImage\": \"Windows\"\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "667"
+        ],
+        "x-ms-client-request-id": [
+          "e401193e-3cad-40eb-ab2a-183eb157e8f8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636266533197099868\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"ec67ff99-9971-4c27-94d0-fc32dae8884c\",\r\n    \"clusterCodeVersion\": \"5.5.216.0\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/ec67ff99-9971-4c27-94d0-fc32dae8884c\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"upgradeDescription\": {\r\n      \"overrideUserUpgradePolicy\": false,\r\n      \"forceRestart\": false,\r\n      \"upgradeReplicaSetCheckTimeout\": \"10675199.02:48:05.4775807\",\r\n      \"healthCheckWaitDuration\": \"00:05:00\",\r\n      \"healthCheckStableDuration\": \"00:05:00\",\r\n      \"healthCheckRetryTimeout\": \"00:45:00\",\r\n      \"upgradeTimeout\": \"12:00:00\",\r\n      \"upgradeDomainTimeout\": \"02:00:00\",\r\n      \"healthPolicy\": {\r\n        \"maxPercentUnhealthyNodes\": 100,\r\n        \"maxPercentUnhealthyApplications\": 100\r\n      },\r\n      \"deltaHealthPolicy\": {\r\n        \"maxPercentDeltaUnhealthyNodes\": 0,\r\n        \"maxPercentUpgradeDomainDeltaUnhealthyNodes\": 0,\r\n        \"maxPercentDeltaUnhealthyApplications\": 0\r\n      }\r\n    },\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1234,\r\n          \"endPort\": 4321\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 3456,\r\n          \"endPort\": 6543\r\n        },\r\n        \"isPrimary\": true,\r\n        \"vmInstanceCount\": 5,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"5.4.145.9494\",\r\n        \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.4.164.9494\",\r\n        \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.5.216.0\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.5.219.0\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:22:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "74ccd43e-0f59-4b80-b0d6-065f29105a93"
+        ],
+        "x-ms-correlation-request-id": [
+          "74ccd43e-0f59-4b80-b0d6-065f29105a93"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142200Z:74ccd43e-0f59-4b80-b0d6-065f29105a93"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "223a535b-91b9-4417-a7a6-3dbf22b9fbae"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636266533197099868\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"ec67ff99-9971-4c27-94d0-fc32dae8884c\",\r\n    \"clusterCodeVersion\": \"5.5.216.0\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/ec67ff99-9971-4c27-94d0-fc32dae8884c\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"upgradeDescription\": {\r\n      \"overrideUserUpgradePolicy\": false,\r\n      \"forceRestart\": false,\r\n      \"upgradeReplicaSetCheckTimeout\": \"10675199.02:48:05.4775807\",\r\n      \"healthCheckWaitDuration\": \"00:05:00\",\r\n      \"healthCheckStableDuration\": \"00:05:00\",\r\n      \"healthCheckRetryTimeout\": \"00:45:00\",\r\n      \"upgradeTimeout\": \"12:00:00\",\r\n      \"upgradeDomainTimeout\": \"02:00:00\",\r\n      \"healthPolicy\": {\r\n        \"maxPercentUnhealthyNodes\": 100,\r\n        \"maxPercentUnhealthyApplications\": 100\r\n      },\r\n      \"deltaHealthPolicy\": {\r\n        \"maxPercentDeltaUnhealthyNodes\": 0,\r\n        \"maxPercentUpgradeDomainDeltaUnhealthyNodes\": 0,\r\n        \"maxPercentDeltaUnhealthyApplications\": 0\r\n      }\r\n    },\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1234,\r\n          \"endPort\": 4321\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 3456,\r\n          \"endPort\": 6543\r\n        },\r\n        \"isPrimary\": true,\r\n        \"vmInstanceCount\": 5,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"5.4.145.9494\",\r\n        \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.4.164.9494\",\r\n        \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.5.216.0\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.5.219.0\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:22:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-request-id": [
+          "960d1dc3-6f7c-4229-8c7c-a47ff6d5bb15"
+        ],
+        "x-ms-correlation-request-id": [
+          "960d1dc3-6f7c-4229-8c7c-a47ff6d5bb15"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142200Z:960d1dc3-6f7c-4229-8c7c-a47ff6d5bb15"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "29d7098b-60a1-44e7-861b-b246a396997c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636266533197099868\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"ec67ff99-9971-4c27-94d0-fc32dae8884c\",\r\n    \"clusterCodeVersion\": \"5.5.216.0\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/ec67ff99-9971-4c27-94d0-fc32dae8884c\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"upgradeDescription\": {\r\n      \"overrideUserUpgradePolicy\": false,\r\n      \"forceRestart\": false,\r\n      \"upgradeReplicaSetCheckTimeout\": \"10675199.02:48:05.4775807\",\r\n      \"healthCheckWaitDuration\": \"00:05:00\",\r\n      \"healthCheckStableDuration\": \"00:05:00\",\r\n      \"healthCheckRetryTimeout\": \"00:45:00\",\r\n      \"upgradeTimeout\": \"12:00:00\",\r\n      \"upgradeDomainTimeout\": \"02:00:00\",\r\n      \"healthPolicy\": {\r\n        \"maxPercentUnhealthyNodes\": 100,\r\n        \"maxPercentUnhealthyApplications\": 100\r\n      },\r\n      \"deltaHealthPolicy\": {\r\n        \"maxPercentDeltaUnhealthyNodes\": 0,\r\n        \"maxPercentUpgradeDomainDeltaUnhealthyNodes\": 0,\r\n        \"maxPercentDeltaUnhealthyApplications\": 0\r\n      }\r\n    },\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1234,\r\n          \"endPort\": 4321\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 3456,\r\n          \"endPort\": 6543\r\n        },\r\n        \"isPrimary\": true,\r\n        \"vmInstanceCount\": 5,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"5.4.145.9494\",\r\n        \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.4.164.9494\",\r\n        \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.5.216.0\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"5.5.219.0\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:22:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-request-id": [
+          "dc8a0c10-708e-42fc-a44d-45c2007910ad"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc8a0c10-708e-42fc-a44d-45c2007910ad"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142200Z:dc8a0c10-708e-42fc-a44d-45c2007910ad"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2df1cae1-68a2-406e-85be-48f0fc151d33"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServiceFabric/clusters/testDeleteCluster' under resource group 'testDeleterg' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "166"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:22:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "eefc261b-d4ee-4c9c-8a5a-b44d02aee6f8"
+        ],
+        "x-ms-correlation-request-id": [
+          "eefc261b-d4ee-4c9c-8a5a-b44d02aee6f8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142201Z:eefc261b-d4ee-4c9c-8a5a-b44d02aee6f8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4ef7d0a4-f991-4b20-8dd3-c83592455452"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:22:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "2f3becab-f478-4655-b4ea-95442f4be129"
+        ],
+        "x-ms-correlation-request-id": [
+          "2f3becab-f478-4655-b4ea-95442f4be129"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142201Z:2f3becab-f478-4655-b4ea-95442f4be129"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/donotexistcluster?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvZG9ub3RleGlzdGNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e2c40526-49af-448d-a1b0-1577ffd9efa7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 01 Apr 2017 14:22:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "ef4e4753-9ab3-482a-acb6-209e563f76a8"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef4e4753-9ab3-482a-acb6-209e563f76a8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170401T142202Z:ef4e4753-9ab3-482a-acb6-209e563f76a8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "b36cdf46-b75d-4dc2-9fe1-1296ee8c623d"
+  }
+}
