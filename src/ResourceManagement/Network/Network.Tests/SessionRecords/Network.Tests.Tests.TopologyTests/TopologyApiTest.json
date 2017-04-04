@@ -726,8 +726,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet1863/providers/Microsoft.Network/networkWatchers/azsmnet4654?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjUxNTY5ZTItNjU3My00ZTE5LTgwODgtYTA4OWNiOGI5N2E5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQxODYzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrV2F0Y2hlcnMvYXpzbW5ldDQ2NTQ/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestUri": "/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet1863/providers/Microsoft.Network/networkWatchers/azsmnet4654?api-version=2017-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjUxNTY5ZTItNjU3My00ZTE5LTgwODgtYTA4OWNiOGI5N2E5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQxODYzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrV2F0Y2hlcnMvYXpzbW5ldDQ2NTQ/YXBpLXZlcnNpb249MjAxNy0wMy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
       "RequestHeaders": {
@@ -776,7 +776,7 @@
           "212074f1-8a6c-46e3-ba4f-d964fbe2c7c1"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Network/locations/eastus/operations/212074f1-8a6c-46e3-ba4f-d964fbe2c7c1?api-version=2016-09-01"
+          "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Network/locations/eastus/operations/212074f1-8a6c-46e3-ba4f-d964fbe2c7c1?api-version=2017-03-01"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -859,8 +859,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet1863/providers/Microsoft.Network/networkWatchers/azsmnet4654/topology?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjUxNTY5ZTItNjU3My00ZTE5LTgwODgtYTA4OWNiOGI5N2E5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQxODYzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrV2F0Y2hlcnMvYXpzbW5ldDQ2NTQvdG9wb2xvZ3k/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestUri": "/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet1863/providers/Microsoft.Network/networkWatchers/azsmnet4654/topology?api-version=2017-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjUxNTY5ZTItNjU3My00ZTE5LTgwODgtYTA4OWNiOGI5N2E5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQxODYzL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9uZXR3b3JrV2F0Y2hlcnMvYXpzbW5ldDQ2NTQvdG9wb2xvZ3k/YXBpLXZlcnNpb249MjAxNy0wMy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"targetResourceGroupName\": \"azsmnet2771\"\r\n}",
       "RequestHeaders": {
@@ -902,7 +902,7 @@
           "chunked"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Network/locations/eastus/operationResults/977c0f9b-3ef5-4b33-a841-46dbcee82fe1?api-version=2016-09-01"
+          "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Network/locations/eastus/operationResults/977c0f9b-3ef5-4b33-a841-46dbcee82fe1?api-version=2017-03-01"
         ],
         "Retry-After": [
           "10"
@@ -918,7 +918,7 @@
           "977c0f9b-3ef5-4b33-a841-46dbcee82fe1"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Network/locations/eastus/operations/977c0f9b-3ef5-4b33-a841-46dbcee82fe1?api-version=2016-09-01"
+          "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Network/locations/eastus/operations/977c0f9b-3ef5-4b33-a841-46dbcee82fe1?api-version=2017-03-01"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

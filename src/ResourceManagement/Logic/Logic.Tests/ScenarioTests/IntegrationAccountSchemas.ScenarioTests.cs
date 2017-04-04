@@ -17,13 +17,8 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts schema.
     /// </summary>
     [Collection("IntegrationAccountSchemaScenarioTests")]
-    public class IntegrationAccountSchemaScenarioTests : BaseScenarioTests
+    public class IntegrationAccountSchemaScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Name of the test class
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests";
-
         /// <summary>
         /// Schema content in string format
         /// </summary>
@@ -50,7 +45,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndDeleteIntegrationAccountSchema()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
@@ -85,7 +80,7 @@ namespace Test.Azure.Management.Logic
         public void DeleteIntegrationAccountSchemaOnAccountDeletion()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
@@ -116,7 +111,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndUpdateIntegrationAccountSchema()
         {
-            using (MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountSchemaName =TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
@@ -153,7 +148,7 @@ namespace Test.Azure.Management.Logic
         public void CreateAndGetIntegrationAccountSchema()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
@@ -186,7 +181,7 @@ namespace Test.Azure.Management.Logic
         public void ListIntegrationAccountSchemas()
         {
             using (
-                MockContext context = MockContext.Start(TestClass))
+                MockContext context = MockContext.Start(className: this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);

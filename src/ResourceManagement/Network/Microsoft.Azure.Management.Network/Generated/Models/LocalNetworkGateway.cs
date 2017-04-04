@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LocalNetworkGateway class.
         /// </summary>
-        /// <param name="localNetworkAddressSpace">Local network site address
-        /// space.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="localNetworkAddressSpace">Local network site address
+        /// space.</param>
         /// <param name="gatewayIpAddress">IP address of local network
         /// gateway.</param>
         /// <param name="bgpSettings">Local network gateway's BGP speaker
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public LocalNetworkGateway(AddressSpace localNetworkAddressSpace, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public LocalNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             LocalNetworkAddressSpace = localNetworkAddressSpace;
@@ -100,19 +100,6 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (LocalNetworkAddressSpace == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "LocalNetworkAddressSpace");
-            }
-        }
     }
 }
 

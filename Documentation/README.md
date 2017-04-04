@@ -18,6 +18,7 @@ These SDKs depend on Microsoft.Azure.Common
 | HdInsight | Microsoft.Azure.Management.HDInsight, Microsoft.Azure.Management.HDInsight.Job |
 | Insights | Microsoft.Azure.Insights |
 | Media Services | Microsoft.WindowsAzure.Management.MediaServices |
+| Monitor | Microsoft.Azure.Monitor |
 | Monitoring | Microsoft.WindowsAzure.Management.Monitoring |
 | Operational Insights | Microsoft.Azure.Management.OperationalInsights |
 | Recovery Services | Microsoft.Azure.Management.RecoveryServices, Microsoft.Azure.Management.RecoveryServices.Backup |
@@ -48,7 +49,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | PowerBI | Microsoft.Azure.Management.PowerBIEmbedded |
 | Redis Cache | Microsoft.Azure.Management.Redis |
 | Resource Manager (ARM) | Microsoft.Azure.Management.ResourceManager |
-| Scheduler | Microsoft.WindowsAzure.Management.Scheduler |
+| Scheduler | Microsoft.Azure.Management.Scheduler |
 | Search | Microsoft.Azure.Search |
 | Storage | Microsoft.Azure.Management.Storage |
 | Traffic Manager | Microsoft.Azure.Management.TrafficManager |

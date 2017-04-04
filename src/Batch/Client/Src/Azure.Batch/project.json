@@ -1,0 +1,49 @@
+﻿{
+  "version": "6.1.0",
+  "name": "Azure.Batch",
+  "description": "This client library provides access to the Microsoft Azure Batch service.",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "The client library for the Microsoft Azure Batch service.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft", "Azure", "Batch", "windowsazureofficial" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "See https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/Batch/Client/changelog.md for release notes."
+  },
+  "buildOptions": {
+    "outputName": "Microsoft.Azure.Batch",
+    "warningsAsErrors": true,
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../../tools/MSSharedLibKey.snk",
+    "define": [ "TESTSIGN" ]
+  },
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "3.3.5"
+  },
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "warningsAsErrors": true
+      },
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0"
+      }
+    },
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "define": [ "PORTABLE" ]
+      },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "Microsoft.AspNetCore.WebUtilities": "1.0.0",
+        "System.Diagnostics.Tools": "4.3.0",
+        "NETStandard.Library": "1.6.1"
+      }
+    }
+  }
+}

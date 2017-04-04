@@ -14,7 +14,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
 
-    public class WorkflowTriggerHistoriesInMemoryTests : BaseInMemoryTests
+    public class WorkflowTriggerHistoriesInMemoryTests : InMemoryTestsBase
     {
         #region Constructor
 
@@ -198,7 +198,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateTriggerHistory1(WorkflowTriggerHistory history)
         {
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName/triggers/tName/histories/08587646315851320553", history.Id);
+            Assert.True(this.ValidateIdFormat(id: history.Id, entityTypeName: "workflows", entitySubtypeName: "triggers", entityMicrotypeName: "histories"));
             Assert.Equal("08587646315851320553", history.Name);
             Assert.Equal("Microsoft.Logic/workflows/triggers/histories", history.Type);
 

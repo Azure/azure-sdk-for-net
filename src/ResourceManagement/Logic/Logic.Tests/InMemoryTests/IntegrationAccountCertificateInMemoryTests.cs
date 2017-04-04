@@ -12,10 +12,10 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
     using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;    
+    using Microsoft.Azure.Management.Logic;
     using System.IO;
 
-    public class IntegrationAccountCertificateInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountCertificateInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountCertificateInMemoryTests()
         {
@@ -277,7 +277,7 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("Microsoft.Logic/integrationAccounts/certificates", certificate.Type);
 
             Assert.Equal("PRIVATEKEY", certificate.Key.KeyName);
-            Assert.Equal("2f08fc1455374280912e7fa24258ecdb", certificate.Key.KeyVersion);            
+            Assert.Equal("2f08fc1455374280912e7fa24258ecdb", certificate.Key.KeyVersion);
             Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourcegroups/IntegrationAccountSdkTest/providers/microsoft.keyvault/vaults/IntegrationAccountVault", certificate.Key.KeyVault.Id);
             Assert.Equal("IntegrationAccountVault", certificate.Key.KeyVault.Name);
             Assert.Equal("Microsoft.KeyVault/vaults", certificate.Key.KeyVault.Type);

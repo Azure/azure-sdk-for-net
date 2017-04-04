@@ -52,9 +52,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
             
         }
 
-        public Alien(string color)
+        public Alien(string color, string smell)
         {
             Color = color;
+            Smell = smell;
         }
 
         private string _planet;
@@ -64,6 +65,9 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
 
         [JsonProperty("color")]
         public string Color { get; private set; }
+
+        [JsonProperty("smell")]
+        public string Smell { get; protected set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

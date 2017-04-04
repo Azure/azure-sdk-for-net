@@ -5,7 +5,7 @@ using System;
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    internal static class StringExtensions
+    public static class StringExtensions
     {
 
         /// <summary>

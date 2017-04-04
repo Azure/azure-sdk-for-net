@@ -75,86 +75,6 @@ namespace Microsoft.Azure.Management.Network
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
         /// <summary>
-        /// Gets the IRouteTablesOperations.
-        /// </summary>
-        IRouteTablesOperations RouteTables { get; }
-
-        /// <summary>
-        /// Gets the IRoutesOperations.
-        /// </summary>
-        IRoutesOperations Routes { get; }
-
-        /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        IPublicIPAddressesOperations PublicIPAddresses { get; }
-
-        /// <summary>
-        /// Gets the INetworkSecurityGroupsOperations.
-        /// </summary>
-        INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
-
-        /// <summary>
-        /// Gets the ISecurityRulesOperations.
-        /// </summary>
-        ISecurityRulesOperations SecurityRules { get; }
-
-        /// <summary>
-        /// Gets the ILoadBalancersOperations.
-        /// </summary>
-        ILoadBalancersOperations LoadBalancers { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworksOperations.
-        /// </summary>
-        IVirtualNetworksOperations VirtualNetworks { get; }
-
-        /// <summary>
-        /// Gets the ISubnetsOperations.
-        /// </summary>
-        ISubnetsOperations Subnets { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkPeeringsOperations.
-        /// </summary>
-        IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; }
-
-        /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        INetworkInterfacesOperations NetworkInterfaces { get; }
-
-        /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        IUsagesOperations Usages { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewaysOperations.
-        /// </summary>
-        IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
-        /// </summary>
-        IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; }
-
-        /// <summary>
-        /// Gets the ILocalNetworkGatewaysOperations.
-        /// </summary>
-        ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
-
-        /// <summary>
-        /// Gets the INetworkWatchersOperations.
-        /// </summary>
-        INetworkWatchersOperations NetworkWatchers { get; }
-
-        /// <summary>
-        /// Gets the IPacketCapturesOperations.
-        /// </summary>
-        IPacketCapturesOperations PacketCaptures { get; }
-
-        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
@@ -175,6 +95,41 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; }
 
         /// <summary>
+        /// Gets the ILoadBalancersOperations.
+        /// </summary>
+        ILoadBalancersOperations LoadBalancers { get; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        INetworkInterfacesOperations NetworkInterfaces { get; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityGroupsOperations.
+        /// </summary>
+        INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the ISecurityRulesOperations.
+        /// </summary>
+        ISecurityRulesOperations SecurityRules { get; }
+
+        /// <summary>
+        /// Gets the INetworkWatchersOperations.
+        /// </summary>
+        INetworkWatchersOperations NetworkWatchers { get; }
+
+        /// <summary>
+        /// Gets the IPacketCapturesOperations.
+        /// </summary>
+        IPacketCapturesOperations PacketCaptures { get; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        IPublicIPAddressesOperations PublicIPAddresses { get; }
+
+        /// <summary>
         /// Gets the IRouteFiltersOperations.
         /// </summary>
         IRouteFiltersOperations RouteFilters { get; }
@@ -185,9 +140,54 @@ namespace Microsoft.Azure.Management.Network
         IRouteFilterRulesOperations RouteFilterRules { get; }
 
         /// <summary>
+        /// Gets the IRouteTablesOperations.
+        /// </summary>
+        IRouteTablesOperations RouteTables { get; }
+
+        /// <summary>
+        /// Gets the IRoutesOperations.
+        /// </summary>
+        IRoutesOperations Routes { get; }
+
+        /// <summary>
         /// Gets the IBgpServiceCommunitiesOperations.
         /// </summary>
         IBgpServiceCommunitiesOperations BgpServiceCommunities { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworksOperations.
+        /// </summary>
+        IVirtualNetworksOperations VirtualNetworks { get; }
+
+        /// <summary>
+        /// Gets the ISubnetsOperations.
+        /// </summary>
+        ISubnetsOperations Subnets { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkPeeringsOperations.
+        /// </summary>
+        IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewaysOperations.
+        /// </summary>
+        IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
+        /// </summary>
+        IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; }
+
+        /// <summary>
+        /// Gets the ILocalNetworkGatewaysOperations.
+        /// </summary>
+        ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available
