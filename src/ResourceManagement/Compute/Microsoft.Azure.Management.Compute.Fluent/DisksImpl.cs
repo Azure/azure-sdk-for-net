@@ -33,20 +33,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:BFFE56CE1D59C3CA9284FED6EC0BD4DE
-        public void RevokeAccess(string resourceGroupName, string diskName)
+        public async Task RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.RevokeAccess(resourceGroupName, diskName);
+            await Inner.RevokeAccessAsync(resourceGroupName, diskName, cancellationToken);
         }
 
         ///GENMHASH:C2E2A5650639245BC0993A33DCAA5D61:5ED639AB5B297A577FFD766897FD02B8
-        public string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
+        public async Task<string> GrantAccessAsync(
+            string resourceGroupName, 
+            string diskName, 
+            AccessLevel accessLevel, 
+            int accessDuration, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             GrantAccessDataInner grantAccessDataInner = new GrantAccessDataInner();
             grantAccessDataInner.Access = accessLevel;
             grantAccessDataInner.DurationInSeconds = accessDuration;
-            AccessUriInner accessUriInner = Inner.GrantAccess(resourceGroupName,
+            AccessUriInner accessUriInner = await Inner.GrantAccessAsync(resourceGroupName,
                 diskName, 
-                grantAccessDataInner);
+                grantAccessDataInner,
+                cancellationToken);
             return accessUriInner.AccessSAS;
         }
 
