@@ -124,8 +124,8 @@ namespace Network.Tests
                     string serviceName = AZT.TestUtilities.GenerateName("testsvc");
                     string deploymentName = string.Format("{0}Prod", serviceName);
                     string reserveIpName = HttpMockServer.GetAssetName("rip", "testrip").ToLower();
-                    string location = "West Central US";
-                    const string usWestLocStr = "West Central US";
+                    string location = managementClient.GetDefaultLocation("Storage", "Compute");
+                    const string usWestLocStr = "West US";
                     try
                     {
                         _testFixture.AssociateReservedIP(
@@ -184,8 +184,8 @@ namespace Network.Tests
                     string serviceName = AZT.TestUtilities.GenerateName("testsvc");
                     string deploymentName = string.Format("{0}Prod", serviceName);
                     string reserveIpName = HttpMockServer.GetAssetName("rip", "testrip").ToLower();
-                    string location = "West Central US";
-                    const string usWestLocStr = "West Central US";
+                    string location = managementClient.GetDefaultLocation("Storage", "Compute");
+                    const string usWestLocStr = "West US";
                     try
                     {
                         _testFixture.AssociateReservedIP(
