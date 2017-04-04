@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsCreating<IBlank>,
         ISupportsDeletingById,
         ISupportsListingByGroup<IAppServiceCertificateOrder>,
+        ISupportsListing<IAppServiceCertificateOrder>,
         ISupportsGettingByGroup<IAppServiceCertificateOrder>,
         ISupportsGettingById<IAppServiceCertificateOrder>,
         ISupportsDeletingByGroup,

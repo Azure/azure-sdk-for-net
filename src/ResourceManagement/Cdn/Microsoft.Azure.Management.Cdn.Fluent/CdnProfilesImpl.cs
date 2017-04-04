@@ -7,13 +7,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using ResourceManager.Fluent.Core;
     using System.Threading;
     using Models;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation for CdnProfiles.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5Qcm9maWxlc0ltcGw=
     internal partial class CdnProfilesImpl  :
-        GroupableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,ICdnManager>,
+        TopLevelModifiableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,ICdnManager>,
         ICdnProfiles
     {
         ///GENMHASH:2CEB6E35574F5C7F1D19ADAC97C93D65:4CE4EF96A3377BCB6304539746BB262C
@@ -33,10 +35,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public IEnumerable<ICdnProfile> List()
+        protected async override Task<IPage<ProfileInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<ProfileInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:B76E119E66FC2C5D09617333DC4FF4E3:5E6BF540BD14D5EE37AC38FE28D3AA9F
@@ -58,10 +64,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(
-            string groupName, 
-            string name, 
-            CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -91,20 +94,20 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<ICdnProfile> GetByGroupAsync(
-            string groupName, 
-            string name, 
-            CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ProfileInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            ProfileInner profileInner = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(profileInner);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
-        public IEnumerable<ICdnProfile> ListByGroup(string groupName)
+        protected async override Task<IPage<ProfileInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(groupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<ProfileInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:80BCE26D6F015BF71C5D9844E17987C3

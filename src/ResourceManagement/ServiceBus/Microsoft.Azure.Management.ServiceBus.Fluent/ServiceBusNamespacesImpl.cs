@@ -2,9 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
+    using Management.Fluent.Resource.Core;
     using Management.Fluent.ServiceBus;
     using Management.Fluent.ServiceBus.Models;
     using ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using ServiceBus.Fluent;
     using System.Collections.Generic;
     using System.Threading;
@@ -15,7 +17,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uU2VydmljZUJ1c05hbWVzcGFjZXNJbXBs
     internal partial class ServiceBusNamespacesImpl  :
-        GroupableResources<IServiceBusNamespace,
+        TopLevelModifiableResources<IServiceBusNamespace,
             ServiceBusNamespaceImpl, 
             NamespaceModelInner,
             INamespacesOperations,
@@ -27,13 +29,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         {
         }
 
-        public async override Task<IServiceBusNamespace> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<NamespaceModelInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var data = await this.Inner.GetAsync(groupName, name, cancellationToken);
-            return this.WrapModel(data);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -73,16 +74,24 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
                 this.Manager);
         }
 
-        public IEnumerable<IServiceBusNamespace> List()
+        protected async override Task<IPage<NamespaceModelInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(cancellationToken);
         }
 
-        public IEnumerable<IServiceBusNamespace> ListByGroup(string resourceGroupName)
+        protected async override Task<IPage<NamespaceModelInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
+        }
+
+        protected async override Task<IPage<NamespaceModelInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<NamespaceModelInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
     }
 }

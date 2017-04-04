@@ -6,6 +6,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for VirtualMachineOffers.
@@ -29,6 +33,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachineOffer> List()
         {
             return WrapList(innerCollection.ListOffers(publisher.Region.Name, publisher.Name));
+        }
+
+        public async Task<IPagedCollection<IVirtualMachineOffer>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IVirtualMachineOffer, VirtualMachineImageResourceInner>.LoadPage(
+                async (cancellation) => await innerCollection.ListOffersAsync(publisher.Region.Name, publisher.Name, cancellation),
+                WrapModel, cancellationToken);
         }
 
         ///GENMHASH:D48BEF4BAC4C0112B6930D731FFC59BD:C7F4803C2EE7A4D67291D41041502664

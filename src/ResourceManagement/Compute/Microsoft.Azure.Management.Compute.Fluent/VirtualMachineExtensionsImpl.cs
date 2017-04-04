@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     extension = new VirtualMachineExtensionImpl(
                         extensionName,
                         Parent,
-                        await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(Parent.ResourceGroupName, Parent.Name, extensionName, null, cancellationToken));
+                        await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(Parent.ResourceGroupName, Parent.Name, extensionName, cancellationToken: cancellationToken));
                 }
                 result.Add(extension);
             }

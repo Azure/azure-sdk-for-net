@@ -8,6 +8,10 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Rest.Azure;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -18,6 +22,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         internal TenantsImpl(ITenantsOperations client)
         {
             this.innerCollection = client;
+        }
+
+        public async Task<IPagedCollection<ITenant>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<ITenant, TenantIdDescription>.LoadPage(
+                async (cancellation) => await innerCollection.ListAsync(cancellation),
+                innerCollection.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
 
         IEnumerable<ITenant> ISupportsListing<ITenant>.List()

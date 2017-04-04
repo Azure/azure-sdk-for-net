@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using ResourceManager.Fluent.Core.CollectionActions;
     using System.Linq;
     using Rest.Azure;
+    using Management.Fluent.Resource.Core;
+    using System;
 
     /// <summary>
     /// Base class for Service Bus child entities.
@@ -38,7 +40,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:AD2F63EB9B7A81CCDA7E3A349748EDF7:27E486AB74A10242FF421C0798DDC450
-        protected abstract Task<InnerT> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+        protected abstract Task<InnerT> GetInnerByNameAsync(string name, CancellationToken cancellationToken);
 
         ///GENMHASH:885F10CFCF9E6A9547B0702B4BBD8C9E:16F094D018A7AB696812573A607E81FE
         public async Task<T> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -70,14 +72,22 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return names;
         }
 
-        protected abstract Task<IPage<InnerT>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken));
-        protected abstract Task<IPage<InnerT>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        protected abstract Task<IPage<InnerT>> ListInnerFirstPageAsync(CancellationToken cancellationToken);
+        protected abstract Task<IPage<InnerT>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken);
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:874C7A8E3CDF988B4BDA901B0FE62ABD
         public IEnumerable<T> List()
         {
-            return WrapList(ListInnerFirstPageAsync().ConfigureAwait(false).GetAwaiter().GetResult()
-                            .AsContinuousCollection(link => ListInnerNextPageAsync(link).ConfigureAwait(false).GetAwaiter().GetResult()));
+            return WrapList(ListInnerFirstPageAsync(default(CancellationToken)).ConfigureAwait(false).GetAwaiter().GetResult()
+                            .AsContinuousCollection(link => ListInnerNextPageAsync(link, default(CancellationToken)).ConfigureAwait(false).GetAwaiter().GetResult()));
+        }
+
+        public async Task<IPagedCollection<T>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<T, InnerT>.LoadPage(
+                async (cancellation) => await ListInnerFirstPageAsync(cancellation),
+                async (nextLink, cancellation) => await ListInnerNextPageAsync(nextLink, cancellation),
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

@@ -34,7 +34,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         #region Implementation of ISupportsGettingByGroup interface
 
-        public abstract Task<IFluentResourceT> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
+        protected abstract Task<InnerResourceT> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
+
+
+        public virtual async Task<IFluentResourceT> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            return WrapModel(await this.GetInnerByGroupAsync(groupName, name, cancellationToken));
+        }
+
 
         public IFluentResourceT GetByGroup(string groupName, string name)
         {
@@ -63,7 +70,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         #region Implementation of ISupportsDeletingByGroup interface
 
-        public abstract Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken));
+        protected abstract Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
+
+        public virtual async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.DeleteInnerByGroupAsync(groupName, name, cancellationToken);
+        }
 
         public void DeleteByGroup(string groupName, string name)
         {

@@ -9,13 +9,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// The implementation for WebApps.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwc0ltcGw=
     internal partial class WebAppsImpl  :
-        GroupableResources<
+        TopLevelModifiableResources<
             IWebApp,
             WebAppImpl,
             Models.SiteInner,
@@ -30,7 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public IEnumerable<IWebApp> ListByGroup(string resourceGroupName)
+        public override IEnumerable<IWebApp> ListByGroup(string resourceGroupName)
         {
             Func<SiteInner, IWebApp> converter = inner =>
             {
@@ -42,16 +44,34 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                         .Select(inner => converter(inner));
         }
 
-        ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
-        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IPagedCollection<IWebApp>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Inner.DeleteAsync(groupName, name, cancellationToken: cancellationToken);
+            return await PagedCollection<IWebApp, SiteInner>.LoadPageWithWrapModelAsync(
+                async (cancellation) => await Inner.ListByResourceGroupAsync(resourceGroupName, cancellationToken: cancellation),
+                Inner.ListByResourceGroupNextAsync,
+                async(inner, cancellation) => await PopulateModelAsync(inner, cancellation),
+                loadAllPages, cancellationToken);
+        }
+
+        public override async Task<IPagedCollection<IWebApp>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IWebApp, SiteInner>.LoadPageWithWrapModelAsync(
+                async (cancellation) => await Inner.ListAsync(cancellation),
+                Inner.ListNextAsync,
+                async (inner, cancellation) => await PopulateModelAsync(inner, cancellation),
+                loadAllPages, cancellationToken);
+        }
+
+        ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            await Inner.DeleteAsync(groupName, name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:F6B932DEEE4F4CBE27781F2323DD7232
         public async override Task<IWebApp> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await Inner.GetAsync(groupName, name, cancellationToken);
+            var inner = await GetInnerByGroupAsync(groupName, name, cancellationToken);
             var webapp = await PopulateModelAsync(inner, cancellationToken);
             return webapp;
         }
@@ -83,6 +103,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
             var configInner = inner.SiteConfig;
             return new WebAppImpl(inner.Name, inner, configInner, Manager);
+        }
+
+        protected override async Task<IPage<SiteInner>> ListInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Inner.ListAsync(cancellationToken);
+        }
+
+        protected override async Task<IPage<SiteInner>> ListInnerNextAsync(string link, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(link, cancellationToken);
+        }
+
+        protected override async Task<IPage<SiteInner>> ListInnerByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupAsync(resourceGroupName, cancellationToken: cancellationToken);
+        }
+
+        protected override async Task<IPage<SiteInner>> ListInnerByGroupNextAsync(string link, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(link, cancellationToken);
+        }
+
+        protected override async Task<SiteInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
     }
 }

@@ -5,7 +5,13 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Management.Fluent.Resource.Core;
     using ResourceManager.Fluent.Core;
+    using System.Linq;
+    using Models;
 
     /// <summary>
     /// The implementation for VirtualMachineImagesInSku.
@@ -41,6 +47,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     innerCollection.Get(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, version)));
             }
             return firstPage;
+        }
+
+        public async Task<IPagedCollection<IVirtualMachineImage>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            List<IVirtualMachineImage> firstPage = new List<IVirtualMachineImage>();
+            var innerImages = await innerCollection.ListAsync(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, cancellationToken: cancellationToken);
+
+            var getResult = await Task.WhenAll(innerImages.Select(async (innerImage) => new VirtualMachineImageImpl(sku.Region,
+                    sku.Publisher.Name,
+                    sku.Offer.Name,
+                    sku.Name,
+                    innerImage.Name,
+                    await innerCollection.GetAsync(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, innerImage.Name, cancellationToken))));
+
+            return PagedCollection<IVirtualMachineImage, VirtualMachineImageResourceInner>.CreateFromEnumerable(getResult);
         }
     }
 }

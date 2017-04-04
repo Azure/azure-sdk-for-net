@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IBlank Define(string name)
         {
-            return CreateFluentModel(name);
+            return WrapModel(name);
         }
 
         public void DeleteById(string id)
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         public async Task<IDeployment> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var deploymentExtendedInner = await Manager.Inner.Deployments.GetAsync(resourceGroupName, name, cancellationToken);
-            return CreateFluentModel(deploymentExtendedInner);
+            return WrapModel(deploymentExtendedInner);
         }
 
         public IDeployment GetById(string id)
@@ -99,7 +100,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     var deploymentExtendedInner = Manager.Inner.Deployments.Get(resourceGroup.Name, name);
                     if (deploymentExtendedInner != null)
                     {
-                        return CreateFluentModel(deploymentExtendedInner);
+                        return WrapModel(deploymentExtendedInner);
                     }
                 }
                 catch (CloudException)
@@ -124,20 +125,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         {
             return Manager.Inner.Deployments.List(resourceGroupName)
                                             .AsContinuousCollection(link => Manager.Inner.Deployments.ListNext(link))
-                                            .Select(inner => CreateFluentModel(inner));
+                                            .Select(inner => WrapModel(inner));
         }
 
-        public Task<IEnumerable<IDeployment>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotSupportedException();
-        }
-
-        private DeploymentImpl CreateFluentModel(DeploymentExtendedInner deploymentExtendedInner)
+        private DeploymentImpl WrapModel(DeploymentExtendedInner deploymentExtendedInner)
         {
             return new DeploymentImpl(deploymentExtendedInner, resourceManager);
         }
 
-        private DeploymentImpl CreateFluentModel(string name)
+        private DeploymentImpl WrapModel(string name)
         {
             return new DeploymentImpl(
                     new DeploymentExtendedInner
@@ -146,6 +142,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     },
                     resourceManager
                 );
+        }
+
+        public async Task<IPagedCollection<IDeployment>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var resourceGroups = await resourceManager.ResourceGroups.ListAsync(true, cancellationToken);
+            var taskResult = await Task.WhenAll(resourceGroups.Select(async (rg) => await ListByGroupAsync(rg.Name, true, cancellationToken)));
+            return PagedCollection<IDeployment, DeploymentExtendedInner>.CreateFromEnumerable(taskResult.SelectMany(deployment => deployment));
+        }
+
+        public async Task<IPagedCollection<IDeployment>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IDeployment, DeploymentExtendedInner>.LoadPage(
+                async (cancellation) => await Manager.Inner.Deployments.ListAsync(resourceGroupName, cancellationToken: cancellationToken),
+                Manager.Inner.Deployments.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
 
     /// <summary>
     /// Implementation of NSRecordSets.
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         INSRecordSets
     {
         private DnsZoneImpl dnsZone;
+        private const RecordType NSRecordType = RecordType.NS;
 
         private DnsZoneImpl Parent()
         {
@@ -29,7 +32,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 dnsZone.ResourceGroupName,
                 dnsZone.Name,
                 name,
-                RecordType.NS,
+                NSRecordType,
                 cancellationToken);
             return new NSRecordSetImpl(dnsZone, inner);
         }
@@ -50,7 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IEnumerable<INSRecordSet> List()
         {
             return WrapList(dnsZone.Manager.Inner.RecordSets
-                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.NS)
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name, NSRecordType)
                 .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
@@ -58,6 +61,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         protected override INSRecordSet WrapModel(RecordSetInner inner)
         {
             return new NSRecordSetImpl(dnsZone, inner);
+        }
+
+        public async Task<IPagedCollection<INSRecordSet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<INSRecordSet, RecordSetInner>.LoadPage(
+                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName, dnsZone.Name, NSRecordType, cancellationToken: cancellation),
+                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

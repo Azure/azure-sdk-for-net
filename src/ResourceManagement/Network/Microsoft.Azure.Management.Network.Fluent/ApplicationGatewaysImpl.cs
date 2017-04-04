@@ -7,13 +7,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation for ApplicationGateways.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uQXBwbGljYXRpb25HYXRld2F5c0ltcGw=
     internal partial class ApplicationGatewaysImpl :
-        GroupableResources<IApplicationGateway, ApplicationGatewayImpl, ApplicationGatewayInner, IApplicationGatewaysOperations, INetworkManager>,
+        TopLevelModifiableResources<IApplicationGateway, ApplicationGatewayImpl, ApplicationGatewayInner, IApplicationGatewaysOperations, INetworkManager>,
         IApplicationGateways
     {
 
@@ -24,16 +26,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IApplicationGateway> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ApplicationGatewayInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var data = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(data);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public IEnumerable<IApplicationGateway> List()
+        protected override async Task<IPage<ApplicationGatewayInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListAll().AsContinuousCollection(link => Inner.ListAllNext(link)));
+            return await Inner.ListAllAsync(cancellationToken);
+        }
+
+        protected override async Task<IPage<ApplicationGatewayInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListAllNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:DB7CDF51E063E00F632236B9A1581DD7:A55F357967E86E32E70097D1F0B4D25E
@@ -43,9 +49,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public IEnumerable<IApplicationGateway> ListByGroup(string groupName)
+        protected override async Task<IPage<ApplicationGatewayInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List(groupName).AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(groupName, cancellationToken);
+        }
+
+        protected override async Task<IPage<ApplicationGatewayInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4FD24066BFA6ACCBA6BCD17F67645E2A
@@ -62,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
