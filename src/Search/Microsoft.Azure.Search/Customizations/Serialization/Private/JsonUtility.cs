@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Search
             settings.Converters.Add(new GeographyPointConverter());
             settings.Converters.Add(new IndexActionConverter<T>());
             settings.Converters.Add(new DateTimeConverter());
+            settings.Converters.Add(new DoubleConverter());
             settings.NullValueHandling = NullValueHandling.Ignore;
 
             if (useCamelCase)
@@ -72,6 +73,7 @@ namespace Microsoft.Azure.Search
             settings.Converters.Add(new GeographyPointConverter());
             settings.Converters.Add(new DocumentConverter());
             settings.Converters.Add(new DateTimeConverter());
+            settings.Converters.Add(new DoubleConverter());
             settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
             settings.Converters.Add(new SuggestResultConverter<TSuggestResult, TDoc>());
             settings.DateParseHandling = DateParseHandling.DateTimeOffset;
