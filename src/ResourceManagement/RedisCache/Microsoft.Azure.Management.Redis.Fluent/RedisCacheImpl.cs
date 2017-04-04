@@ -92,11 +92,11 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:6EE61FA0DE4D0297160B059C5B56D12A:FCE23512A2C31EB7F68F7065799142F4
-        public IRedisAccessKeys Keys()
+        public async Task<IRedisAccessKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (cachedAccessKeys == null)
             {
-                cachedAccessKeys = RefreshKeys();
+                cachedAccessKeys = await RefreshKeysAsync(cancellationToken);
             }
             return cachedAccessKeys;
         }
@@ -155,24 +155,24 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:7EA43FE4B5DC6873C3A15AE9AF9FD9A2:0176FA0695BE5AF7085965288087F3E6
-        public void ImportData(IList<string> files)
+        public async Task ImportDataAsync(IList<string> files, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ImportRDBParametersInner
             {
                 Files = files
             };
-            Manager.Inner.Redis.ImportData(this.ResourceGroupName, this.Name, parameters);
+            await Manager.Inner.Redis.ImportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
         ///GENMHASH:797BE61D54080982DA71A130D2628D30:245A7A45CB8ACD07ADC910C1F5C669C3
-        public void ImportData(IList<string> files, string fileFormat)
+        public async Task ImportDataAsync(IList<string> files, string fileFormat, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ImportRDBParametersInner
             {
                 Files = files,
                 Format = fileFormat
             };
-            Manager.Inner.Redis.ImportData(this.ResourceGroupName, this.Name, parameters);
+            await Manager.Inner.Redis.ImportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
         ///GENMHASH:9456FDB06E5A3C49F9A7BFDDA1938013:A5E2F06B6C6C37916FED3F7329DBBE32
@@ -191,18 +191,18 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:E3A7804FB0FA9098FEB1BBC27C0AC302:1D1FD1926CD83B5A53D025D908F50F70
-        public void ExportData(string containerSASUrl, string prefix)
+        public async Task ExportDataAsync(string containerSASUrl, string prefix, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ExportRDBParametersInner
             {
                 Container = containerSASUrl,
                 Prefix = prefix
             };
-            Manager.Inner.Redis.ExportData(this.ResourceGroupName, this.Name, parameters);
+            await Manager.Inner.Redis.ExportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
         ///GENMHASH:D36720446E1DFBFE86C7D6259BB131A7:96E7F137224736FF0D8B93037CAC1AB4
-        public void ExportData(string containerSASUrl, string prefix, string fileFormat)
+        public async Task ExportDataAsync(string containerSASUrl, string prefix, string fileFormat, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ExportRDBParametersInner
             {
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 Prefix = prefix,
                 Format = fileFormat
             };
-            Manager.Inner.Redis.ExportData(this.ResourceGroupName, this.Name, parameters);
+            await Manager.Inner.Redis.ExportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
         ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:0C30EC62BAFB5962817F1799BCD0FA3F
@@ -295,9 +295,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:861E02F6BBA5773E9337D78B346B0D6B:A13471591206DDE563C137910EBF8D1F
-        public IRedisAccessKeys RegenerateKey(RedisKeyType keyType)
+        public async Task<IRedisAccessKeys> RegenerateKeyAsync(RedisKeyType keyType, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = Manager.Inner.Redis.RegenerateKey(ResourceGroupName, Name, keyType);
+            var response = await Manager.Inner.Redis.RegenerateKeyAsync(ResourceGroupName, Name, keyType, cancellationToken);
             cachedAccessKeys = new RedisAccessKeysImpl(response);
             return cachedAccessKeys;
         }
@@ -346,9 +346,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:36C3CA891B448CCCA6D3BB4C29A31470:A33045316FD527F5E8BD1321B1F93CB2
-        public IRedisAccessKeys RefreshKeys()
+        public async Task<IRedisAccessKeys> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = Manager.Inner.Redis.ListKeys(this.ResourceGroupName, this.Name);
+            var response = await Manager.Inner.Redis.ListKeysAsync(this.ResourceGroupName, this.Name, cancellationToken);
             cachedAccessKeys = new RedisAccessKeysImpl(response);
             return cachedAccessKeys;
         }
@@ -421,24 +421,25 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:00B3FC5713723EC459E8D0BBE862C56F:FB69548FAA3E0BDC93FB1EB6A6E158EC
-        public void ForceReboot(string rebootType)
+        public async Task ForceRebootAsync(string rebootType, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new RedisRebootParametersInner
             {
                 RebootType = rebootType
             };
-            Manager.Inner.Redis.ForceReboot(ResourceGroupName, Name, parameters);
+            await Manager.Inner.Redis.ForceRebootAsync(ResourceGroupName, Name, parameters, cancellationToken);
         }
 
         ///GENMHASH:9514189731558B5E71CF90933A631027:98E14B4429597E5D69A9A512FB31AC81
-        public void ForceReboot(string rebootType, int shardId)
+        public async Task ForceRebootAsync(string rebootType, int shardId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new RedisRebootParametersInner
             {
                 RebootType = rebootType,
                 ShardId = shardId
             };
-            Manager.Inner.Redis.ForceReboot(ResourceGroupName, Name, parameters);
+
+            await Manager.Inner.Redis.ForceRebootAsync(ResourceGroupName, Name, parameters, cancellationToken);
         }
 
         ///GENMHASH:30CB47385D9AC0E9818336B698BEF529:4EF4FC902E838999361E1A71DDDF1772
