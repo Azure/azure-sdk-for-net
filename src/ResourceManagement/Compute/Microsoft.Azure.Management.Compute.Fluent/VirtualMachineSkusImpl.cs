@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public async Task<IPagedCollection<IVirtualMachineSku>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IVirtualMachineSku, VirtualMachineImageResourceInner>.LoadPage(
-                async (cancellation) => await innerCollection.ListSkusAsync(offer.Region.Name, offer.Publisher.Name, offer.Name),
+                async (cancellation) => await innerCollection.ListSkusAsync(offer.Region.Name, offer.Publisher.Name, offer.Name, cancellation),
                 WrapModel, cancellationToken);
         }
 
