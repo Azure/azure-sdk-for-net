@@ -124,7 +124,7 @@ namespace Network.Tests
                     string serviceName = AZT.TestUtilities.GenerateName("testsvc");
                     string deploymentName = string.Format("{0}Prod", serviceName);
                     string reserveIpName = HttpMockServer.GetAssetName("rip", "testrip").ToLower();
-                    string location = managementClient.GetDefaultLocation("Storage", "Compute");
+                    string location = "West US";
                     const string usWestLocStr = "West US";
                     try
                     {
