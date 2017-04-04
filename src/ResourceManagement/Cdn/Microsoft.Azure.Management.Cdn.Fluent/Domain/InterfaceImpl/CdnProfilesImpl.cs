@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <return>List of available CDN REST operations.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListOperations()
+        IEnumerable<Microsoft.Azure.Management.Cdn.Fluent.Operation> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListOperations()
         {
-            return this.ListOperations() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation>;
+            return this.ListOperations();
         }
 
         /// <summary>
@@ -152,9 +152,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>.List()
+        IEnumerable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>;
+            return this.List();
         }
     }
 }

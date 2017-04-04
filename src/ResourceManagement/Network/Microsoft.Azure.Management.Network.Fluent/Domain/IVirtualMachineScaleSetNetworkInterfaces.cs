@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Entry point to virtual machine scale set network interface management API.
@@ -27,6 +28,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="instanceId">Virtual machine scale set vm instance id.</param>
         /// <return>List of network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId);
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId);
     }
 }

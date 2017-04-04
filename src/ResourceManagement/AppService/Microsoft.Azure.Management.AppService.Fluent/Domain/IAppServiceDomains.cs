@@ -5,10 +5,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using AppServiceDomain.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Entry point for domain management API.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IAppServiceDomains  :
         ISupportsCreating<AppServiceDomain.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
@@ -25,6 +29,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="topLevelExtension">The top level extension of the domain, e.g., "com", "net", "org".</param>
         /// <return>The list of agreements required for the purchase.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement> ListAgreements(string topLevelExtension);
+        IEnumerable<IDomainLegalAgreement> ListAgreements(string topLevelExtension);
     }
 }

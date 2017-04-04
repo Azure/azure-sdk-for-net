@@ -3,12 +3,14 @@
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models ;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Threading;
     using Microsoft.Rest;
+    using System.Collections.Generic;
+
     public partial class ServicePrincipalsImpl 
     {
         /// <summary>
@@ -52,8 +54,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>.List() { 
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>;
+        IEnumerable<IServicePrincipal> ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>.List() { 
+            return this.List();
         }
 
     }

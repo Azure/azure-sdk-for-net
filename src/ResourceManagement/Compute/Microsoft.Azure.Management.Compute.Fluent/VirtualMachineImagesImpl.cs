@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
     using ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// The implementation for VirtualMachineImages.
@@ -32,35 +34,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:BA2FEDDF9D78BF55786D81F6C85E907C:630A1B72E2D4ABD6B8949063CF2A1867
-        public PagedList<IVirtualMachineImage> ListByRegion(Region region)
+        public IEnumerable<IVirtualMachineImage> ListByRegion(Region region)
         {
             return ListByRegion(region.Name);
         }
 
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:1493616B491D8F4B92FA36631D115300
-        public PagedList<IVirtualMachineImage> ListByRegion(string regionName)
+        public IEnumerable<IVirtualMachineImage> ListByRegion(string regionName)
         {
-            PagedList<IVirtualMachinePublisher> publishers = Publishers().ListByRegion(regionName);
-
-            PagedList<IVirtualMachineOffer> offers = new ChildListFlattener<IVirtualMachinePublisher, IVirtualMachineOffer>(publishers, 
-                (IVirtualMachinePublisher publisher) =>
-                    {
-                        return publisher.Offers.List();
-                    }).Flatten();
-
-            PagedList<IVirtualMachineSku> skus = new ChildListFlattener<IVirtualMachineOffer, IVirtualMachineSku>(offers,
-                (IVirtualMachineOffer offer) =>
-                    {
-                        return offer.Skus.List();
-                    }).Flatten();
-
-            PagedList<IVirtualMachineImage> images = new ChildListFlattener<IVirtualMachineSku, IVirtualMachineImage>(skus,
-                (IVirtualMachineSku sku) =>
-                    {
-                        return sku.Images.List();
-                    }).Flatten();
-
-            return images;
+            return Publishers().ListByRegion(regionName)
+                    .SelectMany(publisher => publisher.Offers
+                                                      .List()
+                                                      .SelectMany(offer => offer.Skus
+                                                                                .List()
+                                                                                .SelectMany(sku => sku.Images.List())));
         }
 
         ///GENMHASH:0BEBF248F53E3703454D841A5CB0C8BD:F1262C25E062855DE7A22FF21A820919

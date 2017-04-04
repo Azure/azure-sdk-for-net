@@ -7,7 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System;
     using System.Linq;
     using ResourceManager.Fluent.Authentication;
-
+    /// <summary>
+    /// Entry point to Azure networking management.
+    /// </summary>
     public class NetworkManager : Manager<INetworkManagementClient>, INetworkManager
     {
         private PublicIPAddressesImpl publicIPAddresses;
@@ -154,6 +156,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Entry point to application gateway management.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+        /// </remarks>
         public IApplicationGateways ApplicationGateways
         {
             get
@@ -170,6 +175,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// returns entry point to load balancer management
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+        /// </remarks>
         public ILoadBalancers LoadBalancers
         {
             get

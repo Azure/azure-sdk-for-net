@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the virtual machine sizes supported in the availability set.
         /// </summary>
-        PagedList<IVirtualMachineSize> ListVirtualMachineSizes();
+        IEnumerable<IVirtualMachineSize> ListVirtualMachineSizes();
 
         /// <summary>
         /// Gets the availability set sku.

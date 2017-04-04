@@ -19,7 +19,7 @@ namespace Fluent.Tests.ResourceManager
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
-                Assert.True(0 < azure.Subscriptions.List().Count);
+                Assert.True(0 < azure.Subscriptions.List().Count());
                 var subscription = azure.GetCurrentSubscription();
                 Assert.NotNull(subscription);
                 Assert.Equal(subscription.SubscriptionId.ToLowerInvariant(), azure.SubscriptionId.ToLowerInvariant());
@@ -36,7 +36,7 @@ namespace Fluent.Tests.ResourceManager
                 Assert.NotNull(subscription);
 
                 var locations = subscription.ListLocations();
-                Assert.True(locations.Count > 0);
+                Assert.True(locations.Count() > 0);
 
                 foreach (var location in locations)
                 {

@@ -27,13 +27,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         /// Gets the reference to the parent implementation, this is used by
         /// the child resource impls to invoke methods in the parent such as
         /// method to add the child resource impl to collection of child resources
-        /// maintined by the parent.
+        /// maintained by the parent.
         /// </summary>
         public ParentImplT Parent { get; private set; }
 
         public abstract string Name();
 
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
+        string IHasName.Name
         {
             get
             {

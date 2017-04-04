@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading;
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation of DnsZones.
@@ -39,13 +40,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E29BEEAB8CFC79BEFB042BF8EE0AED00
-        public PagedList<IDnsZone> List()
+        public IEnumerable<IDnsZone> List()
         {
-            var pagedList = new PagedList<ZoneInner>(Inner.List(), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:D57C6EF7B32D03E7098E2D735EEF70BD:4E951CDE0BF14119F1DB863BEC8121A9
@@ -57,13 +55,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:B533AA6052ED2EA7F8D7C96A5C95034C
-        public PagedList<IDnsZone> ListByGroup(string groupName)
+        public IEnumerable<IDnsZone> ListByGroup(string groupName)
         {
-            var pagedList = new PagedList<ZoneInner>(Inner.ListByResourceGroup(groupName), (string nextPageLink) =>
-            {
-                return Inner.ListByResourceGroupNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(groupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:F388A69B4ED70BD6EEC04A90B7F6BC69

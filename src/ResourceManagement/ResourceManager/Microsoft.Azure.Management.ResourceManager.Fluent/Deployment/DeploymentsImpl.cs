@@ -3,12 +3,13 @@
 
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Deployment.Definition;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Rest.Azure;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -113,31 +114,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             throw new NotSupportedException();
         }
 
-        public PagedList<IDeployment> List()
+        public IEnumerable<IDeployment> List()
         {
-            return new ChildListFlattener<IResourceGroup, IDeployment>(resourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
-            {
-                return ListByGroup(resourceGroup.Name);
-            }).Flatten();
+            return resourceManager.ResourceGroups.List()
+                                                 .SelectMany(rg => ListByGroup(rg.Name));
         }
 
-        public PagedList<IDeployment> ListByGroup(string resourceGroupName)
+        public IEnumerable<IDeployment> ListByGroup(string resourceGroupName)
         {
-            IPage<DeploymentExtendedInner> firstPage = Manager.Inner.Deployments.List(resourceGroupName);
-            var innerList = new PagedList<DeploymentExtendedInner>(firstPage, (string nextPageLink) =>
-            {
-                return Manager.Inner.Deployments.ListNext(nextPageLink);
-            });
-
-            return new PagedList<IDeployment>(new WrappedPage<DeploymentExtendedInner, IDeployment>(innerList.CurrentPage, CreateFluentModel),
-            (string nextPageLink) =>
-            {
-                innerList.LoadNextPage();
-                return new WrappedPage<DeploymentExtendedInner, IDeployment>(innerList.CurrentPage, CreateFluentModel);
-            });
+            return Manager.Inner.Deployments.List(resourceGroupName)
+                                            .AsContinuousCollection(link => Manager.Inner.Deployments.ListNext(link))
+                                            .Select(inner => CreateFluentModel(inner));
         }
 
-        public Task<PagedList<IDeployment>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<IDeployment>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotSupportedException();
         }

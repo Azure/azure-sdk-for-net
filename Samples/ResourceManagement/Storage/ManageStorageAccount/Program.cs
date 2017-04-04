@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
+using System.Linq;
 
 namespace ManageStorageAccount
 {
@@ -85,9 +86,9 @@ namespace ManageStorageAccount
                 // ============================================================
                 // Delete a storage account
 
-                Utilities.Log($"Deleting a storage account - {accounts[0].Name} created @ {accounts[0].CreationTime}");
+                Utilities.Log($"Deleting a storage account - {accounts.ElementAt(0).Name} created @ {accounts.ElementAt(0).CreationTime}");
 
-                azure.StorageAccounts.DeleteById(accounts[0].Id);
+                azure.StorageAccounts.DeleteById(accounts.ElementAt(0).Id);
 
                 Utilities.Log("Deleted storage account");
             }

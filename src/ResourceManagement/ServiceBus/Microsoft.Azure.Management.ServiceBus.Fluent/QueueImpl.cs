@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:1D23568874BE06880E14E0FB7622F67C:C668F81A8DA344C037D3349C4B8E22EA
         private async Task SubmitChildrenOperationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.AuthorizationRules().CreateAsync(this.rulesToCreate.ToArray());
+            await this.AuthorizationRules().CreateAsync(this.rulesToCreate, cancellationToken);
             await this.AuthorizationRules().DeleteByNameAsync(this.rulesToDelete, cancellationToken);
         }
 

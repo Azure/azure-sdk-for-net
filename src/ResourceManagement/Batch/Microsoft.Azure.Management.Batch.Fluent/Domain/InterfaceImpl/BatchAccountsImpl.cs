@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Collections.Generic;
+
     public partial class BatchAccountsImpl 
     {
         /// <summary>
@@ -47,8 +49,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.ListByGroup(string resourceGroupName) { 
-            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>;
+        IEnumerable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.ListByGroup(string resourceGroupName)
+        {
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -80,8 +83,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.List() { 
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>;
+        IEnumerable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.List() {
+            return this.List();
         }
 
     }

@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using ResourceManager.Fluent.Core;
     using Storage.Fluent;
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -55,27 +56,17 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        internal PagedList<IBatchAccount> List()
+        internal IEnumerable<IBatchAccount> List()
         {
-            var firstPage = Inner.List();
-            var pagedList = new PagedList<BatchAccountInner>(firstPage, (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        internal PagedList<IBatchAccount> ListByGroup(string resourceGroupName)
+        internal IEnumerable<IBatchAccount> ListByGroup(string resourceGroupName)
         {
-            var firstPage = Inner.ListByResourceGroup(resourceGroupName);
-            var pagedList = new PagedList<BatchAccountInner>(firstPage, (string nextPageLink) =>
-            {
-                return Inner.ListByResourceGroupNext(nextPageLink);
-            });
-
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:353632428E49DD5C2FB134FBBB79CA4F:7213377B7C84B2355F61715C95204A42
@@ -94,7 +85,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return WrapModel(name);
         }
 
-        internal Task<PagedList<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        internal Task<IEnumerable<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotSupportedException();
         }

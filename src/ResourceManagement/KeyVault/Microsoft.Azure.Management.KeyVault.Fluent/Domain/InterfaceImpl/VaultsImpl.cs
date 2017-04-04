@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     internal partial class VaultsImpl 
     {
@@ -46,8 +47,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.ListByGroup (string resourceGroupName) {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault>;
+        IEnumerable<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.ListByGroup (string resourceGroupName)
+        {
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -73,8 +75,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.List () {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.KeyVault.Fluent.IVault>;
+        IEnumerable<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.List ()
+        {
+            return this.List();
         }
 
     }

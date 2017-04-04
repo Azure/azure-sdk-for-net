@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// <summary>
     /// Type representing authorization rule defined for queue.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IQueueAuthorizationRule  :
         IAuthorizationRule<Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRule>,
         IUpdatable<QueueAuthorizationRule.Update.IUpdate>

@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Collections.Generic;
 
     internal partial class PublicIPAddressesImpl 
     {
@@ -35,9 +36,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -67,9 +68,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.List()
+        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>;
+            return this.List();
         }
     }
 }

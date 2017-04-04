@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// <summary>
     /// Type representing Service Bus queue.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// </remarks>
     public interface IQueue  :
         IIndependentChildResource<ServiceBus.Fluent.IServiceBusManager, Management.Fluent.ServiceBus.Models.QueueInner>,
         IRefreshable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,

@@ -27,11 +27,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:F06F4A28DDFE89624259B7BA06AB2A0E
-        public PagedList<IVirtualMachineSku> List()
+        public IEnumerable<IVirtualMachineSku> List()
         {
-            IEnumerable<VirtualMachineImageResourceInner> innerSkus = innerCollection.ListSkus(offer.Region.Name, offer.Publisher.Name, offer.Name);
-            var pagedList = new PagedList<VirtualMachineImageResourceInner>(innerSkus);
-            return WrapList(pagedList);
+            return WrapList(innerCollection.ListSkus(offer.Region.Name, offer.Publisher.Name, offer.Name));
         }
 
         ///GENMHASH:D48BEF4BAC4C0112B6930D731FFC59BD:3D3DBF6D2E250B46C52C216A27E376BA

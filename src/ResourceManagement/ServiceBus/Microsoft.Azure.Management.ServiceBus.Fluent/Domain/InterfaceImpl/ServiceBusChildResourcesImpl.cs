@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        PagedList<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<T>.List()
+        IEnumerable<T> ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<T>.List()
         {
-            return this.List() as PagedList<T>;
+            return this.List();
         }
 
         /// <summary>

@@ -6,18 +6,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for Azure SQL Database's service tier advisor.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TZXJ2aWNlVGllckFkdmlzb3JJbXBs
     internal partial class ServiceTierAdvisorImpl :
-        Wrapper<Models.ServiceTierAdvisorInner>,
+        Wrapper<ServiceTierAdvisorInner>,
         IServiceTierAdvisor
     {
         private ResourceId resourceId;
         private IDatabasesOperations databasesInner;
-        private IReadOnlyList<ISloUsageMetric> sloUsageMetrics;
+        private IEnumerable<ISloUsageMetric> sloUsageMetrics;
 
         ///GENMHASH:0150BB5F92ED226BF84D3AC5255EFE3F:F8EEA9E1BE10E299F96C7CA9D025C464
         public string CurrentServiceLevelObjective()
@@ -56,13 +57,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7FD5A8D2A26E9E6B12E7585A7DBE1CE3:9055AAEF8F9A4DFD881586C59581634F
-        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics()
+        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics()
         {
             if (sloUsageMetrics == null)
             {
                 Func<SloUsageMetric, SloUsageMetricImpl> convertor
                     = (sloUsageMetricInner) => new SloUsageMetricImpl(sloUsageMetricInner);
-                sloUsageMetrics = PagedListConverter.Convert(Inner.ServiceLevelObjectiveUsageMetrics, convertor);
+                sloUsageMetrics = Inner.ServiceLevelObjectiveUsageMetrics.Select(inner => convertor(inner));
             }
 
             return sloUsageMetrics;

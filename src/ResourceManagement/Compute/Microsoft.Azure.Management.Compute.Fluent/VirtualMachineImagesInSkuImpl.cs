@@ -25,10 +25,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:F11EF4E68CC9208DDB5333BF63B56234
-        public PagedList<IVirtualMachineImage> List()
+        public IEnumerable<IVirtualMachineImage> List()
         {
             List<IVirtualMachineImage> firstPage = new List<IVirtualMachineImage>();
             var innerImages = innerCollection.List(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name);
+
             foreach(var innerImage in innerImages)
             {
                 var version = innerImage.Name;
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     version,
                     innerCollection.Get(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, version)));
             }
-            return new PagedList<IVirtualMachineImage>(firstPage);
+            return firstPage;
         }
     }
 }

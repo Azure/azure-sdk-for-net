@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using Disk.Definition;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for Disks.
@@ -63,23 +64,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IDisk> List()
+        public IEnumerable<IDisk> List()
         {
-            var pagedList = new PagedList<DiskInner>(Inner.List(), (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public PagedList<IDisk> ListByGroup(string resourceGroupName)
+        public IEnumerable<IDisk> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<DiskInner>(Inner.ListByResourceGroup(resourceGroupName), (string nextPageLink) =>
-            {
-                return Inner.ListByResourceGroupNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
+                .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:37323FCC616B8746EEBA6B2152BF1DA6

@@ -5,6 +5,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -67,12 +69,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return null;
         }
 
-        public PagedList<ILocation> ListLocations()
+        public IEnumerable<ILocation> ListLocations()
         {
-            var innerList = new PagedList<Location>(innerCollection.ListLocations(SubscriptionId));
-            return PagedListConverter.Convert<Location, ILocation>(innerList, innerLocation => {
-                return new LocationImpl(innerLocation); 
-            });
+            return innerCollection.ListLocations(SubscriptionId)
+                         .Select(inner => new LocationImpl(inner));
         }
     }
 }

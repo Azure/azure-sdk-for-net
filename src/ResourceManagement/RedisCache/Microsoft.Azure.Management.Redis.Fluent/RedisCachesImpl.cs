@@ -46,19 +46,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> List()
+        public IEnumerable<IRedisCache> List()
         {
-            IEnumerable<RedisResourceInner> redisResources = Inner.List();
-            var pagedList = new PagedList<RedisResourceInner>(redisResources);
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
-        public PagedList<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> ListByGroup(string groupName)
+        public IEnumerable<IRedisCache> ListByGroup(string groupName)
         {
-            IEnumerable<RedisResourceInner> redisResources = Inner.ListByResourceGroup(groupName);
-            var pagedList = new PagedList<RedisResourceInner>(redisResources);
-            return WrapList(pagedList);
+            return WrapList(Inner.ListByResourceGroup(groupName)
+                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4A5A2A1EDBB98E8843A388EEBC9C31D6

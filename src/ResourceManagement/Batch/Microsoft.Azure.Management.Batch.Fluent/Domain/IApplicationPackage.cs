@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     /// <summary>
-    /// An immutable client-side representation of an Azure batch account application.
+    /// An immutable client-side representation of an Azure batch account application package.
     /// </summary>
     public interface IApplicationPackage  :
         IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage,Microsoft.Azure.Management.Batch.Fluent.IApplication>,

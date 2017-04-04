@@ -76,17 +76,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             throw new NotSupportedException("Get just by resource group and name is not supported. Please use other overloads.");
         }
 
-        public PagedList<IGenericResource> ListByGroup(string resourceGroupName)
+        public IEnumerable<IGenericResource> ListByGroup(string resourceGroupName)
         {
-            IPage<GenericResourceInner> firstPage = Inner.List();
-            var pagedList = new PagedList<GenericResourceInner>(firstPage, (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-            return WrapList(pagedList);
+            return WrapList(Inner.List()
+                                 .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
-        public Task<PagedList<IGenericResource>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<IGenericResource>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotSupportedException();
         }

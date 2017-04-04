@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -21,14 +22,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             Inner = innerCollection;
         }
 
-        public PagedList<IResourceGroup> List()
+        public IEnumerable<IResourceGroup> List()
         {
-            IPage<ResourceGroupInner> firstPage = Inner.List();
-            var pagedList = new PagedList<ResourceGroupInner>(firstPage, (string nextPageLink) =>
-            {
-                return Inner.ListNext(nextPageLink);
-            });
-           return WrapList(pagedList);
+           return WrapList(Inner.List()
+                                .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
         public bool CheckExistence(string name)
@@ -73,9 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             var resourceGroupInner = await Inner.GetAsync(name, cancellationToken);
             return WrapModel(resourceGroupInner);
         }
-
-        #region Implementation of CreatableWrappers abstract methods
-
+        
         protected override ResourceGroupImpl WrapModel(string name)
         {
             return new ResourceGroupImpl(new ResourceGroupInner
@@ -88,7 +83,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         {
             return new ResourceGroupImpl(inner, Inner);
         }
-
-        #endregion
     }
 }

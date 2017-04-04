@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Fluent.Tests.Compute
@@ -85,7 +86,7 @@ namespace Fluent.Tests.Compute
                     var images = computeManager
                             .VirtualMachineCustomImages
                             .ListByGroup(rgName);
-                    Assert.True(images.Count > 0);
+                    Assert.True(images.Count() > 0);
 
                     // Create virtual machine from custom image
                     //

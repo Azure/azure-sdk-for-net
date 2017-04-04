@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     /// <summary>
-    /// An immutable client-side representation of an Azure batch account.
+    /// An immutable client-side representation of an Azure Batch account.
     /// </summary>
     public interface IBatchAccount  :
         IGroupableResource<IBatchManager, BatchAccountInner>,

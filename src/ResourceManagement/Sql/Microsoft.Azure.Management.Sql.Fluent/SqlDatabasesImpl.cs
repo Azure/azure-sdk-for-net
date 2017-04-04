@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:7F70CB1AA5FE23578E360B95D229A1C6
-        public async override Task<PagedList<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IEnumerable<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var pagedList = new PagedList<DatabaseInner>(await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken));
+            var pagedList = await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken);
             return WrapList(pagedList);
         }
 

@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
     using ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The implementation for VirtualMachineSizes.
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:BA2FEDDF9D78BF55786D81F6C85E907C:CD5A589A9B297BE134944F6A531D30E8
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> ListByRegion(Region region)
+        public IEnumerable<IVirtualMachineSize> ListByRegion(Region region)
         {
             return ListByRegion(region.Name);
         }
@@ -35,10 +36,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:1B63D16EAADAEBB8A17A72652C7477D7
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> ListByRegion(string regionName)
+        public IEnumerable<IVirtualMachineSize> ListByRegion(string regionName)
         {
-            var data = innerCollection.List(regionName);
-            return WrapList(new PagedList<VirtualMachineSize>(data));
+            return WrapList(innerCollection.List(regionName));
         }
     }
 }

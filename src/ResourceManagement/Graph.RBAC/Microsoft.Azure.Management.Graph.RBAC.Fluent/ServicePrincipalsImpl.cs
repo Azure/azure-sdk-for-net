@@ -3,18 +3,14 @@
 
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-
-    using Microsoft.Rest;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using System.Threading;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Management.Graph.RBAC;
+    using Rest.Azure;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Rest.Azure;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
@@ -51,10 +47,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public PagedList<IServicePrincipal> List ()
+        public IEnumerable<IServicePrincipal> List()
         {
-            var pagedList = new PagedList<ServicePrincipalInner>(this.innerCollection.List());
-            return WrapList(pagedList);
+            return WrapList(this.innerCollection.List());
         }
 
         ///GENMHASH:B6D698CC3012EA097E8D0E54375F2F9C:DECE5DD844886B2B30C5F0DDB9EAB09E

@@ -64,7 +64,7 @@ namespace Fluent.Tests.ResourceManager
 
                 // Deployment operations
                 var deploymentOperations = deployment.DeploymentOperations.List();
-                Assert.Equal(2, deploymentOperations.Count);
+                Assert.Equal(2, deploymentOperations.Count());
                 IDeploymentOperation deploymentOperation = deployment.DeploymentOperations.GetById(deploymentOperations.First().OperationId);
                 Assert.NotNull(deploymentOperation);
 

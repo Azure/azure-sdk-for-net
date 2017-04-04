@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Collections.Generic;
 
     internal partial class NetworkSecurityGroupsImpl 
     {
@@ -35,9 +36,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>.ListByGroup(string resourceGroupName)
+        IEnumerable<INetworkSecurityGroup> ISupportsListingByGroup<INetworkSecurityGroup>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>;
+            return this.ListByGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -66,9 +67,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>.List()
+        IEnumerable<INetworkSecurityGroup> ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>.List()
         {
-            return this.List() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>;
+            return this.List();
         }
     }
 }

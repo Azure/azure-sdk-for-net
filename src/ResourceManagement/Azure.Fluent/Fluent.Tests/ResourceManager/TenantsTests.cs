@@ -5,6 +5,7 @@ using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Fluent.Tests.ResourceManager
@@ -19,7 +20,7 @@ namespace Fluent.Tests.ResourceManager
             {
                 var authenticated = TestHelper.Authenticate();
                 var tenants = authenticated.Tenants.List();
-                Assert.True(tenants.Count > 0);
+                Assert.True(tenants.Count() > 0);
             }
         }
     }
