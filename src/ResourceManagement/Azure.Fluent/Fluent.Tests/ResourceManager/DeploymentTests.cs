@@ -54,7 +54,7 @@ namespace Fluent.Tests.ResourceManager
                 Assert.True(deployment.ProvisioningState != null);
 
                 // Try export template from deployment object
-                var exportedDeployment = deployment.ExportTemplate;
+                var exportedDeployment = deployment.ExportTemplate();
                 Assert.True(exportedDeployment.Template != null);
 
                 // Try export template using resourcegroup

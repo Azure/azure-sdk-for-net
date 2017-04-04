@@ -90,10 +90,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IResourceGroupExportResult ExportTemplate(ResourceGroupExportTemplateOptions options)
         {
+            return ExportTemplateAsync(options).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<IResourceGroupExportResult> ExportTemplateAsync(ResourceGroupExportTemplateOptions options, CancellationToken cancellationToken = default(CancellationToken))
+        {
             ExportTemplateRequestInner inner = new ExportTemplateRequestInner();
             inner.Resources = new List<string>() { "*" };
             inner.Options = EnumNameAttribute.GetName(options);
-            var result = client.ExportTemplateWithHttpMessagesAsync(Name, inner).ConfigureAwait(false).GetAwaiter().GetResult();
+            var result = await client.ExportTemplateWithHttpMessagesAsync(Name, inner, cancellationToken: cancellationToken);
             return new ResourceGroupExportResultImpl(result.Body);
         }
 

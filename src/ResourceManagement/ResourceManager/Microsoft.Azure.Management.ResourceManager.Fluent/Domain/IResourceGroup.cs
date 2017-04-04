@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     using System.Collections.Generic;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Management.ResourceManager.Fluent.Models;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Grouping of all the resource group update stages.
@@ -39,6 +41,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// <returns>the exported template result</returns>
         IResourceGroupExportResult ExportTemplate (ResourceGroupExportTemplateOptions options);
 
+        /// <summary>
+        /// Captures the specified resource group as a template.
+        /// </summary>
+        /// <param name="options">options the export options</param>
+        /// <returns>the exported template result</returns>
+        Task<IResourceGroupExportResult> ExportTemplateAsync(ResourceGroupExportTemplateOptions options, CancellationToken cancellationToken = default(CancellationToken));
     }
     public interface IDefinitionStages 
     {

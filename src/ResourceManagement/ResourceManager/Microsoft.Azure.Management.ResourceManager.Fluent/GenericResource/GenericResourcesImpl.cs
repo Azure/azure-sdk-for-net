@@ -23,13 +23,32 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            return Inner.CheckExistence(
+            return CheckExistenceAsync(
                 resourceGroupName,
                 resourceProviderNamespace,
                 parentResourcePath,
                 resourceType,
                 resourceName,
-                apiVersion);
+                apiVersion).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<bool> CheckExistenceAsync(
+            string resourceGroupName, 
+            string resourceProviderNamespace, 
+            string parentResourcePath, 
+            string resourceType, 
+            string resourceName, 
+            string apiVersion,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Inner.CheckExistenceAsync(
+                resourceGroupName,
+                resourceProviderNamespace,
+                parentResourcePath,
+                resourceType,
+                resourceName,
+                apiVersion,
+                cancellationToken);
         }
 
         public IBlank Define(string name)
@@ -89,12 +108,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
         {
+            MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task MoveResourcesAsync(
+            string sourceResourceGroupName, 
+            IResourceGroup targetResourceGroup, 
+            IList<string> resources,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
             ResourcesMoveInfoInner moveInfo = new ResourcesMoveInfoInner()
             {
                 TargetResourceGroup = targetResourceGroup.Id,
                 Resources = resources,
             };
-            Inner.MoveResources(sourceResourceGroupName, moveInfo);
+            await Inner.MoveResourcesAsync(sourceResourceGroupName, moveInfo, cancellationToken);
         }
 
         protected override IGenericResource WrapModel(GenericResourceInner inner)

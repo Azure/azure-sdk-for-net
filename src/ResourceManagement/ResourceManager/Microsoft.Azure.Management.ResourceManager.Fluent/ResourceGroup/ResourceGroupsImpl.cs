@@ -30,7 +30,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string name)
         {
-            return Inner.CheckExistence(name);
+            return CheckExistenceAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+        public async Task<bool> CheckExistenceAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Inner.CheckExistenceAsync(name, cancellationToken);
         }
 
         public ResourceGroup.Definition.IBlank Define(string name)

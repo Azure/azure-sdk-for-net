@@ -3,9 +3,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
-
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Feature;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Entry point to features management API.
@@ -14,11 +14,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         ISupportsListing<IFeature>
     {
         /// <summary>
-        /// Filter the features by a specific resource provider.
+        /// Registers a feature in a resource provider.
         /// </summary>
-        /// <param name="resourceProviderName">resourceProviderName the name of the resource provider</param>
-        /// <returns>an instance for accessing features in a resource provider</returns>
-        IInResourceProvider ResourceProvider (string resourceProviderName);
+        /// <param name="resourceProviderNamespace">the namespace of resource provider</param>
+        /// <param name="featureName">the name of the feature</param>
+        /// <returns>the immutable client-side feature object created</returns>
+        IFeature Register(string resourceProviderNamespace, string featureName);
 
+        /// <summary>
+        /// Registers a feature in a resource provider.
+        /// </summary>
+        /// <param name="resourceProviderNamespace">the namespace of resource provider</param>
+        /// <param name="featureName">featureName the name of the feature</param>
+        /// <returns>the immutable client-side feature object created</returns>
+        Task<IFeature> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
