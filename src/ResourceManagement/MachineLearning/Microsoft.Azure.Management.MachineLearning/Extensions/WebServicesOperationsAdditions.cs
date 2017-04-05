@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -142,15 +143,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CreateRegionalPropertiesWithProperRequestIdAsync(string resourceGroupName, string webServiceName, string region, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AsyncOperationStatus> CreateRegionalPropertiesWithProperRequestIdAsync(string resourceGroupName, string webServiceName, string region, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse _response = await BeginCreateRegionalWebServicePropertiesWithHttpMessagesAsync(
+            var _response = await BeginCreateRegionalPropertiesWithHttpMessagesAsync(
                 resourceGroupName, webServiceName, region, customHeaders, cancellationToken);
             try
             {
-                AzureOperationResponse operationResult = await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+                var operationResult = await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
                 operationResult.RequestId = _response.RequestId;
-                return operationResult;
+                return operationResult.Body;
             }
             catch (CloudException cloudEx)
             {

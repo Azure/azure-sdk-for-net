@@ -312,9 +312,9 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));
 
                     // Validate that all services are called when getting the AML service resource list for the subscription
-                    var servicesInSubscription = amlServicesClient.WebServices.List();
+                    var servicesInSubscription = amlServicesClient.WebServices.ListBySubscriptionIdWithHttpMessagesAsync().Result;
                     Assert.NotNull(servicesInSubscription);
-                    servicesList = servicesInSubscription.ToList();
+                    servicesList = servicesInSubscription.Body.ToList();
                     Assert.NotNull(servicesList);
                     Assert.True(servicesList.Count >= 4);
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase)));
