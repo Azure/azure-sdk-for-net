@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definiti
     /// <summary>
     /// The entirety of a load balancer backend definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definiti
     /// <summary>
     /// The first stage of a load balancer backend definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         IWithAttach<ParentT>
     {
@@ -26,9 +26,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definiti
     /// <summary>
     /// The final stage of a load balancer backend definition.
     /// At this stage, any remaining optional settings can be specified, or the definition
-    /// can be attached to the parent load balancer definition using WithAttach.attach().
+    /// can be attached to the parent load balancer definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>
     {

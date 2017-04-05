@@ -2,17 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ApplicationGateway.Definition;
-    using ApplicationGateway.Update;
-    using ApplicationGatewayFrontend.Definition;
-    using ApplicationGatewayFrontend.Update;
-    using ApplicationGatewayFrontend.UpdateDefinition;
-    using Models;
-    using HasPrivateIPAddress.Definition;
-    using HasPrivateIPAddress.UpdateDefinition;
-    using HasPublicIPAddress.Definition;
-    using HasPublicIPAddress.UpdateDefinition;
-    using HasPublicIPAddress.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition;
@@ -20,6 +20,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
     internal partial class ApplicationGatewayFrontendImpl 
     {
+        /// <return>The associated public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
+        {
+            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
+        }
+
+        /// <summary>
+        /// Gets the resource ID of the associated public IP address.
+        /// </summary>
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
+        {
+            get
+            {
+                return this.PublicIPAddressId();
+            }
+        }
+
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
@@ -51,12 +68,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        /// <return>The associated subnet.</return>
-        Microsoft.Azure.Management.Network.Fluent.ISubnet Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend.GetSubnet()
-        {
-            return this.GetSubnet() as Microsoft.Azure.Management.Network.Fluent.ISubnet;
-        }
-
         /// <summary>
         /// Gets true if the frontend is accessible via a public IP address, else false.
         /// </summary>
@@ -68,43 +79,32 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
+        /// <return>The associated subnet.</return>
+        Microsoft.Azure.Management.Network.Fluent.ISubnet Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend.GetSubnet()
         {
-            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
+            return this.GetSubnet() as Microsoft.Azure.Management.Network.Fluent.ISubnet;
         }
 
         /// <summary>
-        /// Gets the resource ID of the associated public IP address.
+        /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
+        Models.IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PublicIPAddressId();
+                return this.PrivateIPAllocationMethod() as Models.IPAllocationMethod;
             }
         }
 
         /// <summary>
-        /// Assigns the specified subnet to this resource.
+        /// Gets the private IP address associated with this resource.
         /// </summary>
-        /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
-        /// <param name="subnetName">The name of the subnet.</param>
-        /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
         {
-            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Assigns the specified subnet to this resource.
-        /// </summary>
-        /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
-        /// <param name="subnetName">The name of the subnet.</param>
-        /// <return>The next stage of the definition.</return>
-        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
-        {
-            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
+            get
+            {
+                return this.PrivateIPAddress();
+            }
         }
 
         /// <summary>
@@ -146,6 +146,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Assigns the specified subnet to this resource.
+        /// </summary>
+        /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
+        /// <param name="subnetName">The name of the subnet.</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        {
+            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Assigns the specified subnet to this resource.
+        /// </summary>
+        /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
+        /// <param name="subnetName">The name of the subnet.</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        {
+            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
+        }
+
+        /// <summary>
         /// Gets the name of the subnet associated with this resource.
         /// </summary>
         string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet.SubnetName
@@ -168,25 +190,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the private IP address associated with this resource.
+        /// Attaches the child definition to the parent resource definition.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
+        /// <return>The next stage of the parent definition.</return>
+        ApplicationGateway.Definition.IWithListener Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ApplicationGateway.Definition.IWithListener>.Attach()
         {
-            get
-            {
-                return this.PrivateIPAddress();
-            }
-        }
-
-        /// <summary>
-        /// Gets the private IP address allocation method within the associated subnet.
-        /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
-        {
-            get
-            {
-                return this.PrivateIPAllocationMethod();
-            }
+            return this.Attach() as ApplicationGateway.Definition.IWithListener;
         }
 
         /// <summary>
@@ -256,15 +265,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>>.WithExistingPublicIPAddress(string resourceId)
         {
             return this.WithExistingPublicIPAddress(resourceId) as ApplicationGatewayFrontend.Definition.IWithAttach<ApplicationGateway.Definition.IWithListener>;
-        }
-
-        /// <summary>
-        /// Attaches the child definition to the parent resource definition.
-        /// </summary>
-        /// <return>The next stage of the parent definition.</return>
-        ApplicationGateway.Definition.IWithListener Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ApplicationGateway.Definition.IWithListener>.Attach()
-        {
-            return this.Attach() as ApplicationGateway.Definition.IWithListener;
         }
 
         /// <summary>

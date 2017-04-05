@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.IO;
-
 namespace Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition
 {
+    using System.IO;
+
     /// <summary>
     /// The stage of a resource definition allowing to specify the SSL certificate to associate with it.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithSslCertificate<ReturnT> 
     {
         /// <summary>
@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefi
         /// The certificate will be named using an auto-generated name.
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
+        /// <throws>IOException when there are issues with the provided file.</throws>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition.IWithSslPassword<ReturnT> WithSslCertificateFromPfxFile(FileInfo pfxFile);
 
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefi
     /// <summary>
     /// The stage of a resource definition allowing to specify the password for the private key of the imported SSL certificate.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithSslPassword<ReturnT> 
     {
         /// <summary>

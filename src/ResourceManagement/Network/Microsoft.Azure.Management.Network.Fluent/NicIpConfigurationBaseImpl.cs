@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <typeparam name="IParentT">Parent interface.</typeparam>
 
     internal partial class NicIPConfigurationBaseImpl<ParentImplT, IParentT> : 
-        ChildResource<NetworkInterfaceIPConfigurationInner, ParentImplT, IParentT>
+        ChildResource<NetworkInterfaceIPConfigurationInner, ParentImplT, IParentT>,
+        IHasSubnet, IHasPrivateIPAddress, INicIPConfigurationBase
         where ParentImplT : IParentT
     {
         private INetworkManager networkManager;

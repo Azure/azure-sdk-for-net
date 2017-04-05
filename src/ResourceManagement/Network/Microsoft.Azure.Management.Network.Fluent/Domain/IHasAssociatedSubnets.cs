@@ -10,6 +10,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IHasAssociatedSubnets 
     {
         /// <return>List of subnets associated with this resource.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet> ListAssociatedSubnets();
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ISubnet> ListAssociatedSubnets();
     }
 }

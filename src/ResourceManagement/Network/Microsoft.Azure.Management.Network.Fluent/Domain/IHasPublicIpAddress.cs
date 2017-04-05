@@ -7,12 +7,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IHasPublicIPAddress 
     {
+        /// <return>The associated public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress GetPublicIPAddress();
+
         /// <summary>
         /// Gets the resource ID of the associated public IP address.
         /// </summary>
         string PublicIPAddressId { get; }
-
-        /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress GetPublicIPAddress();
     }
 }

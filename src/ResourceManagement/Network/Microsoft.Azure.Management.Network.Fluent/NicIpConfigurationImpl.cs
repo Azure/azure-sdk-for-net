@@ -363,9 +363,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:F4D09499BC5D2BC9FBFD23F99BF3219B:98C9348F48818CBA9BE5411158A7ECB2
-        internal NicIPConfigurationImpl WithPrivateIPVersion(string ipVersion)
+        internal NicIPConfigurationImpl WithPrivateIPVersion(IPVersion ipVersion)
         {
-            Inner.PrivateIPAddressVersion = ipVersion;
+            Inner.PrivateIPAddressVersion = ipVersion.ToString();
             return this;
         }
 
@@ -386,17 +386,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         NetworkInterface.Update.IUpdate ISettable<NetworkInterface.Update.IUpdate>.Parent()
         {
             return Parent;
-        }
-
-        /// <summary>
-        /// true if this is the primary ip configuration.
-        /// </summary>
-        bool Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.IsPrimary
-        {
-            get
-            {
-                return this.IsPrimary();
-            }
         }
     }
 }

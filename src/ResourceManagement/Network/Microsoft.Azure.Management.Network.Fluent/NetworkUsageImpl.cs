@@ -13,19 +13,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        public int CurrentValue
+        public long CurrentValue
         {
             get
             {
-                return (int) Inner.CurrentValue;
+                return Inner.CurrentValue;
             }
         }
 
-        public int Limit
+        public long Limit
         {
             get
             {
-                return (int) Inner.Limit;
+                return Inner.Limit;
             }
         }
 

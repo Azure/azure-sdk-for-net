@@ -2,21 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ApplicationGateway.Definition;
-    using ApplicationGateway.Update;
-    using ApplicationGatewayListener.Definition;
-    using ApplicationGatewayListener.Update;
-    using ApplicationGatewayListener.UpdateDefinition;
-    using Models;
-    using HasHostName.Definition;
-    using HasHostName.UpdateDefinition;
-    using HasHostName.Update;
-    using HasServerNameIndication.Definition;
-    using HasServerNameIndication.UpdateDefinition;
-    using HasServerNameIndication.Update;
-    using HasSslCertificate.Definition;
-    using HasSslCertificate.UpdateDefinition;
-    using HasSslCertificate.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.HasHostName.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasHostName.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasHostName.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasServerNameIndication.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasServerNameIndication.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasServerNameIndication.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -272,13 +272,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the resource ID of the associated public IP address.
+        /// Gets the associated SSL certificate, if any.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate Microsoft.Azure.Management.Network.Fluent.IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>.SslCertificate
         {
             get
             {
-                return this.PublicIPAddressId();
+                return this.SslCertificate() as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate;
             }
         }
 
@@ -289,13 +289,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the associated SSL certificate, if any.
+        /// Gets the resource ID of the associated public IP address.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate Microsoft.Azure.Management.Network.Fluent.IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>.SslCertificate
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
         {
             get
             {
-                return this.SslCertificate() as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate;
+                return this.PublicIPAddressId();
             }
         }
 
@@ -388,6 +388,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The certificate will be named using an auto-generated name.
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
+        /// <throws>IOException when there are issues with the provided file.</throws>
         /// <return>The next stage of the definition.</return>
         HasSslCertificate.Update.IWithSslPassword<ApplicationGatewayListener.Update.IUpdate> HasSslCertificate.Update.IWithSslCertificate<ApplicationGatewayListener.Update.IUpdate>.WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {
@@ -410,6 +411,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The certificate will be named using an auto-generated name.
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
+        /// <throws>IOException when there are issues with the provided file.</throws>
         /// <return>The next stage of the definition.</return>
         HasSslCertificate.Definition.IWithSslPassword<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>> HasSslCertificate.Definition.IWithSslCertificate<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>>.WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {
@@ -432,6 +434,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The certificate will be named using an auto-generated name.
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
+        /// <throws>IOException when there are issues with the provided file.</throws>
         /// <return>The next stage of the definition.</return>
         HasSslCertificate.UpdateDefinition.IWithSslPassword<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>> HasSslCertificate.UpdateDefinition.IWithSslCertificate<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {

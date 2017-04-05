@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 using Microsoft.Rest.Azure;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -18,7 +19,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         IHasManager<ManagerT>,
         ISupportsListing<IFluentResourceT>,
         ISupportsListingByResourceGroup<IFluentResourceT>,
-        IHasInner<InnerCollectionT>
+        IHasInner<InnerCollectionT>,
+        ISupportsBatchDeletion
         where IFluentResourceT : class, IGroupableResource<ManagerT, InnerResourceT>
         where FluentResourceT : IFluentResourceT
         where ManagerT : IManagerBase
@@ -60,6 +62,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         protected static IPage<InnerResourceT> ConvertToPage(IEnumerable<InnerResourceT> list)
         {
             return Extensions.ConvertToPage(list);
+        }
+
+        public Task<IEnumerable<string>> DeleteByIdsAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<string>> DeleteByIdsAsync(CancellationToken cancellationToken = default(CancellationToken), params string[] ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteByIds(IEnumerable<string> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteByIds(params string[] ids)
+        {
+            throw new NotImplementedException();
         }
     }
 }

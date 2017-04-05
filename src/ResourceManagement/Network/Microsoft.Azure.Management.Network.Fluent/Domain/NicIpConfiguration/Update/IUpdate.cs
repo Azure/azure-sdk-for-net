@@ -2,11 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
 {
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update;
+
+    /// <summary>
+    /// The stage of the network interface IP configuration update allowing to specify public IP address.
+    /// </summary>
+    public interface IWithPublicIPAddress  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate>
+    {
+    }
 
     /// <summary>
     /// The entirety of a network interface IP configuration update as part of a network interface update.
@@ -18,27 +27,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IWithPublicIPAddress,
         IWithLoadBalancer
     {
-    }
-
-    /// <summary>
-    /// The stage of the network interface IP configuration update allowing to specify public IP address.
-    /// </summary>
-    public interface IWithPublicIPAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate>
-    {
-    }
-
-    /// <summary>
-    /// The stage of the network interface IP configuration update allowing to specify subnet.
-    /// </summary>
-    public interface IWithSubnet 
-    {
-        /// <summary>
-        /// Associate a subnet with the network interface IP configuration.
-        /// </summary>
-        /// <param name="name">The subnet name.</param>
-        /// <return>The next stage of the network interface IP configuration update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithSubnet(string name);
     }
 
     /// <summary>
@@ -77,6 +65,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
     }
 
     /// <summary>
+    /// The stage of the network interface IP configuration update allowing to specify subnet.
+    /// </summary>
+    public interface IWithSubnet 
+    {
+        /// <summary>
+        /// Associate a subnet with the network interface IP configuration.
+        /// </summary>
+        /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the network interface IP configuration update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithSubnet(string name);
+    }
+
+    /// <summary>
     /// The stage of the network interface IP configuration update allowing to specify private IP.
     /// </summary>
     public interface IWithPrivateIP  :
@@ -87,6 +88,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithPrivateIPVersion(string ipVersion);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithPrivateIPVersion(IPVersion ipVersion);
     }
 }
