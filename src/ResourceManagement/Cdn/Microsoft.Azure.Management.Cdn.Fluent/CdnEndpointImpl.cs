@@ -112,9 +112,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:A8B790B37504B3C5949D6280CCA5766C:10B53C5448039688C01BB784974A2356
-        public void PurgeContent(IList<string> contentPaths)
+        public async Task PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Parent.PurgeEndpointContent(this.Name(), contentPaths);
+            await this.Parent.PurgeEndpointContentAsync(this.Name(), contentPaths, cancellationToken);
         }
 
         ///GENMHASH:D5D59EB5CA82A8AB794662C7BE5DC553:B3CB07BBD45377B8277115EC46260752
@@ -130,9 +130,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:72FE6C296217E3578A9C74F7AAE606D0:8C62D9D7CE9960043DCAF3584DDE1668
-        public void LoadContent(IList<string> contentPaths)
+        public async Task LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Parent.LoadEndpointContent(this.Name(), contentPaths);
+            await this.Parent.LoadEndpointContentAsync(this.Name(), contentPaths, cancellationToken);
         }
 
         ///GENMHASH:F08598A17ADD014E223DFD77272641FF:B18E8741B5B810C680CCE7043B0158A0
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:731989EAA3E6D31DB2AFFE17967B29FB
-        public void Stop()
+        public async Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Parent.StopEndpoint(this.Name());
+            await this.Parent.StopEndpointAsync(this.Name(), cancellationToken);
         }
 
         ///GENMHASH:4432D0ADF52DD4D5E7DE90F40C6E8896:76F37D088A77DEC25DE11A157AB47F1D
@@ -460,9 +460,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:A5F7C81073BA64AE03AC5C595EE8B6E5
-        public void Start()
+        public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.Parent.StartEndpoint(this.Name());
+            await this.Parent.StartEndpointAsync(this.Name(), cancellationToken);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:F8A6A48920042C49572BFDA9629E1BC7
@@ -576,9 +576,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:AD2E24D9DFB738D4BF1A5F65CE996552:3723FC50D475B864D34F27CE06DE8A61
-        public CustomDomainValidationResult ValidateCustomDomain(string hostName)
+        public async Task<CustomDomainValidationResult> ValidateCustomDomainAsync(
+            string hostName, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Parent.ValidateEndpointCustomDomain(this.Name(), hostName);
+            return await this.Parent.ValidateEndpointCustomDomainAsync(this.Name(), hostName, cancellationToken);
         }
 
         IUpdate ISettable<IUpdate>.Parent()

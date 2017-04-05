@@ -260,8 +260,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.PurgeEndpointContent(string endpointName, IList<string> contentPaths)
         {
- 
-            this.PurgeEndpointContent(endpointName, contentPaths);
+             ((ICdnProfile)this).PurgeEndpointContentAsync(endpointName, contentPaths).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Forcibly purges CDN endpoint content in current profile.
+        /// </summary>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
+        async Task ICdnProfile.PurgeEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
+        {
+
+            await this.PurgeEndpointContentAsync(endpointName, contentPaths, cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +304,21 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <return>CustomDomainValidationResult object if successful.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.ValidateEndpointCustomDomain(string endpointName, string hostName)
         {
-            return this.ValidateEndpointCustomDomain(endpointName, hostName) as Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult;
+            return ((ICdnProfile)this).ValidateEndpointCustomDomainAsync(endpointName, hostName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS in current profile.
+        /// </summary>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
+        /// <return>CustomDomainValidationResult object if successful.</return>
+        async Task<CustomDomainValidationResult> ICdnProfile.ValidateEndpointCustomDomainAsync(
+            string endpointName, 
+            string hostName, 
+            CancellationToken cancellationToken)
+        {
+            return await this.ValidateEndpointCustomDomainAsync(endpointName, hostName, cancellationToken);
         }
 
         /// <summary>
@@ -303,8 +327,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.StartEndpoint(string endpointName)
         {
- 
-            this.StartEndpoint(endpointName);
+             ((ICdnProfile)this).StartEndpointAsync(endpointName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Starts stopped CDN endpoint in current profile.
+        /// </summary>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        async Task ICdnProfile.StartEndpointAsync(string endpointName, CancellationToken cancellationToken)
+        {
+            await this.StartEndpointAsync(endpointName, cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +360,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.StopEndpoint(string endpointName)
         {
  
-            this.StopEndpoint(endpointName);
+            ((ICdnProfile)this).StopEndpointAsync(endpointName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Stops running CDN endpoint in the current profile.
+        /// </summary>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        async Task ICdnProfile.StopEndpointAsync(string endpointName, CancellationToken cancellationToken)
+        {
+            await this.StopEndpointAsync(endpointName, cancellationToken);
         }
 
         /// <summary>
@@ -338,8 +379,20 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.LoadEndpointContent(string endpointName, IList<string> contentPaths)
         {
- 
-            this.LoadEndpointContent(endpointName, contentPaths);
+             ((ICdnProfile)this).LoadEndpointContentAsync(endpointName, contentPaths).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Forcibly pre-loads CDN endpoint content in current profile. Available for Verizon Profiles.
+        /// </summary>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.LoadEndpointContentAsync(
+            string endpointName, 
+            IList<string> contentPaths,
+            CancellationToken cancellationToken)
+        {
+            await this.LoadEndpointContentAsync(endpointName, contentPaths, cancellationToken);
         }
 
         /// <summary>
