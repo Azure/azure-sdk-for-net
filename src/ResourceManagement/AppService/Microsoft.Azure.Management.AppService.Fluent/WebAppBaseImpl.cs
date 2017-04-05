@@ -213,9 +213,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
             SiteInner inner = await GetInnerAsync(cancellationToken);
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
-            inner.SiteConfig = await GetConfigInnerAsync();
+            inner.SiteConfig = await GetConfigInnerAsync(cancellationToken);
             SetInner(inner);
-            await CacheAppSettingsAndConnectionStringsAsync();
+            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
             return this as FluentT;
         }
 
@@ -251,11 +251,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:C70FCB6ABBA310D8130B4F53160A0440
         public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync();
+            Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync(cancellationToken);
             ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:27E486AB74A10242FF421C0798DDC450
-            Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync();
+            Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync(cancellationToken);
             ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:27E486AB74A10242FF421C0798DDC450
-            Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync();
+            Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync(cancellationToken);
 
             await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask);
 
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             // convert from Inner
             SetInner(site);
             NormalizeProperties();
-            await CacheAppSettingsAndConnectionStringsAsync();
+            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
 
             return this as FluentT;
         }

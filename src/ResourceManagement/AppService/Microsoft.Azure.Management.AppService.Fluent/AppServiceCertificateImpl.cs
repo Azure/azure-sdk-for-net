@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
             if (certificateOrder != null)
             {
-                var keyVaultBinding = await certificateOrder.GetKeyVaultBindingAsync();
+                var keyVaultBinding = await certificateOrder.GetKeyVaultBindingAsync(cancellationToken);
                 Inner.KeyVaultId = keyVaultBinding.KeyVaultId;
                 Inner.KeyVaultSecretName = keyVaultBinding.KeyVaultSecretName;
             }
