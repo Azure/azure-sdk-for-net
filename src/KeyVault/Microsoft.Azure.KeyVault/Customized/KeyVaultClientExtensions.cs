@@ -305,6 +305,9 @@ namespace Microsoft.Azure.KeyVault
             }
 
         }
+        #endregion
+
+        #region Secret Management
 
         /// <summary>
         /// Gets a secret.
@@ -368,6 +371,86 @@ namespace Microsoft.Azure.KeyVault
         }
         #endregion
 
+        #region Recovery Management
+
+        /// <summary>
+        /// Recovers the deleted secret.
+        /// </summary>        
+        /// <param name="recoveryId">The recoveryId of the deleted secret, returned from deletion.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>  
+        /// <returns>A response message containing the recovered secret</returns>
+        public static async Task<SecretBundle> RecoverDeletedSecretAsync(this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(recoveryId))
+                throw new ArgumentNullException(nameof(recoveryId));
+            
+            var secretRecoveryId = new DeletedSecretIdentifier(recoveryId);
+
+            using (var _result = await operations.RecoverDeletedSecretWithHttpMessagesAsync(secretRecoveryId.Vault, secretRecoveryId.Name, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Recovers the deleted key.
+        /// </summary>        
+        /// <param name="recoveryId">The recoveryId of the deleted key, returned from deletion.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>  
+        /// <returns>A response message containing the recovered key</returns>
+        public static async Task<KeyBundle> RecoverDeletedKeyAsync(this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(recoveryId))
+                throw new ArgumentNullException(nameof(recoveryId));
+
+            var keyRecoveryId = new DeletedKeyIdentifier(recoveryId);
+
+            using (var _result = await operations.RecoverDeletedKeyWithHttpMessagesAsync(keyRecoveryId.Vault, keyRecoveryId.Name, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Purges the deleted secret immediately.
+        /// </summary>        
+        /// <param name="recoveryId">The recoveryId of the deleted secret, returned from deletion.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>  
+        /// <returns>A response message containing the recovered secret</returns>
+        public static async Task PurgeDeletedSecretAsync(this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(recoveryId))
+                throw new ArgumentNullException(nameof(recoveryId));
+
+            var secretRecoveryId = new DeletedSecretIdentifier(recoveryId);
+
+            using (var _result = await operations.PurgeDeletedSecretWithHttpMessagesAsync(secretRecoveryId.Vault, secretRecoveryId.Name, null, cancellationToken).ConfigureAwait(false))
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Purges the deleted key immediately.
+        /// </summary>        
+        /// <param name="recoveryId">The recoveryId of the deleted key, returned from deletion.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>  
+        /// <returns>A response message containing the recovered key</returns>
+        public static async Task PurgeDeletedKeyAsync(this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(recoveryId))
+                throw new ArgumentNullException(nameof(recoveryId));
+
+            var keyRecoveryId = new DeletedKeyIdentifier(recoveryId);
+
+            using (var _result = await operations.PurgeDeletedKeyWithHttpMessagesAsync(keyRecoveryId.Vault, keyRecoveryId.Name, null, cancellationToken).ConfigureAwait(false))
+            {
+                return;
+            }
+        }
+
+        #endregion
+
         #region Certificate Management
 
         /// <summary>
@@ -383,7 +466,7 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentNullException("vaultBaseUrl");
 
             if (string.IsNullOrEmpty(certificateName))
-                throw new ArgumentNullException("keyName");
+                throw new ArgumentNullException("certificateName");
 
             using (var _result = await operations.GetCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
@@ -447,6 +530,9 @@ namespace Microsoft.Azure.KeyVault
         {
             if (string.IsNullOrWhiteSpace(vaultBaseUrl))
                 throw new ArgumentNullException("vaultBaseUrl");
+
+            if (string.IsNullOrWhiteSpace(certificateName))
+                throw new ArgumentNullException("certificateName");
 
             if (null == certificateCollection)
                 throw new ArgumentNullException("certificateCollection");

@@ -32,6 +32,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         {
             this.fixture = fixture;
             _standardVaultOnly = fixture.standardVaultOnly;
+            _softDeleteEnabled = fixture.softDeleteEnabled;
             _vaultAddress = fixture.vaultAddress;
             _keyName = fixture.keyName;
             _keyVersion = fixture.keyVersion;
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         private string _keyName = "";
         private string _keyVersion = "";
         private KeyIdentifier _keyIdentifier;
+        private bool _softDeleteEnabled = false;
 
         private KeyVaultClient GetKeyVaultClient()
         {
@@ -86,6 +88,13 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
                     {
                         // Delete the key
                         client.DeleteKeyAsync(vault, "TestKey").GetAwaiter().GetResult();
+
+                        if(_softDeleteEnabled)
+                        {
+                            this.fixture.WaitOnDeletedKey(client, vault, "TestKey");
+
+                            client.PurgeDeletedKeyAsync(vault, "TestKey").GetAwaiter().GetResult();
+                        }
                     }
                 }
             }
@@ -99,7 +108,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                VerifyResolveSecretBase64(128, VerifyResolver);
+                VerifyResolveSecretBase64(128, VerifyResolver, "ResolveSecret128Base64");
             }
         }
 
@@ -111,7 +120,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                VerifyResolveSecretBase64(192, VerifyResolver);
+                VerifyResolveSecretBase64(192, VerifyResolver, "ResolveSecret192Base64");
             }
         }
 
@@ -123,12 +132,12 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                VerifyResolveSecretBase64(256, VerifyResolver);
+                VerifyResolveSecretBase64(256, VerifyResolver, "ResolveSecret256Base64");
             }
         }
 
         private void VerifyResolveSecretBase64(int secretSize,
-            Action<KeyVaultClient, string, string, string> verifyResolverCallback)
+            Action<KeyVaultClient, string, string, string> verifyResolverCallback, string secretName = "TestSecret")
         {
             // Arrange
             var client = GetKeyVaultClient();
@@ -139,7 +148,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
             RandomNumberGenerator.Create().GetBytes(keyBytes);
 
             var secret =
-                client.SetSecretAsync(vault, "TestSecret", Convert.ToBase64String(keyBytes), null,
+                client.SetSecretAsync(vault, secretName, Convert.ToBase64String(keyBytes), null,
                     "application/octet-stream").GetAwaiter().GetResult();
 
             if (secret != null)
@@ -152,7 +161,14 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
                 finally
                 {
                     // Delete the key
-                    client.DeleteSecretAsync(vault, "TestSecret").GetAwaiter().GetResult();
+                    client.DeleteSecretAsync(vault, secretName).GetAwaiter().GetResult();
+
+                    if(_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedSecret(client, vault, secretName);
+
+                        client.PurgeDeletedSecretAsync(vault, secretName).GetAwaiter().GetResult();
+                    }
                 }
             }
         }

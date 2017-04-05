@@ -3,6 +3,7 @@
 // license information.
 
 using Microsoft.Azure.KeyVault;
+using System;
 using Xunit;
 
 namespace Microsoft.Azure.KeyVault.Tests
@@ -12,6 +13,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         string vault = "https://myvault.vault.azure.net:443";
         string name = "myname";
         string version = "myversion";
+
         [Fact]
         public void KeyIdentifierTest()
         {
@@ -38,6 +40,31 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
+        public void DeletedKeyIdentifierTest()
+        {
+            string baseId = string.Format("{0}/deletedkeys/{1}", vault, name);
+            string versionedId = string.Format("{0}/{1}", baseId, version);
+
+            //unversioned
+            var id = new DeletedKeyIdentifier(baseId);
+            Assert.Equal(baseId, id.BaseIdentifier);
+            Assert.Equal(baseId, id.Identifier);
+            Assert.Equal(vault, id.Vault);
+            Assert.Equal(name, id.Name);
+            Assert.Equal(string.Empty, id.Version);
+            Assert.True(DeletedKeyIdentifier.IsDeletedKeyIdentifier(baseId));
+
+            //versioned
+            id = new DeletedKeyIdentifier(versionedId);
+            Assert.Equal(baseId, id.BaseIdentifier);
+            Assert.Equal(baseId, id.Identifier);
+            Assert.Equal(vault, id.Vault);
+            Assert.Equal(name, id.Name);
+            Assert.Equal(string.Empty, id.Version);
+            Assert.True(DeletedKeyIdentifier.IsDeletedKeyIdentifier(versionedId));
+        }
+
+        [Fact]
         public void SecretIdentifierTest()
         {
             string baseId = string.Format("{0}/secrets/{1}", vault, name);
@@ -60,6 +87,31 @@ namespace Microsoft.Azure.KeyVault.Tests
             Assert.Equal(name, id.Name);
             Assert.Equal(version, id.Version);
             Assert.True(SecretIdentifier.IsSecretIdentifier(versionedId));
+        }
+
+        [Fact]
+        public void DeletedSecretIdentifierTest()
+        {
+            string baseId = string.Format("{0}/deletedsecrets/{1}", vault, name);
+            string versionedId = string.Format("{0}/{1}", baseId, version);
+
+            // unversioned
+            var id = new DeletedSecretIdentifier(baseId);
+            Assert.Equal(baseId, id.BaseIdentifier);
+            Assert.Equal(baseId, id.Identifier);
+            Assert.Equal(vault, id.Vault);
+            Assert.Equal(name, id.Name);
+            Assert.Equal(string.Empty, id.Version);
+            Assert.True(DeletedSecretIdentifier.IsDeletedSecretIdentifier(baseId));
+
+            // versioned
+            id = new DeletedSecretIdentifier(versionedId);
+            Assert.Equal(baseId, id.BaseIdentifier);
+            Assert.Equal(baseId, id.Identifier);
+            Assert.Equal(vault, id.Vault);
+            Assert.Equal(name, id.Name);
+            Assert.Equal(string.Empty, id.Version);
+            Assert.True(DeletedSecretIdentifier.IsDeletedSecretIdentifier(versionedId));
         }
         
         [Fact]

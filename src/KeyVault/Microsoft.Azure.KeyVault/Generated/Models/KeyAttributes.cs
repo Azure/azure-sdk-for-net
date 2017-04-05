@@ -10,6 +10,7 @@ namespace Microsoft.Azure.KeyVault.Models
 {
     using Azure;
     using KeyVault;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -31,10 +32,20 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="expires">Expiry date in UTC.</param>
         /// <param name="created">Creation time in UTC.</param>
         /// <param name="updated">Last updated time in UTC.</param>
-        public KeyAttributes(bool? enabled = default(bool?), System.DateTime? notBefore = default(System.DateTime?), System.DateTime? expires = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?))
+        /// <param name="purgeDisabled">Reflects the purge protection status of
+        /// the key. If true, purge is disabled, false, otherwise.</param>
+        public KeyAttributes(bool? enabled = default(bool?), System.DateTime? notBefore = default(System.DateTime?), System.DateTime? expires = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), bool purgeDisabled = default(bool))
             : base(enabled, notBefore, expires, created, updated)
         {
+            PurgeDisabled = purgeDisabled;
         }
+
+        /// <summary>
+        /// Gets reflects the purge protection status of the key. If true,
+        /// purge is disabled, false, otherwise.
+        /// </summary>
+        [JsonProperty(PropertyName = "purgeDisabled")]
+        public bool PurgeDisabled { get; protected set; }
 
     }
 }

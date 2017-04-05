@@ -188,6 +188,152 @@ namespace Microsoft.Azure.Management.KeyVault
             }
 
             /// <summary>
+            /// Gets information about the deleted vaults in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<DeletedVault> ListDeleted(this IVaultsOperations operations)
+            {
+                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListDeletedAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about the deleted vaults in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedVault>> ListDeletedAsync(this IVaultsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDeletedWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the deleted Azure key vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the deleted vault.
+            /// </param>
+            public static DeletedVault GetDeleted(this IVaultsOperations operations, string vaultName, string location)
+            {
+                return Task.Factory.StartNew(s => ((IVaultsOperations)s).GetDeletedAsync(vaultName, location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the deleted Azure key vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the deleted vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeletedVault> GetDeletedAsync(this IVaultsOperations operations, string vaultName, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedWithHttpMessagesAsync(vaultName, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            public static void PurgeDeleted(this IVaultsOperations operations, string vaultName, string location)
+            {
+                Task.Factory.StartNew(s => ((IVaultsOperations)s).PurgeDeletedAsync(vaultName, location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeDeletedAsync(this IVaultsOperations operations, string vaultName, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.PurgeDeletedWithHttpMessagesAsync(vaultName, location, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            public static void BeginPurgeDeleted(this IVaultsOperations operations, string vaultName, string location)
+            {
+                Task.Factory.StartNew(s => ((IVaultsOperations)s).BeginPurgeDeletedAsync(vaultName, location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified vault forever. aka Purges the deleted Azure key
+            /// vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the soft-deleted vault.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginPurgeDeletedAsync(this IVaultsOperations operations, string vaultName, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginPurgeDeletedWithHttpMessagesAsync(vaultName, location, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription.
             /// </summary>
@@ -254,6 +400,40 @@ namespace Microsoft.Azure.Management.KeyVault
             public static async Task<IPage<Vault>> ListByResourceGroupNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about the deleted vaults in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DeletedVault> ListDeletedNext(this IVaultsOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListDeletedNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about the deleted vaults in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedVault>> ListDeletedNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDeletedNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

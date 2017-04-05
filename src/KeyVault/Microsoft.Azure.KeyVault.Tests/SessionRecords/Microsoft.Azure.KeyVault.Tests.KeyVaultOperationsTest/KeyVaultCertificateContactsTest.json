@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//certificates/contacts?api-version=2016-10-01",
-      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvY29udGFjdHM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "/certificates/contacts?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -13,19 +13,20 @@
           "133"
         ],
         "x-ms-client-request-id": [
-          "fa6fc760-0f83-48b6-bdc6-cf1663926abd"
+          "26da16eb-ba5e-4eaa-aabb-339cc660160d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "150"
+          "165"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -37,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 21 Oct 2016 20:35:39 GMT"
+          "Mon, 19 Dec 2016 23:18:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -46,13 +47,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "westus"
+          "South Central US"
         ],
         "x-ms-request-id": [
-          "7d55ced1-6bf7-4a7d-84aa-5c24890f1b85"
+          "b3213f02-8ba7-4bc2-a025-aa00a36b930e"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.781"
+          "1.0.0.1066"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -70,8 +71,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//certificates/contacts?api-version=2016-10-01",
-      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvY29udGFjdHM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "/certificates/contacts?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -82,19 +83,20 @@
           "250"
         ],
         "x-ms-client-request-id": [
-          "c7d82cb2-dbf7-413b-8c54-f1a2f5d8bcb3"
+          "a692f59a-00db-45eb-995e-0c8fbf7e20b8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "228"
+          "243"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -106,7 +108,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 21 Oct 2016 20:35:39 GMT"
+          "Mon, 19 Dec 2016 23:18:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -115,13 +117,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "westus"
+          "South Central US"
         ],
         "x-ms-request-id": [
-          "e3ee5420-769c-4f49-9541-c961772a9412"
+          "abb75f11-2cb6-4366-b3ac-c6e3b12e5df5"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.781"
+          "1.0.0.1066"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -139,25 +141,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//certificates/contacts?api-version=2016-10-01",
-      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvY29udGFjdHM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "/certificates/contacts?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "17fbbe1d-704c-4992-b653-3c5d3f202348"
+          "20b23e97-30ac-40b8-8fa6-6d7325f98792"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "150"
+          "165"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -169,7 +172,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 21 Oct 2016 20:35:39 GMT"
+          "Mon, 19 Dec 2016 23:18:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -178,13 +181,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "westus"
+          "South Central US"
         ],
         "x-ms-request-id": [
-          "2a82d8af-9a6b-4ea0-b679-ecd36af79b67"
+          "731d26a1-ef08-41ac-b9b5-f2f36361097e"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.781"
+          "1.0.0.1066"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -202,25 +205,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//certificates/contacts?api-version=2016-10-01",
-      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvY29udGFjdHM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "/certificates/contacts?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f970a768-3ccd-4067-93e0-28279cd57969"
+          "893c23f8-6dd1-4d5c-a45c-ed49b8562143"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "228"
+          "243"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -232,7 +236,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 21 Oct 2016 20:35:39 GMT"
+          "Mon, 19 Dec 2016 23:18:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -241,13 +245,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "westus"
+          "South Central US"
         ],
         "x-ms-request-id": [
-          "d5459ad1-3636-4610-832a-6ddba2a711dd"
+          "81d7c886-142d-4e3c-929e-8e7b0c467855"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.781"
+          "1.0.0.1066"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -265,25 +269,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//certificates/contacts?api-version=2016-10-01",
-      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvY29udGFjdHM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "/certificates/contacts?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3f7533cf-f1cc-4f15-a7d6-714d7f5be43f"
+          "7f0174ce-5ec9-45ca-bc9b-a7d5dae8360b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "228"
+          "243"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -295,7 +300,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 21 Oct 2016 20:35:39 GMT"
+          "Mon, 19 Dec 2016 23:19:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -304,13 +309,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "westus"
+          "South Central US"
         ],
         "x-ms-request-id": [
-          "a2b6280d-b62b-47a6-ba43-482d2bac094a"
+          "043caa97-e64d-4687-9470-c9abb87d8969"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.781"
+          "1.0.0.1066"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -330,8 +335,8 @@
   ],
   "Names": {},
   "Variables": {
-    "VaultAddress": "https://testvault1020.vault.azure.net/",
+    "VaultAddress": "https://karlaugsoftdeletesdk.vault-int.azure-int.net",
     "KeyName": "sdktestkey",
-    "KeyVersion": "b669c8bf47a940d8ac818c3831fc11b4"
+    "KeyVersion": "f2a7e60b8dd0477d943b3a9fb2a63f0b"
   }
 }
