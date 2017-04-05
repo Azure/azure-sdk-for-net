@@ -24,6 +24,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the list of resource IDs of the network interfaces associated with this resource.
         /// </summary>
-        System.Collections.Generic.IList<string> NetworkInterfaceIds { get; }
+        System.Collections.Generic.IReadOnlyList<string> NetworkInterfaceIds { get; }
     }
 }

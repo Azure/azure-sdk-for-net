@@ -2,15 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using LoadBalancer.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to load balancer management API in Azure.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface ILoadBalancers  :
         ISupportsCreating<LoadBalancer.Definition.IBlank>,
@@ -21,8 +23,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IHasManager<INetworkManager>,
-        IHasInner<ILoadBalancersOperations>
+        ISupportsBatchDeletion,
+        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        IHasInner<Microsoft.Azure.Management.Network.Fluent.ILoadBalancersOperations>
     {
     }
 }

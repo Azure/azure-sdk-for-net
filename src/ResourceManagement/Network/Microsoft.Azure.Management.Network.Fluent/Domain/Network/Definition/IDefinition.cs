@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
 
     /// <summary>
     /// The stage of the public IP definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified, including adding subnets.
     /// </summary>
     public interface IWithCreateAndSubnet  :
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
     {
         /// <summary>
         /// Begins the definition of a new subnet to add to the virtual network.
-        /// The definition must be completed with a call to Subnet.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  Subnet.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the subnet.</param>
         /// <return>The first stage of the new subnet definition.</return>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
         /// <summary>
         /// Explicitly defines subnets in the virtual network based on the provided map.
         /// </summary>
-        /// <param name="nameCidrPairs">A Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
+        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
         /// <return>The next stage of the virtual network definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithSubnets(IDictionary<string,string> nameCidrPairs);
     }
@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
 
     /// <summary>
     /// The stage of the virtual network definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified, except for adding subnets.
     /// Subnets can be added only right after the address space is explicitly specified
-    /// (see WithCreate.create()).
+    /// (see  WithCreate.withAddressSpace(String)).
     /// </summary>
     public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork>,

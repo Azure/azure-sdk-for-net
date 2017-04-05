@@ -2,13 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using System.Collections.Generic;
 
     internal partial class NetworkInterfacesImpl 
     {
@@ -16,10 +12,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Begins a definition for a new resource.
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
-        /// process in Azure is Creatable.create().
-        /// Note that the Creatable.create() method is
+        /// process in Azure is  Creatable.create().
+        /// Note that the  Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
-        /// parameters specified. If you do not see Creatable.create() among the available methods, it
+        /// parameters specified. If you do not see  Creatable.create() among the available methods, it
         /// means you have not yet specified all the required input settings. Input settings generally begin
         /// with the word "with", for example: <code>.withNewResourceGroup()</code> and return the next stage
         /// of the resource definition, as an interface in the "fluent interface" style.
@@ -32,45 +28,49 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Lists resources of the specified type in the specified resource group.
+        /// List the network interfaces associated with a virtual machine scale set.
         /// </summary>
-        /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        /// <return>The list of resources.</return>
-        IEnumerable<INetworkInterface> ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.ListByResourceGroup(string resourceGroupName)
+        /// <param name="id">Virtual machine scale set resource id.</param>
+        /// <return>List of network interfaces.</return>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSetId(string id)
         {
-            return this.ListByResourceGroup(resourceGroupName);
+            return this.ListByVirtualMachineScaleSetId(id) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
-        /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
+        /// Gets a network interface associated with a virtual machine scale set instance.
         /// </summary>
-        /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
-        /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        /// <param name="resourceGroupName">Virtual machine scale set resource group name.</param>
+        /// <param name="scaleSetName">Scale set name.</param>
+        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
+        /// <param name="name">The network interface name.</param>
+        /// <return>Network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.GetByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId, string name)
         {
-            return await this.GetByResourceGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Network.Fluent.INetworkInterface;
+            return this.GetByVirtualMachineScaleSetInstanceId(resourceGroupName, scaleSetName, instanceId, name) as Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface;
         }
 
         /// <summary>
-        /// Asynchronously delete a resource from Azure, identifying it by its name and its resource group.
+        /// List the network interfaces associated with a specific virtual machine instance in a scale set.
         /// </summary>
-        /// <param name="groupName">The group the resource is part of.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <return>An observable to the request.</return>
-        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        /// <param name="resourceGroupName">Virtual machine scale set resource group name.</param>
+        /// <param name="scaleSetName">Scale set name.</param>
+        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
+        /// <return>List of network interfaces.</return>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
         {
- 
-            await this.DeleteByResourceGroupAsync(groupName, name, cancellationToken);
+            return this.ListByVirtualMachineScaleSetInstanceId(resourceGroupName, scaleSetName, instanceId) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
-        /// Lists all the resources of the specified type in the currently selected subscription.
+        /// List the network interfaces associated with a virtual machine scale set.
         /// </summary>
-        /// <return>List of resources.</return>
-        IEnumerable<INetworkInterface> ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.List()
+        /// <param name="resourceGroupName">Virtual machine scale set resource group name.</param>
+        /// <param name="scaleSetName">Scale set name.</param>
+        /// <return>List of network interfaces.</return>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
         {
-            return this.List();
+            return this.ListByVirtualMachineScaleSet(resourceGroupName, scaleSetName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
     }
 }

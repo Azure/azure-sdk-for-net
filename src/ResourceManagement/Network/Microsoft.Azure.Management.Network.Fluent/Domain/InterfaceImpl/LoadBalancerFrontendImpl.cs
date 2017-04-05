@@ -2,21 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using LoadBalancer.Definition;
-    using LoadBalancer.Update;
-    using LoadBalancerPrivateFrontend.Definition;
-    using LoadBalancerPrivateFrontend.Update;
-    using LoadBalancerPrivateFrontend.UpdateDefinition;
-    using LoadBalancerPublicFrontend.Definition;
-    using LoadBalancerPublicFrontend.Update;
-    using LoadBalancerPublicFrontend.UpdateDefinition;
-    using Models;
-    using HasPrivateIPAddress.Definition;
-    using HasPrivateIPAddress.UpdateDefinition;
-    using HasPrivateIPAddress.Update;
-    using HasPublicIPAddress.Definition;
-    using HasPublicIPAddress.UpdateDefinition;
-    using HasPublicIPAddress.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
@@ -26,6 +26,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
     internal partial class LoadBalancerFrontendImpl 
     {
+        /// <return>The associated public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
+        {
+            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
+        }
+
+        /// <summary>
+        /// Gets the resource ID of the associated public IP address.
+        /// </summary>
+        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
+        {
+            get
+            {
+                return this.PublicIPAddressId();
+            }
+        }
+
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
@@ -47,20 +64,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the resource ID of the associated public IP address.
+        /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.PublicIPAddressId
+        Models.IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
         {
             get
             {
-                return this.PublicIPAddressId();
+                return this.PrivateIPAllocationMethod() as Models.IPAllocationMethod;
             }
         }
 
-        /// <return>The associated public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress.GetPublicIPAddress()
+        /// <summary>
+        /// Gets the private IP address associated with this resource.
+        /// </summary>
+        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
         {
-            return this.GetPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
+            get
+            {
+                return this.PrivateIPAddress();
+            }
         }
 
         /// <summary>
@@ -93,16 +115,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Assigns the specified static private IP address within the associated subnet.
-        /// </summary>
-        /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithPrivateIPAddressStatic(string ipAddress)
-        {
-            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
-        }
-
-        /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
@@ -116,9 +128,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIPAddressStatic(string ipAddress)
+        LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -134,10 +146,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Assigns the specified static private IP address within the associated subnet.
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
-        /// <return>The next stage of the update.</return>
-        LoadBalancerPrivateFrontend.Update.IUpdate HasPrivateIPAddress.Update.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIPAddressStatic(string ipAddress)
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Update.IUpdate;
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
@@ -150,25 +162,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the private IP address associated with this resource.
+        /// Assigns the specified static private IP address within the associated subnet.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAddress
+        /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
+        /// <return>The next stage of the update.</return>
+        LoadBalancerPrivateFrontend.Update.IUpdate HasPrivateIPAddress.Update.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            get
-            {
-                return this.PrivateIPAddress();
-            }
-        }
-
-        /// <summary>
-        /// Gets the private IP address allocation method within the associated subnet.
-        /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress.PrivateIPAllocationMethod
-        {
-            get
-            {
-                return this.PrivateIPAllocationMethod();
-            }
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -190,6 +190,48 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.NetworkId();
+            }
+        }
+
+        /// <summary>
+        /// Attaches the child definition to the parent resource definition.
+        /// </summary>
+        /// <return>The next stage of the parent definition.</return>
+        LoadBalancer.Definition.IWithPrivateFrontendOrBackend Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>.Attach()
+        {
+            return this.Attach() as LoadBalancer.Definition.IWithPrivateFrontendOrBackend;
+        }
+
+        /// <summary>
+        /// Gets the inbound NAT pools on this load balancer that use this frontend, indexed by their names.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatPools
+        {
+            get
+            {
+                return this.InboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
+            }
+        }
+
+        /// <summary>
+        /// Gets true if the frontend is public, i.e. it has a public IP address associated with it.
+        /// </summary>
+        bool Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.IsPublic
+        {
+            get
+            {
+                return this.IsPublic();
+            }
+        }
+
+        /// <summary>
+        /// Gets the inbound NAT rules on this load balancer that use this frontend, indexed by their names.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatRules
+        {
+            get
+            {
+                return this.InboundNatRules() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
             }
         }
 
@@ -260,48 +302,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithExistingPublicIPAddress(string resourceId)
         {
             return this.WithExistingPublicIPAddress(resourceId) as LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Attaches the child definition to the parent resource definition.
-        /// </summary>
-        /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithPrivateFrontendOrBackend Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>.Attach()
-        {
-            return this.Attach() as LoadBalancer.Definition.IWithPrivateFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Gets the inbound NAT pools on this load balancer that use this frontend, indexed by their names.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatPools
-        {
-            get
-            {
-                return this.InboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
-            }
-        }
-
-        /// <summary>
-        /// Gets true if the frontend is public, i.e. it has a public IP address associated with it.
-        /// </summary>
-        bool Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.IsPublic
-        {
-            get
-            {
-                return this.IsPublic();
-            }
-        }
-
-        /// <summary>
-        /// Gets the inbound NAT rules on this load balancer that use this frontend, indexed by their names.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatRules
-        {
-            get
-            {
-                return this.InboundNatRules() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
-            }
         }
 
         /// <return>

@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Route.Definition;
-    using Route.Update;
-    using Route.UpdateDefinition;
-    using Models;
-    using RouteTable.Definition;
-    using RouteTable.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Route.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Route.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.RouteTable.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -35,17 +35,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the IP address of the next hop.
-        /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IRoute.NextHopIPAddress
-        {
-            get
-            {
-                return this.NextHopIPAddress();
-            }
-        }
-
-        /// <summary>
         /// Gets the type of the next hop.
         /// </summary>
         Models.RouteNextHopType Microsoft.Azure.Management.Network.Fluent.IRoute.NextHopType
@@ -53,6 +42,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.NextHopType() as Models.RouteNextHopType;
+            }
+        }
+
+        /// <summary>
+        /// Gets the IP address of the next hop.
+        /// </summary>
+        string Microsoft.Azure.Management.Network.Fluent.IRoute.NextHopIPAddress
+        {
+            get
+            {
+                return this.NextHopIPAddress();
             }
         }
 
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Specifies the next hop type.
-        /// To use a virtual appliance, use .withNextHopToVirtualAppliance(String) instead and specify its IP address.
+        /// To use a virtual appliance, use  .withNextHopToVirtualAppliance(String) instead and specify its IP address.
         /// </summary>
         /// <param name="nextHopType">A hop type.</param>
         /// <return>The next stage of the definition.</return>
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Specifies the next hop type.
-        /// To use a virtual appliance, use .withNextHopToVirtualAppliance(String) instead and specify its IP address.
+        /// To use a virtual appliance, use  .withNextHopToVirtualAppliance(String) instead and specify its IP address.
         /// </summary>
         /// <param name="nextHopType">A hop type.</param>
         /// <return>The next stage of the definition.</return>
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Specifies the next hop type.
-        /// To use a virtual appliance, use .withNextHopToVirtualAppliance(String) instead and specify its IP address.
+        /// To use a virtual appliance, use  .withNextHopToVirtualAppliance(String) instead and specify its IP address.
         /// </summary>
         /// <param name="nextHopType">A hop type.</param>
         /// <return>The next stage of the update.</return>

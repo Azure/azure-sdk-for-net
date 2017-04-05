@@ -2,10 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using System.Threading;
     using System.Threading.Tasks;
-    using Network.Definition;
-    using Network.Update;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Network.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Network.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -28,10 +29,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetwork Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>.Refresh()
+        /// <return>The Observable to refreshed resource.</return>
+        async Task<Microsoft.Azure.Management.Network.Fluent.INetwork> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>.RefreshAsync(CancellationToken cancellationToken)
         {
-            return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.INetwork;
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Network.Fluent.INetwork;
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Explicitly defines all the subnets in the virtual network based on the provided map.
         /// This replaces any previously existing subnets.
         /// </summary>
-        /// <param name="nameCidrPairs">A Map of CIDR addresses for the subnets, indexed by the name of each subnet to be added.</param>
+        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be added.</param>
         /// <return>The next stage of the virtual network update.</return>
         Network.Update.IUpdate Network.Update.IWithSubnet.WithSubnets(IDictionary<string,string> nameCidrPairs)
         {
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Begins the definition of a new subnet to add to the virtual network.
-        /// The definition must be completed with a call to Subnet.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  Subnet.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the subnet.</param>
         /// <return>The first stage of the new subnet definition.</return>
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Explicitly defines subnets in the virtual network based on the provided map.
         /// </summary>
-        /// <param name="nameCidrPairs">A Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
+        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
         /// <return>The next stage of the virtual network definition.</return>
         Network.Definition.IWithCreateAndSubnet Network.Definition.IWithSubnet.WithSubnets(IDictionary<string,string> nameCidrPairs)
         {
@@ -135,24 +136,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets list of DNS server IP addresses associated with this virtual network.
+        /// Gets list of address spaces associated with this virtual network, in the CIDR notation.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetwork.DnsServerIPs
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Network.Fluent.INetwork.AddressSpaces
         {
             get
             {
-                return this.DnsServerIPs() as System.Collections.Generic.IList<string>;
+                return this.AddressSpaces() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 
         /// <summary>
-        /// Gets list of address spaces associated with this virtual network, in the CIDR notation.
+        /// Gets list of DNS server IP addresses associated with this virtual network.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetwork.AddressSpaces
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Network.Fluent.INetwork.DnsServerIPs
         {
             get
             {
-                return this.AddressSpaces() as System.Collections.Generic.IList<string>;
+                return this.DnsServerIPs() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 

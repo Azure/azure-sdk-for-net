@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
 {
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition;
@@ -16,11 +18,39 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using ResourceManager.Fluent.Core;
+
+    /// <summary>
+    /// The stage of an application gateway update allowing to modify probes.
+    /// </summary>
+    public interface IWithProbe 
+    {
+        /// <summary>
+        /// Begins the definition of a new probe.
+        /// </summary>
+        /// <param name="name">A unique name for the probe.</param>
+        /// <return>The first stage of a probe definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate> DefineProbe(string name);
+
+        /// <summary>
+        /// Removes a probe from the application gateway.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutProbe(string name);
+
+        /// <summary>
+        /// Begins the update of an existing probe.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The first stage of a probe update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate UpdateProbe(string name);
+    }
 
     /// <summary>
     /// The stage of an application gateway update allowing to modify backends.
@@ -33,13 +63,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         /// <param name="name">A unique name for the backend.</param>
         /// <return>The first stage of the backend definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate> DefineBackend(string name);
-
-        /// <summary>
-        /// Ensures the specified IP address is not associated with any backend.
-        /// </summary>
-        /// <param name="ipAddress">An IP address.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutBackendIPAddress(string ipAddress);
 
         /// <summary>
         /// Removes the specified backend.
@@ -55,6 +78,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         /// <param name="name">The name of the backend.</param>
         /// <return>The first stage of an update of the backend.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate UpdateBackend(string name);
+
+        /// <summary>
+        /// Ensures the specified IP address is not associated with any backend.
+        /// </summary>
+        /// <param name="ipAddress">An IP address.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithoutBackendIPAddress(string ipAddress);
 
         /// <summary>
         /// Ensures the specified fully qualified domain name (FQDN) is not associated with any backend.
@@ -88,9 +118,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// <summary>
     /// The template for an application gateway update operation, containing all the settings that
     /// can be modified.
-    /// Call {.
+    /// Call  apply() to apply the changes to the resource in Azure.
     /// </summary>
-    /// <code>Apply()} to apply the changes to the resource in Azure.</code>
     public interface IUpdate  :
         IAppliable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
@@ -105,7 +134,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         IWithSslCert,
         IWithListener,
         IWithRequestRoutingRule,
-        IWithExistingSubnet
+        IWithExistingSubnet,
+        IWithProbe
     {
     }
 
@@ -284,14 +314,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     }
 
     /// <summary>
-    /// The stage of an application gateway update allowing to specify a public IP address for the public frontend.
-    /// </summary>
-    public interface IWithPublicIPAddress  :
-        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
-    {
-    }
-
-    /// <summary>
     /// The stage of an internal application gateway update allowing to make the application gateway accessible to its
     /// virtual network.
     /// </summary>
@@ -339,17 +361,45 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     }
 
     /// <summary>
+    /// The stage of an application gateway update allowing to specify the size.
+    /// </summary>
+    public interface IWithSize 
+    {
+        /// <summary>
+        /// Specifies the size of the application gateway to use within the context of the selected tier.
+        /// </summary>
+        /// <param name="size">An application gateway size name.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithSize(ApplicationGatewaySkuName size);
+    }
+
+    /// <summary>
+    /// The stage of an application gateway update allowing to specify a public IP address for the public frontend.
+    /// </summary>
+    public interface IWithPublicIPAddress  :
+        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
+    {
+    }
+
+    /// <summary>
+    /// The stage of an application gateway update allowing to specify the capacity (number of instances) of
+    /// the application gateway.
+    /// </summary>
+    public interface IWithInstanceCount 
+    {
+        /// <summary>
+        /// Specifies the capacity (number of instances) for the application gateway.
+        /// </summary>
+        /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected applicatiob gateway size.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithInstanceCount(int instanceCount);
+    }
+
+    /// <summary>
     /// The stage of an application gateway update allowing to modify IP configurations.
     /// </summary>
     public interface IWithIPConfig 
     {
-        /// <summary>
-        /// Begins the definition of the default IP configuration.
-        /// If a default IP configuration already exists, it will be this is equivalent to <code>UpdateDefaultIPConfiguration()</code>.
-        /// </summary>
-        /// <return>The first stage of an IP configuration update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate> DefineDefaultIPConfiguration();
-
         /// <summary>
         /// Begins the update of an existing IP configuration.
         /// </summary>
@@ -371,32 +421,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         /// </summary>
         /// <return>The first stage of an IP configuration update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update.IUpdate UpdateDefaultIPConfiguration();
-    }
 
-    /// <summary>
-    /// The stage of an application gateway update allowing to specify the size.
-    /// </summary>
-    public interface IWithSize 
-    {
         /// <summary>
-        /// Specifies the size of the application gateway to use within the context of the selected tier.
+        /// Begins the definition of the default IP configuration.
+        /// If a default IP configuration already exists, it will be this is equivalent to <code>updateDefaultIPConfiguration()</code>.
         /// </summary>
-        /// <param name="size">An application gateway size name.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithSize(ApplicationGatewaySkuName size);
-    }
-
-    /// <summary>
-    /// The stage of an application gateway update allowing to specify the capacity (number of instances) of
-    /// the application gateway.
-    /// </summary>
-    public interface IWithInstanceCount 
-    {
-        /// <summary>
-        /// Specifies the capacity (number of instances) for the application gateway.
-        /// </summary>
-        /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected applicatiob gateway size.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithInstanceCount(int instanceCount);
+        /// <return>The first stage of an IP configuration update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate> DefineDefaultIPConfiguration();
     }
 }

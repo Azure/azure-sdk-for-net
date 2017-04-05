@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The first stage of a security rule definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         IWithDirectionAccess<ParentT>
     {
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the priority to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithPriority<ParentT> 
     {
         /// <summary>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the destination port(s) to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithDestinationPort<ParentT> 
     {
         /// <summary>
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The final stage of the security rule definition.
     /// At this stage, any remaining optional settings can be specified, or the security rule definition
-    /// can be attached to the parent network security group definition using WithAttach.attach().
+    /// can be attached to the parent network security group definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
         IWithPriority<ParentT>,
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the security rule definition allowing the protocol that the rule applies to to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithProtocol<ParentT> 
     {
         /// <summary>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the source port(s) to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithSourcePort<ParentT> 
     {
         /// <summary>
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the description to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithDescription<ParentT> 
     {
         /// <summary>
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The entirety of a network security rule definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the source address to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithSourceAddress<ParentT> 
     {
         /// <summary>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the direction and the access type to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithDirectionAccess<ParentT> 
     {
         /// <summary>
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definiti
     /// <summary>
     /// The stage of the network rule definition allowing the destination address to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithDestinationAddress<ParentT> 
     {
         /// <summary>

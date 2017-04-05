@@ -2,15 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using LoadBalancer.Definition;
-    using LoadBalancer.Update;
-    using LoadBalancerHttpProbe.Definition;
-    using LoadBalancerHttpProbe.Update;
-    using LoadBalancerHttpProbe.UpdateDefinition;
-    using LoadBalancerTcpProbe.Definition;
-    using LoadBalancerTcpProbe.Update;
-    using LoadBalancerTcpProbe.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the protocol.
         /// </summary>
-        ProbeProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<ProbeProtocol>.Protocol
+        string Microsoft.Azure.Management.Network.Fluent.IHasProtocol<string>.Protocol
         {
             get
             {

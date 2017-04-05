@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Route.Update
 
         /// <summary>
         /// Specifies the next hop type.
-        /// To use a virtual appliance, use .withNextHopToVirtualAppliance(String) instead and specify its IP address.
+        /// To use a virtual appliance, use  .withNextHopToVirtualAppliance(String) instead and specify its IP address.
         /// </summary>
         /// <param name="nextHopType">A hop type.</param>
         /// <return>The next stage of the update.</return>

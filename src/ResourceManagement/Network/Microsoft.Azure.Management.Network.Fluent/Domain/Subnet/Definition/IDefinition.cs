@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The stage of the subnet definition allowing to specify the address space for the subnet.
     /// </summary>
-    /// <typeparam name="Parent">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The parent type.</typeparam>
     public interface IWithAddressPrefix<ParentT> 
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The stage of the subnet definition allowing to specify the network security group to assign to the subnet.
     /// </summary>
-    /// <typeparam name="Parent">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The parent type.</typeparam>
     public interface IWithNetworkSecurityGroup<ParentT> 
     {
         /// <summary>
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The stage of a subnet definition allowing to specify a route table to associate with the subnet.
     /// </summary>
-    /// <typeparam name="Parent">The parent network type.</typeparam>
+    /// <typeparam name="ParentT">The parent network type.</typeparam>
     public interface IWithRouteTable<ParentT> 
     {
         /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The first stage of the subnet definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         IWithAddressPrefix<ParentT>
     {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The entirety of a Subnet definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAddressPrefix<ParentT>,
@@ -84,9 +84,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The final stage of the subnet definition.
     /// At this stage, any remaining optional settings can be specified, or the subnet definition
-    /// can be attached to the parent virtual network definition using WithAttach.attach().
+    /// can be attached to the parent virtual network definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
         IWithNetworkSecurityGroup<ParentT>,

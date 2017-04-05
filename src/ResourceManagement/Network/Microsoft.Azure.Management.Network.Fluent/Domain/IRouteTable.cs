@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using RouteTable.Update;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.RouteTable.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for route table management.
     /// </summary>
     public interface IRouteTable  :
-        IGroupableResource<INetworkManager, RouteTableInner>,
+        IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.RouteTableInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         IUpdatable<RouteTable.Update.IUpdate>,
         IHasAssociatedSubnets
