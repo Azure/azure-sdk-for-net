@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             get; private set;
         }
 
-        #region Implementation of ISupportsGettingByGroup interface
+        #region Implementation of ISupportsGettingByResourceGroup interface
 
         protected abstract Task<InnerResourceT> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
 
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         #endregion
 
-        #region Implementation of ISupportsDeletingByGroup interface
+        #region Implementation of ISupportsDeletingByResourceGroup interface
 
         protected abstract Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
 
