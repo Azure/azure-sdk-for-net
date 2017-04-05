@@ -119,9 +119,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:CD5E69C00F6C1D6EBFC019860CB4AEA6:EF37815ABD90C720F1C27B3219616A48
-        internal void Activate(string format)
+        internal async Task ActivateAsync(string format, CancellationToken cancellationToken = default(CancellationToken))
         {
-            client.Activate(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), format);
+            await client.ActivateAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), format, cancellationToken);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1A5A27E52191D0AB303947147157C578

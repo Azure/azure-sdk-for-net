@@ -53,9 +53,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return WrapModel(client.Register(resourceProviderNamespace));
         }
 
+        public async Task<IProvider> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return WrapModel(await client.RegisterAsync(resourceProviderNamespace, cancellationToken));
+        }
+
         public IProvider Unregister(string resourceProviderNamespace)
         {
-            return WrapModel(client.Unregister(resourceProviderNamespace));
+            return UnregisterAsync(resourceProviderNamespace).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<IProvider> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return WrapModel(await client.UnregisterAsync(resourceProviderNamespace, cancellationToken));
         }
 
         private IProvider WrapModel(ProviderInner innerModel)

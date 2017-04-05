@@ -378,16 +378,23 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void Cancel()
         {
-            Manager.Inner.Deployments.Cancel(resourceGroupName, Name);
+            CancelAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public IDeploymentExportResult ExportTemplate
+        public async Task CancelAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            get
-            {
-                DeploymentExportResultInner inner = Manager.Inner.Deployments.ExportTemplate(ResourceGroupName, Name);
-                return new DeploymentExportResultImpl(inner);
-            }
+            await Manager.Inner.Deployments.CancelAsync(resourceGroupName, Name, cancellationToken);
+        }
+
+        public IDeploymentExportResult ExportTemplate()
+        {
+            return ExportTemplateAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<IDeploymentExportResult> ExportTemplateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            DeploymentExportResultInner inner = await Manager.Inner.Deployments.ExportTemplateAsync(ResourceGroupName, Name, cancellationToken);
+            return new DeploymentExportResultImpl(inner);
         }
 
         public IDeployment BeginCreate()

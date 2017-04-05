@@ -54,7 +54,7 @@ namespace ManageRedis
                 // Get | regenerate Redis Cache access keys
 
                 Utilities.Log("Getting Redis Cache access keys");
-                var redisAccessKeys = redisCache1.Keys;
+                var redisAccessKeys = redisCache1.GetKeys();
                 Utilities.PrintRedisAccessKeys(redisAccessKeys);
 
                 Utilities.Log("Regenerating secondary Redis Cache access key");

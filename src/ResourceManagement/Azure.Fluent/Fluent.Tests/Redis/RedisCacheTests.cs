@@ -92,7 +92,7 @@ namespace Azure.Tests.Redis
                     Assert.Equal(redisCache.ProvisioningState, redisCacheGet.ProvisioningState);
 
                     // Get Keys
-                    var redisKeys = redisCache.Keys;
+                    var redisKeys = redisCache.GetKeys();
                     Assert.NotNull(redisKeys);
                     Assert.NotNull(redisKeys.PrimaryKey);
                     Assert.NotNull(redisKeys.SecondaryKey);

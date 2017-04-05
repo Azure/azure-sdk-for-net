@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     using System.Collections.Generic;
     using Core;
     using Management.ResourceManager.Fluent;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Entry point to generic resources management API.
@@ -30,7 +32,32 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// <param name="resourceName">resourceName the name of the resource</param>
         /// <param name="apiVersion">apiVersion the API version</param>
         /// <returns>true if the resource exists; false otherwise</returns>
-        bool CheckExistence (string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion);
+        bool CheckExistence (
+            string resourceGroupName, 
+            string resourceProviderNamespace, 
+            string parentResourcePath, 
+            string resourceType, 
+            string resourceName, 
+            string apiVersion);
+        
+        /// <summary>
+        /// Checks if a resource exists in a resource group.
+        /// </summary>
+        /// <param name="resourceGroupName">resourceGroupName the resource group's name</param>
+        /// <param name="resourceProviderNamespace">resourceProviderNamespace the resource provider's namespace</param>
+        /// <param name="parentResourcePath">parentResourcePath the parent's resource path</param>
+        /// <param name="resourceType">resourceType the type of the resource</param>
+        /// <param name="resourceName">resourceName the name of the resource</param>
+        /// <param name="apiVersion">apiVersion the API version</param>
+        /// <returns>true if the resource exists; false otherwise</returns>
+        Task<bool> CheckExistenceAsync(
+            string resourceGroupName,
+            string resourceProviderNamespace,
+            string parentResourcePath,
+            string resourceType,
+            string resourceName,
+            string apiVersion,
+            CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Returns a resource belonging to a resource group.
@@ -51,6 +78,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// <param name="targetResourceGroup">targetResourceGroup target resource group, can be in a different subscription</param>
         /// <param name="resources">resources the list of IDs of the resources to move</param>
         void MoveResources (string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources);
+
+        /// <summary>
+        /// Move resources from one resource group to another.
+        /// </summary>
+        /// <param name="sourceResourceGroupName">sourceResourceGroupName Source resource group name</param>
+        /// <param name="targetResourceGroup">targetResourceGroup target resource group, can be in a different subscription</param>
+        /// <param name="resources">resources the list of IDs of the resources to move</param>
+        Task MoveResourcesAsync(
+            string sourceResourceGroupName, 
+            IResourceGroup targetResourceGroup, 
+            IList<string> resources, 
+            CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete resource and all of its child resources.

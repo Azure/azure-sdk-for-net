@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for SqlServer and its parent interfaces.
@@ -90,11 +92,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:DD6979366C7B4F3C6845144DBE9E011A:E0A904BDF0C6E5F4C37230C1174B190E
         public void ForceFailoverAllowDataLoss()
         {
-            this.innerCollection.FailoverReplicationLinkAllowDataLoss(
-            this.ResourceGroupName(),
-            this.SqlServerName(),
-            this.DatabaseName(),
-            this.Name());
+            ForceFailoverAllowDataLossAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+        public async Task ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.innerCollection.FailoverReplicationLinkAllowDataLossAsync(
+                this.ResourceGroupName(),
+                this.SqlServerName(),
+                this.DatabaseName(),
+                this.Name(),
+                cancellationToken);
         }
 
         ///GENMHASH:EE0BD4E72D19A69170DA4CD2D7DA10B4:271A8BBAC31D775322091915FE56A406
@@ -108,11 +115,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:75146396042F3B3D55B973EBEDF73CD2:6BA113CAE218C7605AC4729294DDB001
         public void Failover()
         {
-            this.innerCollection.FailoverReplicationLink(
-            this.ResourceGroupName(),
-            this.SqlServerName(),
-            this.DatabaseName(),
-            this.Name());
+            FailoverAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+        public async Task FailoverAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.innerCollection.FailoverReplicationLinkAsync(
+                this.ResourceGroupName(),
+                this.SqlServerName(),
+                this.DatabaseName(),
+                this.Name(),
+                cancellationToken);
         }
 
         ///GENMHASH:D1AA514022A702178FC60111EBA279F9:23D982D34E0AA0229B0409AE0E6C9099

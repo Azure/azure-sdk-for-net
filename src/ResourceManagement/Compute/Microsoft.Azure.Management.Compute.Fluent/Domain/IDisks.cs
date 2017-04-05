@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Disk.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using ResourceManager.Fluent.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Entry point to managed disk management API in Azure.
@@ -30,6 +32,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void RevokeAccess(string resourceGroupName, string diskName);
 
         /// <summary>
+        /// Revoke access granted to a disk.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="diskName">The disk name.</param>
+        Task RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Grants access to a disk.
         /// </summary>
         /// <param name="resourceGroupName">The resource group name.</param>
@@ -38,5 +47,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="accessDuration">Access duration.</param>
         /// <return>The readonly SAS uri to the disk.</return>
         string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration);
+
+        /// <summary>
+        /// Grants access to a disk.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="diskName">The disk name.</param>
+        /// <param name="accessLevel">Access level.</param>
+        /// <param name="accessDuration">Access duration.</param>
+        /// <return>The readonly SAS uri to the disk.</return>
+        Task<string> GrantAccessAsync(
+            string resourceGroupName, 
+            string diskName, 
+            AccessLevel accessLevel, 
+            int accessDuration, 
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 {
     using Microsoft.Azure.Management.Redis.Fluent.Models;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// An immutable client-side representation of an Azure Redis cache with Premium SKU.
@@ -40,7 +42,26 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
         /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
         /// </param>
+        /// <param name="shardId">In case of cluster cache, this specifies shard id which should be rebooted.</param>
+        Task ForceRebootAsync(string rebootType, int shardId, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
+        /// </summary>
+        /// <param name="rebootType">
+        /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
+        /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
+        /// </param>
         void ForceReboot(string rebootType);
+
+        /// <summary>
+        /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
+        /// </summary>
+        /// <param name="rebootType">
+        /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
+        /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
+        /// </param>
+        Task ForceRebootAsync(string rebootType, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Import data into Redis Cache.
@@ -53,7 +74,20 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Import data into Redis Cache.
         /// </summary>
         /// <param name="files">Files to import.</param>
+        /// <param name="fileFormat">Specifies file format.</param>
+        Task ImportDataAsync(IList<string> files, string fileFormat, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Import data into Redis Cache.
+        /// </summary>
+        /// <param name="files">Files to import.</param>
         void ImportData(IList<string> files);
+
+        /// <summary>
+        /// Import data into Redis Cache.
+        /// </summary>
+        /// <param name="files">Files to import.</param>
+        Task ImportDataAsync(IList<string> files, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Export data from Redis Cache.
@@ -67,7 +101,22 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </summary>
         /// <param name="containerSASUrl">Container name to export to.</param>
         /// <param name="prefix">Prefix to use for exported files.</param>
+        Task ExportDataAsync(string containerSASUrl, string prefix, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Export data from Redis Cache.
+        /// </summary>
+        /// <param name="containerSASUrl">Container name to export to.</param>
+        /// <param name="prefix">Prefix to use for exported files.</param>
         /// <param name="fileFormat">Specifies file format.</param>
         void ExportData(string containerSASUrl, string prefix, string fileFormat);
+
+        /// <summary>
+        /// Export data from Redis Cache.
+        /// </summary>
+        /// <param name="containerSASUrl">Container name to export to.</param>
+        /// <param name="prefix">Prefix to use for exported files.</param>
+        /// <param name="fileFormat">Specifies file format.</param>
+        Task ExportDataAsync(string containerSASUrl, string prefix, string fileFormat, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    
+
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Models;
     using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     internal partial class ReplicationLinkImpl 
     {
@@ -68,8 +70,15 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.Failover()
         {
- 
-            this.Failover();
+             this.Failover();
+        }
+
+        /// <summary>
+        /// Fails over the Azure SQL Database Replication Link.
+        /// </summary>
+        async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.FailoverAsync(CancellationToken cancellationToken)
+        {
+            await this.FailoverAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,8 +172,15 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.ForceFailoverAllowDataLoss()
         {
- 
             this.ForceFailoverAllowDataLoss();
+        }
+
+        /// <summary>
+        /// Forces fail over the Azure SQL Database Replication Link which may result in data loss.
+        /// </summary>
+        async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken)
+        {
+            await this.ForceFailoverAllowDataLossAsync(cancellationToken);
         }
 
         /// <summary>

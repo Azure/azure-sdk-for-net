@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Entry point for application gateway management API in Azure.
@@ -21,6 +23,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasSubnet,
         IHasPrivateIPAddress
     {
+        /// <summary>
+        /// Starts the application gateway.
+        /// </summary>
+        void Start();
+
+        /// <summary>
+        /// Starts the application gateway.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Stops the application gateway.
+        /// </summary>
+        void Stop();
+
+        /// <summary>
+        /// Stops the application gateway.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Gets frontend IP configurations, indexed by name.
         /// </summary>
