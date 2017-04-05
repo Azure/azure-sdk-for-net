@@ -4,16 +4,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure;
-    using Microsoft.Rest;
     using Management.Fluent.ServiceBus.Models;
     using Management.Fluent.ServiceBus;
     using ServiceBus.Fluent;
     using ResourceManager.Fluent.Core;
     using System;
     using Rest.Azure;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for Queues.

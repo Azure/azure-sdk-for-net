@@ -5,7 +5,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 
-namespace Microsoft.Azure.Management.Fluent.Resource
+namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
     internal class LocationImpl : IndexableWrapper<Location>, ILocation
     {

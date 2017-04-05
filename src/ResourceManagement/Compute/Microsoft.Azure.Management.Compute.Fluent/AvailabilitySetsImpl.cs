@@ -9,7 +9,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.Azure;
 using System.Reflection;
 

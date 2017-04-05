@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>df96dee6-1215-4b27-aaee-1cd91d62e476</ProjectGuid>
-    <RootNamespace>Microsoft.Azure.Management.Fluent.Redis</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.Redis.Fluent</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

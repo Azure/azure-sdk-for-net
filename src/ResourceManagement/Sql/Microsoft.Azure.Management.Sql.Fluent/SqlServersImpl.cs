@@ -7,9 +7,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using SqlServer.Definition;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Collections.Generic;
     using Rest.Azure;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for SqlServers and its parent interfaces.

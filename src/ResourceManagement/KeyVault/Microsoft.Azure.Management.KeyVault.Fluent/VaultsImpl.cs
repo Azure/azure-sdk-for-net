@@ -3,15 +3,13 @@
 
 namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
-
-    using ResourceManager.Fluent.Core;
-    using Models;
     using Graph.RBAC.Fluent;
-    using System;
-    using System.Threading.Tasks;
-    using System.Threading;
-    using Management.Fluent.Resource.Core;
+    using Models;
+    using ResourceManager.Fluent.Core;
     using Rest.Azure;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation of Vaults and its parent interfaces.

@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using ResourceManager.Fluent.Core.CollectionActions;
     using System.Linq;
     using Rest.Azure;
-    using Management.Fluent.Resource.Core;
-    using System;
 
     /// <summary>
     /// Base class for Service Bus child entities.

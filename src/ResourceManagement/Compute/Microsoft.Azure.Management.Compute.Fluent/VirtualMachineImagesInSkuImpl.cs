@@ -1,17 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using System;
+    using Models;
+    using ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Fluent.Resource.Core;
-    using ResourceManager.Fluent.Core;
-    using System.Linq;
-    using Models;
 
     /// <summary>
     /// The implementation for VirtualMachineImagesInSku.

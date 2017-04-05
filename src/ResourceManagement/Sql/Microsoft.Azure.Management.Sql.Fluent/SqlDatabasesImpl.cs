@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for SQLDatabases and its parent interfaces.

@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.

@@ -3,13 +3,11 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using Models;
+    using ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using System.Threading;
     using System.Threading.Tasks;
-    using ResourceManager.Fluent.Core;
-    using Models;
-    using System.Collections.Generic;
-    using Rest.Azure;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for RouteTables.
