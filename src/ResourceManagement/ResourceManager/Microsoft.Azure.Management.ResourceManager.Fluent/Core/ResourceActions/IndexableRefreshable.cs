@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
@@ -13,5 +14,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
         protected IndexableRefreshable() {}
 
         public abstract IFluentResourceT Refresh();
+
+        public abstract Task<IFluentResourceT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

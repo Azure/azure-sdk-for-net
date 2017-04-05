@@ -127,10 +127,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1ACD6B53BB71F7548B6ACD87115C57CE
-        public override ISqlElasticPool Refresh()
+        protected override async Task<ElasticPoolInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            Manager.Inner.ElasticPools.Get(ResourceGroupName, SqlServerName(), Name);
-            return this;
+            return await Manager.Inner.ElasticPools.GetAsync(ResourceGroupName, SqlServerName(), Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:ED7351448838F0ED89C6E4AE8FB19EAE:E3FFCB76DD3743CD850897669FC40D12

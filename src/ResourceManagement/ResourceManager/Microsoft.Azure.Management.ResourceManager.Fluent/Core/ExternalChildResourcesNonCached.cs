@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     public abstract class ExternalChildResourcesNonCached<FluentModelTImpl, IFluentModelT, InnerModelT, IParentT, ParentImplT> :
         ExternalChildResourceCollection<FluentModelTImpl, IFluentModelT, InnerModelT, IParentT, ParentImplT>
         where ParentImplT : IParentT
-        where IFluentModelT : IExternalChildResource<IFluentModelT, IParentT>
+        where IFluentModelT : class, IExternalChildResource<IFluentModelT, IParentT>
         where FluentModelTImpl : ExternalChildResource<IFluentModelT, InnerModelT, IParentT, ParentImplT>, IFluentModelT
     {
         /// <summary>

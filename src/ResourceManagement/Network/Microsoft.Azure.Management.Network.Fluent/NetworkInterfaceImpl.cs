@@ -71,11 +71,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:BCF4C230F6F0AA0BE6D9C038631B4B67
-        public override INetworkInterface Refresh()
+        protected override async Task<NetworkInterfaceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var response = Manager.Inner.NetworkInterfaces.Get(ResourceGroupName, nicName);
-            SetInner(response);
-            return this;
+            return await Manager.Inner.NetworkInterfaces.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:C8A4DDE66256242DF61087375BF710B0:78F3FE05E98D67CD9C4262D01BCC8B46

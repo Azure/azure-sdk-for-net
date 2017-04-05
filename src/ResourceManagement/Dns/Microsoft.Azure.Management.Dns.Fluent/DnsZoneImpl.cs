@@ -243,12 +243,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:6E114CA661817C270373E8F5D86D84F5
-        public override IDnsZone Refresh()
+        public override async Task<IDnsZone> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            ZoneInner inner = Manager.Inner.Zones.Get(ResourceGroupName, Name);
+            ZoneInner inner = await GetInnerAsync(cancellationToken);
             SetInner(inner);
             InitRecordSets();
             return this;
+        }
+
+        protected override async Task<ZoneInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.Zones.GetAsync(
+                ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:E10C7FF5C36891D769128853352DD627:C2BD0B555A21A8D13988A3FB8138875D

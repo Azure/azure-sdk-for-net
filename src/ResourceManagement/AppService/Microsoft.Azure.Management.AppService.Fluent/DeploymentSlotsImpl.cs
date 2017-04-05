@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             siteInner.SiteConfig = await Inner.GetConfigurationSlotAsync(resourceGroup, parentName, name, cancellationToken);
 
             var result = WrapModel(siteInner);
-            await ((DeploymentSlotImpl)result).CacheAppSettingsAndConnectionStringsAsync();
+            await ((DeploymentSlotImpl)result).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
 
             return result;
         }

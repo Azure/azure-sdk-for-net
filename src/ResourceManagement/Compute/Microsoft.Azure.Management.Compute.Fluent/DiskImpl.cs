@@ -180,11 +180,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:AACFFB1D9582E4E00031423DDDD4036A
-        public override IDisk Refresh()
+        protected override async Task<DiskInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            DiskInner diskInner = Manager.Inner.Disks.Get(ResourceGroupName, Name);
-            SetInner(diskInner);
-            return this;
+            return await Manager.Inner.Disks.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:B0C9EEFDDA443C25158B8F287BDAF3D8:6F1F05D0FB05C43F2A1F954CC1CBE3FB

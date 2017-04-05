@@ -4,13 +4,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using ResourceManager.Fluent.Core;
     using Models;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for Azure SQL Server's Service Objective.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TZXJ2aWNlT2JqZWN0aXZlSW1wbA==
     internal partial class ServiceObjectiveImpl :
-        Wrapper<ServiceObjectiveInner>,
+        IndexableRefreshableWrapper<IServiceObjective, ServiceObjectiveInner>,
         IServiceObjective
     {
         private ResourceId resourceId;
@@ -59,10 +62,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:D6BF73A4CFB4DF465653CAFA9E2F5177
-        public IServiceObjective Refresh()
+        protected override async Task<ServiceObjectiveInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            this.SetInner(this.serversInner.GetServiceObjective(this.ResourceGroupName(), this.SqlServerName(), this.Name()));
-            return this;
+            return await serversInner.GetServiceObjectiveAsync(this.ResourceGroupName(), this.SqlServerName(), this.Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         ///GENMHASH:1AB678115EC14BC6A56602D164114315:BE55E38683913BEF23106A037A3E9F1C
         internal ServiceObjectiveImpl(ServiceObjectiveInner innerObject, IServersOperations serversInner)
-            : base(innerObject)
+            : base(innerObject.Name, innerObject)
         {
             this.resourceId = ResourceId.FromString(Inner.Id);
             this.serversInner = serversInner;

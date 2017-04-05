@@ -82,12 +82,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:031612B4E8FDCD8F07810CE8D68580BA
-        public override IAvailabilitySet Refresh()
+        public override async Task<IAvailabilitySet> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var availabilitySetInner = Manager.Inner.AvailabilitySets.Get(ResourceGroupName, Name);
+            var availabilitySetInner = await GetInnerAsync(cancellationToken);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;
+        }
+
+        protected override async Task<AvailabilitySetInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.AvailabilitySets.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:CA43B507757943D4A56F8423528A061B:D4173FCB09ADA658582853B4D80CC7E9

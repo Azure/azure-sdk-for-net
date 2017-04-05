@@ -5,15 +5,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System;
-    using System.Threading;
+    using ResourceManager.Fluent.Core.ResourceActions;
     using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for SqlServer and its parent interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5SZXBsaWNhdGlvbkxpbmtJbXBs
     internal partial class ReplicationLinkImpl :
-        Wrapper<ReplicationLinkInner>,
+        IndexableRefreshableWrapper<IReplicationLink, ReplicationLinkInner>,
         IReplicationLink
     {
         private IDatabasesOperations innerCollection;
@@ -62,15 +63,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:A7F868EA1D284A335598127348D0A1AD
-        public IReplicationLink Refresh()
+        protected override async Task<ReplicationLinkInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            this.SetInner(this.innerCollection.GetReplicationLink(
-            this.ResourceGroupName(),
+            return await this.innerCollection.GetReplicationLinkAsync(this.ResourceGroupName(),
             this.SqlServerName(),
             this.DatabaseName(),
-            this.Name()));
-
-            return this;
+            this.Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:3F5BF88EAEB847CE67B8C16A5FDD2D28
@@ -106,7 +104,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         ///GENMHASH:EE0BD4E72D19A69170DA4CD2D7DA10B4:271A8BBAC31D775322091915FE56A406
         internal ReplicationLinkImpl(ReplicationLinkInner innerObject, IDatabasesOperations innerCollection)
-            : base(innerObject)
+            : base(innerObject.Name, innerObject)
         {
             this.resourceId = ResourceId.FromString(Inner.Id);
             this.innerCollection = innerCollection;

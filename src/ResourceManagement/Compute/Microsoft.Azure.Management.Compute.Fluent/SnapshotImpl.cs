@@ -134,11 +134,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:465E0149E0D9FAAA15FE3F675F59732D
-        public override ISnapshot Refresh()
+        protected override async Task<SnapshotInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            SnapshotInner snapshotInner = Manager.Inner.Snapshots.Get(ResourceGroupName, Name);
-            SetInner(snapshotInner);
-            return this;
+            return await Manager.Inner.Snapshots.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:E4F5CCFED775B8C1F10A8019B52CC013:AF82C13C6612DFDED62B43750E8734C8

@@ -39,13 +39,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         private IList<string> topicsToDelete;
         private IList<string> rulesToDelete;
 
-        public override IServiceBusNamespace Refresh()
-        {
-            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            SetInner(inner);
-            return this as IServiceBusNamespace;
-        }
-
         ///GENMHASH:D5F5D7B4ED6C3CD6D1BC4B193E789ED5:DE0F43E4763FD287984BB053E525DD48
         internal ServiceBusNamespaceImpl(string name, NamespaceModelInner inner, IServiceBusManager manager) : base(name, inner, manager)
         {
@@ -110,7 +103,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:08FB5A6CC72E9C407DAC126C07B38561
-        protected async Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<NamespaceModelInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Manager.Inner.Namespaces.GetAsync(
                 this.ResourceGroupName,

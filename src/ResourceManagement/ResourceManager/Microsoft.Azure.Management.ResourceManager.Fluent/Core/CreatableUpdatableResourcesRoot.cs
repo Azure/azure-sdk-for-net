@@ -68,6 +68,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             throw new NotImplementedException();
         }
+
+        public override Task<ICreatableUpdatableResourcesRoot<IFluentResourceT>> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task<InnerResourceT> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region IHasId empty Impl

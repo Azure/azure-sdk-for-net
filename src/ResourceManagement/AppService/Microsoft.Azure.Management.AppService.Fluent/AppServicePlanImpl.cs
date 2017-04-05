@@ -91,10 +91,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public override IAppServicePlan Refresh()
+        protected override async Task<AppServicePlanInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            this.SetInner(Manager.Inner.AppServicePlans.Get(ResourceGroupName, Name));
-            return this;
+            return await Manager.Inner.AppServicePlans.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:5929CFE21A9A83286B8C1C4A12A36B8B:9D4F7490FD2702FB45ED3AC0D12B3775

@@ -280,11 +280,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return cachedAccountKeys;
         }
 
-        public override IStorageAccount Refresh()
+        protected override async Task<StorageAccountInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var response = Manager.Inner.StorageAccounts.GetProperties(ResourceGroupName, Name);
-            SetInner(response);
-            return this;
+            return await Manager.Inner.StorageAccounts.GetPropertiesAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         public override IUpdate Update()

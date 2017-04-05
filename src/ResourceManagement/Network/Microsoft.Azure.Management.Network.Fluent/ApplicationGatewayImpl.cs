@@ -1406,12 +1406,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:96A74C51AAF39DA86E198A67D990E237
-        public override IApplicationGateway Refresh()
+        public override async Task<IApplicationGateway> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = Manager.Inner.ApplicationGateways.Get(this.ResourceGroupName, this.Name);
+            var inner = await GetInnerAsync(cancellationToken);
             SetInner(inner);
             InitializeChildrenFromInner();
             return this;
+        }
+
+        protected override async Task<ApplicationGatewayInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.ApplicationGateways.GetAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);
         }
     }
 }

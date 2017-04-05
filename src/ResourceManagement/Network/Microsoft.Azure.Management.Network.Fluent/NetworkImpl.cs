@@ -49,11 +49,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:283E100E0B274CF53096A783583FAE37
-        public override INetwork Refresh()
+        protected override async Task<VirtualNetworkInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var response = Manager.Inner.VirtualNetworks.Get(ResourceGroupName, Name);
-            SetInner(response);
-            return this;
+            return await Manager.Inner.VirtualNetworks.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:F792498DBF3C736E27E066C92C2E7F7A:129071765816A335066AAC27F7CCCEAD

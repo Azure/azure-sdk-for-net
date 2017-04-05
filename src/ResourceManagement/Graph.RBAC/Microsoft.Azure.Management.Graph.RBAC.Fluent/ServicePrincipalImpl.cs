@@ -75,11 +75,10 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:6FBD633E7AC3512A3078AD9811DEC068
-        public override IServicePrincipal Refresh()
+        protected override async Task<ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var inner = client.List(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId())));
-            SetInner(inner.ToList()[0]);
-            return this;
+            var list = await client.ListAsync(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId())), cancellationToken: cancellationToken);
+            return list.FirstOrDefault();
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:E9A4DA014B21051979442ACE026C7D1F

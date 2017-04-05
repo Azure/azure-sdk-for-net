@@ -129,12 +129,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:7399EBE775B4308D075A8364EF2A490D
-        public override INetworkSecurityGroup Refresh()
+        protected override async Task<NetworkSecurityGroupInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var response = Manager.Inner.NetworkSecurityGroups.Get(ResourceGroupName, Name);
-            SetInner(response);
-            return this;
+            return await Manager.Inner.NetworkSecurityGroups.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
+
         #endregion
 
         #region Accessors

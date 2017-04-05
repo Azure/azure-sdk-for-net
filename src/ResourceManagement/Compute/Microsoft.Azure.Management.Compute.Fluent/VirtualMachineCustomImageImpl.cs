@@ -98,11 +98,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:4F402C1981DA7F09CE4549AA85EF82EF
-        public override IVirtualMachineCustomImage Refresh()
+        protected override async Task<ImageInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            ImageInner imageInner = Manager.Inner.Images.Get(ResourceGroupName, Name);
-            SetInner(imageInner);
-            return this;
+            return await Manager.Inner.Images.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:F8F5E034B580C65E1958A4165F6207B3:34DFF336CAE464BA69C47A7AA2362690

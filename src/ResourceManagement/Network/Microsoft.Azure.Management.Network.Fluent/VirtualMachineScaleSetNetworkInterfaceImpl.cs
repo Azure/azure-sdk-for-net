@@ -187,14 +187,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             throw new NotSupportedException();
         }
 
-        override public IVirtualMachineScaleSetNetworkInterface Refresh()
+        protected override async Task<NetworkInterfaceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            SetInner(Manager.Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface(
+            return await Manager.Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(
                 resourceGroupName,
                 scaleSetName,
                 ResourceUtils.NameFromResourceId(VirtualMachineId()),
-                Name));
-            return this;
+                Name, cancellationToken: cancellationToken);
         }
+
     }
 }

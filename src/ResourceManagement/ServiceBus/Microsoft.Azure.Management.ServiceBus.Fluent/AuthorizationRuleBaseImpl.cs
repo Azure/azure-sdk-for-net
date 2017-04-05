@@ -51,13 +51,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         {
         }
 
-        public override IFluentResourceT Refresh()
-        {
-            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            SetInner(inner);
-            return this as IFluentResourceT;
-        }
-
         ///GENMHASH:AB1BA95F78B711F10D574A0046DE17B7:5297C65D2669C5460BC3173EBA6C2F1E
         protected IList<Management.Fluent.ServiceBus.Models.AccessRights> Rights()
         {
@@ -161,8 +154,5 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 
         ///GENMHASH:1475FAC06F3CDD8B38B0B8B1586C3D7E:27E486AB74A10242FF421C0798DDC450
         protected abstract Task<Management.Fluent.ServiceBus.Models.ResourceListKeysInner> RegenerateKeysInnerAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));
-
-        /////GENMHASH:5AD91481A0966B059A478CD4E9DD9466:FA8879C614CBDAFC8DA9F2E7FAB9838E
-        protected abstract Task<InnerModelT> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }
