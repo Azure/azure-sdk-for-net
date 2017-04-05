@@ -10,13 +10,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Rest.Azure;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation for VirtualMachineScaleSets.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldHNJbXBs
     internal partial class VirtualMachineScaleSetsImpl  :
-        GroupableResources<
+        TopLevelModifiableResources<
             IVirtualMachineScaleSet,
             VirtualMachineScaleSetImpl,
             VirtualMachineScaleSetInner,
@@ -38,32 +39,37 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public IEnumerable<IVirtualMachineScaleSet> ListByGroup(string groupName)
+        protected async override Task<IPage<VirtualMachineScaleSetInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List(groupName)
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<VirtualMachineScaleSetInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public IEnumerable<IVirtualMachineScaleSet> List()
+        protected async override Task<IPage<VirtualMachineScaleSetInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListAll()
-                .AsContinuousCollection(link => Inner.ListAllNext(link)));
+            return await Inner.ListAllAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<VirtualMachineScaleSetInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListAllNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            await Inner.DeleteAsync(groupName,
-                name,
-                cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<VirtualMachineScaleSetInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var scaleSet = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(scaleSet);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:2048E8AC80AC022225C462CE7FD14A6F:AB513A3D7E5B1192B76F853CB23CBB12

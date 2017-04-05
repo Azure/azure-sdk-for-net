@@ -42,6 +42,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// Lists resources of the specified type in the subscription.
+        /// </summary>
+        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.List()
+        {
+            return this.List();
+        }
+
+        /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>

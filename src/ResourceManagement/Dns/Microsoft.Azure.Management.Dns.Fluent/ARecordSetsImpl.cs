@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
 
     /// <summary>
     /// Implementation of ARecordSets.
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IARecordSets
     {
         private DnsZoneImpl dnsZone;
+        private const RecordType ARecordType = RecordType.A;
 
         public async Task<IARecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
@@ -24,7 +27,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 dnsZone.ResourceGroupName,
                 dnsZone.Name,
                 name,
-                RecordType.A,
+                ARecordType,
                 cancellationToken);
             return new ARecordSetImpl(dnsZone, inner);
         }
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IEnumerable<IARecordSet> List()
         {
             return WrapList(dnsZone.Manager.Inner.RecordSets
-                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.A)
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name, ARecordType)
                 .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
@@ -58,6 +61,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         protected override IARecordSet WrapModel(RecordSetInner inner)
         {
             return new ARecordSetImpl(dnsZone, inner);
+        }
+
+        public async Task<IPagedCollection<IARecordSet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IARecordSet, RecordSetInner>.LoadPage(
+                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName, dnsZone.Name, ARecordType, cancellationToken: cancellation),
+                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

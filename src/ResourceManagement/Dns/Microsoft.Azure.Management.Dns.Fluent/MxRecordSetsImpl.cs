@@ -8,6 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
 
     /// <summary>
     /// Implementation of MXRecordSets.
@@ -18,7 +20,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IMXRecordSets
     {
         private DnsZoneImpl dnsZone;
-        
+        private const RecordType MxRecordType = RecordType.MX;
+
         private DnsZoneImpl Parent()
         {
             return dnsZone;
@@ -30,7 +33,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 dnsZone.ResourceGroupName,
                 dnsZone.Name,
                 name,
-                RecordType.MX,
+                MxRecordType,
                 cancellationToken);
             return new MXRecordSetImpl(dnsZone, inner);
         }
@@ -45,7 +48,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IEnumerable<IMXRecordSet> List()
         {
             return WrapList(dnsZone.Manager.Inner.RecordSets
-                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.MX)
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name, MxRecordType)
                 .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
@@ -53,6 +56,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         protected override IMXRecordSet WrapModel(RecordSetInner inner)
         {
             return new MXRecordSetImpl(dnsZone, inner);
+        }
+
+        public async Task<IPagedCollection<IMXRecordSet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IMXRecordSet, RecordSetInner>.LoadPage(
+                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName, dnsZone.Name, MxRecordType, cancellationToken: cancellation),
+                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
 
         ///GENMHASH:6F2FBDD481155D6AAAD51709649A57BB:93DD647D9AB0DB30D017785882D88829

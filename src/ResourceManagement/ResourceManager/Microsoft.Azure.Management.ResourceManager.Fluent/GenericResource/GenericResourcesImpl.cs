@@ -10,10 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
-    internal class GenericResourcesImpl : 
+    internal class GenericResourcesImpl :
         GroupableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, IResourceManager>,
         IGenericResources
     {
@@ -90,7 +91,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return resource;
         }
 
-        public override Task<IGenericResource> GetByGroupAsync(string groupName, string name, CancellationToken cancellation = default(CancellationToken))
+        protected override Task<GenericResourceInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellation)
         {
             throw new NotSupportedException("Get just by resource group and name is not supported. Please use other overloads.");
         }
@@ -99,11 +100,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         {
             return WrapList(Inner.List()
                                  .AsContinuousCollection(link => Inner.ListNext(link)));
-        }
-
-        public Task<IEnumerable<IGenericResource>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotSupportedException();
         }
 
         public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
@@ -147,9 +143,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return model;
         }
 
-        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             throw new NotSupportedException("Delete just by resource group and name is not supported. Please use other overloads.");
+        }
+
+        public async Task<IPagedCollection<IGenericResource>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IGenericResource, GenericResourceInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(cancellationToken: cancellation),
+                Inner.ListNextAsync, WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for SQLDatabases and its parent interfaces.
@@ -42,10 +43,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:7F70CB1AA5FE23578E360B95D229A1C6
-        public async override Task<IEnumerable<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IPagedCollection<ISqlDatabase>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var pagedList = await Inner.ListByServerAsync(resourceGroupName, parentName, cancellationToken);
-            return WrapList(pagedList);
+            return await PagedCollection<ISqlDatabase, DatabaseInner>.LoadPage(
+                async (cancellation) => await Inner.ListByServerAsync(resourceGroupName, parentName, cancellation),
+                WrapModel, cancellationToken);
         }
 
         ///GENMHASH:03C6F391A16F96A5127D98827B5423FA:877F7B73190881879934925547D57EAF
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:36E87C79062474D6AB62B46DAD7396F9
         public async override Task<ISqlDatabase> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapModel(await Inner.GetAsync(resourceGroup, parentName, name, null, cancellationToken));
+            return WrapModel(await Inner.GetAsync(resourceGroup, parentName, name, cancellationToken: cancellationToken));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691

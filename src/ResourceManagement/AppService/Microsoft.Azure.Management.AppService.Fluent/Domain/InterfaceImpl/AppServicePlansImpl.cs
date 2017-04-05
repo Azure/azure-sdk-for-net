@@ -41,6 +41,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.ListByGroup(resourceGroupName);
         }
 
+
+        /// <summary>
+        /// Lists resources of the specified type in the subscription.
+        /// </summary>
+        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.List()
+        {
+            return this.List();
+        }
+
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
         /// </summary>

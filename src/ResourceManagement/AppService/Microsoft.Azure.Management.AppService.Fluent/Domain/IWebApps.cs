@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsCreating<WebApp.Definition.IBlank>,
         ISupportsDeletingById,
         ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
+        ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsDeletingByGroup,

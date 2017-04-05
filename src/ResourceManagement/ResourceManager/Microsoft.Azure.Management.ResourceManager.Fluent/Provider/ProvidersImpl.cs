@@ -8,6 +8,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -27,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public async Task<IProvider> GetByNameAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProviderInner inner = await client.GetAsync(resourceProviderNamespace, null, cancellationToken);
+            ProviderInner inner = await client.GetAsync(resourceProviderNamespace, cancellationToken: cancellationToken);
             return new ProviderImpl(inner);
         }
 
@@ -36,6 +38,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return client.List()
                          .AsContinuousCollection(link => client.ListNext(link))
                          .Select(inner => WrapModel(inner));
+        }
+
+        public async Task<IPagedCollection<IProvider>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IProvider, ProviderInner>.LoadPage(
+                async (cancellation) => await client.ListAsync(cancellationToken: cancellation),
+                client.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
 
         public IProvider Register(string resourceProviderNamespace)

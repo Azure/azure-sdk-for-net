@@ -8,13 +8,15 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Rest.Azure;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for SqlServers and its parent interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxTZXJ2ZXJzSW1wbA==
     internal partial class SqlServersImpl :
-        GroupableResources<ISqlServer, SqlServerImpl, ServerInner, IServersOperations, ISqlManager>,
+        TopLevelModifiableResources<ISqlServer, SqlServerImpl, ServerInner, IServersOperations, ISqlManager>,
         ISqlServers
     {
         ///GENMHASH:01C0FA69267690E3BF39F794FC8D1F05:9CCC9CA468F37F7150A173588C172C02
@@ -24,7 +26,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -36,15 +38,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:92EAC0C15F6E0EE83B7B356CD097B0A0
-        public async override Task<ISqlServer> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ServerInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            return WrapModel(await Inner.GetByResourceGroupAsync(groupName, name, cancellationToken));
+            return await Inner.GetByResourceGroupAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public IEnumerable<ISqlServer> List()
+        protected async override Task<IPage<ServerInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List());
+            return ConvertToPage(await Inner.ListAsync(cancellationToken));
+        }
+
+        protected async override Task<IPage<ServerInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Task.FromResult<IPage<ServerInner>>(null);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:4400109B5DDC2A92920D8D598AB5D8B9
@@ -73,9 +80,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public IEnumerable<ISqlServer> ListByGroup(string resourceGroupName)
+        protected async override Task<IPage<ServerInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(resourceGroupName));
+            return ConvertToPage(await Inner.ListByResourceGroupAsync(groupName, cancellationToken));
+        }
+
+        protected async override Task<IPage<ServerInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Task.FromResult<IPage<ServerInner>>(null);
         }
     }
 }

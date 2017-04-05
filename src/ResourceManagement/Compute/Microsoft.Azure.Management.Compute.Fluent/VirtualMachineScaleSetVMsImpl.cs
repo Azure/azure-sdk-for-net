@@ -5,6 +5,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for VirtualMachineScaleSetVMs.
@@ -49,6 +53,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         protected override IVirtualMachineScaleSetVM WrapModel(VirtualMachineScaleSetVMInner inner)
         {
             return new VirtualMachineScaleSetVMImpl(inner, this.scaleSet);
+        }
+
+        public async Task<IPagedCollection<IVirtualMachineScaleSetVM>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IVirtualMachineScaleSetVM, VirtualMachineScaleSetVMInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(scaleSet.ResourceGroupName, this.scaleSet.Name, cancellationToken: cancellation),
+                Inner.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

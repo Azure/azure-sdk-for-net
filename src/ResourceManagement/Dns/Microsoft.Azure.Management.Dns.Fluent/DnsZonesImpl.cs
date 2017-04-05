@@ -7,19 +7,21 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation of DnsZones.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5EbnNab25lc0ltcGw=
     internal partial class DnsZonesImpl  :
-        GroupableResources<IDnsZone, DnsZoneImpl, ZoneInner, IZonesOperations, IDnsZoneManager>,
+        TopLevelModifiableResources<IDnsZone, DnsZoneImpl, ZoneInner, IZonesOperations, IDnsZoneManager>,
         IDnsZones
     {
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:4C6EFF21E5E730775AFD95DC77DDD7F4
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            await Inner.DeleteAsync(groupName, name, null, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35
@@ -29,9 +31,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IDnsZone> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ZoneInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            return WrapModel(await Inner.GetAsync(groupName, name, cancellationToken));
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:6FA0B6DE5CB193A4650CC6B5966DBC04:345CFB0A0B8A514DED6957391B1D99E5
@@ -40,10 +42,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E29BEEAB8CFC79BEFB042BF8EE0AED00
-        public IEnumerable<IDnsZone> List()
+        protected async override Task<IPage<ZoneInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(cancellationToken: cancellationToken);
+        }
+
+        protected async override Task<IPage<ZoneInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:D57C6EF7B32D03E7098E2D735EEF70BD:4E951CDE0BF14119F1DB863BEC8121A9
@@ -55,10 +61,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:B533AA6052ED2EA7F8D7C96A5C95034C
-        public IEnumerable<IDnsZone> ListByGroup(string groupName)
+        protected async override Task<IPage<ZoneInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(groupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken: cancellationToken);
+        }
+
+        protected async override Task<IPage<ZoneInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:F388A69B4ED70BD6EEC04A90B7F6BC69

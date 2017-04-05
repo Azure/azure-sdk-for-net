@@ -10,13 +10,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Network.Fluent;
     using Storage.Fluent;
     using System.Collections.Generic;
+    using Rest.Azure;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation for VirtualMachines.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVzSW1wbA==
     internal partial class VirtualMachinesImpl :
-        GroupableResources<
+        TopLevelModifiableResources<
             IVirtualMachine,
             VirtualMachineImpl,
             VirtualMachineInner,
@@ -41,21 +43,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public IEnumerable<IVirtualMachine> List()
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListAll()
-                .AsContinuousCollection(link => Inner.ListAllNext(link)));
+            return await Inner.ListAllAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListAllNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public IEnumerable<IVirtualMachine> ListByGroup(string groupName)
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List(groupName)
-                .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -166,10 +176,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<VirtualMachineInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
-            return this.WrapModel(data);
+            return await Inner.GetAsync(groupName, name, cancellationToken: cancellationToken);
         }
     }
 }

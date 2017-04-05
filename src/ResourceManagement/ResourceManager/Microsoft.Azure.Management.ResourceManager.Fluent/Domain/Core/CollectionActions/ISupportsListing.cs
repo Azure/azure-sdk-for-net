@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
@@ -19,5 +22,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// </summary>
         /// <returns>list of resources</returns>
         IEnumerable<T> List ();
+
+        /// <summary>
+        /// Lists all the resources of the specified type in the currently selected subscription.
+        /// </summary>
+        /// <returns>list of resources</returns>
+        Task<IPagedCollection<T>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

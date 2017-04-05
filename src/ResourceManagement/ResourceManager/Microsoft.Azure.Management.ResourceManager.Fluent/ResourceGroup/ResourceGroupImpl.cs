@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             ResourceGroupInner param = new ResourceGroupInner();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
-            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param, null, cancellationToken);
+            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param, cancellationToken: cancellationToken);
             SetInner(response.Body);
             return this;
         }

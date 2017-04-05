@@ -6,6 +6,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageVersions.
@@ -31,6 +35,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 type.RegionName,
                 type.Publisher.Name,
                 type.Name));
+        }
+
+        public async Task<IPagedCollection<IVirtualMachineExtensionImageVersion>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IVirtualMachineExtensionImageVersion, VirtualMachineExtensionImageInner>.LoadPage(
+                async (cancellation) => await this.client.ListVersionsAsync(type.RegionName, type.Publisher.Name, type.Name, cancellationToken: cancellation),
+                WrapModel, cancellationToken);
         }
 
         ///GENMHASH:3823A118AF47AF7328798BEA74521A04:3A4CA90FBB86038062B022FC826008A2

@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
+    using Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlc0ltcGw=
     internal partial class AppServiceCertificatesImpl :
-        GroupableResources<
+        TopLevelModifiableResources<
             IAppServiceCertificate,
             AppServiceCertificateImpl,
             CertificateInner,
@@ -35,22 +37,36 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public IEnumerable<IAppServiceCertificate> ListByGroup(string resourceGroupName)
+        protected async override Task<IPage<CertificateInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<CertificateInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
+        }
+
+        protected async override Task<IPage<CertificateInner>> ListInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Inner.ListAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<CertificateInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
-        public async override Task<IAppServiceCertificate> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<CertificateInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            return WrapModel(await Inner.GetAsync(groupName, name, cancellationToken));
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5AC27B4C4791A2919F43CCB97C0275BA
