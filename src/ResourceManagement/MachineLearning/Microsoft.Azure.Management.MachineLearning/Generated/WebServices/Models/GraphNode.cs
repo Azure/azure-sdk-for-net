@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <param name="parameters">If applicable, parameters of the node.
         /// Global graph parameters map into these, with values set at
         /// runtime.</param>
-        public GraphNode(string assetId = default(string), string inputId = default(string), string outputId = default(string), System.Collections.Generic.IDictionary<string, string> parameters = default(System.Collections.Generic.IDictionary<string, string>))
+        public GraphNode(string assetId = default(string), string inputId = default(string), string outputId = default(string), System.Collections.Generic.IDictionary<string, WebServiceParameter> parameters = default(System.Collections.Generic.IDictionary<string, WebServiceParameter>))
         {
             AssetId = assetId;
             InputId = inputId;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// parameters map into these, with values set at runtime.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "parameters")]
-        public System.Collections.Generic.IDictionary<string, string> Parameters { get; set; }
+        public System.Collections.Generic.IDictionary<string, WebServiceParameter> Parameters { get; set; }
 
     }
 }

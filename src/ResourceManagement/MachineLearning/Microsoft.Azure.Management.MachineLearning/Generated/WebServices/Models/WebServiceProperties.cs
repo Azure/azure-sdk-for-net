@@ -80,7 +80,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// defined for the web service, given as a global parameter name to
         /// default value map. If no default value is specified, the
         /// parameter is considered to be required.</param>
-        public WebServiceProperties(string title = default(string), string description = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), bool? exposeSampleData = default(bool?), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), System.Collections.Generic.IDictionary<string, AssetItem> assets = default(System.Collections.Generic.IDictionary<string, AssetItem>), System.Collections.Generic.IDictionary<string, string> parameters = default(System.Collections.Generic.IDictionary<string, string>))
+        /// <param name="payloadsInBlobStorage">When set to true, indicates
+        /// that the payload size is larger than 3 MB. Otherwise false. If
+        /// the payload size exceed 3 MB, the payload is stored in a blob and
+        /// the PayloadsLocation parameter contains the URI of the blob.
+        /// Otherwise, this will be set to false and Assets, Input, Output,
+        /// Package, Parameters, ExampleRequest are inline. The Payload sizes
+        /// is determined by adding the size of the Assets, Input, Output,
+        /// Package, Parameters, and the ExampleRequest.</param>
+        /// <param name="payloadsLocation">The URI of the payload blob. This
+        /// paramater contains a value only if the payloadsInBlobStorage
+        /// parameter is set to true. Otherwise is set to null.</param>
+        public WebServiceProperties(string title = default(string), string description = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), bool? exposeSampleData = default(bool?), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), System.Collections.Generic.IDictionary<string, AssetItem> assets = default(System.Collections.Generic.IDictionary<string, AssetItem>), System.Collections.Generic.IDictionary<string, WebServiceParameter> parameters = default(System.Collections.Generic.IDictionary<string, WebServiceParameter>), bool? payloadsInBlobStorage = default(bool?), BlobLocation payloadsLocation = default(BlobLocation))
         {
             Title = title;
             Description = description;
@@ -101,6 +112,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
             ExampleRequest = exampleRequest;
             Assets = assets;
             Parameters = parameters;
+            PayloadsInBlobStorage = payloadsInBlobStorage;
+            PayloadsLocation = payloadsLocation;
         }
 
         /// <summary>
@@ -246,7 +259,28 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// considered to be required.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "parameters")]
-        public System.Collections.Generic.IDictionary<string, string> Parameters { get; set; }
+        public System.Collections.Generic.IDictionary<string, WebServiceParameter> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets when set to true, indicates that the payload size is
+        /// larger than 3 MB. Otherwise false. If the payload size exceed 3
+        /// MB, the payload is stored in a blob and the PayloadsLocation
+        /// parameter contains the URI of the blob. Otherwise, this will be
+        /// set to false and Assets, Input, Output, Package, Parameters,
+        /// ExampleRequest are inline. The Payload sizes is determined by
+        /// adding the size of the Assets, Input, Output, Package,
+        /// Parameters, and the ExampleRequest.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "payloadsInBlobStorage")]
+        public bool? PayloadsInBlobStorage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URI of the payload blob. This paramater contains
+        /// a value only if the payloadsInBlobStorage parameter is set to
+        /// true. Otherwise is set to null.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "PayloadsLocation")]
+        public BlobLocation PayloadsLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -289,6 +323,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
                         valueElement.Validate();
                     }
                 }
+            }
+            if (this.PayloadsLocation != null)
+            {
+                this.PayloadsLocation.Validate();
             }
         }
     }

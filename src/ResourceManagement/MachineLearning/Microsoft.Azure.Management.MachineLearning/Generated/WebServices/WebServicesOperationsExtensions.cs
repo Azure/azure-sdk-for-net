@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Gets the Web Service Definiton as specified by a subscription, resource
+            /// Gets the Web Service Definition as specified by a subscription, resource
             /// group, and name. Note that the storage credentials and web service keys
             /// are not returned by this call. To get the web service access keys, call
             /// List Keys.
@@ -136,13 +136,16 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='webServiceName'>
             /// The name of the web service.
             /// </param>
-            public static WebService Get(this IWebServicesOperations operations, string resourceGroupName, string webServiceName)
+            /// <param name='region'>
+            /// The region for which encrypted credential parameters are valid.
+            /// </param>
+            public static WebService Get(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebServicesOperations)s).GetAsync(resourceGroupName, webServiceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebServicesOperations)s).GetAsync(resourceGroupName, webServiceName, region), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the Web Service Definiton as specified by a subscription, resource
+            /// Gets the Web Service Definition as specified by a subscription, resource
             /// group, and name. Note that the storage credentials and web service keys
             /// are not returned by this call. To get the web service access keys, call
             /// List Keys.
@@ -155,13 +158,16 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// </param>
             /// <param name='webServiceName'>
             /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region for which encrypted credential parameters are valid.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<WebService> GetAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<WebService> GetAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, webServiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -339,6 +345,112 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             public static async System.Threading.Tasks.Task BeginRemoveAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginRemoveWithHttpMessagesAsync(resourceGroupName, webServiceName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group in which the web service is located.
+            /// </param>
+            /// <param name='webServiceName'>
+            /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region for which encrypted credential parameters are created.
+            /// </param>
+            public static void CreateRegionalWebServiceProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateRegionalWebServicePropertiesAsync(resourceGroupName, webServiceName, region), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group in which the web service is located.
+            /// </param>
+            /// <param name='webServiceName'>
+            /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region for which encrypted credential parameters are created.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task CreateRegionalWebServicePropertiesAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.CreateRegionalWebServicePropertiesWithHttpMessagesAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group in which the web service is located.
+            /// </param>
+            /// <param name='webServiceName'>
+            /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region for which encrypted credential parameters are created.
+            /// </param>
+            public static void BeginCreateRegionalWebServiceProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebServicesOperations)s).BeginCreateRegionalWebServicePropertiesAsync(resourceGroupName, webServiceName, region), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates an encrypted credentials parameter blob for the specified region.
+            /// To get the web service from a region other than the region in which it
+            /// has been created, you must first call Create Regional Web Services
+            /// Properties to create a copy of the encrypted credential parameter blob in
+            /// that region. You only need to do this before the first time that you get
+            /// the web service in the new region.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group in which the web service is located.
+            /// </param>
+            /// <param name='webServiceName'>
+            /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region for which encrypted credential parameters are created.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginCreateRegionalWebServicePropertiesAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginCreateRegionalWebServicePropertiesWithHttpMessagesAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

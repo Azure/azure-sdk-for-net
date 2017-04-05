@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// the module's metadata.</param>
         /// <param name="parameters">If the asset is a custom module, this
         /// holds the module's parameters.</param>
-        public AssetItem(string name, string type, AssetLocation locationInfo, string id = default(string), System.Collections.Generic.IDictionary<string, InputPort> inputPorts = default(System.Collections.Generic.IDictionary<string, InputPort>), System.Collections.Generic.IDictionary<string, OutputPort> outputPorts = default(System.Collections.Generic.IDictionary<string, OutputPort>), System.Collections.Generic.IDictionary<string, string> metadata = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<ModuleAssetParameter> parameters = default(System.Collections.Generic.IList<ModuleAssetParameter>))
+        public AssetItem(string name, string type, BlobLocation locationInfo, string id = default(string), System.Collections.Generic.IDictionary<string, InputPort> inputPorts = default(System.Collections.Generic.IDictionary<string, InputPort>), System.Collections.Generic.IDictionary<string, OutputPort> outputPorts = default(System.Collections.Generic.IDictionary<string, OutputPort>), System.Collections.Generic.IDictionary<string, string> metadata = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<ModuleAssetParameter> parameters = default(System.Collections.Generic.IList<ModuleAssetParameter>))
         {
             Name = name;
             Id = id;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Gets or sets access information for the asset.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "locationInfo")]
-        public AssetLocation LocationInfo { get; set; }
+        public BlobLocation LocationInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information about the asset's input ports.

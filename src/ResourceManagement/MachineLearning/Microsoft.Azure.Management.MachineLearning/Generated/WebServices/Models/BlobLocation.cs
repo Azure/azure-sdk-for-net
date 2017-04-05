@@ -11,40 +11,41 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the access location for a web service asset.
+    /// Describes the access location for a blob.
     /// </summary>
-    public partial class AssetLocation
+    public partial class BlobLocation
     {
         /// <summary>
-        /// Initializes a new instance of the AssetLocation class.
+        /// Initializes a new instance of the BlobLocation class.
         /// </summary>
-        public AssetLocation() { }
+        public BlobLocation() { }
 
         /// <summary>
-        /// Initializes a new instance of the AssetLocation class.
+        /// Initializes a new instance of the BlobLocation class.
         /// </summary>
-        /// <param name="uri">The URI where the asset is accessible from,
-        /// (e.g. aml://abc for system assets or https://xyz for user
-        /// asets</param>
-        /// <param name="credentials">Access credentials for the asset, if
-        /// applicable (e.g. asset specified by storage account connection
+        /// <param name="uri">The URI from which the blob is accessible from.
+        /// For example, aml://abc for system assets or https://xyz for user
+        /// assets or payload.</param>
+        /// <param name="credentials">Access credentials for the blob, if
+        /// applicable (e.g. blob specified by storage account connection
         /// string + blob URI)</param>
-        public AssetLocation(string uri, string credentials = default(string))
+        public BlobLocation(string uri, string credentials = default(string))
         {
             Uri = uri;
             Credentials = credentials;
         }
 
         /// <summary>
-        /// Gets or sets the URI where the asset is accessible from, (e.g.
-        /// aml://abc for system assets or https://xyz for user asets
+        /// Gets or sets the URI from which the blob is accessible from. For
+        /// example, aml://abc for system assets or https://xyz for user
+        /// assets or payload.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
-        /// Gets or sets access credentials for the asset, if applicable (e.g.
-        /// asset specified by storage account connection string + blob URI)
+        /// Gets or sets access credentials for the blob, if applicable (e.g.
+        /// blob specified by storage account connection string + blob URI)
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "credentials")]
         public string Credentials { get; set; }
