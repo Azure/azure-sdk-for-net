@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.ListByResourceGroup(string resourceGroupName)
         {
             return this.ListByGroup(resourceGroupName);
         }
@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        async Task<IAppServicePlan> ISupportsGettingByGroup<IAppServicePlan>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<IAppServicePlan> ISupportsGettingByResourceGroup<IAppServicePlan>.GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
+            return await this.GetByResourceGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
         }
 
         /// <summary>
@@ -74,10 +74,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
-        async Task ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
  
-            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
+            await this.DeleteByResourceGroupAsync(groupName, name, cancellationToken);
         }
     }
 }

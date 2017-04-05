@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public async Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await DeleteByResourceGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
     }
 }

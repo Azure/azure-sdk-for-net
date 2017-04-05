@@ -26,15 +26,15 @@ namespace Azure.Tests.WebApp
                     .WithExistingResourceGroup(GroupName)
                     .WithHostName("graph-dm7720.com")
                     .WithStandardSku()
-                    .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com"))
+                    .WithDomainVerification(appServiceManager.AppServiceDomains.GetByResourceGroup("javacsmrg9b9912262", "graph-dm7720.com"))
                     .WithNewKeyVault("graphvault", Region.USWest)
                     .WithValidYears(1)
                     .Create();
                 Assert.NotNull(certificateOrder);
                 // GET
-                Assert.NotNull(appServiceManager.AppServiceCertificateOrders.GetByGroup(GroupName, CertificateName));
+                Assert.NotNull(appServiceManager.AppServiceCertificateOrders.GetByResourceGroup(GroupName, CertificateName));
                 // LIST
-                var certificateOrders = appServiceManager.AppServiceCertificateOrders.ListByGroup(GroupName);
+                var certificateOrders = appServiceManager.AppServiceCertificateOrders.ListByResourceGroup(GroupName);
                 var found = false;
                 foreach (var co in certificateOrders)
                 {

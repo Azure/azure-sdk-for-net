@@ -71,10 +71,10 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(disk.Sku, updateTo);
                     Assert.Equal(disk.SizeInGB, 200);
 
-                    disk = computeManager.Disks.GetByGroup(disk.ResourceGroupName, disk.Name);
+                    disk = computeManager.Disks.GetByResourceGroup(disk.ResourceGroupName, disk.Name);
                     Assert.NotNull(disk);
 
-                    var myDisks = computeManager.Disks.ListByGroup(disk.ResourceGroupName);
+                    var myDisks = computeManager.Disks.ListByResourceGroup(disk.ResourceGroupName);
                     Assert.NotNull(myDisks);
                     Assert.True(myDisks.Count() > 0);
 

@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        IEnumerable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.ListByResourceGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName);
+            return this.ListByResourceGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.Batch.Fluent.IBatchAccount Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.GetByGroup(string resourceGroupName, string name) { 
-            return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Batch.Fluent.IBatchAccount;
+        Microsoft.Azure.Management.Batch.Fluent.IBatchAccount Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.GetByResourceGroup(string resourceGroupName, string name) { 
+            return this.GetByResourceGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Batch.Fluent.IBatchAccount;
         }
 
         /// <summary>
@@ -71,12 +71,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task ISupportsDeletingByGroup.DeleteByGroupAsync(
+        async Task ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(
             string groupName, 
             string name, 
             CancellationToken cancellationToken)
         { 
-            await this.DeleteByGroupAsync( groupName,  name, cancellationToken);
+            await this.DeleteByResourceGroupAsync( groupName,  name, cancellationToken);
         }
 
         /// <summary>

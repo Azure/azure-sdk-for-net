@@ -14,24 +14,24 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
     /// 
     /// @param <T> the type of the resource to get.
     /// </summary>
-    public interface ISupportsGettingByGroup<T> 
+    public interface ISupportsGettingByResourceGroup<T> 
     {
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
         /// </summary>
-        /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
-        /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
+        /// <param name="resourceGroupName">the name of the resource group the resource is in</param>
+        /// <param name="name">the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        T GetByGroup (string resourceGroupName, string name);
+        T GetByResourceGroup (string resourceGroupName, string name);
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
         /// </summary>
-        /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
-        /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
-        /// <param name="cancellationToken">cancellationToken the cancellation token</param>
+        /// <param name="resourceGroupName">the name of the resource group the resource is in</param>
+        /// <param name="name">the name of the resource. (Note, this is not the ID)</param>
+        /// <param name="cancellationToken">the cancellation token</param>
         /// <returns>an immutable representation of the resource</returns>
-        Task<T> GetByGroupAsync (string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken));
+        Task<T> GetByResourceGroupAsync (string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

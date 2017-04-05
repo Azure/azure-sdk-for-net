@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface INetworkSecurityGroups  :
         ISupportsCreating<NetworkSecurityGroup.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
         IHasManager<INetworkManager>,
         IHasInner<INetworkSecurityGroupsOperations>

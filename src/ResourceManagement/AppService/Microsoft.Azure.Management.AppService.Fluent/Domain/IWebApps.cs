@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public interface IWebApps  :
         ISupportsCreating<WebApp.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IAppServiceManager>,
         IHasInner<IWebAppsOperations>
     {

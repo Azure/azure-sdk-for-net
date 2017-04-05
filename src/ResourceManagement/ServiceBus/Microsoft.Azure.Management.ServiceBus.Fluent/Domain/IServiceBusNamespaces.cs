@@ -21,11 +21,11 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ISupportsCreating<ServiceBusNamespace.Definition.IBlank>,
         ISupportsBatchCreation<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
         ISupportsListing<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
         ISupportsGettingById<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IServiceBusManager>,
         IHasInner<INamespacesOperations>
     {

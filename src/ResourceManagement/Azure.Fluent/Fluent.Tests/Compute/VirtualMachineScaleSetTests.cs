@@ -241,7 +241,7 @@ namespace Fluent.Tests.Compute
 
                 virtualMachineScaleSet = azure
                     .VirtualMachineScaleSets
-                    .GetByGroup(rgName, vmss_name);
+                    .GetByResourceGroup(rgName, vmss_name);
 
                 // Check LB after update 
                 //
@@ -428,7 +428,7 @@ namespace Fluent.Tests.Compute
                 .Attach()
                 .Create();
 
-            loadBalancer = azure.LoadBalancers.GetByGroup(resourceGroup.Name, loadBalancerName);
+            loadBalancer = azure.LoadBalancers.GetByResourceGroup(resourceGroup.Name, loadBalancerName);
 
             Assert.True(loadBalancer.PublicIPAddressIds.Count() == 1);
             Assert.Equal(loadBalancer.HttpProbes.Count(), 2);
@@ -506,7 +506,7 @@ namespace Fluent.Tests.Compute
                 .Attach()
                 .Create();
 
-            loadBalancer = azure.LoadBalancers.GetByGroup(resourceGroup.Name, loadBalancerName);
+            loadBalancer = azure.LoadBalancers.GetByResourceGroup(resourceGroup.Name, loadBalancerName);
 
             Assert.Equal(loadBalancer.PublicIPAddressIds.Count(), 0);
             Assert.Equal(loadBalancer.Backends.Count(), 2);
@@ -572,7 +572,7 @@ namespace Fluent.Tests.Compute
                 .Attach()
                 .Create();
 
-            loadBalancer = azure.LoadBalancers.GetByGroup(resourceGroup.Name, loadBalancerName);
+            loadBalancer = azure.LoadBalancers.GetByResourceGroup(resourceGroup.Name, loadBalancerName);
 
             Assert.True(loadBalancer.PublicIPAddressIds.Count() == 1);
             var httpProbe = loadBalancer.HttpProbes.FirstOrDefault();

@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public interface IVirtualMachines  :
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         ISupportsCreating<VirtualMachine.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         IHasManager<IComputeManager>,
         IHasInner<IVirtualMachinesOperations>

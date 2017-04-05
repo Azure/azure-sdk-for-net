@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        IEnumerable<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.ListByGroup (string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.KeyVault.Fluent.IVault> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.ListByResourceGroup (string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName);
+            return this.ListByResourceGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.KeyVault.Fluent.IVault Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.GetByGroup (string resourceGroupName, string name) {
-            return this.GetByGroup(resourceGroupName, name) as Microsoft.Azure.Management.KeyVault.Fluent.IVault;
+        Microsoft.Azure.Management.KeyVault.Fluent.IVault Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>.GetByResourceGroup (string resourceGroupName, string name) {
+            return this.GetByResourceGroup(resourceGroupName, name) as Microsoft.Azure.Management.KeyVault.Fluent.IVault;
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="groupName">groupName The group the resource is part of</param>
         /// <param name="name">name The name of the resource</param>
-        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken) {
-            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken) {
+            await this.DeleteByResourceGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>

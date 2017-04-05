@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IRouteTables  :
         ISupportsCreating<RouteTable.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         IHasManager<INetworkManager>,
         IHasInner<IRouteTablesOperations>

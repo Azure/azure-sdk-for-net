@@ -41,7 +41,7 @@ namespace Fluent.Tests.ResourceManager
                     .Create();
 
                 // List
-                var found = (from r in await genericResources.ListByGroupAsync(rgName)
+                var found = (from r in await genericResources.ListByResourceGroupAsync(rgName)
                              where string.Equals(r.Name, resourceName, StringComparison.OrdinalIgnoreCase)
                              select r).FirstOrDefault();
                 Assert.NotNull(found);

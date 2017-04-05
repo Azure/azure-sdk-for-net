@@ -12,8 +12,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// Entry point to generic resources management API.
     /// </summary>
     public interface IGenericResources  :
-        ISupportsListingByGroup<IGenericResource>,
-        ISupportsGettingByGroup<IGenericResource>,
+        ISupportsListingByResourceGroup<IGenericResource>,
+        ISupportsGettingByResourceGroup<IGenericResource>,
         ISupportsGettingById<IGenericResource>,
         ISupportsCreating<GenericResource.Definition.IBlank>,
         ISupportsBatchCreation<IGenericResource>,

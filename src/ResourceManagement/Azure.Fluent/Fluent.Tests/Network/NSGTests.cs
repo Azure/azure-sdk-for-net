@@ -74,7 +74,7 @@ namespace Fluent.Tests.Network
 
 
                 #region Read
-                var resource = manager.NetworkSecurityGroups.GetByGroup(resourceGroupName, nsgName);
+                var resource = manager.NetworkSecurityGroups.GetByResourceGroup(resourceGroupName, nsgName);
                 #endregion
 
                 #region Update
