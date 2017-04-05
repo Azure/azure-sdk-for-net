@@ -727,6 +727,41 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<SecretBundle>> RecoverDeletedSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Requests that a backup of the specified secret be downloaded to the
+        /// client.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='secretName'>
+        /// The name of the secret.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<BackupSecretResult>> BackupSecretWithHttpMessagesAsync( string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default( CancellationToken ) );
+
+        /// <summary>
+        /// Restores a backed up secret to a vault.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='secretBundleBackup'>
+        /// The backup blob associated with a secret bundle.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SecretBundle>> RestoreSecretWithHttpMessagesAsync( string vaultBaseUrl, byte[ ] secretBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default( CancellationToken ) );
+
+        /// <summary>
         /// List certificates in a specified key vault
         /// </summary>
         /// <param name='vaultBaseUrl'>

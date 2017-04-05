@@ -53,12 +53,19 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
                 HttpMockServer.Variables["VaultAddress"] = _vaultAddress;
                 HttpMockServer.Variables["KeyName"] = _keyName;
                 HttpMockServer.Variables["KeyVersion"] = _keyVersion;
+                HttpMockServer.Variables[ "SoftDeleteEnabled" ] = _softDeleteEnabled.ToString( );
             }
             else
             {
                 _vaultAddress = HttpMockServer.Variables["VaultAddress"];
                 _keyName = HttpMockServer.Variables["KeyName"];
                 _keyVersion = HttpMockServer.Variables["KeyVersion"];
+
+                string softDeleteSetting = String.Empty;
+                if ( HttpMockServer.Variables.TryGetValue( "SoftDeleteEnabled", out softDeleteSetting ) )
+                {
+                    Boolean.TryParse( softDeleteSetting, out _softDeleteEnabled );
+                }
             }
             _keyIdentifier = new KeyIdentifier(_vaultAddress, _keyName, _keyVersion);
             return fixture.CreateKeyVaultClient();

@@ -1285,6 +1285,7 @@
   "Variables": {
     "VaultAddress": "https://karlaugsoftdeletesdk.vault-int.azure-int.net",
     "KeyName": "sdktestkey",
-    "KeyVersion": "4ac8dbcb697b44a2bff598b1a21e371c"
+    "KeyVersion": "4ac8dbcb697b44a2bff598b1a21e371c",
+    "SoftDeleteEnabled": "true"
   }
 }
