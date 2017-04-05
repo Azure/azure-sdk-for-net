@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// An immutable client-side representation of an Azure CDN endpoint.
@@ -44,6 +46,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void Start();
 
         /// <summary>
+        /// Starts current stopped CDN endpoint.
+        /// </summary>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets true if content compression is enabled, otherwise false.
         /// </summary>
         bool IsCompressionEnabled { get; }
@@ -70,6 +77,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void PurgeContent(IList<string> contentPaths);
 
         /// <summary>
+        /// Forcibly purges current CDN endpoint content.
+        /// </summary>
+        /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
+        Task PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets list of content types to be compressed.
         /// </summary>
         System.Collections.Generic.IList<string> ContentTypesToCompress { get; }
@@ -78,6 +91,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Stops current running CDN endpoint.
         /// </summary>
         void Stop();
+
+        /// <summary>
+        /// Stops current running CDN endpoint.
+        /// </summary>
+        Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets list of custom domains associated with current endpoint.
@@ -89,6 +107,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
         void LoadContent(IList<string> contentPaths);
+
+        /// <summary>
+        /// Forcibly pre-loads current CDN endpoint content. Available for Verizon Profiles.
+        /// </summary>
+        /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
+        Task LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets origin host header.
@@ -121,5 +145,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
         /// <return>The CustomDomainValidationResult object if successful.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult ValidateCustomDomain(string hostName);
+
+        /// <summary>
+        /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint.
+        /// </summary>
+        /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
+        /// <return>The CustomDomainValidationResult object if successful.</return>
+        Task<CustomDomainValidationResult> ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

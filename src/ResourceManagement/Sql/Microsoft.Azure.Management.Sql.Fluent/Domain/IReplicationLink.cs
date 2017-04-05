@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Models;
     using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Replication link.
@@ -63,9 +65,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         void ForceFailoverAllowDataLoss();
 
         /// <summary>
+        /// Forces fail over the Azure SQL Database Replication Link which may result in data loss.
+        /// </summary>
+        Task ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Fails over the Azure SQL Database Replication Link.
         /// </summary>
         void Failover();
+
+        /// <summary>
+        /// Fails over the Azure SQL Database Replication Link.
+        /// </summary>
+        Task FailoverAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the name of the partner Azure SQL Database.

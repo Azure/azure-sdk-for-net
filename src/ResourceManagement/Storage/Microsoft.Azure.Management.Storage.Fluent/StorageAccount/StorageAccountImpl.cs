@@ -38,9 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             createParameters = new StorageAccountCreateParametersInner();
             updateParameters = new StorageAccountUpdateParametersInner();
         }
-
-        #region Getters
-
+        
         public AccessTier AccessTier
         {
             get
@@ -133,19 +131,18 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public IList<StorageAccountKey> GetKeys()
         {
+            return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<IList<StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
             if (cachedAccountKeys == null)
             {
-                cachedAccountKeys = RefreshKeys();
+                cachedAccountKeys = await RefreshKeysAsync(cancellationToken);
             }
             return cachedAccountKeys;
         }
-
-        #endregion
-
-        #region Fluent setters 
-
-        #region Definition setters
-
+        
         public IWithCreate WithSku(SkuName skuName)
         {
             createParameters.Sku = new Sku()
@@ -200,12 +197,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             createParameters.Encryption = encryption;
             return this;
         }
-
-
-        #endregion
-
-        #region Update setters
-
+        
         IUpdate IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {
             if (Inner.Kind != Kind.BlobStorage)
@@ -261,30 +253,32 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             updateParameters.Encryption = encryption;
             return this;
         }
-
-        #endregion
-
-        #endregion
-
-        #region Actions 
-
-        public IList<StorageAccountKey> RefreshKeys()
+                
+        public async Task<IList<StorageAccountKey>> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var storageAccountListKeysResultInner = Manager.Inner.StorageAccounts.ListKeys(ResourceGroupName, Name);
+            var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.ListKeysAsync(
+                ResourceGroupName, 
+                Name,
+                cancellationToken);
             cachedAccountKeys = storageAccountListKeysResultInner.Keys;
             return cachedAccountKeys;
         }
 
         public IList<StorageAccountKey> RegenerateKey(string keyName)
         {
-            var storageAccountListKeysResultInner = Manager.Inner.StorageAccounts.RegenerateKey(ResourceGroupName, Name, keyName);
+            return RegenerateKeyAsync(keyName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<IList<StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.RegenerateKeyAsync(
+                ResourceGroupName, 
+                Name, 
+                keyName,
+                cancellationToken);
             cachedAccountKeys = storageAccountListKeysResultInner.Keys;
             return cachedAccountKeys;
         }
-
-        #endregion
-
-        #region Implementation of IRefreshable interface
 
         public override IStorageAccount Refresh()
         {
@@ -293,20 +287,11 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return this;
         }
 
-        #endregion
-
-        #region Implementation of IUpdatable interface
-
         public override IUpdate Update()
         {
             updateParameters = new StorageAccountUpdateParametersInner();
             return this;
         }
-
-        #endregion
-
-
-        #region Implementation of IResourceCreator interface
 
         public async override Task<IStorageAccount> CreateResourceAsync(CancellationToken cancellationToken)
         {
@@ -329,7 +314,5 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             SetInner(response);
             return this;
         }
-
-        #endregion
     }
 }

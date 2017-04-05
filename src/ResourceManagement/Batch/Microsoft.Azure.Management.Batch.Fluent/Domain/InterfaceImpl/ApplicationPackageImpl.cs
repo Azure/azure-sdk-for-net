@@ -34,12 +34,23 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 return this.LastActivationTime();
             }
         }
+
         /// <summary>
         /// Activates the application package.
         /// </summary>
         /// <param name="format">format format of the uploaded package supported values zip, tar</param>
-        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Activate(string format) { 
-            this.Activate( format);
+        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Activate(string format)
+        { 
+            ((IApplicationPackage)this).ActivateAsync(format).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Activates the application package.
+        /// </summary>
+        /// <param name="format">format format of the uploaded package supported values zip, tar</param>
+        async Task IApplicationPackage.ActivateAsync(string format, CancellationToken cancellationToken)
+        {
+            await this.ActivateAsync(format, cancellationToken);
         }
 
         /// <returns>the expiry of the storage url for application package</returns>

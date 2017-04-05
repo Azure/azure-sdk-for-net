@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using System.Collections.Generic;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// An immutable client-side representation of an Azure Batch account.
     /// </summary>
@@ -39,17 +42,33 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <returns>the access keys for this batch account</returns>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys GetKeys();
 
+        
+        /// <returns>the access keys for this batch account</returns>
+        Task<BatchAccountKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Regenerates the access keys for batch account.
         /// </summary>
         /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
         /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys RegenerateKeys(AccountKeyType keyType);
+        BatchAccountKeys RegenerateKeys(AccountKeyType keyType);
+
+        /// <summary>
+        /// Regenerates the access keys for batch account.
+        /// </summary>
+        /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
+        /// <returns>the access keys for this batch account</returns>
+        Task<BatchAccountKeys> RegenerateKeysAsync(AccountKeyType keyType, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Synchronize the storage account keys for batch account.
         /// </summary>
         void SynchronizeAutoStorageKeys();
+
+        /// <summary>
+        /// Synchronize the storage account keys for batch account.
+        /// </summary>
+        Task SynchronizeAutoStorageKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <returns>the application in this batch account.</returns>
         System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication> Applications { get; }

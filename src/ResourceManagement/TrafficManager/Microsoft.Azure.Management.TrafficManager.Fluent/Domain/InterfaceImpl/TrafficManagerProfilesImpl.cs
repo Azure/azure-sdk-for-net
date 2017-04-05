@@ -78,7 +78,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// <return>Whether the DNS is available to be used for a traffic manager profile and other info if not.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfiles.CheckDnsNameAvailability(string dnsNameLabel)
         {
-            return this.CheckDnsNameAvailability(dnsNameLabel) as Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult;
+            return this.CheckDnsNameAvailability(dnsNameLabel);
+        }
+
+
+        /// <summary>
+        /// Checks that the DNS name is valid for traffic manager profile and is not in use.
+        /// </summary>
+        /// <param name="dnsNameLabel">The DNS name to check.</param>
+        /// <return>Whether the DNS is available to be used for a traffic manager profile and other info if not.</return>
+        async Task<CheckProfileDnsNameAvailabilityResult> ITrafficManagerProfiles.CheckDnsNameAvailabilityAsync(
+            string dnsNameLabel,
+            CancellationToken cancellationToken)
+        {
+            return await this.CheckDnsNameAvailabilityAsync(dnsNameLabel, cancellationToken);
         }
     }
 }

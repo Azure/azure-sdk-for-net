@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets a network interface associated with a virtual machine scale set instance.
         /// </summary>
-        /// <param name="resourceGroupName">irtual machine scale set resource group name</param>
+        /// <param name="resourceGroupName">Virtual machine scale set resource group name</param>
         /// <param name="scaleSetName">scale set name</param>
         /// <param name="instanceId">the virtual machine scale set vm instance id</param>
         /// <param name="name">the network interface name</param>

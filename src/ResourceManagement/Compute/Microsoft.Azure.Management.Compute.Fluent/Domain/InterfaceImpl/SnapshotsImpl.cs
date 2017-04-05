@@ -23,7 +23,30 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The readonly SAS uri to the snapshot.</return>
         string Microsoft.Azure.Management.Compute.Fluent.ISnapshots.GrantAccess(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration)
         {
-            return this.GrantAccess(resourceGroupName, snapshotName, accessLevel, accessDuration);
+            return ((ISnapshots)this).GrantAccessAsync(
+                    resourceGroupName, 
+                    snapshotName, 
+                    accessLevel, 
+                    accessDuration)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Grants access to a snapshot.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="snapshotName">The snapshot name.</param>
+        /// <param name="accessLevel">Access level.</param>
+        /// <param name="accessDuration">Access duration.</param>
+        /// <return>The readonly SAS uri to the snapshot.</return>
+        async Task<string> ISnapshots.GrantAccessAsync(
+            string resourceGroupName, 
+            string snapshotName, 
+            AccessLevel accessLevel, 
+            int accessDuration,
+            CancellationToken cancellationToken)
+        {
+            return await this.GrantAccessAsync(resourceGroupName, snapshotName, accessLevel, accessDuration, cancellationToken);
         }
 
         /// <summary>
@@ -33,8 +56,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="snapName">The snapshot name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.ISnapshots.RevokeAccess(string resourceGroupName, string snapName)
         {
- 
-            this.RevokeAccess(resourceGroupName, snapName);
+             ((ISnapshots)this).RevokeAccessAsync(resourceGroupName, snapName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Revoke access granted to a snapshot.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="snapName">The snapshot name.</param>
+        async Task Microsoft.Azure.Management.Compute.Fluent.ISnapshots.RevokeAccessAsync(string resourceGroupName, string snapName, CancellationToken cancellationToken)
+        {
+            await this.RevokeAccessAsync(resourceGroupName, snapName, cancellationToken);
         }
 
         /// <summary>

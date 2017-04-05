@@ -4,6 +4,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 {
     using ResourceManager.Fluent.Core;
     using ResourceManager.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// An immutable client-side representation of an Azure storage account.
@@ -63,14 +66,26 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         /// Fetch the up-to-date access keys from Azure for this storage account.
         /// </summary>
         /// <returns>the access keys for this storage account</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Storage.Fluent.Models.StorageAccountKey> GetKeys();
+        IList<Models.StorageAccountKey> GetKeys();
+
+        /// <summary>
+        /// Fetch the up-to-date access keys from Azure for this storage account.
+        /// </summary>
+        /// <returns>the access keys for this storage account</returns>
+        Task<IList<Models.StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
+        /// Regenerates the access keys for this storage account.
+        /// </summary>
+        /// <param name="keyName">keyName if the key name</param>
+        /// <returns>the generated access keys for this storage account</returns>
+        IList<Models.StorageAccountKey> RegenerateKey(string keyName);
 
         /// <summary>
         /// Regenerates the access keys for this storage account.
         /// </summary>
         /// <param name="keyName">keyName if the key name</param>
         /// <returns>the generated access keys for this storage account</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Storage.Fluent.Models.StorageAccountKey> RegenerateKey(string keyName);
-
+        Task<IList<Models.StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
