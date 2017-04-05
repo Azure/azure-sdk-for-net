@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading.Tasks;
     using System.Threading;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
 
     /// <summary>
     /// Implementation of PtrRecordSets.
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IPtrRecordSets
     {
         private DnsZoneImpl dnsZone;
+        private const RecordType PtrRecordType = RecordType.PTR;
 
         private DnsZoneImpl Parent()
         {
@@ -29,7 +32,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 dnsZone.ResourceGroupName,
                 dnsZone.Name,
                 name,
-                RecordType.PTR,
+                PtrRecordType,
                 cancellationToken);
             return new PtrRecordSetImpl(dnsZone, inner);
         }
@@ -50,7 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IEnumerable<IPtrRecordSet> List()
         {
             return WrapList(dnsZone.Manager.Inner.RecordSets
-                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.PTR)
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name, PtrRecordType)
                 .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
@@ -58,6 +61,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         protected override IPtrRecordSet WrapModel(RecordSetInner inner)
         {
             return new PtrRecordSetImpl(dnsZone, inner);
+        }
+
+        public async Task<IPagedCollection<IPtrRecordSet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IPtrRecordSet, RecordSetInner>.LoadPage(
+                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName, dnsZone.Name, PtrRecordType, cancellationToken: cancellation),
+                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

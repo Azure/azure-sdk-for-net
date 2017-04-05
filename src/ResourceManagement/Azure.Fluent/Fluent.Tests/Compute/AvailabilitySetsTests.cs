@@ -41,7 +41,7 @@ namespace Fluent.Tests.Compute
                     Assert.NotNull(feteched);
 
                     // List
-                    var availabilitySets = computeManager.AvailabilitySets.ListByGroup(rgName);
+                    var availabilitySets = computeManager.AvailabilitySets.ListByResourceGroup(rgName);
                     // todo: fix listing
                     // Assert.True(availabilitySets.Count() > 0);
 

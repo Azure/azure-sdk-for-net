@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation for DeploymentSlots.
@@ -56,16 +57,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:1381FA42DE6ECBD284AA54F76A65CC41
-        public async override Task<IEnumerable<IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IPagedCollection<IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Func<SiteInner, IDeploymentSlot> converter = inner =>
-            {
-                return PopulateModelAsync(inner, parent).ConfigureAwait(false).GetAwaiter().GetResult();
-            };
-
-            return (await Inner.ListSlotsAsync(resourceGroupName, parentName, cancellationToken))
-                              .AsContinuousCollection(link => Inner.ListSlotsNext(link))
-                              .Select(inner => converter(inner));
+            return await PagedCollection<IDeploymentSlot, SiteInner>.LoadPageWithWrapModelAsync(
+                async (cancellation) => await Inner.ListSlotsAsync(resourceGroupName, parentName, cancellation),
+                async (nextLink, cancellation) => await Inner.ListSlotsNextAsync(nextLink, cancellation),
+                async (inner, cancellation) => await PopulateModelAsync(inner, parent, cancellation), true, cancellationToken);
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:09CA495AE0F4F57BBBBDFC250874B0D4
@@ -148,6 +145,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var slot = WrapModel(inner, siteConfig);
             await ((DeploymentSlotImpl)slot).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
             return slot;
+        }
+
+        public async Task<IPagedCollection<IDeploymentSlot>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await ListByParentAsync(parent.ResourceGroupName, parent.Name, cancellationToken);
         }
     }
 }

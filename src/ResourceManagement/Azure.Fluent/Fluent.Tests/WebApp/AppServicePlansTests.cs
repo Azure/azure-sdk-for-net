@@ -38,9 +38,9 @@ namespace Azure.Tests.WebApp
                 Assert.Equal(0, appServicePlan.NumberOfWebApps);
                 Assert.Equal(20, appServicePlan.MaxInstances);
                 // GET
-                Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(GroupName, AppServicePlanName));
+                Assert.NotNull(appServiceManager.AppServicePlans.GetByResourceGroup(GroupName, AppServicePlanName));
                 // LIST
-                var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(GroupName);
+                var appServicePlans = appServiceManager.AppServicePlans.ListByResourceGroup(GroupName);
                 var found = false;
                 foreach (var asp in appServicePlans)
                 {

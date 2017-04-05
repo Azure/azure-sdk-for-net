@@ -10,14 +10,15 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     using System;
     using System.Threading.Tasks;
     using System.Threading;
-    using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// The implementation of Vaults and its parent interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmtleXZhdWx0LmltcGxlbWVudGF0aW9uLlZhdWx0c0ltcGw=
     internal partial class VaultsImpl  :
-        GroupableResources<IVault, VaultImpl, VaultInner, IVaultsOperations, IKeyVaultManager>,
+        TopLevelModifiableResources<IVault, VaultImpl, VaultInner, IVaultsOperations, IKeyVaultManager>,
         IVaults
     {
         private IGraphRbacManager graphRbacManager;
@@ -31,49 +32,35 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public IEnumerable<IVault> List ()
+        protected async override Task<IPage<VaultInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(cancellationToken: cancellationToken);
+        }
+
+        protected async override Task<IPage<VaultInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:BDFF4CB61E8A8D975417EA5FC914921A
-        public IEnumerable<IVault> ListByGroup (string groupName)
+        protected async override Task<IPage<VaultInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(groupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken: cancellationToken);
         }
 
-        public async Task<IEnumerable<IVault>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<VaultInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
         {
-            var inner = await Inner.ListByResourceGroupAsync(resourceGroupName, cancellationToken: cancellationToken);
-            return WrapList(inner.AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IVault> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<VaultInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var inner = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(inner);
-        }
-
-        public void Delete (string id)
-        {
-            Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
-        public void Delete (string groupName, string name)
-        {
-            Inner.Delete(groupName, name);
-        }
-
-        public async Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await Inner.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }

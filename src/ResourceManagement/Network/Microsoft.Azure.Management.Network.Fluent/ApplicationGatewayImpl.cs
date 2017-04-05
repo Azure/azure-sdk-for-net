@@ -51,9 +51,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
         }
-
-        #region Accessors
-
+        
         ///GENMHASH:327A257714E97E0CC9195D07369866F6:AC0B304DE3854395AFFCFBF726105B2C
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()
         {
@@ -99,6 +97,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             return portName;
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.Manager.ApplicationGateways.Inner.StartAsync(this.ResourceGroupName, this.Name, cancellationToken);
+        }
+
+        public async Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.Manager.ApplicationGateways.Inner.StopAsync(this.ResourceGroupName, this.Name, cancellationToken);
         }
 
         ///GENMHASH:F756CBB3F13EF6198269C107AED6F9A2:F819A402FF29D3234FF975971868AD05
@@ -316,13 +324,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             return false;
         }
-
-        #endregion
-
-        #region Withers
-
-        #region ApplicationGateway
-
+        
         ///GENMHASH:0A25F8D30AF64565545B20B215964E6B:7FF7C66C33A802B8668BFAC46B248EE8
         public ApplicationGatewayImpl WithSize(ApplicationGatewaySkuName skuName)
         {
@@ -358,11 +360,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.Sku.Capacity = capacity;
             return this;
         }
-
-        #endregion
-
-        #region BackendHttpConfigurations
-
+        
         ///GENMHASH:43D0A80DA689D640320A61D90075ADE8:FC98A09D6ECDCD30021D0B597F97C70C
         internal ApplicationGatewayImpl WithBackendHttpConfiguration(ApplicationGatewayBackendHttpConfigurationImpl httpConfig)
         {
@@ -400,11 +398,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             backendHttpConfigs.TryGetValue(name, out config);
             return (ApplicationGatewayBackendHttpConfigurationImpl)config;
         }
-
-        #endregion
-
-        #region Backends
-
+        
         ///GENMHASH:A0A23179FBDC541925212899C1A48667:2ECFEA1CD411E1F5B44424C5D9DDACA5
         public ApplicationGatewayImpl WithoutBackendIPAddress(string ipAddress)
         {
@@ -468,10 +462,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             return this;
         }
-
-        #endregion
-
-        #region FrontendPorts
 
         ///GENMHASH:99A00736DF753F6060C6104537FAB411:D9EF6ECF075F0671DA3E7309852CB983
         public ApplicationGatewayImpl WithoutFrontendPort(string name)
@@ -573,10 +563,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        #endregion
-
-        #region Frontends
-
         ///GENMHASH:9407377DFC5566D93476B1B7D2246504:B92120874A64FEDF5BAA29C6F88C6CAD
         public ApplicationGatewayFrontendImpl UpdateFrontend(string frontendName)
         {
@@ -619,8 +605,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             frontends.Remove(frontendName);
             return this;
         }
-
-        #region Public
 
         ///GENMHASH:1B49C92CBA9BDBBF9FBFD26544224384:8B6E82EE2C6ECB762256E74C48B124D1
         public IUpdate WithoutPublicIPAddress()
@@ -692,10 +676,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        #endregion
-
-        #region Private
-
         ///GENMHASH:854F62AEEE32605D0082690205B49C3B:68548DB0EF9B6E0869FDD4F8A24E25F9
         public ApplicationGatewayFrontendImpl DefinePrivateFrontend()
         {
@@ -755,13 +735,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             EnsureDefaultPrivateFrontend().WithPrivateIPAddressStatic(ipAddress);
             return this;
         }
-
-        #endregion
-
-        #endregion
-
-        #region IPConfigurations
-
+        
         ///GENMHASH:5D0DD8101FDDEC22F1DD348B5DADC47F:0DDB5F3E565736FD6F95B08EE958E156
         public ApplicationGatewayIPConfigurationImpl DefineDefaultIPConfiguration()
         {
@@ -834,11 +808,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             ipConfigs.Remove(ipConfigurationName);
             return this;
         }
-
-        #endregion
-
-        #region Listeners
-
+        
         ///GENMHASH:335DEBA2C3ED42B7D6D726224668713C:5F7D61C72418DAEB7F935725E2A62AFF
         public ApplicationGatewayListenerImpl DefineListener(string name)
         {
@@ -881,11 +851,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             listeners.Remove(name);
             return this;
         }
-
-        #endregion
-
-        #region RequestRoutingRules
-
+        
         ///GENMHASH:9EE982E7421C1A20C7BB22556011B5DC:345F6A97C61E955CCFAB88208C749162
         internal ApplicationGatewayImpl WithRequestRoutingRule(ApplicationGatewayRequestRoutingRuleImpl rule)
         {
@@ -929,10 +895,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        #endregion
-
-        #region SslCertificates
-
         ///GENMHASH:AA53287F5186B0525C5149BB8A3CC41C:F8A2D339B71D17A2BF48559C2304DA5D
         internal ApplicationGatewayImpl WithSslCertificate(ApplicationGatewaySslCertificateImpl cert)
         {
@@ -967,13 +929,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             sslCerts.Remove(name);
             return this;
         }
-
-        #endregion
-
-        #endregion
-
-        #region Helpers
-
+        
         ///GENMHASH:80375A07B813FDE5A15028546D4FB694:130D5B3A30C34F066046287000EF7300
         internal ApplicationGatewayImpl WithConfig(ApplicationGatewayIPConfigurationImpl config)
         {
@@ -1449,10 +1405,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        #endregion
-
-        #region Actions
-
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:96A74C51AAF39DA86E198A67D990E237
         public override IApplicationGateway Refresh()
         {
@@ -1461,7 +1413,5 @@ namespace Microsoft.Azure.Management.Network.Fluent
             InitializeChildrenFromInner();
             return this;
         }
-
-        #endregion
     }
 }

@@ -9,6 +9,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Rest.Azure;
+using System.Reflection;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -17,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uQXZhaWxhYmlsaXR5U2V0c0ltcGw=
     internal partial class AvailabilitySetsImpl :
-        GroupableResources<
+        TopLevelModifiableResources<
             IAvailabilitySet,
             AvailabilitySetImpl,
             AvailabilitySetInner,
@@ -36,37 +39,59 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E05BE5112BBF24DC07F63B90A384905C
-        public IEnumerable<IAvailabilitySet> List()
+        public override IEnumerable<IAvailabilitySet> List()
         {
+            // TODO - ans - We should try to check with service team if this is just missing API, if yes, then log a bug with swagger
+            // and make a code change in auto-generated to support this method directly, as this will help implementing async pattern.
+
             // There is no API supporting listing of availability set across subscription so enumerate all RGs and then
             // flatten the "list of list of availability sets" as "list of availability sets" .
             return Manager.ResourceManager.ResourceGroups.List()
-                                          .SelectMany(rg => ListByGroup(rg.Name));
+                                          .SelectMany(rg => ListByResourceGroup(rg.Name));
         }
 
-        ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public IEnumerable<IAvailabilitySet> ListByGroup(string resourceGroupName)
+        public override async Task<IPagedCollection<IAvailabilitySet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapList(Inner.List(resourceGroupName));
+            var task = await Manager.ResourceManager.ResourceGroups.ListAsync(true, cancellationToken);
+            return await PagedCollection<IAvailabilitySet, AvailabilitySetInner>.LoadPage(async (cancellation) =>
+            {
+                var resourceGroups = await Manager.ResourceManager.ResourceGroups.ListAsync(true, cancellation);
+                var availabilitySet =  await Task.WhenAll(resourceGroups.Select(async (rg) => await ListInnerByGroupAsync(rg.Name, cancellation)));
+                return availabilitySet.SelectMany(x => x);
+            }, WrapModel, cancellationToken);
         }
 
-        public Task<IEnumerable<IAvailabilitySet>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+
+        protected override Task<IPage<AvailabilitySetInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            // ListByGroupAsync sholud be removed
-            throw new NotSupportedException();
+            throw new NotImplementedException();
+        }
+
+        protected override Task<IPage<AvailabilitySetInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected async override Task<IPage<AvailabilitySetInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
+        {
+            return ConvertToPage(await Inner.ListAsync(groupName, cancellationToken));
+        }
+
+        protected async override Task<IPage<AvailabilitySetInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Task.FromResult<IPage<AvailabilitySetInner>>(null);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7CC0F8C63730735B2D69A34858088DFD
-        public async override Task<IAvailabilitySet> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<AvailabilitySetInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var availabilitySetInner = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(availabilitySetInner);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:08094366E86F6F96174452394778C4F6:ACF6A3952D2A0F720A28B7BE9957D330

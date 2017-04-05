@@ -23,7 +23,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The readonly SAS uri to the disk.</return>
         string Microsoft.Azure.Management.Compute.Fluent.IDisks.GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
         {
-            return this.GrantAccess(resourceGroupName, diskName, accessLevel, accessDuration);
+            return ((IDisks)this).GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Grants access to a disk.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="diskName">The disk name.</param>
+        /// <param name="accessLevel">Access level.</param>
+        /// <param name="accessDuration">Access duration.</param>
+        /// <return>The readonly SAS uri to the disk.</return>
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.IDisks.GrantAccessAsync(
+            string resourceGroupName, 
+            string diskName, 
+            AccessLevel accessLevel, 
+            int accessDuration,
+            CancellationToken cancellationToken)
+        {
+            return await this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration, cancellationToken);
         }
 
         /// <summary>
@@ -33,7 +51,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="diskName">The disk name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IDisks.RevokeAccess(string resourceGroupName, string diskName)
         {
-             this.RevokeAccess(resourceGroupName, diskName);
+             ((IDisks)this).RevokeAccessAsync(resourceGroupName, diskName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Revoke access granted to a disk.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="diskName">The disk name.</param>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IDisks.RevokeAccessAsync(
+            string resourceGroupName, 
+            string diskName, 
+            CancellationToken cancellationToken)
+        {
+            await this.RevokeAccessAsync(resourceGroupName, diskName, cancellationToken);
         }
 
         /// <summary>
@@ -60,9 +91,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.ListByResourceGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName);
+            return this.ListByResourceGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -71,9 +102,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Compute.Fluent.IDisk> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>.GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IDisk;
+            return await this.GetByResourceGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IDisk;
         }
 
         /// <summary>
@@ -82,9 +113,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>A completable indicates completion or exception of the request.</return>
-        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
+            await this.DeleteByResourceGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>

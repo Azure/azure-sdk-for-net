@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Redis.Fluent.Models;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// An immutable client-side representation of an Azure Redis Cache.
@@ -32,7 +34,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Fetch the up-to-date access keys from Azure for this Redis Cache.
         /// </summary>
         /// <return>The access keys for this Redis Cache.</return>
-        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys RefreshKeys();
+        IRedisAccessKeys RefreshKeys();
+
+        /// <summary>
+        /// Fetch the up-to-date access keys from Azure for this Redis Cache.
+        /// </summary>
+        /// <return>The access keys for this Redis Cache.</return>
+        Task<IRedisAccessKeys> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the staticIP value.
@@ -42,7 +50,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <summary>
         /// Gets a Redis Cache's access keys. This operation requires write permission to the Cache resource.
         /// </summary>
-        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Keys { get; }
+        IRedisAccessKeys GetKeys();
+
+        /// <summary>
+        /// Gets a Redis Cache's access keys. This operation requires write permission to the Cache resource.
+        /// </summary>
+        Task<IRedisAccessKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the provisioningState value.
@@ -99,6 +112,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </summary>
         /// <param name="keyType">Key type to regenerate.</param>
         /// <return>The generated access keys for this Redis Cache.</return>
-        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys RegenerateKey(RedisKeyType keyType);
+        IRedisAccessKeys RegenerateKey(RedisKeyType keyType);
+
+        /// <summary>
+        /// Regenerates the access keys for this Redis Cache.
+        /// </summary>
+        /// <param name="keyType">Key type to regenerate.</param>
+        /// <return>The generated access keys for this Redis Cache.</return>
+        Task<IRedisAccessKeys> RegenerateKeyAsync(RedisKeyType keyType, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -126,23 +126,23 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:E4DFA7EA15F8324FB60C810D0C96D2FF:2C24EC1143CD8F8542845A9D3A0F116A
-        internal BatchAccountKeys GetKeys()
+        internal async Task<BatchAccountKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            BatchAccountKeysInner keys = Manager.Inner.BatchAccount.GetKeys(ResourceGroupName, Name);
+            BatchAccountKeysInner keys = await Manager.Inner.BatchAccount.GetKeysAsync(ResourceGroupName, Name, cancellationToken);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
         ///GENMHASH:837770291CB03D6C2AB9BDA889A5B07D:916D2188C6A5919A33DB6C700CE38C2A
-        internal BatchAccountKeys RegenerateKeys(AccountKeyType keyType)
+        internal async Task<BatchAccountKeys> RegenerateKeysAsync(AccountKeyType keyType, CancellationToken cancellationToken = default(CancellationToken))
         {
-            BatchAccountKeysInner keys = Manager.Inner.BatchAccount.RegenerateKey(ResourceGroupName, Name, keyType);
+            BatchAccountKeysInner keys = await Manager.Inner.BatchAccount.RegenerateKeyAsync(ResourceGroupName, Name, keyType, cancellationToken);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
         ///GENMHASH:F464067830773D729F2254E152F52E95:21A9F1295EB43C714008C5226DECA98E
-        internal void SynchronizeAutoStorageKeys()
+        internal async Task SynchronizeAutoStorageKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            Manager.Inner.BatchAccount.SynchronizeAutoStorageKeys(ResourceGroupName, Name);
+            await Manager.Inner.BatchAccount.SynchronizeAutoStorageKeysAsync(ResourceGroupName, Name, cancellationToken);
         }
 
         ///GENMHASH:672E69F72385496EBDF873EB27A7AA15:C0743C8E69844064A4120ADE2213CA5B

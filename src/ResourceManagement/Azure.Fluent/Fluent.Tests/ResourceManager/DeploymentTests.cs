@@ -41,7 +41,7 @@ namespace Fluent.Tests.ResourceManager
                     .Create();
 
                 // List
-                var deployments = resourceManager.Deployments.ListByGroup(rgName);
+                var deployments = resourceManager.Deployments.ListByResourceGroup(rgName);
                 var found = from dep in deployments
                             where dep.Name.Equals(deploymentName1, StringComparison.OrdinalIgnoreCase)
                             select dep;
@@ -49,12 +49,12 @@ namespace Fluent.Tests.ResourceManager
                 Assert.True(found != null);
 
                 // Get
-                var deployment = resourceManager.Deployments.GetByGroup(rgName, deploymentName1);
+                var deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName1);
                 Assert.True(deployment != null);
                 Assert.True(deployment.ProvisioningState != null);
 
                 // Try export template from deployment object
-                var exportedDeployment = deployment.ExportTemplate;
+                var exportedDeployment = deployment.ExportTemplate();
                 Assert.True(exportedDeployment.Template != null);
 
                 // Try export template using resourcegroup
@@ -85,10 +85,10 @@ namespace Fluent.Tests.ResourceManager
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
                     .BeginCreate();
-                var deployment = resourceManager.Deployments.GetByGroup(rgName, deploymentName2);
+                var deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName2);
                 Assert.Equal(deployment.Name, deploymentName2);
                 deployment.Cancel();
-                deployment = resourceManager.Deployments.GetByGroup(rgName, deploymentName2);
+                deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName2);
                 Assert.Equal(deployment.ProvisioningState, "Canceled");
                 resourceManager.GenericResources.Delete(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet1", "2015-06-15");
             }
@@ -108,10 +108,10 @@ namespace Fluent.Tests.ResourceManager
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
                     .BeginCreate();
-                var deployment = resourceManager.Deployments.GetByGroup(rgName, deploymentName3);
+                var deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName3);
                 Assert.Equal(deployment.Name, deploymentName3);
                 deployment.Cancel();
-                deployment = resourceManager.Deployments.GetByGroup(rgName, deploymentName3);
+                deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName3);
                 Assert.Equal(deployment.ProvisioningState, "Canceled");
 
                 deployment.Update()
@@ -119,7 +119,7 @@ namespace Fluent.Tests.ResourceManager
                     .WithParameters(updateParameters)
                     .WithMode(DeploymentMode.Incremental)
                     .Apply();
-                deployment = resourceManager.Deployments.GetByGroup(rgName, deploymentName3);
+                deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName3);
                 Assert.True(deployment.Mode == DeploymentMode.Incremental);
                 Assert.Equal(deployment.ProvisioningState, "Succeeded");
 

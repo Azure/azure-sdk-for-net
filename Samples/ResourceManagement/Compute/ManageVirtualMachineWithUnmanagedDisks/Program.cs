@@ -180,7 +180,7 @@ namespace ManageVirtualMachineWithUnmanagedDisks
 
                 Utilities.Log("Printing list of VMs =======");
 
-                foreach (var virtualMachine in azure.VirtualMachines.ListByGroup(resourceGroupName))
+                foreach (var virtualMachine in azure.VirtualMachines.ListByResourceGroup(resourceGroupName))
                 {
                     Utilities.PrintVirtualMachine(virtualMachine);
                 }

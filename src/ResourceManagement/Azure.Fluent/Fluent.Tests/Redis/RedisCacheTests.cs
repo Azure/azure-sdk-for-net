@@ -68,7 +68,7 @@ namespace Azure.Tests.Redis
                     Assert.Equal(SkuName.Basic, redisCache.Sku.Name);
 
                     // List by Resource Group
-                    var redisCaches = redisManager.RedisCaches.ListByGroup(GroupName);
+                    var redisCaches = redisManager.RedisCaches.ListByResourceGroup(GroupName);
 
                     if (!redisCaches.Any(r => r.Name.Equals(CacheName, StringComparison.OrdinalIgnoreCase)))
                     {
@@ -86,13 +86,13 @@ namespace Azure.Tests.Redis
                     Assert.Equal(3, redisCaches.Count());
 
                     // Get
-                    var redisCacheGet = redisManager.RedisCaches.GetByGroup(GroupName, CacheName);
+                    var redisCacheGet = redisManager.RedisCaches.GetByResourceGroup(GroupName, CacheName);
                     Assert.NotNull(redisCacheGet);
                     Assert.Equal(redisCache.Id, redisCacheGet.Id);
                     Assert.Equal(redisCache.ProvisioningState, redisCacheGet.ProvisioningState);
 
                     // Get Keys
-                    var redisKeys = redisCache.Keys;
+                    var redisKeys = redisCache.GetKeys();
                     Assert.NotNull(redisKeys);
                     Assert.NotNull(redisKeys.PrimaryKey);
                     Assert.NotNull(redisKeys.SecondaryKey);

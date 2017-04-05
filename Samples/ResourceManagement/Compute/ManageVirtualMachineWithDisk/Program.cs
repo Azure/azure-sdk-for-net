@@ -121,7 +121,7 @@ namespace ManageVirtualMachineWithDisk
                 var disk = azure.Disks.GetById(lun3DiskId);
                 Utilities.Log("Delete managed disk: " + disk.Id);
 
-                azure.Disks.DeleteByGroup(disk.ResourceGroupName, disk.Name);
+                azure.Disks.DeleteByResourceGroup(disk.ResourceGroupName, disk.Name);
 
                 Utilities.Log("Deleted managed disk");
 

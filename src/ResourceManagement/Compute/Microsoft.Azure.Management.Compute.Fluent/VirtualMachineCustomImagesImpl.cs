@@ -8,13 +8,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using VirtualMachineCustomImage.Definition;
     using Models;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// The implementation for VirtualMachineCustomImages.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVDdXN0b21JbWFnZXNJbXBs
     internal partial class VirtualMachineCustomImagesImpl  :
-        GroupableResources<
+        TopLevelModifiableResources<
             IVirtualMachineCustomImage,
             VirtualMachineCustomImageImpl,
             ImageInner,
@@ -28,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:737180B1BC9FBD3E5083EE06E951D489
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -40,24 +42,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:0DA05B447E9373BA84F249FC22D8EDFF
-        public async override Task<IVirtualMachineCustomImage> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ImageInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var inner = await Inner.GetAsync(resourceGroupName, name, null, cancellationToken);
-            return WrapModel(inner);
+            return await Inner.GetAsync(groupName, name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public IEnumerable<IVirtualMachineCustomImage> List()
+        protected async override Task<IPage<ImageInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List()
-                .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<ImageInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListByResourceGroupNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:F27988875BD81EE531DA23D26C675612
-        public IEnumerable<IVirtualMachineCustomImage> ListByGroup(string resourceGroupName)
+        protected async override Task<IPage<ImageInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
-                .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return await Inner.ListAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<ImageInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:EB96DF7C77547AEAC01FB2D702838F18

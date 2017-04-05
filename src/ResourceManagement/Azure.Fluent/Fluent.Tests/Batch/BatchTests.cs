@@ -41,10 +41,10 @@ namespace Fluent.Tests.Batch
                     Assert.Equal(rgName, batchAccount.ResourceGroupName);
                     Assert.Null(batchAccount.AutoStorage);
                     // List
-                    var accounts = batchManager.BatchAccounts.ListByGroup(rgName);
+                    var accounts = batchManager.BatchAccounts.ListByResourceGroup(rgName);
                     Assert.True(accounts.Any(account => StringComparer.OrdinalIgnoreCase.Equals(account.Name, batchAccountName)));
                     // Get
-                    batchAccount = batchManager.BatchAccounts.GetByGroup(rgName, batchAccountName);
+                    batchAccount = batchManager.BatchAccounts.GetByResourceGroup(rgName, batchAccountName);
                     Assert.NotNull(batchAccount);
 
                     // Get Keys
@@ -162,7 +162,7 @@ namespace Fluent.Tests.Batch
                     {
                     }
 
-                    var batchAccounts = batchManager.BatchAccounts.ListByGroup(rgName);
+                    var batchAccounts = batchManager.BatchAccounts.ListByResourceGroup(rgName);
 
                     Assert.Equal(batchAccounts.Count(), 0);
                 }
@@ -207,11 +207,11 @@ namespace Fluent.Tests.Batch
                     Assert.Equal(ResourceUtils.NameFromResourceId(batchAccount.AutoStorage.StorageAccountId), storageAccountName);
 
                     // List
-                    var accounts = batchManager.BatchAccounts.ListByGroup(rgName);
+                    var accounts = batchManager.BatchAccounts.ListByResourceGroup(rgName);
                     Assert.True(accounts.Any(account => StringComparer.OrdinalIgnoreCase.Equals(account.Name, batchAccountName)));
 
                     // Get
-                    batchAccount = batchManager.BatchAccounts.GetByGroup(rgName, batchAccountName);
+                    batchAccount = batchManager.BatchAccounts.GetByResourceGroup(rgName, batchAccountName);
                     Assert.NotNull(batchAccount);
 
                     Assert.True(batchAccount.Applications.ContainsKey(applicationId));
@@ -223,12 +223,12 @@ namespace Fluent.Tests.Batch
 
                     try
                     {
-                        await batchManager.BatchAccounts.DeleteByGroupAsync(batchAccount.ResourceGroupName, batchAccountName);
+                        await batchManager.BatchAccounts.DeleteByResourceGroupAsync(batchAccount.ResourceGroupName, batchAccountName);
                     }
                     catch
                     {
                     }
-                    var batchAccounts = batchManager.BatchAccounts.ListByGroup(rgName);
+                    var batchAccounts = batchManager.BatchAccounts.ListByResourceGroup(rgName);
 
                     Assert.Equal(batchAccounts.Count(), 0);
                 }

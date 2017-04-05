@@ -7,13 +7,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using System.Threading;
     using System.Collections.Generic;
     using Models;
+    using Management.Fluent.Resource.Core;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation for TrafficManagerProfiles.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLmltcGxlbWVudGF0aW9uLlRyYWZmaWNNYW5hZ2VyUHJvZmlsZXNJbXBs
     internal partial class TrafficManagerProfilesImpl  :
-        GroupableResources<ITrafficManagerProfile, TrafficManagerProfileImpl, ProfileInner, IProfilesOperations, ITrafficManager>,
+        TopLevelModifiableResources<ITrafficManagerProfile, TrafficManagerProfileImpl, ProfileInner, IProfilesOperations, ITrafficManager>,
         ITrafficManagerProfiles
     {
         ///GENMHASH:84B6E84F790DD3CF43388254CEEE3609:519A2844AD55FAC6990427C640AC9D4B
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -30,8 +32,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:EA7883DCA673C6F67CCCF6E8828D7D51:4DBFF5109C555E749B7E1943ECE31E34
         public CheckProfileDnsNameAvailabilityResult CheckDnsNameAvailability(string dnsNameLabel)
         {
-            return new CheckProfileDnsNameAvailabilityResult(Inner
-                .CheckTrafficManagerRelativeDnsNameAvailability(dnsNameLabel, "Microsoft.Network/trafficManagerProfiles"));
+            return CheckDnsNameAvailabilityAsync(dnsNameLabel).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<CheckProfileDnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(
+            string dnsNameLabel, 
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return new CheckProfileDnsNameAvailabilityResult(
+                await Inner.CheckTrafficManagerRelativeDnsNameAvailabilityAsync(
+                    dnsNameLabel, 
+                    "Microsoft.Network/trafficManagerProfiles"));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35
@@ -41,16 +52,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<ITrafficManagerProfile> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<ProfileInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            ProfileInner profileInner = await Inner.GetAsync(groupName, name, cancellationToken);
-            return WrapModel(profileInner);
+            return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public IEnumerable<ITrafficManagerProfile> List()
+        protected async override Task<IPage<ProfileInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListAll());
+            return ConvertToPage(await Inner.ListAllAsync(cancellationToken));
+        }
+
+        protected async override Task<IPage<ProfileInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Task.FromResult<IPage<ProfileInner>>(null);
         }
 
         ///GENMHASH:ADB150394F552772047E309EF2616501:6EFED76EB6275BD09D4B902BEDDF03D4
@@ -70,9 +85,14 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:2A90E64B785A8609460D87572CE513A1
-        public IEnumerable<ITrafficManagerProfile> ListByGroup(string groupName)
+        protected async override Task<IPage<ProfileInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListAllInResourceGroup(groupName));
+            return ConvertToPage(await Inner.ListAllInResourceGroupAsync(groupName, cancellationToken));
+        }
+
+        protected async override Task<IPage<ProfileInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Task.FromResult<IPage<ProfileInner>>(null);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:12B839BC780AC48D63D16C362B5E2FF5

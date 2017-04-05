@@ -48,7 +48,7 @@ namespace Fluent.Tests.Network
                 var ipConfig2 = ipConfigs.First();
                 Assert.Equal(ipConfig.Name.ToLower(), ipConfig2.Name.ToLower());
 
-                var resource = manager.NetworkInterfaces.GetByGroup("rg" + testId, "nic" + testId);
+                var resource = manager.NetworkInterfaces.GetByResourceGroup("rg" + testId, "nic" + testId);
                 resource = resource.Update()
                     .WithoutIPForwarding()
                     .UpdateIPConfiguration(resource.PrimaryIPConfiguration.Name) // Updating the primary IP configuration

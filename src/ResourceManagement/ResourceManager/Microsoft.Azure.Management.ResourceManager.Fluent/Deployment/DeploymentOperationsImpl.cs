@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -27,25 +29,33 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeploymentOperation GetById(string operationId)
         {
-            return CreateFluentModel(client.Get(deployment.ResourceGroupName, deployment.Name, operationId));
+            return WrapModel(client.Get(deployment.ResourceGroupName, deployment.Name, operationId));
         }
 
         public async Task<IDeploymentOperation> GetByIdAsync(string operationId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await client.GetAsync(deployment.ResourceGroupName, deployment.Name, operationId, cancellationToken);
-            return CreateFluentModel(inner);
+            return WrapModel(inner);
         }
 
         public IEnumerable<IDeploymentOperation> List()
         {
             return client.List(deployment.ResourceGroupName, deployment.Name)
                          .AsContinuousCollection(link => client.ListNext(link))
-                         .Select(inner => CreateFluentModel(inner));
+                         .Select(inner => WrapModel(inner));
+        }
+
+        public async Task<IPagedCollection<IDeploymentOperation>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IDeploymentOperation, DeploymentOperationInner>.LoadPage(
+                async (cancellation) => await client.ListAsync(deployment.ResourceGroupName, deployment.Name, cancellationToken: cancellation),
+                client.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
 
         #endregion
 
-        private DeploymentOperationImpl CreateFluentModel(DeploymentOperationInner deploymentOperationInner)
+        private DeploymentOperationImpl WrapModel(DeploymentOperationInner deploymentOperationInner)
         {
             return new DeploymentOperationImpl(deploymentOperationInner, client);
         }

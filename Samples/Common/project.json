@@ -11,9 +11,9 @@
   },
   
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.3": {
       "buildOptions": {
-        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "define": [ "NETSTANDARD13", "PORTABLE" ],
         "debugType": "portable"
       },
       "imports": [

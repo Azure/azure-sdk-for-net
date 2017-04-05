@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     internal partial class VirtualMachineScaleSetNetworkInterfacesImpl :
         ReadableWrappers<IVirtualMachineScaleSetNetworkInterface,
@@ -80,6 +83,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 resourceGroupName,
                 inner,
                 networkManager);
+        }
+
+        public async Task<IPagedCollection<IVirtualMachineScaleSetNetworkInterface>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IVirtualMachineScaleSetNetworkInterface, NetworkInterfaceInner>.LoadPage(
+                async (cancellation) => await Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, scaleSetName, cancellation),
+                Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

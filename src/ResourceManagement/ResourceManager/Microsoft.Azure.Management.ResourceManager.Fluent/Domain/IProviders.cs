@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
 
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Entry point to providers management API.
@@ -21,11 +23,24 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         IProvider Unregister (string resourceProviderNamespace);
 
         /// <summary>
+        /// Unregisters provider from a subscription.
+        /// </summary>
+        /// <param name="resourceProviderNamespace">resourceProviderNamespace Namespace of the resource provider</param>
+        /// <returns>the ProviderInner object wrapped in {@link ServiceResponse} if successful</returns>
+        Task<IProvider> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Registers provider to be used with a subscription.
         /// </summary>
         /// <param name="resourceProviderNamespace">resourceProviderNamespace Namespace of the resource provider</param>
         /// <returns>the ProviderInner object wrapped in {@link ServiceResponse} if successful</returns>
         IProvider Register (string resourceProviderNamespace);
 
+        /// <summary>
+        /// Registers provider to be used with a subscription.
+        /// </summary>
+        /// <param name="resourceProviderNamespace">resourceProviderNamespace Namespace of the resource provider</param>
+        /// <returns>the ProviderInner object wrapped in {@link ServiceResponse} if successful</returns>
+        Task<IProvider> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

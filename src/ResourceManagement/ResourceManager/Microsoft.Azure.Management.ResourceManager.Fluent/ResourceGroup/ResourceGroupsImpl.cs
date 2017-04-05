@@ -8,6 +8,8 @@ using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -30,7 +32,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string name)
         {
-            return Inner.CheckExistence(name);
+            return CheckExistenceAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+        public async Task<bool> CheckExistenceAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Inner.CheckExistenceAsync(name, cancellationToken);
         }
 
         public ResourceGroup.Definition.IBlank Define(string name)
@@ -82,6 +88,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         protected override IResourceGroup WrapModel(ResourceGroupInner inner)
         {
             return new ResourceGroupImpl(inner, Inner);
+        }
+
+        public async Task<IPagedCollection<IResourceGroup>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IResourceGroup, ResourceGroupInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(cancellationToken: cancellationToken),
+                Inner.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

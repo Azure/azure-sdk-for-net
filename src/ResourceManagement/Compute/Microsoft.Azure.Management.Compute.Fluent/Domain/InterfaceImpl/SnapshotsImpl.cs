@@ -23,7 +23,30 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The readonly SAS uri to the snapshot.</return>
         string Microsoft.Azure.Management.Compute.Fluent.ISnapshots.GrantAccess(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration)
         {
-            return this.GrantAccess(resourceGroupName, snapshotName, accessLevel, accessDuration);
+            return ((ISnapshots)this).GrantAccessAsync(
+                    resourceGroupName, 
+                    snapshotName, 
+                    accessLevel, 
+                    accessDuration)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Grants access to a snapshot.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="snapshotName">The snapshot name.</param>
+        /// <param name="accessLevel">Access level.</param>
+        /// <param name="accessDuration">Access duration.</param>
+        /// <return>The readonly SAS uri to the snapshot.</return>
+        async Task<string> ISnapshots.GrantAccessAsync(
+            string resourceGroupName, 
+            string snapshotName, 
+            AccessLevel accessLevel, 
+            int accessDuration,
+            CancellationToken cancellationToken)
+        {
+            return await this.GrantAccessAsync(resourceGroupName, snapshotName, accessLevel, accessDuration, cancellationToken);
         }
 
         /// <summary>
@@ -33,8 +56,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="snapName">The snapshot name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.ISnapshots.RevokeAccess(string resourceGroupName, string snapName)
         {
- 
-            this.RevokeAccess(resourceGroupName, snapName);
+             ((ISnapshots)this).RevokeAccessAsync(resourceGroupName, snapName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Revoke access granted to a snapshot.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="snapName">The snapshot name.</param>
+        async Task Microsoft.Azure.Management.Compute.Fluent.ISnapshots.RevokeAccessAsync(string resourceGroupName, string snapName, CancellationToken cancellationToken)
+        {
+            await this.RevokeAccessAsync(resourceGroupName, snapName, cancellationToken);
         }
 
         /// <summary>
@@ -61,9 +93,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>.ListByGroup(string resourceGroupName)
+        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>.ListByResourceGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName);
+            return this.ListByResourceGroup(resourceGroupName);
         }
 
         /// <summary>
@@ -72,9 +104,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Compute.Fluent.ISnapshot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Compute.Fluent.ISnapshot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>.GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.ISnapshot;
+            return await this.GetByResourceGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.ISnapshot;
         }
 
         /// <summary>
@@ -83,9 +115,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>A completable indicates completion or exception of the request.</return>
-        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
+            await this.DeleteByResourceGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>

@@ -10,10 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
-    internal class GenericResourcesImpl : 
+    internal class GenericResourcesImpl :
         GroupableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, IResourceManager>,
         IGenericResources
     {
@@ -23,13 +24,32 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            return Inner.CheckExistence(
+            return CheckExistenceAsync(
                 resourceGroupName,
                 resourceProviderNamespace,
                 parentResourcePath,
                 resourceType,
                 resourceName,
-                apiVersion);
+                apiVersion).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<bool> CheckExistenceAsync(
+            string resourceGroupName, 
+            string resourceProviderNamespace, 
+            string parentResourcePath, 
+            string resourceType, 
+            string resourceName, 
+            string apiVersion,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Inner.CheckExistenceAsync(
+                resourceGroupName,
+                resourceProviderNamespace,
+                parentResourcePath,
+                resourceType,
+                resourceName,
+                apiVersion,
+                cancellationToken);
         }
 
         public IBlank Define(string name)
@@ -71,30 +91,34 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return resource;
         }
 
-        public override Task<IGenericResource> GetByGroupAsync(string groupName, string name, CancellationToken cancellation = default(CancellationToken))
+        protected override Task<GenericResourceInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellation)
         {
             throw new NotSupportedException("Get just by resource group and name is not supported. Please use other overloads.");
         }
 
-        public IEnumerable<IGenericResource> ListByGroup(string resourceGroupName)
+        public IEnumerable<IGenericResource> ListByResourceGroup(string resourceGroupName)
         {
             return WrapList(Inner.List()
                                  .AsContinuousCollection(link => Inner.ListNext(link)));
         }
 
-        public Task<IEnumerable<IGenericResource>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
         {
-            throw new NotSupportedException();
+            MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
+        public async Task MoveResourcesAsync(
+            string sourceResourceGroupName, 
+            IResourceGroup targetResourceGroup, 
+            IList<string> resources,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             ResourcesMoveInfoInner moveInfo = new ResourcesMoveInfoInner()
             {
                 TargetResourceGroup = targetResourceGroup.Id,
                 Resources = resources,
             };
-            Inner.MoveResources(sourceResourceGroupName, moveInfo);
+            await Inner.MoveResourcesAsync(sourceResourceGroupName, moveInfo, cancellationToken);
         }
 
         protected override IGenericResource WrapModel(GenericResourceInner inner)
@@ -119,9 +143,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             return model;
         }
 
-        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             throw new NotSupportedException("Delete just by resource group and name is not supported. Please use other overloads.");
+        }
+
+        public async Task<IPagedCollection<IGenericResource>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IGenericResource, GenericResourceInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(cancellationToken: cancellation),
+                Inner.ListNextAsync, WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

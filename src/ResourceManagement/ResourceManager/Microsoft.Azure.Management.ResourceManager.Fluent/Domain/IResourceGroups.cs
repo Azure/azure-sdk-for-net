@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     using Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.ResourceGroup.Definition;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Entry point to resource group management API.
@@ -24,5 +26,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// <returns>true if the resource group exists; false otherwise</returns>
         bool CheckExistence (string name);
 
+        /// <summary>
+        /// Checks whether resource group exists.
+        /// </summary>
+        /// <param name="name">name The name of the resource group to check. The name is case insensitive</param>
+        /// <returns>true if the resource group exists; false otherwise</returns>
+        Task<bool> CheckExistenceAsync(string name, CancellationToken cancellationToken = default(CancellationToken)
+);
     }
 }

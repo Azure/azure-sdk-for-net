@@ -10,13 +10,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Network.Fluent;
     using Storage.Fluent;
     using System.Collections.Generic;
+    using Rest.Azure;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation for VirtualMachines.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVzSW1wbA==
     internal partial class VirtualMachinesImpl :
-        GroupableResources<
+        TopLevelModifiableResources<
             IVirtualMachine,
             VirtualMachineImpl,
             VirtualMachineInner,
@@ -41,21 +43,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
-        public IEnumerable<IVirtualMachine> List()
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.ListAll()
-                .AsContinuousCollection(link => Inner.ListAllNext(link)));
+            return await Inner.ListAllAsync(cancellationToken);
+        }
+
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListAllNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
-        public IEnumerable<IVirtualMachine> ListByGroup(string groupName)
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List(groupName)
-                .AsContinuousCollection(link => Inner.ListNext(link)));
+            return await Inner.ListAsync(groupName, cancellationToken);
+        }
+
+        protected async override Task<IPage<VirtualMachineInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            return await Inner.ListNextAsync(nextLink, cancellationToken);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -67,55 +77,61 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:2048E8AC80AC022225C462CE7FD14A6F:AB513A3D7E5B1192B76F853CB23CBB12
-        public void Deallocate(string groupName, string name)
+        public async Task DeallocateAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.Deallocate(groupName, name);
+            await Inner.DeallocateAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:00E88CFB1570D8A0A8E9FDE81CE27B2D:41D46BEAFAD59BFEA295012F3A5791B5
-        public void Generalize(string groupName, string name)
+        public async Task GeneralizeAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.Generalize(groupName, name);
+            await Inner.GeneralizeAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:9F1310A4445A183902C9AF672DA34354:F32BEF843CE33ABB858763CFD92B9A36
-        public void PowerOff(string groupName, string name)
+        public async Task PowerOffAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.PowerOff(groupName, name);
+            await Inner.PowerOffAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:CD0E967F30C27C522C0DE3E4523C6CDD:8C9B139D9CD48BE89CACA8348E2E8469
-        public void Restart(string groupName, string name)
+        public async Task RestartAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.Restart(groupName, name);
+            await Inner.RestartAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:F5C1D0B90DEED77EE54F7CEB164C727E:4E2B451086A707DC66F26388A688071E
-        public void Start(string groupName, string name)
+        public async Task StartAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.Start(groupName, name);
+            await Inner.StartAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:5BA0ADF7CF4FCFD811B372F59A1C376E:0961DB2042C5E898ED8D9586E90E4F33
-        public void Redeploy(string groupName, string name)
+        public async Task RedeployAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.Redeploy(groupName, name);
+            await Inner.RedeployAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:7DBF1DD4080EA265532035CF9FB8D313:1A99BFC30D31869BE5E39DD7E4E0639D
-        public void ConvertToManaged(string groupName, string name)
+        public async Task ConvertToManagedAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Inner.ConvertToManagedDisks(groupName, name);
+            await Inner.ConvertToManagedDisksAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:E5D7B16A7B6C705114CC71E8BB2B20E1:6975A84E6594FF8DEA88E6C992B0B500
-        public string Capture(string groupName, string name, string containerName, string vhdPrefix, bool overwriteVhd)
+        public async Task<string> CaptureAsync(
+            string groupName, 
+            string name, 
+            string containerName, 
+            string vhdPrefix, 
+            bool overwriteVhd, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
             parameters.DestinationContainerName = containerName;
             parameters.OverwriteVhds = overwriteVhd;
             parameters.VhdPrefix = vhdPrefix;
-            VirtualMachineCaptureResultInner captureResult = Inner.Capture(groupName, name, parameters);
+            VirtualMachineCaptureResultInner captureResult = await Inner.CaptureAsync(groupName, name, parameters, cancellationToken);
             return captureResult.Output.ToString();
         }
 
@@ -160,10 +176,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D
-        public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<VirtualMachineInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            var data = await Inner.GetAsync(groupName, name, null, cancellationToken);
-            return this.WrapModel(data);
+            return await Inner.GetAsync(groupName, name, cancellationToken: cancellationToken);
         }
     }
 }

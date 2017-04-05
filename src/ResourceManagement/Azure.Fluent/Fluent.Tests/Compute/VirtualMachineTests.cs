@@ -52,13 +52,13 @@ namespace Fluent.Tests.Compute
                         .WithOsDiskName("javatest")
                         .Create();
 
-                    var foundedVM = computeManager.VirtualMachines.ListByGroup(GroupName)
+                    var foundedVM = computeManager.VirtualMachines.ListByResourceGroup(GroupName)
                         .FirstOrDefault(v => v.Name.Equals(VMName, StringComparison.OrdinalIgnoreCase));
 
                     Assert.NotNull(foundedVM);
                     Assert.Equal(Location, foundedVM.RegionName);
                     // Get
-                    foundedVM = computeManager.VirtualMachines.GetByGroup(GroupName, VMName);
+                    foundedVM = computeManager.VirtualMachines.GetByResourceGroup(GroupName, VMName);
                     Assert.NotNull(foundedVM);
                     Assert.Equal(Location, foundedVM.RegionName);
 

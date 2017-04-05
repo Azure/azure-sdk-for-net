@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Management.Fluent.Resource.Core;
+    using System;
+    using System.Linq;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
@@ -46,7 +49,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         public IEnumerable<IUser> List ()
         {
-            return WrapList(innerCollection.List());
+            return innerCollection.List()
+                                .AsContinuousCollection(link => innerCollection.ListNext(link))
+                                .Select(inner => WrapModel(inner));
         }
 
         ///GENMHASH:8B08433C196DD61BBDD2BB90A9108032:A264B6A43B1DB71B6549773B10B60787
@@ -72,6 +77,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             var userInner = await innerCollection.GetAsync(upn, cancellationToken);
             return WrapModel(userInner);
+        }
+
+        public async Task<IPagedCollection<IUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IUser, UserInner>.LoadPage(
+                async (cancellation) => await innerCollection.ListAsync(cancellationToken: cancellation),
+                innerCollection.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

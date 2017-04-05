@@ -11,8 +11,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     public abstract class GroupableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT> :
         CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT>,
         ISupportsGettingById<IFluentResourceT>,
-        ISupportsGettingByGroup<IFluentResourceT>,
-        ISupportsDeletingByGroup,
+        ISupportsGettingByResourceGroup<IFluentResourceT>,
+        ISupportsDeletingByResourceGroup,
         IHasManager<ManagerT>,
         IHasInner<InnerCollectionT>
         where IFluentResourceT : class, IGroupableResource<ManagerT, InnerResourceT>
@@ -32,13 +32,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             get; private set;
         }
 
-        #region Implementation of ISupportsGettingByGroup interface
+        #region Implementation of ISupportsGettingByResourceGroup interface
 
-        public abstract Task<IFluentResourceT> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
+        protected abstract Task<InnerResourceT> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
 
-        public IFluentResourceT GetByGroup(string groupName, string name)
+
+        public virtual async Task<IFluentResourceT> GetByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            return GetByGroupAsync(groupName, name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return WrapModel(await this.GetInnerByGroupAsync(groupName, name, cancellationToken));
+        }
+
+
+        public IFluentResourceT GetByResourceGroup(string groupName, string name)
+        {
+            return GetByResourceGroupAsync(groupName, name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         #endregion
@@ -47,7 +54,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public async Task<IFluentResourceT> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetByGroupAsync(
+            return await GetByResourceGroupAsync(
                     ResourceUtils.GroupFromResourceId(id),
                     ResourceUtils.NameFromResourceId(id),
                     cancellationToken
@@ -61,13 +68,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         #endregion
 
-        #region Implementation of ISupportsDeletingByGroup interface
+        #region Implementation of ISupportsDeletingByResourceGroup interface
 
-        public abstract Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken));
+        protected abstract Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
 
-        public void DeleteByGroup(string groupName, string name)
+        public virtual async Task DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.DeleteByGroupAsync(groupName, name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            await this.DeleteInnerByGroupAsync(groupName, name, cancellationToken);
+        }
+
+        public void DeleteByResourceGroup(string groupName, string name)
+        {
+            this.DeleteByResourceGroupAsync(groupName, name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         #endregion
@@ -81,7 +93,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await this.DeleteByResourceGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         #endregion

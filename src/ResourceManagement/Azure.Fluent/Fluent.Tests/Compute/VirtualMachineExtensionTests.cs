@@ -160,7 +160,7 @@ namespace Fluent.Tests.Compute
 
                 // Get the created virtual machine via VM List not by VM GET
                 var virtualMachines = azure.VirtualMachines
-                    .ListByGroup(rgName);
+                    .ListByResourceGroup(rgName);
                 IVirtualMachine vmWithExtensionReference = null;
                 foreach (var virtualMachine in virtualMachines)
                 {
@@ -184,7 +184,7 @@ namespace Fluent.Tests.Compute
 
                 // Again getting VM with extension reference
                 virtualMachines = azure.VirtualMachines
-                    .ListByGroup(rgName);
+                    .ListByResourceGroup(rgName);
                 vmWithExtensionReference = null;
                 foreach (var virtualMachine in virtualMachines)
                 {

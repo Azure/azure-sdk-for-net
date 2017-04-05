@@ -102,7 +102,7 @@ namespace Fluent.Tests.Compute
                     .Create();
 
 
-            foreach (INetwork virtualNetwork in manager.Networks.ListByGroup(rgName))
+            foreach (INetwork virtualNetwork in manager.Networks.ListByResourceGroup(rgName))
             {
             }
 

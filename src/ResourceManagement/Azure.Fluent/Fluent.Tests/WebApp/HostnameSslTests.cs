@@ -28,8 +28,8 @@ namespace Azure.Tests.WebApp
                 string AppServicePlanName = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
-                var domain = appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com");
-                var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup("javacsmrg9b9912262", "graphdmcert7720");
+                var domain = appServiceManager.AppServiceDomains.GetByResourceGroup("javacsmrg9b9912262", "graph-dm7720.com");
+                var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByResourceGroup("javacsmrg9b9912262", "graphdmcert7720");
 
                 // hostname binding
                 appServiceManager.WebApps.Define(WebAppName)
@@ -44,7 +44,7 @@ namespace Azure.Tests.WebApp
                         .Attach()
                     .Create();
 
-                var webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                var webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 Assert.NotNull(webApp);
 
                 var response = await TestHelper.CheckAddress("http://" + WebAppName + "." + domain.Name);

@@ -78,8 +78,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContent(IList<string> contentPaths)
         {
- 
-            this.PurgeContent(contentPaths);
+            ((ICdnEndpoint)this).PurgeContentAsync(contentPaths).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Forcibly purges current CDN endpoint content.
+        /// </summary>
+        /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        {
+            await this.PurgeContentAsync(contentPaths, cancellationToken);
         }
 
         /// <summary>
@@ -108,9 +116,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Stops current running CDN endpoint.
         /// </summary>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.Stop()
+        { 
+            ((ICdnEndpoint)this).StopAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Stops current running CDN endpoint.
+        /// </summary>
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.StopAsync(CancellationToken cancellationToken)
         {
- 
-            this.Stop();
+            await this.StopAsync(cancellationToken);
         }
 
         /// <summary>
@@ -140,9 +155,17 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.Start()
         {
- 
-            this.Start();
+             ((ICdnEndpoint)this).StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
+
+        /// <summary>
+        /// Starts current stopped CDN endpoint.
+        /// </summary>
+        async Task ICdnEndpoint.StartAsync(CancellationToken cancellationToken)
+        {
+            await this.StartAsync(cancellationToken);
+        }
+
 
         /// <summary>
         /// Gets endpoint state.
@@ -172,8 +195,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContent(IList<string> contentPaths)
         {
- 
-            this.LoadContent(contentPaths);
+            ((ICdnEndpoint)this).LoadContentAsync(contentPaths).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Forcibly pre-loads current CDN endpoint content. Available for Verizon Profiles.
+        /// </summary>
+        /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContentAsync(
+            IList<string> contentPaths,
+            CancellationToken cancellationToken)
+        {
+            await this.LoadContentAsync(contentPaths, cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +315,17 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <return>The CustomDomainValidationResult object if successful.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ValidateCustomDomain(string hostName)
         {
-            return this.ValidateCustomDomain(hostName) as Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult;
+            return ((ICdnEndpoint)this).ValidateCustomDomainAsync(hostName).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint.
+        /// </summary>
+        /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
+        /// <return>The CustomDomainValidationResult object if successful.</return>
+        async Task<CustomDomainValidationResult> ICdnEndpoint.ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken)
+        {
+            return await this.ValidateCustomDomainAsync(hostName, cancellationToken);
         }
 
         /// <summary>

@@ -76,7 +76,7 @@ namespace Azure.Tests.Sql
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
-                var sqlServer = sqlServerManager.SqlServers.GetByGroup("ans", "ans-secondary");
+                var sqlServer = sqlServerManager.SqlServers.GetByResourceGroup("ans", "ans-secondary");
                 var usages = sqlServer.Databases.List().First().ListServiceTierAdvisors().Values.FirstOrDefault().ServiceLevelObjectiveUsageMetrics;
                 var recommendedElasticPools = sqlServer.ListRecommendedElasticPools();
                 Assert.NotNull(recommendedElasticPools);
@@ -107,7 +107,7 @@ namespace Azure.Tests.Sql
                 sqlServer.Update().WithAdministratorPassword("loepop77ejk~13@@").Apply();
 
                 // List
-                var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
+                var sqlServers = sqlServerManager.SqlServers.ListByResourceGroup(GroupName);
                 var found = false;
                 foreach (var server in sqlServers)
                 {
@@ -118,10 +118,10 @@ namespace Azure.Tests.Sql
                 }
                 Assert.True(found);
                 // Get
-                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                sqlServer = sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName);
                 Assert.NotNull(sqlServer);
 
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
                 DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
@@ -202,7 +202,7 @@ namespace Azure.Tests.Sql
                 Assert.Equal(sqlServer.ElasticPools.List().Count(), 0);
 
                 // List
-                var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
+                var sqlServers = sqlServerManager.SqlServers.ListByResourceGroup(GroupName);
                 var found = false;
                 foreach (var server in sqlServers)
                 {
@@ -214,10 +214,10 @@ namespace Azure.Tests.Sql
 
                 Assert.True(found);
                 // Get
-                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                sqlServer = sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName);
                 Assert.NotNull(sqlServer);
 
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
                 DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
@@ -235,7 +235,7 @@ namespace Azure.Tests.Sql
                 bool deleteUsingUpdate)
         {
             ValidateSqlServer(sqlServer);
-            ValidateSqlServer(sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName));
+            ValidateSqlServer(sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName));
             ValidateSqlDatabase(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
             ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SqlFirewallRuleName), SqlFirewallRuleName);
 
@@ -390,7 +390,7 @@ namespace Azure.Tests.Sql
                 Assert.NotNull(serviceTierAdvisors.Values.First().ServiceLevelObjectiveUsageMetrics);
                 // End of testing service tier advisors.
 
-                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                sqlServer = sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName);
                 ValidateSqlServer(sqlServer);
 
                 // Create another database with above created database as source database.
@@ -426,7 +426,7 @@ namespace Azure.Tests.Sql
                         .Create();
                 sqlServer.Databases.Delete(sqlDatabase.Name);
 
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
             }
         }
@@ -488,9 +488,9 @@ namespace Azure.Tests.Sql
                 sqlServer1.Databases.Delete(databaseInServer1.Name);
                 sqlServer2.Databases.Delete(databaseInServer2.Name);
 
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer2.ResourceGroupName, sqlServer2.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer2.ResourceGroupName, sqlServer2.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer2);
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer1.ResourceGroupName, sqlServer1.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer1.ResourceGroupName, sqlServer1.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer1);
                 DeleteResourceGroup(sqlServer1.ResourceGroupName);
                 DeleteResourceGroup(sqlServer2.ResourceGroupName);
@@ -544,7 +544,7 @@ namespace Azure.Tests.Sql
 
                 sqlServer.Databases.Delete(SqlDatabaseName);
 
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
                 DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
@@ -574,7 +574,7 @@ namespace Azure.Tests.Sql
 
                 ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
 
-                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                sqlServer = sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName);
                 ValidateSqlServer(sqlServer);
 
                 // Get Elastic pool
@@ -671,7 +671,7 @@ namespace Azure.Tests.Sql
                 ValidateSqlDatabaseNotFound(sqlServerManager, "newDatabase");
 
                 sqlServer.ElasticPools.Delete(SqlElasticPoolName);
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
                 DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
@@ -689,7 +689,7 @@ namespace Azure.Tests.Sql
                 // Create
                 var sqlServer = CreateSqlServer(sqlServerManager);
 
-                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                sqlServer = sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName);
                 ValidateSqlServer(sqlServer);
 
                 var sqlElasticPool = sqlServer.ElasticPools
@@ -730,7 +730,7 @@ namespace Azure.Tests.Sql
                 sqlServer.ElasticPools.Delete(sqlElasticPool.Name);
                 ValidateSqlElasticPoolNotFound(sqlServer, "newElasticPool");
 
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
                 DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
@@ -748,7 +748,7 @@ namespace Azure.Tests.Sql
                 // Create
                 var sqlServer = CreateSqlServer(sqlServerManager);
 
-                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                sqlServer = sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName);
                 ValidateSqlServer(sqlServer);
 
                 var sqlFirewallRule = sqlServer.FirewallRules
@@ -794,7 +794,7 @@ namespace Azure.Tests.Sql
                 ValidateSqlFirewallRuleNotFound(sqlServerManager);
 
                 // Delete server
-                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                sqlServerManager.SqlServers.DeleteByResourceGroup(sqlServer.ResourceGroupName, sqlServer.Name);
                 ValidateSqlServerNotFound(sqlServerManager, sqlServer);
                 DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
@@ -802,7 +802,7 @@ namespace Azure.Tests.Sql
 
         private static void ValidateSqlFirewallRuleNotFound(ISqlManager sqlServerManager)
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName).FirewallRules.Get(SqlFirewallRuleName));
+            AssertIfFound(() => sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName).FirewallRules.Get(SqlFirewallRuleName));
         }
 
         private static void ValidateSqlElasticPoolNotFound(ISqlServer sqlServer, string elasticPoolName)
@@ -812,7 +812,7 @@ namespace Azure.Tests.Sql
 
         private static void ValidateSqlDatabaseNotFound(ISqlManager sqlServerManager, String newDatabase)
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName).Databases.Get(newDatabase));
+            AssertIfFound(() => sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName).Databases.Get(newDatabase));
         }
 
         private static void ValidateSqlServerNotFound(ISqlManager sqlServerManager, ISqlServer sqlServer)

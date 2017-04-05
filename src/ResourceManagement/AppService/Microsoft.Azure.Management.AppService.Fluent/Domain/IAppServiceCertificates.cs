@@ -15,10 +15,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public interface IAppServiceCertificates  :
         ISupportsCreating<AppServiceCertificate.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
+        ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IAppServiceManager>,
         IHasInner<ICertificatesOperations>
     {

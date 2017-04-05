@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public interface IAppServiceDomains  :
         ISupportsCreating<AppServiceDomain.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        ISupportsDeletingByResourceGroup,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         IHasManager<IAppServiceManager>,
         IHasInner<IDomainsOperations>

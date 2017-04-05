@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
+    using Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System.Threading;
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Task<IEnumerable<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IPagedCollection<T>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
@@ -43,6 +44,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<IEnumerable<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IPagedCollection<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

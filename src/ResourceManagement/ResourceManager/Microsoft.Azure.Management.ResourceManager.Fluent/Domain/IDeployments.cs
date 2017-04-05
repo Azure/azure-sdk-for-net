@@ -14,12 +14,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     public interface IDeployments  :
         ISupportsCreating<IBlank>,
         ISupportsListing<IDeployment>,
-        ISupportsListingByGroup<IDeployment>,
+        ISupportsListingByResourceGroup<IDeployment>,
         ISupportsGettingByName<IDeployment>,
-        ISupportsGettingByGroup<IDeployment>,
+        ISupportsGettingByResourceGroup<IDeployment>,
         ISupportsGettingById<IDeployment>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IResourceManager>,
         IHasInner<IDeploymentsOperations>
     {

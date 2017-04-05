@@ -228,7 +228,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>The generated access keys for this Redis Cache.</return>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.RegenerateKey(RedisKeyType keyType)
         {
-            return this.RegenerateKey(keyType) as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+            return ((IRedisCache)this).RegenerateKeyAsync(keyType).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Regenerates the access keys for this Redis Cache.
+        /// </summary>
+        /// <param name="keyType">Key type to regenerate.</param>
+        /// <return>The generated access keys for this Redis Cache.</return>
+        async Task<IRedisAccessKeys> IRedisCache.RegenerateKeyAsync(RedisKeyType keyType, CancellationToken cancellationToken)
+        {
+            return await this.RegenerateKeyAsync(keyType, cancellationToken);
         }
 
         /// <summary>
@@ -278,12 +288,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <summary>
         /// Gets a Redis Cache's access keys. This operation requires write permission to the Cache resource.
         /// </summary>
-        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.Keys
+        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.GetKeys()
         {
-            get
-            {
-                return this.Keys() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
-            }
+            return ((IRedisCache)this).GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Gets a Redis Cache's access keys. This operation requires write permission to the Cache resource.
+        /// </summary>
+        async Task<IRedisAccessKeys> IRedisCache.GetKeysAsync(CancellationToken cancellationToken)
+        {
+            return await this.GetKeysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +340,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>The access keys for this Redis Cache.</return>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.RefreshKeys()
         {
-            return this.RefreshKeys() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+            return ((IRedisCache)this).RefreshKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Fetch the up-to-date access keys from Azure for this Redis Cache.
+        /// </summary>
+        /// <return>The access keys for this Redis Cache.</return>
+        async Task<IRedisAccessKeys> IRedisCache.RefreshKeysAsync(CancellationToken cancellationToken)
+        {
+            return await this.RefreshKeysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -551,8 +575,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="prefix">Prefix to use for exported files.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportData(string containerSASUrl, string prefix)
         {
- 
-            this.ExportData(containerSASUrl, prefix);
+             ((IRedisCachePremium)this).ExportDataAsync(containerSASUrl, prefix).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Export data from Redis Cache.
+        /// </summary>
+        /// <param name="containerSASUrl">Container name to export to.</param>
+        /// <param name="prefix">Prefix to use for exported files.</param>
+        async Task Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportDataAsync(string containerSASUrl, string prefix, CancellationToken cancellationToken)
+        {
+            await this.ExportDataAsync(containerSASUrl, prefix, cancellationToken);
         }
 
         /// <summary>
@@ -562,9 +595,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="prefix">Prefix to use for exported files.</param>
         /// <param name="fileFormat">Specifies file format.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportData(string containerSASUrl, string prefix, string fileFormat)
+        { 
+            ((IRedisCachePremium)this).ExportDataAsync(containerSASUrl, prefix, fileFormat).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Export data from Redis Cache.
+        /// </summary>
+        /// <param name="containerSASUrl">Container name to export to.</param>
+        /// <param name="prefix">Prefix to use for exported files.</param>
+        /// <param name="fileFormat">Specifies file format.</param>
+        async Task IRedisCachePremium.ExportDataAsync(string containerSASUrl, string prefix, string fileFormat, CancellationToken cancellationToken)
         {
- 
-            this.ExportData(containerSASUrl, prefix, fileFormat);
+            await this.ExportDataAsync(containerSASUrl, prefix, fileFormat, cancellationToken);
         }
 
         /// <summary>
@@ -573,8 +616,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="files">Files to import.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ImportData(IList<string> files)
         {
- 
-            this.ImportData(files);
+             ((IRedisCachePremium)this).ImportDataAsync(files).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Import data into Redis Cache.
+        /// </summary>
+        /// <param name="files">Files to import.</param>
+        async Task IRedisCachePremium.ImportDataAsync(IList<string> files, CancellationToken cancellationToken)
+        {
+            await this.ImportDataAsync(files, cancellationToken);
         }
 
         /// <summary>
@@ -583,17 +634,25 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="files">Files to import.</param>
         /// <param name="fileFormat">Specifies file format.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ImportData(IList<string> files, string fileFormat)
+        { 
+            ((IRedisCachePremium)this).ImportDataAsync(files, fileFormat).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Import data into Redis Cache.
+        /// </summary>
+        /// <param name="files">Files to import.</param>
+        /// <param name="fileFormat">Specifies file format.</param>
+        async Task IRedisCachePremium.ImportDataAsync(IList<string> files, string fileFormat, CancellationToken cancellationToken)
         {
- 
-            this.ImportData(files, fileFormat);
+            await this.ImportDataAsync(files, fileFormat, cancellationToken);
         }
 
         /// <summary>
         /// Deletes the patching schedule for Redis Cache.
         /// </summary>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.DeletePatchSchedule()
-        {
- 
+        { 
             this.DeletePatchSchedule();
         }
 
@@ -615,8 +674,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ForceReboot(string rebootType)
         {
- 
-            this.ForceReboot(rebootType);
+             ((IRedisCachePremium)this).ForceRebootAsync(rebootType).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
+        /// </summary>
+        /// <param name="rebootType">
+        /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
+        /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
+        /// </param>
+        async Task IRedisCachePremium.ForceRebootAsync(string rebootType, CancellationToken cancellationToken)
+        {
+            await this.ForceRebootAsync(rebootType, cancellationToken);
         }
 
         /// <summary>
@@ -629,8 +699,20 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="shardId">In case of cluster cache, this specifies shard id which should be rebooted.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ForceReboot(string rebootType, int shardId)
         {
- 
-            this.ForceReboot(rebootType, shardId);
+            ((IRedisCachePremium)this).ForceRebootAsync(rebootType, shardId).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
+        /// </summary>
+        /// <param name="rebootType">
+        /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
+        /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
+        /// </param>
+        /// <param name="shardId">In case of cluster cache, this specifies shard id which should be rebooted.</param>
+        async Task IRedisCachePremium.ForceRebootAsync(string rebootType, int shardId, CancellationToken cancellationToken)
+        {
+            await this.ForceRebootAsync(rebootType, shardId, cancellationToken);
         }
 
         /// <summary>

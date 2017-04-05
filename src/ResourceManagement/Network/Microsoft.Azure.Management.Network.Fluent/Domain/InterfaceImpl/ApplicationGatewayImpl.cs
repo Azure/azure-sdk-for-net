@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using System.Threading;
 
     internal partial class ApplicationGatewayImpl 
     {
@@ -502,6 +503,41 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this.FrontendPortNameFromNumber(portNumber);
         }
 
+        /// <summary>
+        /// Starts the application gateway.
+        /// </summary>
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Start()
+        {
+            ((IApplicationGateway)this).StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Starts the application gateway.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        async Task IApplicationGateway.StartAsync(CancellationToken cancellationToken)
+        {
+            await this.StartAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops the application gateway.
+        /// </summary>
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Stop()
+        {
+            ((IApplicationGateway)this).StopAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Stops the application gateway.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        async Task IApplicationGateway.StopAsync(CancellationToken cancellationToken)
+        {
+            await this.StopAsync(cancellationToken);
+        }
         /// <summary>
         /// Gets SSL certificates, indexed by name.
         /// </summary>

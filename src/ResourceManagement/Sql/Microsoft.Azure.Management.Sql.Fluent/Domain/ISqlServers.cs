@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     public interface ISqlServers  :
         ISupportsCreating<SqlServer.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         IHasManager<ISqlManager>,
         IHasInner<IServersOperations>

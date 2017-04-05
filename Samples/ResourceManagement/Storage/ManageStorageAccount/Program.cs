@@ -76,7 +76,7 @@ namespace ManageStorageAccount
 
                 var storageAccounts = azure.StorageAccounts;
 
-                var accounts = storageAccounts.ListByGroup(rgName);
+                var accounts = storageAccounts.ListByResourceGroup(rgName);
 
                 foreach (var account in accounts)
                 {

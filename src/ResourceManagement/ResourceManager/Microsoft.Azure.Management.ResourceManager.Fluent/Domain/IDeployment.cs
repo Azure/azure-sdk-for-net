@@ -10,6 +10,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     using System;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Management.ResourceManager.Fluent.Models;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// An immutable client-side representation of an Azure deployment.
@@ -64,13 +66,23 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// <summary>
         /// Cancel a currently running template deployment.
         /// </summary>
-        void Cancel ();
+        void Cancel();
+
+        /// <summary>
+        /// Cancel a currently running template deployment.
+        /// </summary>
+        Task CancelAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Exports a deployment template.
         /// </summary>
         /// <returns>the export result</returns>
-        IDeploymentExportResult ExportTemplate { get; }
+        IDeploymentExportResult ExportTemplate();
 
+        /// <summary>
+        /// Exports a deployment template.
+        /// </summary>
+        /// <returns>the export result</returns>
+        Task<IDeploymentExportResult> ExportTemplateAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

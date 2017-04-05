@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 string id = NetworkSecurityGroupId();
                 networkSecurityGroup = Manager
                     .NetworkSecurityGroups
-                    .GetByGroup(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+                    .GetByResourceGroup(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
             }
             return networkSecurityGroup;
         }

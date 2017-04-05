@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
@@ -98,6 +99,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             {
                 return new ServicePrincipalImpl(spList.FirstOrDefault(), innerCollection);
             }
+        }
+
+        public async Task<IPagedCollection<IServicePrincipal>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IServicePrincipal, ServicePrincipalInner>.LoadPage(
+                async (cancellation) => await innerCollection.ListAsync(cancellationToken: cancellation),
+                innerCollection.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

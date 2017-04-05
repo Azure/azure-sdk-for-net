@@ -81,11 +81,11 @@ namespace Fluent.Tests.Compute
                     }
                     var image = computeManager
                             .VirtualMachineCustomImages
-                            .GetByGroup(rgName, vhdBasedImageName);
+                            .GetByResourceGroup(rgName, vhdBasedImageName);
                     Assert.NotNull(image);
                     var images = computeManager
                             .VirtualMachineCustomImages
-                            .ListByGroup(rgName);
+                            .ListByResourceGroup(rgName);
                     Assert.True(images.Count() > 0);
 
                     // Create virtual machine from custom image
@@ -160,7 +160,7 @@ namespace Fluent.Tests.Compute
                         diskImage.BlobUri.Equals(vmDisk.VhdUri, StringComparison.OrdinalIgnoreCase);
                     }
 
-                    customImage = computeManager.VirtualMachineCustomImages.GetByGroup(rgName, imageName);
+                    customImage = computeManager.VirtualMachineCustomImages.GetByResourceGroup(rgName, imageName);
                     Assert.NotNull(customImage);
                     Assert.NotNull(customImage.Inner);
                     computeManager.VirtualMachineCustomImages.DeleteById(customImage.Id);

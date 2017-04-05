@@ -52,7 +52,7 @@ namespace DeployVirtualMachineUsingARMTemplate
 
                 Utilities.Log("Started a deployment for an Azure Virtual Machine with managed disks: " + deploymentName);
 
-                var deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                var deployment = azure.Deployments.GetByResourceGroup(rgName, deploymentName);
                 Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
 
                 while (!(StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Succeeded") ||
@@ -60,7 +60,7 @@ namespace DeployVirtualMachineUsingARMTemplate
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
                 {
                     SdkContext.DelayProvider.Delay(10000);
-                    deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                    deployment = azure.Deployments.GetByResourceGroup(rgName, deploymentName);
                     Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
                 }
             }

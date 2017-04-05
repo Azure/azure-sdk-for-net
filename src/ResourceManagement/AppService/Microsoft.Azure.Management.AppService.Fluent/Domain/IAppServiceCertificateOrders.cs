@@ -17,10 +17,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public interface IAppServiceCertificateOrders  :
         ISupportsCreating<IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<IAppServiceCertificateOrder>,
-        ISupportsGettingByGroup<IAppServiceCertificateOrder>,
+        ISupportsListingByResourceGroup<IAppServiceCertificateOrder>,
+        ISupportsListing<IAppServiceCertificateOrder>,
+        ISupportsGettingByResourceGroup<IAppServiceCertificateOrder>,
         ISupportsGettingById<IAppServiceCertificateOrder>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IAppServiceManager>,
         IHasInner<IAppServiceCertificateOrdersOperations>
     {

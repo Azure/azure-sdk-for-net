@@ -136,7 +136,7 @@ namespace ManageAvailabilitySet
 
                 Utilities.Log("Printing list of availability sets  =======");
 
-                foreach (var availabilitySet in azure.AvailabilitySets.ListByGroup(resourceGroupName))
+                foreach (var availabilitySet in azure.AvailabilitySets.ListByResourceGroup(resourceGroupName))
                 {
                     Utilities.PrintAvailabilitySet(availabilitySet);
                 }

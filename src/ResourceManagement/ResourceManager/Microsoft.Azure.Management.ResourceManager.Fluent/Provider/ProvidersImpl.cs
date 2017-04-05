@@ -8,6 +8,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -27,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public async Task<IProvider> GetByNameAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProviderInner inner = await client.GetAsync(resourceProviderNamespace, null, cancellationToken);
+            ProviderInner inner = await client.GetAsync(resourceProviderNamespace, cancellationToken: cancellationToken);
             return new ProviderImpl(inner);
         }
 
@@ -38,14 +40,32 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                          .Select(inner => WrapModel(inner));
         }
 
+        public async Task<IPagedCollection<IProvider>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IProvider, ProviderInner>.LoadPage(
+                async (cancellation) => await client.ListAsync(cancellationToken: cancellation),
+                client.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
+        }
+
         public IProvider Register(string resourceProviderNamespace)
         {
             return WrapModel(client.Register(resourceProviderNamespace));
         }
 
+        public async Task<IProvider> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return WrapModel(await client.RegisterAsync(resourceProviderNamespace, cancellationToken));
+        }
+
         public IProvider Unregister(string resourceProviderNamespace)
         {
-            return WrapModel(client.Unregister(resourceProviderNamespace));
+            return UnregisterAsync(resourceProviderNamespace).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task<IProvider> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return WrapModel(await client.UnregisterAsync(resourceProviderNamespace, cancellationToken));
         }
 
         private IProvider WrapModel(ProviderInner innerModel)

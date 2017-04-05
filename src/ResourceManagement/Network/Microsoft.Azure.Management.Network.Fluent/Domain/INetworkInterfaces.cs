@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface INetworkInterfaces  :
         ISupportsCreating<NetworkInterface.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         IHasManager<INetworkManager>,
         IHasInner<INetworkInterfacesOperations>
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets a network interface associated with a virtual machine scale set instance.
         /// </summary>
-        /// <param name="resourceGroupName">irtual machine scale set resource group name</param>
+        /// <param name="resourceGroupName">Virtual machine scale set resource group name</param>
         /// <param name="scaleSetName">scale set name</param>
         /// <param name="instanceId">the virtual machine scale set vm instance id</param>
         /// <param name="name">the network interface name</param>

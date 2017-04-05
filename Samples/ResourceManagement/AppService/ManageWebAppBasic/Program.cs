@@ -53,7 +53,7 @@ namespace ManageWebAppBasic
                 // Create a second web app with the same app service plan
 
                 Utilities.Log("Creating another web app " + app2Name + " in resource group " + rg1Name + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByGroup(rg1Name, planName);
+                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rg1Name, planName);
                 var app2 = azure.WebApps
                         .Define(app2Name)
                         .WithExistingResourceGroup(rg1Name)
@@ -106,14 +106,14 @@ namespace ManageWebAppBasic
 
                 Utilities.Log("Printing list of web apps in resource group " + rg1Name + "...");
 
-                foreach (var webApp in azure.WebApps.ListByGroup(rg1Name))
+                foreach (var webApp in azure.WebApps.ListByResourceGroup(rg1Name))
                 {
                     Utilities.Print(webApp);
                 }
 
                 Utilities.Log("Printing list of web apps in resource group " + rg2Name + "...");
 
-                foreach (var webApp in azure.WebApps.ListByGroup(rg2Name))
+                foreach (var webApp in azure.WebApps.ListByResourceGroup(rg2Name))
                 {
                     Utilities.Print(webApp);
                 }
@@ -122,11 +122,11 @@ namespace ManageWebAppBasic
                 // Delete a web app
 
                 Utilities.Log("Deleting web app " + app1Name + "...");
-                azure.WebApps.DeleteByGroup(rg1Name, app1Name);
+                azure.WebApps.DeleteByResourceGroup(rg1Name, app1Name);
                 Utilities.Log("Deleted web app " + app1Name + "...");
 
                 Utilities.Log("Printing list of web apps in resource group " + rg1Name + " again...");
-                foreach (var webApp in azure.WebApps.ListByGroup(rg1Name))
+                foreach (var webApp in azure.WebApps.ListByResourceGroup(rg1Name))
                 {
                     Utilities.Print(webApp);
                 }

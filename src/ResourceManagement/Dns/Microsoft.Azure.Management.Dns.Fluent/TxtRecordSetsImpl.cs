@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading.Tasks;
     using System.Threading;
     using System.Collections.Generic;
+    using Management.Fluent.Resource.Core;
+    using System;
 
     /// <summary>
     /// Implementation of TxtRecordSets.
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ITxtRecordSets
     {
         private DnsZoneImpl dnsZone;
+        private const RecordType TxtRecordType = RecordType.TXT;
 
         private DnsZoneImpl Parent()
         {
@@ -35,7 +38,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 dnsZone.ResourceGroupName,
                 dnsZone.Name,
                 name,
-                RecordType.TXT,
+                TxtRecordType,
                 cancellationToken);
             return new TxtRecordSetImpl(dnsZone, inner);
         }
@@ -50,7 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IEnumerable<ITxtRecordSet> List()
         {
             return WrapList(dnsZone.Manager.Inner.RecordSets
-                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name,RecordType.TXT)
+                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name, TxtRecordType)
                 .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
@@ -58,6 +61,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         protected override ITxtRecordSet WrapModel(RecordSetInner inner)
         {
             return new TxtRecordSetImpl(dnsZone, inner);
+        }
+
+        public async Task<IPagedCollection<ITxtRecordSet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<ITxtRecordSet, RecordSetInner>.LoadPage(
+                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName, dnsZone.Name, TxtRecordType, cancellationToken: cancellation),
+                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

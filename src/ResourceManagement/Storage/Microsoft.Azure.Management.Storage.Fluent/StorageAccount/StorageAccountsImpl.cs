@@ -8,11 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
     internal class StorageAccountsImpl :
-        GroupableResources<
+        TopLevelModifiableResources<
                 IStorageAccount,
                 StorageAccountImpl,
                 StorageAccountInner,
@@ -25,9 +27,14 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         
         public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return new CheckNameAvailabilityResult(Inner.CheckNameAvailability(name));
+            return CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
-        
+
+        public async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return new CheckNameAvailabilityResult(await Inner.CheckNameAvailabilityAsync(name, cancellationToken));
+        }
+
         public StorageAccount.Definition.IBlank Define(string name)
         {
             StorageAccountImpl wrapped = WrapModel(name);
@@ -35,33 +42,37 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                    .WithGeneralPurposeAccountKind();
             return wrapped;
         }
-        
-        public IEnumerable<IStorageAccount> List()
+
+        protected async override Task<IPage<StorageAccountInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return WrapList(Inner.List());
-        }
-        
-        public IEnumerable<IStorageAccount> ListByGroup(string groupName)
-        {
-            return WrapList(Inner.ListByResourceGroup(groupName));
+            return ConvertToPage(await Inner.ListAsync(cancellationToken));
         }
 
-        public Task<IEnumerable<IStorageAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<StorageAccountInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
         {
-            throw new NotSupportedException();
+            return await Task.FromResult<IPage<StorageAccountInner>>(null);
         }
-        
-        public async override Task<IStorageAccount> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+
+        protected async override Task<IPage<StorageAccountInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            var storageAccount = await Inner.GetPropertiesAsync(groupName, name, cancellationToken);
-            return WrapModel(storageAccount);
+            return ConvertToPage(await Inner.ListByResourceGroupAsync(groupName, cancellationToken));
         }
-        
-        public async override Task DeleteByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+
+        protected async override Task<IPage<StorageAccountInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)
         {
-            await Inner.DeleteAsync(resourceGroupName, name, cancellationToken);
+            return await Task.FromResult<IPage<StorageAccountInner>>(null);
         }
-        
+
+        protected async override Task<StorageAccountInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            return await Inner.GetPropertiesAsync(groupName, name, cancellationToken);
+        }
+
+        protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
+        }
+
         protected override IStorageAccount WrapModel(StorageAccountInner inner)
         {
             return new StorageAccountImpl(inner.Name, inner, Manager);

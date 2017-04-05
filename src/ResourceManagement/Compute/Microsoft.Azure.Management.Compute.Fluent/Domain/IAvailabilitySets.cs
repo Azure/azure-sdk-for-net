@@ -11,13 +11,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Entry point to availability set management API.
     /// </summary>
     public interface IAvailabilitySets  :
-        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         ISupportsCreating<AvailabilitySet.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         IHasManager<IComputeManager>,
         IHasInner<IAvailabilitySetsOperations>

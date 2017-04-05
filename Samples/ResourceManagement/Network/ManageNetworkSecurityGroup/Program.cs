@@ -226,7 +226,7 @@ namespace ManageNetworkSecurityGroup
                 // List network security groups
 
                 Utilities.Log("Walking through network security groups");
-                var networkSecurityGroups = azure.NetworkSecurityGroups.ListByGroup(rgName);
+                var networkSecurityGroups = azure.NetworkSecurityGroups.ListByResourceGroup(rgName);
 
                 foreach (var networkSecurityGroup in networkSecurityGroups)
                 {
