@@ -306,7 +306,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP',
+        /// 'RSA-OAEP-256', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -331,7 +332,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP',
+        /// 'RSA-OAEP-256', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -358,7 +360,8 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='algorithm'>
         /// The signing/verification algorithm identifier. For more information
         /// on possible algorithm types, see JsonWebKeySignatureAlgorithm.
-        /// Possible values include: 'RS256', 'RS384', 'RS512', 'RSNULL'
+        /// Possible values include: 'PS256', 'PS384', 'PS512', 'RS256',
+        /// 'RS384', 'RS512', 'RSNULL'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -385,7 +388,8 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='algorithm'>
         /// The signing/verification algorithm. For more information on
         /// possible algorithm types, see JsonWebKeySignatureAlgorithm.
-        /// Possible values include: 'RS256', 'RS384', 'RS512', 'RSNULL'
+        /// Possible values include: 'PS256', 'PS384', 'PS512', 'RS256',
+        /// 'RS384', 'RS512', 'RSNULL'
         /// </param>
         /// <param name='digest'>
         /// The digest used for signing.
@@ -414,7 +418,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP',
+        /// 'RSA-OAEP-256', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -440,7 +445,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP',
+        /// 'RSA-OAEP-256', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -742,7 +748,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<BackupSecretResult>> BackupSecretWithHttpMessagesAsync( string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default( CancellationToken ) );
+        Task<AzureOperationResponse<BackupSecretResult>> BackupSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Restores a backed up secret to a vault.
@@ -759,7 +765,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SecretBundle>> RestoreSecretWithHttpMessagesAsync( string vaultBaseUrl, byte[ ] secretBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default( CancellationToken ) );
+        Task<AzureOperationResponse<SecretBundle>> RestoreSecretWithHttpMessagesAsync(string vaultBaseUrl, byte[] secretBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List certificates in a specified key vault

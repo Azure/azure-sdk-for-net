@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 //
@@ -23,14 +23,14 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretRestoreParameters class.
         /// </summary>
-        public SecretRestoreParameters( ) { }
+        public SecretRestoreParameters() { }
 
         /// <summary>
         /// Initializes a new instance of the SecretRestoreParameters class.
         /// </summary>
         /// <param name="secretBundleBackup">The backup blob associated with a
         /// secret bundle.</param>
-        public SecretRestoreParameters( byte[ ] secretBundleBackup )
+        public SecretRestoreParameters(byte[] secretBundleBackup)
         {
             SecretBundleBackup = secretBundleBackup;
         }
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Gets or sets the backup blob associated with a secret bundle.
         /// </summary>
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
-        [JsonProperty( PropertyName = "value" )]
-        public byte[ ] SecretBundleBackup { get; set; }
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
+        [JsonProperty(PropertyName = "value")]
+        public byte[] SecretBundleBackup { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -48,12 +48,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate( )
+        public virtual void Validate()
         {
-            if ( SecretBundleBackup == null )
+            if (SecretBundleBackup == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "SecretBundleBackup" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "SecretBundleBackup");
             }
         }
     }
 }
+

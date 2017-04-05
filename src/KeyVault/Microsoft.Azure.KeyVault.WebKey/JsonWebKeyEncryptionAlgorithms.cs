@@ -13,6 +13,10 @@ namespace Microsoft.Azure.KeyVault.WebKey
         public const string RSAOAEP = "RSA-OAEP";
         public const string RSA15   = "RSA1_5";
 
+        // RSAES OAEP using SHA-256 and MGF1 with SHA-256 
+        // defined https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms        
+        public const string RSAOAEP256 = "RSA-OAEP-256";
+
         /// <summary>
         /// All algorithms names. Use clone to avoid FxCop violation
         /// </summary>
@@ -21,6 +25,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
             get { return (string[])_allAlgorithms.Clone(); }
         }
 
-        private static readonly string[] _allAlgorithms = { RSA15, RSAOAEP };
+        private static readonly string[] _allAlgorithms = { RSA15, RSAOAEP, RSAOAEP256 };
     }
  }

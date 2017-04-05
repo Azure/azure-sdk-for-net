@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 //
@@ -23,14 +23,14 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the BackupSecretResult class.
         /// </summary>
-        public BackupSecretResult( ) { }
+        public BackupSecretResult() { }
 
         /// <summary>
         /// Initializes a new instance of the BackupSecretResult class.
         /// </summary>
         /// <param name="value">The backup blob containing the backed up
         /// secret.</param>
-        public BackupSecretResult( byte[ ] value = default( byte[ ] ) )
+        public BackupSecretResult(byte[] value = default(byte[]))
         {
             Value = value;
         }
@@ -38,9 +38,10 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Gets the backup blob containing the backed up secret.
         /// </summary>
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
-        [JsonProperty( PropertyName = "value" )]
-        public byte[ ] Value { get; protected set; }
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
+        [JsonProperty(PropertyName = "value")]
+        public byte[] Value { get; protected set; }
 
     }
 }
+
