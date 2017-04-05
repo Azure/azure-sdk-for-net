@@ -5,8 +5,8 @@ using Microsoft.Rest.Azure;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
+using System.Reflection;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -33,6 +33,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
             } while (currentPage.NextPageLink != null &&
                     (currentPage = getNextPage(currentPage.NextPageLink)) != null);
+        }
+
+        public static IPage<InnerResourceT> ConvertToPage<InnerResourceT>(IEnumerable<InnerResourceT> list)
+        {
+            var page = new Page<InnerResourceT>();
+            typeof(Page<InnerResourceT>).GetProperty(
+                    "Items", 
+                    BindingFlags.NonPublic | BindingFlags.Instance)
+                .SetValue(page, list.ToList());
+
+            return page;
         }
     }
 }

@@ -289,11 +289,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:CC9FF17BB935059EB35312593856BE61
-        public override IVault Refresh ()
+        protected override async Task<VaultInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var inner = Manager.Inner.Vaults.Get(ResourceGroupName, Name);
-            SetInner(inner);
-            return this;
+            return await Manager.Inner.Vaults.GetAsync(ResourceGroupName, Name, cancellationToken);
         }
     }
 }

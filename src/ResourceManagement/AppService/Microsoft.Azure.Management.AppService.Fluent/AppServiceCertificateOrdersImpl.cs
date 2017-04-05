@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Management.Fluent.Resource.Core;
     using Models;
     using ResourceManager.Fluent.Core;
     using Rest.Azure;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 

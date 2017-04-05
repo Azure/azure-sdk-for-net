@@ -68,15 +68,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:C47C4325FAE65E493A947196909A8664
-        public ITrafficManagerEndpoint Refresh()
+        protected override async Task<EndpointInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            EndpointInner inner = Parent.Manager.Inner.Endpoints.Get(
+            return await Parent.Manager.Inner.Endpoints.GetAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
                 EndpointType().ToString(),
-                Name());
-            SetInner(inner);
-            return this;
+                Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:E3744107BCA5CCCE4C7486E0C86460B6

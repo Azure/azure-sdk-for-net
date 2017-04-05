@@ -63,10 +63,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:8B499834886805DF649E8FE559911199
-        public override ISqlFirewallRule Refresh()
+        protected override async Task<ServerFirewallRuleInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            Manager.Inner.Servers.GetFirewallRule(ResourceGroupName, SqlServerName(), Name);
-            return this;
+            return await Manager.Inner.Servers.GetFirewallRuleAsync(ResourceGroupName, SqlServerName(), Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:F447869988CA4FAC84328D668E8C3E63:FC2F4AB7336D8B5FBACF1012628B157F

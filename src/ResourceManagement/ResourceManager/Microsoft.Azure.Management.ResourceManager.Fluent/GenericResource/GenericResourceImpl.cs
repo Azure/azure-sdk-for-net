@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -104,11 +105,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #endregion
 
-        public override IGenericResource Refresh()
+        protected override async Task<GenericResourceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            return null;
+            return await Manager.Inner.Resources.GetAsync(ResourceGroupName,
+                resourceProviderNamespace,
+                parentResourceId,
+                resourceType,
+                Name,
+                apiVersion,
+                cancellationToken);
         }
-
 
         public new GenericResource.Update.IWithApiVersion Update()
         {

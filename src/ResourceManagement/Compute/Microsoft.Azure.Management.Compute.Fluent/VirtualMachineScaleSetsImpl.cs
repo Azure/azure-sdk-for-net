@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
+
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
     using Network.Fluent;
     using ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using Storage.Fluent;
-    using Models;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Rest.Azure;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// The implementation for VirtualMachineScaleSets.

@@ -3,15 +3,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using System.Threading.Tasks;
     using Models;
-    using ResourceManager.Fluent.Core;
-    using System.Threading;
     using Network.Fluent;
+    using ResourceManager.Fluent.Core;
+    using Rest.Azure;
     using Storage.Fluent;
     using System.Collections.Generic;
-    using Rest.Azure;
-    using Management.Fluent.Resource.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for VirtualMachines.

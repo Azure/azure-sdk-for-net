@@ -6,11 +6,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Fluent.Resource.Core;
-    using System;
-    using System.Linq;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.

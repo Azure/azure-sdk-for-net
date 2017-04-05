@@ -10,8 +10,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using ResourceManager.Fluent.Core;
     using Rest.Azure;
     using System;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for Topics.

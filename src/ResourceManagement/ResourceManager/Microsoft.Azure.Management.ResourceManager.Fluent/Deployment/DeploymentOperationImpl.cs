@@ -6,6 +6,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
@@ -101,11 +103,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #region Implementation of IRefreshable interface
 
-        public override IDeploymentOperation Refresh()
+        protected override async Task<DeploymentOperationInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var inner = client.Get(resourceGroupName, deploymentName, OperationId);
-            SetInner(inner);
-            return this;
+            return await client.GetAsync(resourceGroupName, deploymentName, OperationId, cancellationToken: cancellationToken);
         }
 
         #endregion

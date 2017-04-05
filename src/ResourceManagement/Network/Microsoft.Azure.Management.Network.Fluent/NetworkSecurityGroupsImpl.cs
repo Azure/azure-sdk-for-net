@@ -4,12 +4,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
-    using System.Threading.Tasks;
     using ResourceManager.Fluent.Core;
-    using System.Threading;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
     using Rest.Azure;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroups.

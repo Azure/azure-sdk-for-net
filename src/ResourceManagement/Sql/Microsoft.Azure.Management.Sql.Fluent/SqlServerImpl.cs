@@ -205,14 +205,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:62957758FC09C0990CF1236E4DBFE16D
-        public override ISqlServer Refresh()
+        protected override async Task<ServerInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var response = Manager.Inner.Servers.GetByResourceGroup(
-                ResourceGroupName, 
-                Name);
-            SetInner(response);
-
-            return this;
+            return await Manager.Inner.Servers.GetByResourceGroupAsync(ResourceGroupName,
+                Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:7D636B43F636D47A310AB1AF99E3C582:8AD037D8825930A5FDA5752A92895784

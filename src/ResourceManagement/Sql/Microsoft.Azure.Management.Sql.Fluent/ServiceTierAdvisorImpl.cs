@@ -7,13 +7,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for Azure SQL Database's service tier advisor.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TZXJ2aWNlVGllckFkdmlzb3JJbXBs
     internal partial class ServiceTierAdvisorImpl :
-        Wrapper<ServiceTierAdvisorInner>,
+        IndexableRefreshableWrapper<IServiceTierAdvisor, ServiceTierAdvisorInner>,
         IServiceTierAdvisor
     {
         private ResourceId resourceId;
@@ -89,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         ///GENMHASH:51288492BC30C9FE517ADAF1E48564C7:A677B0C455E56513C192E43F117D71E1
         internal ServiceTierAdvisorImpl(ServiceTierAdvisorInner innerObject, IDatabasesOperations databasesInner)
-            : base(innerObject)
+            : base(innerObject.Name, innerObject)
         {
             this.resourceId = ResourceId.FromString(Inner.Id);
             this.databasesInner = databasesInner;
@@ -120,11 +123,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:B7D07437BD9F8D06E149C9BD7B0F32C2
-        public IServiceTierAdvisor Refresh()
+        protected override async Task<ServiceTierAdvisorInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             sloUsageMetrics = null;
-            this.SetInner(this.databasesInner.GetServiceTierAdvisor(this.ResourceGroupName(), this.SqlServerName(), this.DatabaseName(), this.Name()));
-            return this;
+            return await databasesInner.GetServiceTierAdvisorAsync(this.ResourceGroupName(), this.SqlServerName(),
+                this.DatabaseName(), this.Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:784C4BB3169D35BF6AAE0AF9F79505C7:115090F0342C88D04EA4B5C6E7311E9C

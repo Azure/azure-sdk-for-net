@@ -150,10 +150,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public override IAppServiceDomain Refresh()
+        protected override async Task<DomainInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            this.SetInner(Manager.Inner.Domains.Get(ResourceGroupName, Name));
-            return this;
+            return await Manager.Inner.Domains.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:F68B7C06A96EFE50420CFD0AF40077FB:26EA9A37169A3648217216A1F31DE87A

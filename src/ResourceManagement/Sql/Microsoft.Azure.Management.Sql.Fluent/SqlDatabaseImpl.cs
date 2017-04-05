@@ -244,18 +244,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:D460F07553280DBC1866880BA0BD8AEF
-        public override ISqlDatabase Refresh()
+        protected override async Task<DatabaseInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             if (Inner.UpgradeHint != null)
             {
-                SetInner(Manager.Inner.Databases.Get(ResourceGroupName, SqlServerName(), Name));
-            }
-            else
-            {
-                SetInner(Manager.Inner.Databases.Get(ResourceGroupName, SqlServerName(), Name, "upgradeHint"));
+                return await Manager.Inner.Databases.GetAsync(ResourceGroupName, SqlServerName(), Name, cancellationToken: cancellationToken);
             }
 
-            return this;
+            return await Manager.Inner.Databases.GetAsync(ResourceGroupName, SqlServerName(), Name, "upgradeHint", cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:495111B1D55D7AA3C4EA4E49042FA05A:81AF1DB897B99ED47A56E01F499D4D5A

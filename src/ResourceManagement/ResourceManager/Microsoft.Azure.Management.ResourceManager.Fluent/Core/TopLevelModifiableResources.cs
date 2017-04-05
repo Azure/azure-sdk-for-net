@@ -8,7 +8,7 @@ using Microsoft.Rest.Azure;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public abstract class TopLevelModifiableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT> :
         GroupableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT>,
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
         protected static IPage<InnerResourceT> ConvertToPage(IEnumerable<InnerResourceT> list)
         {
-            return Utilities.ConvertToPage(list);
+            return Extensions.ConvertToPage(list);
         }
     }
 }

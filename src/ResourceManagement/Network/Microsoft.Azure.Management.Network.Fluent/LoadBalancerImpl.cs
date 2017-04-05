@@ -51,12 +51,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:420B9F8BE887CC0E8BEEE7DBFEAED60C
-        override public ILoadBalancer Refresh ()
+        override public async Task<ILoadBalancer> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = Manager.Inner.LoadBalancers.Get(ResourceGroupName, Name);
+            var response = await GetInnerAsync(cancellationToken);
             SetInner(response);
             InitializeChildrenFromInner();
             return this;
+        }
+
+        protected override async Task<LoadBalancerInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.LoadBalancers.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:3CAF9C390C7752EBAF91179873ABBC9F

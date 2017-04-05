@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Rest.Azure;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

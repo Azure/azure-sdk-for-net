@@ -354,11 +354,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:FEAA566B918E8D6129C37B2AD34F3689
-        public override IRedisCache Refresh()
+        protected override async Task<RedisResourceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var redisResourceInner = Manager.Inner.Redis.Get(this.ResourceGroupName, this.Name);
-            this.SetInner(redisResourceInner);
-            return this;
+            return await Manager.Inner.Redis.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C

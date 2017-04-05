@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using Rest.Azure;
     using ResourceManager.Fluent.Core;
     using System;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for Subscriptions.

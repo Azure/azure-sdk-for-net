@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions
 {
-    using Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;

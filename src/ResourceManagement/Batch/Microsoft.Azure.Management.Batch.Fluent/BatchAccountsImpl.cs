@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-    using Management.Fluent.Resource.Core;
     using Models;
     using ResourceManager.Fluent.Core;
     using Rest.Azure;

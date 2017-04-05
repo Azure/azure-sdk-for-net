@@ -125,12 +125,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1A5A27E52191D0AB303947147157C578
-        public IApplicationPackage Refresh()
+        protected override async Task<ApplicationPackageInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:583937857C93CEEDEFD65D6B38E46ADD
-            ApplicationPackageInner inner = client.Get(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name());
-            SetInner(inner);
-            return this;
+            return await client.GetAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), cancellationToken);
         }
     }
 }

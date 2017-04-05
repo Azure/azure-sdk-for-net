@@ -4,7 +4,7 @@
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest.Azure;

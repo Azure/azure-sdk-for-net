@@ -3,14 +3,12 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
     using Models;
     using ResourceManager.Fluent.Core;
+    using Rest.Azure;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
-    using Rest.Azure;
 
     /// <summary>
     /// Implementation for NetworkInterfaces.

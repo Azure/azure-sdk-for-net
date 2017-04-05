@@ -4,15 +4,13 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
-    using NicIPConfiguration.UpdateDefinition;
-    using System.Collections.Generic;
-    using ResourceManager.Fluent.Core;
     using NicIPConfiguration.Definition;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using ResourceManager.Fluent.Core.ChildResourceActions;
-    using System;
+    using NicIPConfiguration.UpdateDefinition;
     using ResourceManager.Fluent;
-    using Management.Fluent.Network;
+    using ResourceManager.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core.ResourceActions;
+    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for NicIPConfiguration and its create and update interfaces.

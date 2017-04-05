@@ -120,11 +120,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:5074689AB449399B3C11F611FD3EFF94
-        public override IUser Refresh ()
+        protected override async Task<UserInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var inner = client.Get(UserPrincipalName());
-            SetInner(inner);
-            return this;
+            return await client.GetAsync(UserPrincipalName(), cancellationToken);
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:E9A4DA014B21051979442ACE026C7D1F

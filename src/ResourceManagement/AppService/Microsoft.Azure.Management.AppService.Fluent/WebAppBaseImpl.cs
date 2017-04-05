@@ -221,14 +221,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:75636395FBDB9C1FA7F5231207B98D55
-        public override FluentT Refresh()
+        public override async Task<FluentT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
-            SiteInner inner = GetInnerAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            SiteInner inner = await GetInnerAsync(cancellationToken);
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
-            this.SiteConfig = GetConfigInnerAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            this.SiteConfig = await GetConfigInnerAsync(cancellationToken);
             SetInner(inner);
-            CacheAppSettingsAndConnectionStringsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
             return this as FluentT;
         }
 
@@ -264,11 +264,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:C70FCB6ABBA310D8130B4F53160A0440
         public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync();
+            Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync(cancellationToken);
             ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:27E486AB74A10242FF421C0798DDC450
-            Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync();
+            Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync(cancellationToken);
             ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:27E486AB74A10242FF421C0798DDC450
-            Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync();
+            Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync(cancellationToken);
 
             await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask);
 
@@ -448,7 +448,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return Task.WhenAll(bindingTasks).ContinueWith(bindingt =>
                 {
                     // Refresh after hostname bindings
-                    return GetInnerAsync();
+                    return GetInnerAsync(cancellationToken);
                 }).Unwrap();
             }).Unwrap().ContinueWith(t =>
             {
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             // convert from Inner
             SetInner(site);
             NormalizeProperties();
-            await CacheAppSettingsAndConnectionStringsAsync();
+            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
 
             return this as FluentT;
         }
@@ -912,8 +912,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
             return (FluentImplT) this;
         }
-
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:C102774B5B56F13DBA5095A48DC5F846:1886C5FB5632B7468462889794AFEA08
         public NetFrameworkVersion NetFrameworkVersion()

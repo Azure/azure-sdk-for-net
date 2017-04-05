@@ -88,12 +88,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:3C24CB44825C9FD8973A23CA91FB4FD1
-        public override IRouteTable Refresh()
+        public override async Task<IRouteTable> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            RouteTableInner inner = Manager.Inner.RouteTables.Get(ResourceGroupName, Name);
+            RouteTableInner inner = await GetInnerAsync(cancellationToken);
             SetInner(inner);
             InitializeChildrenFromInner();
             return this;
+        }
+
+        protected override async Task<RouteTableInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.RouteTables.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:8200D5EDD19C5D72B80F6841AD9D0FF0:F58B9D6D280E3F1581C12EFC5360F4C9
