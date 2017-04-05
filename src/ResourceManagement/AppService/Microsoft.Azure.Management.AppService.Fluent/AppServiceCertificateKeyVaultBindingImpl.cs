@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:360C34F1E1D3680D56F867742DA72A0F
-        protected override async Task<AppServiceCertificateInner> GetInnerAsync(CancellationToken cancellationToken)
+        protected override async Task<AppServiceCertificateResourceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.AppServiceCertificateOrders.GetCertificateAsync(parent.ResourceGroupName, parent.Name, Name, cancellationToken: cancellationToken);
         }
