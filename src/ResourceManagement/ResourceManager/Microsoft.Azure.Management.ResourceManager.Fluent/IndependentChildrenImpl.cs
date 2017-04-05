@@ -5,9 +5,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     using CollectionActions;
     using System.Threading;
     using System.Threading.Tasks;
-    using System;
     using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs

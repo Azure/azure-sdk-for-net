@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using ResourceManager.Fluent.Core;
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldE5pY0lwQ29uZmlndXJhdGlvbkltcGw=

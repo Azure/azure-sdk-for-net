@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
     public interface IPagedCollection<T> : IEnumerable<T>
     {

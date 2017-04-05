@@ -7,8 +7,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading.Tasks;
     using System.Threading;
     using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
-    using System;
 
     /// <summary>
     /// Implementation of TxtRecordSets.

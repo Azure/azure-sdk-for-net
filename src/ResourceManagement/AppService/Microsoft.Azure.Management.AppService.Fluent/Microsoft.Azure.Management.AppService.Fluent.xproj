@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>C4D80403-4D5E-48BF-A744-08A785F823D9</ProjectGuid>
-    <RootNamespace>Microsoft.Azure.Management.Fluent.AppService</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.AppService.Fluent</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

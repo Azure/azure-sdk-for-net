@@ -10,8 +10,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     using ServiceBus.Fluent;
     using System;
     using Rest.Azure;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
 
     /// <summary>
     /// Implementation for QueueAuthorizationRules.

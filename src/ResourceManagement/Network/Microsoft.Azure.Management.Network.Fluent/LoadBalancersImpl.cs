@@ -2,13 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ResourceManager.Fluent.Core;
-    using System.Threading.Tasks;
-    using System.Threading;
     using Models;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
+    using ResourceManager.Fluent.Core;
     using Rest.Azure;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for LoadBalancers.

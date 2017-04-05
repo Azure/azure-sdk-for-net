@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using Microsoft.Rest.Azure;
 using System.Threading.Tasks;
 using System.Threading;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             Func<InnerResourceT, IFluentResourceT> wrapModel,
             CancellationToken cancellationToken)
         {
-            return await LoadPage(async(cancellation) => Utilities.ConvertToPage(await listInnerAsync(cancellation)),
+            return await LoadPage(async(cancellation) => Extensions.ConvertToPage(await listInnerAsync(cancellation)),
                 async(nextLink, cancellation) => await Task.FromResult<IPage<InnerResourceT>>(null),
                 wrapModel, false, cancellationToken);
         }

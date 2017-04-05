@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>148a7e48-bbb2-4f38-8708-df0cb128de50</ProjectGuid>
-    <RootNamespace>Microsoft.Azure.Management.Fluent.Graph.RBAC</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.Graph.RBAC.Fluent</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

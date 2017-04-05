@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using ResourceManager.Fluent.Core;
-    using System.Threading;
-    using System.Linq;
     using Models;
-    using Management.Fluent.Resource.Core;
+    using ResourceManager.Fluent.Core;
     using Rest.Azure;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for CdnProfiles.

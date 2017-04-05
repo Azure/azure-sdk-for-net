@@ -6,8 +6,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading;
     using ResourceManager.Fluent.Core;
     using Models;
-    using System.Collections.Generic;
-    using Management.Fluent.Resource.Core;
     using Rest.Azure;
 
     /// <summary>

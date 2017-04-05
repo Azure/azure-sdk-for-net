@@ -2,14 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
-    using Management.Fluent.Resource.Core;
     using Management.Fluent.ServiceBus;
     using Management.Fluent.ServiceBus.Models;
     using ResourceManager.Fluent.Core;
     using Rest.Azure;
     using ServiceBus.Fluent;
     using System;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
