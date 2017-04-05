@@ -58,11 +58,17 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return this.PoolQuota();
             }
         }
+
         /// <returns>the access keys for this batch account</returns>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.GetKeys() { 
-            return this.GetKeys() as Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys;
+            return ((IBatchAccount)this).GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
+        /// <returns>the access keys for this batch account</returns>
+        async Task<BatchAccountKeys> IBatchAccount.GetKeysAsync(CancellationToken cancellationToken)
+        {
+            return await this.GetKeysAsync(cancellationToken);
+        }
         /// <returns>the core quota for this BatchAccount account</returns>
         int Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.CoreQuota
         {
@@ -105,11 +111,21 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return this.ActiveJobAndJobScheduleQuota();
             }
         }
+
         /// <summary>
         /// Synchronize the storage account keys for batch account.
         /// </summary>
-        void Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.SynchronizeAutoStorageKeys() { 
-            this.SynchronizeAutoStorageKeys();
+        void Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.SynchronizeAutoStorageKeys()
+        { 
+            ((IBatchAccount)this).SynchronizeAutoStorageKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Synchronize the storage account keys for batch account.
+        /// </summary>
+        async Task IBatchAccount.SynchronizeAutoStorageKeysAsync(CancellationToken cancellationToken)
+        {
+            await this.SynchronizeAutoStorageKeysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +134,17 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
         /// <returns>the access keys for this batch account</returns>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.RegenerateKeys(AccountKeyType keyType) { 
-            return this.RegenerateKeys( keyType) as Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys;
+            return ((IBatchAccount)this).RegenerateKeysAsync(keyType).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Regenerates the access keys for batch account.
+        /// </summary>
+        /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
+        /// <returns>the access keys for this batch account</returns>
+        async Task<BatchAccountKeys> IBatchAccount.RegenerateKeysAsync(AccountKeyType keyType, CancellationToken cancellationToken)
+        {
+            return await this.RegenerateKeysAsync(keyType, cancellationToken);
         }
 
         /// <returns>the application in this batch account.</returns>

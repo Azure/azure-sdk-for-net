@@ -4,6 +4,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 {
 
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// An immutable client-side representation of an Azure batch account application package.
     /// </summary>
@@ -31,6 +34,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </summary>
         /// <param name="format">format format of the uploaded package supported values zip, tar</param>
         void Activate(string format);
+
+        /// <summary>
+        /// Activates the application package.
+        /// </summary>
+        /// <param name="format">format format of the uploaded package supported values zip, tar</param>
+        Task ActivateAsync(string format, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Deletes the application package.
