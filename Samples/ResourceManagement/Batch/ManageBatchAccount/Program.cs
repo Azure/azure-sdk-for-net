@@ -103,7 +103,7 @@ namespace ManageBatchAccount
 
                 // ============================================================
                 // Regenerate the keys for storage account
-                var storageAccount = azure.StorageAccounts.GetByGroup(rgName, storageAccountName);
+                var storageAccount = azure.StorageAccounts.GetByResourceGroup(rgName, storageAccountName);
                 var storageAccountKeys = storageAccount.GetKeys();
 
                 Utilities.PrintStorageAccountKeys(storageAccountKeys);
@@ -162,7 +162,7 @@ namespace ManageBatchAccount
 
                 Utilities.Log("Listing Batch accounts");
 
-                var accounts = azure.BatchAccounts.ListByGroup(rgName);
+                var accounts = azure.BatchAccounts.ListByResourceGroup(rgName);
                 foreach (var account in accounts)
                 {
                     Utilities.Log("Batch Account - " + account.Name);

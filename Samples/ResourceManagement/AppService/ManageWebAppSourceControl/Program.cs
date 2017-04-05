@@ -85,7 +85,7 @@ namespace ManageWebAppSourceControl
                 // Create a second web app with local git source control
 
                 Utilities.Log("Creating another web app " + app2Name + " in resource group " + rgName + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByGroup(rgName, planName);
+                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rgName, planName);
                 var app2 = azure.WebApps
                         .Define(app2Name)
                         .WithExistingResourceGroup(rgName)

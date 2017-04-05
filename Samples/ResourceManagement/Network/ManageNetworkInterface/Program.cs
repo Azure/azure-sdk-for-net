@@ -144,7 +144,7 @@ namespace ManageNetworkInterface
                 // List network interfaces
 
                 Utilities.Log("Walking through network inter4faces in resource group: " + rgName);
-                var networkInterfaces = azure.NetworkInterfaces.ListByGroup(rgName);
+                var networkInterfaces = azure.NetworkInterfaces.ListByResourceGroup(rgName);
                 foreach (var networkInterface in networkInterfaces)
                 {
                     Utilities.PrintNetworkInterface(networkInterface);
@@ -162,7 +162,7 @@ namespace ManageNetworkInterface
 
                 Utilities.Log("============================================================");
                 Utilities.Log("Remaining network interfaces are ...");
-                networkInterfaces = azure.NetworkInterfaces.ListByGroup(rgName);
+                networkInterfaces = azure.NetworkInterfaces.ListByResourceGroup(rgName);
                 foreach (var networkInterface in networkInterfaces)
                 {
                     Utilities.PrintNetworkInterface(networkInterface);

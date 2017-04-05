@@ -53,7 +53,7 @@ namespace DeployUsingARMTemplateWithProgress
 
                 Utilities.Log("Started a deployment for an Azure App Service: " + deploymentName);
 
-                var deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                var deployment = azure.Deployments.GetByResourceGroup(rgName, deploymentName);
                 Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
 
                 while (!(StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Succeeded") || 
@@ -61,7 +61,7 @@ namespace DeployUsingARMTemplateWithProgress
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
                 {
                     SdkContext.DelayProvider.Delay(10000);
-                    deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                    deployment = azure.Deployments.GetByResourceGroup(rgName, deploymentName);
                     Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
                 }
             }

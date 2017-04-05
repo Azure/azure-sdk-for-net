@@ -211,7 +211,7 @@ namespace ManageVirtualNetwork
                 //============================================================
                 // List virtual networks
 
-                foreach (var virtualNetwork in azure.Networks.ListByGroup(ResourceGroupName))
+                foreach (var virtualNetwork in azure.Networks.ListByResourceGroup(ResourceGroupName))
                 {
                     Utilities.PrintVirtualNetwork(virtualNetwork);
                 }
