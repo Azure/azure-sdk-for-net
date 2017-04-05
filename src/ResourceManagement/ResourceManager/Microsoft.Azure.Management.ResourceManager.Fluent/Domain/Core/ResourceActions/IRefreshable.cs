@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
@@ -17,6 +18,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        T Refresh ();
+        T Refresh();
+
+        /// <summary>
+        /// Refreshes the resource to sync with Azure.
+        /// </summary>
+        /// <returns>the refreshed resource</returns>
+        Task<T> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

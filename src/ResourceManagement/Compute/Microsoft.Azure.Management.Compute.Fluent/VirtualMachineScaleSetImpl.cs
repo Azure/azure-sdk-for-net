@@ -730,13 +730,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:9A047B4B22E09AEB6344D4F23EC361E5
-        public override IVirtualMachineScaleSet Refresh()
+        public override async Task<IVirtualMachineScaleSet> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = Manager.Inner.VirtualMachineScaleSets.Get(ResourceGroupName, Name);
+            var response = await GetInnerAsync(cancellationToken);
             SetInner(response);
             ClearCachedProperties();
             InitializeChildrenFromInner();
             return this;
+        }
+
+        protected override async Task<VirtualMachineScaleSetInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.VirtualMachineScaleSets.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:0B0C2470711F6450D4872789FDEB62A0:27733295CC242C366636316AC58FC2D3

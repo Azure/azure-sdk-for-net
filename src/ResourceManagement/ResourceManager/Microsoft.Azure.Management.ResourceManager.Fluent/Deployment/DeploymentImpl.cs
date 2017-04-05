@@ -416,17 +416,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #endregion
 
-        #region Implementation of IRefreshable interface
-
-        public override IDeployment Refresh()
-        {
-            DeploymentExtendedInner inner = Manager.Inner.Deployments.Get(ResourceGroupName, Name);
-            SetInner(inner);
-            return this;
-        }
-
-        #endregion
-
         #region Implementation of ICreatable interface 
 
         public new IDeployment Create()
@@ -484,6 +473,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             };
             Manager.Inner.Deployments.CreateOrUpdate(ResourceGroupName, Name, inner);
             return this;
+        }
+
+        protected override async Task<DeploymentExtendedInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.Deployments.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         #endregion

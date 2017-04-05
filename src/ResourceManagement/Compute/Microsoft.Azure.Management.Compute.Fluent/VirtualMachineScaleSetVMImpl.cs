@@ -504,12 +504,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:44ACDDF0B04148CC3F9347EA7C0643B4
         public IVirtualMachineScaleSetVM Refresh()
         {
-            SetInner(Parent.Manager.Inner.VirtualMachineScaleSetVMs.Get(
+            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+        public async Task<IVirtualMachineScaleSetVM> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            SetInner(await GetInnerAsync(cancellationToken));
+            ClearCachedRelatedResources();
+            return this;
+        }
+
+        protected async Task<VirtualMachineScaleSetVMInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Parent.Manager.Inner.VirtualMachineScaleSetVMs.GetAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
-                InstanceId()));
-                ClearCachedRelatedResources();
-            return this;
+                InstanceId(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:C5FE9F038576055F219FB734E49D39D9

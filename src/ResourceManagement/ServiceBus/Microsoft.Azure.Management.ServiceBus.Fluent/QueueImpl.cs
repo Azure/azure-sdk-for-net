@@ -50,13 +50,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             }
         }
 
-        public override IQueue Refresh()
-        {
-            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            SetInner(inner);
-            return this as IQueue;
-        }
-
         ///GENMHASH:E3E1FE37EF46DBB99588AC2854B0739F:DA91B2CE4D0B6442C970C7DC794FF87E
         public QueueImpl WithoutDuplicateMessageDetection()
         {
@@ -166,7 +159,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:338FF71B5ABADE33BE2440EC7B543A5A
-        protected async Task<QueueInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<QueueInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Manager.Inner.Queues
                 .GetAsync(this.ResourceGroupName,

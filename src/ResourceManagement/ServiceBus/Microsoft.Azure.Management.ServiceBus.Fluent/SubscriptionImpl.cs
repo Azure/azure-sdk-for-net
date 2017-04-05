@@ -43,13 +43,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             }
         }
 
-        public override ISubscription Refresh()
-        {
-            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            SetInner(inner);
-            return this as ISubscription;
-        }
-
         ///GENMHASH:0528195D56802C53049B175998349788:6A2B15DC582327EF91835262AE29E287
         public SubscriptionImpl WithoutSession()
         {
@@ -173,7 +166,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:749030CA5C22BFCBAE3439E2BC57EE23
-        protected async Task<SubscriptionInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<SubscriptionInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
            return await this.Manager.Inner.Subscriptions
                 .GetAsync(this.ResourceGroupName,

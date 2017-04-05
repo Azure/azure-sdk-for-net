@@ -257,6 +257,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
+
         IHostNameBinding IRefreshable<IHostNameBinding>.Refresh()
         {
             if (parent is IWebApp)
@@ -266,6 +267,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             else
             {
                 SetInner(parent.Manager.Inner.WebApps.GetHostNameBindingSlot(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, Name()));
+            }
+            return this;
+        }
+
+        public async Task<IHostNameBinding> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (parent is IWebApp)
+            {
+                SetInner(await parent.Manager.Inner.WebApps.GetHostNameBindingAsync(parent.ResourceGroupName, parent.Name, Name(), cancellationToken));
+            }
+            else
+            {
+                SetInner(await parent.Manager.Inner.WebApps.GetHostNameBindingSlotAsync(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, Name(), cancellationToken));
             }
             return this;
         }

@@ -176,11 +176,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         #region Implementation of IRefreshable interface
 
-        public override IResourceGroup Refresh()
+        protected override async Task<ResourceGroupInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var result = client.Get(Name);
-            SetInner(result);
-            return this;
+            return await client.GetAsync(Name, cancellationToken: cancellationToken);
         }
 
         #endregion

@@ -150,10 +150,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public override IAppServiceCertificateOrder Refresh()
+        protected override async Task<AppServiceCertificateOrderInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            this.SetInner(Manager.Inner.AppServiceCertificateOrders.Get(ResourceGroupName, Name));
-            return this;
+            return await Manager.Inner.AppServiceCertificateOrders.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:9FDF35464E02B70B2EF312DAD321B8C2:82C57278EF9D50148F4779BC9B9CEDCF

@@ -289,14 +289,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:4A10213038743768C271AE3184DC5B16
-        public IDnsRecordSet Refresh()
+        protected override async Task<RecordSetInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            this.SetInner(Parent.Manager.Inner.RecordSets.Get(
-                Parent.ResourceGroupName, 
-                Parent.Name, 
-                Name(), 
-                RecordType()));
-            return this;
+            return await Parent.Manager.Inner.RecordSets.GetAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(),
+                RecordType(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4983E2059828207A0EBDD76459661F4B

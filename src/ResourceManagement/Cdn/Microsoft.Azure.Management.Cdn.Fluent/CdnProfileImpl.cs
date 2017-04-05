@@ -196,11 +196,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:99295E9723E2B8FABFB8C4111423E7B2
-        public override ICdnProfile Refresh()
+        protected override async Task<ProfileInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            ProfileInner cdnProfileInner = Manager.Inner.Profiles.Get(ResourceGroupName, Name);
-            SetInner(cdnProfileInner);
-            return this;
+            return await Manager.Inner.Profiles.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:37D0B9659C11E9B4AA5E39DEE4B0AB7D:C83A09045ECA07DB3EC59281710F2DEA

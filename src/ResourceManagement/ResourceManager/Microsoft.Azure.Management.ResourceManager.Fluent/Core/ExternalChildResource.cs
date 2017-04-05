@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -23,8 +25,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     public abstract class ExternalChildResource<FluentModelT,
         InnerModelT,
         IParentT,
-        ParentImplT> : ChildResource<InnerModelT, ParentImplT, IParentT>
-        where FluentModelT : IExternalChildResource<FluentModelT, IParentT>
+        ParentImplT> : ChildResource<InnerModelT, ParentImplT, IParentT>, IRefreshable<FluentModelT>
+        where FluentModelT : class, IExternalChildResource<FluentModelT, IParentT>
         where ParentImplT : IParentT
     {
         private readonly string name;
@@ -78,6 +80,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         /// </summary>
         /// <returns>the task to track the delete action</returns>
         public abstract Task DeleteAsync(CancellationToken cancellationToken);
+
+        public virtual FluentModelT Refresh()
+        {
+            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public virtual async Task<FluentModelT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var inner = await GetInnerAsync(cancellationToken);
+            this.SetInner(inner);
+            return this as FluentModelT;
+        }
+
+        protected abstract Task<InnerModelT> GetInnerAsync(CancellationToken cancellationToken);
     }
 
     /// <summary>

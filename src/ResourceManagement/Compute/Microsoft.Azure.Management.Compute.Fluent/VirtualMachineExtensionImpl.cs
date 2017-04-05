@@ -217,18 +217,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:0A7B0ED028812E214E22EAF2EB753FAB
-        public IVirtualMachineExtension Refresh()
+
+        protected override async Task<VirtualMachineExtensionInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            string name;
-            if (IsReference()) {
-                name = ResourceUtils.NameFromResourceId(Inner.Id);
-            } else {
-                name = Inner.Name;
-            }
-            VirtualMachineExtensionInner inner = Parent.Manager.Inner.VirtualMachineExtensions.Get(
-                Parent.ResourceGroupName, Parent.Name, name);
-            SetInner(inner);
-            return this;
+            var name = IsReference() ? ResourceUtils.NameFromResourceId(Inner.Id) : Inner.Name;
+
+            return await Parent.Manager.Inner.VirtualMachineExtensions.GetAsync(Parent.ResourceGroupName, Parent.Name, name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:C13D0601ACA269F4AA251080A5EAB8A3

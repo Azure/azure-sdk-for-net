@@ -47,13 +47,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             }
         }
 
-        public override ITopic Refresh()
-        {
-            var inner = this.GetInnerAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            SetInner(inner);
-            return this as ITopic;
-        }
-
         ///GENMHASH:E3E1FE37EF46DBB99588AC2854B0739F:DA91B2CE4D0B6442C970C7DC794FF87E
         public TopicImpl WithoutDuplicateMessageDetection()
         {
@@ -165,7 +158,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:5296EC1C2BF632FB405AED151EB16468
-        protected async Task<TopicInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<TopicInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Manager.Inner.Topics
                     .GetAsync(this.ResourceGroupName,

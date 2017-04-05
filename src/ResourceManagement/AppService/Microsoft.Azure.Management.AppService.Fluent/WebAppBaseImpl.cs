@@ -208,14 +208,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:75636395FBDB9C1FA7F5231207B98D55
-        public override FluentT Refresh()
+        public override async Task<FluentT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
-            SiteInner inner = GetInnerAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            SiteInner inner = await GetInnerAsync(cancellationToken);
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
-            inner.SiteConfig = GetConfigInnerAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            inner.SiteConfig = await GetConfigInnerAsync();
             SetInner(inner);
-            CacheAppSettingsAndConnectionStringsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            await CacheAppSettingsAndConnectionStringsAsync();
             return this as FluentT;
         }
 
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return Task.WhenAll(bindingTasks).ContinueWith(bindingt =>
                 {
                     // Refresh after hostname bindings
-                    return GetInnerAsync();
+                    return GetInnerAsync(cancellationToken);
                 }).Unwrap();
             }).Unwrap().ContinueWith(t =>
             {
@@ -910,8 +910,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
             return (FluentImplT) this;
         }
-
-        internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:C102774B5B56F13DBA5095A48DC5F846:1886C5FB5632B7468462889794AFEA08
         public NetFrameworkVersion NetFrameworkVersion()

@@ -170,12 +170,18 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:280DEDDFDA82FD8E8EA83F4139D8C99A
-        public override ITrafficManagerProfile Refresh()
+        public override async Task<ITrafficManagerProfile> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProfileInner inner = Manager.Inner.Profiles.Get(ResourceGroupName, Name);
+            ProfileInner inner = await GetInnerAsync(cancellationToken);
             SetInner(inner);
             endpoints.Refresh();
             return this;
+        }
+
+        protected override async Task<ProfileInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.Profiles.GetAsync(
+                ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:4AF52DA6D7309E03BCF9F21C532F19E0:DEF2407DA0E866749EF9CC5952427470

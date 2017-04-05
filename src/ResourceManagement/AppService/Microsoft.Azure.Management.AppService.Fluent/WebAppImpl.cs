@@ -229,9 +229,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:AD50571B7362BCAADE526027DA36B58F
-        internal async override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            return await Manager.Inner.WebApps.GetAsync(ResourceGroupName, Name);
+            return await Manager.Inner.WebApps.GetAsync(ResourceGroupName, Name, cancellationToken);
         }
 
         ///GENMHASH:BC96AA8FDB678157AC1E6F0AA511AB65:20A70C4EEFBA9DE9AD6AA6D9133187D7

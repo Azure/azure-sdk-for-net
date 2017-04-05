@@ -466,12 +466,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:F8A6A48920042C49572BFDA9629E1BC7
-        public ICdnEndpoint Refresh()
+        public override async Task<ICdnEndpoint> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            EndpointInner inner = Parent.Manager.Inner.Endpoints.Get(
-                Parent.ResourceGroupName,
-                Parent.Name,
-                Name());
+            EndpointInner inner = await GetInnerAsync(cancellationToken);
             SetInner(inner);
             customDomainList.Clear();
             deletedCustomDomainList.Clear();
@@ -481,6 +478,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     Parent.Name,
                     Name()));
             return this;
+        }
+
+        protected override async Task<EndpointInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Parent.Manager.Inner.Endpoints.GetAsync(
+                Parent.ResourceGroupName,
+                Parent.Name,
+                Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:64AF8E4C0DC21702ECEBDAB60ABF9E38:B0E2487AEAA046DB40AFBF76759F57B7

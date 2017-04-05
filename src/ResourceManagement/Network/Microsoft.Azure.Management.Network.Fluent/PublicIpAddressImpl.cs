@@ -183,11 +183,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:46083B525E2D28949C602FA14CD8C6BB
-        public override IPublicIPAddress Refresh()
+        protected override async Task<PublicIPAddressInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            var response = Manager.Inner.PublicIPAddresses.Get(ResourceGroupName, Inner.Name);
-            SetInner(response);
-            return this;
+            return await Manager.Inner.PublicIPAddresses.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:7D4EDB8798720C21E834ABC3BEB6E503:C11A523B66806B5E409AF440EE4B612E

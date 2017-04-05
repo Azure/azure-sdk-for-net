@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using ResourceManager.Fluent.Core;
+    using System;
 
     /// <summary>
     /// Implementation for BatchAccount and its parent interfaces.
@@ -48,11 +49,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:7CF0E4D2E689061F164F4E8CBEEE0032
-        public override IBatchAccount Refresh()
+        public override async Task<IBatchAccount> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            BatchAccountInner response = Manager.Inner.BatchAccount.Get(ResourceGroupName, Name);
+            var inner = await GetInnerAsync(cancellationToken);
 
-            SetInner(response);
+            SetInner(inner);
             applicationsImpl.Refresh();
 
             return this;
@@ -255,6 +256,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         {
             applicationsImpl.AddApplication(application);
             return this;
+        }
+
+        protected override async Task<BatchAccountInner> GetInnerAsync(CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.BatchAccount.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
     }
 }

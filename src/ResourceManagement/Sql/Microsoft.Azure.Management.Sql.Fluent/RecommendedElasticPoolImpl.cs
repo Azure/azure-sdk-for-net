@@ -7,13 +7,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// Implementation for RecommendedElasticPool and its parent interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5SZWNvbW1lbmRlZEVsYXN0aWNQb29sSW1wbA==
     internal partial class RecommendedElasticPoolImpl :
-        Wrapper<RecommendedElasticPoolInner>,
+        IndexableRefreshableWrapper<IRecommendedElasticPool, RecommendedElasticPoolInner>,
         IRecommendedElasticPool
     {
         private ResourceId resourceId;
@@ -41,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         ///GENMHASH:3C9B0CE07C64DBB8CF2AEF14E330501A:2E8B0A743655F7A17FCDF72496CA11B0
         internal RecommendedElasticPoolImpl(RecommendedElasticPoolInner innerObject, ISqlManager manager)
-            : base(innerObject)
+            : base(innerObject.Name, innerObject)
         {
             resourceId = ResourceId.FromString(Inner.Id);
             Manager = manager;
@@ -82,10 +85,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:887D95D040FBCBF81B9BA7419D7F3A39
-        public IRecommendedElasticPool Refresh()
+        protected override async Task<RecommendedElasticPoolInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            SetInner(Manager.Inner.RecommendedElasticPools.Get(ResourceGroupName(), SqlServerName(), Name()));
-            return this;
+            return await Manager.Inner.RecommendedElasticPools.GetAsync(ResourceGroupName(), SqlServerName(), Name(), cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:0A59E82904CE8BB24F650E93009FF62F:554D1CBF22D4FFEB3B544B44B1374357
