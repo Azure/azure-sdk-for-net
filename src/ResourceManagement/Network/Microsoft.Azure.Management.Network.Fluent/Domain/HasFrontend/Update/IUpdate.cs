@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update
     /// <summary>
     /// The stage of an update allowing to specify a frontend.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the update.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the update.</typeparam>
     public interface IWithFrontend<ReturnT> 
     {
         /// <summary>

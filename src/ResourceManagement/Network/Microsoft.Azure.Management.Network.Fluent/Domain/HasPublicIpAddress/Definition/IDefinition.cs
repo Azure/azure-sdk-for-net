@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definitio
     /// The stage of the definition allowing to associate the resource with a public IP address,
     /// but not allowing to create one with a DNS leaf label.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithPublicIPAddressNoDnsLabel<ReturnT>  :
         IWithExistingPublicIPAddress<ReturnT>,
         IWithNewPublicIPAddressNoDnsLabel<ReturnT>
@@ -17,30 +17,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definitio
     }
 
     /// <summary>
-    /// The stage of the definition allowing to associate the resource with an existing public IP address.
-    /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
-    public interface IWithExistingPublicIPAddress<ReturnT> 
-    {
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="publicIPAddress">An existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        ReturnT WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress);
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        ReturnT WithExistingPublicIPAddress(string resourceId);
-    }
-
-    /// <summary>
     /// The stage of the definition allowing to associate the resource with a new public IP address.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithNewPublicIPAddress<ReturnT>  :
         IWithNewPublicIPAddressNoDnsLabel<ReturnT>
     {
@@ -55,19 +34,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definitio
     }
 
     /// <summary>
-    /// The stage of the definition allowing to associate the resource with a public IP address.
-    /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
-    public interface IWithPublicIPAddress<ReturnT>  :
-        IWithExistingPublicIPAddress<ReturnT>,
-        IWithNewPublicIPAddress<ReturnT>
-    {
-    }
-
-    /// <summary>
     /// The stage of the definition allowing to associate the resource with a new public IP address.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithNewPublicIPAddressNoDnsLabel<ReturnT> 
     {
         /// <summary>
@@ -83,5 +52,36 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definitio
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ReturnT WithNewPublicIPAddress();
+    }
+
+    /// <summary>
+    /// The stage of the definition allowing to associate the resource with a public IP address.
+    /// </summary>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
+    public interface IWithPublicIPAddress<ReturnT>  :
+        IWithExistingPublicIPAddress<ReturnT>,
+        IWithNewPublicIPAddress<ReturnT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the definition allowing to associate the resource with an existing public IP address.
+    /// </summary>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
+    public interface IWithExistingPublicIPAddress<ReturnT> 
+    {
+        /// <summary>
+        /// Associates an existing public IP address with the resource.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        ReturnT WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress);
+
+        /// <summary>
+        /// Associates an existing public IP address with the resource.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        ReturnT WithExistingPublicIPAddress(string resourceId);
     }
 }

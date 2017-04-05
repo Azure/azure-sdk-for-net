@@ -8,7 +8,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a private frontend of an internal load balancer.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface ILoadBalancerPrivateFrontend  :
         ILoadBalancerFrontend,

@@ -4,23 +4,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using PublicIPAddress.Definition;
-    using PublicIPAddress.Update;
-    using Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update;
+    
 
     internal partial class PublicIPAddressImpl 
     {
-        /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
-        }
-
         /// <summary>
         /// Gets the assigned reverse FQDN, if any.
         /// </summary>
@@ -46,11 +36,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP version of the public IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.Version
+        Models.IPVersion Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.Version
         {
             get
             {
-                return this.Version();
+                return this.Version() as Models.IPVersion;
             }
         }
 
@@ -113,7 +103,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the assigned IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.IPAddress
+        string Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.IpAddress
         {
             get
             {
@@ -124,31 +114,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP address allocation method (Static/Dynamic).
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.IPAllocationMethod
+        Models.IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.IPAllocationMethod
         {
             get
             {
-                return this.IPAllocationMethod();
+                return this.IPAllocationMethod() as Models.IPAllocationMethod;
             }
         }
 
         /// <summary>
-        /// Specifies the reverse FQDN to assign to this public IP address.
+        /// Specifies the timeout (in minutes) for an idle connection.
         /// </summary>
-        /// <param name="reverseFQDN">The reverse FQDN to assign.</param>
+        /// <param name="minutes">The length of the time out in minutes.</param>
         /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithReverseFQDN.WithReverseFqdn(string reverseFQDN)
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithIdleTimout.WithIdleTimeoutInMinutes(int minutes)
         {
-            return this.WithReverseFqdn(reverseFQDN) as PublicIPAddress.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Ensures that no reverse FQDN will be used.
-        /// </summary>
-        /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithReverseFQDN.WithoutReverseFqdn()
-        {
-            return this.WithoutReverseFqdn() as PublicIPAddress.Update.IUpdate;
+            return this.WithIdleTimeoutInMinutes(minutes) as PublicIPAddress.Update.IUpdate;
         }
 
         /// <summary>
@@ -171,35 +152,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Specifies the timeout (in minutes) for an idle connection.
+        /// Specifies the reverse FQDN to assign to this public IP address.
         /// </summary>
-        /// <param name="minutes">The length of the time out in minutes.</param>
+        /// <param name="reverseFQDN">The reverse FQDN to assign.</param>
         /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithIdleTimout.WithIdleTimeoutInMinutes(int minutes)
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithReverseFQDN.WithReverseFqdn(string reverseFQDN)
         {
-            return this.WithIdleTimeoutInMinutes(minutes) as PublicIPAddress.Update.IUpdate;
+            return this.WithReverseFqdn(reverseFQDN) as PublicIPAddress.Update.IUpdate;
         }
 
         /// <summary>
-        /// Ensures that no leaf domain label will be used.
-        /// This means that this public IP address will not be associated with a domain name.
+        /// Ensures that no reverse FQDN will be used.
         /// </summary>
         /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithLeafDomainLabel.WithoutLeafDomainLabel()
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithReverseFQDN.WithoutReverseFqdn()
         {
-            return this.WithoutLeafDomainLabel() as PublicIPAddress.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Specifies the leaf domain label to associate with this public IP address.
-        /// The fully qualified domain name (FQDN)
-        /// will be constructed automatically by appending the rest of the domain to this label.
-        /// </summary>
-        /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
-        /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsName)
-        {
-            return this.WithLeafDomainLabel(dnsName) as PublicIPAddress.Update.IUpdate;
+            return this.WithoutReverseFqdn() as PublicIPAddress.Update.IUpdate;
         }
 
         /// <summary>
@@ -225,28 +193,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Enables static IP address allocation.
-        /// Use PublicIPAddress.ipAddress() after the public IP address is updated to
-        /// obtain the actual IP address allocated for this resource by Azure.
+        /// Ensures that no leaf domain label will be used.
+        /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
         /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithIPAddress.WithStaticIP()
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithLeafDomainLabel.WithoutLeafDomainLabel()
         {
-            return this.WithStaticIP() as PublicIPAddress.Update.IUpdate;
+            return this.WithoutLeafDomainLabel() as PublicIPAddress.Update.IUpdate;
         }
 
         /// <summary>
-        /// Enables dynamic IP address allocation.
+        /// Specifies the leaf domain label to associate with this public IP address.
+        /// The fully qualified domain name (FQDN)
+        /// will be constructed automatically by appending the rest of the domain to this label.
         /// </summary>
+        /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
         /// <return>The next stage of the resource update.</return>
-        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithIPAddress.WithDynamicIP()
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsName)
         {
-            return this.WithDynamicIP() as PublicIPAddress.Update.IUpdate;
+            return this.WithLeafDomainLabel(dnsName) as PublicIPAddress.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables static IP address allocation.
-        /// Use PublicIPAddress.ipAddress() after the public IP address is created to obtain the
+        /// Use  PublicIPAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
         /// <return>The next stage of the public IP address definition.</return>
@@ -262,6 +232,26 @@ namespace Microsoft.Azure.Management.Network.Fluent
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithIPAddress.WithDynamicIP()
         {
             return this.WithDynamicIP() as PublicIPAddress.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Enables static IP address allocation.
+        /// Use  PublicIPAddress.ipAddress() after the public IP address is updated to
+        /// obtain the actual IP address allocated for this resource by Azure.
+        /// </summary>
+        /// <return>The next stage of the resource update.</return>
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithIPAddress.WithStaticIP()
+        {
+            return this.WithStaticIP() as PublicIPAddress.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Enables dynamic IP address allocation.
+        /// </summary>
+        /// <return>The next stage of the resource update.</return>
+        PublicIPAddress.Update.IUpdate PublicIPAddress.Update.IWithIPAddress.WithDynamicIP()
+        {
+            return this.WithDynamicIP() as PublicIPAddress.Update.IUpdate;
         }
 
         /// <summary>

@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition
     /// <summary>
     /// The stage of a definition allowing to specify the protocol.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
-    /// <typeparam name="Protocol">The type of the protocol value.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
+    /// <typeparam name="ProtocolT">The type of the protocol value.</typeparam>
     public interface IWithProtocol<ReturnT,ProtocolT> 
     {
         /// <summary>

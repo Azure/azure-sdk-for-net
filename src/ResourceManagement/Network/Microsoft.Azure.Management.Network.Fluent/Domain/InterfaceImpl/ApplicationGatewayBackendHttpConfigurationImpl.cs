@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ApplicationGateway.Definition;
-    using ApplicationGateway.Update;
-    using ApplicationGatewayBackendHttpConfiguration.Definition;
-    using ApplicationGatewayBackendHttpConfiguration.Update;
-    using ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
-    using Models;
-    using HasPort.Definition;
-    using HasPort.UpdateDefinition;
-    using HasPort.Update;
-    using HasProtocol.Definition;
-    using HasProtocol.UpdateDefinition;
-    using HasProtocol.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.HasPort.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPort.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;

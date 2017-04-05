@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update
     {
         /// <summary>
         /// Enables static IP address allocation.
-        /// Use PublicIPAddress.ipAddress() after the public IP address is updated to
+        /// Use  PublicIPAddress.ipAddress() after the public IP address is updated to
         /// obtain the actual IP address allocated for this resource by Azure.
         /// </summary>
         /// <return>The next stage of the resource update.</return>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update
 
     /// <summary>
     /// Container interface for all the updates.
-    /// Use Update.apply() to apply the changes to the resource in Azure.
+    /// Use  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         IAppliable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
@@ -60,6 +60,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update
     }
 
     /// <summary>
+    /// A public IP address update allowing the idle timeout to be changed.
+    /// </summary>
+    public interface IWithIdleTimout 
+    {
+        /// <summary>
+        /// Specifies the timeout (in minutes) for an idle connection.
+        /// </summary>
+        /// <param name="minutes">The length of the time out in minutes.</param>
+        /// <return>The next stage of the resource update.</return>
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate WithIdleTimeoutInMinutes(int minutes);
+    }
+
+    /// <summary>
     /// A public IP address update allowing to change the leaf domain label, if any.
     /// </summary>
     public interface IWithLeafDomainLabel 
@@ -79,18 +92,5 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update
         /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
         /// <return>The next stage of the resource update.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate WithLeafDomainLabel(string dnsName);
-    }
-
-    /// <summary>
-    /// A public IP address update allowing the idle timeout to be changed.
-    /// </summary>
-    public interface IWithIdleTimout 
-    {
-        /// <summary>
-        /// Specifies the timeout (in minutes) for an idle connection.
-        /// </summary>
-        /// <param name="minutes">The length of the time out in minutes.</param>
-        /// <return>The next stage of the resource update.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate WithIdleTimeoutInMinutes(int minutes);
     }
 }

@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using NetworkSecurityGroup.Definition;
-    using NetworkSecurityGroup.Update;
-    using NetworkSecurityRule.Definition;
-    using NetworkSecurityRule.Update;
-    using NetworkSecurityRule.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -266,17 +266,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the destination port range that the rule applies to, in the format "##-##", where "" means any.
-        /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule.DestinationPortRange
-        {
-            get
-            {
-                return this.DestinationPortRange();
-            }
-        }
-
-        /// <summary>
         /// Gets the source port range that the rule applies to, in the format "##-##", where "" means "any".
         /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule.SourcePortRange
@@ -284,6 +273,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.SourcePortRange();
+            }
+        }
+
+        /// <summary>
+        /// Gets the destination port range that the rule applies to, in the format "##-##", where "" means any.
+        /// </summary>
+        string Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule.DestinationPortRange
+        {
+            get
+            {
+                return this.DestinationPortRange();
             }
         }
 
@@ -311,17 +311,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the user-defined description of the security rule.
-        /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule.Description
-        {
-            get
-            {
-                return this.Description();
-            }
-        }
-
-        /// <summary>
         /// Gets the destination address prefix the rule applies to, expressed using the CIDR notation in the format: "###.###.###.###/##",
         /// and "" means "any".
         /// </summary>
@@ -330,6 +319,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.DestinationAddressPrefix();
+            }
+        }
+
+        /// <summary>
+        /// Gets the user-defined description of the security rule.
+        /// </summary>
+        string Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule.Description
+        {
+            get
+            {
+                return this.Description();
             }
         }
 

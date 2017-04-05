@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Network.Definition;
-    using Network.Update;
-    using Subnet.Definition;
-    using Subnet.Update;
-    using Subnet.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Network.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Network.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -84,12 +84,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ISet<INicIPConfiguration> ISubnet.GetNetworkInterfaceIPConfigurations()
+        /// <return>
+        /// Network interface IP configurations that are associated with this subnet
+        /// Note that this call may result in multiple calls to Azure to fetch all the referenced interfaces each time it is invoked.
+        /// </return>
+        System.Collections.Generic.ISet<Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration> Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkInterfaceIPConfigurations()
         {
-            return this.GetNetworkInterfaceIPConfigurations();
+            return this.GetNetworkInterfaceIPConfigurations() as System.Collections.Generic.ISet<Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration>;
         }
 
-        int ISubnet.NetworkInterfaceIPConfigurationCount
+        /// <summary>
+        /// Gets number of network interface IP configurations associated with this subnet.
+        /// </summary>
+        int Microsoft.Azure.Management.Network.Fluent.ISubnet.NetworkInterfaceIPConfigurationCount
         {
             get
             {
@@ -108,15 +115,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        /// <return>
-        /// The network security group associated with this subnet, if any
-        /// Note that this method will result in a call to Azure each time it is invoked.
-        /// </return>
-        INetworkSecurityGroup ISubnet.GetNetworkSecurityGroup()
-        {
-            return this.GetNetworkSecurityGroup() as INetworkSecurityGroup;
-        }
-
         /// <summary>
         /// Gets the resource ID of the route table associated with this subnet, if any.
         /// </summary>
@@ -126,6 +124,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return this.RouteTableId();
             }
+        }
+
+        /// <return>
+        /// The network security group associated with this subnet, if any
+        /// Note that this method will result in a call to Azure each time it is invoked.
+        /// </return>
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkSecurityGroup()
+        {
+            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
         }
 
         /// <summary>

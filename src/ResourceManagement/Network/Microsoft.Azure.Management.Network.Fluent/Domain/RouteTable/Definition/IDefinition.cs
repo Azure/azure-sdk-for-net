@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// The definition must be completed with a call to Route.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  Route.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
         /// <return>The first stage of the definition.</return>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
 
     /// <summary>
     /// The stage of a route table definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :

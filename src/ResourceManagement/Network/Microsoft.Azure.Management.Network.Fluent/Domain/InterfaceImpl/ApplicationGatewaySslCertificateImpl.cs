@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ApplicationGateway.Definition;
-    using ApplicationGateway.Update;
-    using ApplicationGatewaySslCertificate.Definition;
-    using ApplicationGatewaySslCertificate.Update;
-    using ApplicationGatewaySslCertificate.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -70,6 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="pfxFile">A file in the PFX format.</param>
         /// <return>The next stage of the definition.</return>
+        /// <throws>Java.io.IOException when there are problems with the provided file.</throws>
         ApplicationGatewaySslCertificate.Definition.IWithPassword<ApplicationGateway.Definition.IWithCreate> ApplicationGatewaySslCertificate.Definition.IWithData<ApplicationGateway.Definition.IWithCreate>.WithPfxFromFile(FileInfo pfxFile)
         {
             return this.WithPfxFromFile(pfxFile) as ApplicationGatewaySslCertificate.Definition.IWithPassword<ApplicationGateway.Definition.IWithCreate>;

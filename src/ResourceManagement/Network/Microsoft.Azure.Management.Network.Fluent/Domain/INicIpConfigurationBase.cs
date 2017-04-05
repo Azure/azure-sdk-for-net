@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using System.Collections.Generic;
 
     /// <summary>
-    /// The base ip configuration shared across ip configurations in regular and virtual machine scale set
+    /// The base IP configuration shared across IP configurations in regular and virtual machine scale set
     /// network interface.
     /// </summary>
     public interface INicIPConfigurationBase 
@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.INetwork GetNetwork();
 
         /// <return>The load balancer backends associated with this network interface IP configuration.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListAssociatedLoadBalancerBackends();
-
-        /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListAssociatedLoadBalancerBackends();
 
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
-        IPVersion PrivateIPAddressVersion { get; }
+        Models.IPVersion PrivateIPAddressVersion { get; }
+
+        /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
     }
 }

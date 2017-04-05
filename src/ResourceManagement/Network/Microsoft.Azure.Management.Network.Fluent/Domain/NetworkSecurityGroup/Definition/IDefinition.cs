@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
 
     /// <summary>
     /// The stage allowing to define a new security rule.
-    /// When the security rule description is complete enough, use Attachable.attach() to attach it to
+    /// When the security rule description is complete enough, use  Attachable.attach() to attach it to
     /// this network security group.
     /// </summary>
     public interface IWithRule 

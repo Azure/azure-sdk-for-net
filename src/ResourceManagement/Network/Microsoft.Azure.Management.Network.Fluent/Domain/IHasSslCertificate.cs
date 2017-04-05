@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An interface representing a model's ability to reference an SSL certificate.
     /// </summary>
-    /// <typeparam name="">The SSL certificate type.</typeparam>
+    /// <typeparam name="T">The SSL certificate type.</typeparam>
     public interface IHasSslCertificate<T> 
     {
         /// <summary>

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
     /// <summary>
     /// The template for an update operation, containing all the settings that
     /// can be modified.
-    /// Call Update.apply() to apply the changes to the resource in Azure.
+    /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         IAppliable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,

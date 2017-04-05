@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update
     /// <summary>
     /// The stage of an update allowing to modify the transport protocol.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the update.</typeparam>
-    /// <typeparam name="Protocol">The type of the protocol value.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the update.</typeparam>
+    /// <typeparam name="ProtocolT">The type of the protocol value.</typeparam>
     public interface IWithProtocol<ReturnT,ProtocolT> 
     {
         /// <summary>
