@@ -15,20 +15,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
     /// 
     /// @param <T> the type of the resources listed.
     /// </summary>
-    public interface ISupportsListingByGroup<T> 
+    public interface ISupportsListingByResourceGroup<T> 
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
-        /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
+        /// <param name="resourceGroupName"> the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        IEnumerable<T> ListByGroup (string resourceGroupName);
+        IEnumerable<T> ListByResourceGroup (string resourceGroupName);
 
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
-        /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
+        /// <param name="resourceGroupName"> the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Task<IPagedCollection<T>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IPagedCollection<T>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

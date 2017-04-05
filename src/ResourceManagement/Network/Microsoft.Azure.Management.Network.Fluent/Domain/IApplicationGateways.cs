@@ -16,11 +16,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IApplicationGateways  :
         ISupportsCreating<ApplicationGateway.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IHasManager<INetworkManager>,
         IHasInner<IApplicationGatewaysOperations>

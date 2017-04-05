@@ -15,11 +15,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface ILoadBalancers  :
         ISupportsCreating<LoadBalancer.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasManager<INetworkManager>,
         IHasInner<ILoadBalancersOperations>

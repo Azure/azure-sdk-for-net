@@ -14,7 +14,7 @@ namespace Azure.Tests.Common
 {
     public abstract class TestTemplate<T, C, ManagerT>
         where T : IResource, IHasResourceGroup
-        where C : ISupportsListing<T>, ISupportsGettingByGroup<T>, ISupportsDeletingById, ISupportsGettingById<T>
+        where C : ISupportsListing<T>, ISupportsGettingByResourceGroup<T>, ISupportsDeletingById, ISupportsGettingById<T>
     {
         protected string TestId { get; private set; }
         private T resource;
@@ -69,7 +69,7 @@ namespace Azure.Tests.Common
          */
         public T VerifyGetting()
         {
-            T resourceByGroup = collection.GetByGroup(resource.ResourceGroupName, resource.Name);
+            T resourceByGroup = collection.GetByResourceGroup(resource.ResourceGroupName, resource.Name);
             T resourceById = collection.GetById(resourceByGroup.Id);
             Assert.True(resourceById.Id.Equals(resourceByGroup.Id, StringComparison.OrdinalIgnoreCase));
             return resourceById;

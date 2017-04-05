@@ -15,11 +15,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface ISnapshots  :
         ISupportsCreating<Snapshot.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
         IHasManager<IComputeManager>,
         IHasInner<ISnapshotsOperations>

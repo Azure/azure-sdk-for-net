@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     public interface IRedisCaches  :
         ISupportsCreating<RedisCache.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
         ISupportsGettingById<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
         IHasManager<IRedisManager>,
         IHasInner<IRedisOperations>

@@ -54,27 +54,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public void DeleteByGroup(string groupName, string name)
+        public void DeleteByResourceGroup(string groupName, string name)
         {
-            DeleteByGroupAsync(groupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            DeleteByResourceGroupAsync(groupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await DeleteByResourceGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
-        public async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Manager.Inner.Deployments.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public IDeployment GetByGroup(string resourceGroupName, string name)
+        public IDeployment GetByResourceGroup(string resourceGroupName, string name)
         {
-            return GetByGroupAsync(resourceGroupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return GetByResourceGroupAsync(resourceGroupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<IDeployment> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IDeployment> GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var deploymentExtendedInner = await Manager.Inner.Deployments.GetAsync(resourceGroupName, name, cancellationToken);
             return WrapModel(deploymentExtendedInner);
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public async Task<IDeployment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            return await GetByResourceGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         public IDeployment GetByName(string name)
@@ -118,10 +118,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         public IEnumerable<IDeployment> List()
         {
             return resourceManager.ResourceGroups.List()
-                                                 .SelectMany(rg => ListByGroup(rg.Name));
+                                                 .SelectMany(rg => ListByResourceGroup(rg.Name));
         }
 
-        public IEnumerable<IDeployment> ListByGroup(string resourceGroupName)
+        public IEnumerable<IDeployment> ListByResourceGroup(string resourceGroupName)
         {
             return Manager.Inner.Deployments.List(resourceGroupName)
                                             .AsContinuousCollection(link => Manager.Inner.Deployments.ListNext(link))
@@ -147,11 +147,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         public async Task<IPagedCollection<IDeployment>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var resourceGroups = await resourceManager.ResourceGroups.ListAsync(true, cancellationToken);
-            var taskResult = await Task.WhenAll(resourceGroups.Select(async (rg) => await ListByGroupAsync(rg.Name, true, cancellationToken)));
+            var taskResult = await Task.WhenAll(resourceGroups.Select(async (rg) => await ListByResourceGroupAsync(rg.Name, true, cancellationToken)));
             return PagedCollection<IDeployment, DeploymentExtendedInner>.CreateFromEnumerable(taskResult.SelectMany(deployment => deployment));
         }
 
-        public async Task<IPagedCollection<IDeployment>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IPagedCollection<IDeployment>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IDeployment, DeploymentExtendedInner>.LoadPage(
                 async (cancellation) => await Manager.Inner.Deployments.ListAsync(resourceGroupName, cancellationToken: cancellationToken),

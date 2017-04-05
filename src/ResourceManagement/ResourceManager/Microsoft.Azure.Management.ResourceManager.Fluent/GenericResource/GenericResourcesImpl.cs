@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             throw new NotSupportedException("Get just by resource group and name is not supported. Please use other overloads.");
         }
 
-        public IEnumerable<IGenericResource> ListByGroup(string resourceGroupName)
+        public IEnumerable<IGenericResource> ListByResourceGroup(string resourceGroupName)
         {
             return WrapList(Inner.List()
                                  .AsContinuousCollection(link => Inner.ListNext(link)));
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             throw new NotSupportedException("Delete just by resource group and name is not supported. Please use other overloads.");
         }
 
-        public async Task<IPagedCollection<IGenericResource>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IPagedCollection<IGenericResource>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IGenericResource, GenericResourceInner>.LoadPage(
                 async (cancellation) => await Inner.ListAsync(cancellationToken: cancellation),

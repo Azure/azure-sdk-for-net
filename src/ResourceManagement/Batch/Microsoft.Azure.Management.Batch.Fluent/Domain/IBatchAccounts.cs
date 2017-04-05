@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     public interface IBatchAccounts  :
         ISupportsCreating<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
         ISupportsGettingById<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
         IHasManager<IBatchManager>,
         IHasInner<IBatchAccountOperations>

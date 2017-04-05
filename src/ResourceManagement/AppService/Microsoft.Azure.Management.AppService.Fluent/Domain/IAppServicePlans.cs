@@ -17,11 +17,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public interface IAppServicePlans  :
         ISupportsCreating<AppServicePlan.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IAppServiceManager>,
         IHasInner<IAppServicePlansOperations>
     {

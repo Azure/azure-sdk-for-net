@@ -14,10 +14,10 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsCreating<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsGettingById<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         IHasManager<IKeyVaultManager>,
         IHasInner<IVaultsOperations>
     {

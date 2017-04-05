@@ -15,11 +15,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IDisks  :
         ISupportsCreating<Disk.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
         IHasInner<IDisksOperations>,
         IHasManager<IComputeManager>

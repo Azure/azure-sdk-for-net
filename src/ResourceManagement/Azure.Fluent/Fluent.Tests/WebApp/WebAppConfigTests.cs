@@ -33,7 +33,7 @@ namespace Azure.Tests.WebApp
                     .WithNetFrameworkVersion(NetFrameworkVersion.V3_0)
                     .Create();
 
-                var webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                var webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 Assert.NotNull(webApp);
                 Assert.Equal(Region.USWest, webApp.Region);
                 Assert.Equal(NetFrameworkVersion.V3_0, webApp.NetFrameworkVersion);
@@ -43,14 +43,14 @@ namespace Azure.Tests.WebApp
                     .WithJavaVersion(JavaVersion.V7_51)
                     .WithWebContainer(WebContainer.Tomcat7_0_50)
                     .Apply();
-                webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 Assert.Equal(JavaVersion.V7_51, webApp.JavaVersion);
 
                 // Python version
                 webApp.Update()
                     .WithPythonVersion(PythonVersion.V34)
                     .Apply();
-                webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 Assert.Equal(PythonVersion.V34, webApp.PythonVersion);
 
                 // Default documents
@@ -58,7 +58,7 @@ namespace Azure.Tests.WebApp
                 webApp.Update()
                         .WithDefaultDocument("somedocument.Html")
                         .Apply();
-                webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 Assert.Equal(documentSize + 1, webApp.DefaultDocuments.Count);
                 Assert.True(webApp.DefaultDocuments.Contains("somedocument.Html"));
 
@@ -67,7 +67,7 @@ namespace Azure.Tests.WebApp
                         .WithAppSetting("appkey", "appvalue")
                         .WithStickyAppSetting("stickykey", "stickyvalue")
                         .Apply();
-                webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 var appSettingMap = webApp.AppSettings;
                 Assert.Equal("appvalue", appSettingMap["appkey"].Value);
                 Assert.Equal(false, appSettingMap["appkey"].Sticky);
@@ -79,7 +79,7 @@ namespace Azure.Tests.WebApp
                         .WithConnectionString("connectionName", "connectionValue", ConnectionStringType.Custom)
                         .WithStickyConnectionString("stickyName", "stickyValue", ConnectionStringType.Custom)
                         .Apply();
-                webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
+                webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName, WebAppName);
                 var connectionStringMap = webApp.ConnectionStrings;
                 Assert.Equal("connectionValue", connectionStringMap["connectionName"].Value);
                 Assert.Equal(false, connectionStringMap["connectionName"].Sticky);

@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return WrapModel(name);
         }
 
-        internal Task<IEnumerable<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        internal Task<IEnumerable<IBatchAccount>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotSupportedException();
         }

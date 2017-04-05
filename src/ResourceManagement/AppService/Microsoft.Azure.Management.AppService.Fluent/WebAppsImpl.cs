@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public override IEnumerable<IWebApp> ListByGroup(string resourceGroupName)
+        public override IEnumerable<IWebApp> ListByResourceGroup(string resourceGroupName)
         {
             Func<SiteInner, IWebApp> converter = inner =>
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                         .Select(inner => converter(inner));
         }
 
-        public override async Task<IPagedCollection<IWebApp>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IPagedCollection<IWebApp>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IWebApp, SiteInner>.LoadPageWithWrapModelAsync(
                 async (cancellation) => await Inner.ListByResourceGroupAsync(resourceGroupName, cancellationToken: cancellation),
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:F6B932DEEE4F4CBE27781F2323DD7232
-        public async override Task<IWebApp> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IWebApp> GetByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await GetInnerByGroupAsync(groupName, name, cancellationToken);
             var webapp = await PopulateModelAsync(inner, cancellationToken);

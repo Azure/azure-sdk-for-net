@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
     public abstract class TopLevelModifiableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT> :
         GroupableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT>,
         ISupportsGettingById<IFluentResourceT>,
-        ISupportsGettingByGroup<IFluentResourceT>,
-        ISupportsDeletingByGroup,
+        ISupportsGettingByResourceGroup<IFluentResourceT>,
+        ISupportsDeletingByResourceGroup,
         IHasManager<ManagerT>,
         ISupportsListing<IFluentResourceT>,
-        ISupportsListingByGroup<IFluentResourceT>,
+        ISupportsListingByResourceGroup<IFluentResourceT>,
         IHasInner<InnerCollectionT>
         where IFluentResourceT : class, IGroupableResource<ManagerT, InnerResourceT>
         where FluentResourceT : IFluentResourceT
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             return WrapList(this.ListInnerAsync(default(CancellationToken)).GetAwaiter().GetResult().AsContinuousCollection(link => ListInnerNextAsync(link, default(CancellationToken)).GetAwaiter().GetResult()));
         }
 
-        public virtual IEnumerable<IFluentResourceT> ListByGroup(string resourceGroupName)
+        public virtual IEnumerable<IFluentResourceT> ListByResourceGroup(string resourceGroupName)
         {
             return WrapList(this.ListInnerByGroupAsync(resourceGroupName, default(CancellationToken)).GetAwaiter().GetResult().AsContinuousCollection(link => ListInnerByGroupNextAsync(link, default(CancellationToken)).GetAwaiter().GetResult()));
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             return await PagedCollection<IFluentResourceT, InnerResourceT>.LoadPage(ListInnerAsync, ListInnerNextAsync, WrapModel, loadAllPages, cancellationToken);
         }
 
-        public virtual async Task<IPagedCollection<IFluentResourceT>> ListByGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<IPagedCollection<IFluentResourceT>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IFluentResourceT, InnerResourceT>.LoadPage(
                 async(cancellation) => await ListInnerByGroupAsync(resourceGroupName, cancellation),

@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ISupportsListing<IStorageAccount>,
         ISupportsCreating<StorageAccount.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<IStorageAccount>,
-        ISupportsGettingByGroup<IStorageAccount>,
+        ISupportsListingByResourceGroup<IStorageAccount>,
+        ISupportsGettingByResourceGroup<IStorageAccount>,
         ISupportsGettingById<IStorageAccount>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<IStorageAccount>,
         IHasManager<IStorageManager>,
         IHasInner<IStorageAccountsOperations>

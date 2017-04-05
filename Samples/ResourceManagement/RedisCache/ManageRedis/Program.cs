@@ -94,7 +94,7 @@ namespace ManageRedis
                 var redisCaches = azure.RedisCaches;
 
                 // List Redis Caches and select Premium Sku instances only
-                var caches = redisCaches.ListByGroup(rgName)
+                var caches = redisCaches.ListByResourceGroup(rgName)
                     .Where(rc => rc.IsPremium)
                     .Select(rc => rc.AsPremium());
 

@@ -15,11 +15,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     public interface ICdnProfiles  :
         ISupportsCreating<CdnProfile.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         ISupportsGettingById<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         IHasManager<ICdnManager>,
         IHasInner<IProfilesOperations>

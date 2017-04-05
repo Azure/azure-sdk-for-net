@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface INetworkInterfaces  :
         ISupportsCreating<NetworkInterface.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         IHasManager<INetworkManager>,
         IHasInner<INetworkInterfacesOperations>

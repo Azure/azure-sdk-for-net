@@ -105,7 +105,7 @@ namespace ManageKeyVault
 
                 Utilities.Log("Listing key vaults...");
 
-                foreach (var vault in azure.Vaults.ListByGroup(rgName))
+                foreach (var vault in azure.Vaults.ListByResourceGroup(rgName))
                 {
                     Utilities.PrintVault(vault);
                 }

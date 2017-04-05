@@ -37,7 +37,7 @@ namespace Azure.Tests.WebApp
                     .Create();
                 Assert.NotNull(webApp1);
                 Assert.Equal(Region.USWest, webApp1.Region);
-                var plan1 = appServiceManager.AppServicePlans.GetByGroup(GroupName1, AppServicePlanName1);
+                var plan1 = appServiceManager.AppServicePlans.GetByResourceGroup(GroupName1, AppServicePlanName1);
                 Assert.NotNull(plan1);
                 Assert.Equal(Region.USWest, plan1.Region);
                 Assert.Equal(AppServicePricingTier.BasicB1, plan1.PricingTier);
@@ -51,15 +51,15 @@ namespace Azure.Tests.WebApp
                 Assert.Equal(Region.USWest, webApp1.Region);
 
                 // Get
-                var webApp = appServiceManager.WebApps.GetByGroup(GroupName1, webApp1.Name);
+                var webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName1, webApp1.Name);
                 Assert.Equal(webApp1.Id, webApp.Id);
                 webApp = appServiceManager.WebApps.GetById(webApp2.Id);
                 Assert.Equal(webApp2.Name, webApp.Name);
 
                 // List
-                var webApps = appServiceManager.WebApps.ListByGroup(GroupName1);
+                var webApps = appServiceManager.WebApps.ListByResourceGroup(GroupName1);
                 Assert.Equal(1, webApps.Count());
-                webApps = appServiceManager.WebApps.ListByGroup(GroupName2);
+                webApps = appServiceManager.WebApps.ListByResourceGroup(GroupName2);
                 Assert.Equal(1, webApps.Count());
 
                 // Update
@@ -67,7 +67,7 @@ namespace Azure.Tests.WebApp
                     .WithNewAppServicePlan(AppServicePlanName2)
                     .WithPricingTier(AppServicePricingTier.StandardS2)
                     .Apply();
-                var plan2 = appServiceManager.AppServicePlans.GetByGroup(GroupName1, AppServicePlanName2);
+                var plan2 = appServiceManager.AppServicePlans.GetByResourceGroup(GroupName1, AppServicePlanName2);
                 Assert.NotNull(plan2);
                 Assert.Equal(Region.USWest, plan2.Region);
                 Assert.Equal(AppServicePricingTier.StandardS2, plan2.PricingTier);

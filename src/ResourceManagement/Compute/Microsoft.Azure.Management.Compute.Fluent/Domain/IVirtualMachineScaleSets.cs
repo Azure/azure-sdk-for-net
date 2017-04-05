@@ -14,12 +14,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public interface IVirtualMachineScaleSets  :
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         ISupportsCreating<VirtualMachineScaleSet.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IHasManager<IComputeManager>,
         IHasInner<IVirtualMachineScaleSetsOperations>

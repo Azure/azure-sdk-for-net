@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             // There is no API supporting listing of availability set across subscription so enumerate all RGs and then
             // flatten the "list of list of availability sets" as "list of availability sets" .
             return Manager.ResourceManager.ResourceGroups.List()
-                                          .SelectMany(rg => ListByGroup(rg.Name));
+                                          .SelectMany(rg => ListByResourceGroup(rg.Name));
         }
 
         public override async Task<IPagedCollection<IAvailabilitySet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

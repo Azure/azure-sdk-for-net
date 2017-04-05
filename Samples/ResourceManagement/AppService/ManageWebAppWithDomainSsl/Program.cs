@@ -57,7 +57,7 @@ namespace ManageWebAppWithDomainSsl
                 // Create a second web app with the same app service plan
 
                 Utilities.Log("Creating another web app " + app2Name + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByGroup(rgName, planName);
+                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rgName, planName);
                 var app2 = azure.WebApps
                         .Define(app2Name)
                         .WithExistingResourceGroup(rgName)

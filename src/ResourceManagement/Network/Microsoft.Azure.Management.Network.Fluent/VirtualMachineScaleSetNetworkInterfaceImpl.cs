@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             return networkManager
                 .NetworkSecurityGroups
-                .GetByGroup(ResourceUtils.GroupFromResourceId(nsgId),
+                .GetByResourceGroup(ResourceUtils.GroupFromResourceId(nsgId),
                     ResourceUtils.NameFromResourceId(nsgId));
         }
 

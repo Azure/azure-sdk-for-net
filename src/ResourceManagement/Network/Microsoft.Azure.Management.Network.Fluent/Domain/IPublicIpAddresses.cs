@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         ISupportsCreating<PublicIPAddress.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         IHasManager<INetworkManager>,
         IHasInner<IPublicIPAddressesOperations>

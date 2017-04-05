@@ -32,7 +32,7 @@ namespace Fluent.Tests.Network
                     .WithIdleTimeoutInMinutes(10)
                     .Create();
 
-                var resource = manager.PublicIPAddresses.GetByGroup(newRG, newPipName);
+                var resource = manager.PublicIPAddresses.GetByResourceGroup(newRG, newPipName);
                 var updatedDnsName = resource.LeafDomainLabel + "xx";
                 var updatedIdleTimeout = 15;
                 resource = resource.Update()

@@ -14,11 +14,11 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     public interface ITrafficManagerProfiles  :
         ISupportsCreating<TrafficManagerProfile.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
         ISupportsGettingById<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
         IHasManager<ITrafficManager>,
         IHasInner<IProfilesOperations>

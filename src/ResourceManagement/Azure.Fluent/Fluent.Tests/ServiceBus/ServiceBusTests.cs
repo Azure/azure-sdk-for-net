@@ -40,7 +40,7 @@ namespace Azure.Tests.ServiceBus
                             .WithSku(NamespaceSku.PremiumCapacity1)
                             .Create();
 
-                    var namespaces = serviceBusManager.Namespaces.ListByGroup(rgName);
+                    var namespaces = serviceBusManager.Namespaces.ListByResourceGroup(rgName);
                     Assert.NotNull(namespaces);
                     Assert.True(namespaces.Count() > 0);
                     var found = namespaces.Any(n => n.Name.Equals(nspace.Name, StringComparison.OrdinalIgnoreCase));

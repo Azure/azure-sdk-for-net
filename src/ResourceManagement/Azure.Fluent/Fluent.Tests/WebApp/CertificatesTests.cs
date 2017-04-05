@@ -22,11 +22,11 @@ namespace Azure.Tests.WebApp
                 var keyVaultManager = TestHelper.CreateKeyVaultManager();
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
-                var vault = keyVaultManager.Vaults.GetByGroup(GroupName, "bananagraphwebapp319com");
+                var vault = keyVaultManager.Vaults.GetByResourceGroup(GroupName, "bananagraphwebapp319com");
                 var certificate = appServiceManager.AppServiceCertificates.Define("bananacert")
                     .WithRegion(Region.USWest)
                     .WithExistingResourceGroup(GroupName)
-                    .WithExistingCertificateOrder(appServiceManager.AppServiceCertificateOrders.GetByGroup(GroupName, "graphwebapp319"))
+                    .WithExistingCertificateOrder(appServiceManager.AppServiceCertificateOrders.GetByResourceGroup(GroupName, "graphwebapp319"))
                     .Create();
                 Assert.NotNull(certificate);
 

@@ -44,12 +44,12 @@ namespace Fluent.Tests.Storage
                     Assert.Equal(storageAccount.Tags.Count, 2);
 
                     // List
-                    var accounts = storageManager.StorageAccounts.ListByGroup(rgName);
+                    var accounts = storageManager.StorageAccounts.ListByResourceGroup(rgName);
                     bool found = accounts.Any((IStorageAccount stg) => { return string.Equals(stg.Name, stgName); });
                     Assert.True(found);
 
                     // Get
-                    storageAccount = storageManager.StorageAccounts.GetByGroup(rgName, stgName);
+                    storageAccount = storageManager.StorageAccounts.GetByResourceGroup(rgName, stgName);
                     Assert.NotNull(storageAccount);
                     Assert.NotNull(storageAccount.Tags);
                     Assert.Equal(storageAccount.Tags.Count, 2);

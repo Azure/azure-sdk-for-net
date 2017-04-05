@@ -44,7 +44,7 @@ namespace Fluent.Tests.Network
                             .Attach()
                         .Create();
 
-                var resource = manager.Networks.GetByGroup(groupName, newName);
+                var resource = manager.Networks.GetByResourceGroup(groupName, newName);
                 resource = resource.Update()
                     .WithTag("tag1", "value1")
                     .WithTag("tag2", "value2")

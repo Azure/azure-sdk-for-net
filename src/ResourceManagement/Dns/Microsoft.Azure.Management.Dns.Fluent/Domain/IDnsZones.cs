@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IDnsZones  :
         ISupportsCreating<DnsZone.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         ISupportsGettingById<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         IHasManager<IDnsZoneManager>,
         IHasInner<IZonesOperations>

@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
         ISupportsCreating<VirtualMachineCustomImage.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
+        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
+        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
-        ISupportsDeletingByGroup,
+        ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
         IHasManager<IComputeManager>,
         IHasInner<IImagesOperations>
