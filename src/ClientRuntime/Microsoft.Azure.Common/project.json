@@ -21,7 +21,7 @@
     },
 
   "dependencies": {
-    "Hyak.Common": "1.1.2"
+    "Hyak.Common": "1.1.3"
   },
 
   "frameworks": {
