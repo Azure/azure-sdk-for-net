@@ -322,6 +322,11 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(resource.SslCertificates.Count, certCount - 1);
             Assert.True(!resource.SslCertificates.ContainsKey("cert1"));
 
+            // Test stop/start
+            resource.Stop();
+            Assert.Equal(ApplicationGatewayOperationalState.Stopped, resource.OperationalState);
+            resource.Start();
+            Assert.Equal(ApplicationGatewayOperationalState.Running, resource.OperationalState);
             return resource;
         }
     }
