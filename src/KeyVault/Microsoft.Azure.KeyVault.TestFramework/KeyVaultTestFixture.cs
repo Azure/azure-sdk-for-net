@@ -56,7 +56,7 @@ namespace KeyVault.TestFramework
                 retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new ExponentialBackoffRetryStrategy(8, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
             } else
             {
-                retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new FixedIntervalRetryStrategy(0));
+                retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>( new FixedIntervalRetryStrategy( 5, TimeSpan.FromSeconds( 5.0 ) ) );
             }
         }
 

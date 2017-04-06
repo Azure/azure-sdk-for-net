@@ -845,23 +845,69 @@ namespace Microsoft.Azure.KeyVault
                 }
             }
 
-            /// <summary>
-            /// List certificates in a specified key vault
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultBaseUrl'>
-            /// The vault name, for example https://myvault.vault.azure.net.
-            /// </param>
-            /// <param name='maxresults'>
-            /// Maximum number of results to return in a page. If not specified the service
-            /// will return up to 25 results.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<CertificateItem>> GetCertificatesAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Requests that a backup of the specified secret be downloaded to the client.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='secretName'>
+        /// The name of the secret.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<BackupSecretResult> BackupSecretAsync( this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default( CancellationToken ) )
+        {
+            using ( var _result = await operations.BackupSecretWithHttpMessagesAsync( vaultBaseUrl, secretName, null, cancellationToken ).ConfigureAwait( false ) )
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Restores a backed up secret to a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='secretBundleBackup'>
+        /// The backup blob associated with a secret bundle.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<SecretBundle> RestoreSecretAsync( this IKeyVaultClient operations, string vaultBaseUrl, byte[ ] secretBundleBackup, CancellationToken cancellationToken = default( CancellationToken ) )
+        {
+            using ( var _result = await operations.RestoreSecretWithHttpMessagesAsync( vaultBaseUrl, secretBundleBackup, null, cancellationToken ).ConfigureAwait( false ) )
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// List certificates in a specified key vault
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return in a page. If not specified the service
+        /// will return up to 25 results.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<IPage<CertificateItem>> GetCertificatesAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCertificatesWithHttpMessagesAsync(vaultBaseUrl, maxresults, null, cancellationToken).ConfigureAwait(false))
                 {
