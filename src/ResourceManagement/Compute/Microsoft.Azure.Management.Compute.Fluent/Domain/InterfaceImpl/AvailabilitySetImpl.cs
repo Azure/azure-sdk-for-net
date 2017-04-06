@@ -50,11 +50,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the resource IDs of the virtual machines in the availability set.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.VirtualMachineIds
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.VirtualMachineIds
         {
             get
             {
-                return this.VirtualMachineIds() as System.Collections.Generic.IList<string>;
+                return this.VirtualMachineIds() as System.Collections.Generic.ISet<string>;
             }
         }
 

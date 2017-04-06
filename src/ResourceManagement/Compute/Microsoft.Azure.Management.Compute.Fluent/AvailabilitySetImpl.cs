@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         AvailabilitySet.Definition.IDefinition,
         AvailabilitySet.Update.IUpdate
     {
-        private List<string> idOfVMsInSet;
+        private ISet<string> idOfVMsInSet;
 
         ///GENMHASH:8C96B0BDC54BDF41F3FC5BCCAA028C8D:113A819FAF18DEACEC4BCC60120F8166
         internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel, IComputeManager computeManager) :
@@ -54,12 +54,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7CF67BED6AE72D13DE2B93CB9ABDBE99:D5A13B2EFFE12E36E1A8B800CA03B181
-        public IList<string> VirtualMachineIds()
+        public ISet<string> VirtualMachineIds()
         {
             if (idOfVMsInSet == null)
             {
-                idOfVMsInSet = (from subresource in Inner.VirtualMachines
-                                select subresource.Id).ToList();
+                idOfVMsInSet = new HashSet<string>();
+                foreach (var subresource in Inner.VirtualMachines)
+                {
+                    idOfVMsInSet.Add(subresource.Id);
+                }
             }
             return idOfVMsInSet;
         }
