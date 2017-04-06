@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 
@@ -26,6 +27,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="instanceId">Virtual machine scale set vm instance id.</param>
         /// <return>List of network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId);
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId);
     }
 }

@@ -56,7 +56,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="ids">Application gateway resource ids.</param>
         void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Stop(params string[] ids)
         {
- 
             this.Stop(ids);
         }
 

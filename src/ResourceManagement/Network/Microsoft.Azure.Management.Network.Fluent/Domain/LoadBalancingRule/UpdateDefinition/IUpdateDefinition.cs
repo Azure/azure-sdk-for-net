@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition
 {
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<ParentT> WithLoadDistribution(string loadDistribution);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<ParentT> WithLoadDistribution(LoadDistribution loadDistribution);
     }
 
     /// <summary>
@@ -147,7 +148,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {
     }
 }

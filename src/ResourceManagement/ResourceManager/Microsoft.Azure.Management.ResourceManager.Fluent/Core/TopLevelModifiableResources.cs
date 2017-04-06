@@ -8,6 +8,7 @@ using Microsoft.Rest.Azure;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -64,24 +65,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             return Extensions.ConvertToPage(list);
         }
 
-        public Task<IEnumerable<string>> DeleteByIdsAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<string>> DeleteByIdsAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var taskList = ids.Select(id => DeleteByIdAsync(id, cancellationToken)).ToList();
+            await Task.WhenAll(taskList);
+            return ids;
         }
 
-        public Task<IEnumerable<string>> DeleteByIdsAsync(CancellationToken cancellationToken = default(CancellationToken), params string[] ids)
+        public Task<IEnumerable<string>> DeleteByIdsAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return DeleteByIdsAsync(new List<string>(ids), cancellationToken);
         }
 
-        public void DeleteByIds(IEnumerable<string> ids)
+        public void DeleteByIds(IList<string> ids)
         {
-            throw new NotImplementedException();
+            DeleteByIdsAsync(ids).Wait();
         }
 
         public void DeleteByIds(params string[] ids)
         {
-            throw new NotImplementedException();
+            DeleteByIdsAsync(ids).Wait();
         }
     }
 }

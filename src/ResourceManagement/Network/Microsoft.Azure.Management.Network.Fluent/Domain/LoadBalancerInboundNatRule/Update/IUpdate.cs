@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update;
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// The stage of an inbound NAT rule update allowing to specify the transport protocol for the rule to apply to.
     /// </summary>
     public interface IWithProtocol  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {
     }
 

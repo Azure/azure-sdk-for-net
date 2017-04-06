@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the assigned IP address.
         /// </summary>
-        string IpAddress { get; }
+        string IPAddress { get; }
 
         /// <summary>
         /// Gets the IP address allocation method (Static/Dynamic).

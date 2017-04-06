@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP configurations of this network interface, indexed by their names.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNicIPConfiguration> Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface.IpConfigurations
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNicIPConfiguration> Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface.IPConfigurations
         {
             get
             {
-                return this.IpConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNicIPConfiguration>;
+                return this.IPConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNicIPConfiguration>;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             get
             {
-                return this.Manager() as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
+                return this.Manager as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
             }
         }
     }

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets IP configurations of this application gateway, indexed by name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> IpConfigurations { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> IPConfigurations { get; }
 
         /// <summary>
         /// Gets the tier of the application gateway.
@@ -68,12 +68,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Models.ApplicationGatewayTier Tier { get; }
 
         /// <summary>
-        /// Gets Stops the application gateway asynchronously.
+        /// Stops the application gateway asynchronously.
         /// </summary>
-        /// <summary>
-        /// Gets a representation of the deferred computation of this call.
-        /// </summary>
-        Task StopAsync { get; }
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets true if the application gateway has at least one Internet-facing frontend.
@@ -103,7 +101,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Models.ApplicationGatewaySku Sku { get; }
 
         /// <return>Frontend listeners, indexed by name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Listeners();
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Listeners { get; }
 
         /// <summary>
         /// Gets SSL certificates, indexed by name.
@@ -126,12 +124,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> Backends { get; }
 
         /// <summary>
-        /// Gets Starts the application gateway asynchronously.
+        /// Starts the application gateway asynchronously.
         /// </summary>
-        /// <summary>
-        /// Gets a representation of the deferred computation of this call.
-        /// </summary>
-        Task StartAsync { get; }
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets named frontend ports of this application gateway, indexed by name.

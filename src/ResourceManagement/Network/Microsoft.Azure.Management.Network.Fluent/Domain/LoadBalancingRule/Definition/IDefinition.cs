@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
 {
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition;
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT> WithLoadDistribution(string loadDistribution);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT> WithLoadDistribution(LoadDistribution loadDistribution);
     }
 
     /// <summary>
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontend<ParentT>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontend<ParentT>,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {
     }
 

@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 
     internal partial class NetworkInterfacesImpl 
@@ -32,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="id">Virtual machine scale set resource id.</param>
         /// <return>List of network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSetId(string id)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSetId(string id)
         {
-            return this.ListByVirtualMachineScaleSetId(id) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListByVirtualMachineScaleSetId(id) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
@@ -57,9 +58,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="scaleSetName">Scale set name.</param>
         /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
         /// <return>List of network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
         {
-            return this.ListByVirtualMachineScaleSetInstanceId(resourceGroupName, scaleSetName, instanceId) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListByVirtualMachineScaleSetInstanceId(resourceGroupName, scaleSetName, instanceId) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
@@ -68,9 +69,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="resourceGroupName">Virtual machine scale set resource group name.</param>
         /// <param name="scaleSetName">Scale set name.</param>
         /// <return>List of network interfaces.</return>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaces.ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
         {
-            return this.ListByVirtualMachineScaleSet(resourceGroupName, scaleSetName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+            return this.ListByVirtualMachineScaleSet(resourceGroupName, scaleSetName) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
     }
 }

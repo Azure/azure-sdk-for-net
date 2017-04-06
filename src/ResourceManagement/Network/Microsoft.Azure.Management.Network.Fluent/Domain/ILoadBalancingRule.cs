@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasBackendPort,
         IHasFrontend,
         IHasFloatingIP,
-        IHasProtocol<string>,
+        IHasProtocol<Models.TransportProtocol>,
         IHasFrontendPort
     {
         /// <summary>
         /// Gets the method of load distribution.
         /// </summary>
-        string LoadDistribution { get; }
+        Models.LoadDistribution LoadDistribution { get; }
 
         /// <summary>
         /// Gets the number of minutes before an inactive connection is closed.

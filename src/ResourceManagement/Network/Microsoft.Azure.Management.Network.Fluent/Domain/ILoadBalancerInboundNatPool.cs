@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface ILoadBalancerInboundNatPool  :
         IHasFrontend,
         IHasBackendPort,
-        IHasProtocol<string>,
+        IHasProtocol<Models.TransportProtocol>,
         IHasInner<Models.InboundNatPoolInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
     {

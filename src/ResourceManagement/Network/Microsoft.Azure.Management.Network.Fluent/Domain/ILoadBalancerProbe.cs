@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasInner<Models.ProbeInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasLoadBalancingRules,
-        IHasProtocol<string>,
+        IHasProtocol<ProbeProtocol>,
         IHasPort
     {
         /// <summary>

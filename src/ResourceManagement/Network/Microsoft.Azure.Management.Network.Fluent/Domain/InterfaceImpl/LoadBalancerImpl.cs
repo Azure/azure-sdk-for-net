@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="protocol">The protocol to load balance.</param>
         /// <param name="backendPort">The port number on the back end to send load balanced traffic to.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate LoadBalancer.Definition.IWithLoadBalancingRule.WithLoadBalancingRule(int frontendPort, string protocol, int backendPort)
+        LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate LoadBalancer.Definition.IWithLoadBalancingRule.WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
         {
             return this.WithLoadBalancingRule(frontendPort, protocol, backendPort) as LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate;
         }
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="port">The port number on the front and back end for the network traffic to be load balanced on.</param>
         /// <param name="protocol">The protocol to load balance.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate LoadBalancer.Definition.IWithLoadBalancingRule.WithLoadBalancingRule(int port, string protocol)
+        LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate LoadBalancer.Definition.IWithLoadBalancingRule.WithLoadBalancingRule(int port, TransportProtocol protocol)
         {
             return this.WithLoadBalancingRule(port, protocol) as LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate;
         }
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="protocol">The protocol to load balance.</param>
         /// <param name="backendPort">The port number on the back end to send load balanced traffic to.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithLoadBalancingRule.WithLoadBalancingRule(int frontendPort, string protocol, int backendPort)
+        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithLoadBalancingRule.WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
         {
             return this.WithLoadBalancingRule(frontendPort, protocol, backendPort) as LoadBalancer.Update.IUpdate;
         }
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="port">The port number on the front and back end for the network traffic to be load balanced on.</param>
         /// <param name="protocol">The protocol to load balance.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithLoadBalancingRule.WithLoadBalancingRule(int port, string protocol)
+        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithLoadBalancingRule.WithLoadBalancingRule(int port, TransportProtocol protocol)
         {
             return this.WithLoadBalancingRule(port, protocol) as LoadBalancer.Update.IUpdate;
         }

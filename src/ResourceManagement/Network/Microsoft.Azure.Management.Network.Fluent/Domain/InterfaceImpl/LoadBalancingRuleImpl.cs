@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> LoadBalancingRule.Definition.IWithLoadDistribution<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>.WithLoadDistribution(string loadDistribution)
+        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> LoadBalancingRule.Definition.IWithLoadDistribution<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>.WithLoadDistribution(LoadDistribution loadDistribution)
         {
             return this.WithLoadDistribution(loadDistribution) as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancingRule.UpdateDefinition.IWithLoadDistribution<LoadBalancer.Update.IUpdate>.WithLoadDistribution(string loadDistribution)
+        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancingRule.UpdateDefinition.IWithLoadDistribution<LoadBalancer.Update.IUpdate>.WithLoadDistribution(LoadDistribution loadDistribution)
         {
             return this.WithLoadDistribution(loadDistribution) as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancingRule.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancingRule.Update.IUpdate,string>.WithProtocol(string protocol)
+        LoadBalancingRule.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancingRule.Update.IUpdate,Models.TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancingRule.Update.IUpdate;
         }
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasProtocol.Definition.IWithProtocol<LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,string>.WithProtocol(string protocol)
+        LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasProtocol.Definition.IWithProtocol<LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,Models.TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>,string>.WithProtocol(string protocol)
+        LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>,Models.TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>;
         }
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Update.IUpdate LoadBalancingRule.Update.IWithLoadDistribution.WithLoadDistribution(string loadDistribution)
+        LoadBalancingRule.Update.IUpdate LoadBalancingRule.Update.IWithLoadDistribution.WithLoadDistribution(LoadDistribution loadDistribution)
         {
             return this.WithLoadDistribution(loadDistribution) as LoadBalancingRule.Update.IUpdate;
         }
@@ -333,11 +333,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the method of load distribution.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule.LoadDistribution
+        Models.LoadDistribution Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule.LoadDistribution
         {
             get
             {
-                return this.LoadDistribution();
+                return this.LoadDistribution() as Models.LoadDistribution;
             }
         }
 
@@ -457,11 +457,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the protocol.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasProtocol<string>.Protocol
+        Models.TransportProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.TransportProtocol>.Protocol
         {
             get
             {
-                return this.Protocol();
+                return this.Protocol() as Models.TransportProtocol;
             }
         }
     }

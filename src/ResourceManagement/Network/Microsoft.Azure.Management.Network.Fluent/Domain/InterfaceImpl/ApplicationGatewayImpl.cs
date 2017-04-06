@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             get
             {
-                return this.Manager() as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
+                return this.Manager as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
             }
         }
 
@@ -290,18 +290,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets Stops the application gateway asynchronously.
+        /// Stops the application gateway asynchronously.
         /// </summary>
-        /// <summary>
-        /// Gets a representation of the deferred computation of this call.
-        /// </summary>
-        Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StopAsync
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StopAsync(CancellationToken cancellationToken)
         {
-            get
-            {
  
             await this.StopAsync(cancellationToken);
-            }
         }
 
         /// <summary>
@@ -362,11 +357,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets IP configurations of this application gateway, indexed by name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.IpConfigurations
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.IPConfigurations
         {
             get
             {
-                return this.IpConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration>;
+                return this.IPConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration>;
             }
         }
 
@@ -437,9 +432,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>Frontend listeners, indexed by name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Listeners()
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Listeners
         {
-            return this.Listeners() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener>;
+            get
+            {
+                return this.Listeners() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener>;
+            }
         }
 
         /// <summary>
@@ -463,18 +461,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets Starts the application gateway asynchronously.
+        /// Starts the application gateway asynchronously.
         /// </summary>
-        /// <summary>
-        /// Gets a representation of the deferred computation of this call.
-        /// </summary>
-        Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StartAsync
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StartAsync(CancellationToken cancellationToken)
         {
-            get
-            {
  
             await this.StartAsync(cancellationToken);
-            }
         }
 
         /// <summary>

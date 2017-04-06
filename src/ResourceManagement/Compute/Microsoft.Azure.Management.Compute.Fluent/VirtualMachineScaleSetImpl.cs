@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:85147EF10797D4C57F7D765BDFEAE89E:65DEB6D772EFEFA23B2E9C18CCAB48DC
-        public IList<string> PrimaryPublicIPAddressIds()
+        public IReadOnlyList<string> PrimaryPublicIPAddressIds()
         {
             ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
             if (loadBalancer != null)

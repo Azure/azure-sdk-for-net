@@ -2,13 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update;
-    
-
     internal partial class PublicIPAddressImpl 
     {
         /// <summary>
@@ -103,7 +96,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the assigned IP address.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.IpAddress
+        string Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.IPAddress
         {
             get
             {

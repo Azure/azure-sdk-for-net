@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:F8F8F11F485174C9B1CC3FA0197799B9:649DFFCBE23D4220949D8CA7A521D053
-        public ApplicationGatewayListenerImpl Listener()
+        internal ApplicationGatewayListenerImpl Listener()
         {
             var listenerRef = Inner.HttpListener;
             if (listenerRef != null)

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the protocol.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasProtocol<string>.Protocol
+        ProbeProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<ProbeProtocol>.Protocol
         {
             get
             {

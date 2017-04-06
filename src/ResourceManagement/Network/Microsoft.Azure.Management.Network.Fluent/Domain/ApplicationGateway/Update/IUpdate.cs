@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition;
-    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The stage of an application gateway update allowing to modify probes.
@@ -338,7 +337,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// its private IP address from.
     /// </summary>
     public interface IWithExistingSubnet  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
+        ResourceManager.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
     {
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.
