@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        ISupportsBatchDeletion,
         IHasManager<IBatchManager>,
         IHasInner<IBatchAccountOperations>
     {

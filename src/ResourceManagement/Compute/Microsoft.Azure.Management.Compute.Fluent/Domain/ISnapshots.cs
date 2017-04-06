@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
+        ISupportsBatchDeletion,
         IHasManager<IComputeManager>,
         IHasInner<ISnapshotsOperations>
     {

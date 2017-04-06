@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsBatchDeletion,
         IHasManager<IComputeManager>,
         IHasInner<IVirtualMachinesOperations>
     {

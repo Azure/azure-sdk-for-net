@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>,
+        ISupportsBatchDeletion,
         IHasManager<IComputeManager>,
         IHasInner<IImagesOperations>
     {

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        ISupportsBatchDeletion,
         IHasManager<ITrafficManager>,
         IHasInner<IProfilesOperations>
     {
