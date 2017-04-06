@@ -36,6 +36,6 @@
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.5.0-preview,2.0.0)",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Azure.Monitor": "0.15.0-preview"
+    "Microsoft.Azure.Monitor": "0.16.0-preview"
   }
 }

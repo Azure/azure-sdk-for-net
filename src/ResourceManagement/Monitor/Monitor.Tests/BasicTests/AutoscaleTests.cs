@@ -107,7 +107,7 @@ namespace Monitor.Tests.BasicTests
 
             AutoscaleSettingResource setting = new AutoscaleSettingResource
             {
-                Name = "setting1",
+                //Name = "setting1",
                 AutoscaleSettingResourceName = "setting1",
                 TargetResourceUri = resourceUri,
                 Enabled = true,

@@ -31,6 +31,7 @@
     },
     "netstandard1.5": {
       "imports": ["dnxcore50"],
+      "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.1.0",
         "NETStandard.Library": "1.6.1",
@@ -42,6 +43,7 @@
     },
     "netstandard1.1": {
       "imports": ["dnxcore50"],
+      "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.1.0",
         "NETStandard.Library": "1.6.1",
