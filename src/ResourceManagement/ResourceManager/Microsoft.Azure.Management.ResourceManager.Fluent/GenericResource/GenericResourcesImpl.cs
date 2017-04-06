@@ -15,7 +15,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 namespace Microsoft.Azure.Management.ResourceManager.Fluent
 {
     internal class GenericResourcesImpl :
-        GroupableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, IResourceManager>,
+        TopLevelModifiableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, IResourceManager>,
         IGenericResources
     {
         internal GenericResourcesImpl(IResourceManager resourceManager) : base(resourceManager.Inner.Resources, resourceManager)
@@ -96,12 +96,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             throw new NotSupportedException("Get just by resource group and name is not supported. Please use other overloads.");
         }
 
-        public IEnumerable<IGenericResource> ListByResourceGroup(string resourceGroupName)
-        {
-            return WrapList(Inner.List()
-                                 .AsContinuousCollection(link => Inner.ListNext(link)));
-        }
-
         public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
         {
             MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources).ConfigureAwait(false).GetAwaiter().GetResult();
@@ -151,8 +145,28 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         public async Task<IPagedCollection<IGenericResource>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IGenericResource, GenericResourceInner>.LoadPage(
-                async (cancellation) => await Inner.ListAsync(cancellationToken: cancellation),
-                Inner.ListNextAsync, WrapModel, loadAllPages, cancellationToken);
+                async (cancellation) => await Manager.Inner.ResourceGroups.ListResourcesAsync(resourceGroupName, cancellationToken: cancellation),
+                Manager.Inner.ResourceGroups.ListResourcesNextAsync, WrapModel, loadAllPages, cancellationToken);
+        }
+
+        protected async override Task<IPage<GenericResourceInner>> ListInnerAsync(CancellationToken cancellationToken)
+        {
+            return await this.Inner.ListAsync(cancellationToken: cancellationToken);
+        }
+
+        protected async override Task<IPage<GenericResourceInner>> ListInnerNextAsync(string link, CancellationToken cancellationToken)
+        {
+            return await this.Inner.ListNextAsync(link, cancellationToken);
+        }
+
+        protected async override Task<IPage<GenericResourceInner>> ListInnerByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.ResourceGroups.ListResourcesAsync(resourceGroupName, cancellationToken: cancellationToken);
+        }
+
+        protected async override Task<IPage<GenericResourceInner>> ListInnerByGroupNextAsync(string link, CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.ResourceGroups.ListResourcesNextAsync(link, cancellationToken);
         }
     }
 }
