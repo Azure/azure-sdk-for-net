@@ -48,13 +48,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public virtual void Validate( )
         {
-            if (SecretBundleBackup == null)
+            if ( SecretBundleBackup == null )
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SecretBundleBackup");
+                throw new ValidationException( ValidationRules.CannotBeNull, "SecretBundleBackup" );
             }
         }
     }
 }
-
