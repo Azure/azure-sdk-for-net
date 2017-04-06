@@ -8,7 +8,7 @@ setlocal
 
 set autoRestVersion=0.17.0-Nightly20160824
 
-set webServicesSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-machinelearning/2016-05-01-preview/swagger/webservices.json"
+set webServicesSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-machinelearning/2017-01-01/swagger/webservices.json"
 set commitmentPlansSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-machinelearning/2016-05-01-preview/swagger/commitmentPlans.json"
 
 set repoRoot=%~dp0..\..\..\..
