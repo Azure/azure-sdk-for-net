@@ -208,7 +208,9 @@ namespace DataLakeStore.Tests
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
-                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
+                
+                // TODO: re-enable this once we support this in the server again.
+                // Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
 
                 // validate trusted identity provider state
                 Assert.Equal(TrustedIdProviderState.Enabled, responseGet.TrustedIdProviderState);

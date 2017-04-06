@@ -7,14 +7,15 @@
     "summary": "Scheduler.Tests Tests.",
     "tags": [ "" ],
     "projectUrl": "",
-    "licenseUrl": "",
+    "licenseUrl": ""
   },
 
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk",
-    "compile": "../../../../tools/DisableTestRunParallel.cs"
+    "compile": "../../../../tools/DisableTestRunParallel.cs", 
+    "xmlDoc": true
   },
 
   "testRunner": "xunit",

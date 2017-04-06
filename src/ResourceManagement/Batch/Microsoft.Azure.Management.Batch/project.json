@@ -1,5 +1,5 @@
 {
-  "version": "4.1.0",
+  "version": "4.2.0",
   "title": "Microsoft Azure Batch Management Library",
   "description": "Provides management capabilities for Azure Batch service accounts.",
   "authors": [ "Microsoft" ],
@@ -11,13 +11,14 @@
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "requireLicenseAcceptance": true,
-    "releaseNotes": "See https://github.com/matthchr/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/Batch/changelog.md for release notes."
+    "releaseNotes": "See https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/Batch/changelog.md for release notes."
   },
 
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../../tools/MSSharedLibKey.snk", 
+    "xmlDoc": true
   },
 
   "dependencies": {

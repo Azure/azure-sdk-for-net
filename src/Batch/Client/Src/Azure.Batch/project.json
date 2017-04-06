@@ -8,7 +8,7 @@
     "summary": "The client library for the Microsoft Azure Batch service.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-    "licenseUrl": "http://aka.ms/windowsazureapache2",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "tags": [ "Microsoft", "Azure", "Batch", "windowsazureofficial" ],
     "requireLicenseAcceptance": true,
     "releaseNotes": "See https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/Batch/Client/changelog.md for release notes."

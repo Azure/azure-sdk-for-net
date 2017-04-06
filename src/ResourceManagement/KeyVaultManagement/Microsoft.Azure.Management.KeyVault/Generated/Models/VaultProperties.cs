@@ -50,24 +50,25 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="enabledForTemplateDeployment">Property to specify
         /// whether Azure Resource Manager is permitted to retrieve secrets
         /// from the key vault.</param>
-        public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?))
+        /// <param name="enableSoftDelete">Property to specify whether the
+        /// 'soft delete' functionality is enabled for this key vault. It
+        /// does not accept false value.</param>
+        /// <param name="createMode">The vault's create mode to indicate
+        /// whether the vault need to be recovered or not. Possible values
+        /// include: 'recover', 'default'</param>
+        public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), CreateMode? createMode = default(CreateMode?))
         {
             Sku = new Sku();
-            VaultUri = vaultUri;
             TenantId = tenantId;
             Sku = sku;
             AccessPolicies = accessPolicies;
+            VaultUri = vaultUri;
             EnabledForDeployment = enabledForDeployment;
             EnabledForDiskEncryption = enabledForDiskEncryption;
             EnabledForTemplateDeployment = enabledForTemplateDeployment;
+            EnableSoftDelete = enableSoftDelete;
+            CreateMode = createMode;
         }
-
-        /// <summary>
-        /// Gets or sets the URI of the vault for performing operations on
-        /// keys and secrets.
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultUri")]
-        public string VaultUri { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure Active Directory tenant ID that should be
@@ -89,6 +90,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "accessPolicies")]
         public IList<AccessPolicyEntry> AccessPolicies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URI of the vault for performing operations on
+        /// keys and secrets.
+        /// </summary>
+        [JsonProperty(PropertyName = "vaultUri")]
+        public string VaultUri { get; set; }
 
         /// <summary>
         /// Gets or sets property to specify whether Azure Virtual Machines
@@ -113,6 +121,22 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public bool? EnabledForTemplateDeployment { get; set; }
 
         /// <summary>
+        /// Gets or sets property to specify whether the 'soft delete'
+        /// functionality is enabled for this key vault. It does not accept
+        /// false value.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableSoftDelete")]
+        public bool? EnableSoftDelete { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vault's create mode to indicate whether the vault
+        /// need to be recovered or not. Possible values include: 'recover',
+        /// 'default'
+        /// </summary>
+        [JsonProperty(PropertyName = "createMode")]
+        public CreateMode? CreateMode { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -123,10 +147,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
-            }
-            if (AccessPolicies == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessPolicies");
             }
             if (this.Sku != null)
             {

@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.Resources;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -17,8 +20,8 @@ namespace Sql.Tests
             // Warning: This test takes around 20 minutes to run in record mode.
 
             string testPrefix = "sqlrestoretest-";
-            string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create database only required parameters
                 //

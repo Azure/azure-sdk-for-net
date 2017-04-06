@@ -1,5 +1,5 @@
 {
-  "version": "0.10.0-preview",
+  "version": "1.0.0",
   "description": "Provides Machine Learning WebServices management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -15,7 +15,8 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../../tools/MSSharedLibKey.snk", 
+    "xmlDoc": true
   },
 
   "dependencies": {

@@ -41,7 +41,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.Sessions.ListByIntegrationAccounts(null, "IntegrationAccount"));
-            Assert.Throws<CloudException>(() => client.Sessions.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
+            Assert.Throws<ErrorResponseException>(() => client.Sessions.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.Sessions.ListByIntegrationAccountsNext(nextPageLink: null));
-            Assert.Throws<CloudException>(() => client.Sessions.ListByIntegrationAccountsNext(nextPageLink: Constants.NextPageLink));
+            Assert.Throws<ErrorResponseException>(() => client.Sessions.ListByIntegrationAccountsNext(nextPageLink: Constants.NextPageLink));
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Test.Azure.Management.Logic
                 integrationAccountName: "IntegrationAccountName",
                 sessionName: "SessionName",
                 session: null));
-            Assert.Throws<CloudException>(() => client.Sessions.CreateOrUpdate(
+            Assert.Throws<ErrorResponseException>(() => client.Sessions.CreateOrUpdate(
                 resourceGroupName: ResourceGroupName,
                 integrationAccountName: "IntegrationAccountName",
                 sessionName: "SessionName",
@@ -193,11 +193,6 @@ namespace Test.Azure.Management.Logic
             var handler = new RecordedDelegatingHandler();
             var client = this.CreateIntegrationAccountClient(handler);
 
-            handler.Response = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.NotFound
-            };
-
             Assert.Throws<ValidationException>(() => client.Sessions.Delete(
                 resourceGroupName: null,
                 integrationAccountName: "IntegrationAccountName",
@@ -210,10 +205,6 @@ namespace Test.Azure.Management.Logic
                 resourceGroupName: ResourceGroupName,
                 integrationAccountName: "IntegrationAccountName",
                 sessionName: null));
-            Assert.Throws<CloudException>(() => client.Sessions.Delete(
-                resourceGroupName: ResourceGroupName,
-                integrationAccountName: "IntegrationAccountName",
-                sessionName: "SessionName"));
         }
 
         [Fact]
@@ -296,7 +287,7 @@ namespace Test.Azure.Management.Logic
             handler.Request.ValidateAuthorizationHeader();
             handler.Request.ValidateMethod(HttpMethod.Get);
 
-            this.ValidateSession(result as IntegrationAccountSession);
+            this.ValidateSession(result);
         }
 
         private void ValidateSessionList(IPage<IntegrationAccountSession> result)

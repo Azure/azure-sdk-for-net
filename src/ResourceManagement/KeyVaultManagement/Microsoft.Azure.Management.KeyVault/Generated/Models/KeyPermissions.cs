@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// </summary>
     public static class KeyPermissions
     {
-        public const string All = "all";
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
         public const string WrapKey = "wrapKey";
@@ -32,5 +31,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public const string Delete = "delete";
         public const string Backup = "backup";
         public const string Restore = "restore";
+        public const string Recover = "recover";
+        public const string Purge = "purge";
     }
 }

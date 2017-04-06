@@ -1,0 +1,1291 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/create?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC9jcmVhdGU/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ],\r\n  \"attributes\": {},\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "275"
+        ],
+        "x-ms-client-request-id": [
+          "97474c81-8e8a-4a90-be1a-c83fa6bc6bdf"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "726"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "a20661f3-5a43-4635-9e51-601461308bad"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e237d4b0-a826-4ad4-bdc9-21eaf5b0b531"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "726"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "fc5b4ec7-ee71-4327-81c3-6161786c2758"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "02f11540-e6e0-4cd7-8ab7-471b5538b416"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "88"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "1953f564-5179-43b9-9e1f-944743654b0c"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0607f6e9-ed98-4c2f-8960-62ec928cc4db"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "88"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "b4687c0e-3fb0-4e1e-8fe1-83600816c47a"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "174639f4-2a83-4582-a6cf-98321d68a906"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "88"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "0762fef1-3b35-4db6-a396-670c22cfae38"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "63aad575-39e3-4ab7-b529-03bf32ac12c9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "726"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "950e1bb4-ff31-40f8-b68f-115f12f4d3b6"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0988742b-927e-4dfe-8193-dceae3b64fb9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "726"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "6bd09bb1-f27f-4837-bd84-67256a28b694"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a8f331d1-9fff-4f88-9693-f3a8015f6747"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "726"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "6a0cc46f-9f5b-46df-a651-5c4c3f2d27dc"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f3194d9d-afa5-4d67-8248-fd21fb977bbb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "88"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "a8d256d7-c81d-423b-80f7-745bb50ea8d6"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "21d96312-1fef-403d-921b-c170c28b7445"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/deletedkeys/CreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1482186873,\r\n  \"scheduledPurgeDate\": 1489962873,\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "745f1e1f-8304-4d92-8331-c9e8dc8f0e1e"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/keys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvQ3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "712686cb-4860-4d10-82fe-da182fd6fea6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/deletedkeys/CreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1482186929,\r\n  \"scheduledPurgeDate\": 1489962929,\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "c6d38cbc-8460-4f34-bce9-1bbf23a8fac0"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "105ae8f3-ff16-4477-b94a-7c63308af737"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "96"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "a46a4592-da6c-4f09-8ad8-e2b8164bb621"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b069ca78-1899-4842-bba3-519139248f23"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "96"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "c48c71a2-7702-44a7-867a-2dd437a5b8d2"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5fefd67b-b31a-48dc-b12d-db9dc5924c14"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "96"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:34:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "4cb0d3d5-b8fe-40e7-88b7-e84ae964a8c9"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e770cd10-dc1e-43dc-ac27-17cc4fc522ae"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/deletedkeys/CreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1482186873,\r\n  \"scheduledPurgeDate\": 1489962873,\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "5633b1c1-ec22-4c17-8ea9-f784d0820af6"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8e9c1047-adea-40b4-8fa1-c5dbd693838b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "96"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "ec25b403-14b4-4661-b070-93f51a433d58"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bd5e2959-2379-48ab-ab29-03fe0c9f022e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/deletedkeys/CreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1482186929,\r\n  \"scheduledPurgeDate\": 1489962929,\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "5cc786c2-b6a2-4015-bc9b-f561695a1ffb"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "83e434ad-5a3d-461b-8998-d2f36f805c2d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "96"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "78b216eb-464b-4326-9f8f-89c690fc9ee8"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest/recover?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvcmVjb3Zlcj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ca7cde4f-14ff-44c2-bc83-31394ae6eee5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://karlaugsoftdeletesdk.vault-int.azure-int.net/keys/CreateDeleteRecoverPurgeTest/ed0630c77dcf4d35b4f2c949ab3f8a07\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"6j0E_J8NHglCbHdr1RtDVLaUvPL_iihbY1C6m9NgR_EdBnuiXOxyACsFycqiQsEC7ubcjPMW3yE0fUUIVamzSgKGx3O26RIKwaCFXL0eD1_zs1oJN4PglB7mwrh2EGYnrZlF3cZtwCGIwYDP8DYGKi3c6gGX-a7HraG2u2de63duhc18NVXatJebUhPhOBnyamo4R5NNZo0PDzR5Tfwq5vypk_2vN2zOlXRSgUZGoMt5dfameTDrfYqwHpMdI420-g01dJLz5xyTYpYNB-NIQeFjSvr8d50ny_6hr-ZTH9BGr-xKbkBSwszIVcaGK9xcMvHHITtBPT3UJIc0TDj8RQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482186872,\r\n    \"updated\": 1482186872\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "726"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "85301fe7-ad6a-46cf-b768-ebda774820d6"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5d298f87-8538-4983-ac9c-2fbb0e97b310"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24709.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Dec 2016 22:35:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "South Central US"
+        ],
+        "x-ms-request-id": [
+          "d9946733-9241-4f74-961c-557267b27e9b"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1066"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "VaultAddress": "https://karlaugsoftdeletesdk.vault-int.azure-int.net",
+    "KeyName": "sdktestkey",
+    "KeyVersion": "4ac8dbcb697b44a2bff598b1a21e371c",
+    "SoftDeleteEnabled": "true"
+  }
+}

@@ -1,5 +1,11 @@
 ## Azure.Batch release notes
 
+### Upcoming changes
+These changes are planned but haven't been published yet.
+
+#### License
+Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as .NET.
+
 ### Changes in 6.1.0
 #### REST API version
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
@@ -12,8 +18,11 @@ This version of the Batch .NET client library targets version 2017-01-01.4.0 of 
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
 
 #### Features
-- Moved `FileToStage` implementation to the [Azure.Batch.FileStaging](https://www.nuget.org/packages/Azure.Batch.FileStaging) NuGet package and removed the dependency on `WindowsAzure.Storage` from the `Azure.Batch` package. This gives more flexibility on what version of `WindowsAzure.Storage` to use for users who do not use the `FileToStage` features.
+##### Breaking changes
 - Added support for running a task under a configurable user identity via the `UserIdentity` property on all task objects (`CloudTask`, `JobPreparationTask`, `StartTask`, etc). `UserIdentity` replaces `RunElevated`. `UserIdentity` supports running a task as a predefined named user (via `UserIdentity.UserName`) or an automatically created user. The `AutoUserSpecification` specifies an automatically created user account under which to run the task. To translate existing code, change `RunElevated = true` to `UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.Admin))` and `RunElevated = false` to `UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.NonAdmin))`.
+- Moved `FileToStage` implementation to the [Azure.Batch.FileStaging](https://www.nuget.org/packages/Azure.Batch.FileStaging) NuGet package and removed the dependency on `WindowsAzure.Storage` from the `Azure.Batch` package. This gives more flexibility on what version of `WindowsAzure.Storage` to use for users who do not use the `FileToStage` features.
+
+##### Non-breaking changes
 - Added support for defining pool-wide users, via the `UserAccounts` property on `CloudPool` and `PoolSpecification`. You can run a task as such a user using the `UserIdentity` constructor that takes a user name.
 - Added support for requesting the Batch service provide an authentication token to the task when it runs. This is done using the `AuthenticationTokenSettings` on `CloudTask` and `JobManagerTask`. This avoids the need to pass Batch account keys to the task in order to issue requests to the Batch service.
 - Added support for specifying an action to take on a task's dependencies if the task fails using the `DependencyAction` property of `ExitOptions`.
