@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
@@ -13,6 +13,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IRouteTable>
     {
         /// <summary>
+        /// Gets the IP address of the next hop.
+        /// </summary>
+        string NextHopIPAddress { get; }
+
+        /// <summary>
         /// Gets the destination address prefix, expressed using the CIDR notation, to which the route applies.
         /// </summary>
         string DestinationAddressPrefix { get; }
@@ -21,10 +26,5 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the type of the next hop.
         /// </summary>
         Models.RouteNextHopType NextHopType { get; }
-
-        /// <summary>
-        /// Gets the IP address of the next hop.
-        /// </summary>
-        string NextHopIPAddress { get; }
     }
 }

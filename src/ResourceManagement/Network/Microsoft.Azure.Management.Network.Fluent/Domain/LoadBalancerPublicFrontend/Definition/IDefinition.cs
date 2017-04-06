@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The stage of a public frontend definition allowing to specify an existing public IP address.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithPublicIPAddress<ParentT>  :
         IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>
     {
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The first stage of a public frontend definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         IWithPublicIPAddress<ParentT>
     {
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The entirety of a public frontend definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The final stage of a public frontend definition.
     /// At this stage, any remaining optional settings can be specified, or the frontend definition
-    /// can be attached to the parent load balancer definition using WithAttach.attach().
+    /// can be attached to the parent load balancer definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>
     {

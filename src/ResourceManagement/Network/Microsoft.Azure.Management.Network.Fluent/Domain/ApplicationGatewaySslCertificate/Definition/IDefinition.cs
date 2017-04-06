@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// <summary>
     /// The stage of an SSL certificate definition allowing to specify the password for the private key (PFX) content of the certificate.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway to return to after attaching.</typeparam>
     public interface IWithPassword<ParentT> 
     {
         /// <summary>
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// At this stage, any remaining optional settings can be specified, or the definition
     /// can be attached to the parent application gateway definition.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// <summary>
     /// The entirety of an application gateway SSL certificate definition.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// <summary>
     /// The stage of an SSL certificate definition allowing to specify the contents of the SSL certificate.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway to return to after attaching.</typeparam>
     public interface IWithData<ParentT> 
     {
         /// <summary>
@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
         /// </summary>
         /// <param name="pfxFile">A file in the PFX format.</param>
         /// <return>The next stage of the definition.</return>
+        /// <throws>Java.io.IOException when there are problems with the provided file.</throws>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition.IWithPassword<ParentT> WithPfxFromFile(FileInfo pfxFile);
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// <summary>
     /// The first stage of an application gateway SSL certificate.
     /// </summary>
-    /// <typeparam name="Parent">The parent application gateway type.</typeparam>
+    /// <typeparam name="ParentT">The parent application gateway type.</typeparam>
     public interface IBlank<ParentT>  :
         IWithData<ParentT>
     {

@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private Dictionary<string, IApplicationGatewayListener> listeners;
         private Dictionary<string, IApplicationGatewayRequestRoutingRule> rules;
         private Dictionary<string, IApplicationGatewaySslCertificate> sslCerts;
+        private Dictionary<string, IApplicationGatewayProbe> probes;
         private static string DEFAULT = "default";
         private ApplicationGatewayFrontendImpl defaultPrivateFrontend;
         private ApplicationGatewayFrontendImpl defaultPublicFrontend;
@@ -56,7 +57,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()
         {
             Dictionary<string, IApplicationGatewayFrontend> publicFrontends = new Dictionary<string, IApplicationGatewayFrontend>();
-            ///GENMHASH:3BF87DE2E0C9BBAA60FEF8B345571B0D:78DEDBCE9849DD9B71BA61C7FBEA3261
             foreach (var frontend in Frontends().Values)
             {
                 if (frontend.IsPublic)
@@ -86,7 +86,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public string FrontendPortNameFromNumber(int portNumber)
         {
             string portName = null;
-            ///GENMHASH:F0126379A1F65359204BD22C7CF55E7C:BE15CAD584433DEAF8B46C62642E8728
             foreach (var portEntry in FrontendPorts())
             {
                 if (portNumber == portEntry.Value)
@@ -99,20 +98,35 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return portName;
         }
 
+        ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:8E7C5AF309A720AEBD981CD714D58952
         public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.Manager.ApplicationGateways.Inner.StartAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await Manager.ApplicationGateways.Inner.StartAsync(ResourceGroupName, Name, cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
+        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:E0F8963F5DAB9A54987EBE382946F816
+        public void Start()
+        {
+            StartAsync().Wait();
+        }
+
+        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:5A2F4445DA73DB06DF8066E5B2B6EF28
+        public void Stop()
+        {
+            StopAsync().Wait();
+        }
+
+        ///GENMHASH:D6FBED7FC7CBF34940541851FF5C3CC1:9E4F1BE9C6626B590BF7E05F4AD83D73
         public async Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.Manager.ApplicationGateways.Inner.StopAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await Manager.ApplicationGateways.Inner.StopAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
         ///GENMHASH:F756CBB3F13EF6198269C107AED6F9A2:F819A402FF29D3234FF975971868AD05
         public ApplicationGatewayTier Tier()
         {
-            ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:43E446F640DC3345BDBD9A3378F2018A
             if (Sku() != null && Sku().Tier != null)
             {
                 return ApplicationGatewayTier.Parse(Sku().Tier);
@@ -212,6 +226,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return listeners;
         }
 
+        ///GENMHASH:B8F4D6119066B28FD6E6D77185F2C4C5:6E7F6F4E57E7226C275225C0B15F9215
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe> Probes()
+        {
+            return probes;
+        }
+
         ///GENMHASH:37B3BFB70B7A5569F82FB660A259D248:E92DB289B022D8EE6CEDBF8D99A476BC
         public IApplicationGatewayFrontend DefaultPublicFrontend()
         {
@@ -295,6 +315,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return ipConfigs;
         }
 
+        ///GENMHASH:3BF87DE2E0C9BBAA60FEF8B345571B0D:78DEDBCE9849DD9B71BA61C7FBEA3261
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> Frontends()
         {
             return frontends;
@@ -324,7 +345,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             return false;
         }
-        
+
         ///GENMHASH:0A25F8D30AF64565545B20B215964E6B:7FF7C66C33A802B8668BFAC46B248EE8
         public ApplicationGatewayImpl WithSize(ApplicationGatewaySkuName skuName)
         {
@@ -417,6 +438,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
+        ///GENMHASH:5ECDCD52F7D8B026EB0204682B6DBC78:CC42EDBDDB628F9C1D1D1D93BAA3EA03
+        public ApplicationGatewayImpl WithoutProbe(string name)
+        {
+            probes.Remove(name);
+            return this;
+        }
+
         ///GENMHASH:A21060E42B1DFECB63D4D27A101A8941:5B99013747311ACBEED53F35BF26AD98
         public ApplicationGatewayBackendImpl DefineBackend(string name)
         {
@@ -443,12 +471,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (ApplicationGatewayBackendImpl)backend;
         }
 
+        ///GENMHASH:38BFE2F7B09C012CA0D64DCC81623E9E:65B23C9A03D9CBC10B0BBC9CAA4677A8
+        public ApplicationGatewayProbeImpl UpdateProbe(string name)
+        {
+            IApplicationGatewayProbe probe = null;
+            probes.TryGetValue(name, out probe);
+            return (ApplicationGatewayProbeImpl)probe;
+        }
+
         ///GENMHASH:C000D62B14DEB58BED734D8C97CBA337:4F027AEBFAC53ECDC5ED96364FD97831
         internal ApplicationGatewayImpl WithBackend(ApplicationGatewayBackendImpl backend)
         {
             if (backend != null)
             {
                 backends[backend.Name()] = backend;
+            }
+            return this;
+        }
+
+        ///GENMHASH:6E017CB98B56255A0D3E4F37EC8ACD35:539639DE8874C6D95CF8297AE9557E4A
+        internal ApplicationGatewayImpl WithProbe(ApplicationGatewayProbeImpl probe)
+        {
+            if (probe != null)
+            {
+                probes[probe.Name()] = probe;
             }
             return this;
         }
@@ -808,7 +854,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             ipConfigs.Remove(ipConfigurationName);
             return this;
         }
-        
+
         ///GENMHASH:335DEBA2C3ED42B7D6D726224668713C:5F7D61C72418DAEB7F935725E2A62AFF
         public ApplicationGatewayListenerImpl DefineListener(string name)
         {
@@ -923,6 +969,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+        ///GENMHASH:20DB0965DE030D3C81FE00023D376A69:5594A0B4265A52032059CAA4CF474FD6
+        public ApplicationGatewayProbeImpl DefineProbe(string name)
+        {
+            IApplicationGatewayProbe probe = null;
+            if (!probes.TryGetValue(name, out probe))
+            {
+                var inner = new ApplicationGatewayProbeInner()
+                {
+                    Name = name
+                };
+                return new ApplicationGatewayProbeImpl(inner, this);
+            }
+            else
+            {
+                return (ApplicationGatewayProbeImpl)probe;
+            }
+        }
+
         ///GENMHASH:4DB70C23295D0F053459FB0473314A93:7A5B03571727B37E62AC3357D157E863
         public ApplicationGatewayImpl WithoutCertificate(string name)
         {
@@ -940,12 +1004,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:E6C99E3819DC72204CDC6B1A73151A87
+        ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:DB939E7254D6012BBDD1D561DFDD47E4
         protected override void InitializeChildrenFromInner()
         {
             InitializeConfigsFromInner();
             InitializeFrontendsFromInner();
             InitializeBackendsFromInner();
+            InitializeProbesFromInner();
             InitializeBackendHttpConfigsFromInner();
             InitializeHttpListenersFromInner();
             InitializeRequestRoutingRulesFromInner();
@@ -970,7 +1035,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:257D937A0F04955A15D8633AF5E905F3
+        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:5CAB3E21FBC755ECC242114444212594
         protected async override Task<ApplicationGatewayInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
             var tasks = new List<Task>();
@@ -980,7 +1045,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIPAddressId() == null)
             {
                 // If default public frontend requested but no PIP specified, create one
-                ///GENMHASH:D232B3BB0D86D13CC0B242F4000DBF07:97DF71BC11CE54F5F4736C975A273A63
                 Task pipTask = EnsureDefaultPipDefinition().CreateAsync(cancellationToken).ContinueWith(
                     antecedent => {
                         var publicIP = antecedent.Result;
@@ -1007,7 +1071,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 // But if default IP config does not have a subnet specified, then create a default VNet
-                ///GENMHASH:378C5280A44231F5593B789FF6A1BF16:24E45B50AE0887B03C04922FC3F414DC
                 Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync(cancellationToken).ContinueWith(antecedent =>
                 {
                     //... and assign the created VNet to the default IP config
@@ -1103,7 +1166,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return frontend;
         }
 
-        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:2E5EA5B659E60C29EEED049E3FE11D8B
+        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:C98A310BEF4BFFC8FADBA6E1CF0DD0A1
         protected override void BeforeCreating()
         {
             // Process created PIPs
@@ -1120,6 +1183,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update frontends
             Inner.FrontendIPConfigurations = InnersFromWrappers<ApplicationGatewayFrontendIPConfigurationInner, IApplicationGatewayFrontend>(frontends.Values);
+
+            // Reset and update probes
+            Inner.Probes = InnersFromWrappers<ApplicationGatewayProbeInner, IApplicationGatewayProbe>(probes.Values);
 
             // Reset and update backends
             Inner.BackendAddressPools = InnersFromWrappers<ApplicationGatewayBackendAddressPoolInner, IApplicationGatewayBackend>(backends.Values);
@@ -1390,6 +1456,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+
+        ///GENMHASH:12C04D490C1E5A715E97451A0D94F9ED:D101CE8411B06DE3265B59453968C2B5
+        private void InitializeProbesFromInner()
+        {
+            probes = new Dictionary<string, IApplicationGatewayProbe>();
+            var inners = Inner.Probes;
+            if (inners != null)
+            {
+                foreach (var inner in inners)
+                {
+                    var probe = new ApplicationGatewayProbeImpl(inner, this);
+                    probes[inner.Name] = probe;
+                }
+            }
+        }
+
         ///GENMHASH:709E56A3C42D339048D2196CAAA5ED3F:D1F930D6EF465080D5C775FDA7AD0C5D
         private void InitializeHttpListenersFromInner()
         {
@@ -1405,7 +1487,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:96A74C51AAF39DA86E198A67D990E237
+        ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:0EFE916900B9CDEBA2BCE71471195243
         public override async Task<IApplicationGateway> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await GetInnerAsync(cancellationToken);
@@ -1414,6 +1496,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
+        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:1559E5218F079E5EF7779F023F4EF358
         protected override async Task<ApplicationGatewayInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.ApplicationGateways.GetAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);

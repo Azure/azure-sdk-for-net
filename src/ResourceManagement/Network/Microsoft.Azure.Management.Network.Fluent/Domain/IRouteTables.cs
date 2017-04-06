@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using RouteTable.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to route table management.
@@ -18,8 +18,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        IHasManager<INetworkManager>,
-        IHasInner<IRouteTablesOperations>
+        ISupportsBatchDeletion,
+        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        IHasInner<Microsoft.Azure.Management.Network.Fluent.IRouteTablesOperations>
     {
     }
 }

@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// <summary>
     /// The entirety of an application gateway backend definition as part of an application gateway update.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>
@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// <summary>
     /// The final stage of an application gateway backend definition.
     /// At this stage, any remaining optional settings can be specified, or the definition
-    /// can be attached to the parent application gateway definition using WithAttach.attach().
+    /// can be attached to the parent application gateway definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
         IWithAddress<ParentT>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// <summary>
     /// The stage of an application gateway backed definition allowing to add an address to the backend.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAddress<ParentT> 
     {
         /// <summary>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// <summary>
     /// The first stage of an application gateway backend definition.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         IWithAttach<ParentT>
     {

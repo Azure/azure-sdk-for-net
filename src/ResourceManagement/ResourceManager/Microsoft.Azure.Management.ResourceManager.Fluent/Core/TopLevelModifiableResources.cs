@@ -7,6 +7,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 using Microsoft.Rest.Azure;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -18,7 +20,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         IHasManager<ManagerT>,
         ISupportsListing<IFluentResourceT>,
         ISupportsListingByResourceGroup<IFluentResourceT>,
-        IHasInner<InnerCollectionT>
+        IHasInner<InnerCollectionT>,
+        ISupportsBatchDeletion
         where IFluentResourceT : class, IGroupableResource<ManagerT, InnerResourceT>
         where FluentResourceT : IFluentResourceT
         where ManagerT : IManagerBase
@@ -60,6 +63,28 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         protected static IPage<InnerResourceT> ConvertToPage(IEnumerable<InnerResourceT> list)
         {
             return Extensions.ConvertToPage(list);
+        }
+
+        public async Task<IEnumerable<string>> DeleteByIdsAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var taskList = ids.Select(id => DeleteByIdAsync(id, cancellationToken)).ToList();
+            await Task.WhenAll(taskList);
+            return ids;
+        }
+
+        public Task<IEnumerable<string>> DeleteByIdsAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return DeleteByIdsAsync(new List<string>(ids), cancellationToken);
+        }
+
+        public void DeleteByIds(IList<string> ids)
+        {
+            DeleteByIdsAsync(ids).Wait();
+        }
+
+        public void DeleteByIds(params string[] ids)
+        {
+            DeleteByIdsAsync(ids).Wait();
         }
     }
 }

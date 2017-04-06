@@ -15,14 +15,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
 
     /// <summary>
     /// The stage of a load balancer update allowing to create a new inbound NAT pool for a virtual machine scale set.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     {
         /// <summary>
         /// Begins the update of a load balancer frontend.
-        /// The definition must be completed with a call to LoadBalancerPublicFrontend.UpdateDefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerPublicFrontend.UpdateDefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name for the frontend.</param>
         /// <return>The first stage of the new frontend definition.</return>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     /// <summary>
     /// The template for a load balancer update operation, containing all the settings that
     /// can be modified.
-    /// Call Update.apply() to apply the changes to the resource in Azure.
+    /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         IAppliable<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
 
         /// <summary>
         /// Begins the definition of a new TCP probe to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the new probe.</param>
         /// <return>The next stage of the definition.</return>
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the new probe.</param>
         /// <return>The next stage of the definition.</return>
@@ -197,6 +197,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// <param name="port">The port number for the probe to monitor.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate WithTcpProbe(int port);
+    }
+
+    /// <summary>
+    /// The stage of a load balancer update allowing to add a public IP address as the default public frontend.
+    /// </summary>
+    public interface IWithPublicIPAddress  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>
+    {
     }
 
     /// <summary>
@@ -220,7 +228,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
 
         /// <summary>
         /// Begins the definition of a new inbound NAT rule.
-        /// The definition must be completed with a call to LoadBalancerInboundNatRule.UpdateDefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerInboundNatRule.UpdateDefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name for the inbound NAT rule.</param>
         /// <return>The first stage of the new inbound NAT rule definition.</return>
@@ -255,7 +263,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     {
         /// <summary>
         /// Begins the definition of a new load balancing rule to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the load balancing rule.</param>
         /// <return>The first stage of the new load balancing rule definition.</return>
@@ -293,13 +301,5 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// <param name="name">The name of the load balancing rule to update.</param>
         /// <return>The first stage of the load balancing rule update.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate UpdateLoadBalancingRule(string name);
-    }
-
-    /// <summary>
-    /// The stage of a load balancer update allowing to add a public IP address as the default public frontend.
-    /// </summary>
-    public interface IWithPublicIPAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>
-    {
     }
 }

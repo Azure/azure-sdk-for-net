@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition
 {
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent;
@@ -12,8 +11,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
@@ -30,6 +31,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     }
 
     /// <summary>
+    /// The stage of an application gateway definition allowing to add a probe.
+    /// </summary>
+    public interface IWithProbe 
+    {
+        /// <summary>
+        /// Begins the definition of a new probe.
+        /// </summary>
+        /// <param name="name">A unique name for the probe.</param>
+        /// <return>The first stage of a probe definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate> DefineProbe(string name);
+    }
+
+    /// <summary>
     /// The stage of an application gateway definition allowing to add a request routing rule.
     /// </summary>
     public interface IWithRequestRoutingRule 
@@ -40,14 +54,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// <param name="name">A unique name for the request routing rule.</param>
         /// <return>The first stage of the request routing rule.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> DefineRequestRoutingRule(string name);
-    }
-
-    /// <summary>
-    /// The stage of an application gateway definition allowing to add a new Internet-facing frontend with a public IP address.
-    /// </summary>
-    public interface IWithPublicIPAddress  :
-        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
-    {
     }
 
     /// <summary>
@@ -68,15 +74,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithoutPrivateFrontend();
-    }
-
-    /// <summary>
-    /// The stage of an application gateway definition allowing to specify the default IP address the app gateway will be internally available at,
-    /// if the default private frontend has been enabled.
-    /// </summary>
-    public interface IWithPrivateIPAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
-    {
     }
 
     /// <summary>
@@ -163,6 +160,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     }
 
     /// <summary>
+    /// The stage of an application gateway definition allowing to add a new Internet-facing frontend with a public IP address.
+    /// </summary>
+    public interface IWithPublicIPAddress  :
+        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
+    {
+    }
+
+    /// <summary>
     /// The stage of an application gateway definition allowing to specify the capacity (number of instances) of the application gateway.
     /// </summary>
     public interface IWithInstanceCount 
@@ -225,8 +230,17 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     }
 
     /// <summary>
+    /// The stage of an application gateway definition allowing to specify the default IP address the app gateway will be internally available at,
+    /// if the default private frontend has been enabled.
+    /// </summary>
+    public interface IWithPrivateIPAddress  :
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
+    {
+    }
+
+    /// <summary>
     /// The stage of an application gateway definition containing all the required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allowing
+    /// the resource to be created (via  WithCreate.create()), but also allowing
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
@@ -243,7 +257,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateIPAddress,
         IWithPrivateFrontend,
         IWithPublicFrontend,
-        IWithPublicIPAddress
+        IWithPublicIPAddress,
+        IWithProbe
     {
     }
 

@@ -5,23 +5,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
     /// <summary>
-    /// The stage of the network interface IP configuration definition allowing to associate it with
-    /// a public IP address.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
-    public interface IWithPublicIPAddress<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithAttach<ParentT>>
-    {
-    }
-
-    /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify subnet.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IWithSubnet<ParentT> 
     {
         /// <summary>
@@ -33,10 +24,43 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
     }
 
     /// <summary>
+    /// The entirety of a network interface IP configuration definition as part of a network interface update.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    public interface IUpdateDefinition<ParentT>  :
+        IBlank<ParentT>,
+        IWithAttach<ParentT>,
+        IWithNetwork<ParentT>,
+        IWithPrivateIP<ParentT>,
+        IWithSubnet<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithPublicIPAddress<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the network interface IP configuration definition allowing to associate it with
+    /// a public IP address.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
+    public interface IWithPublicIPAddress<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate>>
+    {
+    }
+
+    /// <summary>
+    /// The first stage of network interface IP configuration definition.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
+    public interface IBlank<ParentT>  :
+        IWithNetwork<ParentT>
+    {
+    }
+
+    /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify the load balancer
     /// to associate this IP configuration with.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IWithLoadBalancer<ParentT> 
     {
         /// <summary>
@@ -57,23 +81,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
     }
 
     /// <summary>
-    /// The entirety of a network interface IP configuration definition as part of a network interface update.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final UpdateDefinitionStages.WithAttach.attach().</typeparam>
-    public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithNetwork<ParentT>,
-        IWithPrivateIP<ParentT>,
-        IWithSubnet<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithPublicIPAddress<ParentT>
-    {
-    }
-
-    /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify the virtual network.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IWithNetwork<ParentT> 
     {
         /// <summary>
@@ -117,36 +127,27 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
     /// The stage of the network interface IP configuration definition allowing to specify private IP address
     /// within a virtual network subnet.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IWithPrivateIP<ParentT>  :
-        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithAttach<ParentT>>
+        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate>>
     {
         /// <summary>
         /// Specifies the IP version for the private IP address.
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithAttach<ParentT> WithPrivateIPVersion(string ipVersion);
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithAttach<ParentT> WithPrivateIPVersion(IPVersion ipVersion);
     }
 
     /// <summary>
     /// The final stage of network interface IP configuration.
     /// At this stage, any remaining optional settings can be specified, or the network interface IP configuration
-    /// definition can be attached to the parent network interface definition using WithAttach.attach().
+    /// definition can be attached to the parent network interface definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithPublicIPAddress<ParentT>
-    {
-    }
-
-    /// <summary>
-    /// The first stage of network interface IP configuration definition.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
-    public interface IBlank<ParentT>  :
-        IWithNetwork<ParentT>
     {
     }
 }

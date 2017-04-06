@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 using System.Threading.Tasks;
 using System;
 using System.Threading;
+using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -39,7 +40,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public virtual async Task<IFluentResourceT> GetByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            return WrapModel(await this.GetInnerByGroupAsync(groupName, name, cancellationToken));
+            try
+            {
+                return WrapModel(await this.GetInnerByGroupAsync(groupName, name, cancellationToken));
+            }
+            catch (CloudException ex) when (ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            catch (AggregateException ex) when((ex.InnerExceptions[0] as CloudException).Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
         }
 
 

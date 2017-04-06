@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Update
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// The definition must be completed with a call to Route.UpdateDefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  Route.UpdateDefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
         /// <return>The first stage of the definition.</return>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Update
 
     /// <summary>
     /// The template for a route table update operation, containing all the settings that can be modified.
-    /// Call Update.apply() to apply the changes to the resource in Azure.
+    /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         IAppliable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,

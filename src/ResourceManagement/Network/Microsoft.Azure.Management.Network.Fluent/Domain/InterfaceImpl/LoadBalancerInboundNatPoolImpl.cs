@@ -2,21 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using LoadBalancer.Definition;
-    using LoadBalancer.Update;
-    using LoadBalancerInboundNatPool.Definition;
-    using LoadBalancerInboundNatPool.Update;
-    using LoadBalancerInboundNatPool.UpdateDefinition;
-    using Models;
-    using HasBackendPort.Definition;
-    using HasBackendPort.UpdateDefinition;
-    using HasBackendPort.Update;
-    using HasFrontend.Definition;
-    using HasFrontend.UpdateDefinition;
-    using HasFrontend.Update;
-    using HasProtocol.Definition;
-    using HasProtocol.UpdateDefinition;
-    using HasProtocol.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the protocol.
         /// </summary>
-        TransportProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<TransportProtocol>.Protocol
+        Models.TransportProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.TransportProtocol>.Protocol
         {
             get
             {
-                return this.Protocol();
+                return this.Protocol() as Models.TransportProtocol;
             }
         }
 
@@ -57,17 +57,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the ending frontend port number.
-        /// </summary>
-        int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.FrontendPortRangeEnd
-        {
-            get
-            {
-                return this.FrontendPortRangeEnd();
-            }
-        }
-
-        /// <summary>
         /// Gets the starting frontend port number.
         /// </summary>
         int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.FrontendPortRangeStart
@@ -75,6 +64,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.FrontendPortRangeStart();
+            }
+        }
+
+        /// <summary>
+        /// Gets the ending frontend port number.
+        /// </summary>
+        int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.FrontendPortRangeEnd
+        {
+            get
+            {
+                return this.FrontendPortRangeEnd();
             }
         }
 
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerInboundNatPool.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancerInboundNatPool.Update.IUpdate, TransportProtocol>.WithProtocol(TransportProtocol protocol)
+        LoadBalancerInboundNatPool.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancerInboundNatPool.Update.IUpdate,Models.TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancerInboundNatPool.Update.IUpdate;
         }
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatPool.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancerInboundNatPool.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>, TransportProtocol>.WithProtocol(TransportProtocol protocol)
+        LoadBalancerInboundNatPool.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancerInboundNatPool.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>,Models.TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancerInboundNatPool.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatPool.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatPool> HasProtocol.Definition.IWithProtocol<LoadBalancerInboundNatPool.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatPool>, TransportProtocol>.WithProtocol(TransportProtocol protocol)
+        LoadBalancerInboundNatPool.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatPool> HasProtocol.Definition.IWithProtocol<LoadBalancerInboundNatPool.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,Models.TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancerInboundNatPool.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatPool>;
         }

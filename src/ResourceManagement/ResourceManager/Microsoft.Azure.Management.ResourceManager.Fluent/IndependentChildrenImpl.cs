@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Rest.Azure;
+    using System;
 
     /// <summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs
@@ -60,7 +62,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             ResourceId resourceId = ResourceId.FromString(id);
 
-            return await GetByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name, cancellationToken);
+            try
+            {
+                return await GetByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name, cancellationToken);
+            }
+            catch(CloudException ex) when (ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            catch (AggregateException ex) when ((ex.InnerExceptions[0] as CloudException).Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
         }
 
         ///GENMHASH:B1F9F82090ABF692D9645AE6B2D732EE:B8247A96B5B602D0F01FFC494377AA87
@@ -71,12 +84,34 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public T GetByParent(string resourceGroup, string parentName, string name)
         {
-            return GetByParentAsync(resourceGroup, parentName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            try
+            {
+                return GetByParentAsync(resourceGroup, parentName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+            catch (CloudException ex) when (ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            catch (AggregateException ex) when ((ex.InnerExceptions[0] as CloudException).Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
         }
 
         public async Task<T> GetByParentAsync(ParentT parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetByParentAsync(parentResource.ResourceGroupName, parentResource.Name, name, cancellationToken);
+            try
+            {
+                return await GetByParentAsync(parentResource.ResourceGroupName, parentResource.Name, name, cancellationToken);
+            }
+            catch (CloudException ex) when (ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            catch (AggregateException ex) when ((ex.InnerExceptions[0] as CloudException).Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
         }
 
         ///GENMHASH:A0A10EB2FF1149F056003612DA902E09:D8BC76ED0E6FF85C69301F568869AE3D

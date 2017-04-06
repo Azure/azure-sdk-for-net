@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
 {
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
-    using Models;
 
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the load distribution.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithLoadDistribution<ParentT> 
     {
         /// <summary>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the backend to associate the rule with.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithBackend<ParentT> 
     {
         /// <summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the frontend port to load balance.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithFrontendPort<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithProbe<ParentT>>
     {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the probe to associate with the rule.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithProbe<ParentT> 
     {
         /// <summary>
@@ -63,20 +63,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     }
 
     /// <summary>
-    /// The stage of a load balancing rule definition allowing to enable the floating IP functionality.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithFloatingIP<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT>>
-    {
-    }
-
-    /// <summary>
     /// The final stage of the load balancing rule definition.
     /// At this stage, any remaining optional settings can be specified, or the load balancing rule definition
-    /// can be attached to the parent load balancer definition using WithAttach.attach().
+    /// can be attached to the parent load balancer definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFloatingIP<ParentT>,
@@ -86,9 +77,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     }
 
     /// <summary>
+    /// The stage of a load balancing rule definition allowing to enable the floating IP functionality.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithFloatingIP<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT>>
+    {
+    }
+
+    /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the backend port to send the load-balanced traffic to.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithBackendPort<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT>>,
         IWithAttach<ParentT>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The entirety of a load balancing rule definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the frontend to associate with the rule.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithFrontend<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontendPort<ParentT>>
     {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The first stage of the load balancing rule definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithProtocol<ParentT>
     {
@@ -132,16 +132,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the transport protocol to apply the rule to.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontend<ParentT>, TransportProtocol>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontend<ParentT>,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {
     }
 
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the connection timeout for idle connections.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithIdleTimeoutInMinutes<ParentT> 
     {
         /// <summary>

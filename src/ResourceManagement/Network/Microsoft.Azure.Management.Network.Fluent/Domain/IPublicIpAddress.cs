@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using PublicIPAddress.Update;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Public IP address.
     /// </summary>
     public interface IPublicIPAddress  :
-        IGroupableResource<INetworkManager, PublicIPAddressInner>,
+        IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.PublicIPAddressInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
         IUpdatable<PublicIPAddress.Update.IUpdate>
     {
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the IP address allocation method (Static/Dynamic).
         /// </summary>
-        string IPAllocationMethod { get; }
+        Models.IPAllocationMethod IPAllocationMethod { get; }
 
         /// <summary>
         /// Gets the idle connection timeout setting (in minutes).
@@ -50,20 +50,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         string LeafDomainLabel { get; }
 
-        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
-        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration GetAssignedNetworkInterfaceIPConfiguration();
-
         /// <return>The load balancer public frontend that this public IP address is assigned to.</return>
         Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend();
 
         /// <summary>
         /// Gets the IP version of the public IP address.
         /// </summary>
-        string Version { get; }
+        Models.IPVersion Version { get; }
 
         /// <summary>
         /// Gets true if this public IP address is assigned to a load balancer.
         /// </summary>
         bool HasAssignedLoadBalancer { get; }
+
+        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration GetAssignedNetworkInterfaceIPConfiguration();
     }
 }

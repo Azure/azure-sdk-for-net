@@ -774,7 +774,7 @@ namespace Azure.Tests.Sql
 
                 ValidateSqlFirewallRule(secondFirewallRule, secondFirewallRuleName);
                 sqlServer.FirewallRules.Delete(secondFirewallRuleName);
-                AssertIfFound(() => sqlServer.FirewallRules.Get(secondFirewallRuleName));
+                Assert.Null(sqlServer.FirewallRules.Get(secondFirewallRuleName));
 
                 // Get
                 sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
@@ -802,41 +802,22 @@ namespace Azure.Tests.Sql
 
         private static void ValidateSqlFirewallRuleNotFound(ISqlManager sqlServerManager)
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName).FirewallRules.Get(SqlFirewallRuleName));
+            Assert.Null(sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName).FirewallRules.Get(SqlFirewallRuleName));
         }
 
         private static void ValidateSqlElasticPoolNotFound(ISqlServer sqlServer, string elasticPoolName)
         {
-            AssertIfFound(() => sqlServer.ElasticPools.Get(elasticPoolName));
+            Assert.Null(sqlServer.ElasticPools.Get(elasticPoolName));
         }
 
         private static void ValidateSqlDatabaseNotFound(ISqlManager sqlServerManager, String newDatabase)
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName).Databases.Get(newDatabase));
+            Assert.Null(sqlServerManager.SqlServers.GetByResourceGroup(GroupName, SqlServerName).Databases.Get(newDatabase));
         }
 
         private static void ValidateSqlServerNotFound(ISqlManager sqlServerManager, ISqlServer sqlServer)
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetById("/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver284556/providers/Microsoft.Sql/servers/netsqlserver284556"));
-        }
-
-        private static void AssertIfFound(Action action)
-        {
-            try
-            {
-                action();
-                Assert.True(false);
-            }
-            catch (AggregateException ex) when ((ex.InnerExceptions[0] as CloudException).Response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return;
-            }
-            catch (CloudException ex) when (ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return;
-            }
-
-            Assert.True(false);
+            Assert.Null(sqlServerManager.SqlServers.GetById(sqlServer.Id));
         }
 
         private static ISqlServer CreateSqlServer(ISqlManager sqlServerManager)

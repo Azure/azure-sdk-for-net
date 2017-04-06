@@ -27,12 +27,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        public INetworkManager Manager
+        internal INetworkManager Manager()
         {
-            get
-            {
-                return networkManager;
-            }
+            return networkManager;
         }
 
         internal VirtualMachineScaleSetNetworkInterfacesImpl(
@@ -47,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IVirtualMachineScaleSetNetworkInterface GetByVirtualMachineInstanceId(string instanceId, string name)
         {
-            NetworkInterfaceInner networkInterfaceInner = Manager.Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface(
+            NetworkInterfaceInner networkInterfaceInner = Manager().Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface(
                 resourceGroupName,
                 scaleSetName,
                 instanceId,
@@ -61,16 +58,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<IVirtualMachineScaleSetNetworkInterface> List()
         {
-            return WrapList(Manager.Inner.NetworkInterfaces
+            return WrapList(Manager().Inner.NetworkInterfaces
                 .ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName, scaleSetName)
-                .AsContinuousCollection(link => Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNext(link)));
+                .AsContinuousCollection(link => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNext(link)));
         }
 
         public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId)
         {
-            return WrapList(Manager.Inner.NetworkInterfaces
+            return WrapList(Manager().Inner.NetworkInterfaces
                 .ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName, scaleSetName, instanceId)
-                .AsContinuousCollection(link => Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesNext(link)));
+                .AsContinuousCollection(link => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesNext(link)));
         }
 
         protected override IVirtualMachineScaleSetNetworkInterface WrapModel(NetworkInterfaceInner inner)
@@ -86,8 +83,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public async Task<IPagedCollection<IVirtualMachineScaleSetNetworkInterface>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IVirtualMachineScaleSetNetworkInterface, NetworkInterfaceInner>.LoadPage(
-                async (cancellation) => await Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, scaleSetName, cancellation),
-                Manager.Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNextAsync,
+                async (cancellation) => await Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, scaleSetName, cancellation),
+                Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNextAsync,
                 WrapModel, loadAllPages, cancellationToken);
         }
     }

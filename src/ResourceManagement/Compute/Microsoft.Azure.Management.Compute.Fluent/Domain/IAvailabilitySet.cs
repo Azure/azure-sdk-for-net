@@ -17,32 +17,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IUpdatable<AvailabilitySet.Update.IUpdate>
     {
         /// <summary>
-        /// Gets the fault domain count of this availability set.
+        /// Fault domain count of this availability set.
         /// </summary>
         int FaultDomainCount { get; }
 
         /// <summary>
-        /// Gets the resource IDs of the virtual machines in the availability set.
+        /// Resource IDs of the virtual machines in the availability set.
         /// </summary>
-        System.Collections.Generic.IList<string> VirtualMachineIds { get; }
+        System.Collections.Generic.ISet<string> VirtualMachineIds { get; }
 
         /// <summary>
-        /// Gets the statuses of the existing virtual machines in the availability set.
+        /// Statuses of the existing virtual machines in the availability set.
         /// </summary>
         System.Collections.Generic.IList<Models.InstanceViewStatus> Statuses { get; }
 
         /// <summary>
-        /// Gets the virtual machine sizes supported in the availability set.
+        /// Virtual machine sizes supported in the availability set.
         /// </summary>
         IEnumerable<IVirtualMachineSize> ListVirtualMachineSizes();
 
         /// <summary>
-        /// Gets the availability set sku.
+        /// Availability set sku.
         /// </summary>
         Models.AvailabilitySetSkuTypes Sku { get; }
 
         /// <summary>
-        /// Gets the update domain count of this availability set.
+        /// Update domain count of this availability set.
         /// </summary>
         int UpdateDomainCount { get; }
     }

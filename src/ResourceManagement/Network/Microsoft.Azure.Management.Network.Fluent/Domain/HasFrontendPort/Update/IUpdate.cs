@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Update
     /// <summary>
     /// The stage of an update allowing to specify the frontend port.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the update.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the update.</typeparam>
     public interface IWithFrontendPort<ReturnT> 
     {
         /// <summary>

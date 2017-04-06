@@ -3,11 +3,12 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
 {
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
@@ -15,7 +16,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
-    using Models;
 
     /// <summary>
     /// The stage of a load balancer definition allowing to create a load balancing rule.
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     {
         /// <summary>
         /// Begins the definition of a new load balancing rule to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancingRule.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancingRule.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the load balancing rule.</param>
         /// <return>The first stage of the new load balancing rule definition.</return>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     {
         /// <summary>
         /// Begins the definition of a new load public balancer frontend.
-        /// The definition must be completed with a call to LoadBalancerPublicFrontend.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerPublicFrontend.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name for the frontend.</param>
         /// <return>The first stage of the new frontend definition.</return>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     /// The stage of a load balancer definition allowing to add a virtual machine to
     /// the load balancer's backend pool.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithVirtualMachine<ReturnT> 
     {
         /// <summary>
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     {
         /// <summary>
         /// Begins the definition of a new inbount NAT pool to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerInboundNatPool.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerInboundNatPool.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the inbound NAT pool.</param>
         /// <return>The first stage of the new inbound NAT pool definition.</return>
@@ -186,6 +186,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// <param name="subnetName">The name of an existing subnet on the specified network.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend WithFrontendSubnet(INetwork network, string subnetName);
+    }
+
+    /// <summary>
+    /// The stage of a load balancer definition allowing to add a public IP address as the default public frontend.
+    /// </summary>
+    /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
+    public interface IWithPublicIPAddress<ReturnT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithPublicIPAddress<ReturnT>
+    {
     }
 
     /// <summary>
@@ -215,15 +224,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     }
 
     /// <summary>
-    /// The stage of a load balancer definition allowing to add a public IP address as the default public frontend.
-    /// </summary>
-    /// <typeparam name="Return">The next stage of the definition.</typeparam>
-    public interface IWithPublicIPAddress<ReturnT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithPublicIPAddress<ReturnT>
-    {
-    }
-
-    /// <summary>
     /// The stage of the load balancer definition allowing to add a load balancing probe.
     /// </summary>
     public interface IWithProbe 
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
 
         /// <summary>
         /// Begins the definition of a new TCP probe to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the probe.</param>
         /// <return>The first stage of the new probe definition.</return>
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the probe.</param>
         /// <return>The first stage of the new probe definition.</return>
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     {
         /// <summary>
         /// Begins the definition of a new inbound NAT rule to add to the load balancer.
-        /// The definition must be completed with a call to LoadBalancerInboundNatRule.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  LoadBalancerInboundNatRule.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the inbound NAT rule.</param>
         /// <return>The first stage of the new inbound NAT rule definition.</return>
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
 
     /// <summary>
     /// The stage of a load balancer definition containing all the required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allowing
+    /// the resource to be created (via  WithCreate.create()), but also allowing
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :

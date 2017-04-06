@@ -3,13 +3,13 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update
 {
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
-    using Models;
 
     /// <summary>
     /// The stage of an inbound NAT rule update allowing to specify the frontend port.
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// The stage of an inbound NAT rule update allowing to specify the transport protocol for the rule to apply to.
     /// </summary>
     public interface IWithProtocol  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate, TransportProtocol>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {
     }
 
@@ -32,14 +32,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// </summary>
     public interface IWithBackendPort  :
         Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>
-    {
-    }
-
-    /// <summary>
-    /// The stage of an inbound NAT rule update allowing to specify whether floating IP should be enabled.
-    /// </summary>
-    public interface IWithFloatingIP  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>
     {
     }
 
@@ -62,6 +54,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
         /// <param name="minutes">A number of minutes.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate WithIdleTimeoutInMinutes(int minutes);
+    }
+
+    /// <summary>
+    /// The stage of an inbound NAT rule update allowing to specify whether floating IP should be enabled.
+    /// </summary>
+    public interface IWithFloatingIP  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Update.IWithFloatingIP<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>
+    {
     }
 
     /// <summary>

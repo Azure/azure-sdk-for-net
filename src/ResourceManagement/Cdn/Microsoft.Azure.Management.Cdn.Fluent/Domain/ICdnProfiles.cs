@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        ISupportsBatchDeletion,
         IHasManager<ICdnManager>,
         IHasInner<IProfilesOperations>
     {

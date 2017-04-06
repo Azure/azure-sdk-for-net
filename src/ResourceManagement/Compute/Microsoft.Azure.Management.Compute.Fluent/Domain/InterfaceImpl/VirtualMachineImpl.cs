@@ -389,11 +389,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the list of resource IDs of the network interfaces associated with this resource.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces.NetworkInterfaceIds
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces.NetworkInterfaceIds
         {
             get
             {
-                return this.NetworkInterfaceIds() as System.Collections.Generic.IList<string>;
+                return this.NetworkInterfaceIds() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 

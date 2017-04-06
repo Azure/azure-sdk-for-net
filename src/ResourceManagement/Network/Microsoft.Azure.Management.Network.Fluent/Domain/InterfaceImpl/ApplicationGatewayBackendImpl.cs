@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using ApplicationGateway.Definition;
-    using ApplicationGateway.Update;
-    using ApplicationGatewayBackend.Definition;
-    using ApplicationGatewayBackend.Update;
-    using ApplicationGatewayBackend.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -15,17 +15,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
     internal partial class ApplicationGatewayBackendImpl 
     {
-        /// <summary>
-        /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
-        /// This call can be made in a sequence to add multiple FQDNs.
-        /// </summary>
-        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
-        /// <return>The next stage of the definition.</return>
-        ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackend.Definition.IWithAddress<ApplicationGateway.Definition.IWithCreate>.WithFqdn(string fqdn)
-        {
-            return this.WithFqdn(fqdn) as ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
-        }
-
         /// <summary>
         /// Adds the specified existing IP address to the backend.
         /// This call can be made in a sequence to add multiple IP addresses.
@@ -39,12 +28,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
+        /// This call can be made in a sequence to add multiple FQDNs.
         /// </summary>
         /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackend.UpdateDefinition.IWithAddress<ApplicationGateway.Update.IUpdate>.WithFqdn(string fqdn)
+        ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackend.Definition.IWithAddress<ApplicationGateway.Definition.IWithCreate>.WithFqdn(string fqdn)
         {
-            return this.WithFqdn(fqdn) as ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+            return this.WithFqdn(fqdn) as ApplicationGatewayBackend.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -55,6 +45,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackend.UpdateDefinition.IWithAddress<ApplicationGateway.Update.IUpdate>.WithIPAddress(string ipAddress)
         {
             return this.WithIPAddress(ipAddress) as ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
+        /// </summary>
+        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackend.UpdateDefinition.IWithAddress<ApplicationGateway.Update.IUpdate>.WithFqdn(string fqdn)
+        {
+            return this.WithFqdn(fqdn) as ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
@@ -78,16 +78,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Ensures the specified fully qualified domain name (FQDN) is not associated with this backend.
-        /// </summary>
-        /// <param name="fqdn">A fully qualified domain name.</param>
-        /// <return>The next stage of the update.</return>
-        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithoutFqdn(string fqdn)
-        {
-            return this.WithoutFqdn(fqdn) as ApplicationGatewayBackend.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Ensures the specified IP address is not associated with this backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
@@ -95,6 +85,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithoutIPAddress(string ipAddress)
         {
             return this.WithoutIPAddress(ipAddress) as ApplicationGatewayBackend.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Ensures the specified fully qualified domain name (FQDN) is not associated with this backend.
+        /// </summary>
+        /// <param name="fqdn">A fully qualified domain name.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithoutFqdn(string fqdn)
+        {
+            return this.WithoutFqdn(fqdn) as ApplicationGatewayBackend.Update.IUpdate;
         }
 
         /// <summary>
@@ -108,16 +108,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
-        /// </summary>
-        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
-        /// <return>The next stage of the update.</return>
-        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithFqdn(string fqdn)
-        {
-            return this.WithFqdn(fqdn) as ApplicationGatewayBackend.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Adds the specified existing IP address to the backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
@@ -125,6 +115,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithIPAddress(string ipAddress)
         {
             return this.WithIPAddress(ipAddress) as ApplicationGatewayBackend.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
+        /// </summary>
+        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGatewayBackend.Update.IUpdate ApplicationGatewayBackend.Update.IWithAddress.WithFqdn(string fqdn)
+        {
+            return this.WithFqdn(fqdn) as ApplicationGatewayBackend.Update.IUpdate;
         }
 
         /// <summary>
@@ -152,11 +152,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets addresses on the backend of the application gateway, indexed by their FQDN.
         /// </summary>
-        System.Collections.Generic.IList<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.Addresses
+        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.Addresses
         {
             get
             {
-                return this.Addresses() as System.Collections.Generic.IList<Models.ApplicationGatewayBackendAddress>;
+                return this.Addresses() as System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress>;
             }
         }
 

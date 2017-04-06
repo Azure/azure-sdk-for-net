@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
 {
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
@@ -30,10 +30,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     }
 
     /// <summary>
-    /// The first stage of a public IP address definition.
+    /// The stage of the public IP address definition allowing to specify the resource group.
     /// </summary>
-    public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup>
+    public interface IWithGroup  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
+    {
+    }
+
+    /// <summary>
+    /// Container interface for all the definitions.
+    /// </summary>
+    public interface IDefinition  :
+        IBlank,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup,
+        IWithCreate
     {
     }
 
@@ -44,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     {
         /// <summary>
         /// Enables static IP address allocation.
-        /// Use PublicIPAddress.ipAddress() after the public IP address is created to obtain the
+        /// Use  PublicIPAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
         /// <return>The next stage of the public IP address definition.</return>
@@ -55,6 +65,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
         /// </summary>
         /// <return>The next stage of the public IP address definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithDynamicIP();
+    }
+
+    /// <summary>
+    /// The stage of the public IP definition which contains all the minimum required inputs for
+    /// the resource to be created (via  WithCreate.create()), but also allows
+    /// for any other optional settings to be specified.
+    /// </summary>
+    public interface IWithCreate  :
+        ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        IWithLeafDomainLabel,
+        IWithIPAddress,
+        IWithReverseFQDN,
+        IWithIdleTimeout,
+        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
+    {
     }
 
     /// <summary>
@@ -77,6 +102,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     }
 
     /// <summary>
+    /// The first stage of a public IP address definition.
+    /// </summary>
+    public interface IBlank  :
+        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup>
+    {
+    }
+
+    /// <summary>
     /// A public IP address definition allowing the idle timeout to be specified.
     /// </summary>
     public interface IWithIdleTimeout 
@@ -87,38 +120,5 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
         /// <param name="minutes">The length of the time out in minutes.</param>
         /// <return>The next stage of the resource definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithIdleTimeoutInMinutes(int minutes);
-    }
-
-    /// <summary>
-    /// The stage of the public IP address definition allowing to specify the resource group.
-    /// </summary>
-    public interface IWithGroup  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
-    {
-    }
-
-    /// <summary>
-    /// The stage of the public IP definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
-    /// for any other optional settings to be specified.
-    /// </summary>
-    public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        IWithLeafDomainLabel,
-        IWithIPAddress,
-        IWithReverseFQDN,
-        IWithIdleTimeout,
-        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
-    {
-    }
-
-    /// <summary>
-    /// Container interface for all the definitions.
-    /// </summary>
-    public interface IDefinition  :
-        IBlank,
-        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup,
-        IWithCreate
-    {
     }
 }

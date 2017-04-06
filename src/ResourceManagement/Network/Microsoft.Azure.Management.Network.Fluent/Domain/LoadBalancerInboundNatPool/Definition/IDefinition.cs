@@ -4,14 +4,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
 {
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
-    using Models;
 
     /// <summary>
     /// The stage of an inbound NAT pool definition allowing to specify the backend port.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithBackendPort<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>>
     {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// <summary>
     /// The entirety of an inbound NAT pool definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// <summary>
     /// The stage of an inbound NAT pool definition allowing to specify the frontend port range.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithFrontendPortRange<ParentT> 
     {
         /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// <summary>
     /// The first stage of the inbound NAT pool definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>
     {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// <summary>
     /// The stage of an inbound NAT pool definition allowing to specify the frontend for the inbound NAT rules in the pool to apply to.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithFrontend<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontendPortRange<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>>
     {
@@ -67,18 +67,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// <summary>
     /// The stage of an inbound NAT pool definition allowing to specify the transport protocol for the pool to apply to.
     /// </summary>
-    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    /// <typeparam name="ParentT">The parent load balancer type.</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>, TransportProtocol>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {
     }
 
     /// <summary>
     /// The final stage of the inbound NAT pool definition.
     /// At this stage, any remaining optional settings can be specified, or the inbound NAT pool definition
-    /// can be attached to the parent load balancer definition using WithAttach.attach().
+    /// can be attached to the parent load balancer definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>
     {

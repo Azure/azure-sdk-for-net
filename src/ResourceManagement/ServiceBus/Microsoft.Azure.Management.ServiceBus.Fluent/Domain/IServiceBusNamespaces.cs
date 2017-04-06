@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     public interface IServiceBusNamespaces  :
         ISupportsCreating<ServiceBusNamespace.Definition.IBlank>,
         ISupportsBatchCreation<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        ISupportsBatchDeletion,
         ISupportsListing<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
         ISupportsListingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
         ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,

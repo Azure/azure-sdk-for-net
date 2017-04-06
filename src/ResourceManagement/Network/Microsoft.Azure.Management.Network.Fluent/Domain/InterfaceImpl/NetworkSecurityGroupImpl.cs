@@ -2,10 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using System.Threading;
     using System.Threading.Tasks;
-    using NetworkSecurityGroup.Definition;
-    using NetworkSecurityGroup.Update;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -15,10 +16,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>.Refresh()
+        /// <return>The Observable to refreshed resource.</return>
+        async Task<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>.RefreshAsync(CancellationToken cancellationToken)
         {
-            return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the ids of the network interfaces associated with this network security group.
+        /// Gets the IDs of the network interfaces associated with this network security group.
         /// </summary>
         System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup.NetworkInterfaceIds
         {
@@ -95,9 +96,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>List of subnets associated with this resource.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet> Microsoft.Azure.Management.Network.Fluent.IHasAssociatedSubnets.ListAssociatedSubnets()
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ISubnet> Microsoft.Azure.Management.Network.Fluent.IHasAssociatedSubnets.ListAssociatedSubnets()
         {
-            return this.ListAssociatedSubnets() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet>;
+            return this.ListAssociatedSubnets() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ISubnet>;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update
     /// <summary>
     /// The stage of an update allowing to modify the private IP address.
     /// </summary>
-    /// <typeparam name="Return">The next stage of the update.</typeparam>
+    /// <typeparam name="ReturnT">The next stage of the update.</typeparam>
     public interface IWithPrivateIPAddress<ReturnT> 
     {
         /// <summary>

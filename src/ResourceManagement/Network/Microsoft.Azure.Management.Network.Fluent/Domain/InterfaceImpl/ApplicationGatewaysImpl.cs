@@ -4,10 +4,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Collections.Generic;
 
     internal partial class ApplicationGatewaysImpl 
@@ -16,10 +15,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Begins a definition for a new resource.
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
-        /// process in Azure is Creatable.create().
-        /// Note that the Creatable.create() method is
+        /// process in Azure is  Creatable.create().
+        /// Note that the  Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
-        /// parameters specified. If you do not see Creatable.create() among the available methods, it
+        /// parameters specified. If you do not see  Creatable.create() among the available methods, it
         /// means you have not yet specified all the required input settings. Input settings generally begin
         /// with the word "with", for example: <code>.withNewResourceGroup()</code> and return the next stage
         /// of the resource definition, as an interface in the "fluent interface" style.
@@ -32,45 +31,82 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Lists resources of the specified type in the specified resource group.
+        /// Starts the specified application gateways in parallel asynchronously.
         /// </summary>
-        /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        /// <return>The list of resources.</return>
-        IEnumerable<IApplicationGateway> ISupportsListingByResourceGroup<IApplicationGateway>.ListByResourceGroup(string resourceGroupName)
+        /// <param name="ids">Application gateway resource id.</param>
+        /// <return>An Observable emitting the resource ID for each successfully started application gateway.</return>
+        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StartAsync(string[] ids, CancellationToken cancellationToken)
         {
-            return this.ListByResourceGroup(resourceGroupName);
+            return await this.StartAsync(ids, cancellationToken) as System.Collections.Generic.IEnumerable<string>;
         }
 
         /// <summary>
-        /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
+        /// Starts the specified application gateways in parallel asynchronously.
         /// </summary>
-        /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
-        /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>.GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        /// <param name="ids">Application gateway resource id.</param>
+        /// <return>An Observable emitting the resource ID for each successfully started application gateway.</return>
+        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StartAsync(IList<string> ids, CancellationToken cancellationToken)
         {
-            return await this.GetByResourceGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Network.Fluent.IApplicationGateway;
+            return await this.StartAsync(ids, cancellationToken) as System.Collections.Generic.IEnumerable<string>;
         }
 
         /// <summary>
-        /// Asynchronously delete a resource from Azure, identifying it by its name and its resource group.
+        /// Stops the specified application gateways.
         /// </summary>
-        /// <param name="groupName">The group the resource is part of.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <return>An observable to the request.</return>
-        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup.DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        /// <param name="ids">Application gateway resource ids.</param>
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Stop(params string[] ids)
+        {
+            this.Stop(ids);
+        }
+
+        /// <summary>
+        /// Stops the specified application gateways.
+        /// </summary>
+        /// <param name="ids">Application gateway resource ids.</param>
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Stop(IList<string> ids)
         {
  
-            await this.DeleteByResourceGroupAsync(groupName, name, cancellationToken);
+            this.Stop(ids);
         }
 
         /// <summary>
-        /// Lists all the resources of the specified type in the currently selected subscription.
+        /// Stops the specified application gateways in parallel asynchronously.
         /// </summary>
-        /// <return>List of resources.</return>
-        IEnumerable<IApplicationGateway> ISupportsListing<IApplicationGateway>.List()
+        /// <param name="ids">Application gateway resource ids.</param>
+        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
+        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StopAsync(string[] ids, CancellationToken cancellationToken)
         {
-            return this.List();
+            return await this.StopAsync(ids, cancellationToken) as System.Collections.Generic.IEnumerable<string>;
+        }
+
+        /// <summary>
+        /// Stops the specified application gateways in parallel asynchronously.
+        /// </summary>
+        /// <param name="ids">Application gateway resource id.</param>
+        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
+        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StopAsync(IList<string> ids, CancellationToken cancellationToken)
+        {
+            return await this.StopAsync(ids, cancellationToken) as System.Collections.Generic.IEnumerable<string>;
+        }
+
+        /// <summary>
+        /// Starts the specified application gateways.
+        /// </summary>
+        /// <param name="ids">Application gateway resource ids.</param>
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Start(params string[] ids)
+        {
+ 
+            this.Start(ids);
+        }
+
+        /// <summary>
+        /// Starts the specified application gateways.
+        /// </summary>
+        /// <param name="ids">Application gateway resource ids.</param>
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Start(IList<string> ids)
+        {
+ 
+            this.Start(ids);
         }
     }
 }
