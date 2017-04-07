@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IndexableWrapper<HostNameBindingInner>,
         ICreatable<IHostNameBinding>,
         IHostNameBinding,
-        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithCreate<FluentT>>,
         IUpdateDefinition<IUpdate<FluentT>>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
         where FluentT : class, IWebAppBase
@@ -103,37 +103,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:9462BB1488F8B757A53382E31550B2EC
         public async Task<IHostNameBinding> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ HostNameBinding self = this;
-            //$ Func1<HostNameBindingInner, HostNameBinding> mapper = new Func1<HostNameBindingInner, HostNameBinding>() {
-            //$ @Override
-            //$ public HostNameBinding call(HostNameBindingInner hostNameBindingInner) {
-            //$ setInner(hostNameBindingInner);
-            //$ return self;
-            //$ }
-            //$ };
-            //$ 
-            //$ Observable<HostNameBinding> hostNameBindingObservable;
-            //$ if (parent instanceof DeploymentSlot) {
-            //$ hostNameBindingObservable = this.parent().Manager().Inner().WebApps().CreateOrUpdateHostNameBindingSlotAsync(
-            //$ parent().ResourceGroupName(),
-            //$ ((DeploymentSlot) parent).Parent().Name(),
-            //$ name,
-            //$ parent().Name(), inner()).Map(mapper);
-            //$ } else {
-            //$ hostNameBindingObservable = this.parent().Manager().Inner().WebApps().CreateOrUpdateHostNameBindingAsync(
-            //$ parent().ResourceGroupName(), parent().Name(), name, inner()).Map(mapper);
-            //$ }
-            //$ 
-            //$ return hostNameBindingObservable.Map(new Func1<HostNameBinding, Indexable>() {
-            //$ @Override
-            //$ public Indexable call(HostNameBinding hostNameBinding) {
-            //$ return hostNameBinding;
-            //$ }
-            //$ });
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             var hostNameBindingInner = parent is IDeploymentSlot
                     ? await parent.Manager.Inner.WebApps.CreateOrUpdateHostNameBindingSlotAsync(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, name, Inner, parent.Name)
                     : await parent.Manager.Inner.WebApps.CreateOrUpdateHostNameBindingAsync(parent.ResourceGroupName, parent.Name, name, Inner);
@@ -194,8 +163,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:405D133ADB31FC54FCFE6E63CC7CE6DF:528163E8A39CE260ED65B356ABCB872C
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent)
                 : base(innerObject)
         {
@@ -278,12 +245,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:F1F7115B1E40CAAC3F18CBE220407AB0
         public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> Refresh()
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ 
-            //$ return this;
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             if (parent is IDeploymentSlot)
             {
                 SetInner(parent.Manager.Inner.WebApps.GetHostNameBindingSlot(Parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, name));
@@ -322,42 +283,5 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
             return this;
         }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:224632CB8297D8F40B0FE0FCB0395DAE
-        public async Task<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ HostNameBindingImpl<FluentT, FluentImplT> self = this;
-            //$ Observable<HostNameBindingInner> observable = null;
-            //$ 
-            //$ if (parent instanceof DeploymentSlot) {
-            //$ observable = this.parent().Manager().Inner().WebApps().GetHostNameBindingSlotAsync(
-            //$ parent().ResourceGroupName(), ((DeploymentSlot) parent).Parent().Name(), parent().Name(), name());
-            //$ } else {
-            //$ observable = this.parent().Manager().Inner().WebApps().GetHostNameBindingAsync(parent().ResourceGroupName(),
-            //$ parent().Name(), name());
-            //$ }
-            //$ 
-            //$ return observable.Map(new Func1<HostNameBindingInner, HostNameBinding>() {
-            //$ @Override
-            //$ public HostNameBinding call(HostNameBindingInner hostNameBindingInner) {
-            //$ self.SetInner(hostNameBindingInner);
-            //$ return self;
-            //$ }
-            //$ });
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:124837C1A223C2C1FB769DFAE05ED95C:D5152285D2D13D3814BAD7F6F5C4045B
-        public async Task<ServiceFuture<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> CreateAsync(IServiceCallback<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> callback, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ Observable<Indexable> indexableObservable = createAsync();
-            //$ return ServiceFuture.FromBody(Utils.<HostNameBinding>rootResource(indexableObservable), callback);
-
-            return null;
-        }
-
     }
 }
