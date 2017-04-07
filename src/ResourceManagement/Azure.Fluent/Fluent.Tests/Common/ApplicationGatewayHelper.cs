@@ -152,6 +152,19 @@ namespace Azure.Tests.Common
                 }
             }
 
+            // Show probes
+            var probes = resource.Probes;
+            info.Append("\n\tProbes: ").Append(probes.Count);
+            foreach(IApplicationGatewayProbe probe in probes.Values)
+            {
+                info.Append("\n\t\tName: ").Append(probe.Name)
+                    .Append("\n\t\tProtocol:").Append(probe.Protocol.ToString())
+                    .Append("\n\t\tInterval in seconds: ").Append(probe.TimeBetweenProbesInSeconds)
+                    .Append("\n\t\tRetries: ").Append(probe.RetriesBeforeUnhealthy)
+                    .Append("\n\t\tTimeout: ").Append(probe.TimeoutInSeconds)
+                    .Append("\n\t\tHost: ").Append(probe.Host);
+            }
+
             // Show request routing rules
             var rules = resource.RequestRoutingRules;
             info.Append("\n\tRequest routing rules: ").Append(rules.Count);

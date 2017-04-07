@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Network.Update;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.Network.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -12,19 +12,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for Virtual Network management API in Azure.
     /// </summary>
     public interface INetwork  :
-        IGroupableResource<INetworkManager, VirtualNetworkInner>,
+        IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.VirtualNetworkInner>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
         IUpdatable<Network.Update.IUpdate>
     {
         /// <summary>
         /// Gets list of address spaces associated with this virtual network, in the CIDR notation.
         /// </summary>
-        System.Collections.Generic.IList<string> AddressSpaces { get; }
+        System.Collections.Generic.IReadOnlyList<string> AddressSpaces { get; }
 
         /// <summary>
         /// Gets list of DNS server IP addresses associated with this virtual network.
         /// </summary>
-        System.Collections.Generic.IList<string> DnsServerIPs { get; }
+        System.Collections.Generic.IReadOnlyList<string> DnsServerIPs { get; }
 
         /// <summary>
         /// Gets subnets of this virtual network as a map indexed by subnet name

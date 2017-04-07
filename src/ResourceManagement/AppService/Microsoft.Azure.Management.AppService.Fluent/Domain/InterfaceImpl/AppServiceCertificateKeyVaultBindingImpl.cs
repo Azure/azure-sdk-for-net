@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Name();
+                return this.Name;
             }
         }
 
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.RegionName();
+                return this.RegionName;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+                return this.Tags as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Region() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
+                return this.Region as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Type();
+                return this.Type;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.ResourceGroupName();
+                return this.ResourceGroupName;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return this.Manager() as IAppServiceManager;
+                return this.Manager as IAppServiceManager;
             }
         }
     }

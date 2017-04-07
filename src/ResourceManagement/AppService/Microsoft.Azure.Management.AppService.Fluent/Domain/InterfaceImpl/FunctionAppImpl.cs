@@ -411,9 +411,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// it when system resources are available.
         /// </summary>
         /// <return>An observable of the request.</return>
-        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IIndexable> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
-            return await this.CreateAsync(cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IIndexable;
+            return await this.CreateAsync(cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IFunctionApp;
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="name">The name of the storage account.</param>
         /// <param name="sku">The sku of the storage account.</param>
         /// <return>The next stage of the function app definition.</return>
-        FunctionApp.Definition.IWithCreate FunctionApp.Definition.IWithStorageAccount.WithNewStorageAccount(string name, SkuName sku)
+        FunctionApp.Definition.IWithCreate FunctionApp.Definition.IWithStorageAccount.WithNewStorageAccount(string name, Storage.Fluent.Models.SkuName sku)
         {
             return this.WithNewStorageAccount(name, sku) as FunctionApp.Definition.IWithCreate;
         }
@@ -635,7 +635,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="name">The name of the storage account.</param>
         /// <param name="sku">The sku of the storage account.</param>
         /// <return>The next stage of the function app update.</return>
-        FunctionApp.Update.IUpdate FunctionApp.Update.IWithStorageAccount.WithNewStorageAccount(string name, SkuName sku)
+        FunctionApp.Update.IUpdate FunctionApp.Update.IWithStorageAccount.WithNewStorageAccount(string name, Storage.Fluent.Models.SkuName sku)
         {
             return this.WithNewStorageAccount(name, sku) as FunctionApp.Update.IUpdate;
         }
@@ -1225,7 +1225,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets Last time web app was modified in UTC.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.LastModifiedTime
+        System.DateTime? Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.LastModifiedTime
         {
             get
             {

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Binds to a domain purchased from Azure.
         /// </summary>
         /// <param name="domain">The domain purchased from Azure.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.Definition.IWithSubDomain<WebAppBase.Definition.IWithCreate<FluentT>> HostNameBinding.Definition.IWithDomain<WebAppBase.Definition.IWithCreate<FluentT>>.WithAzureManagedDomain(IAppServiceDomain domain)
         {
             return this.WithAzureManagedDomain(domain) as HostNameBinding.Definition.IWithSubDomain<WebAppBase.Definition.IWithCreate<FluentT>>;
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Binds to a 3rd party domain.
         /// </summary>
         /// <param name="domain">The 3rd party domain name.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.Definition.IWithSubDomain<WebAppBase.Definition.IWithCreate<FluentT>> HostNameBinding.Definition.IWithDomain<WebAppBase.Definition.IWithCreate<FluentT>>.WithThirdPartyDomain(string domain)
         {
             return this.WithThirdPartyDomain(domain) as HostNameBinding.Definition.IWithSubDomain<WebAppBase.Definition.IWithCreate<FluentT>>;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Binds to a domain purchased from Azure.
         /// </summary>
         /// <param name="domain">The domain purchased from Azure.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>> HostNameBinding.UpdateDefinition.IWithDomain<WebAppBase.Update.IUpdate<FluentT>>.WithAzureManagedDomain(IAppServiceDomain domain)
         {
             return this.WithAzureManagedDomain(domain) as HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>>;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Binds to a 3rd party domain.
         /// </summary>
         /// <param name="domain">The 3rd party domain name.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>> HostNameBinding.UpdateDefinition.IWithDomain<WebAppBase.Update.IUpdate<FluentT>>.WithThirdPartyDomain(string domain)
         {
             return this.WithThirdPartyDomain(domain) as HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>>;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the DNS record type.
         /// </summary>
         /// <param name="hostNameDnsRecordType">The DNS record type.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.Definition.IWithAttach<WebAppBase.Definition.IWithCreate<FluentT>> HostNameBinding.Definition.IWithHostNameDnsRecordType<WebAppBase.Definition.IWithCreate<FluentT>>.WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType)
         {
             return this.WithDnsRecordType(hostNameDnsRecordType) as HostNameBinding.Definition.IWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the DNS record type.
         /// </summary>
         /// <param name="hostNameDnsRecordType">The DNS record type.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>> HostNameBinding.UpdateDefinition.IWithHostNameDnsRecordType<WebAppBase.Update.IUpdate<FluentT>>.WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType)
         {
             return this.WithDnsRecordType(hostNameDnsRecordType) as HostNameBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>>;
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// it when system resources are available.
         /// </summary>
         /// <return>An observable of the request.</return>
-        async Task<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
             return await this.CreateAsync(cancellationToken);
         }
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="subDomain">The sub-domain name excluding the top level domain, e.g., ".</param>
         /// <",>"www".</",>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.Definition.IWithHostNameDnsRecordType<WebAppBase.Definition.IWithCreate<FluentT>> HostNameBinding.Definition.IWithSubDomain<WebAppBase.Definition.IWithCreate<FluentT>>.WithSubDomain(string subDomain)
         {
             return this.WithSubDomain(subDomain) as HostNameBinding.Definition.IWithHostNameDnsRecordType<WebAppBase.Definition.IWithCreate<FluentT>>;
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="subDomain">The sub-domain name excluding the top level domain, e.g., ".</param>
         /// <",>"www".</",>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         HostNameBinding.UpdateDefinition.IWithHostNameDnsRecordType<WebAppBase.Update.IUpdate<FluentT>> HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>>.WithSubDomain(string subDomain)
         {
             return this.WithSubDomain(subDomain) as HostNameBinding.UpdateDefinition.IWithHostNameDnsRecordType<WebAppBase.Update.IUpdate<FluentT>>;

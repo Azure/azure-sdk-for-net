@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the SiteInner class.
         /// </summary>
+        /// <param name="kind">The kind of the site</param>
         /// <param name="state">Current state of the app.</param>
         /// <param name="hostNames">Hostnames associated with the app.</param>
         /// <param name="repositorySiteName">Name of the repository

@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IAppServiceCertificate>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages, CancellationToken cancellationToken)
         {
-            return await this.ListByResourceGroupAsync(resourceGroupName, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate;
+            return await this.ListByResourceGroupAsync(resourceGroupName, loadAllPages, cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IAppServiceCertificate>;
         }
 
         /// <summary>

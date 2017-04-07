@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the password to the PFX certificate.
         /// </summary>
         /// <param name="password">The PFX certificate password.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithCreate AppServiceCertificate.Definition.IWithPfxFilePassword.WithPfxPassword(string password)
         {
             return this.WithPfxPassword(password) as AppServiceCertificate.Definition.IWithCreate;
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the app service certificate.
         /// </summary>
         /// <param name="certificateOrder">The app service certificate order.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithCreate AppServiceCertificate.Definition.IWithCertificate.WithExistingCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
             return this.WithExistingCertificateOrder(certificateOrder) as AppServiceCertificate.Definition.IWithCreate;
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the PFX file from a URL.
         /// </summary>
         /// <param name="url">The URL pointing to the PFX file.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFileFromUrl(string url)
         {
             return this.WithPfxFileFromUrl(url) as AppServiceCertificate.Definition.IWithPfxFilePassword;
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the PFX certificate file to upload.
         /// </summary>
         /// <param name="file">The PFX certificate file.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFile(string file)
         {
             return this.WithPfxFile(file) as AppServiceCertificate.Definition.IWithPfxFilePassword;
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the PFX byte array to upload.
         /// </summary>
         /// <param name="pfxByteArray">The PFX byte array.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxByteArray(params byte[] pfxByteArray)
         {
             return this.WithPfxByteArray(pfxByteArray) as AppServiceCertificate.Definition.IWithPfxFilePassword;

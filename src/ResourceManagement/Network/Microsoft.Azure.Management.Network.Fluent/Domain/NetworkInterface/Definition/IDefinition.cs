@@ -22,6 +22,45 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
     }
 
     /// <summary>
+    /// The stage of the network interface definition allowing to associate public IP address with it's primary
+    /// IP configuration.
+    /// </summary>
+    public interface IWithPrimaryPublicIPAddress 
+    {
+        /// <summary>
+        /// Associates an existing public IP address with the network interface's primary IP configuration.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
+
+        /// <summary>
+        /// Create a new public IP address to associate with network interface's primary IP configuration, based on
+        /// the provided definition.
+        /// </summary>
+        /// <param name="creatable">A creatable definition for a new public IP.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable);
+
+        /// <summary>
+        /// Creates a new public IP address in the same region and group as the resource and associate it
+        /// with the network interface's primary IP configuration.
+        /// the internal name and DNS label for the public IP address will be derived from the network interface name.
+        /// </summary>
+        /// <return>The next stage of the network interface definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIPAddress();
+
+        /// <summary>
+        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
+        /// and associate it with the network interface's primary IP configuration.
+        /// the internal name for the public IP address will be derived from the DNS label.
+        /// </summary>
+        /// <param name="leafDnsLabel">The leaf domain label.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIPAddress(string leafDnsLabel);
+    }
+
+    /// <summary>
     /// The stage of the network interface definition allowing to specify private IP address within
     /// a virtual network subnet.
     /// </summary>
@@ -64,19 +103,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// <param name="networkSecurityGroup">An existing network security group.</param>
         /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup);
-    }
-
-    /// <summary>
-    /// The stage of the network interface definition allowing to associate a secondary IP configurations.
-    /// </summary>
-    public interface IWithSecondaryIPConfiguration 
-    {
-        /// <summary>
-        /// Starts definition of a secondary IP configuration.
-        /// </summary>
-        /// <param name="name">Name for the IP configuration.</param>
-        /// <return>The first stage of a secondary IP configuration definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate> DefineSecondaryIPConfiguration(string name);
     }
 
     /// <summary>
@@ -123,42 +149,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
     }
 
     /// <summary>
-    /// The stage of the network interface definition allowing to associate public IP address with it's primary
-    /// IP configuration.
+    /// The stage of the network interface definition allowing to associate a secondary IP configurations.
     /// </summary>
-    public interface IWithPrimaryPublicIPAddress 
+    public interface IWithSecondaryIPConfiguration 
     {
         /// <summary>
-        /// Create a new public IP address to associate with network interface's primary IP configuration, based on
-        /// the provided definition.
+        /// Starts definition of a secondary IP configuration.
         /// </summary>
-        /// <param name="creatable">A creatable definition for a new public IP.</param>
-        /// <return>The next stage of the network interface definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable);
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource and associate it
-        /// with the network interface's primary IP configuration.
-        /// the internal name and DNS label for the public IP address will be derived from the network interface name.
-        /// </summary>
-        /// <return>The next stage of the network interface definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIPAddress();
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
-        /// and associate it with the network interface's primary IP configuration.
-        /// the internal name for the public IP address will be derived from the DNS label.
-        /// </summary>
-        /// <param name="leafDnsLabel">The leaf domain label.</param>
-        /// <return>The next stage of the network interface definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIPAddress(string leafDnsLabel);
-
-        /// <summary>
-        /// Associates an existing public IP address with the network interface's primary IP configuration.
-        /// </summary>
-        /// <param name="publicIPAddress">An existing public IP address.</param>
-        /// <return>The next stage of the network interface definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
+        /// <param name="name">Name for the IP configuration.</param>
+        /// <return>The first stage of a secondary IP configuration definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate> DefineSecondaryIPConfiguration(string name);
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
 
     /// <summary>
     /// The stage of the network interface definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
@@ -203,6 +203,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithInternalDnsNameLabel(string dnsNameLabel);
 
         /// <summary>
+        /// Enable IP forwarding in the network interface.
+        /// </summary>
+        /// <return>The next stage of the network interface definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithIPForwarding();
+
+        /// <summary>
         /// Specifies the IP address of the custom DNS server to associate with the network interface.
         /// Note this method's effect is additive, i.e. each time it is used, the new dns server is
         /// added to the network interface.
@@ -210,12 +216,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// <param name="ipAddress">The IP address of the DNS server.</param>
         /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithDnsServer(string ipAddress);
-
-        /// <summary>
-        /// Enable IP forwarding in the network interface.
-        /// </summary>
-        /// <return>The next stage of the network interface definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithIPForwarding();
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Collections.Generic;
     using System;
 
-    internal abstract partial class WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>
+    internal abstract partial class WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> 
     {
         /// <summary>
         /// Removes source control for deployment from the web app.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Specifies the source control to be a local Git repository on the web app.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSourceControl<FluentT>.WithLocalGitSourceControl()
         {
             return this.WithLocalGitSourceControl() as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if SCM site is also stopped when the web app is stopped.
         /// </summary>
         /// <param name="scmSiteAlsoStopped">True if SCM site is also stopped.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithScmSiteAlsoStopped<FluentT>.WithScmSiteAlsoStopped(bool scmSiteAlsoStopped)
         {
             return this.WithScmSiteAlsoStopped(scmSiteAlsoStopped) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// as well after a deployment slot swap.
         /// </summary>
         /// <param name="settings">A  Map of app settings.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithAppSettings<FluentT>.WithStickyAppSettings(IDictionary<string,string> settings)
         {
             return this.WithStickyAppSettings(settings) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the app settings for the web app as a  Map.
         /// </summary>
         /// <param name="settings">A  Map of app settings.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithAppSettings<FluentT>.WithAppSettings(IDictionary<string,string> settings)
         {
             return this.WithAppSettings(settings) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="key">The key for the app setting.</param>
         /// <param name="value">The value for the app setting.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithAppSettings<FluentT>.WithAppSetting(string key, string value)
         {
             return this.WithAppSetting(key, value) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="key">The key for the app setting.</param>
         /// <param name="value">The value for the app setting.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithAppSettings<FluentT>.WithStickyAppSetting(string key, string value)
         {
             return this.WithStickyAppSetting(key, value) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="name">The name of the connection string.</param>
         /// <param name="value">The connection string value.</param>
         /// <param name="type">The connection string type.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithConnectionString<FluentT>.WithConnectionString(string name, string value, ConnectionStringType type)
         {
             return this.WithConnectionString(name, value, type) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="name">The name of the connection string.</param>
         /// <param name="value">The connection string value.</param>
         /// <param name="type">The connection string type.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithConnectionString<FluentT>.WithStickyConnectionString(string name, string value, ConnectionStringType type)
         {
             return this.WithStickyConnectionString(name, value, type) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="domain">The external domain name.</param>
         /// <param name="hostnames">The list of sub-domains.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithHostNameBinding<FluentT>.WithThirdPartyHostnameBinding(string domain, params string[] hostnames)
         {
             return this.WithThirdPartyHostnameBinding(domain, hostnames) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -397,7 +397,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="domain">The Azure managed domain.</param>
         /// <param name="hostnames">The list of sub-domains.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithHostNameBinding<FluentT>.WithManagedHostnameBindings(IAppServiceDomain domain, params string[] hostnames)
         {
             return this.WithManagedHostnameBindings(domain, hostnames) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Java version.
         /// </summary>
         /// <param name="version">The Java version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithWebContainer<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithJavaVersion(JavaVersion version)
         {
             return this.WithJavaVersion(version) as WebAppBase.Definition.IWithWebContainer<FluentT>;
@@ -611,7 +611,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Disables remote debugging.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithRemoteDebuggingDisabled()
         {
             return this.WithRemoteDebuggingDisabled() as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if the VM powering the web app is always powered on.
         /// </summary>
         /// <param name="alwaysOn">True if the web app is always powered on.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithWebAppAlwaysOn(bool alwaysOn)
         {
             return this.WithWebAppAlwaysOn(alwaysOn) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -631,7 +631,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Removes a default document.
         /// </summary>
         /// <param name="document">Default document to remove.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithoutDefaultDocument(string document)
         {
             return this.WithoutDefaultDocument(document) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -641,7 +641,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the platform architecture to use.
         /// </summary>
         /// <param name="platform">The platform architecture.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithPlatformArchitecture(PlatformArchitecture platform)
         {
             return this.WithPlatformArchitecture(platform) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -651,7 +651,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Adds a default document.
         /// </summary>
         /// <param name="document">Default document.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithDefaultDocument(string document)
         {
             return this.WithDefaultDocument(document) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -661,7 +661,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the .NET Framework version.
         /// </summary>
         /// <param name="version">The .NET Framework version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithNetFrameworkVersion(NetFrameworkVersion version)
         {
             return this.WithNetFrameworkVersion(version) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the PHP version.
         /// </summary>
         /// <param name="version">The PHP version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithPhpVersion(PhpVersion version)
         {
             return this.WithPhpVersion(version) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -681,7 +681,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Visual Studio version for remote debugging.
         /// </summary>
         /// <param name="remoteVisualStudioVersion">The Visual Studio version for remote debugging.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion)
         {
             return this.WithRemoteDebuggingEnabled(remoteVisualStudioVersion) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the slot name to auto-swap when a deployment is completed in this web app / deployment slot.
         /// </summary>
         /// <param name="slotName">The name of the slot, or 'production', to auto-swap.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithAutoSwapSlotName(string slotName)
         {
             return this.WithAutoSwapSlotName(slotName) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -701,7 +701,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the managed pipeline mode.
         /// </summary>
         /// <param name="managedPipelineMode">Managed pipeline mode.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode)
         {
             return this.WithManagedPipelineMode(managedPipelineMode) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -711,7 +711,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Python version.
         /// </summary>
         /// <param name="version">The Python version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithPythonVersion(PythonVersion version)
         {
             return this.WithPythonVersion(version) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -731,7 +731,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if client affinity is enabled.
         /// </summary>
         /// <param name="enabled">True if client affinity is enabled.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithClientAffinityEnabled<FluentT>.WithClientAffinityEnabled(bool enabled)
         {
             return this.WithClientAffinityEnabled(enabled) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -751,7 +751,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if client cert is enabled.
         /// </summary>
         /// <param name="enabled">True if client cert is enabled.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithClientCertEnabled<FluentT>.WithClientCertEnabled(bool enabled)
         {
             return this.WithClientCertEnabled(enabled) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Java web container.
         /// </summary>
         /// <param name="webContainer">The Java web container.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithWebContainer<FluentT>.WithWebContainer(WebContainer webContainer)
         {
             return this.WithWebContainer(webContainer) as WebAppBase.Definition.IWithCreate<FluentT>;

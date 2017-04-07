@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System;
 
     internal partial class AppServiceCertificateOrderImpl 
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the valid years of the certificate.
         /// </summary>
         /// <param name="years">Minimum 1 year, and maximum 3 years.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithCreate AppServiceCertificateOrder.Definition.IWithValidYears.WithValidYears(int years)
         {
             return this.WithValidYears(years) as AppServiceCertificateOrder.Definition.IWithCreate;
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// SSL support to the hostname, and www.hostname. Wildcard type will provide
         /// SSL support to any sub-domain under the hostname.
         /// </summary>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithDomainVerificationFromWebApp AppServiceCertificateOrder.Definition.IWithCertificateSku.WithStandardSku()
         {
             return this.WithStandardSku() as AppServiceCertificateOrder.Definition.IWithDomainVerificationFromWebApp;
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the SKU of the certificate to be wildcard. It will provide
         /// SSL support to any sub-domain under the hostname.
         /// </summary>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithDomainVerification AppServiceCertificateOrder.Definition.IWithCertificateSku.WithWildcardSku()
         {
             return this.WithWildcardSku() as AppServiceCertificateOrder.Definition.IWithDomainVerification;
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Azure managed domain to verify the ownership of the domain.
         /// </summary>
         /// <param name="domain">The Azure managed domain.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithKeyVault AppServiceCertificateOrder.Definition.IWithDomainVerification.WithDomainVerification(IAppServiceDomain domain)
         {
             return this.WithDomainVerification(domain) as AppServiceCertificateOrder.Definition.IWithKeyVault;
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the hostname the certificate binds to.
         /// </summary>
         /// <param name="hostName">The bare host name, without "www". Use . prefix if it's a wild card certificate.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithCertificateSku AppServiceCertificateOrder.Definition.IWithHostName.WithHostName(string hostName)
         {
             return this.WithHostName(hostName) as AppServiceCertificateOrder.Definition.IWithCertificateSku;
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// be bound to the hostname for the certificate.
         /// </summary>
         /// <param name="webApp">The web app bound to the hostname.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithKeyVault AppServiceCertificateOrder.Definition.IWithDomainVerificationFromWebApp.WithWebAppVerification(IWebAppBase webApp)
         {
             return this.WithWebAppVerification(webApp) as AppServiceCertificateOrder.Definition.IWithKeyVault;
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="vaultName">The name of the new key vault.</param>
         /// <param name="region">The region to create the vault.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithCreate AppServiceCertificateOrder.Definition.IWithKeyVault.WithNewKeyVault(string vaultName, Region region)
         {
             return this.WithNewKeyVault(vaultName, region) as AppServiceCertificateOrder.Definition.IWithCreate;
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// attempt will fail.
         /// </summary>
         /// <param name="vault">The vault to store the private key.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithCreate AppServiceCertificateOrder.Definition.IWithKeyVault.WithExistingKeyVault(IVault vault)
         {
             return this.WithExistingKeyVault(vault) as AppServiceCertificateOrder.Definition.IWithCreate;
@@ -107,7 +108,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if the certificate should be auto-renewed.
         /// </summary>
         /// <param name="enabled">True if the certificate order should be auto-renewed.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the update.</return>
         AppServiceCertificateOrder.Update.IUpdate AppServiceCertificateOrder.Update.IWithAutoRenew.WithAutoRenew(bool enabled)
         {
             return this.WithAutoRenew(enabled) as AppServiceCertificateOrder.Update.IUpdate;
@@ -117,7 +118,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if the certificate should be auto-renewed.
         /// </summary>
         /// <param name="enabled">True if the certificate order should be auto-renewed.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificateOrder.Definition.IWithCreate AppServiceCertificateOrder.Definition.IWithAutoRenew.WithAutoRenew(bool enabled)
         {
             return this.WithAutoRenew(enabled) as AppServiceCertificateOrder.Definition.IWithCreate;
@@ -149,6 +150,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Gets expiration time.
         /// </summary>
         System.DateTime? Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ExpirationTime
+
         {
             get
             {

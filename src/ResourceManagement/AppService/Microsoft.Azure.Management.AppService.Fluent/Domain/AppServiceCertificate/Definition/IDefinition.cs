@@ -24,28 +24,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
         /// Specifies the PFX certificate file to upload.
         /// </summary>
         /// <param name="file">The PFX certificate file.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword WithPfxFile(string file);
 
         /// <summary>
         /// Specifies the PFX file from a URL.
         /// </summary>
         /// <param name="url">The URL pointing to the PFX file.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword WithPfxFileFromUrl(string url);
 
         /// <summary>
         /// Specifies the app service certificate.
         /// </summary>
         /// <param name="certificateOrder">The app service certificate order.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCreate WithExistingCertificateOrder(IAppServiceCertificateOrder certificateOrder);
 
         /// <summary>
         /// Specifies the PFX byte array to upload.
         /// </summary>
         /// <param name="pfxByteArray">The PFX byte array.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword WithPfxByteArray(params byte[] pfxByteArray);
     }
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
         /// Specifies the password to the PFX certificate.
         /// </summary>
         /// <param name="password">The PFX certificate password.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCreate WithPfxPassword(string password);
     }
 

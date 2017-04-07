@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        ISupportsBatchDeletion,
         IHasManager<IDnsZoneManager>,
         IHasInner<IZonesOperations>
     {

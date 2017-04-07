@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:9CF36554B675F661BFEE8D1C53C27496:E373401BADB43C440BA3AAFA9214451D
         internal FunctionAppsImpl(AppServiceManager manager)
-            : base(manager.Inner.FunctionApps, manager)
+            : base(manager.Inner.WebApps, manager)
         {
         }
 
@@ -141,87 +141,5 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return await Inner.GetAsync(groupName, name, cancellationToken);
         }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:2C44922AFF6366EE92E097CEC958CA81:479D25A2D8F529C2A92A9524B10C70B9
-        private FunctionAppImpl WrapModel(SiteInner inner, SiteConfigResourceInner configResourceInner)
-        {
-            //$ if (inner == null) {
-            //$ return null;
-            //$ }
-            //$ return new FunctionAppImpl(inner.Name(), inner, configResourceInner, this.Manager());
-            //$ }
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:64609469010BC4A501B1C3197AE4F243:546B78C6345DE4CB959015B4F5C52E0D
-        protected FunctionAppImpl WrapModel(SiteInner inner)
-        {
-            //$ return wrapModel(inner, null);
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:8A5BEB3322ABBAFDEBC760C4F353F882
-        protected FunctionAppImpl WrapModel(string name)
-        {
-            //$ return new FunctionAppImpl(name, new SiteInner(), null, this.Manager());
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:9D38835F71DF2C39BF88CBB588420D30:FBFA0902403A234112A18515EE78DB0D
-        public async Task DeleteByResourceGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return this.Inner().DeleteAsync(groupName, name).ToCompletable();
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:7D93B4EC99C64989F97B3D17F88C3F2C:1148670C7C28940DD2CBF2F669C165E4
-        public IFunctionApp GetByResourceGroup(string groupName, string name)
-        {
-            //$ SiteInner siteInner = this.Inner().GetByResourceGroup(groupName, name);
-            //$ if (siteInner == null) {
-            //$ return null;
-            //$ }
-            //$ return wrapModel(siteInner, this.Inner().GetConfiguration(groupName, name)).CacheSiteProperties().ToBlocking().Single();
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:CB94B6BC21E29A62E4013B4505C36CAB:9CA7B3DBB8B4F2B7418ED7A9EBEDD4BE
-        protected IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp> WrapList(IEnumerable<Models.SiteInner> pagedList)
-        {
-            //$ return converter.Convert(pagedList);
-            //$ }
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
-        public FunctionAppImpl Define(string name)
-        {
-            //$ return wrapModel(name);
-
-            return null;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:7D35601E6590F84E3EC86E2AC56E37A0:136D659EB836ECA199ED5D69D4606314
-        protected async Task DeleteInnerAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return this.Inner().DeleteAsync(resourceGroupName, name).ToCompletable();
-
-            return null;
-        }
-
     }
 }

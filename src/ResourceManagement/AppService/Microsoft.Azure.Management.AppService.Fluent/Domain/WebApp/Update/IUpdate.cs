@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebApp.Update
         /// Specifies the startup command.
         /// </summary>
         /// <param name="startUpCommand">Startup command to replace "CMD" in Dockerfile.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Update.IUpdate WithStartUpCommand(string startUpCommand);
     }
 

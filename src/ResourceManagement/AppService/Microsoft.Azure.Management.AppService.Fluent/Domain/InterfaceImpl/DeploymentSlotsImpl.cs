@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal partial class DeploymentSlotsImpl 
     {
+
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its resource name.
         /// </summary>
@@ -120,6 +121,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetByName(string name)
         {
             return this.GetByName(name) as Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot;
+        }
+
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        IAppServiceManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IAppServiceManager>.Manager
+        {
+            get
+            {
+                return this.Manager as IAppServiceManager;
+            }
         }
     }
 }

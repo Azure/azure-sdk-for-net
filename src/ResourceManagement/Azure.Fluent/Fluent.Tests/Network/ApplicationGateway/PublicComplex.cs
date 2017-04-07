@@ -94,6 +94,16 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .WithExistingPublicIPAddress(testPips[0])
                     .WithSize(ApplicationGatewaySkuName.StandardMedium)
                     .WithInstanceCount(2)
+
+                    // Probes
+                    .DefineProbe("probe1")
+                        .WithHost("microsoft.com")
+                        .WithPath("/")
+                        .WithHttp()
+                        .WithTimeoutInSeconds(10)
+                        .WithTimeBetweenProbesInSeconds(9)
+                        .WithRetriesBeforeUnhealthy(5)
+                        .Attach()
                     .Create();
             }
             catch
@@ -108,28 +118,28 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.True(!appGateway.IsPrivate);
             Assert.Equal(ApplicationGatewayTier.Standard, appGateway.Tier);
             Assert.Equal(ApplicationGatewaySkuName.StandardMedium, appGateway.Size);
-            Assert.Equal(appGateway.InstanceCount, 2);
-            Assert.Equal(appGateway.IPConfigurations.Count, 1);
+            Assert.Equal(2, appGateway.InstanceCount);
+            Assert.Equal(1, appGateway.IPConfigurations.Count);
 
             // Verify frontend ports
-            Assert.Equal(appGateway.FrontendPorts.Count, 3);
+            Assert.Equal(3, appGateway.FrontendPorts.Count);
             Assert.NotNull(appGateway.FrontendPortNameFromNumber(80));
             Assert.NotNull(appGateway.FrontendPortNameFromNumber(443));
             Assert.NotNull(appGateway.FrontendPortNameFromNumber(9000));
 
             // Verify frontends
-            Assert.Equal(appGateway.Frontends.Count, 1);
-            Assert.Equal(appGateway.PublicFrontends.Count, 1);
-            Assert.Equal(appGateway.PrivateFrontends.Count, 0);
+            Assert.Equal(1, appGateway.Frontends.Count);
+            Assert.Equal(1, appGateway.PublicFrontends.Count);
+            Assert.Equal(0, appGateway.PrivateFrontends.Count);
             IApplicationGatewayFrontend frontend = appGateway.PublicFrontends.Values.First();
             Assert.True(frontend.IsPublic);
             Assert.True(!frontend.IsPrivate);
 
             // Verify listeners
-            Assert.Equal(appGateway.Listeners.Count, 3);
+            Assert.Equal(3, appGateway.Listeners.Count);
             IApplicationGatewayListener listener = appGateway.Listeners["listener1"];
             Assert.NotNull(listener);
-            Assert.Equal(listener.FrontendPortNumber, 9000);
+            Assert.Equal(9000, listener.FrontendPortNumber);
             Assert.Equal("www.fabricam.com", listener.HostName);
             Assert.True(listener.RequiresServerNameIndication);
             Assert.NotNull(listener.Frontend);
@@ -140,7 +150,7 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.NotNull(appGateway.ListenerByPortNumber(443));
 
             // Verify certificates
-            Assert.Equal(appGateway.SslCertificates.Count, 2);
+            Assert.Equal(2, appGateway.SslCertificates.Count);
 
             // Verify backend HTTP settings configs
             Assert.Equal(appGateway.BackendHttpConfigurations.Count, 2);
@@ -150,22 +160,22 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(config.RequestTimeout, 45);
 
             // Verify backends
-            Assert.Equal(appGateway.Backends.Count, 2);
+            Assert.Equal(2, appGateway.Backends.Count);
             IApplicationGatewayBackend backend = appGateway.Backends["backend1"];
             Assert.NotNull(backend);
-            Assert.Equal(backend.Addresses.Count, 2);
+            Assert.Equal(2, backend.Addresses.Count);
 
             // Verify request routing rules
-            Assert.Equal(appGateway.RequestRoutingRules.Count, 3);
+            Assert.Equal(3, appGateway.RequestRoutingRules.Count);
             IApplicationGatewayRequestRoutingRule rule;
 
             rule = appGateway.RequestRoutingRules["rule80"];
             Assert.NotNull(rule);
             Assert.Equal(testPips[0].Id, rule.PublicIPAddressId);
-            Assert.Equal(rule.FrontendPort, 80);
-            Assert.Equal(rule.BackendPort, 8080);
+            Assert.Equal(80, rule.FrontendPort);
+            Assert.Equal(8080, rule.BackendPort);
             Assert.True(rule.CookieBasedAffinity);
-            Assert.Equal(rule.BackendAddresses.Count, 4);
+            Assert.Equal(4, rule.BackendAddresses.Count);
             Assert.True(rule.Backend.ContainsIPAddress("11.1.1.2"));
             Assert.True(rule.Backend.ContainsIPAddress("11.1.1.1"));
             Assert.True(rule.Backend.ContainsFqdn("www.microsoft.com"));
@@ -174,23 +184,34 @@ namespace Azure.Tests.Network.ApplicationGateway
             rule = appGateway.RequestRoutingRules["rule443"];
             Assert.NotNull(rule);
             Assert.Equal(testPips[0].Id, rule.PublicIPAddressId);
-            Assert.Equal(rule.FrontendPort, 443);
+            Assert.Equal(443, rule.FrontendPort);
             Assert.Equal(ApplicationGatewayProtocol.Https, rule.FrontendProtocol);
             Assert.NotNull(rule.SslCertificate);
             Assert.NotNull(rule.BackendHttpConfiguration);
-            Assert.Equal(rule.BackendHttpConfiguration.Name, "config1");
+            Assert.Equal("config1", rule.BackendHttpConfiguration.Name);
             Assert.NotNull(rule.Backend);
-            Assert.Equal(rule.Backend.Name, "backend1");
+            Assert.Equal("backend1", rule.Backend.Name);
 
             rule = appGateway.RequestRoutingRules["rule9000"];
             Assert.NotNull(rule);
             Assert.NotNull(rule.Listener);
-            Assert.Equal(rule.Listener.Name, "listener1");
+            Assert.Equal("listener1", rule.Listener.Name);
             Assert.NotNull(rule.BackendHttpConfiguration);
-            Assert.Equal(rule.BackendHttpConfiguration.Name, "config1");
+            Assert.Equal("config1", rule.BackendHttpConfiguration.Name);
             Assert.NotNull(rule.Backend);
-            Assert.Equal(rule.Backend.Name, "backend1");
+            Assert.Equal("backend1", rule.Backend.Name);
 
+            // Verify probes
+            Assert.Equal(1, appGateway.Probes.Count);
+            IApplicationGatewayProbe probe;
+            probe = appGateway.Probes["probe1"];
+            Assert.NotNull(probe);
+            Assert.Equal("microsoft.com", probe.Host.ToLower());
+            Assert.Equal(ApplicationGatewayProtocol.Http, probe.Protocol);
+            Assert.Equal("/", probe.Path);
+            Assert.Equal(5,  probe.RetriesBeforeUnhealthy);
+            Assert.Equal(9, probe.TimeBetweenProbesInSeconds);
+            Assert.Equal(10, probe.TimeoutInSeconds);
             return appGateway;
         }
 
@@ -208,6 +229,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .FromListener("listener1")
                     .Parent()
                 .WithoutRequestRoutingRule("rule9000")
+                .WithoutProbe("probe1")
                 .WithTag("tag1", "value1")
                 .WithTag("tag2", "value2")
                 .Apply();
@@ -229,6 +251,9 @@ namespace Azure.Tests.Network.ApplicationGateway
             IApplicationGatewayRequestRoutingRule rule = resource.RequestRoutingRules["rule443"];
             Assert.NotNull(rule);
             Assert.Equal("listener1", rule.Listener.Name);
+
+            // Verify probes
+            Assert.Equal(0, resource.Probes.Count);
             return resource;
         }
     }

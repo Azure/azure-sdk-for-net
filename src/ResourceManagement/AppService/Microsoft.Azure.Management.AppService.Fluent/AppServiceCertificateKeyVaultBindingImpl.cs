@@ -33,20 +33,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:EF611182518FA724341200882E0C6D97
         protected async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ AppServiceCertificateKeyVaultBinding self = this;
-            //$ return parent.Manager().Inner().AppServiceCertificateOrders().CreateOrUpdateCertificateAsync(
-            //$ parent.ResourceGroupName(), parent.Name(), name(), inner())
-            //$ .Map(new Func1<AppServiceCertificateResourceInner, AppServiceCertificateKeyVaultBinding>() {
-            //$ @Override
-            //$ public AppServiceCertificateKeyVaultBinding call(AppServiceCertificateResourceInner appServiceCertificateInner) {
-            //$ setInner(appServiceCertificateInner);
-            //$ return self;
-            //$ }
-            //$ });
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             var inner = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateCertificateAsync(parent.ResourceGroupName, parent.Name, Name, Inner);
             SetInner(inner);
             return this;
@@ -65,8 +51,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:360C34F1E1D3680D56F867742DA72A0F
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected override async Task<AppServiceCertificateResourceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.AppServiceCertificateOrders.GetCertificateAsync(parent.ResourceGroupName, parent.Name, Name, cancellationToken: cancellationToken);
@@ -79,23 +63,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B9EDBDEBBAFF9FA1B965F82D94B7D20D:D717DAAD2288A48502D0DF6C7AA6562A
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal AppServiceCertificateKeyVaultBindingImpl(AppServiceCertificateResourceInner innerObject, AppServiceCertificateOrderImpl parent)
             : base(innerObject.Name, innerObject, (parent != null) ? parent.Manager : null)
         {
             this.parent = parent;
         }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:E9BB823B391CFE2533F54D0791FCA593
-        protected async Task<Models.AppServiceCertificateResourceInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return parent.Manager().Inner().AppServiceCertificateOrders().GetCertificateAsync(
-            //$ parent.ResourceGroupName(), parent.Name(), name());
-
-            return null;
-        }
-
     }
 }

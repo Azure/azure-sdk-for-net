@@ -89,15 +89,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7248510394946B110C799F104E023F9D:00D88D2717A616B24525A5934BEBB4F1
-        internal string IPAllocationMethod()
+        internal IPAllocationMethod IPAllocationMethod()
         {
-            return Inner.PublicIPAllocationMethod;
+            return Models.IPAllocationMethod.Parse(Inner.PublicIPAllocationMethod);
         }
 
         ///GENMHASH:493B1EDB88EACA3A476D936362A5B14C:FCE799745FA15D3EA39692B492C8E747
-        internal string Version()
+        internal IPVersion Version()
         {
-            return Inner.PublicIPAddressVersion;
+            return IPVersion.Parse(Inner.PublicIPAddressVersion);
         }
 
         ///GENMHASH:577F8437932AEC6E08E1A137969BDB4A:DF24BB824B6120C47B7D78874CC08BE4

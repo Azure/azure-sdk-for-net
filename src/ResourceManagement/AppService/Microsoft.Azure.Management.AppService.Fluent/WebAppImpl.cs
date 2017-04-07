@@ -40,7 +40,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         private IDeploymentSlots deploymentSlots;
 
-
+        ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
+        internal WebAppImpl(
+            string name,
+            SiteInner innerObject,
+            SiteConfigResourceInner configObject,
+            IAppServiceManager manager)
+            : base(name, innerObject, configObject, manager)
+        {
+        }
 
         ///GENMHASH:CF27BBA612E1A2ABC8C2A6B8E0D936B0:8EE9D9B6AF47B6B9D97ADAC781E86E83
         public IDeploymentSlots DeploymentSlots()
@@ -128,7 +136,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             //$ throw new IllegalArgumentException("Docker container settings only apply to Linux app service plans.");
             //$ }
             //$ }
+        }
 
+        ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:9AA0391980CD01ABEA62130DB5348393
+        internal async override Task<SiteConfigResourceInner> CreateOrUpdateSiteConfigAsync(SiteConfigResourceInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Manager.Inner.WebApps.CreateOrUpdateConfigurationAsync(ResourceGroupName, Name, siteConfig, cancellationToken);
         }
 
         ///GENMHASH:AAA2EDCB023B7B99FC1D55B0B3B66F13:6B3219D30AE1CF4B94F25508BCCDD7E9
@@ -217,6 +230,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup(string name)
+
         {
             throw new NotImplementedException();
         }

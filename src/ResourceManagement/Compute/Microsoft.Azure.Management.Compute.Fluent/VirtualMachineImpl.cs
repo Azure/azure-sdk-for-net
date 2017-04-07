@@ -1287,7 +1287,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:606A3D349546DF27E3A091C321476658:DC63C44DC2A2862C6AC14F711DCB1EFA
-        public IList<string> NetworkInterfaceIds()
+        public IReadOnlyList<string> NetworkInterfaceIds()
         {
             List<string> nicIds = new List<string>();
             foreach (NetworkInterfaceReferenceInner nicRef in Inner.NetworkProfile.NetworkInterfaces)

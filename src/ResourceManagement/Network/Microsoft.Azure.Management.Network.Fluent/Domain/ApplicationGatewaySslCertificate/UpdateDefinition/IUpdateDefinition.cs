@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// <summary>
     /// The entirety of an application gateway SSL certificate definition as part of an application gateway update.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// At this stage, any remaining optional settings can be specified, or the definition
     /// can be attached to the parent application gateway definition.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>
     {
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// <summary>
     /// The first stage of an application gateway authentication certificate definition.
     /// </summary>
-    /// <typeparam name="Parent">The stage of the parent application gateway definition to return to after attaching.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IBlank<ParentT>  :
         IWithAttach<ParentT>
     {

@@ -2,10 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using System.Threading;
     using System.Threading.Tasks;
-    using Models;
-    using RouteTable.Definition;
-    using RouteTable.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.RouteTable.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -15,10 +16,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Network.Fluent.IRouteTable Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>.Refresh()
+        /// <return>The Observable to refreshed resource.</return>
+        async Task<Microsoft.Azure.Management.Network.Fluent.IRouteTable> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>.RefreshAsync(CancellationToken cancellationToken)
         {
-            return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.IRouteTable;
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Network.Fluent.IRouteTable;
         }
 
         /// <summary>
@@ -33,9 +34,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>List of subnets associated with this resource.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet> Microsoft.Azure.Management.Network.Fluent.IHasAssociatedSubnets.ListAssociatedSubnets()
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ISubnet> Microsoft.Azure.Management.Network.Fluent.IHasAssociatedSubnets.ListAssociatedSubnets()
         {
-            return this.ListAssociatedSubnets() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet>;
+            return this.ListAssociatedSubnets() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ISubnet>;
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// The definition must be completed with a call to Route.UpdateDefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  Route.UpdateDefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
         /// <return>The first stage of the definition.</return>
@@ -117,7 +118,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// The definition must be completed with a call to Route.DefinitionStages.WithAttach.attach().
+        /// The definition must be completed with a call to  Route.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
         /// <return>The first stage of the definition.</return>

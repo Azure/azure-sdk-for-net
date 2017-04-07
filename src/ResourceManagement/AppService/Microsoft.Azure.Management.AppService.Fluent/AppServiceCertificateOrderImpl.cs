@@ -48,14 +48,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.KeySize.GetValueOrDefault();
         }
 
-        ///GENMHASH:16ABBA273C3F791D052D0188B2107D3F:350ABDAE4E13610D23DE001D15AA1B31
+
+        ///GENMHASH:16ABBA273C3F791D052D0188B2107D3F:675930B8422D1B7EC65FC1D9BBC5D548
         public CertificateDetails Root()
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ return inner().Root();
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             return Inner.Root;
         }
 
@@ -75,45 +71,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:8B606A8E8FDFF98EAC99D5B0A6FBB7A6
         public async override Task<IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ AppServiceCertificateOrder self = this;
-            //$ return this.Manager().Inner().AppServiceCertificateOrders().CreateOrUpdateAsync(
-            //$ resourceGroupName(), name(), inner())
-            //$ .Map(innerToFluentMap(this))
-            //$ .FlatMap(new Func1<AppServiceCertificateOrder, Observable<Void>>() {
-            //$ @Override
-            //$ public Observable<Void> call(AppServiceCertificateOrder certificateOrder) {
-            //$ if (domainVerifyWebApp != null) {
-            //$ return domainVerifyWebApp.VerifyDomainOwnershipAsync(name(), domainVerificationToken()).ToObservable();
-            //$ } else if (domainVerifyDomain != null) {
-            //$ return domainVerifyDomain.VerifyDomainOwnershipAsync(name(), domainVerificationToken()).ToObservable();
-            //$ } else {
-            //$ throw new IllegalArgumentException(
-            //$ "Please specify a non-null web app or domain to verify the domain ownership "
-            //$ + "for hostname " + distinguishedName());
-            //$ }
-            //$ }
-            //$ })
-            //$ .FlatMap(new Func1<Void, Observable<AppServiceCertificateKeyVaultBinding>>() {
-            //$ @Override
-            //$ public Observable<AppServiceCertificateKeyVaultBinding> call(Void aVoid) {
-            //$ return bindingVault.FlatMap(new Func1<Vault, Observable<AppServiceCertificateKeyVaultBinding>>() {
-            //$ @Override
-            //$ public Observable<AppServiceCertificateKeyVaultBinding> call(Vault vault) {
-            //$ return createKeyVaultBindingAsync(name(), vault);
-            //$ }
-            //$ });
-            //$ }
-            //$ })
-            //$ .Map(new Func1<AppServiceCertificateKeyVaultBinding, AppServiceCertificateOrder>() {
-            //$ @Override
-            //$ public AppServiceCertificateOrder call(AppServiceCertificateKeyVaultBinding appServiceCertificateKeyVaultBinding) {
-            //$ return self;
-            //$ }
-            //$ });
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             var certificateOrder = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             Task verifyDomainOwnerShip = null;
             if (domainVerifyWebApp != null)
@@ -180,7 +137,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:89B68C3393E544990D0BC1837B4C4C0E:B1CB960E9688630133BF735EE72C4279
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
         internal AppServiceCertificateOrderImpl(
             string key,
             AppServiceCertificateOrderInner innerObject,
@@ -193,7 +150,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected override async Task<AppServiceCertificateOrderInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.AppServiceCertificateOrders.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
@@ -222,23 +178,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:04406413E97C82F19F013C72D1DD2758:964B5AF9C84F1352BF2A096010560999
         public async Task<IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ AppServiceCertificateResourceInner certInner = new AppServiceCertificateResourceInner();
-            //$ certInner.WithLocation(vault.RegionName());
-            //$ certInner.WithKeyVaultId(vault.Id());
-            //$ certInner.WithKeyVaultSecretName(certificateName);
-            //$ AppServiceCertificateOrderImpl self = this;
-            //$ return this.Manager().Inner().AppServiceCertificateOrders().CreateOrUpdateCertificateAsync(
-            //$ resourceGroupName(), name(), certificateName, certInner)
-            //$ .Map(new Func1<AppServiceCertificateResourceInner, AppServiceCertificateKeyVaultBinding>() {
-            //$ @Override
-            //$ public AppServiceCertificateKeyVaultBinding call(AppServiceCertificateResourceInner appServiceCertificateInner) {
-            //$ return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInner, self);
-            //$ }
-            //$ });
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             AppServiceCertificateResourceInner certInner = new AppServiceCertificateResourceInner();
 
             certInner.Location = vault.RegionName;
@@ -266,23 +205,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0CD614E818D4086C936A0BF04B47C550:DE5AB4A66AE0FA398E7DCCB9A28087C9
         public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> GetKeyVaultBindingAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ AppServiceCertificateOrderImpl self = this;
-            //$ return this.Manager().Inner().AppServiceCertificateOrders().ListCertificatesAsync(resourceGroupName(), name())
-            //$ .Map(new Func1<Page<AppServiceCertificateResourceInner>, AppServiceCertificateKeyVaultBinding>() {
-            //$ @Override
-            //$ public AppServiceCertificateKeyVaultBinding call(Page<AppServiceCertificateResourceInner> appServiceCertificateInnerPage) {
-            //$ // There can only be one binding associated with an order
-            //$ if (appServiceCertificateInnerPage.Items() == null || appServiceCertificateInnerPage.Items().IsEmpty()) {
-            //$ return null;
-            //$ } else {
-            //$ return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInnerPage.Items().Get(0), self);
-            //$ }
-            //$ }
-            //$ });
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             var appServiceCertificateInnerPage = await Manager.Inner.AppServiceCertificateOrders.ListCertificatesAsync(ResourceGroupName, Name);
 
             // There can only be one binding associated with an order
@@ -306,25 +228,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.AutoRenew.GetValueOrDefault();
         }
 
-        ///GENMHASH:6BDAA4A8036F1C03CAA8CE2EB2F9FBE3:CD3751683E6897FE918843A84BBD512B
+        ///GENMHASH:6BDAA4A8036F1C03CAA8CE2EB2F9FBE3:FE2E769A2AEA3ACB1FD64758285EBC71
         public CertificateDetails Intermediate()
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ return inner().Intermediate();
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             return Inner.Intermediate;
         }
 
-        ///GENMHASH:90FC937E60E521C5C15FEEEA8CB6CCB8:F0DF51426BCE5084D77EDBC53933FCAC
+        ///GENMHASH:90FC937E60E521C5C15FEEEA8CB6CCB8:C2904A9EF2F5A312DA01425F79F55AA4
         public CertificateDetails SignedCertificate()
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ return inner().SignedCertificate();
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             return Inner.SignedCertificate;
         }
 
@@ -350,11 +262,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:247F3F9D51B0218A2892B535E30EFFE4:15E338262AA4F8C7461DD6FBB41E746B
         public void VerifyDomainOwnership(IAppServiceDomain domain)
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ verifyDomainOwnershipAsync(domain).ToObservable().ToBlocking().Subscribe();
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             VerifyDomainOwnership(domain);
         }
 
@@ -384,15 +291,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             Inner.AutoRenew = enabled;
             return this;
-        }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:82CAA687D7FF7EF4187ED330AFCE7819
-        protected async Task<Models.AppServiceCertificateOrderInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return this.Manager().Inner().AppServiceCertificateOrders().GetByResourceGroupAsync(resourceGroupName(), name());
-
-            return null;
         }
 
     }

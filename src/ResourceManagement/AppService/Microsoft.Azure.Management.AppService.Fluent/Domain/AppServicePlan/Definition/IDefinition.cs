@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithOperatingSystem WithPricingTier(PricingTier pricingTier);
     }
 
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
         /// Specifies the operating system of the app service plan.
         /// </summary>
         /// <param name="operatingSystem">The operating system.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithOperatingSystem(OperatingSystem operatingSystem);
     }
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithPerSiteScaling(bool perSiteScaling);
     }
 

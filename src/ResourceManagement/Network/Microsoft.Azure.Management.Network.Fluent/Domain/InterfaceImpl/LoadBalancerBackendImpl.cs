@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using LoadBalancer.Definition;
-    using LoadBalancer.Update;
-    using LoadBalancerBackend.Definition;
-    using LoadBalancerBackend.Update;
-    using LoadBalancerBackend.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;

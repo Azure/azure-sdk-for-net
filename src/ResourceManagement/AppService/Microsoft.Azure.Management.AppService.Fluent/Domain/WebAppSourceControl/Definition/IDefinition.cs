@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
     /// <summary>
     /// A web app source control definition allowing GitHub access token to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithGitHubAccessToken<ParentT> 
     {
         /// <summary>
@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
         /// https://github.com/settings/tokens.
         /// </summary>
         /// <param name="personalAccessToken">The personal access token from GitHub.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IGitHubWithAttach<ParentT> WithGitHubAccessToken(string personalAccessToken);
     }
 
     /// <summary>
     /// A web app source control definition allowing repository type to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithRepositoryType<ParentT> 
     {
         /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
         /// Continuous integration will not be turned on.
         /// </summary>
         /// <param name="url">The url of the Mercurial repository.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithBranch<ParentT> WithPublicMercurialRepository(string url);
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
         /// Continuous integration will not be turned on.
         /// </summary>
         /// <param name="url">The url of the Git repository.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithBranch<ParentT> WithPublicGitRepository(string url);
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
         /// </summary>
         /// <param name="organization">The user name or organization name the GitHub repository belongs to, e.g. Azure.</param>
         /// <param name="repository">The name of the repository, e.g. azure-sdk-for-java.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository);
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
         /// must have enough privileges to add a webhook to the repository.
         /// </summary>
         /// <param name="url">The URL pointing to the repository, e.g. https://github.com/Azure/azure-sdk-for-java.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string url);
     }
 
@@ -103,28 +103,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Defin
     /// <summary>
     /// A web app source control definition allowing branch to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithGitHubBranch<ParentT> 
     {
         /// <summary>
         /// Specifies the branch in the repository to use.
         /// </summary>
         /// <param name="branch">The branch to use.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IGitHubWithAttach<ParentT> WithBranch(string branch);
     }
 
     /// <summary>
     /// A web app source control definition allowing branch to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithBranch<ParentT> 
     {
         /// <summary>
         /// Specifies the branch in the repository to use.
         /// </summary>
         /// <param name="branch">The branch to use.</param>
-        /// <return>The next stage of the web app source control definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithAttach<ParentT> WithBranch(string branch);
     }
 

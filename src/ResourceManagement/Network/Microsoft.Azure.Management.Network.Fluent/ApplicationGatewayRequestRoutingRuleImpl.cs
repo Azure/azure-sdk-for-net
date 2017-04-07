@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.IO;
     using ResourceManager.Fluent.Core.ChildResourceActions;
     using ResourceManager.Fluent;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for ApplicationGatewayRequestRoutingRule.
@@ -331,7 +332,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             var backend = Backend();
             if (backend != null && backend.Addresses != null)
             {
-                addresses = backend.Addresses;
+                addresses = backend.Addresses.ToList();
             }
             return addresses;
         }
@@ -344,7 +345,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:F8F8F11F485174C9B1CC3FA0197799B9:649DFFCBE23D4220949D8CA7A521D053
-        public ApplicationGatewayListenerImpl Listener()
+        internal ApplicationGatewayListenerImpl Listener()
         {
             var listenerRef = Inner.HttpListener;
             if (listenerRef != null)

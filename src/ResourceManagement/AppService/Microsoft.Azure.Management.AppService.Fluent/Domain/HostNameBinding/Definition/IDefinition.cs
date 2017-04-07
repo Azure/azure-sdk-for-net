@@ -9,21 +9,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definitio
     /// <summary>
     /// The stage of a hostname binding definition allowing domain to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDomain<ParentT> 
     {
         /// <summary>
         /// Binds to a 3rd party domain.
         /// </summary>
         /// <param name="domain">The 3rd party domain name.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IWithSubDomain<ParentT> WithThirdPartyDomain(string domain);
 
         /// <summary>
         /// Binds to a domain purchased from Azure.
         /// </summary>
         /// <param name="domain">The domain purchased from Azure.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IWithSubDomain<ParentT> WithAzureManagedDomain(IAppServiceDomain domain);
     }
 
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definitio
     /// <summary>
     /// The stage of a hostname binding definition allowing sub-domain to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithSubDomain<ParentT> 
     {
         /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definitio
         /// </summary>
         /// <param name="subDomain">The sub-domain name excluding the top level domain, e.g., ".</param>
         /// <",>"www".</",>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IWithHostNameDnsRecordType<ParentT> WithSubDomain(string subDomain);
     }
 
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definitio
     /// <summary>
     /// The first stage of a host name binding definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IWithDomain<ParentT>
     {
@@ -78,14 +78,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definitio
     /// <summary>
     /// The stage of a hostname binding definition allowing DNS record type to be set.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithHostNameDnsRecordType<ParentT> 
     {
         /// <summary>
         /// Specifies the DNS record type.
         /// </summary>
         /// <param name="hostNameDnsRecordType">The DNS record type.</param>
-        /// <return>The next stage of the host name binding definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IWithAttach<ParentT> WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType);
     }
 }

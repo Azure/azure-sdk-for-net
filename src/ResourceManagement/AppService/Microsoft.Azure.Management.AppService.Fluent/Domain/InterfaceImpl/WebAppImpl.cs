@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the platform architecture to use.
         /// </summary>
         /// <param name="platform">The platform architecture.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithPlatformArchitecture(PlatformArchitecture platform)
         {
             return this.WithPlatformArchitecture(platform) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Adds a list of default documents.
         /// </summary>
         /// <param name="documents">List of default documents.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithDefaultDocuments(IList<string> documents)
         {
             return this.WithDefaultDocuments(documents) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Disables remote debugging.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithRemoteDebuggingDisabled()
         {
             return this.WithRemoteDebuggingDisabled() as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the .NET Framework version.
         /// </summary>
         /// <param name="version">The .NET Framework version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithNetFrameworkVersion(NetFrameworkVersion version)
         {
             return this.WithNetFrameworkVersion(version) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if the VM powering the web app is always powered on.
         /// </summary>
         /// <param name="alwaysOn">True if the web app is always powered on.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithWebAppAlwaysOn(bool alwaysOn)
         {
             return this.WithWebAppAlwaysOn(alwaysOn) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if web sockets are enabled.
         /// </summary>
         /// <param name="enabled">True if web sockets are enabled.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithWebSocketsEnabled(bool enabled)
         {
             return this.WithWebSocketsEnabled(enabled) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the slot name to auto-swap when a deployment is completed in this web app / deployment slot.
         /// </summary>
         /// <param name="slotName">The name of the slot, or 'production', to auto-swap.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithAutoSwapSlotName(string slotName)
         {
             return this.WithAutoSwapSlotName(slotName) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the managed pipeline mode.
         /// </summary>
         /// <param name="managedPipelineMode">Managed pipeline mode.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode)
         {
             return this.WithManagedPipelineMode(managedPipelineMode) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Visual Studio version for remote debugging.
         /// </summary>
         /// <param name="remoteVisualStudioVersion">The Visual Studio version for remote debugging.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion)
         {
             return this.WithRemoteDebuggingEnabled(remoteVisualStudioVersion) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Removes a default document.
         /// </summary>
         /// <param name="document">Default document to remove.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithoutDefaultDocument(string document)
         {
             return this.WithoutDefaultDocument(document) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Python version.
         /// </summary>
         /// <param name="version">The Python version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithPythonVersion(PythonVersion version)
         {
             return this.WithPythonVersion(version) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Turn off PHP support.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithoutPhp()
         {
             return this.WithoutPhp() as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the PHP version.
         /// </summary>
         /// <param name="version">The PHP version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithPhpVersion(PhpVersion version)
         {
             return this.WithPhpVersion(version) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the Java version.
         /// </summary>
         /// <param name="version">The Java version.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithWebContainer<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithJavaVersion(JavaVersion version)
         {
             return this.WithJavaVersion(version) as WebAppBase.Definition.IWithWebContainer<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Adds a default document.
         /// </summary>
         /// <param name="document">Default document.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSiteConfigs<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithDefaultDocument(string document)
         {
             return this.WithDefaultDocument(document) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Specifies the source control to be a local Git repository on the web app.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithSourceControl<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithLocalGitSourceControl()
         {
             return this.WithLocalGitSourceControl() as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if SCM site is also stopped when the web app is stopped.
         /// </summary>
         /// <param name="scmSiteAlsoStopped">True if SCM site is also stopped.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithScmSiteAlsoStopped<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithScmSiteAlsoStopped(bool scmSiteAlsoStopped)
         {
             return this.WithScmSiteAlsoStopped(scmSiteAlsoStopped) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -407,7 +407,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if client cert is enabled.
         /// </summary>
         /// <param name="enabled">True if client cert is enabled.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithClientCertEnabled<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithClientCertEnabled(bool enabled)
         {
             return this.WithClientCertEnabled(enabled) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="domain">The Azure managed domain.</param>
         /// <param name="hostnames">The list of sub-domains.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithManagedHostnameBindings(IAppServiceDomain domain, params string[] hostnames)
         {
             return this.WithManagedHostnameBindings(domain, hostnames) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="domain">The external domain name.</param>
         /// <param name="hostnames">The list of sub-domains.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithThirdPartyHostnameBinding(string domain, params string[] hostnames)
         {
             return this.WithThirdPartyHostnameBinding(domain, hostnames) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if client affinity is enabled.
         /// </summary>
         /// <param name="enabled">True if client affinity is enabled.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithClientAffinityEnabled<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithClientAffinityEnabled(bool enabled)
         {
             return this.WithClientAffinityEnabled(enabled) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Uses an existing app service plan for the web app.
         /// </summary>
         /// <param name="appServicePlan">The existing app service plan.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IExistingLinuxPlanWithGroup WebApp.Definition.IBlank.WithExistingLinuxPlan(IAppServicePlan appServicePlan)
         {
             return this.WithExistingLinuxPlan(appServicePlan) as WebApp.Definition.IExistingLinuxPlanWithGroup;
@@ -572,7 +572,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Uses an existing app service plan for the web app.
         /// </summary>
         /// <param name="appServicePlan">The existing app service plan.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IExistingWindowsPlanWithGroup WebApp.Definition.IBlank.WithExistingWindowsPlan(IAppServicePlan appServicePlan)
         {
             return this.WithExistingWindowsPlan(appServicePlan) as WebApp.Definition.IExistingWindowsPlanWithGroup;
@@ -634,7 +634,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the docker container image to be a built in one.
         /// </summary>
         /// <param name="runtimeStack">The runtime stack installed on the image.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCreate WebApp.Definition.IWithDockerContainerImage.WithBuiltInImage(RuntimeStack runtimeStack)
         {
             return this.WithBuiltInImage(runtimeStack) as WebApp.Definition.IWithCreate;
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the docker container image to be one from Docker Hub.
         /// </summary>
         /// <param name="imageAndTag">Image and optional tag (eg 'image:tag').</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithStartUpCommand WebApp.Definition.IWithDockerContainerImage.WithPublicDockerHubImage(string imageAndTag)
         {
             return this.WithPublicDockerHubImage(imageAndTag) as WebApp.Definition.IWithStartUpCommand;
@@ -655,7 +655,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="imageAndTag">Image and optional tag (eg 'image:tag').</param>
         /// <param name="serverUrl">The URL to the private registry server.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCredentials WebApp.Definition.IWithDockerContainerImage.WithPrivateRegistryImage(string imageAndTag, string serverUrl)
         {
             return this.WithPrivateRegistryImage(imageAndTag, serverUrl) as WebApp.Definition.IWithCredentials;
@@ -665,7 +665,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the docker container image to be one from Docker Hub.
         /// </summary>
         /// <param name="imageAndTag">Image and optional tag (eg 'image:tag').</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCredentials WebApp.Definition.IWithDockerContainerImage.WithPrivateDockerHubImage(string imageAndTag)
         {
             return this.WithPrivateDockerHubImage(imageAndTag) as WebApp.Definition.IWithCredentials;
@@ -1222,6 +1222,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             get
             {
                 return this.PythonVersion() as Microsoft.Azure.Management.AppService.Fluent.PythonVersion;
+
             }
         }
 
@@ -1361,7 +1362,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Creates a new free app service plan. This will fail if there are 10 or more
         /// free plans in the current subscription.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCreate WebApp.Definition.IWithNewAppServicePlan.WithNewFreeAppServicePlan()
         {
             return this.WithNewFreeAppServicePlan() as WebApp.Definition.IWithCreate;
@@ -1371,7 +1372,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="pricingTier">The sku of the app service plan.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCreate WebApp.Definition.IWithNewAppServicePlan.WithNewWindowsPlan(PricingTier pricingTier)
         {
             return this.WithNewWindowsPlan(pricingTier) as WebApp.Definition.IWithCreate;
@@ -1381,7 +1382,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="appServicePlanCreatable">The new app service plan creatable.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCreate WebApp.Definition.IWithNewAppServicePlan.WithNewWindowsPlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable)
         {
             return this.WithNewWindowsPlan(appServicePlanCreatable) as WebApp.Definition.IWithCreate;
@@ -1391,7 +1392,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="pricingTier">The sku of the app service plan.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithDockerContainerImage WebApp.Definition.IWithNewAppServicePlan.WithNewLinuxPlan(PricingTier pricingTier)
         {
             return this.WithNewLinuxPlan(pricingTier) as WebApp.Definition.IWithDockerContainerImage;
@@ -1401,7 +1402,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="appServicePlanCreatable">The new app service plan creatable.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithDockerContainerImage WebApp.Definition.IWithNewAppServicePlan.WithNewLinuxPlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable)
         {
             return this.WithNewLinuxPlan(appServicePlanCreatable) as WebApp.Definition.IWithDockerContainerImage;
@@ -1410,7 +1411,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Creates a new shared app service plan.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCreate WebApp.Definition.IWithNewAppServicePlan.WithNewSharedAppServicePlan()
         {
             return this.WithNewSharedAppServicePlan() as WebApp.Definition.IWithCreate;
@@ -1468,7 +1469,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="name">The name of the connection string.</param>
         /// <param name="value">The connection string value.</param>
         /// <param name="type">The connection string type.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithConnectionString<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithConnectionString(string name, string value, ConnectionStringType type)
         {
             return this.WithConnectionString(name, value, type) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -1481,7 +1482,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="name">The name of the connection string.</param>
         /// <param name="value">The connection string value.</param>
         /// <param name="type">The connection string type.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithConnectionString<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithStickyConnectionString(string name, string value, ConnectionStringType type)
         {
             return this.WithStickyConnectionString(name, value, type) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -1491,7 +1492,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the startup command.
         /// </summary>
         /// <param name="startUpCommand">Startup command to replace "CMD" in Dockerfile.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Update.IUpdate WebApp.Update.IWithStartUpCommand.WithStartUpCommand(string startUpCommand)
         {
             return this.WithStartUpCommand(startUpCommand) as WebApp.Update.IUpdate;
@@ -1501,7 +1502,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the startup command.
         /// </summary>
         /// <param name="startUpCommand">Startup command to replace "CMD" in Dockerfile.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithCreate WebApp.Definition.IWithStartUpCommand.WithStartUpCommand(string startUpCommand)
         {
             return this.WithStartUpCommand(startUpCommand) as WebApp.Definition.IWithCreate;
@@ -1577,7 +1578,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// as well after a deployment slot swap.
         /// </summary>
         /// <param name="settings">A  Map of app settings.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithAppSettings<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithStickyAppSettings(IDictionary<string,string> settings)
         {
             return this.WithStickyAppSettings(settings) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -1587,7 +1588,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the app settings for the web app as a  Map.
         /// </summary>
         /// <param name="settings">A  Map of app settings.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithAppSettings<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithAppSettings(IDictionary<string,string> settings)
         {
             return this.WithAppSettings(settings) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -1599,7 +1600,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="key">The key for the app setting.</param>
         /// <param name="value">The value for the app setting.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithAppSettings<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithStickyAppSetting(string key, string value)
         {
             return this.WithStickyAppSetting(key, value) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -1610,7 +1611,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="key">The key for the app setting.</param>
         /// <param name="value">The value for the app setting.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebAppBase.Definition.IWithAppSettings<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.WithAppSetting(string key, string value)
         {
             return this.WithAppSetting(key, value) as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
@@ -1636,6 +1637,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             get
             {
                 return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>>;
+
             }
         }
 
@@ -1683,7 +1685,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="username">The username for Docker Hub or the docker registry.</param>
         /// <param name="password">The password for Docker Hub or the docker registry.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebApp.Definition.IWithStartUpCommand WebApp.Definition.IWithCredentials.WithCredentials(string username, string password)
         {
             return this.WithCredentials(username, password) as WebApp.Definition.IWithStartUpCommand;

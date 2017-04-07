@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
         /// Explicitly defines all the subnets in the virtual network based on the provided map.
         /// This replaces any previously existing subnets.
         /// </summary>
-        /// <param name="nameCidrPairs">A Map of CIDR addresses for the subnets, indexed by the name of each subnet to be added.</param>
+        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be added.</param>
         /// <return>The next stage of the virtual network update.</return>
         Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithSubnets(IDictionary<string,string> nameCidrPairs);
     }
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
     /// <summary>
     /// The template for a virtual network update operation, containing all the settings that
     /// can be modified.
-    /// Call Update.apply() to apply the changes to the resource in Azure.
+    /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         IAppliable<Microsoft.Azure.Management.Network.Fluent.INetwork>,

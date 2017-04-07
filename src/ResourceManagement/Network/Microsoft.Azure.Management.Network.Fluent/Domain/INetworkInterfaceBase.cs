@@ -2,19 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Models;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
     /// <summary>
     /// The base network interface shared across regular and virtual machine scale set network interface.
     /// </summary>
-    public interface INetworkInterfaceBase : IHasInner<NetworkInterfaceInner>, IHasManager<INetworkManager>
+    public interface INetworkInterfaceBase  :
+        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        IHasInner<Models.NetworkInterfaceInner>
     {
         /// <summary>
         /// Gets applied DNS servers.
         /// </summary>
-        System.Collections.Generic.IList<string> AppliedDnsServers { get; }
+        System.Collections.Generic.IReadOnlyList<string> AppliedDnsServers { get; }
 
         /// <summary>
         /// Gets the MAC Address of the network interface.
@@ -32,23 +34,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string InternalDnsNameLabel { get; }
 
         /// <summary>
-        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
-        /// </summary>
-        bool IsIPForwardingEnabled { get; }
-
-        /// <summary>
-        /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
-        /// primary IP configuration.
-        /// </summary>
-        IPAllocationMethod PrimaryPrivateIPAllocationMethod { get; }
-
-        /// <summary>
         /// Gets the internal domain name suffix.
         /// </summary>
         string InternalDomainNameSuffix { get; }
 
         /// <summary>
-        /// Gets Gets the fully qualified domain name of this network interface.
+        /// Gets the fully qualified domain name of this network interface.
         /// A network interface receives FQDN as a part of assigning it to a virtual machine.
         /// </summary>
         /// <summary>
@@ -57,9 +48,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string InternalFqdn { get; }
 
         /// <summary>
+        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// </summary>
+        bool IsIPForwardingEnabled { get; }
+
+        /// <summary>
+        /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
+        /// primary IP configuration.
+        /// </summary>
+        Models.IPAllocationMethod PrimaryPrivateIPAllocationMethod { get; }
+
+        /// <summary>
         /// Gets IP addresses of this network interface's DNS servers.
         /// </summary>
-        System.Collections.Generic.IList<string> DnsServers { get; }
+        System.Collections.Generic.IReadOnlyList<string> DnsServers { get; }
 
         /// <summary>
         /// Gets the network security group associated this network interface.
@@ -69,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup GetNetworkSecurityGroup();
 
         /// <summary>
-        /// Gets Gets the private IP address allocated to this network interface's primary IP configuration.
+        /// Gets the private IP address allocated to this network interface's primary IP configuration.
         /// The private IP will be within the virtual network subnet of this network interface.
         /// </summary>
         /// <summary>

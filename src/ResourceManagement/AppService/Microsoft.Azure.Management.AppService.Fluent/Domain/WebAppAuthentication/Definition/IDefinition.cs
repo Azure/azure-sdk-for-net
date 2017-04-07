@@ -8,14 +8,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
     /// <summary>
     /// A web app authentication definition allowing branch to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithExternalRedirectUrls<ParentT> 
     {
         /// <summary>
         /// Adds an external redirect URL.
         /// </summary>
         /// <param name="url">The external redirect URL.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithAllowedExternalRedirectUrl(string url);
     }
 
@@ -51,21 +51,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
         /// <summary>
         /// Does not require login by default.
         /// </summary>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithAnonymousAuthentication();
 
         /// <summary>
         /// Specifies the default authentication provider.
         /// </summary>
         /// <param name="provider">The default authentication provider.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithDefaultAuthenticationProvider(BuiltInAuthenticationProvider provider);
     }
 
     /// <summary>
     /// A web app authentication definition allowing detailed provider information to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAuthenticationProvider<ParentT> 
     {
         /// <summary>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
         /// </summary>
         /// <param name="clientId">The Microsoft app's client ID.</param>
         /// <param name="clientSecret">The Microsoft app's client secret.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithMicrosoft(string clientId, string clientSecret);
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
         /// </summary>
         /// <param name="appId">The Facebook app ID.</param>
         /// <param name="appSecret">The Facebook app secret.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithFacebook(string appId, string appSecret);
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
         /// </summary>
         /// <param name="apiKey">The Twitter app's API key.</param>
         /// <param name="apiSecret">The Twitter app's API secret.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithTwitter(string apiKey, string apiSecret);
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
         /// </summary>
         /// <param name="clientId">The Google app's client ID.</param>
         /// <param name="clientSecret">The Google app's client secret.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithGoogle(string clientId, string clientSecret);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
         /// </summary>
         /// <param name="clientId">The AAD app's client ID.</param>
         /// <param name="issuerUrl">The token issuer URL in the format of https://sts.windows.net/(tenantId).</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithActiveDirectory(string clientId, string issuerUrl);
     }
 
@@ -123,14 +123,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Defi
     /// <summary>
     /// A web app authentication definition allowing token store to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithTokenStore<ParentT> 
     {
         /// <summary>
         /// Specifies if token store should be enabled.
         /// </summary>
         /// <param name="enabled">True if token store should be enabled.</param>
-        /// <return>The next stage of the web app authentication definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IWithAttach<ParentT> WithTokenStore(bool enabled);
     }
 }

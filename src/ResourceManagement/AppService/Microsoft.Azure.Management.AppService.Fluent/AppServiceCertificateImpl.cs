@@ -96,40 +96,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:2FC7013122FAA8BE302588EAE7701904
         public async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ Observable<Void> pfxBytes = Observable.Just(null);
-            //$ if (pfxFileUrl != null) {
-            //$ pfxBytes = Utils.DownloadFileAsync(pfxFileUrl, this.Manager().RestClient().Retrofit())
-            //$ .Map(new Func1<byte[], Void>() {
-            //$ @Override
-            //$ public Void call(byte[] bytes) {
-            //$ inner().WithPfxBlob(bytes);
-            //$ return null;
-            //$ }
-            //$ });
-            //$ }
-            //$ Observable<Void> keyVaultBinding = Observable.Just(null);
-            //$ if (certificateOrder != null) {
-            //$ keyVaultBinding = certificateOrder.GetKeyVaultBindingAsync()
-            //$ .Map(new Func1<AppServiceCertificateKeyVaultBinding, Void>() {
-            //$ @Override
-            //$ public Void call(AppServiceCertificateKeyVaultBinding keyVaultBinding) {
-            //$ inner().WithKeyVaultId(keyVaultBinding.KeyVaultId()).WithKeyVaultSecretName(keyVaultBinding.KeyVaultSecretName());
-            //$ return null;
-            //$ }
-            //$ });
-            //$ }
-            //$ CertificatesInner client = this.Manager().Inner().Certificates();
-            //$ return pfxBytes.ConcatWith(keyVaultBinding).Last()
-            //$ .FlatMap(new Func1<Void, Observable<CertificateInner>>() {
-            //$ @Override
-            //$ public Observable<CertificateInner> call(Void aVoid) {
-            //$ return client.CreateOrUpdateAsync(resourceGroupName(), name(), inner());
-            //$ }
-            //$ }).Map(innerToFluentMap(this));
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             if (pfxFileUrl != null)
             {
                 using (var httpClient = new HttpClient())
@@ -175,7 +141,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, IAppServiceManager manager)
                     : base(Name, innerObject, manager)
         {
@@ -208,7 +173,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected override async Task<CertificateInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.Certificates.GetAsync(ResourceGroupName,
@@ -227,15 +191,5 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Inner.Password = password;
             return this;
         }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:CF24F17A5DFB65F1C2A8DF857C7C3BCB
-        protected async Task<Models.CertificateInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return this.Manager().Inner().Certificates().GetAsync(resourceGroupName(), name());
-
-            return null;
-        }
-
     }
 }

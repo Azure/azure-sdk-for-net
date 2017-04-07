@@ -2,16 +2,38 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+
+    /// <summary>
+    /// The entirety of an application gateway IP configuration definition as part of an application gateway update.
+    /// </summary>
+    /// <typeparam name="ParentT">The parent type.</typeparam>
+    public interface IUpdateDefinition<ParentT>  :
+        IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ParentT>,
+        IWithAttach<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The final stage of an application gateway IP configuration definition.
+    /// At this stage, any remaining optional settings can be specified, or the definition
+    /// can be attached to the parent application gateway definition using  WithAttach.attach().
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithAttach<ParentT>  :
+        IInUpdate<ParentT>
+    {
+    }
 
     /// <summary>
     /// The stage of an application gateway IP configuration definition allowing to specify the subnet the application gateway is on.
     /// </summary>
-    /// <typeparam name="Parent">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The parent type.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.UpdateDefinition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Specifies an existing subnet the application gateway should be part of and get its private IP address from.
@@ -30,31 +52,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfigur
     }
 
     /// <summary>
-    /// The entirety of an application gateway IP configuration definition as part of an application gateway update.
-    /// </summary>
-    /// <typeparam name="Parent">The parent type.</typeparam>
-    public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ParentT>,
-        IWithAttach<ParentT>
-    {
-    }
-
-    /// <summary>
-    /// The final stage of an application gateway IP configuration definition.
-    /// At this stage, any remaining optional settings can be specified, or the definition
-    /// can be attached to the parent application gateway definition using WithAttach.attach().
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
-    {
-    }
-
-    /// <summary>
     /// The first stage of an application gateway IP configuration definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ParentT>
     {

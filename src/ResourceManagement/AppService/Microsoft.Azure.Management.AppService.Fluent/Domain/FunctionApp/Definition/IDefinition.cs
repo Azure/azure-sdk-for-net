@@ -20,13 +20,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// Specifies the runtime version for the function app.
         /// </summary>
         /// <param name="version">The version of the Azure Functions runtime.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithRuntimeVersion(string version);
 
         /// <summary>
         /// Uses the latest runtime version for the function app.
         /// </summary>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithLatestRuntimeVersion();
     }
 
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// The group will be created in the same location as the resource.
         /// </summary>
         /// <param name="name">The name of the new group.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewResourceGroup(string name);
 
         /// <summary>
@@ -56,28 +56,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// The group will be created in the same location as the resource.
         /// The group's name is automatically derived from the resource's name.
         /// </summary>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewResourceGroup();
 
         /// <summary>
         /// Creates a new resource group to put the resource in, based on the definition specified.
         /// </summary>
         /// <param name="groupDefinition">A creatable definition for a new resource group.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewResourceGroup(ICreatable<Microsoft.Azure.Management.ResourceManager.Fluent.IResourceGroup> groupDefinition);
 
         /// <summary>
         /// Associates the resource with an existing resource group.
         /// </summary>
         /// <param name="groupName">The name of an existing resource group to put this resource in.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithExistingResourceGroup(string groupName);
 
         /// <summary>
         /// Associates the resource with an existing resource group.
         /// </summary>
         /// <param name="group">An existing resource group to put the resource in.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithExistingResourceGroup(IResourceGroup group);
     }
 
@@ -89,34 +89,34 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// <summary>
         /// Creates a new shared app service plan.
         /// </summary>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewSharedAppServicePlan();
 
         /// <summary>
         /// Creates a new free app service plan. This will fail if there are 10 or more
         /// free plans in the current subscription.
         /// </summary>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewFreeAppServicePlan();
 
         /// <summary>
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="pricingTier">The sku of the app service plan.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewAppServicePlan(PricingTier pricingTier);
 
         /// <summary>
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="appServicePlanCreatable">The new app service plan creatable.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewAppServicePlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable);
 
         /// <summary>
         /// Creates a new consumption plan to use.
         /// </summary>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewConsumptionPlan();
     }
 
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// Uses an existing app service plan for the function app.
         /// </summary>
         /// <param name="appServicePlan">The existing app service plan.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IExistingAppServicePlanWithGroup WithExistingAppServicePlan(IAppServicePlan appServicePlan);
     }
 
@@ -172,14 +172,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// </summary>
         /// <param name="name">The name of the storage account.</param>
         /// <param name="sku">The sku of the storage account.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithNewStorageAccount(string name, SkuName sku);
 
         /// <summary>
         /// Specifies the storage account to use for the function app.
         /// </summary>
         /// <param name="storageAccount">The storage account to use.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithExistingStorageAccount(IStorageAccount storageAccount);
     }
 
@@ -191,14 +191,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition
         /// <summary>
         /// Specifies the daily usage data cap.
         /// </summary>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithoutDailyUsageQuota();
 
         /// <summary>
         /// Specifies the daily usage data cap.
         /// </summary>
         /// <param name="quota">The daily usage quota.</param>
-        /// <return>The next stage of the function app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Definition.IWithCreate WithDailyUsageQuota(int quota);
     }
 }

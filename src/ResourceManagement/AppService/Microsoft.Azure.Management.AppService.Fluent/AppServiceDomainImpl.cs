@@ -71,41 +71,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:90FEC55929748850F1ED324D0CB61EE7
         public async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ String[] domainParts = this.Name().Split("\\.");
-            //$ String topLevel = domainParts[domainParts.Length - 1];
-            //$ DomainsInner client = this.Manager().Inner().Domains();
-            //$ return this.Manager().Inner().TopLevelDomains().ListAgreementsAsync(topLevel)
-            //$ // Step 1: Consent to agreements
-            //$ .FlatMap(new Func1<Page<TldLegalAgreementInner>, Observable<List<String>>>() {
-            //$ @Override
-            //$ public Observable<List<String>> call(Page<TldLegalAgreementInner> tldLegalAgreementInnerPage) {
-            //$ List<String> agreementKeys = new ArrayList<String>();
-            //$ for (TldLegalAgreementInner agreementInner : tldLegalAgreementInnerPage.Items()) {
-            //$ agreementKeys.Add(agreementInner.AgreementKey());
-            //$ }
-            //$ return Observable.Just(agreementKeys);
-            //$ }
-            //$ })
-            //$ // Step 2: Create domain
-            //$ .FlatMap(new Func1<List<String>, Observable<DomainInner>>() {
-            //$ @Override
-            //$ public Observable<DomainInner> call(List<String> keys) {
-            //$ try {
-            //$ inner().WithConsent(new DomainPurchaseConsent()
-            //$ .WithAgreedAt(new DateTime())
-            //$ .WithAgreedBy(Inet4Address.GetLocalHost().GetHostAddress())
-            //$ .WithAgreementKeys(keys));
-            //$ } catch (UnknownHostException e) {
-            //$ return Observable.Error(e);
-            //$ }
-            //$ return client.CreateOrUpdateAsync(resourceGroupName(), name(), inner());
-            //$ }
-            //$ })
-            //$ .Map(innerToFluentMap(this));
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             string[] domainParts = this.Name.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
             string topLevel = domainParts[domainParts.Length - 1];
             // Step 1: Consent to agreements
@@ -152,7 +117,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal AppServiceDomainImpl(string name, DomainInner innerObject, IAppServiceManager manager)
             : base(name, innerObject, manager)
         {
@@ -172,19 +136,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:CC6E0592F0BCD4CD83D832B40167E562:19BB8B1526082C9526EBBE504AC24AE2
         public async Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken))
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ DomainOwnershipIdentifierInner identifierInner = new DomainOwnershipIdentifierInner().WithOwnershipId(domainVerificationToken);
-            //$ identifierInner.WithLocation("global");
-            //$ return this.Manager().Inner().Domains().CreateOrUpdateOwnershipIdentifierAsync(resourceGroupName(), name(), certificateOrderName, identifierInner)
-            //$ .Map(new Func1<DomainOwnershipIdentifierInner, Void>() {
-            //$ @Override
-            //$ public Void call(DomainOwnershipIdentifierInner domainOwnershipIdentifierInner) {
-            //$ return null;
-            //$ }
-            //$ }).ToCompletable();
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             DomainOwnershipIdentifierInner identifierInner = new DomainOwnershipIdentifierInner()
             {
                 Location = "global",
@@ -200,8 +151,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected override async Task<DomainInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.Domains.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
@@ -266,11 +215,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:40B9A5AF5E2BAAC912A2E077A8B03C22
         public void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ verifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken).ToObservable().ToBlocking().Subscribe();
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken).Wait();
         }
 
@@ -298,15 +242,5 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             clientIp = ipAddress;
             return this; 
         }
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:9BB09AC2C6BEB23EC56AC19E01FE9F19
-        protected async Task<Models.DomainInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return this.Manager().Inner().Domains().GetByResourceGroupAsync(resourceGroupName(), name());
-
-            return null;
-        }
-
     }
 }

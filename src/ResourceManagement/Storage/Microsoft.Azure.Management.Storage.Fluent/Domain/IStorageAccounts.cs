@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ISupportsGettingById<IStorageAccount>,
         ISupportsDeletingByResourceGroup,
         ISupportsBatchCreation<IStorageAccount>,
+        ISupportsBatchDeletion,
         IHasManager<IStorageManager>,
         IHasInner<IStorageAccountsOperations>
     {

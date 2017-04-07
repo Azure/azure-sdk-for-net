@@ -34,16 +34,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C332A900315E8149F8047F02D419C9DC:DA276544D03C0E0CFA6F790ECB2A2B92
         public IEnumerable<IDomainLegalAgreement> ListAgreements(string topLevelExtension)
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ return new PagedListConverter<TldLegalAgreementInner, DomainLegalAgreement>() {
-            //$ @Override
-            //$ public DomainLegalAgreement typeConvert(TldLegalAgreementInner tldLegalAgreementInner) {
-            //$ return new DomainLegalAgreementImpl(tldLegalAgreementInner);
-            //$ }
-            //$ }.Convert(this.Manager().Inner().TopLevelDomains().ListAgreements(topLevelExtension));
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             var topLevelDomains = Manager.Inner.TopLevelDomains;
 
             return topLevelDomains.ListAgreements(topLevelExtension)
@@ -53,7 +43,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected async override Task<IPage<DomainInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
             return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
@@ -66,7 +55,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name);
@@ -74,7 +62,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected async override Task<DomainInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             return await Inner.GetAsync(groupName, name, cancellationToken);
@@ -82,7 +69,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:8CF52FF5A0D0AA245495F311570001AD
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         protected async override Task<IPage<DomainInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
             return await Inner.ListAsync(cancellationToken);
@@ -95,7 +81,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:9303C19C6745E77DCF648A0A5F603980:6058FD68A2D3CB7431C37FFF30958B5E
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal  AppServiceDomainsImpl(AppServiceManager manager)
             : base (manager.Inner.Domains, manager)
         {
@@ -104,25 +89,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:A825BD2BA1961FDCEBA86379F29EB25B
         protected override AppServiceDomainImpl WrapModel(string name)
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ return new AppServiceDomainImpl(name, new DomainInner(), this.Manager());
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             return new AppServiceDomainImpl(name, new DomainInner(), Manager);
         }
 
         ///GENMHASH:D46619B18B9E2DF548FE051B5E4AA581:B2349B8AC556881EB5FF1F67AC6E2BB3
         protected override IAppServiceDomain WrapModel(DomainInner inner)
         {
-<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //$ if (inner == null) {
-            //$ return null;
-            //$ }
-            //$ return new AppServiceDomainImpl(inner.Name(), inner, this.Manager());
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
             if (inner == null) {
                 return null;
             }

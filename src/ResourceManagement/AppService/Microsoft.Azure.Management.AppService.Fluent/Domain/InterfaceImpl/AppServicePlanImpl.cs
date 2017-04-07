@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     internal partial class AppServicePlanImpl 
     {
@@ -90,7 +91,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServicePlan.Definition.IWithOperatingSystem AppServicePlan.Definition.IWithPricingTier.WithPricingTier(PricingTier pricingTier)
         {
             return this.WithPricingTier(pricingTier) as AppServicePlan.Definition.IWithOperatingSystem;
@@ -110,7 +111,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithPerSiteScaling.WithPerSiteScaling(bool perSiteScaling)
         {
             return this.WithPerSiteScaling(perSiteScaling) as AppServicePlan.Definition.IWithCreate;
@@ -140,7 +141,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the operating system of the app service plan.
         /// </summary>
         /// <param name="operatingSystem">The operating system.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithOperatingSystem.WithOperatingSystem(OperatingSystem operatingSystem)
         {
             return this.WithOperatingSystem(operatingSystem) as AppServicePlan.Definition.IWithCreate;
