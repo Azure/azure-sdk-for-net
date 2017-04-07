@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:934D38FBA69BF2F25673598C416DD202:E29466D1FE6AACE8059987F066EC1188
-        public FluentImplT WithExistingAppServicePlan(IAppServicePlan appServicePlan)
+        public virtual FluentImplT WithExistingAppServicePlan(IAppServicePlan appServicePlan)
         {
             Inner.ServerFarmId = appServicePlan.Id;
             if (newGroup != null && IsInCreateMode)
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             await Manager.Inner.WebApps.DeleteHostNameBindingAsync(ResourceGroupName, Name, hostname, cancellationToken);
         }
         
-        internal FluentImplT WithNewAppServicePlan(OperatingSystem operatingSystem, PricingTier pricingTier)
+        internal virtual FluentImplT WithNewAppServicePlan(OperatingSystem operatingSystem, PricingTier pricingTier)
         {
             //$ return withNewAppServicePlan(newDefaultAppServicePlan().WithOperatingSystem(operatingSystem).WithPricingTier(pricingTier));
 

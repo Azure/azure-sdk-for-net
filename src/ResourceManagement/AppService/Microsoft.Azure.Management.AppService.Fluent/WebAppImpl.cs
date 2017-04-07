@@ -215,52 +215,62 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup(string name)
         {
-            return 
+            WithNewResourceGroup(name);
+            return this;
         }
 
         IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup()
         {
-            throw new NotImplementedException();
+            WithNewResourceGroup();
+            return this;
         }
 
         IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup(ICreatable<IResourceGroup> groupDefinition)
         {
-            throw new NotImplementedException();
+            WithNewResourceGroup(groupDefinition);
+            return this;
         }
 
         IWithCreate IExistingWindowsPlanWithGroup.WithExistingResourceGroup(string groupName)
         {
-            throw new NotImplementedException();
+            WithExistingResourceGroup(groupName);
+            return this;
         }
 
         IWithCreate IExistingWindowsPlanWithGroup.WithExistingResourceGroup(IResourceGroup group)
         {
-            throw new NotImplementedException();
+            WithExistingResourceGroup(group);
+            return this;
         }
 
         WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithNewResourceGroup(string name)
         {
-            throw new NotImplementedException();
+            WithNewResourceGroup(name);
+            return this;
         }
 
         WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithNewResourceGroup()
         {
-            throw new NotImplementedException();
+            WithNewResourceGroup();
+            return this;
         }
 
         WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithNewResourceGroup(ICreatable<IResourceGroup> groupDefinition)
         {
-            throw new NotImplementedException();
+            WithNewResourceGroup(groupDefinition);
+            return this;
         }
 
         WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithExistingResourceGroup(string groupName)
         {
-            throw new NotImplementedException();
+            WithExistingResourceGroup(groupName);
+            return this;
         }
 
         WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithExistingResourceGroup(IResourceGroup group)
         {
-            throw new NotImplementedException();
+            WithExistingResourceGroup(group);
+            return this;
         }
     }
 }

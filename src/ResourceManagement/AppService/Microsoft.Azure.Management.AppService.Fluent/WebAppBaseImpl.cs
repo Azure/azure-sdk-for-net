@@ -491,28 +491,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
 
             // App settings
-            if (appSettingsToAdd.Count > 0 || appSettingsToRemove.Count > 0)
-            {
-                StringDictionaryInner appSettings = await ListAppSettingsAsync(cancellationToken);
-                if (appSettings == null)
-                {
-                    appSettings = new StringDictionaryInner();
-                    appSettings.Location = RegionName;
-                }
-                if (appSettings.Properties == null)
-                {
-                    appSettings.Properties = new Dictionary<string, string>();
-                }
-                foreach (var appSetting in appSettingsToAdd)
-                {
-                    appSettings.Properties[appSetting.Key] = appSetting.Value;
-                }
-                foreach (var appSetting in appSettingsToRemove)
-                {
-                    appSettings.Properties.Remove(appSetting);
-                }
-                appSettings = await UpdateAppSettingsAsync(appSettings, cancellationToken);
-            }
+            await SubmitAppSettingsAsync(site, cancellationToken);
 
             // Connection strings
             if (connectionStringsToAdd.Count > 0 || connectionStringsToRemove.Count > 0)
@@ -611,6 +590,33 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             await CacheSiteProperties(cancellationToken);
 
             return this as FluentT;
+        }
+
+        internal virtual async Task<SiteInner> SubmitAppSettingsAsync(SiteInner site, CancellationToken cancellationToken)
+        {
+            if (appSettingsToAdd.Count > 0 || appSettingsToRemove.Count > 0)
+            {
+                StringDictionaryInner appSettings = await ListAppSettingsAsync(cancellationToken);
+                if (appSettings == null)
+                {
+                    appSettings = new StringDictionaryInner();
+                    appSettings.Location = RegionName;
+                }
+                if (appSettings.Properties == null)
+                {
+                    appSettings.Properties = new Dictionary<string, string>();
+                }
+                foreach (var appSetting in appSettingsToAdd)
+                {
+                    appSettings.Properties[appSetting.Key] = appSetting.Value;
+                }
+                foreach (var appSetting in appSettingsToRemove)
+                {
+                    appSettings.Properties.Remove(appSetting);
+                }
+                await UpdateAppSettingsAsync(appSettings, cancellationToken);
+            }
+            return site;
         }
 
         ///GENMHASH:339A48BAE1EB5ED9A9975C86986C944F:019E868E4A08A557C6D58D6C887F8914

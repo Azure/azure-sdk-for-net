@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using Microsoft.Azure.Management.Storage.Fluent;
     using System;
+    using ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent;
 
     /// <summary>
     /// The implementation for FunctionApp.
@@ -36,188 +38,126 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public FunctionAppImpl WithoutDailyUsageQuota()
         {
-            //$ return withDailyUsageQuota(0);
-
-            return this;
+            return WithDailyUsageQuota(0);
         }
 
         private FunctionAppImpl AutoSetAlwaysOn(PricingTier pricingTier)
         {
-            //$ SkuDescription description = pricingTier.ToSkuDescription();
-            //$ if (description.Tier().EqualsIgnoreCase("Basic")
-            //$ || description.Tier().EqualsIgnoreCase("Standard")
-            //$ || description.Tier().EqualsIgnoreCase("Premium")) {
-            //$ return withWebAppAlwaysOn(true);
-            //$ } else {
-            //$ return withWebAppAlwaysOn(false);
-            //$ }
-            //$ }
-
-            return this;
+            SkuDescription description = pricingTier.SkuDescription;
+            if (description.Tier.Equals("Basic", StringComparison.OrdinalIgnoreCase)
+                || description.Tier.Equals("Standard", StringComparison.OrdinalIgnoreCase)
+                || description.Tier.Equals("Premium", StringComparison.OrdinalIgnoreCase))
+            {
+                return WithWebAppAlwaysOn(true);
+            }
+            else
+            {
+                return WithWebAppAlwaysOn(false);
+            }
         }
 
         public FunctionAppImpl WithDailyUsageQuota(int quota)
         {
-            //$ inner().WithDailyMemoryTimeQuota(quota);
-            //$ return this;
-
+            Inner.DailyMemoryTimeQuota = quota;
             return this;
         }
 
         internal  FunctionAppImpl(string name, SiteInner innerObject, SiteConfigResourceInner configObject, IAppServiceManager manager)
             : base(name, innerObject, configObject, manager)
         {
-            //$ super(name, innerObject, configObject, manager);
-            //$ innerObject.WithKind("functionapp");
-            //$ }
-
+            Inner.Kind = "functionapp";
         }
 
         public FunctionAppImpl WithNewStorageAccount(string name, Storage.Fluent.Models.SkuName sku)
         {
-            //$ StorageAccount.DefinitionStages.WithGroup storageDefine = manager().StorageManager().StorageAccounts()
-            //$ .Define(name)
-            //$ .WithRegion(regionName());
-            //$ if (super.CreatableGroup != null && isInCreateMode()) {
-            //$ storageAccountCreatable = storageDefine.WithNewResourceGroup(super.CreatableGroup)
-            //$ .WithGeneralPurposeAccountKind()
-            //$ .WithSku(sku);
-            //$ } else {
-            //$ storageAccountCreatable = storageDefine.WithExistingResourceGroup(resourceGroupName())
-            //$ .WithGeneralPurposeAccountKind()
-            //$ .WithSku(sku);
-            //$ }
-            //$ addCreatableDependency(storageAccountCreatable);
-            //$ return this;
-
+            Storage.Fluent.StorageAccount.Definition.IWithGroup storageDefine = Manager.StorageManager.StorageAccounts
+                .Define(name)
+                .WithRegion(RegionName);
+            if (newGroup != null && IsInCreateMode) {
+                storageAccountCreatable = storageDefine.WithNewResourceGroup(newGroup)
+                    .WithGeneralPurposeAccountKind()
+                    .WithSku(sku);
+            } else {
+                storageAccountCreatable = storageDefine.WithExistingResourceGroup(ResourceGroupName)
+                    .WithGeneralPurposeAccountKind()
+                    .WithSku(sku);
+            }
+            AddCreatableDependency(storageAccountCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
         public FunctionAppImpl WithExistingStorageAccount(IStorageAccount storageAccount)
         {
-            //$ this.storageAccountToSet = storageAccount;
-            //$ return this;
-
+            this.storageAccountToSet = storageAccount;
             return this;
         }
 
-        internal FunctionAppImpl WithNewAppServicePlan(OperatingSystem operatingSystem, PricingTier pricingTier)
+        internal override FunctionAppImpl WithNewAppServicePlan(OperatingSystem operatingSystem, PricingTier pricingTier)
         {
-            //$ return super.WithNewAppServicePlan(operatingSystem, pricingTier).AutoSetAlwaysOn(pricingTier);
-
-            return this;
+            return base.WithNewAppServicePlan(operatingSystem, pricingTier).AutoSetAlwaysOn(pricingTier);
         }
 
         public FunctionAppImpl WithRuntimeVersion(string version)
         {
-            //$ return withAppSetting("FUNCTIONS_EXTENSION_VERSION", version.StartsWith("~") ? version : "~" + version);
-
-            return this;
+            return WithAppSetting("FUNCTIONS_EXTENSION_VERSION", version.StartsWith("~") ? version : "~" + version);
         }
 
         public FunctionAppImpl WithNewConsumptionPlan()
         {
-            //$ return withNewAppServicePlan(OperatingSystem.WINDOWS, new PricingTier("Dynamic", "Y1"));
-
-            return this;
+            return WithNewAppServicePlan(Fluent.OperatingSystem.Windows, new PricingTier("Dynamic", "Y1"));
         }
 
-        internal async Task<Models.SiteInner> SubmitAppSettingsAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
+        internal override async Task<Models.SiteInner> SubmitAppSettingsAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ if (storageAccountCreatable != null && createdResource(storageAccountCreatable.Key()) != null) {
-            //$ storageAccountToSet = (StorageAccount) createdResource(storageAccountCreatable.Key());
-            //$ }
-            //$ if (storageAccountToSet == null) {
-            //$ return super.SubmitAppSettings(site);
-            //$ } else {
-            //$ return storageAccountToSet.GetKeysAsync()
-            //$ .FlatMapIterable(new Func1<List<StorageAccountKey>, Iterable<StorageAccountKey>>() {
-            //$ @Override
-            //$ public Iterable<StorageAccountKey> call(List<StorageAccountKey> storageAccountKeys) {
-            //$ return storageAccountKeys;
-            //$ }
-            //$ })
-            //$ .First().FlatMap(new Func1<StorageAccountKey, Observable<SiteInner>>() {
-            //$ @Override
-            //$ public Observable<SiteInner> call(StorageAccountKey storageAccountKey) {
-            //$ String connectionString = String.Format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s",
-            //$ storageAccountToSet.Name(), storageAccountKey.Value());
-            //$ withAppSetting("AzureWebJobsStorage", connectionString);
-            //$ withAppSetting("AzureWebJobsDashboard", connectionString);
-            //$ withAppSetting("WEBSITE_CONTENTAZUREFILECONNECTIONSTRING", connectionString);
-            //$ withAppSetting("WEBSITE_CONTENTSHARE", SdkContext.RandomResourceName(name(), 32));
-            //$ return FunctionAppImpl.Super.SubmitAppSettings(site);
-            //$ }
-            //$ }).DoOnCompleted(new Action0() {
-            //$ @Override
-            //$ public void call() {
-            //$ currentStorageAccount = storageAccountToSet;
-            //$ storageAccountToSet = null;
-            //$ storageAccountCreatable = null;
-            //$ }
-            //$ });
-            //$ }
+            if (storageAccountCreatable != null && CreatedResource(storageAccountCreatable.Key) != null)
+            {
+                storageAccountToSet = (IStorageAccount) CreatedResource(storageAccountCreatable.Key);
+            }
+            if (storageAccountToSet == null)
+            {
+                return await base.SubmitAppSettingsAsync(site, cancellationToken);
+            }
+            else
+            {
+                var keys = await storageAccountToSet.GetKeysAsync(cancellationToken);
+                var connectionString = string.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}",
+                    storageAccountToSet.Name, keys[0].Value);
+                WithAppSetting("AzureWebJobsStorage", connectionString);
+                WithAppSetting("AzureWebJobsDashboard", connectionString);
+                WithAppSetting("WEBSITE_CONTENTAZUREFILECONNECTIONSTRING", connectionString);
+                WithAppSetting("WEBSITE_CONTENTSHARE", SdkContext.RandomResourceName(Name, 32));
 
-            return null;
+                // clean up
+                currentStorageAccount = storageAccountToSet;
+                storageAccountToSet = null;
+                storageAccountCreatable = null;
+
+                return await base.SubmitAppSettingsAsync(site, cancellationToken);
+            }
         }
 
         public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IIndexable> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ if (inner().ServerFarmId() == null) {
-            //$ withNewConsumptionPlan();
-            //$ }
-            //$ if (currentStorageAccount == null && storageAccountToSet == null && storageAccountCreatable == null) {
-            //$ withNewStorageAccount(SdkContext.RandomResourceName(name(), 20), SkuName.STANDARD_GRS);
-            //$ }
-            //$ return super.CreateAsync();
-
-            return null;
+            if (Inner.ServerFarmId == null)
+            {
+                WithNewConsumptionPlan();
+            }
+            if (currentStorageAccount == null && storageAccountToSet == null && storageAccountCreatable == null)
+            {
+                WithNewStorageAccount(SdkContext.RandomResourceName(Name, 20), Storage.Fluent.Models.SkuName.StandardGRS);
+            }
+            return await base.CreateAsync(cancellationToken);
         }
 
-        public FunctionAppImpl WithExistingAppServicePlan(IAppServicePlan appServicePlan)
+        public override FunctionAppImpl WithExistingAppServicePlan(IAppServicePlan appServicePlan)
         {
-            //$ public FunctionAppImpl withExistingAppServicePlan(AppServicePlan appServicePlan) {
-            //$ super.WithExistingAppServicePlan(appServicePlan);
-            //$ return autoSetAlwaysOn(appServicePlan.PricingTier());
-
-            return this;
+            base.WithExistingAppServicePlan(appServicePlan);
+            return AutoSetAlwaysOn(appServicePlan.PricingTier);
         }
 
         public FunctionAppImpl WithLatestRuntimeVersion()
         {
-            //$ return withRuntimeVersion("latest");
-
-            return this;
-        }
-
-        public override Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return WithRuntimeVersion("latest");
         }
     }
 }
