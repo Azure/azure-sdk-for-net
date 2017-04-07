@@ -60,6 +60,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IDictionary<string, bool> connectionStringStickiness;
         private WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl;
         private bool sourceControlToDelete;
+        private WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> authentication;
+        private bool authenticationToUpdate;
 
         internal SiteConfigResourceInner SiteConfig
         {
@@ -125,6 +127,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             this.connectionStringStickiness = new Dictionary<string, bool>();
             this.sourceControl = null;
             this.sourceControlToDelete = false;
+            this.authenticationToUpdate = false;
             this.sslBindingsToCreate = new Dictionary<string, HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>>();
             if (Inner.HostNames != null)
             {
@@ -229,7 +232,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
             this.SiteConfig = await GetConfigInnerAsync(cancellationToken);
             SetInner(inner);
-            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await CacheSiteProperties(cancellationToken);
             return this as FluentT;
         }
 
@@ -265,19 +268,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:C70FCB6ABBA310D8130B4F53160A0440
 
-        public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task CacheSiteProperties(CancellationToken cancellationToken = default(CancellationToken))
         {
             Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync(cancellationToken);
-            ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:27E486AB74A10242FF421C0798DDC450
             Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync(cancellationToken);
-            ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:27E486AB74A10242FF421C0798DDC450
             Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync(cancellationToken);
+            Task<SiteAuthSettingsInner> authenticationTask = GetAuthenticationAsync(cancellationToken);
 
-            await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask);
+            await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask, authenticationTask);
 
             StringDictionaryInner appSettings = appSettingsTask.Result;
             ConnectionStringDictionaryInner connectionStrings = connectionStringsTask.Result;
             SlotConfigNamesResourceInner slotConfigs = slotConfigsTask.Result;
+            SiteAuthSettingsInner authInner = authenticationTask.Result;
 
             if (appSettings == null || appSettings.Properties == null)
             {
@@ -302,6 +305,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                         slotConfigs.ConnectionStringNames != null && slotConfigs.ConnectionStringNames.Contains(p.Key)))
                     .ToDictionary(s => s.Name);
             }
+
+            authentication = new WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(authInner, this);
         }
 
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:27E486AB74A10242FF421C0798DDC450
@@ -581,6 +586,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 slotConfigs = await UpdateSlotConfigurationsAsync(slotConfigs, cancellationToken);
             }
 
+            // Delete source control
+            if (sourceControlToDelete)
+            {
+                await DeleteSourceControlAsync(cancellationToken);
+            }
+
             // Create source control
             if (sourceControl != null && !sourceControlToDelete)
             {
@@ -589,16 +600,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 await CreateOrUpdateSourceControlAsync(sourceControl.Inner, cancellationToken);
             }
 
-            // Delete source control
-            if (sourceControlToDelete)
-            {
-                await DeleteSourceControlAsync(cancellationToken);
+            // authentication
+            if (authenticationToUpdate) {
+                await UpdateAuthenticationAsync(authentication.Inner, cancellationToken);
             }
 
             // convert from Inner
             SetInner(site);
             NormalizeProperties();
-            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await CacheSiteProperties(cancellationToken);
 
             return this as FluentT;
         }
@@ -1189,32 +1199,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:23274EA44FADF0D35A6CB3228A47EFD8:9ACE693A325D20B0E77B92545761E40F
         public FluentImplT WithoutAuthentication()
         {
-            //$ public FluentImplT withoutAuthentication() {
-            //$ this.authentication.Inner().WithEnabled(false);
-            //$ authenticationToUpdate = true;
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            this.authentication.Inner.Enabled = false;
+            authenticationToUpdate = true;
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:F644770BE853EE30024DEE4BE9D96441:049C263D531DF9C62F1DF917EA2491D1
         public OperatingSystem OperatingSystem()
         {
-            //$ if (inner().Reserved() != null && inner().Reserved()) {
-            //$ return OperatingSystem.LINUX;
-            //$ } else {
-            //$ return OperatingSystem.WINDOWS;
-            //$ }
-
-            return Fluent.OperatingSystem.WINDOWS;
+            if (Inner.Reserved != null && (bool)Inner.Reserved)
+            {
+                return Fluent.OperatingSystem.Linux;
+            }
+            else
+            {
+                return Fluent.OperatingSystem.Windows;
+            }
         }
 
         ///GENMHASH:F2F359A4D1C48DF1D575CBA6AD2D6B24:8DED25B1B6AC5BD0C916FD0616562DC8
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineAuthentication()
         {
-            //$ return new WebAppAuthenticationImpl<>(new SiteAuthSettingsInner().WithEnabled(true), this);
-
-            return null;
+            return new WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(new SiteAuthSettingsInner
+            {
+                Enabled = true
+            }, this);
         }
       
        
@@ -1227,9 +1236,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:1B0D5BB9595EC313A20468FF100694B0:D3C435DB0263C2140BE41D5EAE32848D
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> UpdateAuthentication()
         {
-            //$ return authentication;
-
-            return null;
+            return authentication;
         }
 
         ///GENMHASH:21D1748197F7ECC1EFA9660DF579B414:27E486AB74A10242FF421C0798DDC450
@@ -1238,23 +1245,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C17839133E66320367CE2F5EF66B54F4:6C685EA1512F1D3FDFEFDFE594F83AA2
         public PlatformArchitecture PlatformArchitecture()
         {
-            //$ if (siteConfig.Use32BitWorkerProcess()) {
-            //$ return PlatformArchitecture.X86;
-            //$ } else {
-            //$ return PlatformArchitecture.X64;
-            //$ }
-
-            return Fluent.PlatformArchitecture.X86;
+            if (_siteConfig.Use32BitWorkerProcess == null || (bool) _siteConfig.Use32BitWorkerProcess)
+            {
+                return Fluent.PlatformArchitecture.X86;
+            }
+            else
+            {
+                return Fluent.PlatformArchitecture.X64;
+            }
         }
 
         ///GENMHASH:1A77ED64E69487E4AA617B8DFCB5EBBB:813687B9CE9E6688BFA2A18264FD8B2D
         internal FluentImplT WithAuthentication(WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> authentication)
         {
-            //$ this.authentication = authentication;
-            //$ authenticationToUpdate = true;
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            this.authentication = authentication;
+            authenticationToUpdate = true;
+            return (FluentImplT) this;
         }
 
         public abstract Task<IDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));

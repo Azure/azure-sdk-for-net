@@ -284,52 +284,39 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         private AppServicePlanImpl NewDefaultAppServicePlan()
         {
-            //$ String planName = SdkContext.RandomResourceName(name() + "plan", 32);
-            //$ AppServicePlanImpl appServicePlan = (AppServicePlanImpl) (this.Manager().AppServicePlans()
-            //$ .Define(planName))
-            //$ .WithRegion(regionName());
-            //$ appServicePlan.WithOperatingSystem(operatingSystem());
-            //$ if (super.CreatableGroup != null && isInCreateMode()) {
-            //$ appServicePlan = appServicePlan.WithNewResourceGroup(super.CreatableGroup);
-            //$ } else {
-            //$ appServicePlan = appServicePlan.WithExistingResourceGroup(resourceGroupName());
-            //$ }
-            //$ return appServicePlan;
-
-            return null;
+            String planName = SdkContext.RandomResourceName(Name + "plan", 32);
+            AppServicePlanImpl appServicePlan = (AppServicePlanImpl) (this.Manager.AppServicePlans
+            .Define(planName))
+            .WithRegion(RegionName);
+            appServicePlan.WithOperatingSystem(OperatingSystem());
+            if (newGroup != null && IsInCreateMode) {
+                appServicePlan = appServicePlan.WithNewResourceGroup(newGroup) as AppServicePlanImpl;
+            } else {
+                appServicePlan = appServicePlan.WithExistingResourceGroup(ResourceGroupName) as AppServicePlanImpl;
+            }
+            return appServicePlan;
         }
 
         internal override async Task<Models.SiteAuthSettingsInner> UpdateAuthenticationAsync(SiteAuthSettingsInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().Inner().WebApps().UpdateAuthSettingsAsync(resourceGroupName(), name(), inner);
-
-            return null;
+            return await Manager.Inner.WebApps.UpdateAuthSettingsAsync(ResourceGroupName, Name, inner, cancellationToken);
         }
 
         public FluentImplT WithNewSharedAppServicePlan()
         {
-            //$ return withNewAppServicePlan(OperatingSystem.WINDOWS, new PricingTier("Shared", "D1"));
-            //$ }
-
-            return default(FluentImplT);
+            return WithNewAppServicePlan(Fluent.OperatingSystem.Windows, new PricingTier("Shared", "D1"));
         }
         
         public FluentImplT WithNewFreeAppServicePlan()
         {
-            //$ return withNewAppServicePlan(OperatingSystem.WINDOWS, new PricingTier("Free", "F1"));
-            //$ }
-
-            return default(FluentImplT);
+            return WithNewAppServicePlan(Fluent.OperatingSystem.Windows, new PricingTier("Free", "F1"));
         }
         
 
         ///GENMHASH:80973546C834C7C29422D77A01231051:254A5188A8B9B221986ACC09C33E3859
         public FluentImplT WithNewAppServicePlan(PricingTier pricingTier)
         {
-            //$ return withNewAppServicePlan(operatingSystem(), pricingTier);
-            //$ }
-
-            return default(FluentImplT);
+            return WithNewAppServicePlan(OperatingSystem(), pricingTier);
         }
 
         ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:4A2ED55DAB8B08E815B4AB5554D9C60C
@@ -355,14 +342,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:E7F5C40042323022AA5171FA979A6E79:27DA6227AE38DA9C9AC067D20F4EEEAC
         public override async Task SwapAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().Inner().WebApps().SwapSlotWithProductionAsync(resourceGroupName(), name(), new CsmSlotEntityInner().WithTargetSlot(slotName))
-            //$ .FlatMap(new Func1<Void, Observable<?>>() {
-            //$ @Override
-            //$ public Observable<?> call(Void aVoid) {
-            //$ return refreshAsync();
-            //$ }
-            //$ }).ToCompletable();
-
             await Manager.Inner.WebApps.SwapSlotWithProductionAsync(ResourceGroupName, Name, new CsmSlotEntityInner
             {
                 TargetSlot = slotName
@@ -373,63 +352,52 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:E10A5B0FD0E95947B1A669D51E6BD5C9:977A64CFAC7B27FE0960C4DC670C662E
         public override async Task<System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ public Observable<Map<String, HostNameBinding>> getHostNameBindingsAsync() {
-            //$ return this.Manager().Inner().WebApps().ListHostNameBindingsAsync(resourceGroupName(), name())
-            //$ .FlatMap(new Func1<Page<HostNameBindingInner>, Observable<HostNameBindingInner>>() {
-            //$ @Override
-            //$ public Observable<HostNameBindingInner> call(Page<HostNameBindingInner> hostNameBindingInnerPage) {
-            //$ return Observable.From(hostNameBindingInnerPage.Items());
-            //$ }
-            //$ })
-            //$ .Map(new Func1<HostNameBindingInner, HostNameBinding>() {
-            //$ @Override
-            //$ public HostNameBinding call(HostNameBindingInner hostNameBindingInner) {
-            //$ return new HostNameBindingImpl<>(hostNameBindingInner, (FluentImplT) AppServiceBaseImpl.This);
-            //$ }
-            //$ }).ToList()
-            //$ .Map(new Func1<List<HostNameBinding>, Map<String, HostNameBinding>>() {
-            //$ @Override
-            //$ public Map<String, HostNameBinding> call(List<HostNameBinding> hostNameBindings) {
-            //$ return Collections.UnmodifiableMap(Maps.UniqueIndex(hostNameBindings, new Function<HostNameBinding, String>() {
-            //$ @Override
-            //$ public String apply(HostNameBinding input) {
-            //$ return input.Name().Replace(name() + "/", "");
-            //$ }
-            //$ }));
-            //$ }
-            //$ });
-
-            return null;
+            var bindingsList = await PagedCollection<IHostNameBinding, HostNameBindingInner>.LoadPage(
+                async (cancellation) => await Manager.Inner.WebApps.ListHostNameBindingsAsync(ResourceGroupName, Name, cancellation),
+                Manager.Inner.WebApps.ListHostNameBindingsNextAsync,
+                (inner) => new HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(inner, (FluentImplT) this),
+                true, cancellationToken);
+            return bindingsList.ToDictionary(binding => binding.Name.Replace(this.Name + "/", ""));
         }
 
-        public override Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.ApplySlotConfigToProductionAsync(ResourceGroupName, Name, new CsmSlotEntityInner
+            {
+                TargetSlot = slotName
+            }, cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.StopAsync(ResourceGroupName, Name, cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            Stream stream = await Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsAsync(ResourceGroupName, Name, null, cancellationToken);
+            StreamReader reader = new StreamReader(stream);
+            string xml = reader.ReadToEnd();
+            return new PublishingProfileImpl(xml, this);
         }
 
-        public override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.RestartAsync(ResourceGroupName, Name, null, null, cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>
+                (await Manager.Inner.WebApps.GetSourceControlAsync(ResourceGroupName, Name, cancellationToken), this);
         }
 
-        protected override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
+        protected async override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await Manager.Inner.WebApps.GetAsync(ResourceGroupName, Name, cancellationToken);
         }
     }
 }

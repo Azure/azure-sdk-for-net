@@ -113,24 +113,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:96136B4F06090288022D1EF87309064C:9A69FEB095211874831DC78CF9CBB543
         public AppServicePlanImpl WithOperatingSystem(OperatingSystem operatingSystem)
         {
-            //$ if (OperatingSystem.LINUX.Equals(operatingSystem)) {
-            //$ inner().WithReserved(true);
-            //$ }
-            //$ return this;
-
+            if (Fluent.OperatingSystem.Linux.Equals(operatingSystem))
+            {
+                Inner.Reserved = true;
+            }
             return this;
         }
 
         ///GENMHASH:F644770BE853EE30024DEE4BE9D96441:049C263D531DF9C62F1DF917EA2491D1
         public OperatingSystem OperatingSystem()
         {
-            //$ if (inner().Reserved() != null && inner().Reserved()) {
-            //$ return OperatingSystem.LINUX;
-            //$ } else {
-            //$ return OperatingSystem.WINDOWS;
-            //$ }
-
-            return Fluent.OperatingSystem.WINDOWS;
+            if (Inner.Reserved != null && (bool) Inner.Reserved)
+            {
+                return Fluent.OperatingSystem.Linux;
+            }
+            else
+            {
+                return Fluent.OperatingSystem.Windows;
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for WebAppAuthentication and its create and update interfaces.
@@ -30,105 +31,86 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent;
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithMicrosoft(string clientId, string clientSecret)
         {
-            //$ inner().WithMicrosoftAccountClientId(clientId).WithMicrosoftAccountClientSecret(clientSecret);
-            //$ return this;
-
+            Inner.MicrosoftAccountClientId = clientId;
+            Inner.MicrosoftAccountClientSecret = clientSecret;
             return this;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithAnonymousAuthentication()
         {
-            //$ inner().WithUnauthenticatedClientAction(UnauthenticatedClientAction.ALLOW_ANONYMOUS);
-            //$ return this;
-
+            Inner.UnauthenticatedClientAction = UnauthenticatedClientAction.AllowAnonymous;
             return this;
         }
 
         public FluentImplT Attach()
         {
-            //$ parent.WithAuthentication(this);
-            //$ return parent();
-
-            return default(FluentImplT);
+            parent.WithAuthentication(this);
+            return (FluentImplT) parent;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithFacebook(string appId, string appSecret)
         {
-            //$ inner().WithFacebookAppId(appId).WithFacebookAppSecret(appSecret);
-            //$ return this;
-
+            Inner.FacebookAppId = appId;
+            Inner.FacebookAppSecret = appSecret;
             return this;
         }
 
         public FluentImplT Parent()
         {
-            //$ public FluentImplT parent() {
-            //$ parent.WithAuthentication(this);
-            //$ return (FluentImplT) this.parent;
-
-            return default(FluentImplT);
+            parent.WithAuthentication(this);
+            return (FluentImplT) this.parent;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithDefaultAuthenticationProvider(BuiltInAuthenticationProvider provider)
         {
-            //$ inner().WithUnauthenticatedClientAction(UnauthenticatedClientAction.REDIRECT_TO_LOGIN_PAGE).WithDefaultProvider(provider);
-            //$ return this;
-
+            Inner.UnauthenticatedClientAction = UnauthenticatedClientAction.RedirectToLoginPage;
+            Inner.DefaultProvider = provider;
             return this;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithTwitter(string apiKey, string apiSecret)
         {
-            //$ inner().WithTwitterConsumerKey(apiKey).WithTwitterConsumerSecret(apiSecret);
-            //$ return this;
-
+            Inner.TwitterConsumerKey = apiKey;
+            Inner.TwitterConsumerSecret = apiSecret;
             return this;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithAllowedExternalRedirectUrl(string url)
         {
-            //$ if (inner().AllowedExternalRedirectUrls() == null) {
-            //$ inner().WithAllowedExternalRedirectUrls(new ArrayList<String>());
-            //$ }
-            //$ inner().AllowedExternalRedirectUrls().Add(url);
-            //$ return this;
-
+            if (Inner.AllowedExternalRedirectUrls == null)
+            {
+                Inner.AllowedExternalRedirectUrls = new List<string>();
+            }
+            Inner.AllowedExternalRedirectUrls.Add(url);
             return this;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithTokenStore(bool enabled)
         {
-            //$ inner().WithTokenStoreEnabled(enabled);
-            //$ return this;
-
+            Inner.TokenStoreEnabled = enabled;
             return this;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithGoogle(string clientId, string clientSecret)
         {
-            //$ inner().WithGoogleClientId(clientId).WithGoogleClientSecret(clientSecret);
-            //$ return this;
-
+            Inner.GoogleClientId = clientId;
+            Inner.GoogleClientSecret = clientSecret;
             return this;
         }
 
         public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithActiveDirectory(string clientId, string issuerUrl)
         {
-            //$ inner().WithClientId(clientId).WithIssuer(issuerUrl);
-            //$ return this;
-
+            Inner.ClientId = clientId;
+            Inner.Issuer = issuerUrl;
             return this;
         }
 
         internal  WebAppAuthenticationImpl(SiteAuthSettingsInner inner, WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent)
             : base(inner)
         {
-            //$ super(inner);
-            //$ this.parent = parent;
-            //$ inner.WithLocation(parent.RegionName());
-            //$ inner.WithTokenStoreEnabled(true);
-            //$ }
-
+            this.parent = parent;
+            Inner.Location = parent.RegionName;
+            Inner.TokenStoreEnabled = true;
         }
     }
 }

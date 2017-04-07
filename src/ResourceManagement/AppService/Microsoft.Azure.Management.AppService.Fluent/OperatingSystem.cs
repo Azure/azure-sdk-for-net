@@ -7,6 +7,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public enum OperatingSystem
     {
-        WINDOWS, LINUX
+        Windows, Linux
     }
 }

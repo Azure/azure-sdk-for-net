@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using DeploymentSlot.Definition;
     using DeploymentSlot.Update;
     using Models;
+    using ResourceManager.Fluent.Core;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -285,64 +286,85 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             await Manager.Inner.WebApps.DeleteHostNameBindingSlotAsync(ResourceGroupName, parent.Name, Name(), hostname, cancellationToken);
         }
 
-        public override Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.ApplySlotConfigurationSlotAsync(ResourceGroupName, parent.Name, new CsmSlotEntityInner
+            {
+                TargetSlot = slotName
+            }, Name() , cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.StopSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            Stream stream = await Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlotAsync(ResourceGroupName, parent.Name, Name(), null, cancellationToken);
+            StreamReader reader = new StreamReader(stream);
+            string xml = reader.ReadToEnd();
+            return new PublishingProfileImpl(xml, this);
         }
 
-        public override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.RestartSlotAsync(ResourceGroupName, parent.Name, Name(), null, null, cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return new WebAppSourceControlImpl<IDeploymentSlot, DeploymentSlotImpl, object, object, IUpdate>
+                (await Manager.Inner.WebApps.GetSourceControlSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken), this);
         }
 
-        protected override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
+        protected async override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await Manager.Inner.WebApps.GetSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
         }
 
-        internal override Task<SiteAuthSettingsInner> GetAuthenticationAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteAuthSettingsInner> GetAuthenticationAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return await Manager.Inner.WebApps.GetAuthSettingsSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
         }
 
-        internal override Task<SiteAuthSettingsInner> UpdateAuthenticationAsync(SiteAuthSettingsInner inner, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteAuthSettingsInner> UpdateAuthenticationAsync(SiteAuthSettingsInner inner, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return await Manager.Inner.WebApps.UpdateAuthSettingsSlotAsync(ResourceGroupName, parent.Name, inner, Name(), cancellationToken);
         }
 
-        public override Task<IDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var bindingsList = await PagedCollection<IHostNameBinding, HostNameBindingInner>.LoadPage(
+                async (cancellation) => await Manager.Inner.WebApps.ListHostNameBindingsSlotAsync(ResourceGroupName, parent.Name, Name(), cancellation),
+                Manager.Inner.WebApps.ListHostNameBindingsSlotNextAsync,
+                (inner) => new HostNameBindingImpl<IDeploymentSlot, DeploymentSlotImpl, object, object, IUpdate>(inner, this),
+                true, cancellationToken);
+            return bindingsList.ToDictionary(binding => binding.Name.Replace(this.Name() + "/", ""));
         }
 
-        public override Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.StartSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task SwapAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task SwapAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.SwapSlotSlotAsync(ResourceGroupName, parent.Name, new CsmSlotEntityInner
+            {
+                TargetSlot = slotName
+            }, Name(), cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
-        public override Task ResetSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task ResetSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await Manager.Inner.WebApps.ResetSlotConfigurationSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
     }
 }

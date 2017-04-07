@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private async Task<IWebApp> PopulateModelAsync(SiteInner inner, CancellationToken cancellationToken = default(CancellationToken)) {
             var siteConfig = await Inner.GetConfigurationAsync(inner.ResourceGroup, inner.Name, cancellationToken);
             var webApp = WrapModel(inner, siteConfig);
-            await ((WebAppImpl)webApp).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await ((WebAppImpl)webApp).CacheSiteProperties(cancellationToken);
             return webApp;
         }
 

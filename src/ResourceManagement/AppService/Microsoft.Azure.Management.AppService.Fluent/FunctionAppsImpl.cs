@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             var siteConfig = await Inner.GetConfigurationAsync(inner.ResourceGroup, inner.Name, cancellationToken);
             var FunctionApp = WrapModel(inner, siteConfig);
-            await ((FunctionAppImpl)FunctionApp).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await ((FunctionAppImpl)FunctionApp).CacheSiteProperties(cancellationToken);
             return FunctionApp;
         }
 
