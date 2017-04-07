@@ -709,11 +709,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -873,6 +873,14 @@ namespace Microsoft.Azure.Management.Sql
                     // Deserialize Response
                     result = new FailoverGroupFailoverResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -1033,6 +1041,14 @@ namespace Microsoft.Azure.Management.Sql
                     // Deserialize Response
                     result = new FailoverGroupForceFailoverResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -1682,21 +1698,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </returns>
         public async Task<FailoverGroupFailoverResponse> FailoverAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
         {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException("failoverGroupName");
-            }
-            
-            // Tracing
+            SqlManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -1709,112 +1711,46 @@ namespace Microsoft.Azure.Management.Sql
                 TracingAdapter.Enter(invocationId, this, "FailoverAsync", tracingParameters);
             }
             
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
+            cancellationToken.ThrowIfCancellationRequested();
+            FailoverGroupFailoverResponse response = await client.FailoverGroups.BeginFailoverAsync(resourceGroupName, serverName, failoverGroupName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                return response;
             }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/failoverGroups/";
-            url = url + Uri.EscapeDataString(failoverGroupName);
-            url = url + "/failover";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
-            if (queryParameters.Count > 0)
+            cancellationToken.ThrowIfCancellationRequested();
+            FailoverGroupFailoverResponse result = await client.FailoverGroups.GetFailoverGroupFailoverOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                url = url + "?" + string.Join("&", queryParameters);
+                delayInSeconds = 30;
             }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            if (url[0] == '/')
+            while (result.Status == OperationStatus.InProgress)
             {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.FailoverGroups.GetFailoverGroupFailoverOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
                 {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    FailoverGroupFailoverResponse result = null;
-                    // Deserialize Response
-                    result = new FailoverGroupFailoverResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
+                    delayInSeconds = 15;
                 }
-                finally
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -1842,21 +1778,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </returns>
         public async Task<FailoverGroupForceFailoverResponse> ForceFailoverAllowDataLossAsync(string resourceGroupName, string serverName, string failoverGroupName, CancellationToken cancellationToken)
         {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException("failoverGroupName");
-            }
-            
-            // Tracing
+            SqlManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -1869,112 +1791,46 @@ namespace Microsoft.Azure.Management.Sql
                 TracingAdapter.Enter(invocationId, this, "ForceFailoverAllowDataLossAsync", tracingParameters);
             }
             
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
+            cancellationToken.ThrowIfCancellationRequested();
+            FailoverGroupForceFailoverResponse response = await client.FailoverGroups.BeginForceFailoverAllowDataLossAsync(resourceGroupName, serverName, failoverGroupName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                return response;
             }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/failoverGroups/";
-            url = url + Uri.EscapeDataString(failoverGroupName);
-            url = url + "/forceFailoverAllowDataLoss";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
-            if (queryParameters.Count > 0)
+            cancellationToken.ThrowIfCancellationRequested();
+            FailoverGroupForceFailoverResponse result = await client.GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                url = url + "?" + string.Join("&", queryParameters);
+                delayInSeconds = 30;
             }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            if (url[0] == '/')
+            while (result.Status == OperationStatus.InProgress)
             {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
                 {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    FailoverGroupForceFailoverResponse result = null;
-                    // Deserialize Response
-                    result = new FailoverGroupForceFailoverResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
+                    delayInSeconds = 15;
                 }
-                finally
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -2560,144 +2416,6 @@ namespace Microsoft.Azure.Management.Sql
                                 string targetInstance = ((string)targetValue);
                                 errorInstance.Target = targetInstance;
                             }
-                            
-                            FailoverGroup failoverGroupInstance = new FailoverGroup();
-                            result.FailoverGroup = failoverGroupInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                FailoverGroupProperties propertiesInstance = new FailoverGroupProperties();
-                                failoverGroupInstance.Properties = propertiesInstance;
-                                
-                                JToken readOnlyEndpointValue = propertiesValue["readOnlyEndpoint"];
-                                if (readOnlyEndpointValue != null && readOnlyEndpointValue.Type != JTokenType.Null)
-                                {
-                                    ReadOnlyEndpoint readOnlyEndpointInstance = new ReadOnlyEndpoint();
-                                    propertiesInstance.ReadOnlyEndpoint = readOnlyEndpointInstance;
-                                    
-                                    JToken failoverPolicyValue = readOnlyEndpointValue["failoverPolicy"];
-                                    if (failoverPolicyValue != null && failoverPolicyValue.Type != JTokenType.Null)
-                                    {
-                                        string failoverPolicyInstance = ((string)failoverPolicyValue);
-                                        readOnlyEndpointInstance.FailoverPolicy = failoverPolicyInstance;
-                                    }
-                                }
-                                
-                                JToken readWriteEndpointValue = propertiesValue["readWriteEndpoint"];
-                                if (readWriteEndpointValue != null && readWriteEndpointValue.Type != JTokenType.Null)
-                                {
-                                    ReadWriteEndpoint readWriteEndpointInstance = new ReadWriteEndpoint();
-                                    propertiesInstance.ReadWriteEndpoint = readWriteEndpointInstance;
-                                    
-                                    JToken failoverPolicyValue2 = readWriteEndpointValue["failoverPolicy"];
-                                    if (failoverPolicyValue2 != null && failoverPolicyValue2.Type != JTokenType.Null)
-                                    {
-                                        string failoverPolicyInstance2 = ((string)failoverPolicyValue2);
-                                        readWriteEndpointInstance.FailoverPolicy = failoverPolicyInstance2;
-                                    }
-                                    
-                                    JToken failoverWithDataLossGracePeriodMinutesValue = readWriteEndpointValue["failoverWithDataLossGracePeriodMinutes"];
-                                    if (failoverWithDataLossGracePeriodMinutesValue != null && failoverWithDataLossGracePeriodMinutesValue.Type != JTokenType.Null)
-                                    {
-                                        int failoverWithDataLossGracePeriodMinutesInstance = ((int)failoverWithDataLossGracePeriodMinutesValue);
-                                        readWriteEndpointInstance.FailoverWithDataLossGracePeriodMinutes = failoverWithDataLossGracePeriodMinutesInstance;
-                                    }
-                                }
-                                
-                                JToken replicationRoleValue = propertiesValue["replicationRole"];
-                                if (replicationRoleValue != null && replicationRoleValue.Type != JTokenType.Null)
-                                {
-                                    string replicationRoleInstance = ((string)replicationRoleValue);
-                                    propertiesInstance.ReplicationRole = replicationRoleInstance;
-                                }
-                                
-                                JToken replicationStateValue = propertiesValue["replicationState"];
-                                if (replicationStateValue != null && replicationStateValue.Type != JTokenType.Null)
-                                {
-                                    string replicationStateInstance = ((string)replicationStateValue);
-                                    propertiesInstance.ReplicationState = replicationStateInstance;
-                                }
-                                
-                                JToken partnerServersArray = propertiesValue["partnerServers"];
-                                if (partnerServersArray != null && partnerServersArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken partnerServersValue in ((JArray)partnerServersArray))
-                                    {
-                                        FailoverGroupPartnerServer failoverGroupPartnerServerInstance = new FailoverGroupPartnerServer();
-                                        propertiesInstance.PartnerServers.Add(failoverGroupPartnerServerInstance);
-                                        
-                                        JToken idValue = partnerServersValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            failoverGroupPartnerServerInstance.Id = idInstance;
-                                        }
-                                        
-                                        JToken locationValue = partnerServersValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            failoverGroupPartnerServerInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken replicationRoleValue2 = partnerServersValue["replicationRole"];
-                                        if (replicationRoleValue2 != null && replicationRoleValue2.Type != JTokenType.Null)
-                                        {
-                                            string replicationRoleInstance2 = ((string)replicationRoleValue2);
-                                            failoverGroupPartnerServerInstance.ReplicationRole = replicationRoleInstance2;
-                                        }
-                                    }
-                                }
-                                
-                                JToken databasesArray = propertiesValue["databases"];
-                                if (databasesArray != null && databasesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken databasesValue in ((JArray)databasesArray))
-                                    {
-                                        propertiesInstance.Databases.Add(((string)databasesValue));
-                                    }
-                                }
-                            }
-                            
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                            {
-                                string idInstance2 = ((string)idValue2);
-                                failoverGroupInstance.Id = idInstance2;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                failoverGroupInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                failoverGroupInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                            {
-                                string locationInstance2 = ((string)locationValue2);
-                                failoverGroupInstance.Location = locationInstance2;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    failoverGroupInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
                         }
                         
                     }
@@ -2706,15 +2424,15 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
                     if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
                     if (statusCode == HttpStatusCode.NoContent)
-                    {
-                        result.Status = OperationStatus.Succeeded;
-                    }
-                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -3005,11 +2723,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
