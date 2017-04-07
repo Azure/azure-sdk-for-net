@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
     /// An app service certificate definition allowing region to be set.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithGroup>
     {
     }
 
@@ -24,28 +24,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
         /// Specifies the PFX certificate file to upload.
         /// </summary>
         /// <param name="file">The PFX certificate file.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword WithPfxFile(string file);
 
         /// <summary>
         /// Specifies the PFX file from a URL.
         /// </summary>
         /// <param name="url">The URL pointing to the PFX file.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword WithPfxFileFromUrl(string url);
 
         /// <summary>
         /// Specifies the app service certificate.
         /// </summary>
         /// <param name="certificateOrder">The app service certificate order.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCreate WithExistingCertificateOrder(IAppServiceCertificateOrder certificateOrder);
 
         /// <summary>
         /// Specifies the PFX byte array to upload.
         /// </summary>
         /// <param name="pfxByteArray">The PFX byte array.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword WithPfxByteArray(params byte[] pfxByteArray);
     }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>
     {
     }
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
         /// Specifies the password to the PFX certificate.
         /// </summary>
         /// <param name="password">The PFX certificate password.</param>
-        /// <return>The next stage of the app service certificate definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCreate WithPfxPassword(string password);
     }
 
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IBlank,
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithGroup,
-        IWithCertificate,
-        IWithPfxFilePassword,
-        IWithCreate
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCertificate,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCreate
     {
     }
 }

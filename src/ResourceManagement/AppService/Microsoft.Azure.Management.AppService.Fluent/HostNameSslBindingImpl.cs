@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// Implementation for HostNameSslBinding and its create and update interfaces.
     /// </summary>
-    /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
+    /// <typeparam name="Fluent">The fluent interface of IWithCreateIWithCreatethe parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVTc2xCaW5kaW5nSW1wbA==
     internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> :
         IndexableWrapper<HostNameSslState>,
         IHostNameSslBinding,
-        HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithCreate<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
         where FluentT : class, IWebAppBase

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Models;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System;
@@ -12,35 +12,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// An immutable client-side representation of an Azure Web App or deployment slot.
     /// </summary>
+    /// <remarks>
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
+    /// </remarks>
     public interface IWebAppBase  :
-        IHasName,
-        IGroupableResource<IAppServiceManager, SiteInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.SiteInner>
     {
-        /// <summary>
-        /// Gets the connection strings defined on the web app.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString> ConnectionStrings { get; }
-
         /// <summary>
         /// Gets Last time web app was modified in UTC.
         /// </summary>
-        System.DateTime? LastModifiedTime { get; }
-
-        /// <summary>
-        /// Stops the web app or deployment slot.
-        /// </summary>
-        void Stop();
-
-        /// <summary>
-        /// Gets the version of PHP.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.PhpVersion PhpVersion { get; }
-
-        /// <summary>
-        /// Gets list of Azure Traffic manager host names associated with web
-        /// app.
-        /// </summary>
-        System.Collections.Generic.ISet<string> TrafficManagerHostNames { get; }
+        System.DateTime LastModifiedTime { get; }
 
         /// <summary>
         /// Gets whether to stop SCM (KUDU) site when the web app is
@@ -49,19 +33,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         bool ScmSiteAlsoStopped { get; }
 
         /// <summary>
-        /// Gets the auto swap slot name.
+        /// Gets list of Azure Traffic manager host names associated with web
+        /// app.
         /// </summary>
-        string AutoSwapSlotName { get; }
+        System.Collections.Generic.ISet<string> TrafficManagerHostNames { get; }
 
         /// <summary>
-        /// Gets state of the web app.
+        /// Gets the version of PHP.
         /// </summary>
-        string State { get; }
+        Microsoft.Azure.Management.AppService.Fluent.PhpVersion PhpVersion { get; }
 
-        /// <summary>
-        /// Gets whether web app is deployed as a premium app.
-        /// </summary>
-        bool IsPremiumApp { get; }
+        /// <return>The mapping from host names and the host name bindings.</return>
+        Task<System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets name of repository site.
@@ -69,16 +52,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         string RepositorySiteName { get; }
 
         /// <summary>
-        /// Gets management information availability state for the web app.
+        /// Starts the web app or deployment slot.
         /// </summary>
-        Models.SiteAvailabilityState AvailabilityState { get; }
-
-        /// <summary>
-        /// Gets if the public hostnames are disabled the web app.
-        /// If set to true the app is only accessible via API
-        /// Management process.
-        /// </summary>
-        bool HostNamesDisabled { get; }
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets Java container version.
@@ -86,63 +63,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         string JavaContainerVersion { get; }
 
         /// <summary>
-        /// Gets managed pipeline mode.
-        /// </summary>
-        Models.ManagedPipelineMode ManagedPipelineMode { get; }
-
-        /// <summary>
-        /// Gets information about whether the web app is cloned from another.
-        /// </summary>
-        Models.CloningInfo CloningInfo { get; }
-
-        /// <summary>
-        /// Gets if the web app is always on.
-        /// </summary>
-        bool AlwaysOn { get; }
-
-        /// <summary>
         /// Gets the version of Python.
         /// </summary>
         Microsoft.Azure.Management.AppService.Fluent.PythonVersion PythonVersion { get; }
 
         /// <summary>
-        /// Verifies the ownership of the domain for a certificate order by verifying a hostname
-        /// of the domain is bound to this web app.
+        /// Apply the slot (or sticky) configurations from the specified slot
+        /// to the current one. This is useful for "Swap with Preview".
         /// </summary>
-        /// <param name="certificateOrderName">The name of the certificate order.</param>
-        /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
-        /// <return>The Observable to the result.</return>
-        Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets state indicating whether web app has exceeded its quota usage.
-        /// </summary>
-        Models.UsageState UsageState { get; }
-
-        /// <summary>
-        /// Gets which slot this app will swap into.
-        /// </summary>
-        string TargetSwapSlot { get; }
-
-        /// <summary>
-        /// Gets name of gateway app associated with web app.
-        /// </summary>
-        string GatewaySiteName { get; }
-
-        /// <summary>
-        /// Gets Java version.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.JavaVersion JavaVersion { get; }
-
-        /// <summary>
-        /// Gets default hostname of the web app.
-        /// </summary>
-        string DefaultHostName { get; }
-
-        /// <summary>
-        /// Gets The resource ID of the app service plan.
-        /// </summary>
-        string AppServicePlanId { get; }
+        /// <param name="slotName">The target slot to apply configurations from.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the remote debugging version.
@@ -150,36 +81,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Microsoft.Azure.Management.AppService.Fluent.RemoteVisualStudioVersion RemoteDebuggingVersion { get; }
 
         /// <summary>
-        /// Gets if the remote eebugging is enabled.
-        /// </summary>
-        bool RemoteDebuggingEnabled { get; }
-
-        /// <summary>
-        /// Gets list of IP addresses that this web app uses for
-        /// outbound connections. Those can be used when configuring firewall
-        /// rules for databases accessed by this web app.
-        /// </summary>
-        System.Collections.Generic.ISet<string> OutboundIpAddresses { get; }
-
-        /// <summary>
-        /// Reset the slot to its original configurations.
-        /// </summary>
-        void ResetSlotConfigurations();
-
-        /// <summary>
         /// Gets if web socket is enabled.
         /// </summary>
         bool WebSocketsEnabled { get; }
 
         /// <summary>
+        /// Stops the web app or deployment slot.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets true if the site is enabled; otherwise, false.
         /// </summary>
         bool Enabled { get; }
-
-        /// <summary>
-        /// Restarts the web app or deployment slot.
-        /// </summary>
-        void Restart();
 
         /// <return>The URL and credentials for publishing through FTP or Git.</return>
         Microsoft.Azure.Management.AppService.Fluent.IPublishingProfile GetPublishingProfile();
@@ -188,11 +103,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Gets size of a function container.
         /// </summary>
         int ContainerSize { get; }
-
-        /// <summary>
-        /// Gets Java container.
-        /// </summary>
-        string JavaContainer { get; }
 
         /// <summary>
         /// Apply the slot (or sticky) configurations from the specified slot
@@ -207,35 +117,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IAppSetting> AppSettings { get; }
 
         /// <summary>
-        /// Gets hostnames associated with web app.
-        /// </summary>
-        System.Collections.Generic.ISet<string> HostNames { get; }
-
-        /// <summary>
-        /// Gets if the client affinity is enabled when load balancing http
-        /// request for multiple instances of the web app.
-        /// </summary>
-        bool ClientAffinityEnabled { get; }
-
-        /// <summary>
-        /// Gets the default documents.
-        /// </summary>
-        System.Collections.Generic.IList<string> DefaultDocuments { get; }
-
-        /// <summary>
-        /// Gets list of SSL states used to manage the SSL bindings for site's hostnames.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Models.HostNameSslState> HostNameSslStates { get; }
-
-        /// <return>The mapping from host names and the host name bindings.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> GetHostNameBindings();
-
-        /// <summary>
-        /// Gets the micro-service name.
-        /// </summary>
-        string MicroService { get; }
-
-        /// <summary>
         /// Gets if the client certificate is enabled for the web app.
         /// </summary>
         bool ClientCertEnabled { get; }
@@ -248,9 +129,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
         void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken);
 
-        /// <return>The source control information for the web app.</return>
-        Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl GetSourceControl();
-
         /// <summary>
         /// Gets the .NET Framework version.
         /// </summary>
@@ -262,14 +140,201 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         void Start();
 
         /// <summary>
-        /// Gets site is a default container.
-        /// </summary>
-        bool IsDefaultContainer { get; }
-
-        /// <summary>
         /// Gets host names for the web app that are enabled.
         /// </summary>
         System.Collections.Generic.ISet<string> EnabledHostNames { get; }
+
+        /// <summary>
+        /// Gets the version of Node.JS.
+        /// </summary>
+        string NodeVersion { get; }
+
+        /// <return>The URL and credentials for publishing through FTP or Git.</return>
+        Task<Microsoft.Azure.Management.AppService.Fluent.IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the connection strings defined on the web app.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString> ConnectionStrings { get; }
+
+        /// <summary>
+        /// Gets the architecture of the platform, either 32 bit (x86) or 64 bit (x64).
+        /// </summary>
+        Microsoft.Azure.Management.AppService.Fluent.PlatformArchitecture PlatformArchitecture { get; }
+
+        /// <summary>
+        /// Stops the web app or deployment slot.
+        /// </summary>
+        void Stop();
+
+        /// <summary>
+        /// Gets the operating system the web app is running on.
+        /// </summary>
+        OperatingSystem OperatingSystem { get; }
+
+        /// <summary>
+        /// Gets the auto swap slot name.
+        /// </summary>
+        string AutoSwapSlotName { get; }
+
+        /// <summary>
+        /// Swaps the app running in the current web app / slot with the app
+        /// running in the specified slot.
+        /// </summary>
+        /// <param name="slotName">
+        /// The target slot to swap with. Use 'production' for
+        /// the production slot.
+        /// </param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task SwapAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets state of the web app.
+        /// </summary>
+        string State { get; }
+
+        /// <summary>
+        /// Gets whether web app is deployed as a premium app.
+        /// </summary>
+        bool IsPremiumApp { get; }
+
+        /// <summary>
+        /// Reset the slot to its original configurations.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task ResetSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets if the public hostnames are disabled the web app.
+        /// If set to true the app is only accessible via API
+        /// Management process.
+        /// </summary>
+        bool HostNamesDisabled { get; }
+
+        /// <summary>
+        /// Gets management information availability state for the web app.
+        /// </summary>
+        Models.SiteAvailabilityState AvailabilityState { get; }
+
+        /// <summary>
+        /// Gets information about whether the web app is cloned from another.
+        /// </summary>
+        Models.CloningInfo CloningInfo { get; }
+
+        /// <summary>
+        /// Gets managed pipeline mode.
+        /// </summary>
+        Models.ManagedPipelineMode ManagedPipelineMode { get; }
+
+        /// <summary>
+        /// Gets if the web app is always on.
+        /// </summary>
+        bool AlwaysOn { get; }
+
+        /// <summary>
+        /// Verifies the ownership of the domain for a certificate order by verifying a hostname
+        /// of the domain is bound to this web app.
+        /// </summary>
+        /// <param name="certificateOrderName">The name of the certificate order.</param>
+        /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets state indicating whether web app has exceeded its quota usage.
+        /// </summary>
+        Models.UsageState UsageState { get; }
+
+        /// <summary>
+        /// Gets name of gateway app associated with web app.
+        /// </summary>
+        string GatewaySiteName { get; }
+
+        /// <summary>
+        /// Gets which slot this app will swap into.
+        /// </summary>
+        string TargetSwapSlot { get; }
+
+        /// <summary>
+        /// Gets default hostname of the web app.
+        /// </summary>
+        string DefaultHostName { get; }
+
+        /// <summary>
+        /// Gets Java version.
+        /// </summary>
+        Microsoft.Azure.Management.AppService.Fluent.JavaVersion JavaVersion { get; }
+
+        /// <summary>
+        /// Gets The resource ID of the app service plan.
+        /// </summary>
+        string AppServicePlanId { get; }
+
+        /// <summary>
+        /// Gets if the remote eebugging is enabled.
+        /// </summary>
+        bool RemoteDebuggingEnabled { get; }
+
+        /// <summary>
+        /// Reset the slot to its original configurations.
+        /// </summary>
+        void ResetSlotConfigurations();
+
+        /// <summary>
+        /// Restarts the web app or deployment slot.
+        /// </summary>
+        void Restart();
+
+        /// <summary>
+        /// Gets Java container.
+        /// </summary>
+        string JavaContainer { get; }
+
+        /// <summary>
+        /// Restarts the web app or deployment slot.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets if the client affinity is enabled when load balancing http
+        /// request for multiple instances of the web app.
+        /// </summary>
+        bool ClientAffinityEnabled { get; }
+
+        /// <summary>
+        /// Gets hostnames associated with web app.
+        /// </summary>
+        System.Collections.Generic.ISet<string> HostNames { get; }
+
+        /// <summary>
+        /// Gets list of SSL states used to manage the SSL bindings for site's hostnames.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Models.HostNameSslState> HostNameSslStates { get; }
+
+        /// <summary>
+        /// Gets the default documents.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> DefaultDocuments { get; }
+
+        /// <summary>
+        /// Gets the micro-service name.
+        /// </summary>
+        string MicroService { get; }
+
+        /// <return>The mapping from host names and the host name bindings.</return>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> GetHostNameBindings();
+
+        /// <return>The source control information for the web app.</return>
+        Task<Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <return>The source control information for the web app.</return>
+        Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl GetSourceControl();
+
+        /// <summary>
+        /// Gets site is a default container.
+        /// </summary>
+        bool IsDefaultContainer { get; }
 
         /// <summary>
         /// Swaps the app running in the current web app / slot with the app
@@ -282,8 +347,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         void Swap(string slotName);
 
         /// <summary>
-        /// Gets the version of Node.JS.
+        /// Gets list of IP addresses that this web app uses for
+        /// outbound connections. Those can be used when configuring firewall
+        /// rules for databases accessed by this web app.
         /// </summary>
-        string NodeVersion { get; }
+        System.Collections.Generic.ISet<string> OutboundIPAddresses { get; }
     }
 }

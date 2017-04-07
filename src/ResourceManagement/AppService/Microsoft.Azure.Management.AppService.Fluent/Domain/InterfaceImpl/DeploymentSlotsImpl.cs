@@ -4,33 +4,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using Microsoft.Rest;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Rest;
 
     internal partial class DeploymentSlotsImpl 
     {
-        IWebApp IHasParent<IWebApp>.Parent
-        {
-            get
-            {
-                return this.Parent();
-            }
-        }
-
-        /// <summary>
-        /// Asynchronously delete a resource from Azure, identifying it by its resource name.
-        /// </summary>
-        /// <param name="name">The name of the resource to delete.</param>
-        /// <return>An observable of the request.</return>
-        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
-        {
- 
-            await this.DeleteByNameAsync(name, cancellationToken);
-        }
-
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its resource name.
         /// </summary>
@@ -42,13 +23,35 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// Asynchronously delete a resource from Azure, identifying it by its resource name.
+        /// </summary>
+        /// <param name="name">The name of the resource to delete.</param>
+        /// <param name="callback">The callback on success or failure.</param>
+        /// <return>A handle to cancel the request.</return>
+        async Task<Microsoft.Rest.ServiceFuture> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, IServiceCallback callback, CancellationToken cancellationToken)
+        {
+            return await this.DeleteByNameAsync(name, callback, cancellationToken) as Microsoft.Rest.ServiceFuture;
+        }
+
+        /// <summary>
+        /// Asynchronously delete a resource from Azure, identifying it by its resource name.
+        /// </summary>
+        /// <param name="name">The name of the resource to delete.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
+        {
+ 
+            await this.DeleteByNameAsync(name, cancellationToken);
+        }
+
+        /// <summary>
         /// Begins a definition for a new resource.
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
-        /// process in Azure is Creatable.create().
-        /// Note that the Creatable.create() method is
+        /// process in Azure is  Creatable.create().
+        /// Note that the  Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
-        /// parameters specified. If you do not see Creatable.create() among the available methods, it
+        /// parameters specified. If you do not see  Creatable.create() among the available methods, it
         /// means you have not yet specified all the required input settings. Input settings generally begin
         /// with the word "with", for example: <code>.withNewResourceGroup()</code> and return the next stage
         /// of the resource definition, as an interface in the "fluent interface" style.
@@ -61,12 +64,74 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// Gets the information about a resource from Azure based on the resource id.
+        /// </summary>
+        /// <param name="id">The id of the resource.</param>
+        /// <return>An immutable representation of the resource.</return>
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetByIdAsync(string id, CancellationToken cancellationToken)
+        {
+            return await this.GetByIdAsync(id, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot;
+        }
+
+        /// <summary>
+        /// Gets the information about a resource from Azure based on the resource id.
+        /// </summary>
+        /// <param name="id">The id of the resource.</param>
+        /// <param name="callback">The callback to call on success or failure.</param>
+        /// <return>An immutable representation of the resource.</return>
+        async Task<Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetByIdAsync(string id, IServiceCallback<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> callback, CancellationToken cancellationToken)
+        {
+            return await this.GetByIdAsync(id, callback, cancellationToken) as Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
+        }
+
+        /// <summary>
+        /// Gets the information about a resource from Azure based on the resource id.
+        /// </summary>
+        /// <param name="id">The id of the resource.</param>
+        /// <return>An immutable representation of the resource.</return>
+        Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetById(string id)
+        {
+            return this.GetById(id) as Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot;
+        }
+
+        /// <summary>
+        /// Gets the parent of this child object.
+        /// </summary>
+        Microsoft.Azure.Management.AppService.Fluent.IWebApp Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasParent<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.Parent
+        {
+            get
+            {
+                return this.Parent() as Microsoft.Azure.Management.AppService.Fluent.IWebApp;
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously delete a resource from Azure, identifying it by its resource ID.
+        /// </summary>
+        /// <param name="id">The resource ID of the resource to delete.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById.DeleteByIdAsync(string id, CancellationToken cancellationToken)
+        {
+ 
+            await this.DeleteByIdAsync(id, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.List()
+        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IDeploymentSlot>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.ListAsync(bool loadAllPages, CancellationToken cancellationToken)
         {
-            return this.List();
+            return await this.ListAsync(loadAllPages, cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IDeploymentSlot>;
+        }
+
+        /// <summary>
+        /// Lists all the resources of the specified type in the currently selected subscription.
+        /// </summary>
+        /// <return>List of resources.</return>
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.List()
+        {
+            return this.List() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>;
         }
 
         /// <summary>
@@ -77,6 +142,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.GetByName(string name)
         {
             return this.GetByName(name) as Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot;
+        }
+
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        IAppServiceManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IAppServiceManager>.Manager
+        {
+            get
+            {
+                return this.Manager() as IAppServiceManager;
+            }
         }
     }
 }

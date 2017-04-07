@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IndexableWrapper<HostNameBindingInner>,
         ICreatable<IHostNameBinding>,
         IHostNameBinding,
-        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithCreate<FluentT>>,
         IUpdateDefinition<IUpdate<FluentT>>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
         where FluentT : class, IWebAppBase

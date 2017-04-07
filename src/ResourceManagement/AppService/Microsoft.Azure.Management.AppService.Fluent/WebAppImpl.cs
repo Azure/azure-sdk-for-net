@@ -25,15 +25,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         WebAppBaseImpl<
             IWebApp,
             WebAppImpl,
+            WebApp.Definition.INewAppServicePlanWithGroup,
             WebApp.Definition.IWithNewAppServicePlan,
-            WebApp.Definition.IWithAppServicePlan,
             WebApp.Update.IUpdate>,
         IWebApp,
         IDefinition,
         WebApp.Update.IUpdate,
         WebApp.Definition.IWithNewAppServicePlan,
-        WebApp.Update.IWithAppServicePlan,
-        WebApp.Update.IWithNewAppServicePlan
+        WebApp.Update.IWithAppServicePlan
     {
         private IDeploymentSlots deploymentSlots;
         private AppServicePlanImpl appServicePlan;
@@ -215,7 +214,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var hostNameBindings = new List<IHostNameBinding>();
             foreach(var inner in collectionInner)
             {
-                hostNameBindings.Add(new HostNameBindingImpl<IWebApp, WebAppImpl, WebApp.Definition.IWithNewAppServicePlan, WebApp.Definition.IWithAppServicePlan, IUpdate>(
+                hostNameBindings.Add(new HostNameBindingImpl<IWebApp, WebAppImpl, 
+                    WebApp.Definition.INewAppServicePlanWithGroup, 
+                    WebApp.Definition.IWithNewAppServicePlan, IUpdate>(
                     inner,
                     this));
             }
@@ -238,8 +239,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public override IWebAppSourceControl GetSourceControl()
         {
             SiteSourceControlInner siteSourceControlInner = Manager.Inner.WebApps.GetSourceControl(ResourceGroupName, Name);
-            return new WebAppSourceControlImpl<IWebApp, WebAppImpl, WebApp.Definition.IWithNewAppServicePlan,
-                WebApp.Definition.IWithAppServicePlan, IUpdate>(siteSourceControlInner, this);
+            return new WebAppSourceControlImpl<IWebApp, WebAppImpl, WebApp.Definition.INewAppServicePlanWithGroup,
+                WebApp.Definition.IWithNewAppServicePlan, IUpdate>(siteSourceControlInner, this);
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:57465AB4A649A705C9DC2183EE743214

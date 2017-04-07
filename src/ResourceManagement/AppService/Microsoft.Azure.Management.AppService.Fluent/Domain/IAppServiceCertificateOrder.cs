@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using AppServiceCertificateOrder.Update;
-    using Models;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
@@ -15,12 +15,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure App Service certificate order.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IAppServiceCertificateOrder  :
-        IGroupableResource<IAppServiceManager, AppServiceCertificateOrderInner>,
-        IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
-        IUpdatable<AppServiceCertificateOrder.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.AppServiceCertificateOrderInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<AppServiceCertificateOrder.Update.IUpdate>
     {
         /// <summary>
         /// Gets duration in years (must be between 1 and 3).
@@ -43,7 +45,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the root certificate.
         /// </summary>
-        CertificateDetails Root { get; }
+        Models.CertificateDetails Root { get; }
 
         /// <summary>
         /// Gets if the certificate should be automatically renewed upon expiration.
@@ -58,7 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the intermediate certificate.
         /// </summary>
-        CertificateDetails Intermediate { get; }
+        Models.CertificateDetails Intermediate { get; }
 
         /// <summary>
         /// Gets the domain verification token.
@@ -68,7 +70,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the signed certificate.
         /// </summary>
-        CertificateDetails SignedCertificate { get; }
+        Models.CertificateDetails SignedCertificate { get; }
 
         /// <summary>
         /// Gets the certificate product type.
@@ -100,7 +102,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets expiration time.
         /// </summary>
-        System.DateTime? ExpirationTime { get; }
+        System.DateTime ExpirationTime { get; }
 
         /// <summary>
         /// Verifies the ownership of the domain by providing the Azure purchased domain.
@@ -112,7 +114,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets last issuance time.
         /// </summary>
-        System.DateTime? LastCertificateIssuanceTime { get; }
+        System.DateTime LastCertificateIssuanceTime { get; }
 
         /// <summary>
         /// Gets certificate's distinguished name.

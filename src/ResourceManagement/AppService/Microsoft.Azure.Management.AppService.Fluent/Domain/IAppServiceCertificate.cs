@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -12,16 +12,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure app service certificate.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IAppServiceCertificate  :
-        IGroupableResource<IAppServiceManager, CertificateInner>,
-        IRefreshable<IAppServiceCertificate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.CertificateInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>
     {
         /// <summary>
         /// Gets the pfx blob.
         /// </summary>
-        byte[] PfxBlob { get; }
+        byte PfxBlob { get; }
 
         /// <summary>
         /// Gets if the certificate valid.
@@ -56,7 +58,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the host names the certificate applies to.
         /// </summary>
-        System.Collections.Generic.IList<string> HostNames { get; }
+        System.Collections.Generic.IReadOnlyList<string> HostNames { get; }
 
         /// <summary>
         /// Gets the self link.

@@ -25,13 +25,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update
     /// The template for a domain update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
-        IWithAdminContact,
-        IWithBillingContact,
-        IWithTechContact,
-        IWithAutoRenew,
-        IWithDomainPrivacy,
-        IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IWithAdminContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IWithBillingContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IWithTechContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IWithAutoRenew,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IWithDomainPrivacy,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate>
     {
     }
 

@@ -58,25 +58,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
     }
 
     /// <summary>
-    /// A domain definition allowing client IP address to be set.
-    /// </summary>
-    public interface IWithClientIpAddress 
-    {
-        /// <summary>
-        /// Specifies the client IP address. This is used for record-keeping
-        /// of the domain purchase agreement. If not provided, 127.0.0.1 is
-        /// used for this version.
-        /// </summary>
-        /// <param name="ipAddress">The client IP address.</param>
-        /// <return>The next stage of domain definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithClientIpAddress(string ipAddress);
-    }
-
-    /// <summary>
     /// The first stage of the domain definition.
     /// </summary>
     public interface IBlank  :
-        IWithExistingResourceGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithRegistrantContact>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithExistingResourceGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithRegistrantContact>
     {
     }
 
@@ -84,12 +69,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithAdminContact,
-        IWithBillingContact,
-        IWithRegistrantContact,
-        IWithTechContact,
-        IWithCreate
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IBlank,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithAdminContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithBillingContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithRegistrantContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithTechContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate
     {
     }
 
@@ -113,14 +98,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        IWithDomainPrivacy,
-        IWithAutoRenew,
-        IWithClientIpAddress,
-        IWithAdminContact,
-        IWithBillingContact,
-        IWithTechContact,
-        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
-        IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate>
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithDomainPrivacy,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithAutoRenew,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithAdminContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithBillingContact,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithTechContact,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate>
     {
     }
 

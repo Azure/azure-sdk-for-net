@@ -4,23 +4,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using AppServiceCertificate.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using System;
 
     internal partial class AppServiceCertificateImpl 
     {
         /// <summary>
-        /// Refreshes the resource to sync with Azure.
+        /// Gets the certificate password.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate;
-        }
-
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Password
         {
             get
@@ -29,6 +23,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the public key hash.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.PublicKeyHash
         {
             get
@@ -37,6 +34,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the app name.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.SiteName
         {
             get
@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the certificate thumbprint.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Thumbprint
         {
             get
@@ -53,6 +56,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the raw bytes of .cer file.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.CertificateBlob
         {
             get
@@ -61,7 +67,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        byte[] Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.PfxBlob
+        /// <summary>
+        /// Gets the pfx blob.
+        /// </summary>
+        byte Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.PfxBlob
         {
             get
             {
@@ -69,14 +78,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.HostNames
+        /// <summary>
+        /// Gets the host names the certificate applies to.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.HostNames
         {
             get
             {
-                return this.HostNames() as System.Collections.Generic.IList<string>;
+                return this.HostNames() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 
+        /// <summary>
+        /// Gets the certificate issuer.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Issuer
         {
             get
@@ -85,6 +100,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets if the certificate valid.
+        /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Valid
         {
             get
@@ -93,6 +111,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the self link.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.SelfLink
         {
             get
@@ -101,14 +122,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.HostingEnvironmentProfile Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.HostingEnvironmentProfile
+        /// <summary>
+        /// Gets the specification for the App Service Environment to use for the certificate.
+        /// </summary>
+        Models.HostingEnvironmentProfile Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.HostingEnvironmentProfile
         {
             get
             {
-                return this.HostingEnvironmentProfile() as Microsoft.Azure.Management.AppService.Fluent.Models.HostingEnvironmentProfile;
+                return this.HostingEnvironmentProfile() as Models.HostingEnvironmentProfile;
             }
         }
 
+        /// <summary>
+        /// Gets the certificate issue Date.
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.IssueDate
         {
             get
@@ -117,6 +144,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the subject name of the certificate.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.SubjectName
         {
             get
@@ -125,6 +155,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the certificate expriration date.
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.ExpirationDate
         {
             get
@@ -133,6 +166,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the friendly name of the certificate.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.FriendlyName
         {
             get
@@ -145,6 +181,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the password to the PFX certificate.
         /// </summary>
         /// <param name="password">The PFX certificate password.</param>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithCreate AppServiceCertificate.Definition.IWithPfxFilePassword.WithPfxPassword(string password)
         {
             return this.WithPfxPassword(password) as AppServiceCertificate.Definition.IWithCreate;
@@ -154,6 +191,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the app service certificate.
         /// </summary>
         /// <param name="certificateOrder">The app service certificate order.</param>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithCreate AppServiceCertificate.Definition.IWithCertificate.WithExistingCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
             return this.WithExistingCertificateOrder(certificateOrder) as AppServiceCertificate.Definition.IWithCreate;
@@ -163,6 +201,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the PFX file from a URL.
         /// </summary>
         /// <param name="url">The URL pointing to the PFX file.</param>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFileFromUrl(string url)
         {
             return this.WithPfxFileFromUrl(url) as AppServiceCertificate.Definition.IWithPfxFilePassword;
@@ -171,16 +210,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Specifies the PFX certificate file to upload.
         /// </summary>
-        /// <param name="file">The PFX certificate file.</param>F
-        AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFile(string filePath)
+        /// <param name="file">The PFX certificate file.</param>
+        /// <return>The next stage of the definition.</return>
+        AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFile(string file)
         {
-            return this.WithPfxFile(filePath) as AppServiceCertificate.Definition.IWithPfxFilePassword;
+            return this.WithPfxFile(file) as AppServiceCertificate.Definition.IWithPfxFilePassword;
         }
 
         /// <summary>
         /// Specifies the PFX byte array to upload.
         /// </summary>
         /// <param name="pfxByteArray">The PFX byte array.</param>
+        /// <return>The next stage of the definition.</return>
         AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxByteArray(params byte[] pfxByteArray)
         {
             return this.WithPfxByteArray(pfxByteArray) as AppServiceCertificate.Definition.IWithPfxFilePassword;
