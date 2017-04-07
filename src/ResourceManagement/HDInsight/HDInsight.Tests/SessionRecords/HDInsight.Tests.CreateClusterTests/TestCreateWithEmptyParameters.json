@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdi5437?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaTU0Mzc/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdi2127?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaTIxMjc/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi5437\",\r\n  \"name\": \"hdi5437\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi2127\",\r\n  \"name\": \"hdi2127\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "167"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-request-id": [
-          "06c5ee06-1fda-408a-a234-ec91cb1f3105"
+          "0a3ebd0b-81cd-42ef-b82a-9b6faab6a2f2"
         ],
         "x-ms-correlation-request-id": [
-          "06c5ee06-1fda-408a-a234-ec91cb1f3105"
+          "0a3ebd0b-81cd-42ef-b82a-9b6faab6a2f2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161014T014343Z:06c5ee06-1fda-408a-a234-ec91cb1f3105"
+          "CENTRALUS:20170330T085936Z:0a3ebd0b-81cd-42ef-b82a-9b6faab6a2f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,14 +49,14 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:43:42 GMT"
+          "Thu, 30 Mar 2017 08:59:36 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi5437/providers/Microsoft.HDInsight/clusters/fakecluster?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTU0MzcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvZmFrZWNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi2127/providers/Microsoft.HDInsight/clusters/fakecluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTIxMjcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvZmFrZWNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{}",
       "RequestHeaders": {
@@ -69,7 +69,7 @@
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationRequired\",\r\n    \"message\": \"The location property is required for this definition.\"\r\n  }\r\n}",
@@ -90,13 +90,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "3eb9af9a-a118-4427-9d94-0568911e89bd"
+          "5af69255-5417-423d-8436-7ac04150f18c"
         ],
         "x-ms-correlation-request-id": [
-          "3eb9af9a-a118-4427-9d94-0568911e89bd"
+          "5af69255-5417-423d-8436-7ac04150f18c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161014T014343Z:3eb9af9a-a118-4427-9d94-0568911e89bd"
+          "CENTRALUS:20170330T085937Z:5af69255-5417-423d-8436-7ac04150f18c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,7 +105,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:43:42 GMT"
+          "Thu, 30 Mar 2017 08:59:36 GMT"
         ]
       },
       "StatusCode": 400
@@ -113,7 +113,7 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "hdi5437"
+      "hdi2127"
     ]
   },
   "Variables": {

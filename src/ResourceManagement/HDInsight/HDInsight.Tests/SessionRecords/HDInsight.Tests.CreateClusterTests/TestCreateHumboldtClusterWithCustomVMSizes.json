@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdi9491?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaTk0OTE/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdi9087?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaTkwODc/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491\",\r\n  \"name\": \"hdi9491\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087\",\r\n  \"name\": \"hdi9087\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "167"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1199"
         ],
         "x-ms-request-id": [
-          "4c4fc482-b10c-4d1c-aacb-91e832ac98d5"
+          "5fb9a65a-9ad1-4f78-a4c8-9b17023002e4"
         ],
         "x-ms-correlation-request-id": [
-          "4c4fc482-b10c-4d1c-aacb-91e832ac98d5"
+          "5fb9a65a-9ad1-4f78-a4c8-9b17023002e4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014834Z:4c4fc482-b10c-4d1c-aacb-91e832ac98d5"
+          "CENTRALUS:20170330T090642Z:5fb9a65a-9ad1-4f78-a4c8-9b17023002e4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,33 +49,33 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:48:33 GMT"
+          "Thu, 30 Mar 2017 09:06:42 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTk0OTEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTkwODcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"HBase\",\r\n      \"componentVersion\": {},\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://rjaiswal-sdktest@shaoopeus2.blob.core.windows.net\",\r\n          \"fs.azure.account.key.shaoopeus2.blob.core.windows.net\": \"0GBQ0eAVNUNEkTt9x0FC3s0qiuMshJUSLlFiY108XCmqIGpPyUmFmV/cGY2O4eBKytOI5NbWT6B2lfSgldofgQ==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"hadoopuser\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\",\r\n              \"password\": \"HdInsight123!\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\",\r\n              \"password\": \"HdInsight123!\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\",\r\n              \"password\": \"HdInsight123!\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"HBase\",\r\n      \"componentVersion\": {},\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://tempkafka02container@kafkatestwestus.blob.core.windows.net\",\r\n          \"fs.azure.account.key.kafkatestwestus.blob.core.windows.net\": \"83xoxvZvvxLUby+F5QIPLx4pFZUFbM9NaJ72pjUz3XT2JeVpBhbhppdLWf5BKX0PG+EILMJu9hdsvgTpxnaMdQ==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"hadoopuser\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\",\r\n              \"password\": \"H@doop1234\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\",\r\n              \"password\": \"H@doop1234\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\",\r\n              \"password\": \"H@doop1234\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "1854"
+          "1859"
         ],
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"4f50ecc5-1b51-4724-b92a-039524c4da3b\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8648399.json\",\r\n      \"kind\": \"HBase\",\r\n      \"componentVersion\": {}\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-10-14T01:48:45.12\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"614b25d1-270c-4f2d-b6cc-b40cd5b7d1a2\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8840373.json\",\r\n      \"kind\": \"HBase\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2017-03-30T09:06:54.387\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1157"
+          "1136"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -87,22 +87,25 @@
           "no-cache"
         ],
         "x-ms-hdi-clusteruri": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2/azureasyncoperations/create?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2/azureasyncoperations/create?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "fb5601ab-dfd9-4ba9-aea2-234025bc9b3a"
+          "2f90126d-c631-497d-a08a-b6c1f761c9c6"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "609c562f-1a70-48ea-b72f-ed2a36c742a4"
+          "91924379-0737-402e-8d2b-7ad5369038ec"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014845Z:609c562f-1a70-48ea-b72f-ed2a36c742a4"
+          "CENTRALUS:20170330T090653Z:91924379-0737-402e-8d2b-7ad5369038ec"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,10 +114,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:48:44 GMT"
+          "Thu, 30 Mar 2017 09:06:53 GMT"
         ],
         "ETag": [
-          "\"4f50ecc5-1b51-4724-b92a-039524c4da3b\""
+          "\"614b25d1-270c-4f2d-b6cc-b40cd5b7d1a2\""
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -126,21 +129,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTk0OTEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTkwODcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"4f50ecc5-1b51-4724-b92a-039524c4da3b\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8648399.json\",\r\n      \"kind\": \"HBase\",\r\n      \"componentVersion\": {}\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-10-14T01:48:45.12\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"614b25d1-270c-4f2d-b6cc-b40cd5b7d1a2\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8840373.json\",\r\n      \"kind\": \"HBase\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2017-03-30T09:06:54.387\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1157"
+          "1136"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -152,16 +155,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "790e1e12-2778-4d99-8d5b-c10103d7ef06"
+          "7cde0db5-ff14-40ff-b5d9-2da7e4051781"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14880"
+          "14833"
         ],
         "x-ms-correlation-request-id": [
-          "5806d1e7-1789-4eb3-8107-d9708df6cec0"
+          "b5c50b9c-9d10-44ca-8d5e-3ef7a01553f5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014846Z:5806d1e7-1789-4eb3-8107-d9708df6cec0"
+          "CENTRALUS:20170330T090654Z:b5c50b9c-9d10-44ca-8d5e-3ef7a01553f5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -170,7 +176,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:48:45 GMT"
+          "Thu, 30 Mar 2017 09:06:54 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -182,21 +188,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTk0OTEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTkwODcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"4f50ecc5-1b51-4724-b92a-039524c4da3b\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8648399.json\",\r\n      \"kind\": \"HBase\",\r\n      \"componentVersion\": {}\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2016-10-14T01:48:45.12\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"InvalidDocumentErrorCode\",\r\n        \"message\": \"DeploymentDocument 'AmbariConfiguration_1_7' failed the validation. Error: 'The default storage account is not in the same region as the cluster'\"\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"614b25d1-270c-4f2d-b6cc-b40cd5b7d1a2\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8840373.json\",\r\n      \"kind\": \"HBase\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2017-03-30T09:06:54.387\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"InvalidDocumentErrorCode\",\r\n        \"message\": \"DeploymentDocument 'AmbariConfiguration_1_7' failed the validation. Error: 'The default storage account is not in the same region as the cluster'\"\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1355"
+          "1334"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -208,16 +214,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7c6bc884-af68-4c9d-816e-4396cb012401"
+          "e0ff1a2e-fe88-4927-88bd-33a5fce6a0e2"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14875"
+          "14832"
         ],
         "x-ms-correlation-request-id": [
-          "337090e4-9d2a-4c43-a649-29537a2ef667"
+          "894b2a96-5889-4453-810c-6cb46270e877"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014947Z:337090e4-9d2a-4c43-a649-29537a2ef667"
+          "CENTRALUS:20170330T090755Z:894b2a96-5889-4453-810c-6cb46270e877"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -226,7 +235,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:49:46 GMT"
+          "Thu, 30 Mar 2017 09:07:54 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -238,21 +247,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTk0OTEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTkwODcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"4f50ecc5-1b51-4724-b92a-039524c4da3b\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8648399.json\",\r\n      \"kind\": \"HBase\",\r\n      \"componentVersion\": {}\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2016-10-14T01:48:45.12\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"InvalidDocumentErrorCode\",\r\n        \"message\": \"DeploymentDocument 'AmbariConfiguration_1_7' failed the validation. Error: 'The default storage account is not in the same region as the cluster'\"\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"name\": \"hdisdk-iaasclusternew-customvmsizes-2\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"614b25d1-270c-4f2d-b6cc-b40cd5b7d1a2\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hbase-3.2.1000.0.8840373.json\",\r\n      \"kind\": \"HBase\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hdiuser\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2017-03-30T09:06:54.387\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 32\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"InvalidDocumentErrorCode\",\r\n        \"message\": \"DeploymentDocument 'AmbariConfiguration_1_7' failed the validation. Error: 'The default storage account is not in the same region as the cluster'\"\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1355"
+          "1334"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,16 +273,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d9268c1d-4c09-43dc-95b1-eea113bb5a68"
+          "714f07ca-f963-44fc-8c24-b55f086c6cd7"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14874"
+          "14831"
         ],
         "x-ms-correlation-request-id": [
-          "ff541767-ac8a-4b1d-83f2-faf1068f5ee0"
+          "f443b285-5ec1-4a30-bb64-8861e750d138"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014947Z:ff541767-ac8a-4b1d-83f2-faf1068f5ee0"
+          "CENTRALUS:20170330T090755Z:f443b285-5ec1-4a30-bb64-8861e750d138"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -282,7 +294,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:49:46 GMT"
+          "Thu, 30 Mar 2017 09:07:55 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -294,15 +306,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9491/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTk0OTEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi9087/providers/Microsoft.HDInsight/clusters/hdisdk-iaasclusternew-customvmsizes-2?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTkwODcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVybmV3LWN1c3RvbXZtc2l6ZXMtMj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
       "ResponseBody": "",
@@ -320,19 +332,22 @@
           "60"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East US/azureasyncoperations/42003af3-d80b-419e-8856-75b55003c2ed-0?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East US/azureasyncoperations/d6a29b11-e926-4aaf-a450-c3111bf3213c-0?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "48fa7d38-c583-4a31-bf46-8dc736248e16"
+          "4214ab8c-d464-4227-a49b-774dab67c664"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "ffbc1d4e-5c23-49b6-83fe-f1b7d6fb3551"
+          "053e9ee3-27e3-4f85-a605-c090a917896e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014948Z:ffbc1d4e-5c23-49b6-83fe-f1b7d6fb3551"
+          "CENTRALUS:20170330T090757Z:053e9ee3-27e3-4f85-a605-c090a917896e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -341,10 +356,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:49:48 GMT"
+          "Thu, 30 Mar 2017 09:07:57 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East%20US/operationresults/42003af3-d80b-419e-8856-75b55003c2ed-0?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East%20US/operationresults/d6a29b11-e926-4aaf-a450-c3111bf3213c-0?api-version=2015-03-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -356,15 +371,15 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/42003af3-d80b-419e-8856-75b55003c2ed-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvNDIwMDNhZjMtZDgwYi00MTllLTg4NTYtNzViNTUwMDNjMmVkLTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6a29b11-e926-4aaf-a450-c3111bf3213c-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZhMjliMTEtZTkyNi00YWFmLWE0NTAtYzMxMTFiZjMyMTNjLTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -385,16 +400,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bcca5dbe-5e27-474b-91dc-55e2871c3d7e"
+          "a77c7907-9e08-4fc1-9178-7190095c81f4"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14873"
+          "14830"
         ],
         "x-ms-correlation-request-id": [
-          "dfc05ac1-8ffc-49d4-bb05-189c06cf9bde"
+          "3f49888e-6daf-4068-898b-1f7a4cc4b60f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T014949Z:dfc05ac1-8ffc-49d4-bb05-189c06cf9bde"
+          "CENTRALUS:20170330T090758Z:3f49888e-6daf-4068-898b-1f7a4cc4b60f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -403,7 +421,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:49:48 GMT"
+          "Thu, 30 Mar 2017 09:07:57 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -415,15 +433,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/42003af3-d80b-419e-8856-75b55003c2ed-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvNDIwMDNhZjMtZDgwYi00MTllLTg4NTYtNzViNTUwMDNjMmVkLTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6a29b11-e926-4aaf-a450-c3111bf3213c-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZhMjliMTEtZTkyNi00YWFmLWE0NTAtYzMxMTFiZjMyMTNjLTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -444,16 +462,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ce40fd58-58d7-43c6-88d3-db9d088853e0"
+          "c258b93a-bef7-426f-a249-7383183de05e"
+        ],
+        "x-ms-hdi-served-by": [
+          "global"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14902"
+          "14829"
         ],
         "x-ms-correlation-request-id": [
-          "f9aeb537-88e4-4c01-a23d-12deb019b3ec"
+          "5add60d1-96e9-4162-9e0c-a8f80e2b111d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T015049Z:f9aeb537-88e4-4c01-a23d-12deb019b3ec"
+          "CENTRALUS:20170330T090858Z:5add60d1-96e9-4162-9e0c-a8f80e2b111d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -462,7 +483,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 01:50:49 GMT"
+          "Thu, 30 Mar 2017 09:08:58 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -476,7 +497,7 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "hdi9491"
+      "hdi9087"
     ]
   },
   "Variables": {

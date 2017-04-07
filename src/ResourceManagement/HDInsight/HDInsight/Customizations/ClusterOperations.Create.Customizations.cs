@@ -508,6 +508,13 @@ namespace Microsoft.Azure.Management.HDInsight
                 roles.Add(sandboxHeadNode);
                 return roles;
             }
+
+            List<DataDisksGroupProperties> workernodedatadiskgroups = null;
+            if(clusterCreateParameters.WorkerNodeDataDisksGroups != null && clusterCreateParameters.WorkerNodeDataDisksGroups.Count > 0)
+            {
+                workernodedatadiskgroups = clusterCreateParameters.WorkerNodeDataDisksGroups;
+            }
+            
             var headNodeSize = GetHeadNodeSize(clusterCreateParameters);
             var headNode = new Role
             {
@@ -533,7 +540,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     VmSize = workerNodeSize
                 },
                 OsProfile = osProfile,
-                ScriptActions = workernodeactions
+                ScriptActions = workernodeactions,
+                DataDisksGroups = workernodedatadiskgroups
             };
             roles.Add(workerNode);
 
