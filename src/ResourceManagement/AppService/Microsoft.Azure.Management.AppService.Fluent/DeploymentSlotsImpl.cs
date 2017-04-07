@@ -33,9 +33,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:DF6DF1B2A329B554D04700E954A45A08
+        ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:23815681E86022F4ACC67F93AAA34DF6
         public async override Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
+<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //$ return innerCollection.DeleteSlotAsync(groupName, parentName, name).ToCompletable();
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
             await Inner.DeleteSlotAsync(groupName, parentName, name, cancellationToken: cancellationToken);
         }
 
@@ -46,6 +51,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:DED500AFBAD0A9AF916DAD488509F998:46CC5FC812EA999640A1A10FD4B00D83
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal DeploymentSlotsImpl(
             WebAppImpl parent,
             IAppServiceManager manager)
@@ -75,9 +82,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return ListByParent(parent.ResourceGroupName, parent.Name);
         }
 
-        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5C4D08699E1ECDDF02A498EE458BCCC7
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:CAB02828F240DEA3976BF1456621A4A8
         protected override DeploymentSlotImpl WrapModel(string name)
         {
+<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //$ return new DeploymentSlotImpl(name, new SiteInner(), null, parent)
+            //$ .WithRegion(parent.RegionName())
+            //$ .WithExistingResourceGroup(parent.ResourceGroupName());
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
             var deploymentSlot = new DeploymentSlotImpl(name, new SiteInner(), null, parent, Manager);
 
             deploymentSlot.WithRegion(parent.RegionName);
@@ -86,9 +100,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return deploymentSlot;
         }
 
-        ///GENMHASH:64609469010BC4A501B1C3197AE4F243:9586F8E3CBA078647A5B1619BB8CAD97
+        ///GENMHASH:64609469010BC4A501B1C3197AE4F243:546B78C6345DE4CB959015B4F5C52E0D
         protected override IDeploymentSlot WrapModel(SiteInner inner)
         {
+<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //$ return wrapModel(inner, null);
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
             if (inner == null)
             {
                 return null;
@@ -112,6 +131,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:C7E55DE6EB5DCE4FD47A68B8B1B62F02
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public async override Task<IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             SiteInner siteInner = await Inner.GetSlotAsync(resourceGroup, parentName, name, cancellationToken);
@@ -149,5 +170,94 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return await ListByParentAsync(parent.ResourceGroupName, parent.Name, cancellationToken);
         }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:7F5BEBF638B801886F5E13E6CCFF6A4E:11F9A1DFE425B6C4099E5E20B4D6B6AF
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IDeploymentSlot>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return convertPageToInnerAsync(innerCollection.ListSlotsAsync(parent.ResourceGroupName(), parent.Name())).Map(new Func1<SiteInner, DeploymentSlot>() {
+            //$ @Override
+            //$ public DeploymentSlot call(SiteInner siteInner) {
+            //$ return wrapModelWithConfigChange(siteInner, innerCollection, parent);
+            //$ }
+            //$ });
+
+            return null;
+        }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:EA1A01CE829067751D1BD24D7AC819DA:6B3D59259881324FE0CF7E22BF7F40ED
+        public async Task<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return innerCollection.GetSlotAsync(resourceGroup, parentName, name).FlatMap(new Func1<SiteInner, Observable<DeploymentSlot>>() {
+            //$ @Override
+            //$ public Observable<DeploymentSlot> call( SiteInner siteInner) {
+            //$ if (siteInner == null) {
+            //$ return null;
+            //$ }
+            //$ return innerCollection.GetConfigurationSlotAsync(resourceGroup, parentName, name)
+            //$ .FlatMap(new Func1<SiteConfigResourceInner, Observable<DeploymentSlot>>() {
+            //$ @Override
+            //$ public Observable<DeploymentSlot> call(SiteConfigResourceInner siteConfigInner) {
+            //$ return wrapModel(siteInner, siteConfigInner).CacheSiteProperties();
+            //$ }
+            //$ });
+            //$ }
+            //$ });
+
+            return null;
+        }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:CB94B6BC21E29A62E4013B4505C36CAB:9CA7B3DBB8B4F2B7418ED7A9EBEDD4BE
+        protected IEnumerable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> WrapList(IEnumerable<Models.SiteInner> pagedList)
+        {
+            //$ return converter.Convert(pagedList);
+            //$ }
+
+            return null;
+        }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:2C44922AFF6366EE92E097CEC958CA81:549EBADE44CE71CDF3F96696D492C0C0
+        private DeploymentSlotImpl WrapModel(SiteInner inner, SiteConfigResourceInner configResourceInner)
+        {
+            //$ if (inner == null) {
+            //$ return null;
+            //$ }
+            //$ return new DeploymentSlotImpl(inner.Name(), inner, configResourceInner, parent);
+            //$ }
+
+            return null;
+        }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:39A6A31D8DAC49D71E3CC7E7A36AE799:C89D473BD6F78FC268FC1A95772A16AF
+        public async Task<ServiceFuture> DeleteByNameAsync(string name, IServiceCallback callback, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return deleteByParentAsync(parent.ResourceGroupName(), parent.Name(), name, callback);
+
+            return null;
+        }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:7D20AFF6B32FFD01B49036D5C89ED11D
+        public IWebApp Parent()
+        {
+            //$ return this.parent;
+
+            return null;
+        }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:0DEB22BBB7D8923C553A1245310E2A47:606FE71056AF5E8384157FC5248CED0E
+        private IDeploymentSlot WrapModelWithConfigChange(SiteInner siteInner, WebAppsInner innerCollection, WebAppImpl parent)
+        {
+            //$ return wrapModel(siteInner, innerCollection.GetConfigurationSlot(siteInner.ResourceGroup(), parent.Name(), siteInner.Name().ReplaceAll(".*/", ""))).CacheSiteProperties().ToBlocking().Single();
+            //$ }
+
+            return null;
+        }
+
     }
 }

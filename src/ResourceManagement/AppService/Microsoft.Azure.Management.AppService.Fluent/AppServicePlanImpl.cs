@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:2EDD4B59BAFACBDD881E1EB427AFB76D:27E8C00736FB4030B068A418C1F77220
-        public AppServicePlanImpl WithPricingTier(AppServicePricingTier pricingTier)
+        public AppServicePlanImpl WithPricingTier(PricingTier pricingTier)
         {
             if (pricingTier == null)
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.Sku.Capacity.GetValueOrDefault();
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:F27412D40851995FA8EF630919CB5FD6
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:9894F9B5E98AB173C75848A5A1683E30
         public async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             SetInner(await Manager.Inner.AppServicePlans.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
@@ -91,21 +91,46 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
+
         protected override async Task<AppServicePlanInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.AppServicePlans.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
-        ///GENMHASH:5929CFE21A9A83286B8C1C4A12A36B8B:9D4F7490FD2702FB45ED3AC0D12B3775
-        public AppServicePricingTier PricingTier()
+        ///GENMHASH:5929CFE21A9A83286B8C1C4A12A36B8B:F775AC028B6CCB70A291111547C87A76
+        public PricingTier PricingTier()
         {
-            return AppServicePricingTier.FromSkuDescription(Inner.Sku);
+            return Fluent.PricingTier.FromSkuDescription(Inner.Sku);
         }
 
         ///GENMHASH:07BF52A3FFAEDB1E45066F5776F5CC29:8A264E667F06CE3E13EBAC780725861E
+
         internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServiceManager manager)
             : base (name, innerObject, manager)
         {
+        }
+
+        ///GENMHASH:96136B4F06090288022D1EF87309064C:9A69FEB095211874831DC78CF9CBB543
+        public AppServicePlanImpl WithOperatingSystem(OperatingSystem operatingSystem)
+        {
+            //$ if (OperatingSystem.LINUX.Equals(operatingSystem)) {
+            //$ inner().WithReserved(true);
+            //$ }
+            //$ return this;
+
+            return this;
+        }
+
+        ///GENMHASH:F644770BE853EE30024DEE4BE9D96441:049C263D531DF9C62F1DF917EA2491D1
+        public OperatingSystem OperatingSystem()
+        {
+            //$ if (inner().Reserved() != null && inner().Reserved()) {
+            //$ return OperatingSystem.LINUX;
+            //$ } else {
+            //$ return OperatingSystem.WINDOWS;
+            //$ }
+
+            return Fluent.OperatingSystem.WINDOWS;
         }
     }
 }

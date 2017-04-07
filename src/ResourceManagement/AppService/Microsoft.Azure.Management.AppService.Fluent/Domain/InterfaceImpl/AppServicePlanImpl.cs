@@ -4,22 +4,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using AppServicePlan.Definition;
-    using AppServicePlan.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     internal partial class AppServicePlanImpl 
     {
-        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.NumberOfWebApps
-        {
-            get
-            {
-                return this.NumberOfWebApps();
-            }
-        }
-
+        /// <summary>
+        /// Gets maximum number of instances that can be assigned.
+        /// </summary>
         int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.Capacity
         {
             get
@@ -28,22 +21,42 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.MaxInstances
+        /// <summary>
+        /// Gets the operating system the web app is running on.
+        /// </summary>
+        OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.OperatingSystem
         {
             get
             {
-                return this.MaxInstances();
+                return this.OperatingSystem();
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.AppServicePricingTier Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.PricingTier
+        /// <summary>
+        /// Gets the pricing tier information of the App Service Plan.
+        /// </summary>
+        Microsoft.Azure.Management.AppService.Fluent.PricingTier Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.PricingTier
         {
             get
             {
-                return this.PricingTier() as Microsoft.Azure.Management.AppService.Fluent.AppServicePricingTier;
+                return this.PricingTier() as Microsoft.Azure.Management.AppService.Fluent.PricingTier;
             }
         }
 
+        /// <summary>
+        /// Gets number of web apps assigned to this App Service Plan.
+        /// </summary>
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.NumberOfWebApps
+        {
+            get
+            {
+                return this.NumberOfWebApps();
+            }
+        }
+
+        /// <summary>
+        /// Gets if apps assigned to this App Service Plan can be scaled independently.
+        /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.PerSiteScaling
         {
             get
@@ -53,10 +66,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// Gets maximum number of instances that can be assigned.
+        /// </summary>
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.MaxInstances
+        {
+            get
+            {
+                return this.MaxInstances();
+            }
+        }
+
+        /// <summary>
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
-        AppServicePlan.Update.IUpdate AppServicePlan.Update.IWithPricingTier.WithPricingTier(AppServicePricingTier pricingTier)
+        /// <return>The next stage of the app service plan update.</return>
+        AppServicePlan.Update.IUpdate AppServicePlan.Update.IWithPricingTier.WithPricingTier(PricingTier pricingTier)
         {
             return this.WithPricingTier(pricingTier) as AppServicePlan.Update.IUpdate;
         }
@@ -65,23 +90,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
-        AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithPricingTier.WithPricingTier(AppServicePricingTier pricingTier)
+        /// <return>The next stage of the app service plan definition.</return>
+        AppServicePlan.Definition.IWithOperatingSystem AppServicePlan.Definition.IWithPricingTier.WithPricingTier(PricingTier pricingTier)
         {
-            return this.WithPricingTier(pricingTier) as AppServicePlan.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
+            return this.WithPricingTier(pricingTier) as AppServicePlan.Definition.IWithOperatingSystem;
         }
 
         /// <summary>
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
+        /// <return>The next stage of the app service plan update.</return>
         AppServicePlan.Update.IUpdate AppServicePlan.Update.IWithPerSiteScaling.WithPerSiteScaling(bool perSiteScaling)
         {
             return this.WithPerSiteScaling(perSiteScaling) as AppServicePlan.Update.IUpdate;
@@ -91,6 +110,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
+        /// <return>The next stage of the app service plan definition.</return>
         AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithPerSiteScaling.WithPerSiteScaling(bool perSiteScaling)
         {
             return this.WithPerSiteScaling(perSiteScaling) as AppServicePlan.Definition.IWithCreate;
@@ -100,6 +120,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the maximum number of instances running for this app service plan.
         /// </summary>
         /// <param name="capacity">The maximum number of instances.</param>
+        /// <return>The next stage of an app service plan update.</return>
         AppServicePlan.Update.IUpdate AppServicePlan.Update.IWithCapacity.WithCapacity(int capacity)
         {
             return this.WithCapacity(capacity) as AppServicePlan.Update.IUpdate;
@@ -109,9 +130,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the maximum number of instances running for this app service plan.
         /// </summary>
         /// <param name="capacity">The maximum number of instances.</param>
+        /// <return>The next stage of an app service plan definition.</return>
         AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithCapacity.WithCapacity(int capacity)
         {
             return this.WithCapacity(capacity) as AppServicePlan.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the operating system of the app service plan.
+        /// </summary>
+        /// <param name="operatingSystem">The operating system.</param>
+        /// <return>The next stage of the app service plan definition.</return>
+        AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithOperatingSystem.WithOperatingSystem(OperatingSystem operatingSystem)
+        {
+            return this.WithOperatingSystem(operatingSystem) as AppServicePlan.Definition.IWithCreate;
         }
     }
 }

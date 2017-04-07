@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithHostName,
-        IWithCertificateSku,
-        IWithDomainVerificationFromWebApp,
-        IWithKeyVault,
-        IWithCreate
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IBlank,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithHostName,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCertificateSku,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithDomainVerificationFromWebApp,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithKeyVault,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate
     {
     }
 
@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
-        IWithValidYears,
-        IWithAutoRenew,
-        IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithValidYears,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithAutoRenew,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate>
     {
     }
 
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     /// An app service certificate order definition allowing resource group to be set.
     /// </summary>
     public interface IBlank  :
-        IWithExistingResourceGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithHostName>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithExistingResourceGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithHostName>
     {
     }
 
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     /// An app service certificate order definition allowing more domain verification methods to be set.
     /// </summary>
     public interface IWithDomainVerificationFromWebApp  :
-        IWithDomainVerification
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithDomainVerification
     {
         /// <summary>
         /// Specifies the web app to verify the ownership of the domain. The web app needs to

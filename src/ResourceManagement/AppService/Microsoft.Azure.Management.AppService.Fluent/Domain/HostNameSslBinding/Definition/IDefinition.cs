@@ -9,27 +9,27 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Defini
     /// <summary>
     /// The first stage of a hostname SSL binding definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
-        IWithHostname<ParentT>
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IWithHostname<ParentT>
     {
     }
 
     /// <summary>
     /// The final stage of the hostname SSL binding definition.
     /// At this stage, any remaining optional settings can be specified, or the hostname SSL binding definition
-    /// can be attached to the parent web app definition using WithAttach.attach().
+    /// can be attached to the parent web app definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>
     {
     }
 
     /// <summary>
     /// The stage of a hostname SSL binding definition allowing hostname to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithHostname<ParentT> 
     {
         /// <summary>
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Defini
     /// <summary>
     /// The stage of a hostname SSL binding definition allowing SSL type to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithSslType<ParentT> 
     {
         /// <summary>
@@ -62,21 +62,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Defini
     /// <summary>
     /// The entirety of a hostname SSL binding definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithHostname<ParentT>,
-        IWithCertificate<ParentT>,
-        IWithKeyVault<ParentT>,
-        IWithSslType<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IWithHostname<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IWithCertificate<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IWithKeyVault<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IWithSslType<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IWithAttach<ParentT>
     {
     }
 
     /// <summary>
     /// The stage of a hostname SSL binding definition allowing certificate information to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithCertificate<ParentT> 
     {
         /// <summary>
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Defini
     /// <summary>
     /// The stage of a hostname SSL binding definition allowing key vault for certificate store to be specified.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithKeyVault<ParentT> 
     {
         /// <summary>

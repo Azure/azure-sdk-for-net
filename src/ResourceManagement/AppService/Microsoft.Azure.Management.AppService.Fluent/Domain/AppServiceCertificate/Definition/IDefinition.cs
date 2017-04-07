@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
     /// An app service certificate definition allowing region to be set.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithGroup>
     {
     }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>
     {
     }
 
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IBlank,
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithGroup,
-        IWithCertificate,
-        IWithPfxFilePassword,
-        IWithCreate
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCertificate,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithPfxFilePassword,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition.IWithCreate
     {
     }
 }

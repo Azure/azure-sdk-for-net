@@ -4,13 +4,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The stage of contact definition allowing 2nd line of address to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithAddressLine2<ParentT>  :
-        IWithCity<ParentT>
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithCity<ParentT>
     {
         /// <summary>
         /// Specifies the 2nd line of the address.
@@ -23,14 +24,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The final stage of the domain contact definition.
     /// At this stage, any remaining optional settings can be specified, or the domain contact definition
-    /// can be attached to the parent domain definition using WithAttach.attach().
+    /// can be attached to the parent domain definition using  WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
-        IWithOrganization<ParentT>,
-        IWithJobTitle<ParentT>,
-        IWithFaxNumber<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithOrganization<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithJobTitle<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithFaxNumber<ParentT>
     {
         Microsoft.Azure.Management.AppService.Fluent.Models.Contact Build { get; }
     }
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing city to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithCity<ParentT> 
     {
         /// <summary>
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing country to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithCountry<ParentT> 
     {
         /// <summary>
@@ -60,13 +61,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
         /// </summary>
         /// <param name="country">The country of the address.</param>
         /// <return>The next stage of the contact definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPostalCode<ParentT> WithCountry(Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode country);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPostalCode<ParentT> WithCountry(CountryISOCode country);
     }
 
     /// <summary>
     /// The stage of contact definition allowing phone number to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithPhoneNumber<ParentT> 
     {
         /// <summary>
@@ -80,28 +81,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The entirety of a domain contact definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithFirstName<ParentT>,
-        IWithMiddleName<ParentT>,
-        IWithAddressLine1<ParentT>,
-        IWithAddressLine2<ParentT>,
-        IWithCity<ParentT>,
-        IWithStateOrProvince<ParentT>,
-        IWithCountry<ParentT>,
-        IWithPostalCode<ParentT>,
-        IWithEmail<ParentT>,
-        IWithPhoneCountryCode<ParentT>,
-        IWithPhoneNumber<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithFirstName<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithMiddleName<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAddressLine1<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAddressLine2<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithCity<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithStateOrProvince<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithCountry<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPostalCode<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithEmail<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneCountryCode<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT>,
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT>
     {
     }
 
     /// <summary>
     /// The stage of contact definition allowing email to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithEmail<ParentT> 
     {
         /// <summary>
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing organization to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithOrganization<ParentT> 
     {
         Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithOrganization(string organziation);
@@ -124,7 +125,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing job title to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithJobTitle<ParentT> 
     {
         Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithJobTitle(string jobTitle);
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing first name to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithFirstName<ParentT> 
     {
         /// <summary>
@@ -147,9 +148,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing middle name to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithMiddleName<ParentT>  :
-        IWithLastName<ParentT>
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithLastName<ParentT>
     {
         /// <summary>
         /// Specifies the middle name.
@@ -162,7 +163,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing fax number to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithFaxNumber<ParentT> 
     {
         Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithFaxNumber(string faxNumber);
@@ -171,16 +172,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The first stage of a domain contact definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IBlank<ParentT>  :
-        IWithFirstName<ParentT>
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithFirstName<ParentT>
     {
     }
 
     /// <summary>
     /// The stage of contact definition allowing phone country code to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithPhoneCountryCode<ParentT> 
     {
         /// <summary>
@@ -188,13 +189,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
         /// </summary>
         /// <param name="code">The country code.</param>
         /// <return>The next stage of the contact definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT> WithPhoneCountryCode(Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryPhoneCode code);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT> WithPhoneCountryCode(CountryPhoneCode code);
     }
 
     /// <summary>
     /// The stage of contact definition allowing last name to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithLastName<ParentT> 
     {
         /// <summary>
@@ -208,7 +209,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing 1st line of address to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithAddressLine1<ParentT> 
     {
         /// <summary>
@@ -222,7 +223,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing postal/zip code to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithPostalCode<ParentT> 
     {
         /// <summary>
@@ -236,7 +237,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
     /// <summary>
     /// The stage of contact definition allowing state/province to be set.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
     public interface IWithStateOrProvince<ParentT> 
     {
         /// <summary>

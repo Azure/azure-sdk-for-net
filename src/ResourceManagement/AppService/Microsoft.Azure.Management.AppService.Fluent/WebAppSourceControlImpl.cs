@@ -46,9 +46,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:41AFD2B5AA5DD5D065E6012F1607BD83:317138FE0D466839A44ABBD93DDA4E7F
+        ///GENMHASH:41AFD2B5AA5DD5D065E6012F1607BD83:6ACF74B813BCAD8B41434D3540AE8141
         internal async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SourceControlInner> RegisterGithubAccessTokenAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //$ if (githubAccessToken == null) {
+            //$ return Observable.Just(null);
+            //$ }
+            //$ SourceControlInner sourceControlInner = new SourceControlInner().WithToken(githubAccessToken);
+            //$ sourceControlInner.WithLocation(parent().RegionName());
+            //$ return this.parent().Manager().Inner().UpdateSourceControlAsync("Github", sourceControlInner);
+            //$ }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
             if (githubAccessToken != null)
             {
                 return await parent.Manager.Inner.UpdateSourceControlAsync("Github", new SourceControlInner
@@ -60,13 +71,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await Task.FromResult<SourceControlInner>(null);
         }
 
-        ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:F9159053EE75683F7DC604A5FCBB8F04
+        ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:00C6BAC04AF2ED6D87D2C5610E88B001
         public IWebAppBase Parent()
         {
+<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGED>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //$ public FluentImplT parent() {
+            //$ return (FluentImplT) this.parent;
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
             return parent;
         }
 
         ///GENMHASH:DBC91E274023CE112BF5317D36B0BDC3:08D6495FD781CCB57E524CE9B1EDE729
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         internal WebAppSourceControlImpl(
             SiteSourceControlInner inner,
             WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent)
@@ -150,5 +169,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return Inner.DeploymentRollbackEnabled ?? false;
         }
+
     }
 }

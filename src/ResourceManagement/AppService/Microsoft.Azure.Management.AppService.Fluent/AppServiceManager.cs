@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 SubscriptionId = subscriptionId
             })
         {
-            keyVaultManager = KeyVault.Fluent.KeyVaultManager.Authenticate(RestClient.Configure()
+            keyVaultManager = KeyVault.KeyVault.FluentManager.Authenticate(RestClient.Configure()
                 .WithBaseUri(restClient.BaseUri)
                 .WithCredentials(restClient.Credentials)
                 .Build(), subscriptionId, tenantId);

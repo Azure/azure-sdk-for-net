@@ -2,15 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
 
     internal partial class DomainContactImpl 
     {
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact DomainContact.Definition.IWithAttach<AppServiceDomain.Definition.IWithCreate>.Build
+        Models.Contact DomainContact.Definition.IWithAttach<AppServiceDomain.Definition.IWithCreate>.Build
         {
             get
             {
-                return this.Build() as Microsoft.Azure.Management.AppService.Fluent.Models.Contact;
+                return this.Build() as Models.Contact;
             }
         }
 
@@ -23,19 +27,26 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the city of the address.
         /// </summary>
         /// <param name="city">The city of the address.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithStateOrProvince<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithCity<AppServiceDomain.Definition.IWithCreate>.WithCity(string city)
         {
             return this.WithCity(city) as DomainContact.Definition.IWithStateOrProvince<AppServiceDomain.Definition.IWithCreate>;
         }
 
-        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.FirstName
+        /// <summary>
+        /// Gets contact's mailing address.
+        /// </summary>
+        Models.Address Microsoft.Azure.Management.AppService.Fluent.IDomainContact.AddressMailing
         {
             get
             {
-                return this.FirstName();
+                return this.AddressMailing() as Models.Address;
             }
         }
 
+        /// <summary>
+        /// Gets contact's phone number.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Phone
         {
             get
@@ -44,38 +55,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.LastName
-        {
-            get
-            {
-                return this.LastName();
-            }
-        }
-
-        Microsoft.Azure.Management.AppService.Fluent.Models.Address Microsoft.Azure.Management.AppService.Fluent.IDomainContact.AddressMailing
-        {
-            get
-            {
-                return this.AddressMailing() as Microsoft.Azure.Management.AppService.Fluent.Models.Address;
-            }
-        }
-
-        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Email
-        {
-            get
-            {
-                return this.Email();
-            }
-        }
-
-        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.MiddleName
-        {
-            get
-            {
-                return this.MiddleName();
-            }
-        }
-
+        /// <summary>
+        /// Gets contact's fax number.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Fax
         {
             get
@@ -84,6 +66,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets contact's last name.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.LastName
+        {
+            get
+            {
+                return this.LastName();
+            }
+        }
+
+        /// <summary>
+        /// Gets contact's email address.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Email
+        {
+            get
+            {
+                return this.Email();
+            }
+        }
+
+        /// <summary>
+        /// Gets contact's job title.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.JobTitle
         {
             get
@@ -92,6 +99,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets contact's organization.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Organization
         {
             get
@@ -101,21 +111,45 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
-        /// Specifies the 1st line of the address.
+        /// Gets contact's middle name.
         /// </summary>
-        /// <param name="addressLine1">The 1st line of the address.</param>
-        DomainContact.Definition.IWithAddressLine2<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithAddressLine1<AppServiceDomain.Definition.IWithCreate>.WithAddressLine1(string addressLine1)
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.MiddleName
         {
-            return this.WithAddressLine1(addressLine1) as DomainContact.Definition.IWithAddressLine2<AppServiceDomain.Definition.IWithCreate>;
+            get
+            {
+                return this.MiddleName();
+            }
+        }
+
+        /// <summary>
+        /// Gets contact's first name.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.FirstName
+        {
+            get
+            {
+                return this.FirstName();
+            }
         }
 
         /// <summary>
         /// Specifies the postal code or zip code of the address.
         /// </summary>
         /// <param name="postalCode">The postal code of the address.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithPhoneCountryCode<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithPostalCode<AppServiceDomain.Definition.IWithCreate>.WithPostalCode(string postalCode)
         {
             return this.WithPostalCode(postalCode) as DomainContact.Definition.IWithPhoneCountryCode<AppServiceDomain.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Specifies the 1st line of the address.
+        /// </summary>
+        /// <param name="addressLine1">The 1st line of the address.</param>
+        /// <return>The next stage of the contact definition.</return>
+        DomainContact.Definition.IWithAddressLine2<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithAddressLine1<AppServiceDomain.Definition.IWithCreate>.WithAddressLine1(string addressLine1)
+        {
+            return this.WithAddressLine1(addressLine1) as DomainContact.Definition.IWithAddressLine2<AppServiceDomain.Definition.IWithCreate>;
         }
 
         DomainContact.Definition.IWithAttach<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithFaxNumber<AppServiceDomain.Definition.IWithCreate>.WithFaxNumber(string faxNumber)
@@ -126,6 +160,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
+        /// <return>The next stage of the parent definition.</return>
         AppServiceDomain.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<AppServiceDomain.Definition.IWithCreate>.Attach()
         {
             return this.Attach() as AppServiceDomain.Definition.IWithCreate;
@@ -135,6 +170,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the 2nd line of the address.
         /// </summary>
         /// <param name="addressLine2">The 2nd line of the address.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithCity<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithAddressLine2<AppServiceDomain.Definition.IWithCreate>.WithAddressLine2(string addressLine2)
         {
             return this.WithAddressLine2(addressLine2) as DomainContact.Definition.IWithCity<AppServiceDomain.Definition.IWithCreate>;
@@ -144,6 +180,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the country of the address.
         /// </summary>
         /// <param name="country">The country of the address.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithPostalCode<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithCountry<AppServiceDomain.Definition.IWithCreate>.WithCountry(CountryISOCode country)
         {
             return this.WithCountry(country) as DomainContact.Definition.IWithPostalCode<AppServiceDomain.Definition.IWithCreate>;
@@ -153,6 +190,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the email.
         /// </summary>
         /// <param name="email">Contact's email address.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithAddressLine1<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithEmail<AppServiceDomain.Definition.IWithCreate>.WithEmail(string email)
         {
             return this.WithEmail(email) as DomainContact.Definition.IWithAddressLine1<AppServiceDomain.Definition.IWithCreate>;
@@ -162,6 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the last name.
         /// </summary>
         /// <param name="lastName">The last name.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithEmail<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithLastName<AppServiceDomain.Definition.IWithCreate>.WithLastName(string lastName)
         {
             return this.WithLastName(lastName) as DomainContact.Definition.IWithEmail<AppServiceDomain.Definition.IWithCreate>;
@@ -176,6 +215,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the first name.
         /// </summary>
         /// <param name="firstName">The first name.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithMiddleName<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithFirstName<AppServiceDomain.Definition.IWithCreate>.WithFirstName(string firstName)
         {
             return this.WithFirstName(firstName) as DomainContact.Definition.IWithMiddleName<AppServiceDomain.Definition.IWithCreate>;
@@ -185,6 +225,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the country code of the phone number.
         /// </summary>
         /// <param name="code">The country code.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithPhoneNumber<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithPhoneCountryCode<AppServiceDomain.Definition.IWithCreate>.WithPhoneCountryCode(CountryPhoneCode code)
         {
             return this.WithPhoneCountryCode(code) as DomainContact.Definition.IWithPhoneNumber<AppServiceDomain.Definition.IWithCreate>;
@@ -194,15 +235,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the middle name.
         /// </summary>
         /// <param name="middleName">The middle name.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithLastName<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithMiddleName<AppServiceDomain.Definition.IWithCreate>.WithMiddleName(string middleName)
         {
             return this.WithMiddleName(middleName) as DomainContact.Definition.IWithLastName<AppServiceDomain.Definition.IWithCreate>;
         }
 
         /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
+        {
+            get
+            {
+                return this.Name();
+            }
+        }
+
+        /// <summary>
         /// Specifies the phone number.
         /// </summary>
         /// <param name="phoneNumber">Phone number.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithAttach<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithPhoneNumber<AppServiceDomain.Definition.IWithCreate>.WithPhoneNumber(string phoneNumber)
         {
             return this.WithPhoneNumber(phoneNumber) as DomainContact.Definition.IWithAttach<AppServiceDomain.Definition.IWithCreate>;
@@ -212,6 +266,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies the state or province of the address.
         /// </summary>
         /// <param name="stateOrProvince">The state or province of the address.</param>
+        /// <return>The next stage of the contact definition.</return>
         DomainContact.Definition.IWithCountry<AppServiceDomain.Definition.IWithCreate> DomainContact.Definition.IWithStateOrProvince<AppServiceDomain.Definition.IWithCreate>.WithStateOrProvince(string stateOrProvince)
         {
             return this.WithStateOrProvince(stateOrProvince) as DomainContact.Definition.IWithCountry<AppServiceDomain.Definition.IWithCreate>;

@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     /// The template for an app service certificate order update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
-        IWithAutoRenew,
-        IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update.IWithAutoRenew,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update.IUpdate>
     {
     }
 }

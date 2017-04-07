@@ -4,13 +4,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithConfiguration
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IBlank,
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithConfiguration,
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithCreate
     {
     }
 
@@ -18,7 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition
     /// The first stage of the deployment slot definition.
     /// </summary>
     public interface IBlank  :
-        IWithConfiguration
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithConfiguration
     {
     }
 
@@ -32,25 +34,36 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition
         /// </summary>
         /// <param name="webApp">The web app to copy the configurations from.</param>
         /// <return>The next stage of the deployment slot definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> WithConfigurationFromWebApp(IWebApp webApp);
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithCreate WithConfigurationFromWebApp(IWebApp webApp);
 
         /// <summary>
         /// Creates the deployment slot with brand new site configurations.
         /// </summary>
         /// <return>The next stage of the deployment slot definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> WithBrandNewConfiguration();
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithCreate WithBrandNewConfiguration();
 
         /// <summary>
         /// Copies the site configurations from the web app the deployment slot belongs to.
         /// </summary>
         /// <return>The next stage of the deployment slot definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> WithConfigurationFromParent();
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithCreate WithConfigurationFromParent();
 
         /// <summary>
         /// Copies the site configurations from a given deployment slot.
         /// </summary>
         /// <param name="deploymentSlot">The deployment slot to copy the configurations from.</param>
         /// <return>The next stage of the deployment slot definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> WithConfigurationFromDeploymentSlot(IDeploymentSlot deploymentSlot);
+        Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition.IWithCreate WithConfigurationFromDeploymentSlot(IDeploymentSlot deploymentSlot);
+    }
+
+    /// <summary>
+    /// A site definition with sufficient inputs to create a new web app /
+    /// deployments slot in the cloud, but exposing additional optional
+    /// inputs to specify.
+    /// </summary>
+    public interface IWithCreate  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>
+    {
     }
 }

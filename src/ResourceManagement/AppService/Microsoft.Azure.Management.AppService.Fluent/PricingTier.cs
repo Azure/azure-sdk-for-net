@@ -9,25 +9,25 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// Defines values for AppServicePricingTier.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuQXBwU2VydmljZVByaWNpbmdUaWVy
-    public partial class AppServicePricingTier
+    public partial class PricingTier
     {
-        public static readonly AppServicePricingTier FreeF1 = new AppServicePricingTier("Free", "F1");
-        public static readonly AppServicePricingTier SharedD1 = new AppServicePricingTier("Shared", "D1");
-        public static readonly AppServicePricingTier BasicB1 = new AppServicePricingTier("Basic", "B1");
-        public static readonly AppServicePricingTier BasicB2 = new AppServicePricingTier("Basic", "B2");
-        public static readonly AppServicePricingTier BasicB3 = new AppServicePricingTier("Basic", "B3");
-        public static readonly AppServicePricingTier StandardS1 = new AppServicePricingTier("Standard", "S1");
-        public static readonly AppServicePricingTier StandardS2 = new AppServicePricingTier("Standard", "S2");
-        public static readonly AppServicePricingTier StandardS3 = new AppServicePricingTier("Standard", "S3");
-        public static readonly AppServicePricingTier PremiumP1 = new AppServicePricingTier("Premium", "P1");
-        public static readonly AppServicePricingTier PremiumP2 = new AppServicePricingTier("Premium", "P2");
-        public static readonly AppServicePricingTier PremiumP3 = new AppServicePricingTier("Premium", "P3");
+        public static readonly PricingTier FreeF1 = new PricingTier("Free", "F1");
+        public static readonly PricingTier SharedD1 = new PricingTier("Shared", "D1");
+        public static readonly PricingTier BasicB1 = new PricingTier("Basic", "B1");
+        public static readonly PricingTier BasicB2 = new PricingTier("Basic", "B2");
+        public static readonly PricingTier BasicB3 = new PricingTier("Basic", "B3");
+        public static readonly PricingTier StandardS1 = new PricingTier("Standard", "S1");
+        public static readonly PricingTier StandardS2 = new PricingTier("Standard", "S2");
+        public static readonly PricingTier StandardS3 = new PricingTier("Standard", "S3");
+        public static readonly PricingTier PremiumP1 = new PricingTier("Premium", "P1");
+        public static readonly PricingTier PremiumP2 = new PricingTier("Premium", "P2");
+        public static readonly PricingTier PremiumP3 = new PricingTier("Premium", "P3");
 
         ///GENMHASH:B9CFE16F1B01DA31969DCEB63534EB1A:B18BAF7D223AB29E75CD572030AABDBC
         public SkuDescription SkuDescription { get; private set; }
 
         ///GENMHASH:577161D2DAB431E91C429EBDA0A3812F:48ACBDFB047C8D6CF117E277F4C203CC
-        private AppServicePricingTier()
+        private PricingTier()
         {
         }
 
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="tier">the tier name</param>
         /// <param name="size">the size of the plan</param>
-        public AppServicePricingTier(string tier, string size)
+        public PricingTier(string tier, string size)
         {
             this.SkuDescription = new SkuDescription
             {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:86E56D83C59D665A2120AFEA8D89804D:2997034F6A828592A426C244FB4206B1
         public override bool Equals(object obj)
         {
-            if (!(obj is AppServicePricingTier))
+            if (!(obj is PricingTier))
             {
                 return false;
             }
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return true;
             }
-            AppServicePricingTier rhs = (AppServicePricingTier)obj;
+            PricingTier rhs = (PricingTier)obj;
             return ToString().Equals(rhs.ToString());
         }
 
@@ -75,12 +75,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:3E41C75F291566718F049BE8298BE8DC:A12B779940ABC1017C310E5DAEB47E21
-        public static AppServicePricingTier FromSkuDescription(SkuDescription skuDescription)
+        public static PricingTier FromSkuDescription(SkuDescription skuDescription)
         {
-            return new AppServicePricingTier()
+            return new PricingTier()
             {
                 SkuDescription = skuDescription
             };
         }
+
     }
 }

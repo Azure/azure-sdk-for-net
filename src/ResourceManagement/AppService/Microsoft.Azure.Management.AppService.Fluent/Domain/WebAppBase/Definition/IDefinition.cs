@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition;
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// A web app definition stage allowing other configurations to be set. These configurations
     /// can be cloned when creating or swapping with a deployment slot.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithSiteConfigs<FluentT> 
     {
         /// <summary>
@@ -123,9 +124,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     }
 
     /// <summary>
+    /// A web app definition stage allowing authentication to be set.
+    /// </summary>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
+    public interface IWithAuthentication<FluentT> 
+    {
+        /// <summary>
+        /// Gets Specifies the definition of a new authentication configuration.
+        /// </summary>
+        /// <summary>
+        /// Gets the first stage of an authentication definition.
+        /// </summary>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineAuthentication { get; }
+    }
+
+    /// <summary>
     /// A web app definition stage allowing setting if client affinity is enabled.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithClientAffinityEnabled<FluentT> 
     {
         /// <summary>
@@ -140,7 +156,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// A web app definition stage allowing Java web container to be set. This is required
     /// after specifying Java version.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithWebContainer<FluentT> 
     {
         /// <summary>
@@ -154,7 +170,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// <summary>
     /// A web app definition stage allowing connection strings to be set.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithConnectionString<FluentT> 
     {
         /// <summary>
@@ -180,7 +196,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// <summary>
     /// A web app definition stage allowing disabling the web app upon creation.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithSiteEnabled<FluentT> 
     {
         /// <summary>
@@ -191,12 +207,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     }
 
     /// <summary>
-    /// Container interface for all the definitions that need to be implemented.
+    /// The entirety of the web app base definition.
     /// </summary>
-    /// <typeparam name="Fluent">The fluent interface of the web app or deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IDefinition<FluentT>  :
-        IWithHostNameSslBinding<FluentT>,
-        IWithWebContainer<FluentT>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithWebContainer<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>
     {
     }
 
@@ -205,25 +221,27 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// deployments slot in the cloud, but exposing additional optional
     /// inputs to specify.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithCreate<FluentT>  :
-        ICreatable<FluentT>,
-        IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>>,
-        IWithSiteEnabled<FluentT>,
-        IWithScmSiteAlsoStopped<FluentT>,
-        IWithClientAffinityEnabled<FluentT>,
-        IWithClientCertEnabled<FluentT>,
-        IWithSiteConfigs<FluentT>,
-        IWithAppSettings<FluentT>,
-        IWithConnectionString<FluentT>,
-        IWithSourceControl<FluentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<FluentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithClientAffinityEnabled<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithClientCertEnabled<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithScmSiteAlsoStopped<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithSiteConfigs<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithAppSettings<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithConnectionString<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithSourceControl<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameBinding<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>,
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithAuthentication<FluentT>
     {
     }
 
     /// <summary>
     /// A web app definition stage allowing source control to be set.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithSourceControl<FluentT> 
     {
         /// <summary>
@@ -242,7 +260,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// <summary>
     /// A web app definition stage allowing setting if SCM site is also stopped when the web app is stopped.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithScmSiteAlsoStopped<FluentT> 
     {
         /// <summary>
@@ -256,7 +274,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// <summary>
     /// A web app definition stage allowing setting if client cert is enabled.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithClientCertEnabled<FluentT> 
     {
         /// <summary>
@@ -270,14 +288,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// <summary>
     /// A web app definition stage allowing app settings to be set.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
     public interface IWithAppSettings<FluentT> 
     {
         /// <summary>
-        /// Specifies the app settings for the web app as a Map. These app settings will be swapped
+        /// Specifies the app settings for the web app as a  Map. These app settings will be swapped
         /// as well after a deployment slot swap.
         /// </summary>
-        /// <param name="settings">A Map of app settings.</param>
+        /// <param name="settings">A  Map of app settings.</param>
         /// <return>The next stage of the web app definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithStickyAppSettings(IDictionary<string,string> settings);
 
@@ -299,9 +317,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithStickyAppSetting(string key, string value);
 
         /// <summary>
-        /// Specifies the app settings for the web app as a Map.
+        /// Specifies the app settings for the web app as a  Map.
         /// </summary>
-        /// <param name="settings">A Map of app settings.</param>
+        /// <param name="settings">A  Map of app settings.</param>
         /// <return>The next stage of the web app definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithAppSettings(IDictionary<string,string> settings);
     }
@@ -309,9 +327,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     /// <summary>
     /// A web app definition stage allowing host name binding to be specified.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
-    public interface IWithHostNameBinding<FluentT>  :
-        IWithCreate<FluentT>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
+    public interface IWithHostNameBinding<FluentT> 
     {
         /// <summary>
         /// Defines a list of host names of an Azure managed domain. The DNS record type is
@@ -320,7 +337,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         /// <param name="domain">The Azure managed domain.</param>
         /// <param name="hostnames">The list of sub-domains.</param>
         /// <return>The next stage of the web app definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT> WithManagedHostnameBindings(IAppServiceDomain domain, params string[] hostnames);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithManagedHostnameBindings(IAppServiceDomain domain, params string[] hostnames);
 
         /// <summary>
         /// Defines a list of host names of an externally purchased domain. The hostnames
@@ -329,26 +346,25 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         /// <param name="domain">The external domain name.</param>
         /// <param name="hostnames">The list of sub-domains.</param>
         /// <return>The next stage of the web app definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT> WithThirdPartyHostnameBinding(string domain, params string[] hostnames);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithThirdPartyHostnameBinding(string domain, params string[] hostnames);
 
         /// <summary>
         /// Starts the definition of a new host name binding.
         /// </summary>
         /// <return>The first stage of a hostname binding definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> DefineHostnameBinding();
+        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineHostnameBinding();
     }
 
     /// <summary>
     /// A web app definition stage allowing SSL binding to be set.
     /// </summary>
-    /// <typeparam name="Fluent">The type of the resource, either a web app or a deployment slot.</typeparam>
-    public interface IWithHostNameSslBinding<FluentT>  :
-        IWithHostNameBinding<FluentT>
+    /// <typeparam name="FluentT">The type of the resource.</typeparam>
+    public interface IWithHostNameSslBinding<FluentT> 
     {
         /// <summary>
         /// Starts a definition of an SSL binding.
         /// </summary>
         /// <return>The first stage of an SSL binding definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> DefineSslBinding();
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineSslBinding();
     }
 }

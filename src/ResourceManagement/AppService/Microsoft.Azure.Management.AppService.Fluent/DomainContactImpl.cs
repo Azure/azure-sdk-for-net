@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A2410FFAF22DDB24E8AAB7622E498164:3400BF47ADE77DCA1540472C1E1BB0BB
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<DELETED>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public DomainContactImpl WithCountry(CountryISOCode country)
         {
             Inner.AddressMailing.Country = country.ToString();
@@ -214,5 +216,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return Inner.AddressMailing;
         }
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<NEW>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        ///GENMHASH:328F5990D4D2D78C8F86FB5296257E0D:3400BF47ADE77DCA1540472C1E1BB0BB
+        public DomainContactImpl WithCountry(CountryIsoCode country)
+        {
+            //$ inner().AddressMailing().WithCountry(country.ToString());
+            //$ return this;
+
+            return this;
+        }
+
     }
 }
