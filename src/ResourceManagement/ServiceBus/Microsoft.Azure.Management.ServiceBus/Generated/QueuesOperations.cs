@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,9 +87,31 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -250,10 +272,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
@@ -288,13 +310,46 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
+            }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
             }
             if (parameters == null)
             {
@@ -472,13 +527,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
-        /// The name of the queue to be deleted.
+        /// The queue name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -504,13 +559,46 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
+            }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -647,10 +735,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
@@ -682,13 +770,46 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
+            }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -851,7 +972,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
@@ -886,13 +1007,46 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
+            }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -1054,16 +1208,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// Creates an authorization rule for a queue.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -1095,17 +1249,61 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
             }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (parameters == null)
             {
@@ -1285,16 +1483,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1320,17 +1518,61 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
             }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -1469,16 +1711,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1507,17 +1749,61 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
             }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -1682,16 +1968,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1720,17 +2006,61 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
             }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -1895,16 +2225,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to regenerate the authorization rule.
@@ -1936,17 +2266,61 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (queueName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "queueName");
             }
+            if (queueName != null)
+            {
+                if (queueName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "queueName", 50);
+                }
+                if (queueName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "queueName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (parameters == null)
             {

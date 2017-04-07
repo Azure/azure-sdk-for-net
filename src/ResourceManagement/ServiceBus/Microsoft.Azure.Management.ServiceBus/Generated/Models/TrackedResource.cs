@@ -12,43 +12,47 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Management;
     using ServiceBus;
     using Rest;
-    using Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Description of a namespace authorization rule.
+    /// The Resource definition.
     /// </summary>
-    [JsonTransformation]
-    public partial class SharedAccessAuthorizationRuleResource : Resource
+    public partial class TrackedResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleResource class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        public SharedAccessAuthorizationRuleResource() { }
+        public TrackedResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleResource class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        /// <param name="rights">The rights associated with the rule.</param>
+        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SharedAccessAuthorizationRuleResource(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="tags">Resource tags</param>
+        public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)
         {
-            Rights = rights;
+            Location = location;
+            Tags = tags;
         }
 
         /// <summary>
-        /// Gets or sets the rights associated with the rule.
+        /// Gets or sets resource location
         /// </summary>
-        [JsonProperty(PropertyName = "properties.rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,9 +62,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Rights == null)
+            if (Location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
         }
     }

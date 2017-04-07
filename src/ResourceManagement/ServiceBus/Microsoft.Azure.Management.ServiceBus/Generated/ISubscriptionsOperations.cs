@@ -24,14 +24,14 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface ISubscriptionsOperations
     {
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic.
+        /// List all the subscriptions under a specified topic.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='topicName'>
         /// The topic name.
@@ -57,10 +57,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639385.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='topicName'>
         /// The topic name.
@@ -92,10 +92,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639381.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='topicName'>
         /// The topic name.
@@ -121,10 +121,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639402.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='topicName'>
         /// The topic name.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse<SubscriptionResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic.
+        /// List all the subscriptions under a specified topic.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
         /// </summary>
         /// <param name='nextPageLink'>

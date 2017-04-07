@@ -79,13 +79,18 @@ namespace ServiceBus.Tests.ScenarioTests
                 {
                     Location = location,
                     EnableExpress = true,                   
-                    IsAnonymousAccessible = true                   
+                    IsAnonymousAccessible = true,
+                    MaxDeliveryCount = 5
                 };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
                 Assert.NotNull(updateQueueResponse);
                 Assert.True(updateQueueResponse.EnableExpress);
                 Assert.True(updateQueueResponse.IsAnonymousAccessible);
+
+
+                // Get the created Queue
+                var getQueueResponse11 = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
 
                 // Delete Created Queue  and check for the NotFound exception 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
