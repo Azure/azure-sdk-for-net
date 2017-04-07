@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0-preview",
+  "version": "2.1.1-preview",
   "description": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -16,7 +16,8 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../../tools/MSSharedLibKey.snk", 
+    "xmlDoc": true
   },
 
   "dependencies": {

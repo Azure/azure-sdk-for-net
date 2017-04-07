@@ -26,7 +26,7 @@ namespace MachineLearning.Tests.ScenarioTests
 {
     public class WebServiceTests : BaseScenarioTests
     {
-        private const string DefaultLocation = "South Central US";
+        private const string DefaultLocation = "West Central US";
         private const string TestServiceNamePrefix = "amlws";
         private const string TestCommitmentPlanNamePrefix = "amlcp";
         private const string TestResourceGroupNamePrefix = "amlrg";
@@ -42,6 +42,7 @@ namespace MachineLearning.Tests.ScenarioTests
         /// is working as expected, re-record the test against Prod before submitting an official pull request.
         /// </summary>
         private readonly string TestServiceDefinitionFile;
+        private readonly string TestServiceDefinitionFileWithLargePayload;
 
         private const int AsyncOperationPollingIntervalSeconds = 5;
 
@@ -56,6 +57,7 @@ namespace MachineLearning.Tests.ScenarioTests
         public WebServiceTests()
         {
             TestServiceDefinitionFile = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_Prod.json");
+            TestServiceDefinitionFileWithLargePayload = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_LargePayload_Prod.json");
         }
 
         [Fact]
@@ -92,6 +94,13 @@ namespace MachineLearning.Tests.ScenarioTests
                     var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName));
                     Assert.NotNull(expectedCloudException.Body);
                     Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
                 }
                 finally
                 {
@@ -141,10 +150,124 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.Equal(serviceKeys.Primary, serviceUpdates.Properties.Keys.Primary);
                     Assert.Equal(serviceKeys.Secondary, serviceDefinition.Properties.Keys.Secondary);
                 }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
+                }
                 finally
                 {
                     // Remove the web service
                     BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                }
+            });
+        }
+
+        [Fact]
+        public void CreateAndPostOnGraphWebService()
+        {
+            const string NewRegion = "southcentralus";
+    
+            this.RunAMLWebServiceTestScenario((webServiceName, resourceGroupName, resourcesClient, amlServicesClient, cpResourceId, storageAccount) =>
+            {
+                try
+                {
+                    // Create and validate the AML service resource
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFile, cpResourceId, storageAccount);
+                    var webService = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService, serviceDefinition);
+
+                    //Validate that the expected not found exception is thrown before create the regional properties
+                    var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName, NewRegion));
+                    Assert.NotNull(expectedCloudException.Body);
+                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+
+                    // Submit some updates to this resource
+                    amlServicesClient.WebServices.CreateRegionalPropertiesWithRequestId(resourceGroupName, webServiceName, NewRegion);
+
+                    // Retrieve the AML web service after POST
+                    var retrievedService = amlServicesClient.WebServices.Get(resourceGroupName, webServiceName, NewRegion);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, retrievedService);
+                    Assert.NotNull(retrievedService.Properties);
+                    var properties = retrievedService.Properties as WebServicePropertiesForGraph;
+                    Assert.NotNull(properties);
+                    Assert.NotNull(properties.Package);
+                    Assert.NotNull(properties.Package.Nodes);
+                    Assert.NotNull(properties.Package.Nodes["node1"]);
+                    Assert.NotNull(properties.Package.Nodes["node1"].Parameters);
+                    Assert.NotNull(properties.Package.Nodes["node1"].Parameters["Account Key"]);
+
+                    WebServiceParameter param = properties.Package.Nodes["node1"].Parameters["Account Key"];
+
+                    string expectedThumbprint = "ONE_THUMBPRINT";
+                    Assert.Equal(expectedThumbprint, param.CertificateThumbprint);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
+                }
+                finally
+                {
+                    // Remove the web service
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                }
+            });
+        }
+
+        [Fact]
+        public void CreateGetRemoveGraphWebServiceWithLargePayload()
+        {
+            this.RunAMLWebServiceTestScenario((webServiceName, resourceGroupName, resourcesClient, amlServicesClient, cpResourceId, storageAccount) =>
+            {
+                bool serviceWasRemoved = false;
+                try
+                {
+                    //Validate expected NO-OP behavior on deleting a non existing service
+                    amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName);
+
+                    // Create and validate the AML service resource
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFileWithLargePayload, cpResourceId, storageAccount);
+                    var webService = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService);
+
+                    // Retrieve the AML web service after creation
+                    var retrievedService = amlServicesClient.WebServices.Get(resourceGroupName, webServiceName);
+                    WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, retrievedService);
+
+                    // Retrieve the AML web service's keys
+                    WebServiceKeys serviceKeys = amlServicesClient.WebServices.ListKeys(resourceGroupName, webServiceName);
+                    Assert.NotNull(serviceKeys);
+                    Assert.Equal(serviceKeys.Primary, serviceDefinition.Properties.Keys.Primary);
+                    Assert.Equal(serviceKeys.Secondary, serviceDefinition.Properties.Keys.Secondary);
+
+                    // Remove the web service
+                    amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName);
+                    serviceWasRemoved = true;
+
+                    //Validate that the expected not found exception is thrown after deletion when trying to access the service
+                    var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName));
+                    Assert.NotNull(expectedCloudException.Body);
+                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
+                }
+                finally
+                {
+                    // Remove the web service
+                    if (!serviceWasRemoved)
+                    {
+                        BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                    }
                 }
             });
         }
@@ -189,9 +312,9 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));
 
                     // Validate that all services are called when getting the AML service resource list for the subscription
-                    var servicesInSubscription = amlServicesClient.WebServices.List();
+                    var servicesInSubscription = amlServicesClient.WebServices.ListBySubscriptionIdWithHttpMessagesAsync().Result;
                     Assert.NotNull(servicesInSubscription);
-                    servicesList = servicesInSubscription.ToList();
+                    servicesList = servicesInSubscription.Body.ToList();
                     Assert.NotNull(servicesList);
                     Assert.True(servicesList.Count >= 4);
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase)));
@@ -199,6 +322,13 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));
                     string otherServiceExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, otherResourceGroupName, otherServiceName);
                     Assert.True(servicesList.Any(svc => string.Equals(svc.Id, otherServiceExpectedId, StringComparison.OrdinalIgnoreCase)));
+                }
+                catch(Exception ex)
+                {
+                    Trace.TraceError("Caught unexpected exception: ");
+                    Trace.TraceError(ex.Message);
+
+                    throw;
                 }
                 finally
                 {
@@ -342,7 +472,7 @@ namespace MachineLearning.Tests.ScenarioTests
 
         private static Tuple<DeploymentExtended, GenericResource> CreateCommitmentPlanResource(string resourceGroupName, string commitmentPlanName, string deploymentName, ResourceManagementClient resourcesClient, string cpApiVersion)
         {
-            string deploymentParams = @"{'planName': {'value': '" + commitmentPlanName + "'}, 'planSkuName': {'value': 'PLAN_SKU_NAME'}, 'planSkuTier': {'value': 'PLAN_SKU_TIER'}, 'apiVersion': {'value': '" + cpApiVersion + "'}}";
+            string deploymentParams = @"{'planName': {'value': '" + commitmentPlanName + "'}, 'planSkuName': {'value': 'S1'}, 'planSkuTier': {'value': 'Standard'}, 'apiVersion': {'value': '" + cpApiVersion + "'}}";
             var deploymentProperties = new DeploymentProperties
             {
                 Template = JObject.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "TestData", "DeployCommitmentPlanTemplate.json"))),

@@ -3,7 +3,8 @@
 
   "buildOptions": {
     "delaySign": true,
-    "publicSign": false
+    "publicSign": false, 
+    "xmlDoc": true
   },
 
   "testRunner": "xunit",

@@ -31,6 +31,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         {
             this.fixture = fixture;
             _standardVaultOnly = fixture.standardVaultOnly;
+            _softDeleteEnabled = fixture.softDeleteEnabled;
             _vaultAddress = fixture.vaultAddress;
             _keyName = fixture.keyName;
             _keyVersion = fixture.keyVersion;
@@ -38,6 +39,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         private bool _standardVaultOnly = false;
+        private bool _softDeleteEnabled = false;
         private string _vaultAddress = "";
         private string _keyName = "";
         private string _keyVersion = "";
@@ -50,12 +52,19 @@ namespace Microsoft.Azure.KeyVault.Tests
                 HttpMockServer.Variables["VaultAddress"] = _vaultAddress;
                 HttpMockServer.Variables["KeyName"] = _keyName;
                 HttpMockServer.Variables["KeyVersion"] = _keyVersion;
+                HttpMockServer.Variables[ "SoftDeleteEnabled" ] = _softDeleteEnabled.ToString( );
             }
             else
             {
                 _vaultAddress = HttpMockServer.Variables["VaultAddress"];
                 _keyName = HttpMockServer.Variables["KeyName"];
                 _keyVersion = HttpMockServer.Variables["KeyVersion"];
+
+                string softDeleteSetting = String.Empty;
+                if ( HttpMockServer.Variables.TryGetValue( "SoftDeleteEnabled", out softDeleteSetting ) )
+                {
+                    Boolean.TryParse( softDeleteSetting, out _softDeleteEnabled );
+                }
             }
         }
 
@@ -100,6 +109,17 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var client = GetKeyVaultClient();
 
                 EncryptDecrypt(client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSA15);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultEncryptDecryptRsaOaep256Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                EncryptDecrypt( client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSAOAEP256 );
             }
         }
 
@@ -184,6 +204,45 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
+        public void KeyVaultSignVerifyPS256Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                var digest = RandomHash(SHA256.Create(), 32);
+
+                SignVerify( client, _keyIdentifier, JsonWebKeySignatureAlgorithm.PS256, digest );
+            }
+        }
+
+        [Fact]
+        public void KeyVaultSignVerifyPS384Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                var digest = RandomHash(SHA384.Create(), 64);
+
+                SignVerify( client, _keyIdentifier, JsonWebKeySignatureAlgorithm.PS384, digest );
+            }
+        }
+
+        [Fact]
+        public void KeyVaultSignVerifyPS512Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                var digest = RandomHash(SHA512.Create(), 64);
+
+                SignVerify( client, _keyIdentifier, JsonWebKeySignatureAlgorithm.PS512, digest );
+            }
+        }
+
+        [Fact]
         public void KeyVaultWrapUnwrapRsaOaepTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -206,6 +265,19 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var symmetricKeyBytes = GetSymmetricKeyBytes();
                 WrapAndUnwrap(client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSA15, symmetricKeyBytes);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultWrapUnwrapRsaOaep256Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+
+                var client = GetKeyVaultClient();
+
+                var symmetricKeyBytes = GetSymmetricKeyBytes();
+                WrapAndUnwrap( client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSAOAEP256, symmetricKeyBytes );
             }
         }
 
@@ -249,6 +321,13 @@ namespace Microsoft.Azure.KeyVault.Tests
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
                             throw ex;
                     }
+
+                    if (_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, "CreateSoftKeyTest");
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, "CreateSoftKeyTest").GetAwaiter().GetResult();
+                    }
                 }
             }
         }
@@ -272,6 +351,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     //Trace.WriteLine("Verify generated key is as expected");
                     VerifyKeyAttributesAreEqual(attributes, createdKey.Attributes);
                     Assert.Equal(JsonWebKeyType.RsaHsm, createdKey.Key.Kty);
+                    Assert.NotNull(createdKey.Attributes.PurgeDisabled);
 
                     //Trace.WriteLine("Get the key");
                     var retrievedKey = client.GetKeyAsync(createdKey.Key.Kid).GetAwaiter().GetResult();
@@ -286,6 +366,14 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(deletedKey.Attributes, createdKey.Attributes);
                     VerifyWebKeysAreEqual(deletedKey.Key, createdKey.Key);
+                    Assert.NotNull(deletedKey.Attributes.PurgeDisabled);
+
+                    if (_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, "CreateHsmKeyTest");
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, "CreateHsmKeyTest").Wait();
+                    }
                 }
             }
         }
@@ -309,6 +397,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var importedKey =
                     client.ImportKeyAsync(_vaultAddress, "ImportSoftKeyTest", keyBundle).GetAwaiter().GetResult();
+                Assert.NotNull(importedKey.Attributes.PurgeDisabled);
 
                 try
                 {
@@ -320,10 +409,18 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(importedKey.Attributes, retrievedKey.Attributes);
                     VerifyWebKeysAreEqual(importedKey.Key, retrievedKey.Key);
+                    Assert.NotNull(retrievedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
                     client.DeleteKeyAsync(_vaultAddress, "ImportSoftKeyTest").Wait();
+
+                    if(_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, "ImportSoftKeyTest");
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, "ImportSoftKeyTest").GetAwaiter().GetResult();
+                    }
                 }
             }
         }
@@ -360,6 +457,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
                     updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
+                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
 
                     // Create a new version of the key
                     var newkeyVersion = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
@@ -377,10 +475,18 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
                     updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
+                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
                     client.DeleteKeyAsync(_vaultAddress, keyName).Wait();
+
+                    if(_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    }
                 }
             }
         }
@@ -421,23 +527,31 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyAttributesAreEqual(updatedKey.Attributes, createdKey.Attributes);
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, createdKey.Key.KeyOps);
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
+                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
                     client.DeleteKeyAsync(_vaultAddress, keyName).Wait();
+
+                    if (_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    }
                 }
             }
         }
 
         [Fact]
-        public void KeyVaultBackupRestoreTest()
+        public void KeyVaultKeyBackupRestoreTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
 
-                var keyName = "BackupRestoreTest";
+                var keyName = "KeyBackupRestoreTest";
 
                 var attribute = new KeyAttributes()
                 {
@@ -451,21 +565,97 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 try
                 {
-                    // Restore a deleted key
+                    // Backup the key
                     var backupResponse = client.BackupKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
 
                     client.DeleteKeyAsync(_vaultAddress, keyName).Wait();
 
+                    if (_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, keyName).Wait();
+                    }
+
+                    // Restore the backedup key
                     var restoredDeletedKey =
-                        client.RestoreKeyAsync(_vaultAddress, backupResponse.Value).GetAwaiter().GetResult();
+                        this.fixture.retryExecutor.ExecuteAction(() => client.RestoreKeyAsync(_vaultAddress, backupResponse.Value).GetAwaiter().GetResult());
 
                     VerifyKeyAttributesAreEqual(restoredDeletedKey.Attributes, createdKey.Attributes);
                     Assert.Equal(restoredDeletedKey.Key.Kty, createdKey.Key.Kty);
                     Assert.Equal(createdKey.Key.Kid, restoredDeletedKey.Key.Kid);
+                    Assert.NotNull(restoredDeletedKey.Attributes.PurgeDisabled);
                 }
                 finally
                 {
+                    this.fixture.WaitOnKey(client, _vaultAddress, keyName);
+
                     client.DeleteKeyAsync(_vaultAddress, keyName).Wait();
+
+                    if(_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                        client.PurgeDeletedKeyAsync(_vaultAddress, keyName).Wait();
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultSecretBackupRestoreTest( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+
+                var client = GetKeyVaultClient();
+
+                var name = "SecretBackupRestoreTest";
+
+                var attributes = new SecretAttributes()
+                {
+                    Enabled = true,
+                    Expires = new DateTime(2030, 1, 1).ToUniversalTime(),
+                    NotBefore = new DateTime(2010, 1, 1).ToUniversalTime()
+                };
+
+                var created = client.SetSecretAsync(_vaultAddress, name, "if found please return to secretbackuprestoretest", tags: null, contentType: "text", secretAttributes: attributes )
+                    .GetAwaiter()
+                    .GetResult();
+
+                try
+                {
+                    // Backup the secret 
+                    var backupResponse = client.BackupSecretAsync(_vaultAddress, name).GetAwaiter().GetResult();
+
+                    client.DeleteSecretAsync( _vaultAddress, name ).Wait( );
+
+                    if ( _softDeleteEnabled )
+                    {
+                        this.fixture.WaitOnDeletedSecret( client, _vaultAddress, name );
+
+                        client.PurgeDeletedSecretAsync( _vaultAddress, name ).Wait( );
+                    }
+
+                    // Restore the backedup secret
+                    var restoredDeletedSecret =
+                        this.fixture.retryExecutor.ExecuteAction(() => client.RestoreSecretAsync(_vaultAddress, backupResponse.Value).GetAwaiter().GetResult());
+
+                    VerifySecretAttributesAreEqual( restoredDeletedSecret.Attributes, created.Attributes );
+                    Assert.Equal( created.Id, restoredDeletedSecret.Id );
+                }
+                finally
+                {
+                    this.fixture.WaitOnSecret( client, _vaultAddress, name );
+
+                    client.DeleteSecretAsync( _vaultAddress, name ).Wait( );
+
+                    if ( _softDeleteEnabled )
+                    {
+                        this.fixture.WaitOnDeletedSecret( client, _vaultAddress, name );
+
+                        client.PurgeDeletedSecretAsync( _vaultAddress, name ).Wait( );
+                    }
                 }
             }
         }
@@ -575,6 +765,215 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
         #endregion
 
+        #region Deleted Key Operations
+
+        [Fact]
+        public void KeyVaultGetDeletedKeyTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // settings may not be loaded until the client is fully initialized
+                if ( !_softDeleteEnabled ) return;
+
+                var keyName = "GetDeletedKeyTest";
+                var attributes = new KeyAttributes();
+                var tags = new Dictionary<string, string>() { { "purpose", "unit test" }, { "test name ", "GetDeletedKeyTest" } };
+                var createdKey = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
+                    JsonWebKeyOperation.AllOperations, attributes, tags).GetAwaiter().GetResult();
+                var deletedKey = client.DeleteKeyAsync(_vaultAddress, createdKey.KeyIdentifier.Name).GetAwaiter().GetResult();
+
+                try
+                {
+                    this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                    // Get the deleted key using its recovery identifier
+                    var getDeletedKey = client.GetDeletedKeyAsync(_vaultAddress, createdKey.KeyIdentifier.Name).GetAwaiter().GetResult();
+                    VerifyIdsAreEqual(createdKey.Key.Kid, getDeletedKey.Key.Kid);
+                    VerifyIdsAreEqual(deletedKey.RecoveryId, getDeletedKey.RecoveryId);
+                }
+                finally
+                {
+                    this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                    // Purge the key
+                    client.PurgeDeletedKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultKeyCreateDeleteRecoverPurgeTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // settings may not be loaded until the client is fully initialized
+                if ( !_softDeleteEnabled ) return;
+
+                var keyName = "CreateDeleteRecoverPurgeTest";
+                var attributes = new KeyAttributes();
+                var tags = new Dictionary<string, string>() { { "purpose", "unit test" }, { "test name ", "CreateDeleteRecoverPurgeTest" } };
+                var createdKey = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
+                    JsonWebKeyOperation.AllOperations, attributes, tags).GetAwaiter().GetResult();
+                var originalKey = client.GetKeyAsync(_vaultAddress, createdKey.KeyIdentifier.Name).GetAwaiter().GetResult();
+
+                try
+                {
+                    // Delete the key
+                    var deletedKey = client.DeleteKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+
+                    //verify the key is deleted
+                    try
+                    {
+                        client.GetKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+
+                    this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                    // Recover the key
+                    var recoveredKey = client.RecoverDeletedKeyAsync(deletedKey.RecoveryId).GetAwaiter().GetResult();
+                    VerifyKeyAttributesAreEqual(recoveredKey.Attributes, originalKey.Attributes);
+                    VerifyKeyOperationsAreEqual(recoveredKey.Key.KeyOps, originalKey.Key.KeyOps);
+                    Assert.Equal(keyName, recoveredKey.KeyIdentifier.Name);
+                    Assert.Equal(originalKey.Key.Kid, recoveredKey.Key.Kid);
+                    Assert.NotNull(recoveredKey.Attributes.PurgeDisabled);
+
+                    this.fixture.WaitOnKey(client, _vaultAddress, keyName);
+
+                    var recoveredGetKey = client.GetKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    VerifyKeyAttributesAreEqual(recoveredGetKey.Attributes, originalKey.Attributes);
+                    VerifyKeyOperationsAreEqual(recoveredGetKey.Key.KeyOps, originalKey.Key.KeyOps);
+                    Assert.Equal(keyName, recoveredGetKey.KeyIdentifier.Name);
+                    Assert.Equal(originalKey.Key.Kid, recoveredGetKey.Key.Kid);
+                    Assert.NotNull(recoveredGetKey.Attributes.PurgeDisabled);
+                }
+                finally
+                {
+                    this.fixture.WaitOnKey(client, _vaultAddress, keyName);
+
+                    // Delete the key
+                    var deletedKey = client.DeleteKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+
+                    //verify the key is deleted
+                    try
+                    {
+                        client.GetKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+
+                    this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                    // Purge the key
+                    client.PurgeDeletedKeyAsync(deletedKey.RecoveryId).GetAwaiter().GetResult();
+
+                    //verify the key is purged
+                    try
+                    {
+                        client.GetDeletedKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultListDeletedKeysTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // settings may not be loaded until the client is fully initialized
+                if ( !_softDeleteEnabled ) return;
+
+                string keyNamePrefix = "listdeletedkeytest";
+                int numKeys = 3;
+                int maxResults = 1;
+
+                var addedObjects = new HashSet<string>();
+                var removedObjects = new HashSet<string>();
+
+                //Create and delete the keys
+                for (int i = 0; i < numKeys; i++)
+                {
+                    string keyName = keyNamePrefix + i.ToString();
+
+                    var addedKey =
+                        client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa).GetAwaiter().GetResult();
+                    client.DeleteKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+
+                    this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
+
+                    addedObjects.Add(GetKidWithoutVersion(addedKey.Key.Kid));
+                }
+
+                //List the deleted keys
+                var listResponse = client.GetDeletedKeysAsync(_vaultAddress, maxResults).GetAwaiter().GetResult();
+                Assert.NotNull(listResponse);
+                foreach (DeletedKeyItem m in listResponse)
+                {
+                    if (addedObjects.Contains(m.Kid))
+                    {
+                        Assert.True(m.Identifier.Name.StartsWith(keyNamePrefix));
+                        Assert.NotNull(m.RecoveryId);
+                        Assert.NotNull(m.ScheduledPurgeDate);
+                        Assert.NotNull(m.DeletedDate);
+                        Assert.Equal(m.RecoveryIdentifier.Name, m.Identifier.Name);
+                        Assert.True(m.RecoveryIdentifier.Name.StartsWith(keyNamePrefix));
+                        addedObjects.Remove(m.Kid);
+                        removedObjects.Add(m.RecoveryId);
+                    }
+                }
+
+                var nextLink = listResponse.NextPageLink;
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    var listNextResponse = client.GetDeletedKeysNextAsync(nextLink).GetAwaiter().GetResult();
+                    Assert.NotNull(listNextResponse);
+                    foreach (DeletedKeyItem m in listNextResponse)
+                    {
+                        if (addedObjects.Contains(m.Kid))
+                        {
+                            Assert.True(m.Identifier.Name.StartsWith(keyNamePrefix));
+                            Assert.NotNull(m.RecoveryId);
+                            Assert.NotNull(m.ScheduledPurgeDate);
+                            Assert.NotNull(m.DeletedDate);
+                            Assert.Equal(m.RecoveryIdentifier.Name, m.Identifier.Name);
+                            Assert.True(m.RecoveryIdentifier.Name.StartsWith(keyNamePrefix));
+
+                            addedObjects.Remove(m.Kid);
+                            removedObjects.Add(m.RecoveryId);
+                        }
+                    }
+                    nextLink = listNextResponse.NextPageLink;
+                }
+
+                Assert.True(addedObjects.Count == 0);
+
+                foreach(string recoveryId in removedObjects)
+                {
+                    client.PurgeDeletedKeyAsync(recoveryId).Wait();
+                }
+            }
+        }
+        #endregion
+
         #region Secret Operations
 
         [Fact]
@@ -621,6 +1020,13 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     // Delete the secret
                     var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+
+                    if(_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                        client.PurgeDeletedSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
 
                     //verify the secret is deleted
                     try
@@ -680,6 +1086,13 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     // Delete the secret
                     client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+
+                    if (_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                        client.PurgeDeletedSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
                 }
             }
         }
@@ -836,6 +1249,214 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Message));
                     Assert.NotNull(ex.Body.Error.InnerError);
                     Assert.True(!String.IsNullOrEmpty(ex.Body.Error.InnerError.Code));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Deleted Secret Operations
+
+        [Fact]
+        public void KeyVaultGetDeletedSecretTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // settings may not be loaded until the client is fully initialized
+                if ( !_softDeleteEnabled ) return;
+
+                var secretName = "GetDeletedSecretTest";
+                var secretValue = "mysecretvalue";
+                var secretOlder = client.SetSecretAsync(_vaultAddress, secretName, secretValue).GetAwaiter().GetResult();
+                var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+
+                this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                try
+                {
+                    // Get the deleted secret using its recovery identifier
+                    var getDeletedSecret = client.GetDeletedSecretAsync(_vaultAddress, secretOlder.SecretIdentifier.Name).GetAwaiter().GetResult();
+                    VerifyIdsAreEqual(secretOlder.Id, getDeletedSecret.Id);
+                    VerifyIdsAreEqual(deletedSecret.RecoveryId, getDeletedSecret.RecoveryId);
+                }
+                finally
+                {
+                    this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                    // Purge the secret
+                    client.PurgeDeletedSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultSecretCreateDeleteRecoverPurgeTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // settings may not be loaded until the client is fully initialized
+                if ( !_softDeleteEnabled ) return;
+
+                string secretName = "SecretCreateDeleteRecoverPurgeTest";
+                string originalSecretValue = "mysecretvalue";
+
+                var originalSecret =
+                    client.SetSecretAsync(_vaultAddress, secretName, originalSecretValue).GetAwaiter().GetResult();
+
+                VerifySecretValuesAreEqual(originalSecret.Value, originalSecretValue);
+                Assert.Equal(secretName, originalSecret.SecretIdentifier.Name);
+                try
+                {
+                    // Delete the secret
+                    var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+
+                    //verify the secret is deleted
+                    try
+                    {
+                        client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+
+                    this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                    // Recover the secret
+                    var recoveredSecret = client.RecoverDeletedSecretAsync(deletedSecret.RecoveryId).GetAwaiter().GetResult();
+                    VerifySecretValuesAreEqual(recoveredSecret.Value, null);
+                    Assert.Equal(secretName, recoveredSecret.SecretIdentifier.Name);
+
+                    this.fixture.WaitOnSecret(client, _vaultAddress, secretName);
+
+                    // Read the recovered secret using full identifier
+                    var recoveredReadSecret = client.GetSecretAsync(recoveredSecret.Id).GetAwaiter().GetResult();
+                    VerifySecretValuesAreEqual(recoveredReadSecret.Value, originalSecretValue);
+                    VerifyIdsAreEqual(recoveredReadSecret.Id, recoveredSecret.Id);
+                    VerifyTagsAreEqual(originalSecret.Tags, recoveredReadSecret.Tags);
+
+                    // Read the recovered secret with the version independent identifier
+                    recoveredReadSecret = client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    VerifySecretValuesAreEqual(recoveredReadSecret.Value, originalSecretValue);
+                    VerifyIdsAreEqual(recoveredReadSecret.Id, recoveredSecret.Id);
+                    VerifyTagsAreEqual(originalSecret.Tags, recoveredReadSecret.Tags);
+                }
+                finally
+                {
+                    this.fixture.WaitOnSecret(client, _vaultAddress, secretName);
+
+                    // Delete the secret
+                    var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+
+                    //verify the secret is deleted
+                    try
+                    {
+                        client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+
+                    this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                    // Purge the secret
+                    client.PurgeDeletedSecretAsync(deletedSecret.RecoveryId).GetAwaiter().GetResult();
+                    
+                    //verify the secret is purged
+                    try
+                    {
+                        client.GetDeletedSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultListDeletedSecretsTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // settings may not be loaded until the client is fully initialized
+                if ( !_softDeleteEnabled ) return;
+
+                int numSecrets = 3;
+                int maxResults = 1;
+
+                var addedObjects = new HashSet<string>();
+                var removedObjects = new HashSet<string>();
+                string secretValue = "mysecretvalue";
+
+                //Create and delete the secrets
+                for (int i = 0; i < numSecrets; i++)
+                {
+                    string secretName = "listdeletedsecrettest" + i.ToString();
+
+                    var addedSecret =
+                        client.SetSecretAsync(_vaultAddress, secretName, secretValue, contentType: "plainText").GetAwaiter().GetResult();
+                    addedObjects.Add(addedSecret.Id.Substring(0, addedSecret.Id.LastIndexOf("/")));
+
+                    client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+
+                    this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+                }
+
+                //List the secrets
+                var listResponse = client.GetDeletedSecretsAsync(_vaultAddress, maxResults).GetAwaiter().GetResult();
+                Assert.NotNull(listResponse);
+                foreach (DeletedSecretItem m in listResponse)
+                {
+                    if (addedObjects.Contains(m.Id))
+                    {
+                        Assert.True(m.Identifier.Name.StartsWith("listdeletedsecrettest"));
+                        Assert.NotNull(m.RecoveryId);
+                        Assert.NotNull(m.ScheduledPurgeDate);
+                        Assert.NotNull(m.DeletedDate);
+                        Assert.True(m.RecoveryIdentifier.Name.StartsWith("listdeletedsecrettest"));
+                        addedObjects.Remove(m.Id);
+                        removedObjects.Add(m.RecoveryId);
+                    }
+                }
+
+                var nextLink = listResponse.NextPageLink;
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    var listNextResponse = client.GetDeletedSecretsNextAsync(nextLink).GetAwaiter().GetResult();
+                    Assert.NotNull(listNextResponse);
+                    foreach (DeletedSecretItem m in listNextResponse)
+                    {
+                        if (addedObjects.Contains(m.Id))
+                        {
+                            Assert.True(m.Identifier.Name.StartsWith("listdeletedsecrettest"));
+                            Assert.NotNull(m.RecoveryId);
+                            Assert.NotNull(m.ScheduledPurgeDate);
+                            Assert.NotNull(m.DeletedDate);
+                            Assert.True(m.RecoveryIdentifier.Name.StartsWith("listdeletedsecrettest"));
+                            addedObjects.Remove(m.Id);
+                            removedObjects.Add(m.RecoveryId);
+                        }
+                    }
+                    nextLink = listNextResponse.NextPageLink;
+                }
+
+                Assert.True(addedObjects.Count == 0);
+
+                foreach (string recoveryId in removedObjects)
+                {
+                    client.PurgeDeletedSecretAsync(recoveryId).Wait();
                 }
             }
         }
@@ -2322,11 +2943,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             Assert.NotEqual(id1, id2);
         }
 
-        private void ListSecrets(int secrets, int? maxResults)
-        {
-
-        }
-
         protected static byte[] RandomBytes(int length)
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -2355,6 +2971,13 @@ namespace Microsoft.Azure.KeyVault.Tests
             Assert.Equal(keyAttribute1.Expires, keyAttribute2.Expires);
             Assert.Equal(keyAttribute1.NotBefore, keyAttribute2.NotBefore);
             Assert.Equal<bool?>(keyAttribute1.Enabled ?? true, keyAttribute2.Enabled ?? true);
+        }
+
+        private void VerifySecretAttributesAreEqual( SecretAttributes leftAttributes, SecretAttributes rightAttributes )
+        {
+            Assert.Equal( leftAttributes.Expires, rightAttributes.Expires );
+            Assert.Equal( leftAttributes.NotBefore, rightAttributes.NotBefore );
+            Assert.Equal<bool?>( leftAttributes.Enabled ?? true, rightAttributes.Enabled ?? true );
         }
 
         private void VerifyKeyOperationsAreEqual(IList<string> firstOperations, IList<string> secondOperations)
@@ -2520,13 +3143,12 @@ namespace Microsoft.Azure.KeyVault.Tests
         public static class WellKnownIssuers
         {
             public const string Self = "Self";
-            
+
             public const string Unknown = "Unknown";
 
             public static readonly string[] AllIssuers = { Self, Unknown };
         }
 
         #endregion
-
     }
 }

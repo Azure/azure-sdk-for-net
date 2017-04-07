@@ -3,16 +3,15 @@
 // license information.
 // 
 
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace KeyVault.Management.Tests
 {
@@ -24,123 +23,96 @@ namespace KeyVault.Management.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KeyVaultTestBase(context);
-                var client = testBase.client;
+                testBase.vaultProperties.EnableSoftDelete = null;
 
-                string rgName = TestUtilities.GenerateName("sdktestrg");
-                testBase.resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = testBase.location });
-
-                string vaultName = TestUtilities.GenerateName("sdktestvault");
-                var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = testBase.objectId;
-                var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
-                var accPol = new AccessPolicyEntry
-                {
-                    TenantId = tenantIdGuid,
-                    ObjectId = objectIdGuid,
-                    Permissions = new Permissions
-                    {
-                        Keys = new string[] { "all" },
-                        Secrets = null,
-                        Certificates = new string[] { "all" }
-                    }
-                };
-                var createdVault = client.Vaults.CreateOrUpdate(
-                    resourceGroupName: rgName,
-                    vaultName: vaultName,
+                var createdVault = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
                     parameters: new VaultCreateOrUpdateParameters
                     {
                         Location = testBase.location,
-                        Tags = tags,
-                        Properties = new VaultProperties
-                        {
-                            EnabledForDeployment = true,
-                            EnabledForDiskEncryption = true,
-                            EnabledForTemplateDeployment = true,
-                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
-                            TenantId = tenantIdGuid,
-                            VaultUri = "",
-                            AccessPolicies = new[]
-                              {
-                                  accPol
-                              }
-                        }
+                        Tags = testBase.tags,
+                        Properties = testBase.vaultProperties
                     }
                     );
 
                 ValidateVault(createdVault,
-                    vaultName,
-                    rgName,
+                    testBase.vaultName,
+                    testBase.rgName,
                     testBase.subscriptionId,
-                    tenantIdGuid,
+                    testBase.tenantIdGuid,
                     testBase.location,
                     "A",
                     SkuName.Standard,
                     true,
                     true,
                     true,
-                    new[] { accPol },
-                    tags);
+                    null,
+                    new[] { testBase.accPol },
+                    testBase.tags);
 
                 //Update
 
                 createdVault.Properties.Sku.Name = SkuName.Premium;
-                accPol.Permissions.Secrets = new string[] { "get", "set" };
-                accPol.Permissions.Keys = null;
-                createdVault.Properties.AccessPolicies = new[] { accPol };
+                testBase.accPol.Permissions.Secrets = new string[] { "get", "set" };
+                testBase.accPol.Permissions.Keys = null;
+                createdVault.Properties.AccessPolicies = new[] { testBase.accPol };
 
-                var updateVault = client.Vaults.CreateOrUpdate(
-                    resourceGroupName: rgName,
-                    vaultName: vaultName,
+                var updateVault = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
                     parameters: new VaultCreateOrUpdateParameters
                     {
                         Location = testBase.location,
-                        Tags = tags,
+                        Tags = testBase.tags,
                         Properties = createdVault.Properties
                     }
                     );
 
                 ValidateVault(updateVault,
-                    vaultName,
-                    rgName,
+                    testBase.vaultName,
+                    testBase.rgName,
                     testBase.subscriptionId,
-                    tenantIdGuid,
+                    testBase.tenantIdGuid,
                     testBase.location,
                     "A",
                     SkuName.Premium,
                     true,
                     true,
                     true,
-                    new[] { accPol },
-                    tags);
+                    null,
+                    new[] { testBase.accPol },
+                    testBase.tags);
 
-                var retrievedVault = client.Vaults.Get(
-                    resourceGroupName: rgName,
-                    vaultName: vaultName);
+                var retrievedVault = testBase.client.Vaults.Get(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
 
                 ValidateVault(retrievedVault,
-                    vaultName,
-                    rgName,
+                    testBase.vaultName,
+                    testBase.rgName,
                     testBase.subscriptionId,
-                    tenantIdGuid,
+                    testBase.tenantIdGuid,
                     testBase.location,
                     "A",
                     SkuName.Premium,
                     true,
                     true,
                     true,
-                    new[] { accPol },
-                    tags);
+                    null,
+                    new[] { testBase.accPol },
+                    testBase.tags);
 
                 // Delete
-                client.Vaults.Delete(
-                    resourceGroupName: rgName,
-                    vaultName: vaultName);
+                testBase.client.Vaults.Delete(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
 
                 Assert.Throws<CloudException>(() =>
                 {
-                    client.Vaults.Get(
-                        resourceGroupName: rgName,
-                        vaultName: vaultName);
+                    testBase.client.Vaults.Get(
+                        resourceGroupName: testBase.rgName,
+                        vaultName: testBase.vaultName);
                 });
             }
         }
@@ -151,96 +123,286 @@ namespace KeyVault.Management.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KeyVaultTestBase(context);
-                var client = testBase.client;
+                testBase.accPol.ApplicationId = Guid.Parse(testBase.applicationId);
+                testBase.vaultProperties.EnableSoftDelete = null;
 
-                string rgName = TestUtilities.GenerateName("sdktestrg");
-                testBase.resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = testBase.location });
-
-                string vaultName = TestUtilities.GenerateName("sdktestvault");
-                var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = testBase.objectId;
-                var applicationId = Guid.Parse(testBase.applicationId);
-                var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
-                var accPol = new AccessPolicyEntry
-                {
-                    TenantId = tenantIdGuid,
-                    ObjectId = objectIdGuid,
-                    ApplicationId = applicationId,
-                    Permissions = new Permissions
-                    {
-                        Keys = new string[] { "all" },
-                        Secrets = null,
-                        Certificates = new string[] { "all" }
-                    }
-                };
-                var createVault = client.Vaults.CreateOrUpdate(
-                    resourceGroupName: rgName,
-                    vaultName: vaultName,
+                var createVault = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
                     parameters: new VaultCreateOrUpdateParameters
                     {
                         Location = testBase.location,
-                        Tags = tags,
-                        Properties = new VaultProperties
-                        {
-                            EnabledForDeployment = true,
-                            EnabledForDiskEncryption = true,
-                            EnabledForTemplateDeployment = true,
-                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
-                            TenantId = tenantIdGuid,
-                            VaultUri = "",
-                            AccessPolicies = new[]
-                              {
-                                  accPol
-                              }
-                        }
+                        Tags = testBase.tags,
+                        Properties = testBase.vaultProperties
                     }
                     );
 
                 ValidateVault(createVault,
-                    vaultName,
-                    rgName,
+                    testBase.vaultName,
+                    testBase.rgName,
                     testBase.subscriptionId,
-                    tenantIdGuid,
+                    testBase.tenantIdGuid,
                     testBase.location,
                     "A",
                     SkuName.Standard,
                     true,
                     true,
                     true,
-                    new[] { accPol },
-                    tags);
+                    null,
+                    new[] { testBase.accPol },
+                    testBase.tags);
 
                 // Get
-                var retrievedVault = client.Vaults.Get(
-                   resourceGroupName: rgName,
-                   vaultName: vaultName);
+                var retrievedVault = testBase.client.Vaults.Get(
+                   resourceGroupName: testBase.rgName,
+                   vaultName: testBase.vaultName);
 
                 ValidateVault(retrievedVault,
-                    vaultName,
-                    rgName,
+                    testBase.vaultName,
+                    testBase.rgName,
                     testBase.subscriptionId,
-                    tenantIdGuid,
+                    testBase.tenantIdGuid,
                     testBase.location,
                     "A",
                     SkuName.Standard,
                     true,
                     true,
                     true,
-                    new[] { accPol },
-                    tags);
+                    null,
+                    new[] { testBase.accPol },
+                    testBase.tags);
 
 
                 // Delete
-                client.Vaults.Delete(
-                    resourceGroupName: rgName,
-                    vaultName: vaultName);
+                testBase.client.Vaults.Delete(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
 
                 Assert.Throws<CloudException>(() =>
                 {
-                    client.Vaults.Get(
-                        resourceGroupName: rgName,
-                        vaultName: vaultName);
+                    testBase.client.Vaults.Get(
+                        resourceGroupName: testBase.rgName,
+                        vaultName: testBase.vaultName);
                 });
+            }
+        }
+
+        [Fact]
+        public void KeyVaultManagementListVaults()
+        {
+            int n = 3;
+            int top = 2;
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var testBase = new KeyVaultTestBase(context);
+                testBase.vaultProperties.EnableSoftDelete = null;
+
+                List<string> resourceIds = new List<string>();
+                List<string> vaultNameList = new List<string>();
+                for (int i = 0; i < n; i++)
+                {
+                    string vaultName = TestUtilities.GenerateName("sdktestvault");
+                    var createdVault = testBase.client.Vaults.CreateOrUpdate(
+                        resourceGroupName: testBase.rgName,
+                        vaultName: vaultName,
+                        parameters: new VaultCreateOrUpdateParameters
+                        {
+                            Location = testBase.location,
+                            Tags = testBase.tags,
+                            Properties = testBase.vaultProperties
+                        }
+                        );
+
+                    Assert.NotNull(createdVault);
+                    Assert.NotNull(createdVault.Id);
+                    resourceIds.Add(createdVault.Id);
+                    vaultNameList.Add(createdVault.Name);
+                }
+
+                var vaults = testBase.client.Vaults.ListByResourceGroup(testBase.rgName, top);
+                Assert.NotNull(vaults);
+
+                foreach (var v in vaults)
+                {
+                    Assert.True(resourceIds.Remove(v.Id));
+                }
+
+                while (vaults.NextPageLink != null)
+                {
+                    vaults = testBase.client.Vaults.ListByResourceGroupNext(vaults.NextPageLink);
+                    Assert.NotNull(vaults);
+                    foreach (var v in vaults)
+                    {
+                        Assert.True(resourceIds.Remove(v.Id));
+                    }
+                }
+                Assert.True(resourceIds.Count == 0);
+
+                var allVaults = testBase.client.Vaults.List(top);
+                Assert.NotNull(vaults);
+
+                // Delete
+                foreach (var v in vaultNameList)
+                {
+                    testBase.client.Vaults.Delete(resourceGroupName: testBase.rgName, vaultName: v);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultManagementRecoverDeletedVault()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var testBase = new KeyVaultTestBase(context);
+
+                var createdVault = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
+                    parameters: new VaultCreateOrUpdateParameters
+                    {
+                        Location = testBase.location,
+                        Tags = testBase.tags,
+                        Properties = testBase.vaultProperties
+                    }
+                    );
+
+                // Delete
+                testBase.client.Vaults.Delete(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
+
+                // Get deleted vault
+                Assert.Throws<CloudException>(() =>
+                {
+                    testBase.client.Vaults.Get(
+                        resourceGroupName: testBase.rgName,
+                        vaultName: testBase.vaultName);
+                });
+
+                // Recover in default mode
+                var recoveredVault = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
+                    parameters: new VaultCreateOrUpdateParameters
+                    {
+                        Location = testBase.location,
+                        Tags = testBase.tags,
+                        Properties = testBase.vaultProperties
+                    }
+                    );
+
+                Assert.True(recoveredVault.IsEqual(createdVault));
+
+                // Get recovered vault
+                testBase.client.Vaults.Get(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
+
+                // Delete
+                testBase.client.Vaults.Delete(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
+
+                // Recover in recover mode
+                var recoveredVault2 = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
+                    parameters: new VaultCreateOrUpdateParameters
+                    {
+                        Location = testBase.location,
+                        Tags = testBase.tags,
+                        Properties = new VaultProperties
+                        {
+                            CreateMode = CreateMode.Recover
+                        }
+                    }
+                    );
+                
+                Assert.True(recoveredVault2.IsEqual(createdVault));
+
+                // Get recovered vault
+                testBase.client.Vaults.Get(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
+
+                // Delete
+                testBase.client.Vaults.Delete(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultManagementListDeletedVaults()
+        {
+            int n = 3;
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var testBase = new KeyVaultTestBase(context);
+
+                List<string> resourceIds = new List<string>();
+                List<string> vaultNameList = new List<string>();
+                for (int i = 0; i < n; i++)
+                {
+                    string vaultName = TestUtilities.GenerateName("sdktestvault");
+                    var createdVault = testBase.client.Vaults.CreateOrUpdate(
+                        resourceGroupName: testBase.rgName,
+                        vaultName: vaultName,
+                        parameters: new VaultCreateOrUpdateParameters
+                        {
+                            Location = testBase.location,
+                            Tags = testBase.tags,
+                            Properties = testBase.vaultProperties
+                        }
+                        );
+
+                    Assert.NotNull(createdVault);
+                    Assert.NotNull(createdVault.Id);
+                    resourceIds.Add(createdVault.Id);
+                    vaultNameList.Add(createdVault.Name);
+
+                    testBase.client.Vaults.Delete(resourceGroupName: testBase.rgName, vaultName: vaultName);
+
+                    var deletedVault = testBase.client.Vaults.GetDeleted(vaultName, testBase.location);
+                    deletedVault.IsEqual(createdVault);
+                }
+
+                var deletedVaults = testBase.client.Vaults.ListDeleted();
+                Assert.NotNull(deletedVaults);
+
+                foreach (var v in deletedVaults)
+                {
+                    var exists = resourceIds.Remove(v.Properties.VaultId);
+
+                    if (exists)
+                    {
+                        // Purge vault
+                        testBase.client.Vaults.PurgeDeleted(v.Name, testBase.location);
+                        Assert.Throws<CloudException>(() => testBase.client.Vaults.GetDeleted(v.Name, testBase.location));
+                    }
+                }
+
+                while (deletedVaults.NextPageLink != null)
+                {
+                    deletedVaults = testBase.client.Vaults.ListDeletedNext(deletedVaults.NextPageLink);
+                    Assert.NotNull(deletedVaults);
+                    foreach (var v in deletedVaults)
+                    {
+                        var exists = resourceIds.Remove(v.Id);
+
+                        if (exists)
+                        {
+                            // Purge vault
+                            testBase.client.Vaults.PurgeDeleted(v.Name, testBase.location);
+                            Assert.Throws<CloudException>(() => testBase.client.Vaults.GetDeleted(v.Name, testBase.location));
+                        }
+                    }
+
+                    if (resourceIds.Count == 0)
+                        break;
+                }
+                Assert.True(resourceIds.Count == 0);
             }
         }
 
@@ -256,6 +418,7 @@ namespace KeyVault.Management.Tests
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
+            bool? expectedEnableSoftDelete,
             AccessPolicyEntry[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
@@ -273,135 +436,9 @@ namespace KeyVault.Management.Tests
             Assert.Equal(expectedEnabledForDeployment, vault.Properties.EnabledForDeployment);
             Assert.Equal(expectedEnabledForTemplateDeployment, vault.Properties.EnabledForTemplateDeployment);
             Assert.Equal(expectedEnabledForDiskEncryption, vault.Properties.EnabledForDiskEncryption);
+            Assert.Equal(expectedEnableSoftDelete, vault.Properties.EnableSoftDelete);
             Assert.True(expectedTags.DictionaryEqual(vault.Tags));
-            Assert.True(CompareAccessPolicies(expectedPolicies, vault.Properties.AccessPolicies.ToArray()));
-        }
-
-        private bool CompareAccessPolicies(AccessPolicyEntry[] expected, AccessPolicyEntry[] actual)
-        {
-            if (expected == null && actual == null)
-                return true;
-
-            if (expected == null || actual == null)
-                return false;
-
-            if (expected.Length != actual.Length)
-                return false;
-
-            AccessPolicyEntry[] expectedCopy = new AccessPolicyEntry[expected.Length];
-            expected.CopyTo(expectedCopy, 0);
-
-            foreach (AccessPolicyEntry a in actual)
-            {
-                var match = expectedCopy.Where(e =>
-                    e.TenantId == a.TenantId &&
-                    e.ObjectId == a.ObjectId &&
-                    e.ApplicationId == a.ApplicationId &&
-                    ((a.Permissions.Secrets == null && e.Permissions.Secrets == null) ||
-                        Enumerable.SequenceEqual(e.Permissions.Secrets, a.Permissions.Secrets)) &&
-                    ((a.Permissions.Keys == null && e.Permissions.Keys == null) ||
-                        Enumerable.SequenceEqual(a.Permissions.Keys, a.Permissions.Keys))
-                    ).FirstOrDefault();
-                if (match == null)
-                    return false;
-
-                expectedCopy = expectedCopy.Where(e => e != match).ToArray();
-            }
-            if (expectedCopy.Length > 0)
-                return false;
-
-            return true;
-        }
-
-
-        [Fact]
-        public void KeyVaultManagementListVaults()
-        {
-            int n = 3;
-            int top = 2;
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var testBase = new KeyVaultTestBase(context);
-                var client = testBase.client;
-
-                string rgName = TestUtilities.GenerateName("sdktestrg");
-                var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = testBase.objectId;
-
-                var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
-
-                testBase.resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = testBase.location });
-                List<string> resourceIds = new List<string>();
-                List<string> vaultNameList = new List<string>();
-                for (int i = 0; i < n; i++)
-                {
-                    string vaultName = TestUtilities.GenerateName("sdktestvault");
-                    var createdVault = client.Vaults.CreateOrUpdate(
-                        resourceGroupName: rgName,
-                        vaultName: vaultName,
-                        parameters: new VaultCreateOrUpdateParameters
-                        {
-                            Location = testBase.location,
-                            Tags = tags,
-                            Properties = new VaultProperties
-                            {
-                                EnabledForDeployment = true,
-                                EnabledForDiskEncryption = true,
-                                EnabledForTemplateDeployment = true,
-                                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
-                                TenantId = tenantIdGuid,
-                                VaultUri = "",
-                                AccessPolicies = new[]
-                                {
-                                    new AccessPolicyEntry
-                                    {
-                                        TenantId = tenantIdGuid,
-                                        ObjectId = objectIdGuid,
-                                        Permissions = new Permissions{
-                                            Keys = new string[]{"all"},
-                                            Secrets = new string[]{"all"},
-                                            Certificates = new string[] { "all" }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        );
-
-                    Assert.NotNull(createdVault);
-                    Assert.NotNull(createdVault.Id);
-                    resourceIds.Add(createdVault.Id);
-                    vaultNameList.Add(createdVault.Name);
-                }
-
-                var vaults = client.Vaults.ListByResourceGroup(rgName, top);
-                Assert.NotNull(vaults);
-
-                foreach (var v in vaults)
-                {
-                    Assert.True(resourceIds.Remove(v.Id));
-                }
-
-                while (vaults.NextPageLink != null)
-                {
-                    vaults = client.Vaults.ListByResourceGroupNext(vaults.NextPageLink);
-                    Assert.NotNull(vaults);
-                    foreach (var v in vaults)
-                    {
-                        Assert.True(resourceIds.Remove(v.Id));
-                    }
-                }
-                Assert.True(resourceIds.Count == 0);
-
-                var allVaults = client.Vaults.List(top);
-                Assert.NotNull(vaults);
-
-                // Delete
-                foreach (var v in vaultNameList)
-                {
-                    client.Vaults.Delete(resourceGroupName: rgName, vaultName: v);
-                }
-            }
+            Assert.True(expectedPolicies.IsEqual(vault.Properties.AccessPolicies));
         }
     }
 
@@ -428,6 +465,73 @@ namespace KeyVault.Management.Tests
                 if (!second.TryGetValue(kvp.Key, out secondValue)) return false;
                 if (!valueComparer.Equals(kvp.Value, secondValue)) return false;
             }
+            return true;
+        }
+
+        public static bool IsEqual(this DeletedVault deletedVault, Vault createdVault)
+        {
+            Assert.Equal(createdVault.Location, deletedVault.Properties.Location);
+            Assert.Equal(createdVault.Name, deletedVault.Name);
+            Assert.Equal(createdVault.Id, deletedVault.Properties.VaultId);
+            Assert.Equal("Microsoft.KeyVault/deletedVaults", deletedVault.Type);
+            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Properties.Tags));
+            Assert.NotNull(deletedVault.Properties.ScheduledPurgeDate);
+            Assert.NotNull(deletedVault.Properties.DeletionDate);
+            Assert.NotNull(deletedVault.Id);
+            return true;
+        }
+
+        public static bool IsEqual(this Vault vault1, Vault vault2)
+        {
+            Assert.Equal(vault2.Location, vault1.Location);
+            Assert.Equal(vault2.Name, vault1.Name);
+            Assert.Equal(vault2.Id, vault1.Id);
+            Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
+            
+            Assert.Equal(vault2.Properties.VaultUri.TrimEnd('/'), vault1.Properties.VaultUri.TrimEnd('/'));
+            Assert.Equal(vault2.Properties.TenantId, vault1.Properties.TenantId);
+            Assert.Equal(vault2.Properties.Sku.Name, vault1.Properties.Sku.Name);
+            Assert.Equal(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);
+            Assert.Equal(vault2.Properties.EnabledForTemplateDeployment, vault1.Properties.EnabledForTemplateDeployment);
+            Assert.Equal(vault2.Properties.EnabledForDiskEncryption, vault1.Properties.EnabledForDiskEncryption);
+            Assert.Equal(vault2.Properties.EnabledForDeployment, vault1.Properties.EnabledForDeployment);
+            Assert.True(vault2.Properties.AccessPolicies.IsEqual(vault1.Properties.AccessPolicies));
+            return true;
+        }
+        
+        public static bool IsEqual(this IList<AccessPolicyEntry> expected, IList<AccessPolicyEntry> actual)
+        {
+            if (expected == null && actual == null)
+                return true;
+
+            if (expected == null || actual == null)
+                return false;
+
+            if (expected.Count != actual.Count)
+                return false;
+
+            AccessPolicyEntry[] expectedCopy = new AccessPolicyEntry[expected.Count];
+            expected.CopyTo(expectedCopy, 0);
+
+            foreach (AccessPolicyEntry a in actual)
+            {
+                var match = expectedCopy.Where(e =>
+                    e.TenantId == a.TenantId &&
+                    e.ObjectId == a.ObjectId &&
+                    e.ApplicationId == a.ApplicationId &&
+                    ((a.Permissions.Secrets == null && e.Permissions.Secrets == null) ||
+                        Enumerable.SequenceEqual(e.Permissions.Secrets, a.Permissions.Secrets)) &&
+                    ((a.Permissions.Keys == null && e.Permissions.Keys == null) ||
+                        Enumerable.SequenceEqual(a.Permissions.Keys, a.Permissions.Keys))
+                    ).FirstOrDefault();
+                if (match == null)
+                    return false;
+
+                expectedCopy = expectedCopy.Where(e => e != match).ToArray();
+            }
+            if (expectedCopy.Length > 0)
+                return false;
+
             return true;
         }
     }

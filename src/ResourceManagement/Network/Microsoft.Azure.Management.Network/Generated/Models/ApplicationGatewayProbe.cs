@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayProbe class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="protocol">Protocol. Possible values are: 'Http' and
-        /// 'Https'. Possible values include: 'Http', 'Https'</param>
+        /// <param name="protocol">Protocol. Possible values include: 'Http',
+        /// 'Https'</param>
         /// <param name="host">Host name to send the probe to.</param>
         /// <param name="path">Relative path of probe. Valid path starts from
         /// '/'. Probe is sent to
@@ -70,8 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets protocol. Possible values are: 'Http' and 'Https'.
-        /// Possible values include: 'Http', 'Https'
+        /// Gets or sets protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

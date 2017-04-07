@@ -10,6 +10,9 @@ using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Management.KeyVault.Models;
+using System.Collections.Generic;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace KeyVault.Management.Tests
 {
@@ -29,6 +32,14 @@ namespace KeyVault.Management.Tests
 
         public KeyVaultManagementClient client { get; set; }
         public ResourceManagementClient resourcesClient { get; set; }
+        public AccessPolicyEntry accPol { get; internal set; }
+        public string objectIdGuid { get; internal set; }
+        public string rgName { get; internal set; }
+        public Dictionary<string, string> tags { get; internal set; }
+        public Guid tenantIdGuid { get; internal set; }
+        public string vaultName { get; internal set; }
+        public VaultProperties vaultProperties { get; internal set; }
+
         public KeyVaultTestBase(MockContext context)
         {
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
@@ -42,7 +53,7 @@ namespace KeyVault.Management.Tests
                 this.subscriptionId = testEnv.SubscriptionId;
                 var graphClient = context.GetServiceClient<GraphRbacManagementClient>();
                 graphClient.TenantID = this.tenantId;
-                graphClient.BaseUri = new Uri("https://graph.windows.net");
+                graphClient.BaseUri = testEnv.Endpoints.GraphUri;
                 this.objectId = graphClient.User.Get(testEnv.UserName).ObjectId;
                 this.applicationId = Guid.NewGuid().ToString();
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
@@ -69,6 +80,41 @@ namespace KeyVault.Management.Tests
                 }
                 ).First().Locations.FirstOrDefault();
 
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            rgName = TestUtilities.GenerateName("sdktestrg");
+            resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+
+            vaultName = TestUtilities.GenerateName("sdktestvault");
+            tenantIdGuid = Guid.Parse(tenantId);
+            objectIdGuid = objectId;
+            tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
+            accPol = new AccessPolicyEntry
+            {
+                TenantId = tenantIdGuid,
+                ObjectId = objectIdGuid,
+                Permissions = new Permissions
+                {
+                    Keys = new string[] { "all" },
+                    Secrets = new string[] { "all" },
+                    Certificates = new string[] { "all" }
+                }
+            };
+
+            vaultProperties = new VaultProperties
+            {
+                EnabledForDeployment = true,
+                EnabledForDiskEncryption = true,
+                EnabledForTemplateDeployment = true,
+                EnableSoftDelete = true,
+                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
+                TenantId = tenantIdGuid,
+                VaultUri = "",
+                AccessPolicies = new[] { accPol }
+            };
         }
     }
 }

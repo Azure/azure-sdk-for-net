@@ -785,6 +785,89 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanRoundtripBoundaryValues()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var expectedDocs = new[]
+                {
+                    // Minimum values
+                    new Hotel()
+                    {
+                        HotelId = "1",
+                        BaseRate = Double.MinValue,
+                        Category = String.Empty,
+                        LastRenovationDate = DateTimeOffset.MinValue,
+                        Location = GeographyPoint.Create(-90, -180),   // South pole, date line from the west
+                        ParkingIncluded = false,
+                        Rating = Int32.MinValue,
+                        Tags = new string[0]
+                    },
+                    // Maximimum values
+                    new Hotel()
+                    {
+                        HotelId = "2",
+                        BaseRate = Double.MaxValue,
+                        Category = "test",  // No meaningful string max since there is no length limit (other than payload size or term length).
+                        LastRenovationDate = DateTimeOffset.MaxValue,
+                        Location = GeographyPoint.Create(90, 180),   // North pole, date line from the east
+                        ParkingIncluded = true,
+                        Rating = Int32.MaxValue,
+                        Tags = new string[] { "test" }  // No meaningful string max; see above.
+                    },
+                    // Other boundary values #1
+                    new Hotel()
+                    {
+                        HotelId = "3",
+                        BaseRate = Double.NegativeInfinity,
+                        Category = null,
+                        LastRenovationDate = null,
+                        Location = GeographyPoint.Create(0, 0),   // Equator, meridian
+                        ParkingIncluded = null,
+                        Rating = null,
+                        Tags = new string[0]
+                    },
+                    // Other boundary values #2
+                    new Hotel()
+                    {
+                        HotelId = "4",
+                        BaseRate = Double.PositiveInfinity,
+                        Location = null,
+                        Tags = new string[0]
+                    },
+                    // Other boundary values #3
+                    new Hotel()
+                    {
+                        HotelId = "5",
+                        BaseRate = Double.NaN,
+                        Tags = new string[0]
+                    },
+                    // Other boundary values #4
+                    new Hotel()
+                    {
+                        HotelId = "6",
+                        BaseRate = null,
+                        Tags = new string[0]
+                    }
+                };
+
+                var batch = IndexBatch.Upload(expectedDocs);
+
+                client.Documents.Index(batch);
+
+                SearchTestUtilities.WaitForIndexing();
+
+                Hotel[] actualDocs = expectedDocs.Select(d => client.Documents.Get<Hotel>(d.HotelId)).ToArray();
+                for (int i = 0; i < actualDocs.Length; i++)
+                {
+                    Assert.Equal(expectedDocs[i], actualDocs[i]);
+                }                
+            });
+        }
+
         private void TestCanIndexAndRetrieveWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null) 
             where T : CustomBook, new()
         {

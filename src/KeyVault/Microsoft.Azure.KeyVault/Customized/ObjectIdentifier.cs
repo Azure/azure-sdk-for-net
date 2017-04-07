@@ -34,7 +34,7 @@ namespace Microsoft.Azure.KeyVault
                 if (baseUri.Segments.Length != 3 && baseUri.Segments.Length != 4)
                     return false;
 
-                if (!string.Equals(baseUri.Segments[1], collection + "/"))
+                if (!string.Equals(baseUri.Segments[1], collection + "/", StringComparison.OrdinalIgnoreCase))
                     return false;
 
                 return true;
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.KeyVault
             if (baseUri.Segments.Length != 3 && baseUri.Segments.Length != 4)
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", identifier, baseUri.Segments.Length));
 
-            if (!string.Equals(baseUri.Segments[1], collection + "/"))
+            if (!string.Equals(baseUri.Segments[1], collection + "/", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", identifier, collection, baseUri.Segments[1]));
 
             _name = baseUri.Segments[2].Substring(0, baseUri.Segments[2].Length).TrimEnd('/');
@@ -254,6 +254,82 @@ namespace Microsoft.Azure.KeyVault
         public SecretIdentifier(string identifier)
             : base("secrets", identifier)
         {
+        }
+    }
+
+    /// <summary>
+    /// The Key Vault deleted key identifier. Aka the recoveryId.
+    /// </summary>
+    public sealed class DeletedKeyIdentifier : ObjectIdentifier
+    {
+        /// <summary>
+        /// Verifies whether the identifier belongs to a key vault deleted key.
+        /// </summary>
+        /// <param name="identifier">The key vault deleted key identifier.</param>
+        /// <returns>True if the identifier belongs to a key vault deleted key. False otherwise.</returns>
+        public static bool IsDeletedKeyIdentifier(string identifier)
+        {
+            return ObjectIdentifier.IsObjectIdentifier("deletedkeys", identifier);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vaultBaseUrl"> the vault base URL</param>
+        /// <param name="name">the name of the deleted key </param>
+        public DeletedKeyIdentifier(string vaultBaseUrl, string name)
+            : base(vaultBaseUrl, "deletedkeys", name, string.Empty)
+        {
+            Identifier = BaseIdentifier; // Deleted entities are unversioned.
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="identifier">The identifier for the deleted key. Aka the recoveryId return from deletion.</param>
+        public DeletedKeyIdentifier(string identifier)
+            : base("deletedkeys", identifier)
+        {
+            Version = string.Empty;
+            Identifier = BaseIdentifier; // Deleted entities are unversioned.
+        }
+    }
+
+    /// <summary>
+    /// The Key Vault deleted secret identifier. Aka the recoveryId.
+    /// </summary>
+    public sealed class DeletedSecretIdentifier : ObjectIdentifier
+    {
+        /// <summary>
+        /// Verifies whether the identifier belongs to a key vault deleted secret.
+        /// </summary>
+        /// <param name="identifier">The key vault secret identifier.</param>
+        /// <returns>True if the identifier belongs to a key vault deleted secret. False otherwise.</returns>
+        public static bool IsDeletedSecretIdentifier(string identifier)
+        {
+            return ObjectIdentifier.IsObjectIdentifier("deletedsecrets", identifier);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vaultBaseUrl"> the vault base URL</param>
+        /// <param name="name">the name of the deleted secret </param>
+        public DeletedSecretIdentifier(string vaultBaseUrl, string name)
+            : base(vaultBaseUrl, "deletedsecrets", name, string.Empty)
+        {
+            Identifier = BaseIdentifier; // Deleted entities are unversioned.
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="identifier">The identifier for the deleted secret. Aka the recoveryId return from deletion.</param>
+        public DeletedSecretIdentifier(string identifier)
+            : base("deletedsecrets", identifier)
+        {
+            Version = string.Empty;
+            Identifier = BaseIdentifier; // Deleted entities are unversioned.
         }
     }
 

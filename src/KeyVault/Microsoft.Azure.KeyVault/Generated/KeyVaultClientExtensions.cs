@@ -123,7 +123,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<KeyBundle> DeleteKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeletedKeyBundle> DeleteKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -315,7 +315,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -346,7 +347,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -379,7 +381,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='algorithm'>
             /// The signing/verification algorithm identifier. For more information on
             /// possible algorithm types, see JsonWebKeySignatureAlgorithm. Possible values
-            /// include: 'RS256', 'RS384', 'RS512', 'RSNULL'
+            /// include: 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -412,7 +414,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='algorithm'>
             /// The signing/verification algorithm. For more information on possible
             /// algorithm types, see JsonWebKeySignatureAlgorithm. Possible values include:
-            /// 'RS256', 'RS384', 'RS512', 'RSNULL'
+            /// 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL'
             /// </param>
             /// <param name='digest'>
             /// The digest used for signing.
@@ -447,7 +449,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -479,7 +482,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -489,6 +493,96 @@ namespace Microsoft.Azure.KeyVault
             public static async Task<KeyOperationResult> UnwrapKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, string keyVersion, string algorithm, byte[] value, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UnwrapKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, keyVersion, algorithm, value, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List deleted keys in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return in a page. If not specified the service
+            /// will return up to 25 results.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedKeyItem>> GetDeletedKeysAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedKeysWithHttpMessagesAsync(vaultBaseUrl, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the deleted key information plus its attributes
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeletedKeyBundle> GetDeletedKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Permanently deletes the specified key. aka purges the key.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeDeletedKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.PurgeDeletedKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Recovers the deleted key back to its current version under /keys
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the deleted key
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<KeyBundle> RecoverDeletedKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RecoverDeletedKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -544,7 +638,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecretBundle> DeleteSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeletedSecretBundle> DeleteSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -660,6 +754,142 @@ namespace Microsoft.Azure.KeyVault
             public static async Task<IPage<SecretItem>> GetSecretVersionsAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSecretVersionsWithHttpMessagesAsync(vaultBaseUrl, secretName, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List deleted secrets in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return in a page. If not specified the service
+            /// will return up to 25 results.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedSecretItem>> GetDeletedSecretsAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedSecretsWithHttpMessagesAsync(vaultBaseUrl, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the deleted secret information plus its attributes
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeletedSecretBundle> GetDeletedSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Permanently deletes the specified secret. aka purges the secret.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeDeletedSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.PurgeDeletedSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Recovers the deleted secret back to its current version under /secrets
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the deleted secret
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SecretBundle> RecoverDeletedSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RecoverDeletedSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Requests that a backup of the specified secret be downloaded to the client.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupSecretResult> BackupSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BackupSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Restores a backed up secret to a vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretBundleBackup'>
+            /// The backup blob associated with a secret bundle.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SecretBundle> RestoreSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, byte[] secretBundleBackup, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RestoreSecretWithHttpMessagesAsync(vaultBaseUrl, secretBundleBackup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1274,6 +1504,26 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
+            /// List deleted keys in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedKeyItem>> GetDeletedKeysNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedKeysNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List secrets in a specified key vault
             /// </summary>
             /// <param name='operations'>
@@ -1308,6 +1558,26 @@ namespace Microsoft.Azure.KeyVault
             public static async Task<IPage<SecretItem>> GetSecretVersionsNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSecretVersionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List deleted secrets in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedSecretItem>> GetDeletedSecretsNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedSecretsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
