@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IndependentChildResourceImpl<
             IAppServiceCertificateKeyVaultBinding,
             IAppServiceCertificateOrder,
-            AppServiceCertificateInner,
+            AppServiceCertificateResourceInner,
             AppServiceCertificateKeyVaultBindingImpl,
             object,
             object,
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:360C34F1E1D3680D56F867742DA72A0F
-        protected override async Task<AppServiceCertificateInner> GetInnerAsync(CancellationToken cancellationToken)
+        protected override async Task<AppServiceCertificateResourceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.AppServiceCertificateOrders.GetCertificateAsync(parent.ResourceGroupName, parent.Name, Name, cancellationToken: cancellationToken);
         }
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B9EDBDEBBAFF9FA1B965F82D94B7D20D:D717DAAD2288A48502D0DF6C7AA6562A
-        internal AppServiceCertificateKeyVaultBindingImpl(AppServiceCertificateInner innerObject, AppServiceCertificateOrderImpl parent)
+        internal AppServiceCertificateKeyVaultBindingImpl(AppServiceCertificateResourceInner innerObject, AppServiceCertificateOrderImpl parent)
             : base(innerObject.Name, innerObject, (parent != null) ? parent.Manager : null)
         {
             this.parent = parent;

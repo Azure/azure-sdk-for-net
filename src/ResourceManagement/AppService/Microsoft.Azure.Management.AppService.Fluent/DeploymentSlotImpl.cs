@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:16850E2C75364DB3483B86D73CBDEC35:256BDD90CDF5E9C0BF04ED1F7DE5F0E8
-        private void CopyConfigurations(SiteConfigInner configInner, IList<Microsoft.Azure.Management.AppService.Fluent.IAppSetting> appSettings, IList<Microsoft.Azure.Management.AppService.Fluent.IConnectionString> connectionStrings)
+        private void CopyConfigurations(SiteConfigResourceInner configInner, IList<Microsoft.Azure.Management.AppService.Fluent.IAppSetting> appSettings, IList<Microsoft.Azure.Management.AppService.Fluent.IConnectionString> connectionStrings)
         {
-            Inner.SiteConfig = configInner;
+            this.SiteConfig = configInner;
             // app settings
             foreach (var appSetting in appSettings)
             {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:F529354C5AB0AFD4EE1F8B0AABF34899:9D5B643E4CC2E0B0C53BBF7A34E7FE45
         public DeploymentSlotImpl WithConfigurationFromWebApp(IWebApp webApp)
         {
-            CopyConfigurations(webApp.Inner.SiteConfig, webApp.AppSettings.Values.ToList(), webApp.ConnectionStrings.Values.ToList());
+            CopyConfigurations(((WebAppImpl) webApp).SiteConfig, webApp.AppSettings.Values.ToList(), webApp.ConnectionStrings.Values.ToList());
             return this;
         }
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:1FEB5AC5504703AC62EC7802B4BCBC4F
-        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigResourceInner> CreateOrUpdateSiteConfigAsync(SiteConfigResourceInner siteConfig, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.CreateOrUpdateConfigurationSlotAsync(ResourceGroupName, parent.Name, siteConfig, Name(), cancellationToken);
         }
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal DeploymentSlotImpl(
             string name,
             SiteInner innerObject,
-            SiteConfigInner configObject,
+            SiteConfigResourceInner configObject,
             WebAppImpl parent,
             IAppServiceManager manager)
                     : base(Regex.Replace(name, ".*/", ""), innerObject, configObject, manager)
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:256905D5B839C64BFE9830503CB5607B:EEE6F5F14FBF97AB824F4DC5BEE421C9
-        internal async override Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async override Task<SiteConfigResourceInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Manager.Inner.WebApps.GetConfigurationSlotAsync(ResourceGroupName, parent.Name, Name());
         }
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:68C25D685A0291AC775CEA8FCE1D7E20:19F7AEA76877B47E32F58082C59F91CA
         public DeploymentSlotImpl WithConfigurationFromDeploymentSlot(IDeploymentSlot slot)
         {
-            CopyConfigurations(slot.Inner.SiteConfig, slot.AppSettings.Values.ToList(), slot.ConnectionStrings.Values.ToList());
+            CopyConfigurations(((DeploymentSlotImpl) slot).SiteConfig, slot.AppSettings.Values.ToList(), slot.ConnectionStrings.Values.ToList());
             return this;
         }
 

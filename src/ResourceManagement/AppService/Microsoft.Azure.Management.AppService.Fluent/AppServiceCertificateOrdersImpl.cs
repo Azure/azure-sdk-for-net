@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:60ECC4D32A4130D4A0971FBE7432E886
         protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-            await Inner.DeleteCertificateOrderAsync(groupName, name, cancellationToken);
+            await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0AA8888F1EA6DA91AC72678639578389
