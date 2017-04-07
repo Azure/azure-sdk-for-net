@@ -14,9 +14,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public interface IResourceGroups  :
         ISupportsListing<IResourceGroup>,
+        ISupportsListingByTag<IResourceGroup>,
         ISupportsGettingByName<IResourceGroup>,
         ISupportsCreating<IBlank>,
         ISupportsDeletingByName,
+        ISupportsBeginDeletingByName,
         ISupportsBatchCreation<IResourceGroup>
     {
         /// <summary>
