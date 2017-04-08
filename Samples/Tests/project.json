@@ -80,6 +80,7 @@
     "ManageWebAppBasic": "1.0.0-*",
     "ManageWebAppSlots": "1.0.0-*",
     "ManageWebAppSourceControl": "1.0.0-*",
+    "ManageWebAppSourceControlAsync": "1.0.0-*",
     "ManageWebAppSqlConnection": "1.0.0-*",
     "ManageWebAppStorageAccountConnection": "1.0.0-*",
     "ManageWebAppWithDomainSsl": "1.0.0-*",

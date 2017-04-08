@@ -35,6 +35,16 @@ namespace Samples.Tests
                Path.Combine("..", "Common"));
         }
 
+        [Fact(Skip = "Async methods are not ported to C# yet")]
+        [Trait("Samples", "AppService")]
+        public void ManageWebAppSourceControlAsyncTest()
+        {
+            RunSampleAsTest(
+               this.GetType().FullName,
+               ManageWebAppSourceControlAsync.Program.RunSample,
+               Path.Combine("..", "Common"));
+        }
+
         [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSlotsTest()
