@@ -88,5 +88,17 @@ namespace Samples.Tests
                 this.GetType().FullName,
                 ManageVirtualNetwork.Program.RunSample);
         }
+
+        [Fact]
+        [Trait("Samples", "Network")]
+        public void ManageVirtualNetworkTestAsync()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                (azure) => ManageVirtualNetworkAsync.Program
+                            .RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult());
+        }
     }
 }
