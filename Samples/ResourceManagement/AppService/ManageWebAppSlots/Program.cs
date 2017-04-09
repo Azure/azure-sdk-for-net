@@ -111,17 +111,15 @@ namespace ManageWebAppSlots
         
         private static IWebApp CreateWebApp(IAzure azure, string rgName, string appName, Region region)
         {
-            var planName = SdkContext.RandomResourceName("jplan_", 15);
             var appUrl = appName + Suffix;
 
             Utilities.Log("Creating web app " + appName + " with master branch...");
 
             var app = azure.WebApps
                     .Define(appName)
-                    .WithExistingResourceGroup(rgName)
-                    .WithNewAppServicePlan(planName)
                     .WithRegion(region)
-                    .WithPricingTier(AppServicePricingTier.StandardS1)
+                    .WithExistingResourceGroup(rgName)
+                    .WithNewWindowsPlan(PricingTier.StandardS1)
                     .WithJavaVersion(JavaVersion.V8Newest)
                     .WithWebContainer(WebContainer.Tomcat8_0Newest)
                     .DefineSourceControl()

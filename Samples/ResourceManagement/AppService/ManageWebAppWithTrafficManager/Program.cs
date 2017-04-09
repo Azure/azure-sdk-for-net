@@ -252,15 +252,16 @@ namespace ManageWebAppWithTrafficManager
                     .Define(name)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
-                    .WithPricingTier(AppServicePricingTier.BasicB1)
+                    .WithPricingTier(PricingTier.BasicB1)
+                    .WithOperatingSystem(OperatingSystem.Windows)
                     .Create();
         }
 
         private static IWebApp CreateWebApp(IAzure azure, IAppServiceDomain domain, string rgName, string name, IAppServicePlan plan)
         {
             return azure.WebApps.Define(name)
+                    .WithExistingWindowsPlan(plan)
                     .WithExistingResourceGroup(rgName)
-                    .WithExistingAppServicePlan(plan)
                     .WithManagedHostnameBindings(domain, name)
                     .DefineSslBinding()
                         .ForHostname(name + "." + domain.Name)

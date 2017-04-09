@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Stream stream = Manager.Inner.WebApps.ListPublishingProfileXmlWithSecrets(ResourceGroupName, Name);
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
-            return new PublishingProfileImpl(xml, this);
+            return new PublishingProfileImpl(xml);
         }
 
         ///GENMHASH:62F8B201D885123D1E906E306D144662:E1F277FB3368B266611D1FAD9307CC48
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:BC033DDD8D749B9BBCDC5BADD5CF2B94:9F4E7075C3242FB2777F45453DB418B6
         public FluentImplT WithFreePricingTier()
         {
-            return WithPricingTier(PricingTier.FreeF1);
+            return WithPricingTier(new PricingTier("Free", "F1"));
         }
 
         ///GENMHASH:256905D5B839C64BFE9830503CB5607B:7AC64BDE9A6045728A97AD3B7E256F87
@@ -267,9 +267,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         
         internal virtual FluentImplT WithNewAppServicePlan(OperatingSystem operatingSystem, PricingTier pricingTier)
         {
-            //$ return withNewAppServicePlan(newDefaultAppServicePlan().WithOperatingSystem(operatingSystem).WithPricingTier(pricingTier));
-
-            return default(FluentImplT);
+            return WithNewAppServicePlan(NewDefaultAppServicePlan().WithOperatingSystem(operatingSystem).WithPricingTier(pricingTier));
         }
 
         public FluentImplT WithNewAppServicePlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable)
@@ -380,7 +378,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Stream stream = await Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsAsync(ResourceGroupName, Name, null, cancellationToken);
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
-            return new PublishingProfileImpl(xml, this);
+            return new PublishingProfileImpl(xml);
         }
 
         public async override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))

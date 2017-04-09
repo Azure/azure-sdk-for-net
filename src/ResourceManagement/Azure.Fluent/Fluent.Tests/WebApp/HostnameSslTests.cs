@@ -33,10 +33,9 @@ namespace Azure.Tests.WebApp
 
                 // hostname binding
                 appServiceManager.WebApps.Define(WebAppName)
-                    .WithNewResourceGroup(GroupName)
-                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.BasicB1)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewWindowsPlan(PricingTier.BasicB1)
                     .DefineHostnameBinding()
                         .WithAzureManagedDomain(domain)
                         .WithSubDomain(WebAppName)

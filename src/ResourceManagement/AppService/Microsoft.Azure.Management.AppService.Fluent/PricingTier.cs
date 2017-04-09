@@ -6,13 +6,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
 
     /// <summary>
-    /// Defines values for AppServicePricingTier.
+    /// Defines values for PricingTier.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuQXBwU2VydmljZVByaWNpbmdUaWVy
     public partial class PricingTier
     {
-        public static readonly PricingTier FreeF1 = new PricingTier("Free", "F1");
-        public static readonly PricingTier SharedD1 = new PricingTier("Shared", "D1");
         public static readonly PricingTier BasicB1 = new PricingTier("Basic", "B1");
         public static readonly PricingTier BasicB2 = new PricingTier("Basic", "B2");
         public static readonly PricingTier BasicB3 = new PricingTier("Basic", "B3");
@@ -32,7 +30,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
-        /// Creates a custom value for AppServicePricingTier.
+        /// Creates a custom value for PricingTier.
         /// </summary>
         /// <param name="tier">the tier name</param>
         /// <param name="size">the size of the plan</param>

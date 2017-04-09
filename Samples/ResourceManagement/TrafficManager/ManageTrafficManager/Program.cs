@@ -102,7 +102,8 @@ namespace ManageTrafficManager
                             .Define(planName)
                             .WithRegion(region)
                             .WithExistingResourceGroup(rgName)
-                            .WithPricingTier(AppServicePricingTier.BasicB1)
+                            .WithPricingTier(PricingTier.BasicB1)
+                            .WithOperatingSystem(OperatingSystem.Windows)
                             .Create();
                     Utilities.Log("Created app service plan " + planName);
                     Utilities.Print(appServicePlan);
@@ -119,8 +120,8 @@ namespace ManageTrafficManager
                     var webAppName = webAppNamePrefix + id;
                     Utilities.Log("Creating a web app " + webAppName + " using the plan " + appServicePlan.Name + "...");
                     var webApp = azure.WebApps.Define(webAppName)
+                            .WithExistingWindowsPlan(appServicePlan)
                             .WithExistingResourceGroup(rgName)
-                            .WithExistingAppServicePlan(appServicePlan)
                             .WithManagedHostnameBindings(domain, webAppName)
                             .DefineSslBinding()
                             .ForHostname(webAppName + "." + domain.Name)

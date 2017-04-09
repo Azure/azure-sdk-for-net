@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Stream stream = Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, Parent().Name, Name());
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
-            return new PublishingProfileImpl(xml, this);
+            return new PublishingProfileImpl(xml);
         }
 
         ///GENMHASH:62F8B201D885123D1E906E306D144662:88BEE6CEAD1A9FC39C629C20B3DA3F56
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Stream stream = await Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlotAsync(ResourceGroupName, parent.Name, Name(), null, cancellationToken);
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
-            return new PublishingProfileImpl(xml, this);
+            return new PublishingProfileImpl(xml);
         }
 
         public async override Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))

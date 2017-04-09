@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
             return CreateAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        public virtual Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
             TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
             

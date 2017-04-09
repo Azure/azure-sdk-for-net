@@ -11,10 +11,10 @@ using Xunit;
 
 namespace Azure.Tests.WebApp
 {
-    public class WebAppsTests
+    public class LinuxWebAppsTests
     {
         [Fact]
-        public void CanCRUDWebApp()
+        public void CanCRUDLinuxWebApp()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
@@ -22,8 +22,6 @@ namespace Azure.Tests.WebApp
                 string GroupName2 = TestUtilities.GenerateName("javacsmrg");
                 string WebAppName1 = TestUtilities.GenerateName("java-webapp-");
                 string WebAppName2 = TestUtilities.GenerateName("java-webapp-");
-                string AppServicePlanName1 = TestUtilities.GenerateName("java-asp-");
-                string AppServicePlanName2 = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
@@ -31,8 +29,8 @@ namespace Azure.Tests.WebApp
                 var webApp1 = appServiceManager.WebApps.Define(WebAppName1)
                     .WithRegion(Region.USWest)
                     .WithNewResourceGroup(GroupName1)
-                    .WithNewWindowsPlan(PricingTier.BasicB1)
-                    .WithRemoteDebuggingEnabled(RemoteVisualStudioVersion.VS2013)
+                    .WithNewLinuxPlan(PricingTier.BasicB1)
+                    .WithPublicDockerHubImage("wordpress")
                     .Create();
                 Assert.NotNull(webApp1);
                 Assert.Equal(Region.USWest, webApp1.Region);
@@ -40,6 +38,8 @@ namespace Azure.Tests.WebApp
                 Assert.NotNull(plan1);
                 Assert.Equal(Region.USWest, plan1.Region);
                 Assert.Equal(PricingTier.BasicB1, plan1.PricingTier);
+                Assert.Equal(OperatingSystem.Linux, plan1.OperatingSystem);
+                Assert.Equal(OperatingSystem.Linux, webApp1.OperatingSystem);
 
                 // Create in a new group with existing app service plan
                 var webApp2 = appServiceManager.WebApps.Define(WebAppName2)
@@ -47,13 +47,16 @@ namespace Azure.Tests.WebApp
                     .WithNewResourceGroup(GroupName2)
                     .Create();
                 Assert.NotNull(webApp2);
-                Assert.Equal(Region.USWest, webApp1.Region);
+                Assert.Equal(Region.USWest, webApp2.Region);
+                Assert.Equal(OperatingSystem.Linux, webApp2.OperatingSystem);
 
                 // Get
                 var webApp = appServiceManager.WebApps.GetByResourceGroup(GroupName1, webApp1.Name);
                 Assert.Equal(webApp1.Id, webApp.Id);
+                Assert.Equal(OperatingSystem.Linux, webApp.OperatingSystem);
                 webApp = appServiceManager.WebApps.GetById(webApp2.Id);
                 Assert.Equal(webApp2.Name, webApp.Name);
+                Assert.Equal(OperatingSystem.Linux, webApp.OperatingSystem);
 
                 // List
                 var webApps = appServiceManager.WebApps.ListByResourceGroup(GroupName1);
@@ -70,6 +73,17 @@ namespace Azure.Tests.WebApp
                 Assert.NotEqual(plan1.Id, plan2.Id);
                 Assert.Equal(Region.USWest, plan2.Region);
                 Assert.Equal(PricingTier.StandardS2, plan2.PricingTier);
+                Assert.Equal(OperatingSystem.Linux, plan2.OperatingSystem);
+
+                // Update 2
+                webApp1.Update()
+                    .WithBuiltInImage(RuntimeStack.NodeJS_6_6_0)
+                    .DefineSourceControl()
+                        .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
+                        .WithBranch("master")
+                        .Attach()
+                    .Apply();
+                Assert.NotNull(webApp1);
             }
         }
     }

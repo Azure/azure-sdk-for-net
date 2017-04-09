@@ -31,9 +31,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IStorageAccount currentStorageAccount;
         public IStorageAccount StorageAccount()
         {
-            //$ return currentStorageAccount;
-
-            return null;
+            return currentStorageAccount;
         }
 
         public FunctionAppImpl WithoutDailyUsageQuota()
@@ -136,7 +134,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IIndexable> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IFunctionApp> CreateAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             if (Inner.ServerFarmId == null)
             {
