@@ -115,6 +115,7 @@
     "ManageVirtualMachine": "1.0.0-*",
     "ManageVirtualMachineExtension": "1.0.0-*",
     "ManageVirtualMachineScaleSet": "1.0.0-*",
+    "ManageVirtualMachineScaleSetAsync": "1.0.0-*",
     "ManageVirtualMachineScaleSetWithUnmanagedDisks": "1.0.0-*",
     "ManageVirtualMachinesInParallel": "1.0.0-*",
     "ManageVirtualMachinesInParallelWithNetwork": "1.0.0-*",

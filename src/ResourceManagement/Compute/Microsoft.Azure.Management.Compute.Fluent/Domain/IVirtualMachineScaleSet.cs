@@ -8,6 +8,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine scale set.
@@ -42,6 +44,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void PowerOff();
 
+        /// <summary>
+        /// Powers off (stops) the virtual machines in the scale set.
+        /// </summary>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken));
+
         /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
         IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
 
@@ -52,6 +62,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Deallocate();
+
+        /// <summary>
+        /// Shuts down the virtual machines in the scale set and releases its compute resources.
+        /// </summary>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <return>
         /// The virtual network associated with the primary network interfaces of the virtual machines
@@ -101,6 +119,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Reimage();
 
         /// <summary>
+        /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set.
+        /// </summary>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets the name of the OS disk of virtual machines in the scale set.
         /// </summary>
         string OsDiskName { get; }
@@ -148,12 +174,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Restart();
 
         /// <summary>
+        /// Restarts the virtual machines in the scale set.
+        /// </summary>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Starts the virtual machines in the scale set.
         /// </summary>
         /// <throws>CloudException thrown for an invalid response from the service.</throws>
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Start();
+
+        /// <summary>
+        /// Starts the virtual machines in the scale set.
+        /// </summary>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <return>
         /// The internal load balancer associated with the primary network interface of

@@ -176,6 +176,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppSourceControlAs
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualNetworkAsync", "ResourceManagement\Network\ManageVirtualNetworkAsync\ManageVirtualNetworkAsync.xproj", "{94E95E76-3398-482B-A95C-64334987D1F4}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachineScaleSetAsync", "ResourceManagement\Compute\ManageVirtualMachineScaleSetAsync\ManageVirtualMachineScaleSetAsync.xproj", "{58443BBC-FC60-408B-B9EF-61D447897BB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -466,6 +468,10 @@ Global
 		{94E95E76-3398-482B-A95C-64334987D1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94E95E76-3398-482B-A95C-64334987D1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94E95E76-3398-482B-A95C-64334987D1F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58443BBC-FC60-408B-B9EF-61D447897BB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58443BBC-FC60-408B-B9EF-61D447897BB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58443BBC-FC60-408B-B9EF-61D447897BB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58443BBC-FC60-408B-B9EF-61D447897BB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -541,5 +547,6 @@ Global
 		{9C9553CE-5BD4-4E9B-8B2D-4D04AB8D11EA} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
 		{EB218C74-2280-4F09-B6D1-20659248350B} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{94E95E76-3398-482B-A95C-64334987D1F4} = {CC32CE3E-95AA-44D1-AF4E-F8B3AA94D7F8}
+		{58443BBC-FC60-408B-B9EF-61D447897BB0} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 	EndGlobalSection
 EndGlobal

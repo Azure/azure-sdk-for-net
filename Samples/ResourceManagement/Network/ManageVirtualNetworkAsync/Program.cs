@@ -50,13 +50,8 @@ namespace ManageVirtualNetworkAsync
 
                 Utilities.Log("Creating a network security group for virtual network backend subnet...");
                 Utilities.Log("Creating a network security group for virtual network frontend subnet...");
-
-                INetwork virtualNetwork2 = null;
-                INetworkSecurityGroup frontEndSubnetNsg = null;
-                INetworkSecurityGroup backEndSubnetNsg = null;
-
-                await Task.WhenAll(
-                    azure.NetworkSecurityGroups
+                
+                var backEndSubnetNsg = await azure.NetworkSecurityGroups
                         .Define(VNet1BackEndSubnetNsgName)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(ResourceGroupName)
@@ -76,42 +71,36 @@ namespace ManageVirtualNetworkAsync
                             .ToAnyPort()
                             .WithAnyProtocol()
                             .Attach()
-                        .CreateAsync()
-                        .ContinueWith( nsg =>
-                        {
-                            backEndSubnetNsg = nsg.Result;
-                            Utilities.Log("Created network security group");
-                            // Print the network security group
-                            Utilities.PrintNetworkSecurityGroup(backEndSubnetNsg);
-                        }),
-                    azure.NetworkSecurityGroups.Define(VNet1FrontEndSubnetNsgName)
-                        .WithRegion(Region.USEast)
-                        .WithNewResourceGroup(ResourceGroupName)
-                        .DefineRule("AllowHttpInComing")
-                            .AllowInbound()
-                            .FromAddress("INTERNET")
-                            .FromAnyPort()
-                            .ToAnyAddress()
-                            .ToPort(80)
-                            .WithProtocol(SecurityRuleProtocol.Tcp)
-                            .Attach()
-                        .DefineRule("DenyInternetOutGoing")
-                            .DenyOutbound()
-                            .FromAnyAddress()
-                            .FromAnyPort()
-                            .ToAddress("INTERNET")
-                            .ToAnyPort()
-                            .WithAnyProtocol()
-                            .Attach()
-                        .CreateAsync()
-                        .ContinueWith(nsg =>
-                        {
-                            frontEndSubnetNsg = nsg.Result;
-                            Utilities.Log("Created network security group");
-                            // Print the network security group
-                            Utilities.PrintNetworkSecurityGroup(frontEndSubnetNsg);
-                            return nsg.Result;
-                        }));
+                        .CreateAsync();
+                
+                Utilities.Log("Created network security group");
+                // Print the network security group
+                Utilities.PrintNetworkSecurityGroup(backEndSubnetNsg);
+
+                var frontEndSubnetNsg = await azure.NetworkSecurityGroups.Define(VNet1FrontEndSubnetNsgName)
+                    .WithRegion(Region.USEast)
+                    .WithExistingResourceGroup(ResourceGroupName)
+                    .DefineRule("AllowHttpInComing")
+                        .AllowInbound()
+                        .FromAddress("INTERNET")
+                        .FromAnyPort()
+                        .ToAnyAddress()
+                        .ToPort(80)
+                        .WithProtocol(SecurityRuleProtocol.Tcp)
+                        .Attach()
+                    .DefineRule("DenyInternetOutGoing")
+                        .DenyOutbound()
+                        .FromAnyAddress()
+                        .FromAnyPort()
+                        .ToAddress("INTERNET")
+                        .ToAnyPort()
+                        .WithAnyProtocol()
+                        .Attach()
+                    .CreateAsync();
+
+                Utilities.Log("Created network security group");
+                // Print the network security group
+                Utilities.PrintNetworkSecurityGroup(frontEndSubnetNsg);
                 
                 Utilities.Log("Creating virtual network #1...");
 
@@ -159,8 +148,7 @@ namespace ManageVirtualNetworkAsync
 
                 var t1 = DateTime.UtcNow;
 
-                await Task.WhenAll(
-                    azure.VirtualMachines.Define(frontEndVmName)
+                var frontEndVM = await azure.VirtualMachines.Define(frontEndVmName)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(ResourceGroupName)
                         .WithExistingPrimaryNetwork(virtualNetwork1)
@@ -171,17 +159,15 @@ namespace ManageVirtualNetworkAsync
                         .WithRootUsername(UserName)
                         .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
-                        .CreateAsync()
-                        .ContinueWith(frontEndVM =>
-                        {
-                            var t2 = DateTime.UtcNow;
-                            Utilities.Log("Created Linux VM: (took "
-                                    + (t2 - t1).TotalSeconds + " seconds) " + frontEndVM.Result.Id);
-                            // Print virtual machine details
-                            Utilities.PrintVirtualMachine(frontEndVM.Result);
-                            return frontEndVM.Result;
-                        }),
-                    azure.VirtualMachines.Define(backEndVmName)
+                        .CreateAsync();
+                var t2 = DateTime.UtcNow;
+                Utilities.Log("Created Linux VM: (took "
+                    + (t2 - t1).TotalSeconds + " seconds) " + frontEndVM);
+                // Print virtual machine details
+                Utilities.PrintVirtualMachine(frontEndVM);
+                t1 = DateTime.UtcNow;
+
+                var backEndVM = await azure.VirtualMachines.Define(backEndVmName)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(ResourceGroupName)
                         .WithExistingPrimaryNetwork(virtualNetwork1)
@@ -192,30 +178,23 @@ namespace ManageVirtualNetworkAsync
                         .WithRootUsername(UserName)
                         .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
-                        .CreateAsync()
-                        .ContinueWith(backEndVM =>
-                        {
-                            var t3 = DateTime.UtcNow;
-                            Utilities.Log("Created Linux VM: (took "
-                                    + (t3 - t1).TotalSeconds + " seconds) " + backEndVM.Result.Id);
-                            // Print virtual machine details
-                            Utilities.PrintVirtualMachine(backEndVM.Result);
-                            return backEndVM.Result;
-                        }),
-                    azure.Networks.Define(vnetName2)
+                        .CreateAsync();
+
+                var t3 = DateTime.UtcNow;
+                Utilities.Log("Created Linux VM: (took "
+                        + (t3 - t1).TotalSeconds + " seconds) " + backEndVM.Id);
+                // Print virtual machine details
+                Utilities.PrintVirtualMachine(backEndVM);
+
+                var virtualNetwork2 = await azure.Networks.Define(vnetName2)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(ResourceGroupName)
-                        .CreateAsync()
-                        .ContinueWith(vn =>
-                        {
-                            Utilities.Log("Created a virtual network");
-                            // Print the virtual network details
-                            Utilities.PrintVirtualNetwork(vn.Result);
-                            virtualNetwork2 = vn.Result;
-                            return vn.Result;
-                        }
-                    ));
+                        .CreateAsync();
 
+                Utilities.Log("Created a virtual network");
+                // Print the virtual network details
+                Utilities.PrintVirtualNetwork(virtualNetwork2);
+                
                 //============================================================
                 // List virtual networks
                 
@@ -235,7 +214,7 @@ namespace ManageVirtualNetworkAsync
                 try
                 {
                     Utilities.Log("Deleting Resource Group: " + ResourceGroupName);
-                    azure.ResourceGroups.DeleteByNameAsync(ResourceGroupName);
+                    await azure.ResourceGroups.DeleteByNameAsync(ResourceGroupName);
                     Utilities.Log("Deleted Resource Group: " + ResourceGroupName);
                 }
                 catch (NullReferenceException)

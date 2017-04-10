@@ -148,6 +148,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             Manager.Inner.VirtualMachineScaleSets.PowerOff(ResourceGroupName, Name);
         }
 
+        public async Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachineScaleSets.PowerOffAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
+        }
+
         ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:51AD565B2270FC1F9104F1A5BC632E24
         public VirtualMachineScaleSetImpl WithStoredLinuxImage(string imageUrl)
         {
@@ -174,6 +179,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             Manager.Inner.VirtualMachineScaleSets.Deallocate(this.ResourceGroupName, this.Name);
             Refresh();
+        }
+
+        public async Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachineScaleSets.DeallocateAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);
+            await RefreshAsync(cancellationToken);
         }
 
         ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
@@ -694,6 +705,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public void Restart()
         {
             Manager.Inner.VirtualMachineScaleSets.Restart(this.ResourceGroupName, this.Name);
+        }
+
+        public async Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachineScaleSets.RestartAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:5880487AA9218E8DF536932A49A0ACDD:35850B81E88D88D68766589B9671E590
@@ -1651,6 +1667,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             Manager.Inner.VirtualMachineScaleSets.Reimage(ResourceGroupName, Name);
         }
+        public async Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachineScaleSets.ReimageAsync(ResourceGroupName, Name, cancellationToken);
+        }
 
         ///GENMHASH:7BA741621F15820BA59476A9CFEBBD88:395C45C93AFFE4737734EBBF09A6B2AF
         public VirtualMachineScaleSetImpl WithComputerNamePrefix(string namePrefix)
@@ -1920,6 +1940,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public void Start()
         {
             Manager.Inner.VirtualMachineScaleSets.Start(ResourceGroupName, Name);
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachineScaleSets.StartAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
 
         ///GENMHASH:E3A33B29616A6EAF518CC10EA90B45C7:191C8844004D95B6F7362BD81543FE33

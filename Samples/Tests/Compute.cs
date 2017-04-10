@@ -204,6 +204,18 @@ namespace Samples.Tests
         }
 
         [Fact]
+        [Trait("Samples", "Network")]
+        public void ManageVirtualMachineScaleSetTestAsync()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                (azure) => ManageVirtualMachineScaleSetAsync.Program
+                            .RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult());
+        }
+
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineTest()
         {
