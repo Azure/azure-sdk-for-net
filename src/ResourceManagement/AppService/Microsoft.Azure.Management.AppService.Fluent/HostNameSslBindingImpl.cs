@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// Implementation for HostNameSslBinding and its create and update interfaces.
     /// </summary>
-    /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
+    /// <typeparam name="Fluent">The fluent interface of IWithCreateIWithCreatethe parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVTc2xCaW5kaW5nSW1wbA==
     internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> :
         IndexableWrapper<HostNameSslState>,
         IHostNameSslBinding,
-        HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithCreate<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
         where FluentT : class, IWebAppBase
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.VirtualIP;
         }
 
-        ///GENMHASH:1CBA63C4D54835D9C11EFE4E0444EE09:353CE8610C345C1C601531BF2C13A9A5
+        ///GENMHASH:1CBA63C4D54835D9C11EFE4E0444EE09:2E4B713AA17332F584447BAD1A48787F
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
             newCertificate = async () => await parent.Manager.AppServiceCertificates
@@ -101,15 +101,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
-        public IWebAppBase Parent
+        public IWebAppBase Parent()
         {
-            get
-            {
-                return parent;
-            }
+            return parent;
         }
 
-        ///GENMHASH:B8A050E8A75C218A628FE17D20A72D91:BCDDFE46A85ECD6829F8CF639BD96E8F
+        ///GENMHASH:B8A050E8A75C218A628FE17D20A72D91:6EE39F4002D191398A0EC683504A242D
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPfxCertificateToUpload(string pfxPath, string password)
         {
             var thumbprint = GetCertificateThumbprint(pfxPath, password);
@@ -131,7 +128,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             this.parent = parent;
         }
 
-        ///GENMHASH:FECDA6325A56C366902AD25EE3271FA5:27D3A54723DD08767C3E53EDE9EA8C5E
+        ///GENMHASH:FECDA6325A56C366902AD25EE3271FA5:CDA44B33A4B3A52E7650DDCC73B20F00
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewStandardSslCertificateOrder(string certificateOrderName)
         {
             this.certificateInDefinition = parent.Manager.AppServiceCertificateOrders.Define(certificateOrderName)
@@ -150,7 +147,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:3ADCAA931B83CC8C43D568C38C044646:28A9D87D2294D65F59DDB8E411F07C49
+        ///GENMHASH:3ADCAA931B83CC8C43D568C38C044646:82887684BAC138BE1FF3A3C831EDBD37
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewKeyVault(string vaultName)
         {
             this.newCertificate = async () =>
@@ -195,7 +192,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:14288EE05A643ED3D2973C5B1849325A:6B20708315CEB0423077398E0C490AFB
+        ///GENMHASH:14288EE05A643ED3D2973C5B1849325A:7E99B36D9E7DE4FAEAE4A28470A90541
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithExistingKeyVault(IVault vault)
         {
             newCertificate = async () =>
@@ -219,5 +216,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Inner.SslState = Models.SslState.SniEnabled;
             return this;
         }
+
     }
 }

@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using AppServiceDomain.Update;
-    using Models;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -14,17 +14,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// An immutable client-side representation of a domain.
     /// Domains in Azure are purchased from 3rd party domain providers. By calling
-    /// Creatable.create() or Creatable.createAsync() you agree to
-    /// the agreements listed in AppServiceDomains#listAgreements(String).
+    /// Creatable.create() or  Creatable.createAsync() you agree to
+    /// the agreements listed in  AppServiceDomains.listAgreements(String).
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IAppServiceDomain  :
-        IGroupableResource<IAppServiceManager, DomainInner>,
-        IHasName,
-        IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
-        IUpdatable<AppServiceDomain.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.DomainInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<AppServiceDomain.Update.IUpdate>
     {
         /// <summary>
         /// Gets legal agreement consent.
@@ -69,7 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets name servers.
         /// </summary>
-        System.Collections.Generic.IList<string> NameServers { get; }
+        System.Collections.Generic.IReadOnlyList<string> NameServers { get; }
 
         /// <summary>
         /// Gets billing contact information.
@@ -93,7 +95,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
-        /// <return>The Observable to the result.</return>
+        /// <return>A representation of the deferred computation of this call.</return>
         Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

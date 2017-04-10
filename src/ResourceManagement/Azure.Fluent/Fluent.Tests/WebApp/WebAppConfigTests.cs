@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
 using Xunit;
 
 namespace Azure.Tests.WebApp
@@ -26,10 +27,9 @@ namespace Azure.Tests.WebApp
 
                 // Create with new app service plan
                 appServiceManager.WebApps.Define(WebAppName)
-                    .WithNewResourceGroup(GroupName)
-                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.BasicB1)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewWindowsPlan(PricingTier.BasicB1)
                     .WithNetFrameworkVersion(NetFrameworkVersion.V3_0)
                     .Create();
 

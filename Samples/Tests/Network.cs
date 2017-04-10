@@ -35,7 +35,7 @@ namespace Samples.Tests
                 ManageInternalLoadBalancer.Program.RunSample);
         }
 
-        [Fact(Skip = "Fails in record mode with: Addition of a VM with managed disks to non-managed Availability Set or addition of a VM with blob based disks to managed Availability Set is not supported. Please create an Availability Set with 'managed' property set in order to add a VM with managed disks to it.")]
+        [Fact]
         [Trait("Samples", "Network")]
         public void ManageInternetFacingLoadBalancerTest()
         {

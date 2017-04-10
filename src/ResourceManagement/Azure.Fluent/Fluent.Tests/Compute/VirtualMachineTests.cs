@@ -199,7 +199,7 @@ namespace Fluent.Tests.Compute
             }
         }
 
-        [Fact(Skip="Fails in record mode. need investigation")]
+        [Fact]
         public void CanCreateVirtualMachineWithCustomData()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))

@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
 
         ///GENMHASH:E776888E46F8A3FC56D24DF4A74E5B74:938AF55195C22DFA74E6820E73D5DEE3
+
         public new async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var resourceId = ResourceId.FromString(id);
@@ -38,6 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
+
         public IEnumerable<IAppServicePlan> ListByGroup(string resourceGroupName)
         {
             return WrapList(Inner.ListByResourceGroup(resourceGroupName)
@@ -75,13 +77,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
-        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:C35C270B3C2E9692DFA4DB35882E6EF7
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:15CD9415526D1B733D90CDDE7ECDE8B9
         protected override AppServicePlanImpl WrapModel(string name)
         {
             return new AppServicePlanImpl(name, new AppServicePlanInner(), Manager);
         }
 
-        ///GENMHASH:1421F11CFE57BDF3BEA54271EBAF3758:8BBC6CEF06D15B4BC058A7C4E216A1A2
+        ///GENMHASH:1421F11CFE57BDF3BEA54271EBAF3758:E10F86D38EF3746AE39B86EEC91CC962
         protected override IAppServicePlan WrapModel(AppServicePlanInner inner)
         {
             if (inner == null)
@@ -96,5 +98,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             : base(manager.Inner.AppServicePlans, manager)
         {
         }
+
     }
 }

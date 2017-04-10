@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update
     /// The template for a site update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
-        IWithCapacity,
-        IWithPerSiteScaling,
-        IWithPricingTier,
-        IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IWithCapacity,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IWithPerSiteScaling,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IWithPricingTier,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate>
     {
     }
 
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
         /// <return>The next stage of the app service plan update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithPricingTier(AppServicePricingTier pricingTier);
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithPricingTier(PricingTier pricingTier);
     }
 
     /// <summary>

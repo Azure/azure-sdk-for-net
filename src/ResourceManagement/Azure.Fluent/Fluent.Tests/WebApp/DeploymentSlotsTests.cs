@@ -29,10 +29,9 @@ namespace Azure.Tests.WebApp
 
                 // Create web app
                 var webApp = appServiceManager.WebApps.Define(WebAppName)
-                    .WithNewResourceGroup(GroupName)
-                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.StandardS2)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewWindowsPlan(PricingTier.StandardS2)
                     .WithAppSetting("appkey", "appvalue")
                     .WithStickyAppSetting("stickykey", "stickyvalue")
                     .WithConnectionString("connectionName", "connectionValue", ConnectionStringType.Custom)

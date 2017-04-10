@@ -60,6 +60,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IDictionary<string, bool> connectionStringStickiness;
         private WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl;
         private bool sourceControlToDelete;
+        private WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> authentication;
+        private bool authenticationToUpdate;
 
         internal SiteConfigResourceInner SiteConfig
         {
@@ -76,7 +78,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:400B39C84CFE07A8B031B773061CF1BB:54F16B494685A43639288CB0A223084F
+        ///GENMHASH:400B39C84CFE07A8B031B773061CF1BB:3336437A3EFA0E423BB5363ADD7BA1F0
         public FluentImplT WithAppSettingStickiness(string key, bool sticky)
         {
             appSettingStickiness[key] = sticky;
@@ -89,13 +91,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.RepositorySiteName;
         }
 
-        ///GENMHASH:5347BC9AA33E4B7344CEB8188EA1DAA3:B3A0F7D2A1C11139E3140FF2DC919CEB
+        ///GENMHASH:5347BC9AA33E4B7344CEB8188EA1DAA3:361AE1AC09182E0F87A8F6D59BF17F5C
         public FluentImplT WithoutPython()
         {
             return WithPythonVersion(Fluent.PythonVersion.Parse(""));
         }
 
-        ///GENMHASH:B67E95BCEA89D1B6CBB6849249A60D4F:3A1F8EE2D47ED51D598D727D3C3FAA86
+        ///GENMHASH:B67E95BCEA89D1B6CBB6849249A60D4F:03059CE12A850A7CCCF1A3E59870EDED
         public FluentImplT WithThirdPartyHostnameBinding(string domain, params string[] hostnames)
         {
             foreach (var hostname in hostnames)
@@ -112,7 +114,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:620993DCE6DF78140D8125DD97478452:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<StringDictionaryInner> ListAppSettingsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:879627C2DAE69433191E7E3A0197FFCB:97444012B93FEF52369A6C980B714A5A
+        ///GENMHASH:879627C2DAE69433191E7E3A0197FFCB:50FA58870F56D048CFBCFCDB1A5091C6
         private FluentT NormalizeProperties()
         {
             this.hostNameBindingsToCreate = new Dictionary<string, HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>>();
@@ -125,6 +127,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             this.connectionStringStickiness = new Dictionary<string, bool>();
             this.sourceControl = null;
             this.sourceControlToDelete = false;
+            this.authenticationToUpdate = false;
             this.sslBindingsToCreate = new Dictionary<string, HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>>();
             if (Inner.HostNames != null)
             {
@@ -157,7 +160,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this as FluentT;
         }
 
-        ///GENMHASH:5091CF7FBD481F6A80C8200D77B918B5:86CEE108C820B076B77DA76828966EDD
+        ///GENMHASH:5091CF7FBD481F6A80C8200D77B918B5:2676D6C589C22A318404C0D6FEBB1458
         public string JavaContainerVersion()
         {
             if (this.SiteConfig == null)
@@ -170,7 +173,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:807E62B6346803DB90804D0DEBD2FCA6:27E486AB74A10242FF421C0798DDC450
         internal abstract Task DeleteSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:B06FC38A7913CA2F028C97DE025DEED3:0F7ECBEDACE05420A5D0D277D4704257
+        ///GENMHASH:B06FC38A7913CA2F028C97DE025DEED3:64057BA87D06462F77EAD057B63F6120
         public FluentImplT WithStickyConnectionString(string name, string value, ConnectionStringType type)
         {
             connectionStringsToAdd[name] = new ConnStringValueTypePair()
@@ -182,7 +185,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:0BD0140B6FBB6AA6B83FE90F95878549:855FB47B5269DBB806FE536172AD4F91
+        ///GENMHASH:0BD0140B6FBB6AA6B83FE90F95878549:795D3BB5233A7B4C5D83186D286586D7
         public PythonVersion PythonVersion()
         {
             if (this.SiteConfig == null || this.SiteConfig.PythonVersion == null)
@@ -192,13 +195,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Fluent.PythonVersion.Parse(this.SiteConfig.PythonVersion);
         }
 
-        ///GENMHASH:C03B1FAF31FB94362C083BAA7332E4A4:516E9ADDDB1B086B94A185F8CA729E6B
+        ///GENMHASH:C03B1FAF31FB94362C083BAA7332E4A4:8B19C9BFB290F4258B198AA4A8232D84
         public FluentImplT WithoutJava()
         {
             return WithJavaVersion(Fluent.JavaVersion.Parse("")).WithWebContainer(null);
         }
 
-        ///GENMHASH:3A0791A760CE20BB60B662E45E1B5A20:AC8556A885DA9E1351FB1A6C074AA07E
+        ///GENMHASH:3A0791A760CE20BB60B662E45E1B5A20:4FF1C3A0EBAB86346DAA7BA2FF1129CE
         public FluentImplT WithPythonVersion(PythonVersion version)
         {
             if (this.SiteConfig == null)
@@ -209,7 +212,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:E45783E7B404EC0F4EBC4EE6BA7EF55A:5ECDDE741F87F4634B0FDC94904B2771
+        ///GENMHASH:E45783E7B404EC0F4EBC4EE6BA7EF55A:35E22FB3218ACDCDE6A7844929967E03
         public FluentImplT WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode)
         {
             if (this.SiteConfig == null)
@@ -221,24 +224,26 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:75636395FBDB9C1FA7F5231207B98D55
+
         public override async Task<FluentT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
-            SiteInner inner = await GetInnerAsync(cancellationToken);
+            SiteInner inner = await GetSiteAsync(cancellationToken);
             ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
             this.SiteConfig = await GetConfigInnerAsync(cancellationToken);
             SetInner(inner);
-            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await CacheSiteProperties(cancellationToken);
             return this as FluentT;
         }
 
         ///GENMHASH:10422D744EF1F162EBE8C9A9FA95C4F1:730A847F06F615063704F0C5FFF2B639
-        public ISet<string> OutboundIpAddresses()
+
+        public ISet<string> OutboundIPAddresses()
         {
             return outboundIpAddressesSet;
         }
 
-        ///GENMHASH:4380B7AB34BB7338E16329242A2DB73A:399A7EDDE163BD102BD7A221C0EF6472
+        ///GENMHASH:4380B7AB34BB7338E16329242A2DB73A:ACAB6B8E224E0172DCF3037479B95B0A
         public bool WebSocketsEnabled()
         {
             if (this.SiteConfig == null || this.SiteConfig.WebSocketsEnabled == null)
@@ -262,19 +267,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:C70FCB6ABBA310D8130B4F53160A0440
-        public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
+
+        public async Task CacheSiteProperties(CancellationToken cancellationToken = default(CancellationToken))
         {
             Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync(cancellationToken);
-            ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:27E486AB74A10242FF421C0798DDC450
             Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync(cancellationToken);
-            ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:27E486AB74A10242FF421C0798DDC450
             Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync(cancellationToken);
+            Task<SiteAuthSettingsInner> authenticationTask = GetAuthenticationAsync(cancellationToken);
 
-            await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask);
+            await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask, authenticationTask);
 
             StringDictionaryInner appSettings = appSettingsTask.Result;
             ConnectionStringDictionaryInner connectionStrings = connectionStringsTask.Result;
             SlotConfigNamesResourceInner slotConfigs = slotConfigsTask.Result;
+            SiteAuthSettingsInner authInner = authenticationTask.Result;
 
             if (appSettings == null || appSettings.Properties == null)
             {
@@ -299,6 +305,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                         slotConfigs.ConnectionStringNames != null && slotConfigs.ConnectionStringNames.Contains(p.Key)))
                     .ToDictionary(s => s.Name);
             }
+
+            authentication = new WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(authInner, this);
         }
 
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:27E486AB74A10242FF421C0798DDC450
@@ -306,7 +314,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             ConnectionStringDictionaryInner inner,
             CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:5C64261945401D044556FE57A81F8919:9E936C439A1F037DD069CDD0064C2AC0
+        ///GENMHASH:5C64261945401D044556FE57A81F8919:FF5FA095598E35520A42EFBB735AC487
         public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineHostnameBinding()
         {
             HostNameBindingInner inner = new HostNameBindingInner()
@@ -322,7 +330,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 (FluentImplT)this);
         }
 
-        ///GENMHASH:C41BC129D11DD290512802D4F95ED197:C6674CAD927602613E222F438F228B47
+        ///GENMHASH:C41BC129D11DD290512802D4F95ED197:013031F4CC26C3B90E69794F1038D33B
         public FluentImplT WithDefaultDocument(string document)
         {
             if (this.SiteConfig == null)
@@ -337,7 +345,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:75EA0E50B45903417B864DA9C5D01D1C:9919B071041D059D4D8D308E1FB5E20E
+        ///GENMHASH:75EA0E50B45903417B864DA9C5D01D1C:B2C616DAEE72068CA3942A2BF4BC9ECB
         public FluentImplT WithConnectionStringStickiness(string name, bool stickiness)
         {
             connectionStringStickiness[name] = stickiness;
@@ -350,7 +358,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return enabledHostNamesSet;
         }
 
-        ///GENMHASH:28D9C85008A5FA42084A6F7E18E27138:AD25C9D393389A67F8973FC859A1C1D2
+        ///GENMHASH:28D9C85008A5FA42084A6F7E18E27138:EA42CE9A58D576BB006C11AB710672FB
         public FluentImplT WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion)
         {
             if (this.SiteConfig == null)
@@ -362,7 +370,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:7889230A4E9E7272A9D70286DB690D8E:53F488EBDEDD2F8F38BF84028D4A7680
+        ///GENMHASH:7889230A4E9E7272A9D70286DB690D8E:94B0D757764065B7860AD2852AB07F7E
         public FluentImplT WithoutDefaultDocument(string document)
         {
             if (this.SiteConfig == null)
@@ -376,14 +384,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:1BA412F5F81148A7D5CE917E46EAF27A:22A28B1AE554D533D9E4E3634397A615
+        ///GENMHASH:1BA412F5F81148A7D5CE917E46EAF27A:92D9EEA0C2036558D58ED13AECCA31C3
         public FluentImplT WithClientCertEnabled(bool enabled)
         {
             Inner.ClientCertEnabled = enabled;
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:843B1707D5538E1793853BD38DCDFC52:E68D654B4C771392BAED7DFAFD6DE33F
+        ///GENMHASH:843B1707D5538E1793853BD38DCDFC52:C41573D98BF4332B78B04B0D2F4FA92C
         public FluentImplT WithLocalGitSourceControl()
         {
             if (this.SiteConfig == null)
@@ -394,7 +402,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:BEE7B618B5DF7C44777C46BFEC630694:20EB58C3836E816A654AF4F84626B607
+        ///GENMHASH:BEE7B618B5DF7C44777C46BFEC630694:35997061CE30D9AFADF853A44BC04645
         public FluentImplT WithAppSetting(string key, string value)
         {
             appSettingsToAdd[key] = value;
@@ -407,7 +415,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.PremiumAppDeployed ?? false;
         }
 
-        ///GENMHASH:7B9E90726FF47A7DBBBA2ECDEF2A3EA5:D06B68E3D50C3AA8EE45FF306EE6CF8F
+        ///GENMHASH:7B9E90726FF47A7DBBBA2ECDEF2A3EA5:9EDEDE0F4F481094C0815FBE89B5A385
         public FluentImplT WithRemoteDebuggingDisabled()
         {
             if (this.SiteConfig == null)
@@ -418,7 +426,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:DF632029F61029FAC5B2195A4AAC92F5
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:A25AA6BA478E9A0DD581F3FB75601E70
         public async override Task<FluentT> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostNameSslStateMap.Count > 0)
@@ -448,7 +456,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return Task.WhenAll(bindingTasks).ContinueWith(bindingt =>
                 {
                     // Refresh after hostname bindings
-                    return GetInnerAsync(cancellationToken);
+                    return GetSiteAsync(cancellationToken);
                 }).Unwrap();
             }).Unwrap().ContinueWith(t =>
             {
@@ -478,34 +486,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             // Submit site config
             if (this.SiteConfig != null)
             {
-                ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:27E486AB74A10242FF421C0798DDC450
                 SiteConfigResourceInner configInner = await CreateOrUpdateSiteConfigAsync(this.SiteConfig, cancellationToken);
                 this.SiteConfig = configInner;
             }
 
             // App settings
-            if (appSettingsToAdd.Count > 0 || appSettingsToRemove.Count > 0)
-            {
-                StringDictionaryInner appSettings = await ListAppSettingsAsync(cancellationToken);
-                if (appSettings == null)
-                {
-                    appSettings = new StringDictionaryInner();
-                    appSettings.Location = RegionName;
-                }
-                if (appSettings.Properties == null)
-                {
-                    appSettings.Properties = new Dictionary<string, string>();
-                }
-                foreach (var appSetting in appSettingsToAdd)
-                {
-                    appSettings.Properties[appSetting.Key] = appSetting.Value;
-                }
-                foreach (var appSetting in appSettingsToRemove)
-                {
-                    appSettings.Properties.Remove(appSetting);
-                }
-                appSettings = await UpdateAppSettingsAsync(appSettings, cancellationToken);
-            }
+            await SubmitAppSettingsAsync(site, cancellationToken);
 
             // Connection strings
             if (connectionStringsToAdd.Count > 0 || connectionStringsToRemove.Count > 0)
@@ -579,6 +565,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 slotConfigs = await UpdateSlotConfigurationsAsync(slotConfigs, cancellationToken);
             }
 
+            // Delete source control
+            if (sourceControlToDelete)
+            {
+                await DeleteSourceControlAsync(cancellationToken);
+            }
+
             // Create source control
             if (sourceControl != null && !sourceControlToDelete)
             {
@@ -587,21 +579,47 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 await CreateOrUpdateSourceControlAsync(sourceControl.Inner, cancellationToken);
             }
 
-            // Delete source control
-            if (sourceControlToDelete)
-            {
-                await DeleteSourceControlAsync(cancellationToken);
+            // authentication
+            if (authenticationToUpdate) {
+                await UpdateAuthenticationAsync(authentication.Inner, cancellationToken);
             }
 
             // convert from Inner
             SetInner(site);
             NormalizeProperties();
-            await CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await CacheSiteProperties(cancellationToken);
 
             return this as FluentT;
         }
 
-        ///GENMHASH:339A48BAE1EB5ED9A9975C86986C944F:C86BE9E21375ED5DE08698ADE36B0A6F
+        internal virtual async Task<SiteInner> SubmitAppSettingsAsync(SiteInner site, CancellationToken cancellationToken)
+        {
+            if (appSettingsToAdd.Count > 0 || appSettingsToRemove.Count > 0)
+            {
+                StringDictionaryInner appSettings = await ListAppSettingsAsync(cancellationToken);
+                if (appSettings == null)
+                {
+                    appSettings = new StringDictionaryInner();
+                    appSettings.Location = RegionName;
+                }
+                if (appSettings.Properties == null)
+                {
+                    appSettings.Properties = new Dictionary<string, string>();
+                }
+                foreach (var appSetting in appSettingsToAdd)
+                {
+                    appSettings.Properties[appSetting.Key] = appSetting.Value;
+                }
+                foreach (var appSetting in appSettingsToRemove)
+                {
+                    appSettings.Properties.Remove(appSetting);
+                }
+                await UpdateAppSettingsAsync(appSettings, cancellationToken);
+            }
+            return site;
+        }
+
+        ///GENMHASH:339A48BAE1EB5ED9A9975C86986C944F:019E868E4A08A557C6D58D6C887F8914
         public FluentImplT WithDefaultDocuments(IList<string> documents)
         {
             if (this.SiteConfig == null)
@@ -632,7 +650,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.HostNamesDisabled ?? false;
         }
 
-        ///GENMHASH:640AF2322AF44FB1653F02E5B958A86A:32901B4F001F2D3B8C6B7E60929A323B
+        ///GENMHASH:640AF2322AF44FB1653F02E5B958A86A:0A5075F071576A92A870B3FF79D52706
         public FluentImplT WithConnectionString(string name, string value, ConnectionStringType type)
         {
             connectionStringsToAdd[name] = new ConnStringValueTypePair()
@@ -643,7 +661,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:D101C73F080409B39A67AF00AD9821C6:6F295C3A8A7CB5E19AB918210E36BC1D
+        ///GENMHASH:D101C73F080409B39A67AF00AD9821C6:123E679DCA04C09E8E07DC6E7894664F
         public ManagedPipelineMode ManagedPipelineMode()
         {
             if (this.SiteConfig == null || this.SiteConfig.ManagedPipelineMode == null) {
@@ -674,7 +692,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.GatewaySiteName;
         }
 
-        ///GENMHASH:19DC73910D23C00F8667540D0CBD0AEC:5D6124142B08C7816B4D9A638C461920
+        ///GENMHASH:19DC73910D23C00F8667540D0CBD0AEC:E23AFA4DD63099E4C406231C758F91E4
         public JavaVersion JavaVersion()
         {
             if (this.SiteConfig == null || this.SiteConfig.JavaVersion == null) {
@@ -689,7 +707,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.DefaultHostName;
         }
 
-        ///GENMHASH:7A3D1E4A59735B1A92153B49F406A2EA:D3BD1FCEC94D233A323B882DA914CD12
+        ///GENMHASH:7A3D1E4A59735B1A92153B49F406A2EA:28A9E89FFAE2C02A8D6559195D5529FC
         public FluentImplT WithAppSettings(IDictionary<string,string> settings)
         {
             foreach (KeyValuePair<string, string> setting in settings)
@@ -699,7 +717,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:CFB093F74965BAD2150F4041715B9A85:26C83F8A1A14CE55546ED814DB69FDDC
+        ///GENMHASH:CFB093F74965BAD2150F4041715B9A85:53401E07679E0D67E0D9C7F4FFAF593B
         public string JavaContainer()
         {
             if (this.SiteConfig == null) {
@@ -708,7 +726,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.SiteConfig.JavaContainer;
         }
 
-        ///GENMHASH:BFDA79902F6BE9566899DA86DF88D0D8:DF03AD72AC444A097819590079C05599
+        ///GENMHASH:BFDA79902F6BE9566899DA86DF88D0D8:BDA62FE77DDD9791BF594E8C70B0DF97
         public FluentImplT WithoutSourceControl()
         {
             sourceControlToDelete = true;
@@ -721,7 +739,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return hostNamesSet;
         }
 
-        ///GENMHASH:23406BAAD05E75776B2C2D57DAD6EC31:20D62AB87640E86D7C2ED3CD5286A461
+        ///GENMHASH:23406BAAD05E75776B2C2D57DAD6EC31:1EF21756C66ADE5D95AB8272104B3924
         public IList<string> DefaultDocuments()
         {
             if (this.SiteConfig == null)
@@ -737,18 +755,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.MicroService;
         }
 
-        ///GENMHASH:8B6374B8DE9FB105A8A4FE1AC98E0A32:26E0CCD0FFBC820C6C211AAEFBB00D18
+        ///GENMHASH:8B6374B8DE9FB105A8A4FE1AC98E0A32:59ABE89788E5ADCDFB7771D2A4549653
         public FluentImplT WithPlatformArchitecture(PlatformArchitecture platform)
         {
             if (this.SiteConfig == null)
             {
                 this.SiteConfig = new SiteConfigResourceInner();
             }
-            this.SiteConfig.Use32BitWorkerProcess = PlatformArchitecture.X86.Equals(platform);
+            this.SiteConfig.Use32BitWorkerProcess = Fluent.PlatformArchitecture.X86.Equals(platform);
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:0326165974AFF6C272DF7A9B97057A14:A5822AF23DD5553DE60CAAA635E71F67
+        ///GENMHASH:0326165974AFF6C272DF7A9B97057A14:566E4209819C87DEC331672295F5DDF7
         public FluentImplT WithNetFrameworkVersion(NetFrameworkVersion version)
         {
             if (this.SiteConfig == null)
@@ -759,7 +777,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:A7C75BEA6A6C2CBCEF6C124C164A8BF5:3146F8F0F41CCE0E8CC45456DD403ED8
+        ///GENMHASH:A7C75BEA6A6C2CBCEF6C124C164A8BF5:1FF4D5BA862094ABC5B52373AF55536D
         public FluentImplT WithoutHostnameBinding(string hostname)
         {
             hostNameBindingsToDelete.Add(hostname);
@@ -772,7 +790,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.LastModifiedTimeUtc;
         }
 
-        ///GENMHASH:B37CF91380CE58F97FF98F833D067DB4:04E6E9F28F72119837F1EA6B5B69BD0F
+        ///GENMHASH:B37CF91380CE58F97FF98F833D067DB4:2902F3307D1294D3293754828C3C2392
         public FluentImplT WithoutConnectionString(string name)
         {
             connectionStringsToRemove.Add(name);
@@ -780,7 +798,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:C8FAEA7DC8B31D619F885C64E56A6686:9896B5012319AD936FC829F4017BFCF9
+        ///GENMHASH:C8FAEA7DC8B31D619F885C64E56A6686:7D1B09772DF5D11EA432C92D9E893EB2
         public PhpVersion PhpVersion()
         {
             if (this.SiteConfig == null || this.SiteConfig.PhpVersion == null)
@@ -802,7 +820,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.ScmSiteAlsoStopped ?? false;
         }
 
-        ///GENMHASH:B2C0373522058958F4115A63609B90C1:C3580B34803FD62C1976A18A7581AA0B
+        ///GENMHASH:B2C0373522058958F4115A63609B90C1:3B9E723346BCE1F9D33286828FF0504F
         public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSslBinding()
         {
             return new HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(
@@ -810,14 +828,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 (FluentImplT) this);
         }
 
-        ///GENMHASH:9C834AC4DD619BA31DBCFAAB13EE9923:914A632A86CAEA343D26353F278D7305
+        ///GENMHASH:9C834AC4DD619BA31DBCFAAB13EE9923:D92341EB6ACBF9BC85EE5C8E82E755BB
         public FluentImplT WithClientAffinityEnabled(bool enabled)
         {
             Inner.ClientAffinityEnabled = enabled;
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:E9F49502899B96A687DA858A6BE8647D:14B808B9FEDFD8512C02B321FDC1D222
+        ///GENMHASH:E9F49502899B96A687DA858A6BE8647D:6E46732E5E7ACD1E67A42FB29B9A2AEA
         public FluentImplT WithAppDisabledOnCreation()
         {
             Inner.Enabled = false;
@@ -826,7 +844,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> ListSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:845984DE82811B6BF5DE9676CE5B433A:6A4C5D736C724933B8B06C102140E89D
+        ///GENMHASH:845984DE82811B6BF5DE9676CE5B433A:E333B3ECA89F7142EFBB8ED6C09C281F
         public FluentImplT WithoutAppSetting(string key)
         {
             appSettingsToRemove.Add(key);
@@ -834,7 +852,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:F49A26C57ADD85EB4F774AACF7455EA0:8C65401DDB5F058E55EDB8D8C3E3DFAA
+        ///GENMHASH:F49A26C57ADD85EB4F774AACF7455EA0:83C28BA7D84EF699C71803A7D7CFBB80
         public RemoteVisualStudioVersion RemoteDebuggingVersion()
         {
             if (this.SiteConfig == null)
@@ -844,7 +862,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return RemoteVisualStudioVersion.Parse(this.SiteConfig.RemoteDebuggingVersion);
         }
 
-        ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:B4CE82C3129D4304A7C71A600E1CA97C
+        ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:64F71096112779B21E7588E1CF111081
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSourceControl()
         {
             return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(
@@ -864,7 +882,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (bool) Inner.Enabled;
         }
 
-        ///GENMHASH:78FD17A2E22E150AD12AA226D4123829:29A4403ED56D639EA144EEEF29FB711D
+        ///GENMHASH:78FD17A2E22E150AD12AA226D4123829:20881A157745B3122FA08852FA7B9A5F
         public FluentImplT WithJavaVersion(JavaVersion version)
         {
             if (this.SiteConfig == null)
@@ -885,7 +903,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         internal abstract Task<SiteConfigResourceInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:F76B0B1D4816856D9C8EA506F611C03D:91C46F0ECB5CC2D51804D2C0710E6211
+        ///GENMHASH:F76B0B1D4816856D9C8EA506F611C03D:2D3BF9E8D775FB6FE81CA6E68F51821E
         public FluentImplT WithoutSslBinding(string hostname)
         {
             if (hostNameSslStateMap.ContainsKey(hostname))
@@ -902,7 +920,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.ClientCertEnabled ?? false;
         }
 
-        ///GENMHASH:37E27ADFB836BE1FD0A02912DEE9E60B:8A1A421381B060FE80BB398E975836CB
+        ///GENMHASH:37E27ADFB836BE1FD0A02912DEE9E60B:35FBE729B5E05F7A5F7D32A4C23D16D7
         public FluentImplT WithStickyAppSettings(IDictionary<string,string> settings)
         {
             WithAppSettings(settings);
@@ -913,7 +931,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:C102774B5B56F13DBA5095A48DC5F846:1886C5FB5632B7468462889794AFEA08
+        ///GENMHASH:C102774B5B56F13DBA5095A48DC5F846:F6178F0CB26AA5D89FC0751F52A093BD
         public NetFrameworkVersion NetFrameworkVersion()
         {
             if (this.SiteConfig == null)
@@ -933,7 +951,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:EDB4EABD52D790D7204DF4CACC39D04A:4469898682437D64D221DD7583D2B354
+        ///GENMHASH:EDB4EABD52D790D7204DF4CACC39D04A:C925020B1287157BB98149E18416A63F
         public FluentImplT WithAutoSwapSlotName(string slotName)
         {
             if (this.SiteConfig == null)
@@ -944,7 +962,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:750A632B5F062E375E30024C56379A8E:39DCD28D9DEDDE14FCCB5F803750A6BE
+        ///GENMHASH:750A632B5F062E375E30024C56379A8E:F98F3B7A0499D5EE3A9963286109E6D1
         public string NodeVersion()
         {
             if (this.SiteConfig == null)
@@ -965,6 +983,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal abstract Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
+
         internal  WebAppBaseImpl(
             string name,
             SiteInner innerObject,
@@ -976,14 +995,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             NormalizeProperties();
         }
 
-        ///GENMHASH:3A1ECB38842D1F307BEAA5CE89B8D9A9:37E20E73C6553EB8ECA43CDD3E03DF88
+        ///GENMHASH:3A1ECB38842D1F307BEAA5CE89B8D9A9:5C42B8D5EC49CB7A6DE06E65978C67FF
         public FluentImplT WithScmSiteAlsoStopped(bool scmSiteAlsoStopped)
         {
             Inner.ScmSiteAlsoStopped = scmSiteAlsoStopped;
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:88FB986A040F70D62E535B947213D4C9:872EB6D779CA1F073EAE994BA5E1A2D8
+        ///GENMHASH:88FB986A040F70D62E535B947213D4C9:1C89F744A8D9C1F5DB0623288789A344
         public string AutoSwapSlotName()
         {
             if (this.SiteConfig == null)
@@ -993,7 +1012,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.SiteConfig.AutoSwapSlotName;
         }
 
-        ///GENMHASH:C3A15726A3EC798F48295A8FF0867A0B:7C9DD6C2A7609244E63D0353EBF87B3B
+        ///GENMHASH:C3A15726A3EC798F48295A8FF0867A0B:64440044D8E2B777B70CFCC979127973
         public FluentImplT WithPhpVersion(PhpVersion version)
         {
             if (this.SiteConfig == null)
@@ -1004,7 +1023,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:4217B9DCD795EFEFA0771FDE182F0DF5:156FC00C236BFE0C12D023AABE135F63
+        ///GENMHASH:4217B9DCD795EFEFA0771FDE182F0DF5:AEBFCA9CD76563190B8E6FFAC42C860E
         public FluentImplT WithManagedHostnameBindings(IAppServiceDomain domain, params string[] hostnames)
         {
             foreach(var hostname in hostnames)  {
@@ -1031,7 +1050,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.State;
         }
 
-        ///GENMHASH:B1A8B6AF0882F87FF978C572DA7F4B5C:CA993290F5DD317A425ED88E1175A1D9
+        ///GENMHASH:B1A8B6AF0882F87FF978C572DA7F4B5C:429417D60E0A61FBA1F29B09E1B0A557
         public FluentImplT WithWebSocketsEnabled(bool enabled)
         {
             if (this.SiteConfig == null)
@@ -1042,7 +1061,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:DBBC1639A411401B52B0F804284263EE:473779DF0D6351D3FEF135C14773DB4F
+        ///GENMHASH:DBBC1639A411401B52B0F804284263EE:70126B3DD819B271AE1558799CB9FF14
         public bool AlwaysOn()
         {
             if (this.SiteConfig == null || this.SiteConfig.AlwaysOn == null)
@@ -1054,7 +1073,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         internal abstract Task<SiteConfigResourceInner> CreateOrUpdateSiteConfigAsync(SiteConfigResourceInner siteConfig, CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:FA11486B840C0E86D3D1A446BF2A3C96:AA358901B07077B2692CB317CAFFF60D
+        ///GENMHASH:FA11486B840C0E86D3D1A446BF2A3C96:33C1F54E166F31D7975C1D7CFEDBE4D3
         public FluentImplT WithStickyAppSetting(string key, string value)
         {
             return WithAppSetting(key, value).WithAppSettingStickiness(key, true);
@@ -1066,7 +1085,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.TargetSwapSlot;
         }
 
-        ///GENMHASH:3BBC37006EE11765DF55134711F9E6D9:86A9DA70332D3F08A24CC84ED1EBFE15
+        ///GENMHASH:3BBC37006EE11765DF55134711F9E6D9:408BCD869DB0D9A064B2707ED604B773
         public FluentImplT WithoutPhp()
         {
             return WithPhpVersion(Fluent.PhpVersion.Parse(""));
@@ -1078,7 +1097,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.ServerFarmId;
         }
 
-        ///GENMHASH:F63CA8A7D8722945AE86442FAAE62963:837E0749902A7C8B46678D5899F91E3A
+        ///GENMHASH:F63CA8A7D8722945AE86442FAAE62963:7EB4E2061F48471ACC49772C3793135C
         public bool RemoteDebuggingEnabled()
         {
             if (this.SiteConfig == null || this.SiteConfig.RemoteDebuggingEnabled == null)
@@ -1088,7 +1107,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (bool)this.SiteConfig.RemoteDebuggingEnabled;
         }
 
-        ///GENMHASH:13FED596F6C9DDEA581391D2291A4AB1:7DD021B685AC511232E39D9D870512E3
+        ///GENMHASH:13FED596F6C9DDEA581391D2291A4AB1:3E4DE0E9E167232EBC1B15647EFA21AD
         public FluentImplT WithWebContainer(WebContainer webContainer)
         {
             if (this.SiteConfig == null)
@@ -1124,7 +1143,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:C82AC013C402054BF54C48891EAC7C4E:09A97DDE352A5FE05FF05D87BB65FB03
+        ///GENMHASH:C82AC013C402054BF54C48891EAC7C4E:508EE67946380C2FE640CD199C6130F2
         public FluentImplT WithWebAppAlwaysOn(bool alwaysOn)
         {
             if (this.SiteConfig == null)
@@ -1182,5 +1201,82 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return WithoutTag(key);
         }
+        
+        ///GENMHASH:23274EA44FADF0D35A6CB3228A47EFD8:9ACE693A325D20B0E77B92545761E40F
+        public FluentImplT WithoutAuthentication()
+        {
+            this.authentication.Inner.Enabled = false;
+            authenticationToUpdate = true;
+            return (FluentImplT) this;
+        }
+
+        ///GENMHASH:F644770BE853EE30024DEE4BE9D96441:049C263D531DF9C62F1DF917EA2491D1
+        public OperatingSystem OperatingSystem()
+        {
+            if (Inner.Reserved != null && (bool)Inner.Reserved)
+            {
+                return Fluent.OperatingSystem.Linux;
+            }
+            else
+            {
+                return Fluent.OperatingSystem.Windows;
+            }
+        }
+
+        ///GENMHASH:F2F359A4D1C48DF1D575CBA6AD2D6B24:8DED25B1B6AC5BD0C916FD0616562DC8
+        public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineAuthentication()
+        {
+            return new WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(new SiteAuthSettingsInner
+            {
+                Enabled = true
+            }, this);
+        }
+      
+       
+        ///GENMHASH:8E71F8927E941B28152FA821CDDF0634:27E486AB74A10242FF421C0798DDC450
+        internal abstract Task<Models.SiteAuthSettingsInner> GetAuthenticationAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:0365FE7FA5BA46F11AB3094892C8AEC1
+        protected abstract Task<Models.SiteInner> GetSiteAsync(CancellationToken cancellationToken = default(CancellationToken));
+        
+        ///GENMHASH:1B0D5BB9595EC313A20468FF100694B0:D3C435DB0263C2140BE41D5EAE32848D
+        public WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> UpdateAuthentication()
+        {
+            return authentication;
+        }
+
+        ///GENMHASH:21D1748197F7ECC1EFA9660DF579B414:27E486AB74A10242FF421C0798DDC450
+        internal abstract Task<Models.SiteAuthSettingsInner> UpdateAuthenticationAsync(SiteAuthSettingsInner inner, CancellationToken cancellationToken = default(CancellationToken));
+
+        ///GENMHASH:C17839133E66320367CE2F5EF66B54F4:6C685EA1512F1D3FDFEFDFE594F83AA2
+        public PlatformArchitecture PlatformArchitecture()
+        {
+            if (_siteConfig.Use32BitWorkerProcess == null || (bool) _siteConfig.Use32BitWorkerProcess)
+            {
+                return Fluent.PlatformArchitecture.X86;
+            }
+            else
+            {
+                return Fluent.PlatformArchitecture.X64;
+            }
+        }
+
+        ///GENMHASH:1A77ED64E69487E4AA617B8DFCB5EBBB:813687B9CE9E6688BFA2A18264FD8B2D
+        internal FluentImplT WithAuthentication(WebAppAuthenticationImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> authentication)
+        {
+            this.authentication = authentication;
+            authenticationToUpdate = true;
+            return (FluentImplT) this;
+        }
+
+        public abstract Task<IDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task SwapAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task ResetSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

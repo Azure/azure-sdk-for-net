@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.NameServers;
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:A096A9B6D504D2EF53E4C2B61224B4A4
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:90FEC55929748850F1ED324D0CB61EE7
         public async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             string[] domainParts = this.Name.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
@@ -116,6 +116,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
+
         internal AppServiceDomainImpl(string name, DomainInner innerObject, IAppServiceManager manager)
             : base(name, innerObject, manager)
         {
@@ -132,7 +133,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.ReadyForDnsRecordManagement.GetValueOrDefault();
         }
 
-        ///GENMHASH:CC6E0592F0BCD4CD83D832B40167E562:D41B9629ECB5CD8AE8852218E07D95CC
+        ///GENMHASH:CC6E0592F0BCD4CD83D832B40167E562:19BB8B1526082C9526EBBE504AC24AE2
         public async Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken))
         {
             DomainOwnershipIdentifierInner identifierInner = new DomainOwnershipIdentifierInner()
@@ -211,7 +212,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:391885361D8D6FDB8CD9E96400E16B73
+        ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:40B9A5AF5E2BAAC912A2E077A8B03C22
         public void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
             VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken).Wait();

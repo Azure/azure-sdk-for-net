@@ -27,12 +27,13 @@ namespace Azure.Tests.WebApp
                     .Define(AppServicePlanName)
                     .WithRegion(Region.USWest)
                     .WithNewResourceGroup(GroupName)
-                    .WithPricingTier(AppServicePricingTier.PremiumP1)
+                    .WithPricingTier(PricingTier.PremiumP1)
+                    .WithOperatingSystem(OperatingSystem.Windows)
                     .WithPerSiteScaling(false)
                     .WithCapacity(2)
                     .Create();
                 Assert.NotNull(appServicePlan);
-                Assert.Equal(AppServicePricingTier.PremiumP1, appServicePlan.PricingTier);
+                Assert.Equal(PricingTier.PremiumP1, appServicePlan.PricingTier);
                 Assert.Equal(false, appServicePlan.PerSiteScaling);
                 Assert.Equal(2, appServicePlan.Capacity);
                 Assert.Equal(0, appServicePlan.NumberOfWebApps);
@@ -53,12 +54,12 @@ namespace Azure.Tests.WebApp
                 Assert.True(found);
                 // UPDATE
                 appServicePlan = appServicePlan.Update()
-                    .WithPricingTier(AppServicePricingTier.StandardS1)
+                    .WithPricingTier(PricingTier.StandardS1)
                     .WithPerSiteScaling(true)
                     .WithCapacity(3)
                     .Apply();
                 Assert.NotNull(appServicePlan);
-                Assert.Equal(AppServicePricingTier.StandardS1, appServicePlan.PricingTier);
+                Assert.Equal(PricingTier.StandardS1, appServicePlan.PricingTier);
                 Assert.Equal(true, appServicePlan.PerSiteScaling);
                 Assert.Equal(3, appServicePlan.Capacity);
             }

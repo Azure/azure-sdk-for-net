@@ -36,7 +36,6 @@ namespace ManageWebAppStorageAccountConnection
             string App1Url = App1Name + SUFFIX;
             string StorageName = SdkContext.RandomResourceName("jsdkstore", 20);
             string ContainerName = SdkContext.RandomResourceName("jcontainer", 20);
-            string PlanName = SdkContext.RandomResourceName("jplan_", 15);
             string ResourceGroupName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
@@ -81,10 +80,9 @@ namespace ManageWebAppStorageAccountConnection
 
                 var app1 = azure.WebApps
                         .Define(App1Name)
-                        .WithExistingResourceGroup(ResourceGroupName)
-                        .WithNewAppServicePlan(PlanName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithExistingResourceGroup(ResourceGroupName)
+                        .WithNewWindowsPlan(PricingTier.StandardS1)
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .WithConnectionString("storage.ConnectionString", connectionString, ConnectionStringType.Custom)

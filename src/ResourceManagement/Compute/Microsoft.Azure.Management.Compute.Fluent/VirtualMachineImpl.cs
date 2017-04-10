@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public void Deallocate()
         {
             Manager.Inner.VirtualMachines.Deallocate(this.ResourceGroupName, this.Name);
-
+            Refresh();
         }
 
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:6AC69BE8BE090CDE9822C84DD5F906F3
@@ -892,65 +892,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
             this.managedDataDisks.DiskLunsToRemove.Add(lun);
             return this;
-        }
-
-        ///GENMHASH:6EBC495ACCF47FA1132C69EF861BEF04:6A0D8974E32FFD5CEB2A606AAC5ABD0C
-        public VirtualMachineImpl WithDataDiskUpdated(int lun, int newSizeInGB)
-        {
-            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_No_Managed_Disk_To_Update);
-            DataDisk dataDisk = GetDataDiskInner(lun);
-            if (dataDisk == null)
-            {
-                throw new InvalidOperationException($"A data disk with name '{lun}' not found");
-            }
-            dataDisk.DiskSizeGB = newSizeInGB;
-            return this;
-        }
-
-        ///GENMHASH:986681CB5EE945646F08E34410E1B451:75034EB3465BEE513D2E786B0825570E
-        public VirtualMachineImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType)
-        {
-            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_No_Managed_Disk_To_Update);
-            DataDisk dataDisk = GetDataDiskInner(lun);
-            if (dataDisk == null)
-            {
-                throw new NotSupportedException($"A data disk with name '{lun}' not found");
-            }
-            dataDisk.DiskSizeGB = newSizeInGB;
-            dataDisk.Caching = cachingType;
-            return this;
-        }
-
-        ///GENMHASH:63310A9035013C60AE73F35617BBA53F:12AB266B41186EDE8208FC5E5DF264FB
-        public VirtualMachineImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
-        {
-            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_No_Managed_Disk_To_Update);
-            DataDisk dataDisk = GetDataDiskInner(lun);
-            if (dataDisk == null)
-            {
-                throw new NotSupportedException($"A data disk with name '{lun}' not found");
-            }
-            dataDisk.DiskSizeGB = newSizeInGB;
-            dataDisk.Caching = cachingType;
-            dataDisk.ManagedDisk.StorageAccountType = storageAccountType;
-            return this;
-        }
-
-        ///GENMHASH:0B0C2470711F6450D4872789FDEB62A0:59AC96236BCAC9172D6EBEE9467C487B
-        private DataDisk GetDataDiskInner(int lun)
-        {
-            if (Inner.StorageProfile.DataDisks == null)
-            {
-                return null;
-            }
-            foreach (var dataDiskInner in this.StorageProfile().DataDisks)
-            {
-                if (dataDiskInner.Lun == lun)
-                {
-                    return dataDiskInner;
-                }
-            }
-            return null;
         }
 
         ///GENMHASH:2DC51FEC3C45675856B4AC1D97BECBFD:03CBC8ECAD4A07D8AE9ABC931CB422F4

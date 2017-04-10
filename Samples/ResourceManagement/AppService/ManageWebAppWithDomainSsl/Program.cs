@@ -31,7 +31,6 @@ namespace ManageWebAppWithDomainSsl
         {
             string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
             string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
-            string planName = SdkContext.RandomResourceName("jplan_", 15);
             string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
             string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
 
@@ -44,10 +43,9 @@ namespace ManageWebAppWithDomainSsl
 
                 var app1 = azure.WebApps
                         .Define(app1Name)
-                        .WithNewResourceGroup(rgName)
-                        .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithNewResourceGroup(rgName)
+                        .WithNewWindowsPlan(PricingTier.StandardS1)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -57,11 +55,11 @@ namespace ManageWebAppWithDomainSsl
                 // Create a second web app with the same app service plan
 
                 Utilities.Log("Creating another web app " + app2Name + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rgName, planName);
+                var plan = azure.AppServices.AppServicePlans.GetById(app1.AppServicePlanId);
                 var app2 = azure.WebApps
                         .Define(app2Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         .Create();
 
                 Utilities.Log("Created web app " + app2.Name);

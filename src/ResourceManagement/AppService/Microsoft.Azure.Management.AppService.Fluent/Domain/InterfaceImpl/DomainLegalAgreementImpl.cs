@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal sealed partial class DomainLegalAgreementImpl 
     {
+        /// <summary>
+        /// Gets url where a copy of the agreement details is hosted.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement.Url
         {
             get
@@ -15,6 +18,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets unique identifier for the agreement.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement.AgreementKey
         {
             get
@@ -23,6 +29,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets agreement details.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement.Content
         {
             get
@@ -31,6 +40,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets agreement title.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement.Title
         {
             get

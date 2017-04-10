@@ -30,12 +30,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
+
         internal AppServiceCertificatesImpl(IAppServiceManager manager)
             : base(manager.Inner.Certificates, manager)
         {
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
+
         protected async override Task<IPage<CertificateInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
             return await Inner.ListByResourceGroupAsync(groupName, cancellationToken);
@@ -57,24 +59,26 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
+
         protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
+
         protected async override Task<CertificateInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             return await Inner.GetAsync(groupName, name, cancellationToken);
         }
 
-        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5AC27B4C4791A2919F43CCB97C0275BA
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:52C1475082F350C9790152505F0F5545
         protected override AppServiceCertificateImpl WrapModel(string name)
         {
             return new AppServiceCertificateImpl(name, new CertificateInner(), Manager);
         }
 
-        ///GENMHASH:446794D74A04366F0AA274DF90F28CE3:218BCD2B4CE1C82F271307788818A2EC
+        ///GENMHASH:446794D74A04366F0AA274DF90F28CE3:33B6A3A8A24D997474871BAB2A8C2B87
         protected override IAppServiceCertificate WrapModel(CertificateInner inner)
         {
             if (inner == null)

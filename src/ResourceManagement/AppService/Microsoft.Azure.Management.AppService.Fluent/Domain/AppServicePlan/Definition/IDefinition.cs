@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
     using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
 
     /// <summary>
     /// An app service plan definition allowing resource group to be set.
@@ -24,8 +25,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
-        /// <return>The next stage of the app service plan definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithPricingTier(AppServicePricingTier pricingTier);
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithOperatingSystem WithPricingTier(PricingTier pricingTier);
     }
 
     /// <summary>
@@ -34,11 +35,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        IWithPerSiteScaling,
-        IWithCapacity,
-        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
-        IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate>
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithPerSiteScaling,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCapacity,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate>
     {
+    }
+
+    /// <summary>
+    /// An app service plan definition allowing the operating system to be set.
+    /// </summary>
+    public interface IWithOperatingSystem 
+    {
+        /// <summary>
+        /// Specifies the operating system of the app service plan.
+        /// </summary>
+        /// <param name="operatingSystem">The operating system.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithOperatingSystem(OperatingSystem operatingSystem);
     }
 
     /// <summary>
@@ -58,7 +72,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
     /// The first stage of the app service plan definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithGroup>
     {
     }
 
@@ -71,7 +85,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
-        /// <return>The next stage of the app service plan definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithPerSiteScaling(bool perSiteScaling);
     }
 
@@ -79,10 +93,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IBlank,
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithGroup,
-        IWithPricingTier,
-        IWithCreate
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithPricingTier,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithOperatingSystem,
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate
     {
     }
 }

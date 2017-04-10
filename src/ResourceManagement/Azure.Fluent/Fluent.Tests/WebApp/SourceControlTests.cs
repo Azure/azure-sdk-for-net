@@ -28,10 +28,9 @@ namespace Azure.Tests.WebApp
 
                 // Create web app
                 var webApp = appServiceManager.WebApps.Define(WebAppName)
-                    .WithNewResourceGroup(GroupName)
-                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.StandardS1)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewWindowsPlan(PricingTier.StandardS1)
                     .DefineSourceControl()
                         .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test")
                         .WithBranch("master")

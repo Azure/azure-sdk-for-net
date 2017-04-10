@@ -27,7 +27,6 @@ namespace ManageWebAppBasic
             string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
             string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
             string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
-            string planName = SdkContext.RandomResourceName("jplan_", 15);
             string rg1Name = SdkContext.RandomResourceName("rg1NEMV_", 24);
             string rg2Name = SdkContext.RandomResourceName("rg2NEMV_", 24);
 
@@ -40,10 +39,9 @@ namespace ManageWebAppBasic
 
                 var app1 = azure.WebApps
                         .Define(app1Name)
-                        .WithNewResourceGroup(rg1Name)
-                        .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithNewResourceGroup(rg1Name)
+                        .WithNewWindowsPlan(PricingTier.StandardS1)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -53,11 +51,11 @@ namespace ManageWebAppBasic
                 // Create a second web app with the same app service plan
 
                 Utilities.Log("Creating another web app " + app2Name + " in resource group " + rg1Name + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rg1Name, planName);
+                var plan = azure.AppServices.AppServicePlans.GetById(app1.AppServicePlanId);
                 var app2 = azure.WebApps
                         .Define(app2Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rg1Name)
-                        .WithExistingAppServicePlan(plan)
                         .Create();
 
                 Utilities.Log("Created web app " + app2.Name);
@@ -70,8 +68,8 @@ namespace ManageWebAppBasic
                 Utilities.Log("Creating another web app " + app3Name + " in resource group " + rg2Name + "...");
                 var app3 = azure.WebApps
                         .Define(app3Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithNewResourceGroup(rg2Name)
-                        .WithExistingAppServicePlan(plan)
                         .Create();
 
                 Utilities.Log("Created web app " + app3.Name);
@@ -135,12 +133,12 @@ namespace ManageWebAppBasic
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rg1Name);
-                    azure.ResourceGroups.DeleteByName(rg1Name);
-                    Utilities.Log("Deleted Resource Group: " + rg1Name);
                     Utilities.Log("Deleting Resource Group: " + rg2Name);
                     azure.ResourceGroups.DeleteByName(rg2Name);
                     Utilities.Log("Deleted Resource Group: " + rg2Name);
+                    Utilities.Log("Deleting Resource Group: " + rg1Name);
+                    azure.ResourceGroups.DeleteByName(rg1Name);
+                    Utilities.Log("Deleted Resource Group: " + rg1Name);
                 }
                 catch (NullReferenceException)
                 {

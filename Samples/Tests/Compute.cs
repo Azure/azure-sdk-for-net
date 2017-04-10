@@ -170,7 +170,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "Server bug: disk size cannot be resized down [This sample will not be published]")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineWithDiskTest()
         {
@@ -203,7 +203,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "Fails in record mode: need investigation")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineTest()
         {

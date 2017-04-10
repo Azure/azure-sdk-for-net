@@ -4,14 +4,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     internal partial class AppSettingImpl 
     {
-        string Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Key
+        /// <summary>
+        /// Gets if the setting sticks to the slot during a swap.
+        /// </summary>
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Sticky
         {
             get
             {
-                return this.Key();
+                return this.Sticky();
             }
         }
 
+        /// <summary>
+        /// Gets the value of the setting.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Value
         {
             get
@@ -20,11 +26,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Sticky
+        /// <summary>
+        /// Gets the key of the setting.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Key
         {
             get
             {
-                return this.Sticky();
+                return this.Key();
             }
         }
     }

@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading.Tasks;
-    using AppServiceCertificateOrder.Definition;
-    using HostNameSslBinding.Definition;
-    using HostNameSslBinding.UpdateDefinition;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using WebAppBase.Definition;
-    using WebAppBase.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update;
     using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> 
     {
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
         {
             get
@@ -27,22 +30,25 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Uses Server Name Indication (SNI) based SSL.
         /// </summary>
-        HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithSniBasedSsl()
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>>.WithSniBasedSsl()
         {
-            return this.WithSniBasedSsl() as HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithSniBasedSsl() as HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
         /// Uses IP based SSL. Only one hostname can be bound to IP based SSL.
         /// </summary>
-        HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithIpBasedSsl()
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>>.WithIpBasedSsl()
         {
-            return this.WithIpBasedSsl() as HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithIpBasedSsl() as HostNameSslBinding.Definition.IWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
         /// Uses Server Name Indication (SNI) based SSL.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>.WithSniBasedSsl()
         {
             return this.WithSniBasedSsl() as HostNameSslBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>>;
@@ -51,24 +57,38 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Uses IP based SSL. Only one hostname can be bound to IP based SSL.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>.WithIpBasedSsl()
         {
             return this.WithIpBasedSsl() as HostNameSslBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>
-        /// Specifies the hostname to bind SSL certificate to.
+        /// Gets the parent of this child object.
         /// </summary>
-        /// <param name="hostname">The naked hostname, excluding "www". But use *. prefix for wild card typed certificate order.</param>
-        HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithHostname<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.ForHostname(string hostname)
+        Microsoft.Azure.Management.AppService.Fluent.IWebAppBase Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasParent<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>.Parent
         {
-            return this.ForHostname(hostname) as HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            get
+            {
+                return this.Parent() as Microsoft.Azure.Management.AppService.Fluent.IWebAppBase;
+            }
         }
 
         /// <summary>
         /// Specifies the hostname to bind SSL certificate to.
         /// </summary>
-        /// <param name="hostname">The naked hostname, excluding "www". But use *. prefix for wild card typed certificate order.</param>
+        /// <param name="hostname">The naked hostname, excluding "www". But use . prefix for wild card typed certificate order.</param>
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithHostname<WebAppBase.Definition.IWithCreate<FluentT>>.ForHostname(string hostname)
+        {
+            return this.ForHostname(hostname) as HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithCreate<FluentT>>;
+        }
+
+        /// <summary>
+        /// Specifies the hostname to bind SSL certificate to.
+        /// </summary>
+        /// <param name="hostname">The naked hostname, excluding "www". But use . prefix for wild card typed certificate order.</param>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithHostname<WebAppBase.Update.IUpdate<FluentT>>.ForHostname(string hostname)
         {
             return this.ForHostname(hostname) as HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>;
@@ -77,11 +97,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
+        /// <return>The next stage of the parent definition.</return>
         WebAppBase.Update.IUpdate<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<WebAppBase.Update.IUpdate<FluentT>>.Attach()
         {
             return this.Attach() as WebAppBase.Update.IUpdate<FluentT>;
         }
 
+        /// <summary>
+        /// Gets the SSL cert thumbprint.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IHostNameSslBinding.Thumbprint
         {
             get
@@ -90,6 +114,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets the virtual IP address assigned to the host name if IP based SSL is enabled.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IHostNameSslBinding.VirtualIP
         {
             get
@@ -98,7 +125,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.SslState Microsoft.Azure.Management.AppService.Fluent.IHostNameSslBinding.SslState
+        /// <summary>
+        /// Gets the SSL type.
+        /// </summary>
+        Models.SslState Microsoft.Azure.Management.AppService.Fluent.IHostNameSslBinding.SslState
         {
             get
             {
@@ -109,18 +139,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
-        WebAppBase.Definition.IWithHostNameSslBinding<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.Attach()
+        /// <return>The next stage of the parent definition.</return>
+        WebAppBase.Definition.IWithCreate<FluentT> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<WebAppBase.Definition.IWithCreate<FluentT>>.Attach()
         {
-            return this.Attach() as WebAppBase.Definition.IWithHostNameSslBinding<FluentT>;
+            return this.Attach() as WebAppBase.Definition.IWithCreate<FluentT>;
         }
 
         /// <summary>
         /// Specifies a ready-to-use certificate order to use. This is usually useful for reusing wildcard certificates.
         /// </summary>
         /// <param name="certificateOrder">The ready-to-use certificate order.</param>
-        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithCreate<FluentT>>.WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
-            return this.WithExistingAppServiceCertificateOrder(certificateOrder) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithExistingAppServiceCertificateOrder(certificateOrder) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
@@ -128,24 +160,27 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="pfxFile">The PFX certificate file to upload.</param>
         /// <param name="password">The password to the certificate.</param>
-        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithPfxCertificateToUpload(string pfxPath, string password)
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithCreate<FluentT>>.WithPfxCertificateToUpload(string pfxFile, string password)
         {
-            return this.WithPfxCertificateToUpload(pfxPath, password) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithPfxCertificateToUpload(pfxFile, password) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
         /// Places a new App Service certificate order to use for the hostname.
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
-        HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithNewStandardSslCertificateOrder(string certificateOrderName)
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithCreate<FluentT>>.WithNewStandardSslCertificateOrder(string certificateOrderName)
         {
-            return this.WithNewStandardSslCertificateOrder(certificateOrderName) as HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithNewStandardSslCertificateOrder(certificateOrderName) as HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
         /// Specifies a ready-to-use certificate order to use. This is usually useful for reusing wildcard certificates.
         /// </summary>
         /// <param name="certificateOrder">The ready-to-use certificate order.</param>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>.WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
             return this.WithExistingAppServiceCertificateOrder(certificateOrder) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;
@@ -156,15 +191,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="pfxFile">The PFX certificate file to upload.</param>
         /// <param name="password">The password to the certificate.</param>
-        HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>.WithPfxCertificateToUpload(string pfxPath, string password)
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>.WithPfxCertificateToUpload(string pfxFile, string password)
         {
-            return this.WithPfxCertificateToUpload(pfxPath, password) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;
+            return this.WithPfxCertificateToUpload(pfxFile, password) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>
         /// Places a new App Service certificate order to use for the hostname.
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithKeyVault<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>.WithNewStandardSslCertificateOrder(string certificateOrderName)
         {
             return this.WithNewStandardSslCertificateOrder(certificateOrderName) as HostNameSslBinding.UpdateDefinition.IWithKeyVault<WebAppBase.Update.IUpdate<FluentT>>;
@@ -174,24 +211,27 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Stores the certificate in an existing vault.
         /// </summary>
         /// <param name="vault">The existing vault to use.</param>
-        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithExistingKeyVault(IVault vault)
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithCreate<FluentT>>.WithExistingKeyVault(IVault vault)
         {
-            return this.WithExistingKeyVault(vault) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithExistingKeyVault(vault) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
         /// Creates a new key vault to store the certificate.
         /// </summary>
         /// <param name="vaultName">The name of the key vault to create.</param>
-        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithNewKeyVault(string vaultName)
+        /// <return>The next stage of the definition.</return>
+        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>> HostNameSslBinding.Definition.IWithKeyVault<WebAppBase.Definition.IWithCreate<FluentT>>.WithNewKeyVault(string vaultName)
         {
-            return this.WithNewKeyVault(vaultName) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithNewKeyVault(vaultName) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>
         /// Stores the certificate in an existing vault.
         /// </summary>
         /// <param name="vault">The existing vault to use.</param>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithKeyVault<WebAppBase.Update.IUpdate<FluentT>>.WithExistingKeyVault(IVault vault)
         {
             return this.WithExistingKeyVault(vault) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;
@@ -201,6 +241,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Creates a new key vault to store the certificate.
         /// </summary>
         /// <param name="vaultName">The name of the key vault to create.</param>
+        /// <return>The next stage of the definition.</return>
         HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithKeyVault<WebAppBase.Update.IUpdate<FluentT>>.WithNewKeyVault(string vaultName)
         {
             return this.WithNewKeyVault(vaultName) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;

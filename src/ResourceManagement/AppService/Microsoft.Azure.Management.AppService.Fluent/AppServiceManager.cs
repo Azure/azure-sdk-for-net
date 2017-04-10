@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.Storage.Fluent;
 
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
@@ -18,12 +19,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public class AppServiceManager : Manager<IWebSiteManagementClient>, IAppServiceManager
     {
         private IKeyVaultManager keyVaultManager;
+        private IStorageManager storageManager;
         private string tenantId;
         private RestClient restClient;
 
         #region Fluent private collections
         private IAppServicePlans appServicePlans;
         private IWebApps webApps;
+        private IFunctionApps functionApps;
         private IAppServiceDomains appServiceDomains;
         private IAppServiceCertificates appServiceCertificates;
         private IAppServiceCertificateOrders appServiceCertificateOrders;
@@ -44,6 +47,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 .WithBaseUri(restClient.BaseUri)
                 .WithCredentials(restClient.Credentials)
                 .Build(), subscriptionId, tenantId);
+            storageManager = Storage.Fluent.StorageManager.Authenticate(restClient, subscriptionId);
             this.tenantId = tenantId;
             this.restClient = restClient;
         }
@@ -118,6 +122,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        public IFunctionApps FunctionApps
+        {
+            get
+            {
+                if (functionApps == null)
+                {
+                    functionApps = new FunctionAppsImpl(this);
+                }
+                return functionApps;
+            }
+        }
+
         public IAppServiceDomains AppServiceDomains
         {
             get
@@ -162,6 +178,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        public IStorageManager StorageManager
+        {
+            get
+            {
+                return storageManager;
+            }
+        }
+
         #endregion
     }
 
@@ -169,9 +193,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         IAppServicePlans AppServicePlans { get; }
         IWebApps WebApps { get; }
+        IFunctionApps FunctionApps { get; }
         IAppServiceDomains AppServiceDomains { get; }
         IAppServiceCertificates AppServiceCertificates { get; }
         IAppServiceCertificateOrders AppServiceCertificateOrders { get; }
         IKeyVaultManager KeyVaultManager { get; }
+        IStorageManager StorageManager { get; }
     }
 }
