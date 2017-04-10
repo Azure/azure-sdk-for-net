@@ -173,6 +173,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public void Deallocate()
         {
             Manager.Inner.VirtualMachineScaleSets.Deallocate(this.ResourceGroupName, this.Name);
+            Refresh();
         }
 
         ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
@@ -1135,48 +1136,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public bool OverProvisionEnabled()
         {
             return Inner.Overprovision.Value;
-        }
-
-        ///GENMHASH:6EBC495ACCF47FA1132C69EF861BEF04:D2A5B97B4B994A8E4E51963BF644DE4B
-        public VirtualMachineScaleSetImpl WithDataDiskUpdated(int lun, int newSizeInGB)
-        {
-            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_No_Managed_Disk_To_Update);
-            VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
-            if (dataDisk == null)
-            {
-                throw new InvalidOperationException($"A data disk with lun '{lun}' not found");
-            }
-            dataDisk.DiskSizeGB = newSizeInGB;
-            return this;
-        }
-
-        ///GENMHASH:986681CB5EE945646F08E34410E1B451:FFA40AD18912F7256B5D3D5734676714
-        public VirtualMachineScaleSetImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType)
-        {
-            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_No_Managed_Disk_To_Update);
-            VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
-            if (dataDisk == null)
-            {
-                throw new InvalidOperationException($"A data disk with lun '{lun}' not found");
-            }
-            dataDisk.DiskSizeGB = newSizeInGB;
-            dataDisk.Caching = cachingType;
-            return this;
-        }
-
-        ///GENMHASH:63310A9035013C60AE73F35617BBA53F:EE9555A6CB519B9EA087D92E2ACDAAE2
-        public VirtualMachineScaleSetImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
-        {
-            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_No_Managed_Disk_To_Update);
-            VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
-            if (dataDisk == null)
-            {
-                throw new InvalidOperationException($"A data disk with lun '{lun}' not found");
-            }
-            dataDisk.DiskSizeGB = newSizeInGB;
-            dataDisk.Caching = cachingType;
-            dataDisk.ManagedDisk.StorageAccountType = storageAccountType;
-            return this;
         }
 
         ///GENMHASH:AFF08018A4055EA21949F6479B3BCCA0:4175296A99E4DC787679DF89D1FABCD5

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType);
 
         /// <summary>
-        /// Specifies the size of the OSDisk in GB.
+        /// Specifies the size of the OSDisk in GB. This can be modified only for non-managed disks.
         /// </summary>
         /// <param name="size">The disk size.</param>
         /// <return>The stage representing updatable VM definition.</return>
@@ -80,33 +80,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     /// </summary>
     public interface IWithManagedDataDisk 
     {
-        /// <summary>
-        /// Updates the size of a managed data disk with the given lun.
-        /// </summary>
-        /// <param name="lun">The disk lun.</param>
-        /// <param name="newSizeInGB">The new size of the disk.</param>
-        /// <return>The next stage of virtual machine update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskUpdated(int lun, int newSizeInGB);
-
-        /// <summary>
-        /// Updates the size and caching type of a managed data disk with the given lun.
-        /// </summary>
-        /// <param name="lun">The disk lun.</param>
-        /// <param name="newSizeInGB">The new size of the disk.</param>
-        /// <param name="cachingType">The caching type.</param>
-        /// <return>The next stage of virtual machine update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType);
-
-        /// <summary>
-        /// Updates the size, caching type and storage account type of a managed data disk with the given lun.
-        /// </summary>
-        /// <param name="lun">The disk lun.</param>
-        /// <param name="newSizeInGB">The new size of the disk.</param>
-        /// <param name="cachingType">The caching type.</param>
-        /// <param name="storageAccountType">The storage account type.</param>
-        /// <return>The next stage of virtual machine update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType);
-
         /// <summary>
         /// Specifies an existing source managed disk.
         /// </summary>
