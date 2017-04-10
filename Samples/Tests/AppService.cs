@@ -41,7 +41,9 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                this.GetType().FullName,
-               ManageWebAppSourceControlAsync.Program.RunSample,
+               (azure) => ManageWebAppSourceControlAsync.Program.RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult(),
                Path.Combine("..", "Common"));
         }
 

@@ -29,7 +29,7 @@ namespace ManageWebAppSourceControlAsync
          *    - Deploy to 3 using a publicly available Git repository
          *    - Deploy to 4 using a GitHub repository with continuous integration
          */
-        public static void RunSample(IAzure azure)
+        public async static Task RunSampleAsync(IAzure azure)
         {
             string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
             string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
@@ -39,7 +39,6 @@ namespace ManageWebAppSourceControlAsync
             string app2Url = app2Name + Suffix;
             string app3Url = app3Name + Suffix;
             string app4Url = app4Name + Suffix;
-            string planName = SdkContext.RandomResourceName("jplan_", 15);
             string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
@@ -51,10 +50,9 @@ namespace ManageWebAppSourceControlAsync
 
                 var app1 = azure.WebApps
                         .Define(app1Name)
-                        .WithNewResourceGroup(rgName)
-                        .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithNewResourceGroup(rgName)
+                        .WithNewWindowsPlan(PricingTier.StandardS1)
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Create();
@@ -68,7 +66,7 @@ namespace ManageWebAppSourceControlAsync
                 Utilities.Log("Deploying helloworld.War to " + app1Name + " through FTP...");
 
                 Utilities.UploadFileToFtp(
-                    app1.GetPublishingProfile(), 
+                    app1.GetPublishingProfile(),
                     Path.Combine(Utilities.ProjectPath, "Asset", "helloworld.war"));
 
                 Utilities.Log("Deployment helloworld.War to web app " + app1.Name + " completed");
@@ -85,11 +83,11 @@ namespace ManageWebAppSourceControlAsync
                 // Create a second web app with local git source control
 
                 Utilities.Log("Creating another web app " + app2Name + " in resource group " + rgName + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rgName, planName);
+                var plan = azure.AppServices.AppServicePlans.GetById(app1.AppServicePlanId);
                 var app2 = azure.WebApps
                         .Define(app2Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         .WithLocalGitSourceControl()
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
@@ -122,8 +120,8 @@ namespace ManageWebAppSourceControlAsync
                 Utilities.Log("Creating another web app " + app3Name + "...");
                 var app3 = azure.WebApps
                         .Define(app3Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithNewResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         .DefineSourceControl()
                             .WithPublicGitRepository("https://github.com/Azure-Samples/app-service-web-dotnet-get-started")
                             .WithBranch("master")
@@ -146,8 +144,8 @@ namespace ManageWebAppSourceControlAsync
                 Utilities.Log("Creating another web app " + app4Name + "...");
                 var app4 = azure.WebApps
                         .Define(app4Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         // Uncomment the following lines to turn on 4th scenario
                         //.DefineSourceControl()
                         //    .WithContinuouslyIntegratedGitHubRepository("username", "reponame")
@@ -206,7 +204,7 @@ namespace ManageWebAppSourceControlAsync
                 // Print selected subscription
                 Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                RunSample(azure);
+                RunSampleAsync(azure).GetAwaiter().GetResult();
             }
             catch (Exception e)
             {

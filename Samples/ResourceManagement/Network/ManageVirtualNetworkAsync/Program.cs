@@ -51,9 +51,9 @@ namespace ManageVirtualNetworkAsync
                 Utilities.Log("Creating a network security group for virtual network backend subnet...");
                 Utilities.Log("Creating a network security group for virtual network frontend subnet...");
 
-                INetwork virtualNetwork1 = null;
                 INetwork virtualNetwork2 = null;
                 INetworkSecurityGroup frontEndSubnetNsg = null;
+                INetworkSecurityGroup backEndSubnetNsg = null;
 
                 await Task.WhenAll(
                     azure.NetworkSecurityGroups
@@ -77,34 +77,16 @@ namespace ManageVirtualNetworkAsync
                             .WithAnyProtocol()
                             .Attach()
                         .CreateAsync()
-                        .ContinueWith( async nsg =>
+                        .ContinueWith( nsg =>
                         {
+                            backEndSubnetNsg = nsg.Result;
                             Utilities.Log("Created network security group");
                             // Print the network security group
-                            Utilities.PrintNetworkSecurityGroup(nsg.Result);
-
-                            Utilities.Log("Creating virtual network #1...");
-                            virtualNetwork1 = await azure.Networks.Define(vnetName1)
-                                .WithRegion(Region.USEast)
-                                .WithExistingResourceGroup(ResourceGroupName)
-                                .WithAddressSpace("192.168.0.0/16")
-                                .WithSubnet(VNet1FrontEndSubnetName, "192.168.1.0/24")
-                                .DefineSubnet(VNet1BackEndSubnetName)
-                                    .WithAddressPrefix("192.168.2.0/24")
-                                    .WithExistingNetworkSecurityGroup(nsg.Result)
-                                    .Attach()
-                                .CreateAsync()
-                                .ContinueWith(n =>
-                                {
-                                    Utilities.Log("Created a virtual network");
-                                    // Print the virtual network details
-                                    Utilities.PrintVirtualNetwork(n.Result);
-                                    return n.Result;
-                                });
+                            Utilities.PrintNetworkSecurityGroup(backEndSubnetNsg);
                         }),
                     azure.NetworkSecurityGroups.Define(VNet1FrontEndSubnetNsgName)
                         .WithRegion(Region.USEast)
-                        .WithExistingResourceGroup(ResourceGroupName)
+                        .WithNewResourceGroup(ResourceGroupName)
                         .DefineRule("AllowHttpInComing")
                             .AllowInbound()
                             .FromAddress("INTERNET")
@@ -130,12 +112,29 @@ namespace ManageVirtualNetworkAsync
                             Utilities.PrintNetworkSecurityGroup(frontEndSubnetNsg);
                             return nsg.Result;
                         }));
+                
+                Utilities.Log("Creating virtual network #1...");
+
+                INetwork virtualNetwork1 = await azure.Networks.Define(vnetName1)
+                                .WithRegion(Region.USEast)
+                                .WithExistingResourceGroup(ResourceGroupName)
+                                .WithAddressSpace("192.168.0.0/16")
+                                .WithSubnet(VNet1FrontEndSubnetName, "192.168.1.0/24")
+                                .DefineSubnet(VNet1BackEndSubnetName)
+                                    .WithAddressPrefix("192.168.2.0/24")
+                                    .WithExistingNetworkSecurityGroup(backEndSubnetNsg)
+                                    .Attach()
+                                .CreateAsync();
+
+                Utilities.Log("Created a virtual network");
+                // Print the virtual network details
+                Utilities.PrintVirtualNetwork(virtualNetwork1);
 
                 //============================================================
                 // Update a virtual network
-
+                
                 // Update the virtual network frontend subnet by associating it with network security group
-
+                
                 Utilities.Log("Associating network security group rule to frontend subnet");
 
                 await virtualNetwork1.Update()
@@ -236,7 +235,7 @@ namespace ManageVirtualNetworkAsync
                 try
                 {
                     Utilities.Log("Deleting Resource Group: " + ResourceGroupName);
-                    await azure.ResourceGroups.DeleteByNameAsync(ResourceGroupName);
+                    azure.ResourceGroups.DeleteByNameAsync(ResourceGroupName);
                     Utilities.Log("Deleted Resource Group: " + ResourceGroupName);
                 }
                 catch (NullReferenceException)
