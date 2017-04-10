@@ -194,6 +194,47 @@ namespace Test.Azure.Management.Logic
 
         #endregion
 
+        #region WorkflowTriggerHistoriesResubmit_Post
+
+        [Fact]
+        public void WorkflowTriggerHistoriesResubmit_Post_Exception()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = this.Empty
+            };
+
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit(null, "wfName", "triggerName", "historyName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", null, "triggerName", "historyName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", null, "historyName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", null));
+            Assert.Throws<CloudException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", "historyName"));
+        }
+
+        [Fact]
+        public void WorkflowTriggerHistoriesResubmit_Post_OK()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+
+            client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", "historyName");
+
+            // Validates request.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateMethod(HttpMethod.Post);
+        }
+
+        #endregion
+
         #region Validation
 
         private void ValidateTriggerHistory1(WorkflowTriggerHistory history)

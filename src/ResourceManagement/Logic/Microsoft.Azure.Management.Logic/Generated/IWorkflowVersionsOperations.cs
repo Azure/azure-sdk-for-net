@@ -80,6 +80,40 @@ namespace Microsoft.Azure.Management.Logic
         /// </exception>
         Task<AzureOperationResponse<WorkflowVersion>> GetWithHttpMessagesAsync(string resourceGroupName, string workflowName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists the callback URL for a trigger of a workflow version.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='workflowName'>
+        /// The workflow name.
+        /// </param>
+        /// <param name='versionId'>
+        /// The workflow versionId.
+        /// </param>
+        /// <param name='triggerName'>
+        /// The workflow trigger name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The callback URL parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<WorkflowTriggerCallbackUrl>> ListCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string workflowName, string versionId, string triggerName, GetCallbackUrlParameters parameters = default(GetCallbackUrlParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a list of workflow versions.
         /// </summary>
         /// <param name='nextPageLink'>
