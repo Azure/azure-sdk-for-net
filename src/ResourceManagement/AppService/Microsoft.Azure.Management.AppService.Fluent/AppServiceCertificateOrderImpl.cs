@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.KeySize.GetValueOrDefault();
         }
 
+
         ///GENMHASH:16ABBA273C3F791D052D0188B2107D3F:675930B8422D1B7EC65FC1D9BBC5D548
         public CertificateDetails Root()
         {
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:88F80234ADBF5F0E8B64015C7A3EF8D0
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:8B606A8E8FDFF98EAC99D5B0A6FBB7A6
         public async override Task<IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var certificateOrder = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
@@ -135,6 +136,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:89B68C3393E544990D0BC1837B4C4C0E:B1CB960E9688630133BF735EE72C4279
+
+
         internal AppServiceCertificateOrderImpl(
             string key,
             AppServiceCertificateOrderInner innerObject,
@@ -146,6 +149,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
+
         protected override async Task<AppServiceCertificateOrderInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.AppServiceCertificateOrders.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
@@ -171,7 +175,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:04406413E97C82F19F013C72D1DD2758:39E496E31AE9087192892138F0910259
+        ///GENMHASH:04406413E97C82F19F013C72D1DD2758:964B5AF9C84F1352BF2A096010560999
         public async Task<IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
         {
             AppServiceCertificateResourceInner certInner = new AppServiceCertificateResourceInner();
@@ -198,7 +202,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:0CD614E818D4086C936A0BF04B47C550:E31DD88A5AABE0E7EB1AA9BD08BE551A
+        ///GENMHASH:0CD614E818D4086C936A0BF04B47C550:DE5AB4A66AE0FA398E7DCCB9A28087C9
         public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> GetKeyVaultBindingAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var appServiceCertificateInnerPage = await Manager.Inner.AppServiceCertificateOrders.ListCertificatesAsync(ResourceGroupName, Name);
@@ -255,7 +259,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return GetKeyVaultBinding();
         }
 
-        ///GENMHASH:247F3F9D51B0218A2892B535E30EFFE4:88C1A66E95DDA5984E09A8B9C12ABB55
+        ///GENMHASH:247F3F9D51B0218A2892B535E30EFFE4:15E338262AA4F8C7461DD6FBB41E746B
         public void VerifyDomainOwnership(IAppServiceDomain domain)
         {
             VerifyDomainOwnership(domain);
@@ -288,5 +292,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Inner.AutoRenew = enabled;
             return this;
         }
+
     }
 }

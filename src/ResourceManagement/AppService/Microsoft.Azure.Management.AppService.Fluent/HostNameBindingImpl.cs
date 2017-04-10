@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IndexableWrapper<HostNameBindingInner>,
         ICreatable<IHostNameBinding>,
         IHostNameBinding,
-        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithCreate<FluentT>>,
         IUpdateDefinition<IUpdate<FluentT>>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
         where FluentT : class, IWebAppBase
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:3785204345CF88A369A14E3305BB659F
+        ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:9462BB1488F8B757A53382E31550B2EC
         public async Task<IHostNameBinding> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var hostNameBindingInner = parent is IDeploymentSlot
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return name + ": " + DnsRecordType() + " " + AzureResourceName() + suffix;
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:E0D0D53840F0C86DC4B91B99218C81C9
+        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:F1F7115B1E40CAAC3F18CBE220407AB0
         public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> Refresh()
         {
             if (parent is IDeploymentSlot)

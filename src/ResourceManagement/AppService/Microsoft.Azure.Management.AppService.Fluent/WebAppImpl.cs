@@ -22,66 +22,40 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwSW1wbA==
     internal partial class WebAppImpl  :
-        WebAppBaseImpl<
+        AppServiceBaseImpl<
             IWebApp,
             WebAppImpl,
+            WebApp.Definition.IWithCreate,
+            WebApp.Definition.INewAppServicePlanWithGroup,
             WebApp.Definition.IWithNewAppServicePlan,
-            WebApp.Definition.IWithAppServicePlan,
             WebApp.Update.IUpdate>,
         IWebApp,
         IDefinition,
         WebApp.Update.IUpdate,
-        WebApp.Definition.IWithNewAppServicePlan,
+        WebApp.Definition.IExistingWindowsPlanWithGroup,
+        WebApp.Definition.IExistingLinuxPlanWithGroup,
         WebApp.Update.IWithAppServicePlan,
-        WebApp.Update.IWithNewAppServicePlan
+        WebApp.Update.IWithCredentials,
+        WebApp.Update.IWithStartUpCommand
     {
         private IDeploymentSlots deploymentSlots;
-        private AppServicePlanImpl appServicePlan;
+        private const string SETTING_DOCKER_IMAGE = "DOCKER_CUSTOM_IMAGE_NAME";
+        private const string SETTING_REGISTRY_SERVER = "DOCKER_REGISTRY_SERVER_URL";
+        private const string SETTING_REGISTRY_USERNAME = "DOCKER_REGISTRY_SERVER_USERNAME";
+        private const string SETTING_REGISTRY_PASSWORD = "DOCKER_REGISTRY_SERVER_PASSWORD";
 
-        ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:66A6C8EDFAA0E618EA9FC53E296A637E
-        internal async override Task<SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
+
+        ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
+        internal WebAppImpl(
+            string name,
+            SiteInner innerObject,
+            SiteConfigResourceInner configObject,
+            IAppServiceManager manager)
+            : base(name, innerObject, configObject, manager)
         {
-            return await Manager.Inner.WebApps.CreateOrUpdateAsync(ResourceGroupName, Name, site, cancellationToken: cancellationToken);
         }
 
-        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:E0C4A1757552CAB0ED8F92E2EB35D2E2
-        public override void Stop()
-        {
-            Manager.Inner.WebApps.Stop(ResourceGroupName, Name);
-
-        }
-
-        ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:512E3D0409D7A159D1D192520CB3A8DB
-        internal async override Task<StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.UpdateApplicationSettingsAsync(ResourceGroupName, Name, inner, cancellationToken);
-        }
-
-        ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:FDA787AD964B4EF34BCD2352730B6528
-        internal async override Task<SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.CreateOrUpdateSourceControlAsync(ResourceGroupName, Name, inner, cancellationToken);
-        }
-
-        ///GENMHASH:620993DCE6DF78140D8125DD97478452:5A132EFB7A05E4DC22E7252CDF660609
-        internal async override Task<StringDictionaryInner> ListAppSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.ListApplicationSettingsAsync(ResourceGroupName, Name);
-        }
-
-        ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:E67D9CD74CA1A0DECF6EE2FD2CA91749
-        internal async override Task<SlotConfigNamesResourceInner> ListSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.ListSlotConfigurationNamesAsync(ResourceGroupName, Name);
-        }
-
-        ///GENMHASH:807E62B6346803DB90804D0DEBD2FCA6:DE0948CBC34F6D6B889CD89BA36F4D94
-        internal async override Task DeleteSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await Manager.Inner.WebApps.DeleteSourceControlAsync(ResourceGroupName, Name);
-        }
-
-        ///GENMHASH:CF27BBA612E1A2ABC8C2A6B8E0D936B0:7E977531CD59BD2933F963708B65758E
+        ///GENMHASH:CF27BBA612E1A2ABC8C2A6B8E0D936B0:8EE9D9B6AF47B6B9D97ADAC781E86E83
         public IDeploymentSlots DeploymentSlots()
         {
             if (deploymentSlots == null)
@@ -91,25 +65,76 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return deploymentSlots;
         }
 
-        ///GENMHASH:981FA7F7C88705FACC2675A0E796937F:791F75E9324E0F8CD9B54F2D9EF56E3D
-        public WebAppImpl WithNewAppServicePlan(string name)
+
+        ///GENMHASH:E73A2BC2090FC3A00E0D2D18D7506D67:BFA1AA102FC308FAD095DF52D3D7C9F1
+        public WebAppImpl WithPrivateRegistryImage(string imageAndTag, string serverUrl)
         {
-            appServicePlan = (AppServicePlanImpl) Manager.AppServicePlans.Define(name);
-            String id = ResourceUtils.ConstructResourceId(Manager.SubscriptionId,
-            ResourceGroupName, "Microsoft.Web", "serverFarms", name, "");
-            Inner.ServerFarmId = id;
+            EnsureLinuxPlan();
+            CleanUpContainerSettings();
+            WithBuiltInImage(RuntimeStack.NodeJS_6_6_0);
+            WithAppSetting(SETTING_DOCKER_IMAGE, imageAndTag);
+            WithAppSetting(SETTING_REGISTRY_SERVER, serverUrl);
             return this;
         }
 
-        ///GENMHASH:CC6E0592F0BCD4CD83D832B40167E562:30CA9232F1D7C8ACB181740BD31D7B58
-        public async override Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken))
+        ///GENMHASH:602C33B7B682DA260F6CBFC17D1C7E12:E4FC04D27E28502A10F31E38E988A897
+        private void CleanUpContainerSettings()
         {
-            IdentifierInner identifierInner = new IdentifierInner()
+            if (SiteConfig != null && SiteConfig.LinuxFxVersion != null)
             {
-                Location = "global",
-                IdentifierId = domainVerificationToken
-            };
-            await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner, cancellationToken);
+                SiteConfig.LinuxFxVersion = null;
+            }
+            // PHP
+            if (SiteConfig != null && SiteConfig.PhpVersion != null)
+            {
+                SiteConfig.PhpVersion = null;
+            }
+            // Node
+            if (SiteConfig != null && SiteConfig.NodeVersion != null)
+            {
+                SiteConfig.NodeVersion = null;
+            }
+            // .NET
+            if (SiteConfig != null && SiteConfig.NetFrameworkVersion != null)
+            {
+                SiteConfig.NetFrameworkVersion = "v4.0";
+            }
+            // Docker Hub
+            WithoutAppSetting(SETTING_DOCKER_IMAGE);
+            WithoutAppSetting(SETTING_REGISTRY_SERVER);
+            WithoutAppSetting(SETTING_REGISTRY_USERNAME);
+            WithoutAppSetting(SETTING_REGISTRY_PASSWORD);
+        }
+
+        ///GENMHASH:2460CA25AB23358958E16CE251EDCDED:CB5ABC6F0B7D23F2B39F2E5148275C79
+        public WebAppImpl WithExistingWindowsPlan(IAppServicePlan appServicePlan)
+        {
+            return WithExistingAppServicePlan(appServicePlan);
+        }
+
+        ///GENMHASH:8E1D3700A243EE806EC812A6D7F6CAE3:CB5ABC6F0B7D23F2B39F2E5148275C79
+        public WebAppImpl WithExistingLinuxPlan(IAppServicePlan appServicePlan)
+        {
+            return WithExistingAppServicePlan(appServicePlan);
+        }
+
+        ///GENMHASH:D15FB33BB43555A701A8FD43F244B1D9:2B645488043FF9B7C9FE21F5BC901768
+        public WebAppImpl WithPublicDockerHubImage(string imageAndTag)
+        {
+            EnsureLinuxPlan();
+            CleanUpContainerSettings();
+            WithBuiltInImage(RuntimeStack.NodeJS_6_6_0);
+            WithAppSetting(SETTING_DOCKER_IMAGE, imageAndTag);
+            return this;
+        }
+
+        ///GENMHASH:4554623A20A1D1D6CA43597FA7713AD7:DD8E427B2F3E82987E90A2D5CCB5E193
+        private void EnsureLinuxPlan()
+        {
+            if (Fluent.OperatingSystem.Windows.Equals(OperatingSystem()))
+            {
+                throw new InvalidOperationException("Docker container settings only apply to Linux app service plans.");
+            }
         }
 
         ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:9AA0391980CD01ABEA62130DB5348393
@@ -118,160 +143,134 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await Manager.Inner.WebApps.CreateOrUpdateConfigurationAsync(ResourceGroupName, Name, siteConfig, cancellationToken);
         }
 
-        ///GENMHASH:1AD5C303B4B7C1709305A18733B506B2:B2AAE3FC1D57B875FAA6AD38F9DB069C
-        public override void ResetSlotConfigurations()
+        ///GENMHASH:AAA2EDCB023B7B99FC1D55B0B3B66F13:6B3219D30AE1CF4B94F25508BCCDD7E9
+        public WebAppImpl WithPrivateDockerHubImage(string imageAndTag)
         {
-            Manager.Inner.WebApps.ResetProductionSlotConfig(ResourceGroupName, Name);
+            return WithPublicDockerHubImage(imageAndTag);
         }
 
-        ///GENMHASH:2EDD4B59BAFACBDD881E1EB427AFB76D:6899DBE410B89E7D8EEB69725B8CE588
-        public WebAppImpl WithPricingTier(AppServicePricingTier pricingTier)
+        ///GENMHASH:9624C43502CE877F02ED31D67E4A6217:9E9E1980C1811DAF6A3570844756F43D
+        public WebAppImpl WithNewWindowsPlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable)
         {
-            appServicePlan.WithRegion(RegionName);
-            appServicePlan.WithPricingTier(pricingTier);
-            if (newGroup != null && IsInCreateMode)
+            return WithNewAppServicePlan(appServicePlanCreatable);
+        }
+
+        ///GENMHASH:1C6077E4D6C66768F90D34959C6A9557:E04E020A102AA03085B45CBF493840AB
+        public WebAppImpl WithNewWindowsPlan(PricingTier pricingTier)
+        {
+            return WithNewAppServicePlan(Fluent.OperatingSystem.Windows, pricingTier);
+        }
+
+        ///GENMHASH:05FFF17BA5124DA9ADF68F72A294217A:9E9E1980C1811DAF6A3570844756F43D
+        public WebAppImpl WithNewLinuxPlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable)
+        {
+            return WithNewAppServicePlan(appServicePlanCreatable);
+        }
+
+        ///GENMHASH:93C29CF5161D2614E639C98402130AE8:6F5157AFE185E032D5BFCA058B128443
+        public WebAppImpl WithNewLinuxPlan(PricingTier pricingTier)
+        {
+            return WithNewAppServicePlan(Fluent.OperatingSystem.Linux, pricingTier);
+        }
+
+        ///GENMHASH:EF90793D27905B9731A3A9BAC102798B:43571FEFEFB64D6EDF2EE00DFD72EDFA
+        public WebAppImpl WithStartUpCommand(string startUpCommand)
+        {
+            if (SiteConfig == null)
             {
-                appServicePlan.WithNewResourceGroup(ResourceGroupName);
-                ((IndexableRefreshableWrapper<IResourceGroup, ResourceGroupInner>) newGroup).Inner.Location = RegionName;
+                SiteConfig = new SiteConfigResourceInner();
             }
-            else
-            {
-                appServicePlan.WithExistingResourceGroup(ResourceGroupName);
-            }
-            AddCreatableDependency(appServicePlan);
+            SiteConfig.AppCommandLine = startUpCommand;
             return this;
         }
 
-        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:192EA146CBED61BBAAC7B336DA07F261
-        public override void Restart()
+        ///GENMHASH:D79048417E133BB6DC503E8145592A80:62AD83CC92F592B62208E92CCB5E5752
+        public WebAppImpl WithCredentials(string username, string password)
         {
-            Manager.Inner.WebApps.Restart(ResourceGroupName, Name);
-        }
-
-        ///GENMHASH:3F0152723C985A22C1032733AB942C96:9A3E19132DCD027C4BA1BBB085642F29
-        public override IPublishingProfile GetPublishingProfile()
-        {
-            Stream stream = Manager.Inner.WebApps.ListPublishingProfileXmlWithSecrets(ResourceGroupName, Name);
-            StreamReader reader = new StreamReader(stream);
-            string xml = reader.ReadToEnd();
-            return new PublishingProfileImpl(xml);
-        }
-
-        ///GENMHASH:62F8B201D885123D1E906E306D144662:E1F277FB3368B266611D1FAD9307CC48
-        internal async override Task<SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.UpdateSlotConfigurationNamesAsync(ResourceGroupName, Name, inner, cancellationToken);
-        }
-
-        ///GENMHASH:924482EE7AA6A01820720743C2A59A72:AA2A43E94B10FDB1A9E9E89ED9CA279B
-        public override void ApplySlotConfigurations(string slotName)
-        {
-            Manager.Inner.WebApps.ApplySlotConfigToProduction(ResourceGroupName, Name, new CsmSlotEntityInner()
-            {
-                TargetSlot = slotName
-            });
-            Refresh();
-        }
-
-        ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:B4D4D99FF69FD9180176D4E47741258C
-        internal async override Task<ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.UpdateConnectionStringsAsync(ResourceGroupName, Name, inner, cancellationToken);
-        }
-
-        ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:1EF461DA96453123EA3CCA0E640170EC
-        internal async override Task<ConnectionStringDictionaryInner> ListConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.ListConnectionStringsAsync(ResourceGroupName, Name);
-        }
-
-        ///GENMHASH:BC033DDD8D749B9BBCDC5BADD5CF2B94:9F4E7075C3242FB2777F45453DB418B6
-        public WebAppImpl WithFreePricingTier()
-        {
-            return WithPricingTier(AppServicePricingTier.FreeF1);
-        }
-
-        ///GENMHASH:256905D5B839C64BFE9830503CB5607B:7AC64BDE9A6045728A97AD3B7E256F87
-        internal async override Task<SiteConfigResourceInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Manager.Inner.WebApps.GetConfigurationAsync(ResourceGroupName, Name);
-        }
-
-        ///GENMHASH:934D38FBA69BF2F25673598C416DD202:E29466D1FE6AACE8059987F066EC1188
-        public WebAppImpl WithExistingAppServicePlan(IAppServicePlan appServicePlan)
-        {
-            Inner.ServerFarmId = appServicePlan.Id;
-            if (newGroup != null && IsInCreateMode) {
-                ((IndexableRefreshableWrapper<IResourceGroup,ResourceGroupInner>) newGroup).Inner.Location = appServicePlan.RegionName;
-            }
-            this.WithRegion(appServicePlan.RegionName);
+            WithAppSetting(SETTING_REGISTRY_USERNAME, username);
+            WithAppSetting(SETTING_REGISTRY_PASSWORD, password);
             return this;
         }
 
-        ///GENMHASH:8C5F8B18192B4F8FD7D43AB4D318EA69:E232113DB866C8D255AE12F7A61042E8
-        public override IReadOnlyDictionary<string, IHostNameBinding> GetHostNameBindings()
+        ///GENMHASH:F7734222FF39440A50483317E5DF8156:998FF6187B952D74EE89FFECAAB847A3
+        public WebAppImpl WithBuiltInImage(RuntimeStack runtimeStack)
         {
-            var collectionInner = Manager.Inner.WebApps.ListHostNameBindings(ResourceGroupName, Name);
-            var hostNameBindings = new List<IHostNameBinding>();
-            foreach(var inner in collectionInner)
-            {
-                hostNameBindings.Add(new HostNameBindingImpl<IWebApp, WebAppImpl, WebApp.Definition.IWithNewAppServicePlan, WebApp.Definition.IWithAppServicePlan, IUpdate>(
-                    inner,
-                    this));
+            EnsureLinuxPlan();
+            CleanUpContainerSettings();
+            if (SiteConfig == null) {
+                SiteConfig = new SiteConfigResourceInner();
             }
-            return hostNameBindings.ToDictionary(b => b.Name.Replace(Name + "/", ""));
+            SiteConfig.LinuxFxVersion = String.Format("%s|%s", runtimeStack.Stack(), runtimeStack.Version());
+            if (runtimeStack.Stack().Equals("NODE")) {
+                SiteConfig.NodeVersion = runtimeStack.Version();
+            }
+            if (runtimeStack.Stack().Equals("PHP")) {
+                SiteConfig.PhpVersion = runtimeStack.Version();
+            }
+            if (runtimeStack.Stack().Equals("DOTNETCORE")) {
+                SiteConfig.NetFrameworkVersion = runtimeStack.Version();
+            }
+            return this;
         }
 
-        ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:391885361D8D6FDB8CD9E96400E16B73
-        public override void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
+        IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup(string name)
         {
-            VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            WithNewResourceGroup(name);
+            return this;
         }
 
-        ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:AD50571B7362BCAADE526027DA36B58F
-        protected async override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
+        IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup()
         {
-            return await Manager.Inner.WebApps.GetAsync(ResourceGroupName, Name, cancellationToken);
+            WithNewResourceGroup();
+            return this;
         }
 
-        ///GENMHASH:BC96AA8FDB678157AC1E6F0AA511AB65:20A70C4EEFBA9DE9AD6AA6D9133187D7
-        public override IWebAppSourceControl GetSourceControl()
+        IWithCreate IExistingWindowsPlanWithGroup.WithNewResourceGroup(ICreatable<IResourceGroup> groupDefinition)
         {
-            SiteSourceControlInner siteSourceControlInner = Manager.Inner.WebApps.GetSourceControl(ResourceGroupName, Name);
-            return new WebAppSourceControlImpl<IWebApp, WebAppImpl, WebApp.Definition.IWithNewAppServicePlan,
-                WebApp.Definition.IWithAppServicePlan, IUpdate>(siteSourceControlInner, this);
+            WithNewResourceGroup(groupDefinition);
+            return this;
         }
 
-        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:57465AB4A649A705C9DC2183EE743214
-        public override void Start()
+        IWithCreate IExistingWindowsPlanWithGroup.WithExistingResourceGroup(string groupName)
         {
-            Manager.Inner.WebApps.Start(ResourceGroupName, Name);
+            WithExistingResourceGroup(groupName);
+            return this;
         }
 
-        ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
-        internal WebAppImpl(
-            string name,
-            SiteInner innerObject,
-            SiteConfigResourceInner configObject,
-            IAppServiceManager manager)
-            : base (name, innerObject, configObject, manager)
+        IWithCreate IExistingWindowsPlanWithGroup.WithExistingResourceGroup(IResourceGroup group)
         {
+            WithExistingResourceGroup(group);
+            return this;
         }
 
-        ///GENMHASH:DFC52755A97E7B13EB10FA2EB9538E4A:FCF3A2AD2F52743B995DDA1FE7D020CB
-        public override void Swap(string slotName)
+        WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithNewResourceGroup(string name)
         {
-            Manager.Inner.WebApps.SwapSlotWithProduction(ResourceGroupName, Name, new CsmSlotEntityInner
-            {
-                TargetSlot = slotName
-            });
-            Refresh();
+            WithNewResourceGroup(name);
+            return this;
         }
 
-        ///GENMHASH:FCAC8C2F8D6E12CB6F5D7787A2837016:932BF8229CACF0E669A4DDE8FAEB10D4
-        internal async override Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken))
+        WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithNewResourceGroup()
         {
-            await Manager.Inner.WebApps.DeleteHostNameBindingAsync(ResourceGroupName, Name, hostname, cancellationToken);
+            WithNewResourceGroup();
+            return this;
+        }
+
+        WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithNewResourceGroup(ICreatable<IResourceGroup> groupDefinition)
+        {
+            WithNewResourceGroup(groupDefinition);
+            return this;
+        }
+
+        WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithExistingResourceGroup(string groupName)
+        {
+            WithExistingResourceGroup(groupName);
+            return this;
+        }
+
+        WebApp.Definition.IWithDockerContainerImage IExistingLinuxPlanWithGroup.WithExistingResourceGroup(IResourceGroup group)
+        {
+            WithExistingResourceGroup(group);
+            return this;
         }
     }
 }

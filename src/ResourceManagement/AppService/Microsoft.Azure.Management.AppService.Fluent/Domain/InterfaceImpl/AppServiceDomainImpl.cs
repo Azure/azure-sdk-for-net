@@ -4,11 +4,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using AppServiceDomain.Definition;
-    using AppServiceDomain.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using System;
 
@@ -20,6 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// available publicly.
         /// </summary>
         /// <param name="domainPrivacy">True if domain privacy is turned on.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Definition.IWithCreate AppServiceDomain.Definition.IWithDomainPrivacy.WithDomainPrivacyEnabled(bool domainPrivacy)
         {
             return this.WithDomainPrivacyEnabled(domainPrivacy) as AppServiceDomain.Definition.IWithCreate;
@@ -31,23 +30,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// available publicly.
         /// </summary>
         /// <param name="domainPrivacy">True if domain privacy is turned on.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Update.IUpdate AppServiceDomain.Update.IWithDomainPrivacy.WithDomainPrivacyEnabled(bool domainPrivacy)
         {
             return this.WithDomainPrivacyEnabled(domainPrivacy) as AppServiceDomain.Update.IUpdate;
         }
 
         /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain;
-        }
-
-        /// <summary>
         /// Specify the admin contact.
         /// </summary>
         /// <param name="contact">The admin contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Definition.IWithCreate AppServiceDomain.Definition.IWithAdminContact.WithAdminContact(Contact contact)
         {
             return this.WithAdminContact(contact) as AppServiceDomain.Definition.IWithCreate;
@@ -57,6 +50,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specify the admin contact.
         /// </summary>
         /// <param name="contact">The admin contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Update.IUpdate AppServiceDomain.Update.IWithAdminContact.WithAdminContact(Contact contact)
         {
             return this.WithAdminContact(contact) as AppServiceDomain.Update.IUpdate;
@@ -66,6 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specify the tech contact.
         /// </summary>
         /// <param name="contact">The tech contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Definition.IWithCreate AppServiceDomain.Definition.IWithTechContact.WithTechContact(Contact contact)
         {
             return this.WithTechContact(contact) as AppServiceDomain.Definition.IWithCreate;
@@ -75,6 +70,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specify the tech contact.
         /// </summary>
         /// <param name="contact">The tech contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Update.IUpdate AppServiceDomain.Update.IWithTechContact.WithTechContact(Contact contact)
         {
             return this.WithTechContact(contact) as AppServiceDomain.Update.IUpdate;
@@ -84,6 +80,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specify the billing contact.
         /// </summary>
         /// <param name="contact">The billing contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Definition.IWithCreate AppServiceDomain.Definition.IWithBillingContact.WithBillingContact(Contact contact)
         {
             return this.WithBillingContact(contact) as AppServiceDomain.Definition.IWithCreate;
@@ -93,11 +90,37 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specify the billing contact.
         /// </summary>
         /// <param name="contact">The billing contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Update.IUpdate AppServiceDomain.Update.IWithBillingContact.WithBillingContact(Contact contact)
         {
             return this.WithBillingContact(contact) as AppServiceDomain.Update.IUpdate;
         }
 
+        /// <summary>
+        /// Gets name servers.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.NameServers
+        {
+            get
+            {
+                return this.NameServers() as System.Collections.Generic.IReadOnlyList<string>;
+            }
+        }
+
+        /// <summary>
+        /// Gets admin contact information.
+        /// </summary>
+        Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.AdminContact
+        {
+            get
+            {
+                return this.AdminContact() as Models.Contact;
+            }
+        }
+
+        /// <summary>
+        /// Gets true if domain will renewed automatically.
+        /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.AutoRenew
         {
             get
@@ -106,40 +129,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostName> Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ManagedHostNames
+        /// <summary>
+        /// Gets technical contact information.
+        /// </summary>
+        Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.TechContact
         {
             get
             {
-                return this.ManagedHostNames() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostName>;
+                return this.TechContact() as Models.Contact;
             }
         }
 
         /// <summary>
-        /// Verifies the ownership of the domain for a certificate order bound to this domain.
+        /// Gets domain expiration timestamp.
         /// </summary>
-        /// <param name="certificateOrderName">The name of the certificate order.</param>
-        void Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
-        {
- 
-            this.VerifyDomainOwnership(certificateOrderName, domainVerificationToken);
-        }
-
-        Microsoft.Azure.Management.AppService.Fluent.Models.DomainStatus Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.RegistrationStatus
-        {
-            get
-            {
-                return this.RegistrationStatus();
-            }
-        }
-
-        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.LastRenewedTime
-        {
-            get
-            {
-                return this.LastRenewedTime();
-            }
-        }
-
         System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ExpirationTime
         {
             get
@@ -148,6 +151,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
+        /// <summary>
+        /// Gets timestamp when the domain was renewed last time.
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.LastRenewedTime
+        {
+            get
+            {
+                return this.LastRenewedTime();
+            }
+        }
+
+        /// <summary>
+        /// Gets domain creation timestamp.
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.CreatedTime
         {
             get
@@ -156,19 +173,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.RegistrantContact
+        /// <summary>
+        /// Gets billing contact information.
+        /// </summary>
+        Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.BillingContact
         {
             get
             {
-                return this.RegistrantContact() as Microsoft.Azure.Management.AppService.Fluent.Models.Contact;
-            }
-        }
-
-        Microsoft.Azure.Management.AppService.Fluent.Models.DomainPurchaseConsent Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.Consent
-        {
-            get
-            {
-                return this.Consent() as Microsoft.Azure.Management.AppService.Fluent.Models.DomainPurchaseConsent;
+                return this.BillingContact() as Models.Contact;
             }
         }
 
@@ -177,20 +189,73 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken)
         {
  
             await this.VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken, cancellationToken);
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.BillingContact
+        /// <summary>
+        /// Gets domain registration status.
+        /// </summary>
+        Models.DomainStatus Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.RegistrationStatus
         {
             get
             {
-                return this.BillingContact() as Microsoft.Azure.Management.AppService.Fluent.Models.Contact;
+                return this.RegistrationStatus();
             }
         }
 
+        /// <summary>
+        /// Gets registrant contact information.
+        /// </summary>
+        Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.RegistrantContact
+        {
+            get
+            {
+                return this.RegistrantContact() as Models.Contact;
+            }
+        }
+
+        /// <summary>
+        /// Gets legal agreement consent.
+        /// </summary>
+        Models.DomainPurchaseConsent Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.Consent
+        {
+            get
+            {
+                return this.Consent() as Models.DomainPurchaseConsent;
+            }
+        }
+
+        /// <summary>
+        /// Gets all hostnames derived from the domain and assigned to Azure resources.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Models.HostName> Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ManagedHostNames
+        {
+            get
+            {
+                return this.ManagedHostNames() as System.Collections.Generic.IReadOnlyDictionary<string,Models.HostName>;
+            }
+        }
+
+        /// <summary>
+        /// Verifies the ownership of the domain for a certificate order bound to this domain.
+        /// </summary>
+        /// <param name="certificateOrderName">The name of the certificate order.</param>
+        /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
+        void Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
+        {
+ 
+            this.VerifyDomainOwnership(certificateOrderName, domainVerificationToken);
+        }
+
+        /// <summary>
+        /// Gets true if Azure can assign this domain to Web Apps. This value will
+        /// be true if domain registration status is active and it is hosted on
+        /// name servers Azure has programmatic access to.
+        /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ReadyForDnsRecordManagement
         {
             get
@@ -199,22 +264,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.NameServers
-        {
-            get
-            {
-                return this.NameServers() as System.Collections.Generic.IList<string>;
-            }
-        }
-
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.AdminContact
-        {
-            get
-            {
-                return this.AdminContact() as Microsoft.Azure.Management.AppService.Fluent.Models.Contact;
-            }
-        }
-
+        /// <summary>
+        /// Gets true if domain privacy is enabled for this domain.
+        /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.Privacy
         {
             get
@@ -223,19 +275,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.TechContact
-        {
-            get
-            {
-                return this.TechContact() as Microsoft.Azure.Management.AppService.Fluent.Models.Contact;
-            }
-        }
-
         /// <summary>
         /// Specifies if the domain should be automatically renewed when it's
         /// about to expire.
         /// </summary>
         /// <param name="autoRenew">True if the domain should be automatically renewed.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Definition.IWithCreate AppServiceDomain.Definition.IWithAutoRenew.WithAutoRenewEnabled(bool autoRenew)
         {
             return this.WithAutoRenewEnabled(autoRenew) as AppServiceDomain.Definition.IWithCreate;
@@ -246,17 +291,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// about to expire.
         /// </summary>
         /// <param name="autoRenew">True if the domain should be automatically renewed.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Update.IUpdate AppServiceDomain.Update.IWithAutoRenew.WithAutoRenewEnabled(bool autoRenew)
         {
             return this.WithAutoRenewEnabled(autoRenew) as AppServiceDomain.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Starts the definition of a new domain contact.
-        /// </summary>
-        DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate> AppServiceDomain.Definition.IWithRegistrantContact.DefineRegistrantContact()
-        {
-            return this.DefineRegistrantContact() as DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -264,9 +302,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// admin, billing, and tech.
         /// </summary>
         /// <param name="contact">The registrant contact.</param>
+        /// <return>The next stage of domain definition.</return>
         AppServiceDomain.Definition.IWithCreate AppServiceDomain.Definition.IWithRegistrantContact.WithRegistrantContact(Contact contact)
         {
             return this.WithRegistrantContact(contact) as AppServiceDomain.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Starts the definition of a new domain contact.
+        /// </summary>
+        /// <return>The first stage of the domain contact definition.</return>
+        DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate> AppServiceDomain.Definition.IWithRegistrantContact.DefineRegistrantContact()
+        {
+            return this.DefineRegistrantContact() as DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate>;
         }
     }
 }

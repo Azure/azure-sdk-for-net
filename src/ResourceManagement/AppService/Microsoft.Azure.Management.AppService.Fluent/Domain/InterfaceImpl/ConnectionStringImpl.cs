@@ -6,6 +6,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal partial class ConnectionStringImpl 
     {
+        /// <summary>
+        /// Gets the key of the setting.
+        /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Name
         {
             get
@@ -14,7 +17,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringType Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Type
+        /// <summary>
+        /// Gets the type of the connection string.
+        /// </summary>
+        Models.ConnectionStringType Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Type
         {
             get
             {
@@ -22,19 +28,25 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Value
-        {
-            get
-            {
-                return this.Value();
-            }
-        }
-
+        /// <summary>
+        /// Gets if the connection string sticks to the slot during a swap.
+        /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Sticky
         {
             get
             {
                 return this.Sticky();
+            }
+        }
+
+        /// <summary>
+        /// Gets the value of the connection string.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Value
+        {
+            get
+            {
+                return this.Value();
             }
         }
     }

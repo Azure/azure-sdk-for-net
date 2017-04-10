@@ -39,7 +39,6 @@ namespace ManageWebAppSourceControl
             string app2Url = app2Name + Suffix;
             string app3Url = app3Name + Suffix;
             string app4Url = app4Name + Suffix;
-            string planName = SdkContext.RandomResourceName("jplan_", 15);
             string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
@@ -51,10 +50,9 @@ namespace ManageWebAppSourceControl
 
                 var app1 = azure.WebApps
                         .Define(app1Name)
-                        .WithNewResourceGroup(rgName)
-                        .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithNewResourceGroup(rgName)
+                        .WithNewWindowsPlan(PricingTier.StandardS1)
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Create();
@@ -85,11 +83,11 @@ namespace ManageWebAppSourceControl
                 // Create a second web app with local git source control
 
                 Utilities.Log("Creating another web app " + app2Name + " in resource group " + rgName + "...");
-                var plan = azure.AppServices.AppServicePlans.GetByResourceGroup(rgName, planName);
+                var plan = azure.AppServices.AppServicePlans.GetById(app1.AppServicePlanId);
                 var app2 = azure.WebApps
                         .Define(app2Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         .WithLocalGitSourceControl()
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
@@ -122,8 +120,8 @@ namespace ManageWebAppSourceControl
                 Utilities.Log("Creating another web app " + app3Name + "...");
                 var app3 = azure.WebApps
                         .Define(app3Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithNewResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         .DefineSourceControl()
                             .WithPublicGitRepository("https://github.com/Azure-Samples/app-service-web-dotnet-get-started")
                             .WithBranch("master")
@@ -146,8 +144,8 @@ namespace ManageWebAppSourceControl
                 Utilities.Log("Creating another web app " + app4Name + "...");
                 var app4 = azure.WebApps
                         .Define(app4Name)
+                        .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
-                        .WithExistingAppServicePlan(plan)
                         // Uncomment the following lines to turn on 4th scenario
                         //.DefineSourceControl()
                         //    .WithContinuouslyIntegratedGitHubRepository("username", "reponame")

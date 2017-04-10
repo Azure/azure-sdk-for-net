@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:DF6DF1B2A329B554D04700E954A45A08
+        ///GENMHASH:1F414E796475F1DA7286F29E3E27589D:23815681E86022F4ACC67F93AAA34DF6
         public async override Task DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.DeleteSlotAsync(groupName, parentName, name, cancellationToken: cancellationToken);
@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:DED500AFBAD0A9AF916DAD488509F998:46CC5FC812EA999640A1A10FD4B00D83
+
         internal DeploymentSlotsImpl(
             WebAppImpl parent,
             IAppServiceManager manager)
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return ListByParent(parent.ResourceGroupName, parent.Name);
         }
 
-        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5C4D08699E1ECDDF02A498EE458BCCC7
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:CAB02828F240DEA3976BF1456621A4A8
         protected override DeploymentSlotImpl WrapModel(string name)
         {
             var deploymentSlot = new DeploymentSlotImpl(name, new SiteInner(), null, parent, Manager);
@@ -86,7 +87,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return deploymentSlot;
         }
 
-        ///GENMHASH:64609469010BC4A501B1C3197AE4F243:9586F8E3CBA078647A5B1619BB8CAD97
+        ///GENMHASH:64609469010BC4A501B1C3197AE4F243:546B78C6345DE4CB959015B4F5C52E0D
         protected override IDeploymentSlot WrapModel(SiteInner inner)
         {
             if (inner == null)
@@ -112,6 +113,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:C7E55DE6EB5DCE4FD47A68B8B1B62F02
+
         public async override Task<IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             SiteInner siteInner = await Inner.GetSlotAsync(resourceGroup, parentName, name, cancellationToken);
@@ -122,7 +124,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var siteConfig = await Inner.GetConfigurationSlotAsync(resourceGroup, parentName, name, cancellationToken);
 
             var result = WrapModel(siteInner, siteConfig);
-            await ((DeploymentSlotImpl)result).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await ((DeploymentSlotImpl)result).CacheSiteProperties(cancellationToken);
 
             return result;
         }
@@ -141,7 +143,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             var siteConfig = await Inner.GetConfigurationSlotAsync(inner.ResourceGroup, parent.Name, Regex.Replace(inner.Name, ".*/", ""), cancellationToken);
             var slot = WrapModel(inner, siteConfig);
-            await ((DeploymentSlotImpl)slot).CacheAppSettingsAndConnectionStringsAsync(cancellationToken);
+            await ((DeploymentSlotImpl)slot).CacheSiteProperties(cancellationToken);
             return slot;
         }
 

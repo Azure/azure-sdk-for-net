@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.Id;
         }
 
-        ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:DC8E8A0BB59447B858C77B2C0A633857
+        ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:EF611182518FA724341200882E0C6D97
         protected async override Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await Manager.Inner.AppServiceCertificateOrders.CreateOrUpdateCertificateAsync(parent.ResourceGroupName, parent.Name, Name, Inner);

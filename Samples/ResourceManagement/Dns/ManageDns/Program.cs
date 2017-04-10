@@ -36,7 +36,6 @@ namespace ManageDns
         public static void RunSample(IAzure azure)
         {
             string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
-            string appServicePlanName = SdkContext.RandomResourceName("jplan1_", 15);
             string webAppName = SdkContext.RandomResourceName("webapp1-", 20);
             
             try
@@ -73,10 +72,9 @@ namespace ManageDns
 
                 Utilities.Log("Creating Web App " + webAppName + "...");
                 var webApp = azure.WebApps.Define(webAppName)
-                        .WithExistingResourceGroup(rgName)
-                        .WithNewAppServicePlan(appServicePlanName)
                         .WithRegion(Region.USEast2)
-                        .WithPricingTier(AppServicePricingTier.BasicB1)
+                        .WithExistingResourceGroup(rgName)
+                        .WithNewWindowsPlan(PricingTier.BasicB1)
                         .DefineSourceControl()
                             .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
                             .WithBranch("master")

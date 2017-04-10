@@ -2,28 +2,29 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AppServiceCertificateOrder.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point for app service certificate order management API.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IAppServiceCertificateOrders  :
-        ISupportsCreating<IBlank>,
-        ISupportsDeletingById,
-        ISupportsListingByResourceGroup<IAppServiceCertificateOrder>,
-        ISupportsListing<IAppServiceCertificateOrder>,
-        ISupportsGettingByResourceGroup<IAppServiceCertificateOrder>,
-        ISupportsGettingById<IAppServiceCertificateOrder>,
-        ISupportsDeletingByResourceGroup,
-        IHasManager<IAppServiceManager>,
-        IHasInner<IAppServiceCertificateOrdersOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<AppServiceCertificateOrder.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IAppServiceManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<IAppServiceCertificateOrdersOperations>
     {
     }
 }
