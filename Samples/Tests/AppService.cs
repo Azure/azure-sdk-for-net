@@ -35,7 +35,7 @@ namespace Samples.Tests
                Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "Async methods are not ported to C# yet")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSourceControlAsyncTest()
         {

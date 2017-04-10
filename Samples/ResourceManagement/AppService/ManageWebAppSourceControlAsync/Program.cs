@@ -48,14 +48,14 @@ namespace ManageWebAppSourceControlAsync
 
                 Utilities.Log("Creating web app " + app1Name + " in resource group " + rgName + "...");
 
-                var app1 = azure.WebApps
+                var app1 = await azure.WebApps
                         .Define(app1Name)
                         .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
                         .WithNewWindowsPlan(PricingTier.StandardS1)
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
-                        .Create();
+                        .CreateAsync();
 
                 Utilities.Log("Created web app " + app1.Name);
                 Utilities.Print(app1);
@@ -66,7 +66,7 @@ namespace ManageWebAppSourceControlAsync
                 Utilities.Log("Deploying helloworld.War to " + app1Name + " through FTP...");
 
                 Utilities.UploadFileToFtp(
-                    app1.GetPublishingProfile(),
+                    await app1.GetPublishingProfileAsync(),
                     Path.Combine(Utilities.ProjectPath, "Asset", "helloworld.war"));
 
                 Utilities.Log("Deployment helloworld.War to web app " + app1.Name + " completed");
@@ -83,15 +83,15 @@ namespace ManageWebAppSourceControlAsync
                 // Create a second web app with local git source control
 
                 Utilities.Log("Creating another web app " + app2Name + " in resource group " + rgName + "...");
-                var plan = azure.AppServices.AppServicePlans.GetById(app1.AppServicePlanId);
-                var app2 = azure.WebApps
+                var plan = await azure.AppServices.AppServicePlans.GetByIdAsync(app1.AppServicePlanId);
+                var app2 = await azure.WebApps
                         .Define(app2Name)
                         .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
                         .WithLocalGitSourceControl()
                         .WithJavaVersion(JavaVersion.V8Newest)
                         .WithWebContainer(WebContainer.Tomcat8_0Newest)
-                        .Create();
+                        .CreateAsync();
 
                 Utilities.Log("Created web app " + app2.Name);
                 Utilities.Print(app2);
@@ -101,7 +101,7 @@ namespace ManageWebAppSourceControlAsync
 
                 Utilities.Log("Deploying a local Tomcat source to " + app2Name + " through Git...");
 
-                var profile = app2.GetPublishingProfile();
+                var profile = await app2.GetPublishingProfileAsync();
                 Utilities.DeployByGit(profile);
 
                 Utilities.Log("Deployment to web app " + app2.Name + " completed");
@@ -118,7 +118,7 @@ namespace ManageWebAppSourceControlAsync
                 // Create a 3rd web app with a public GitHub repo in Azure-Samples
 
                 Utilities.Log("Creating another web app " + app3Name + "...");
-                var app3 = azure.WebApps
+                var app3 = await azure.WebApps
                         .Define(app3Name)
                         .WithExistingWindowsPlan(plan)
                         .WithNewResourceGroup(rgName)
@@ -126,7 +126,7 @@ namespace ManageWebAppSourceControlAsync
                             .WithPublicGitRepository("https://github.com/Azure-Samples/app-service-web-dotnet-get-started")
                             .WithBranch("master")
                             .Attach()
-                        .Create();
+                        .CreateAsync();
 
                 Utilities.Log("Created web app " + app3.Name);
                 Utilities.Print(app3);
@@ -142,7 +142,7 @@ namespace ManageWebAppSourceControlAsync
                 // Create a 4th web app with a personal GitHub repo and turn on continuous integration
 
                 Utilities.Log("Creating another web app " + app4Name + "...");
-                var app4 = azure.WebApps
+                var app4 = await azure.WebApps
                         .Define(app4Name)
                         .WithExistingWindowsPlan(plan)
                         .WithExistingResourceGroup(rgName)
@@ -152,7 +152,7 @@ namespace ManageWebAppSourceControlAsync
                         //    .WithBranch("master")
                         //    .WithGitHubAccessToken("YOUR GITHUB PERSONAL TOKEN")
                         //    .Attach()
-                        .Create();
+                        .CreateAsync();
 
                 Utilities.Log("Created web app " + app4.Name);
                 Utilities.Print(app4);
@@ -173,7 +173,7 @@ namespace ManageWebAppSourceControlAsync
                 try
                 {
                     Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
+                    await azure.ResourceGroups.DeleteByNameAsync(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
