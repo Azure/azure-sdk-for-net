@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Rest;
     using Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -45,9 +47,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="outputsLink">Gets the link to outputs.</param>
         /// <param name="trackedProperties">Gets the tracked
         /// properties.</param>
+        /// <param name="retryHistory">Gets the retry histories.</param>
         /// <param name="name">Gets the workflow run action name.</param>
         /// <param name="type">Gets the workflow run action type.</param>
-        public WorkflowRunAction(string id = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), WorkflowStatus? status = default(WorkflowStatus?), string code = default(string), object error = default(object), string trackingId = default(string), Correlation correlation = default(Correlation), ContentLink inputsLink = default(ContentLink), ContentLink outputsLink = default(ContentLink), object trackedProperties = default(object), string name = default(string), string type = default(string))
+        public WorkflowRunAction(string id = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), WorkflowStatus? status = default(WorkflowStatus?), string code = default(string), object error = default(object), string trackingId = default(string), Correlation correlation = default(Correlation), ContentLink inputsLink = default(ContentLink), ContentLink outputsLink = default(ContentLink), object trackedProperties = default(object), IList<RetryHistory> retryHistory = default(IList<RetryHistory>), string name = default(string), string type = default(string))
             : base(id)
         {
             StartTime = startTime;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.Logic.Models
             InputsLink = inputsLink;
             OutputsLink = outputsLink;
             TrackedProperties = trackedProperties;
+            RetryHistory = retryHistory;
             Name = name;
             Type = type;
         }
@@ -125,6 +129,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.trackedProperties")]
         public object TrackedProperties { get; protected set; }
+
+        /// <summary>
+        /// Gets the retry histories.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.retryHistory")]
+        public IList<RetryHistory> RetryHistory { get; set; }
 
         /// <summary>
         /// Gets the workflow run action name.
