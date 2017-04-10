@@ -116,13 +116,7 @@ namespace ManageManagedDisks
 
                 Utilities.Log("Created VM [with new managed data disks and disk attached]");
 
-                // Upate a VM
-
-                Utilities.Log("De-allocating VM");
-
-                linuxVM2.Deallocate();
-
-                Utilities.Log("De-allocated VM");
+                // Update a VM
 
                 Utilities.Log("Updating VM [by detaching a disk and adding empty disk]");
 

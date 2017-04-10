@@ -261,42 +261,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Updates the size of a managed data disk with the given lun.
-        /// </summary>
-        /// <param name="lun">The disk lun.</param>
-        /// <param name="newSizeInGB">The new size of the disk.</param>
-        /// <return>The next stage of virtual machine update.</return>
-        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithManagedDataDisk.WithDataDiskUpdated(int lun, int newSizeInGB)
-        {
-            return this.WithDataDiskUpdated(lun, newSizeInGB) as VirtualMachine.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Updates the size and caching type of a managed data disk with the given lun.
-        /// </summary>
-        /// <param name="lun">The disk lun.</param>
-        /// <param name="newSizeInGB">The new size of the disk.</param>
-        /// <param name="cachingType">The caching type.</param>
-        /// <return>The next stage of virtual machine update.</return>
-        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithManagedDataDisk.WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType)
-        {
-            return this.WithDataDiskUpdated(lun, newSizeInGB, cachingType) as VirtualMachine.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Updates the size, caching type and storage account type of a managed data disk with the given lun.
-        /// </summary>
-        /// <param name="lun">The disk lun.</param>
-        /// <param name="newSizeInGB">The new size of the disk.</param>
-        /// <param name="cachingType">The caching type.</param>
-        /// <param name="storageAccountType">The storage account type.</param>
-        /// <return>The next stage of virtual machine update.</return>
-        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithManagedDataDisk.WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
-        {
-            return this.WithDataDiskUpdated(lun, newSizeInGB, cachingType, storageAccountType) as VirtualMachine.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Specifies that a managed disk needs to be created explicitly with the given definition and
         /// attach to the virtual machine as data disk.
         /// </summary>

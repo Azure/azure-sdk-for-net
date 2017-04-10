@@ -20,7 +20,6 @@ namespace ManageVirtualMachine
          *  - Stop a virtual machine
          *  - Restart a virtual machine
          *  - Update a virtual machine
-         *    - Expand the OS drive
          *    - Tag a virtual machine (there are many possible variations here)
          *    - Attach data disks
          *    - Detach data disks
@@ -110,37 +109,6 @@ namespace ManageVirtualMachine
                         .Apply();
 
                 Utilities.Log("Detached data disk at lun 0 from VM " + windowsVM.Id);
-
-                //=============================================================
-                // Update - Resize (expand) the data disk
-                // First, deallocate the virtual machine and then proceed with resize
-
-                Utilities.Log("De-allocating VM: " + windowsVM.Id);
-
-                windowsVM.Deallocate();
-
-                Utilities.Log("De-allocated VM: " + windowsVM.Id);
-
-                //=============================================================
-                // Update - Expand the OS and data disks
-
-                Utilities.Log("Resize OS and data disks");
-
-                windowsVM.Update()
-                        .WithOSDiskSizeInGB(200)
-                        .WithDataDiskUpdated(1, 200)
-                        .WithDataDiskUpdated(2, 200)
-                        .Apply();
-
-                Utilities.Log("Expanded VM " + windowsVM.Id + "'s OS and data disks");
-
-                // Start the virtual machine
-
-                Utilities.Log("Starting VM " + windowsVM.Id);
-
-                windowsVM.Start();
-
-                Utilities.Log("Started VM: " + windowsVM.Id + "; state = " + windowsVM.PowerState);
 
                 //=============================================================
                 // Restart the virtual machine
