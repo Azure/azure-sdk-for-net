@@ -9,9 +9,7 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "Microsoft.Azure.ServiceBus": {
-      "target": "project"
-    }
+    "Microsoft.Azure.ServiceBus": "0.0.2-preview"
   },
 
   "frameworks": {

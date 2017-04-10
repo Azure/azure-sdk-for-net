@@ -35,9 +35,7 @@ In this tutorial, we will write a console application to send messages to a Serv
 1. Add the following to your project.json, making sure that the solution references the `Microsoft.Azure.ServiceBus` project.
 
     ```json
-    "Microsoft.Azure.ServiceBus": {
-        "target": "project"
-    }
+    "Microsoft.Azure.ServiceBus": "0.0.2-preview"
     ```
 
 ### Write some code to send a message to a queue
@@ -69,7 +67,7 @@ In this tutorial, we will write a console application to send messages to a Serv
                 var message = new Message($"Message {i}");
 
                 // Write the body of the message to the console
-                Console.WriteLine($"Sending message: {message.GetBody<string>()}");
+                Console.WriteLine($"Sending message: {Encoding.UTF8.GetString(message.Body)}");
 
                 // Send the message to the queue
                 await queueClient.SendAsync(message);

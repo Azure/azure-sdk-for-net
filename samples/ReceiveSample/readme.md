@@ -36,9 +36,7 @@ In this tutorial, we will write a console application to receive messages from a
 1. Add the following to your project.json, making sure that the solution references the `Microsoft.Azure.ServiceBus` project.
 
     ```json
-    "Microsoft.Azure.ServiceBus": {
-        "target": "project"
-    }
+    "Microsoft.Azure.ServiceBus": "0.0.2-preview"
     ```
 
 ### Write some code to receive messages from a queue
@@ -66,13 +64,12 @@ In this tutorial, we will write a console application to receive messages from a
             async (message, token) =>
             {
                 // Process the message
-                Console.WriteLine($"Received message: SequenceNumber:{message.SequenceNumber} Body:{message.GetBody<string>()}");
+                Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
 
                 // Complete the message so that it is not received again.
                 // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
                 await queueClient.CompleteAsync(message.LockToken);
-            },
-            new RegisterHandlerOptions() {MaxConcurrentCalls = 1, AutoComplete = false});
+            });
     }
     catch (Exception exception)
     {
