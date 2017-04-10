@@ -117,6 +117,33 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             UpdatedAt = updatedAt;
         }
 
+        public QueueCreateOrUpdateParameters(QueueResource queueResource)
+        {
+            Name = queueResource.Name;
+            LockDuration = queueResource.LockDuration;
+            AccessedAt = queueResource.AccessedAt;
+            AutoDeleteOnIdle = queueResource.AutoDeleteOnIdle;
+            EntityAvailabilityStatus = queueResource.EntityAvailabilityStatus;
+            CreatedAt = queueResource.CreatedAt;
+            DefaultMessageTimeToLive = queueResource.DefaultMessageTimeToLive;
+            DuplicateDetectionHistoryTimeWindow = queueResource.DuplicateDetectionHistoryTimeWindow;
+            EnableBatchedOperations = queueResource.EnableBatchedOperations;
+            DeadLetteringOnMessageExpiration = queueResource.DeadLetteringOnMessageExpiration;
+            EnableExpress = queueResource.EnableExpress;
+            EnablePartitioning = queueResource.EnablePartitioning;
+            IsAnonymousAccessible = queueResource.IsAnonymousAccessible;
+            MaxDeliveryCount = queueResource.MaxDeliveryCount;
+            MaxSizeInMegabytes = queueResource.MaxSizeInMegabytes;
+            MessageCount = queueResource.MessageCount;
+            CountDetails = queueResource.CountDetails;
+            RequiresDuplicateDetection = queueResource.RequiresDuplicateDetection;
+            RequiresSession = queueResource.RequiresSession;
+            SizeInBytes = queueResource.SizeInBytes;
+            Status = queueResource.Status;
+            SupportOrdering = queueResource.SupportOrdering;
+            UpdatedAt = queueResource.UpdatedAt;
+        }
+
         /// <summary>
         /// Gets or sets queue name.
         /// </summary>
