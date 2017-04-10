@@ -97,5 +97,31 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 Inner.ListNextAsync,
                 WrapModel, loadAllPages, cancellationToken);
         }
+
+        public IEnumerable<IResourceGroup> ListByTag(string tagName, string tagValue)
+        {
+            return WrapList(Inner.List(
+                    ResourceUtils.CreateODataFilterForTags(tagName, tagValue))
+                    .AsContinuousCollection((nextLink) => Inner.ListNext(nextLink)));
+        }
+
+        public async Task<IPagedCollection<IResourceGroup>> ListByTagAsync(string tagName, string tagValue, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IResourceGroup, ResourceGroupInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(
+                    ResourceUtils.CreateODataFilterForTags(tagName, tagValue), cancellationToken: cancellation),
+                Inner.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
+        }
+
+        public void BeginDeleteByName(string name)
+        {
+            BeginDeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task BeginDeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Inner.BeginDeleteAsync(name, cancellationToken);
+        }
     }
 }

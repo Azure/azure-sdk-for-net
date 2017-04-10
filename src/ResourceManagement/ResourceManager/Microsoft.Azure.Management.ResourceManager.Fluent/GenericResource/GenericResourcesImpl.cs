@@ -168,5 +168,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         {
             return await Manager.Inner.ResourceGroups.ListResourcesNextAsync(link, cancellationToken);
         }
+
+        public IEnumerable<IGenericResource> ListByTag(string resourceGroupName, string tagName, string tagValue)
+        {
+            return WrapList(Manager.Inner.ResourceGroups.ListResources(
+                    resourceGroupName, ResourceUtils.CreateODataFilterForTags(tagName, tagValue))
+                    .AsContinuousCollection((nextLink) => Manager.Inner.ResourceGroups.ListResourcesNext(nextLink)));
+        }
+
+        public async Task<IPagedCollection<IGenericResource>> ListByTagAsync(string resourceGroupName, string tagName, string tagValue, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IGenericResource, GenericResourceInner>.LoadPage(
+                async (cancellation) => await Manager.Inner.ResourceGroups.ListResourcesAsync(
+                    resourceGroupName, ResourceUtils.CreateODataFilterForTags(tagName, tagValue), cancellationToken: cancellation),
+                Manager.Inner.ResourceGroups.ListResourcesNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
+        }
     }
 }

@@ -74,5 +74,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                     resourceType,
                     resourceName);
         }
+
+        public static string CreateODataFilterForTags(string tagName, string tagValue)
+        {
+            if (tagName == null)
+            {
+                return null;
+            }
+            else if (tagValue == null)
+            {
+                return $"tagname eq {tagName}";
+            }
+            else
+            {
+                return $"tagname eq {tagName} and tagvalue eq {tagValue}";
+            }
+        }
     }
 }

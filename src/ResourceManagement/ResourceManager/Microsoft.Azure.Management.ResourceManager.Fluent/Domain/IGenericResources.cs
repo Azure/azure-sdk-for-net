@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     public interface IGenericResources  :
         ISupportsListing<IGenericResource>,
         ISupportsListingByResourceGroup<IGenericResource>,
+        ISupportsListingInResourceGroupByTag<IGenericResource>,
         ISupportsGettingByResourceGroup<IGenericResource>,
         ISupportsGettingById<IGenericResource>,
         ISupportsCreating<GenericResource.Definition.IBlank>,
