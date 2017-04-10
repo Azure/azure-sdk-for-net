@@ -110,6 +110,7 @@
     "ManageSqlDatabasesAcrossDifferentDataCenters": "1.0.0-*",
     "ManageSqlFirewallRules": "1.0.0-*",
     "ManageStorageAccount": "1.0.0-*",
+    "ManageStorageAccountAsync": "1.0.0-*",
     "ManageTrafficManager": "1.0.0-*",
     "ManageUserDefinedRoute": "1.0.0-*",
     "ManageVirtualMachine": "1.0.0-*",
