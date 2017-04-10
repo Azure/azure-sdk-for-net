@@ -101,6 +101,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             Refresh();
         }
 
+        public async Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.DeallocateAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await RefreshAsync(cancellationToken);
+        }
+
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:6AC69BE8BE090CDE9822C84DD5F906F3
         public VirtualMachineInstanceView RefreshInstanceView()
         {
@@ -124,10 +130,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             Manager.Inner.VirtualMachines.Generalize(this.ResourceGroupName, this.Name);
         }
 
+        public async Task GeneralizeAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.GeneralizeAsync(this.ResourceGroupName, this.Name, cancellationToken);
+        }
+
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
         public void PowerOff()
         {
             Manager.Inner.VirtualMachines.PowerOff(this.ResourceGroupName, this.Name);
+        }
+
+        public async Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.PowerOffAsync(this.ResourceGroupName, this.Name, cancellationToken);
         }
 
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
@@ -136,10 +152,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             Manager.Inner.VirtualMachines.Restart(this.ResourceGroupName, this.Name);
         }
 
+        public async Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.RestartAsync(this.ResourceGroupName, this.Name, cancellationToken);
+        }
+
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
         public void Start()
         {
             Manager.Inner.VirtualMachines.Start(this.ResourceGroupName, this.Name);
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.StartAsync(this.ResourceGroupName, this.Name, cancellationToken);
         }
 
         ///GENMHASH:D9EB75AF88B1A07EDC0965B26A7F7C04:E30F1E083D68AA7A68C7128405BA3741
@@ -149,11 +175,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         }
 
+        public async Task RedeployAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.RedeployAsync(this.ResourceGroupName, this.Name, cancellationToken);
+
+        }
+
         ///GENMHASH:BF8CE5C594210A476EF389DC52B15805:2795B67DFA718D9C0FFC69E152857591
         public void ConvertToManaged()
         {
             Manager.Inner.VirtualMachines.ConvertToManagedDisks(this.ResourceGroupName, this.Name);
             this.Refresh();
+        }
+
+        public async Task ConvertToManagedAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.VirtualMachines.ConvertToManagedDisksAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await this.RefreshAsync(cancellationToken);
         }
 
         ///GENMHASH:842FBE4DCB8BFE1B50632DBBE157AEA8:B5262187B60CE486998F800E9A96B659
@@ -171,6 +209,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             parameters.OverwriteVhds = overwriteVhd;
             parameters.VhdPrefix = vhdPrefix;
             VirtualMachineCaptureResultInner captureResult = Manager.Inner.VirtualMachines.Capture(this.ResourceGroupName, this.Name, parameters);
+            return JsonConvert.SerializeObject(captureResult.Output);
+        }
+
+        public async Task<string> CaptureAsync(string containerName, string vhdPrefix, bool overwriteVhd, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
+            parameters.DestinationContainerName = containerName;
+            parameters.OverwriteVhds = overwriteVhd;
+            parameters.VhdPrefix = vhdPrefix;
+            VirtualMachineCaptureResultInner captureResult = await Manager.Inner.VirtualMachines.CaptureAsync(
+                this.ResourceGroupName, 
+                this.Name, 
+                parameters,
+                cancellationToken);
             return JsonConvert.SerializeObject(captureResult.Output);
         }
 

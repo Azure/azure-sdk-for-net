@@ -37,10 +37,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void PowerOff();
 
         /// <summary>
+        /// Power off (stop) the virtual machine.
+        /// You will be billed for the compute resources that this Virtual Machine uses.
+        /// </summary>
+        Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Shuts down the Virtual Machine and releases the compute resources.
         /// You are not billed for the compute resources that this Virtual Machine uses.
         /// </summary>
         void Deallocate();
+
+        /// <summary>
+        /// Shuts down the Virtual Machine and releases the compute resources.
+        /// You are not billed for the compute resources that this Virtual Machine uses.
+        /// </summary>
+        Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets entry point to enabling, disabling and querying disk encryption.
@@ -66,6 +78,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
         /// </summary>
         void ConvertToManaged();
+
+        /// <summary>
+        /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
+        /// </summary>
+        Task ConvertToManagedAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets resource id of the managed disk backing OS disk.
@@ -112,9 +129,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Generalize();
 
         /// <summary>
+        /// Generalize the Virtual Machine.
+        /// </summary>
+        Task GeneralizeAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Redeploy the virtual machine.
         /// </summary>
         void Redeploy();
+
+        /// <summary>
+        /// Redeploy the virtual machine.
+        /// </summary>
+        Task RedeployAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets Returns the diagnostics profile of an Azure virtual machine.
@@ -147,9 +174,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Restart();
 
         /// <summary>
+        /// Restart the virtual machine.
+        /// </summary>
+        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Start the virtual machine.
         /// </summary>
         void Start();
+
+
+        /// <summary>
+        /// Start the virtual machine.
+        /// </summary>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Captures the virtual machine by copying virtual hard disks of the VM and returns template as json
@@ -160,6 +198,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="overwriteVhd">Whether to overwrites destination vhd if it exists.</param>
         /// <return>The template as json string.</return>
         string Capture(string containerName, string vhdPrefix, bool overwriteVhd);
+
+        /// <summary>
+        /// Captures the virtual machine by copying virtual hard disks of the VM and returns template as json
+        /// string that can be used to create similar VMs.
+        /// </summary>
+        /// <param name="containerName">Destination container name to store the captured Vhd.</param>
+        /// <param name="vhdPrefix">The prefix for the vhd holding captured image.</param>
+        /// <param name="overwriteVhd">Whether to overwrites destination vhd if it exists.</param>
+        /// <return>The template as json string.</return>
+        Task<string> CaptureAsync(string containerName, string vhdPrefix, bool overwriteVhd, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the uri to the vhd file backing this virtual machine's operating system disk.

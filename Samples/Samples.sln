@@ -180,6 +180,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachineScaleSe
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageStorageAccountAsync", "ResourceManagement\Storage\ManageStorageAccountAsync\ManageStorageAccountAsync.xproj", "{316F1D19-2F1F-4EF3-A3A3-BC6249A6B630}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachineAsync", "ResourceManagement\Compute\ManageVirtualMachineAsync\ManageVirtualMachineAsync.xproj", "{D453DE01-05FF-4629-A07C-D673D820E02A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -478,6 +480,10 @@ Global
 		{316F1D19-2F1F-4EF3-A3A3-BC6249A6B630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{316F1D19-2F1F-4EF3-A3A3-BC6249A6B630}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{316F1D19-2F1F-4EF3-A3A3-BC6249A6B630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D453DE01-05FF-4629-A07C-D673D820E02A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D453DE01-05FF-4629-A07C-D673D820E02A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D453DE01-05FF-4629-A07C-D673D820E02A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D453DE01-05FF-4629-A07C-D673D820E02A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -555,5 +561,6 @@ Global
 		{94E95E76-3398-482B-A95C-64334987D1F4} = {CC32CE3E-95AA-44D1-AF4E-F8B3AA94D7F8}
 		{58443BBC-FC60-408B-B9EF-61D447897BB0} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 		{316F1D19-2F1F-4EF3-A3A3-BC6249A6B630} = {BC9AE100-9C80-475D-B978-A4F532CBC0EE}
+		{D453DE01-05FF-4629-A07C-D673D820E02A} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 	EndGlobalSection
 EndGlobal

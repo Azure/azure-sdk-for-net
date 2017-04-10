@@ -226,6 +226,18 @@ namespace Samples.Tests
             }
         }
 
+        [Fact(Skip = "Recording fails due to a failure on Managed disks backend")]
+        [Trait("Samples", "Compute")]
+        public void ManageVirtualMachineAsyncTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                (azure) => ManageVirtualMachineAsync.Program
+                            .RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult());
+        }
+
         [Fact]
         [Trait("Samples", "Compute")]
         public void ManageManagedDisksTest()

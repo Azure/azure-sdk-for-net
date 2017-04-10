@@ -114,6 +114,7 @@
     "ManageTrafficManager": "1.0.0-*",
     "ManageUserDefinedRoute": "1.0.0-*",
     "ManageVirtualMachine": "1.0.0-*",
+    "ManageVirtualMachineAsync": "1.0.0-*",
     "ManageVirtualMachineExtension": "1.0.0-*",
     "ManageVirtualMachineScaleSet": "1.0.0-*",
     "ManageVirtualMachineScaleSetAsync": "1.0.0-*",

@@ -25,14 +25,13 @@ namespace ManageVirtualNetworkAsync
         private static readonly string ResourceGroupName = SdkContext.RandomResourceName("rgNEMV", 24);
 
         /**
-         * Azure Network sample for managing virtual networks -
-         *  - Create a virtual network with Subnets
-         *  - Update a virtual network
-         *  - Create virtual machines in the virtual network subnets
-         *  - Create another virtual network
-         *  - List virtual networks
-         *  - Delete a virtual network.
-         */
+        * Azure Network sample for managing virtual networks.
+        *  - Create a virtual network with Subnets
+        *  - Update a virtual network
+        *  - Create virtual machines in the virtual network subnets
+        *  - Create another virtual network
+        *  - List virtual networks
+        */
         public async static Task RunSampleAsync(IAzure azure)
         {
             string vnetName1 = SdkContext.RandomResourceName("vnet1", 20);

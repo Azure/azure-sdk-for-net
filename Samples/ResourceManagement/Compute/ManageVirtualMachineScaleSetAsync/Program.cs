@@ -22,7 +22,6 @@ namespace ManageVirtualMachineScaleSetAsync
          * Azure Compute sample for managing virtual machine scale sets with un-managed disks -
          *  - Create a virtual machine scale set behind an Internet facing load balancer
          *  - Install Apache Web servers in virtual machines in the virtual machine scale set
-         *  - List the network interfaces associated with the virtual machine scale set
          *  - List scale set virtual machine instances and SSH collection string
          *  - Stop a virtual machine scale set
          *  - Start a virtual machine scale set
@@ -30,7 +29,6 @@ namespace ManageVirtualMachineScaleSetAsync
          *    - Double the no. of virtual machines
          *  - Restart a virtual machine scale set
          */
-
         public async static Task RunSampleAsync(IAzure azure)
         {
             var region = Region.USWestCentral;
