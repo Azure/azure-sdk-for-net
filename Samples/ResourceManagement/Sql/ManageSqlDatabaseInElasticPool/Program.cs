@@ -69,6 +69,7 @@ namespace ManageSqlDatabaseInElasticPool
                 // Change DTUs in the elastic pools.
                 elasticPool = elasticPool.Update()
                         .WithDtu(200)
+                        .WithStorageCapacity(204800)
                         .WithDatabaseDtuMin(10)
                         .WithDatabaseDtuMax(50)
                         .Apply();

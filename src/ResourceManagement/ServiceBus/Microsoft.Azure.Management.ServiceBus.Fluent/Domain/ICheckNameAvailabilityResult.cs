@@ -3,23 +3,23 @@
 namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using Management.Fluent.ServiceBus.Models;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The result of checking for Service Bus namespace name availability.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface ICheckNameAvailabilityResult  :
-        IHasInner<CheckNameAvailabilityResultInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<CheckNameAvailabilityResultInner>
     {
         /// <summary>
-        /// Gets a boolean value that indicates whether the name is available for
-        /// you to use. If true, the name is available. If false, the name has
-        /// already been taken or invalid and cannot be used.
+        /// Gets an error message explaining the Reason value in more detail.
         /// </summary>
-        bool IsAvailable { get; }
+        string UnavailabilityMessage { get; }
 
         /// <summary>
         /// Gets the unavailabilityReason that a namespace name could not be used. The
@@ -28,8 +28,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         UnavailableReason UnavailabilityReason { get; }
 
         /// <summary>
-        /// Gets an error message explaining the Reason value in more detail.
+        /// Gets a boolean value that indicates whether the name is available for
+        /// you to use. If true, the name is available. If false, the name has
+        /// already been taken or invalid and cannot be used.
         /// </summary>
-        string UnavailabilityMessage { get; }
+        bool IsAvailable { get; }
     }
 }

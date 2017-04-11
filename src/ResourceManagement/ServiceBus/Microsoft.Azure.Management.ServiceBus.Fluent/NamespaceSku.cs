@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// Defines values for NamespaceSku.
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuTmFtZXNwYWNlU2t1
-    public class NamespaceSku
+    public partial class NamespaceSku
     {
         public static readonly NamespaceSku Basic = new NamespaceSku(new Sku() { Name = SkuName.Basic.ToString(), Tier = SkuTier.Basic.ToString()});
         public static readonly NamespaceSku Standard = new NamespaceSku(new Sku() { Name = SkuName.Standard.ToString(), Tier = SkuTier.Standard.ToString() });

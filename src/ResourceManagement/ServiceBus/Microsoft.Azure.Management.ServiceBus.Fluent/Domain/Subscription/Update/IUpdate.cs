@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update
 {
-    using Microsoft.Azure.Management.Servicebus.Fluent;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using System;
     using Management.Fluent.ServiceBus.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Servicebus.Fluent;
+    using System;
 
     /// <summary>
     /// The stage of the subscription definition allowing to specify maximum delivery count of message before
@@ -59,15 +59,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update
     /// The template for a subscription update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>,
-        IWithDeleteOnIdle,
-        IWithMessageLockDuration,
-        IWithDefaultMessageTTL,
-        IWithSession,
-        IWithMessageBatching,
-        IWithExpiredMessageMovedToDeadLetterSubscription,
-        IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
-        IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithMessageLockDuration,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithSession,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithMessageBatching,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithExpiredMessageMovedToDeadLetterSubscription,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException
     {
     }
 
@@ -78,19 +78,19 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update
     public interface IWithAuthorizationRule 
     {
         /// <summary>
-        /// Removes an authorization rule for the subscription.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the subscription update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IUpdate WithoutNewAuthorizationRule(string name);
-
-        /// <summary>
         /// Creates an authorization rule for the subscription.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <param name="rights">Rule rights.</param>
         /// <return>Next stage of the subscription update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IUpdate WithNewAuthorizationRule(string name, params AccessRights[] rights);
+
+        /// <summary>
+        /// Removes an authorization rule for the subscription.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the subscription update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IUpdate WithoutNewAuthorizationRule(string name);
     }
 
     /// <summary>
@@ -163,15 +163,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update
     public interface IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException 
     {
         /// <summary>
-        /// Specifies that filter evaluation failed message must be moved to dead-letter subscription.
-        /// </summary>
-        /// <return>The next stage of subscription update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IUpdate WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException();
-
-        /// <summary>
         /// Specifies that filter evaluation failed message should not be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IUpdate WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException();
+
+        /// <summary>
+        /// Specifies that filter evaluation failed message must be moved to dead-letter subscription.
+        /// </summary>
+        /// <return>The next stage of subscription update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update.IUpdate WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException();
     }
 }

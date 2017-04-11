@@ -5,17 +5,17 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definit
     /// <summary>
     /// The stage of the Service Bus authorization rule definition allowing to enable listen, send or manage policy.
     /// </summary>
-    /// <typeparam name="">The next stage of the definition.</typeparam>
+    /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithListenOrSendOrManage<T>  :
-        IWithListen<T>,
-        IWithSendOrManage<T>
+        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithListen<T>,
+        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithSendOrManage<T>
     {
     }
 
     /// <summary>
     /// The stage of the Service Bus authorization rule definition allowing to enable manage policy.
     /// </summary>
-    /// <typeparam name="">The next stage of the definition.</typeparam>
+    /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithManage<T> 
     {
         /// <return>The next stage of the definition.</return>
@@ -25,17 +25,17 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definit
     /// <summary>
     /// The stage of the Service Bus authorization rule definition allowing to enable send or manage policy.
     /// </summary>
-    /// <typeparam name="">The next stage of the definition.</typeparam>
+    /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithSendOrManage<T>  :
-        IWithSend<T>,
-        IWithManage<T>
+        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithSend<T>,
+        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithManage<T>
     {
     }
 
     /// <summary>
     /// The stage of the Service Bus authorization rule definition allowing to enable send policy.
     /// </summary>
-    /// <typeparam name="">The next stage of the definition.</typeparam>
+    /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithSend<T> 
     {
         /// <return>The next stage of the definition.</return>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definit
     /// <summary>
     /// The stage of the Service Bus authorization rule definition allowing to enable listen policy.
     /// </summary>
-    /// <typeparam name="">The next stage of the definition.</typeparam>
+    /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithListen<T> 
     {
         /// <return>The next stage of the definition.</return>

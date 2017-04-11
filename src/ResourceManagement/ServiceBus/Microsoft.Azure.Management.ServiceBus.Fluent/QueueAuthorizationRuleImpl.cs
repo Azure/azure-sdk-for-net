@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return this.parentName;
         }
 
-        IList<AccessRights> IAuthorizationRule<IQueueAuthorizationRule>.Rights
+        IReadOnlyList<AccessRights> IAuthorizationRule<IQueueAuthorizationRule>.Rights
         {
             get
             {
-                return base.Rights();
+                return base.Rights() as System.Collections.Generic.IReadOnlyList<AccessRights>;
             }
         }
 
