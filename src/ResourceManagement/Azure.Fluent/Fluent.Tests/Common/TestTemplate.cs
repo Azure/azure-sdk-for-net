@@ -83,7 +83,14 @@ namespace Azure.Tests.Common
         {
             var groupName = resource.ResourceGroupName;
             collection.DeleteById(resource.Id);
-            resourceGroups.DeleteByName(groupName);
+            try
+            {
+                resourceGroups.DeleteByName(groupName);
+            }
+            catch
+            {
+                // Do not care if RG delete will fail.
+            }
         }
 
         /**
