@@ -201,4 +201,7 @@
   <data name="ArgumentMustBePositive" xml:space="preserve">
     <value>The value of the argument {0} must be positive.</value>
   </data>
+  <data name="InvalidAmqpMessageProperty" xml:space="preserve">
+    <value>{0} is not a supported user property type.</value>
+  </data>
 </root>

@@ -177,6 +177,15 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to {0} is not a supported user property type..
+        /// </summary>
+        public static string InvalidAmqpMessageProperty {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The entity name or path contains an invalid character &apos;{0}&apos;. The supplied value is &apos;{1}&apos;..
         /// </summary>
         public static string InvalidCharacterInEntityName {

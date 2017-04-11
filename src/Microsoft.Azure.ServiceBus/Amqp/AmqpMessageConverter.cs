@@ -153,6 +153,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         amqpMessage.ApplicationProperties.Map.Add(pair.Key, amqpObject);
                     }
+                    else
+                    {
+                        throw new NotSupportedException(Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
+                    }
                 }
             }
 
@@ -167,10 +171,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             SBMessage sbMessage;
-            if (amqpMessage.BodyType == SectionFlag.AmqpValue && amqpMessage.ValueBody.Value != null)
+
+            if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0
+                && amqpMessage.ValueBody.Value != null)
             {
                 var byteArrayValue = (byte[])amqpMessage.ValueBody.Value;
                 sbMessage = new SBMessage(byteArrayValue);
+            }
+            else if ((amqpMessage.BodyType & SectionFlag.Data) != 0
+                && amqpMessage.DataBody != null)
+            {
+                var dataSegments = new List<byte>();
+                foreach (var data in amqpMessage.DataBody)
+                {
+                    var arraySegmentValue = (ArraySegment<byte>)data.Value;
+                    dataSegments.AddRange(arraySegmentValue);
+                }
+                sbMessage = new SBMessage(dataSegments.ToArray());
             }
             else
             {

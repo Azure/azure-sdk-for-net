@@ -5,11 +5,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Text;
+    using Azure.Amqp.Framing;
+    using Microsoft.Azure.Amqp;
     using Microsoft.Azure.ServiceBus.Amqp;
     using Xunit;
 
     public class AmqpConverterTests
     {
+        [Fact]
+        [DisplayTestMethodName]
+        void Convert_Amqp_message_with_data_value_to_SB_message()
+        {
+            var messageBody = Encoding.UTF8.GetBytes("message1");
+
+            var data = new Data();
+            data.Value = new ArraySegment<byte>(messageBody);
+            var amqpMessage = AmqpMessage.Create(data);
+
+            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            Assert.Equal(messageBody, sbMessage.Body);
+        }
+
         [Fact]
         [DisplayTestMethodName]
         void Convert_SB_message_to_Amqp_message_and_back()
@@ -44,21 +60,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             sbMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
             var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(sbMessage);
-            var convertedBrokeredMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
 
-            Assert.Equal("SomeUserProperty", convertedBrokeredMessage.UserProperties["UserProperty"]);
-            Assert.Equal(messageBody, convertedBrokeredMessage.Body);
-            Assert.Equal(messageId, convertedBrokeredMessage.MessageId);
-            Assert.Equal(partitionKey, convertedBrokeredMessage.PartitionKey);
-            Assert.Equal(sessionId, convertedBrokeredMessage.SessionId);
-            Assert.Equal(correlationId, convertedBrokeredMessage.CorrelationId);
-            Assert.Equal(label, convertedBrokeredMessage.Label);
-            Assert.Equal(to, convertedBrokeredMessage.To);
-            Assert.Equal(contentType, convertedBrokeredMessage.ContentType);
-            Assert.Equal(replyTo, convertedBrokeredMessage.ReplyTo);
-            Assert.Equal(replyToSessionId, convertedBrokeredMessage.ReplyToSessionId);
-            Assert.Equal(publisher, convertedBrokeredMessage.Publisher);
-            Assert.Equal(deadLetterSource, convertedBrokeredMessage.DeadLetterSource);
+            Assert.Equal("SomeUserProperty", convertedSbMessage.UserProperties["UserProperty"]);
+            Assert.Equal(messageBody, convertedSbMessage.Body);
+            Assert.Equal(messageId, convertedSbMessage.MessageId);
+            Assert.Equal(partitionKey, convertedSbMessage.PartitionKey);
+            Assert.Equal(sessionId, convertedSbMessage.SessionId);
+            Assert.Equal(correlationId, convertedSbMessage.CorrelationId);
+            Assert.Equal(label, convertedSbMessage.Label);
+            Assert.Equal(to, convertedSbMessage.To);
+            Assert.Equal(contentType, convertedSbMessage.ContentType);
+            Assert.Equal(replyTo, convertedSbMessage.ReplyTo);
+            Assert.Equal(replyToSessionId, convertedSbMessage.ReplyToSessionId);
+            Assert.Equal(publisher, convertedSbMessage.Publisher);
+            Assert.Equal(deadLetterSource, convertedSbMessage.DeadLetterSource);
         }
     }
 }
