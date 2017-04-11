@@ -33,11 +33,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType);
 
         /// <summary>
+        /// Specifies the size of the OSDisk in GB. This can be modified only for non-managed disks.
+        /// </summary>
+        /// <param name="size">The disk size.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOSDiskSizeInGB(int size);
+
+        /// <summary>
         /// Specifies the default caching type for the managed data disks.
         /// </summary>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The stage representing updatable VM definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskDefaultCachingType(CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies the caching type for the Operating System disk.
+        /// </summary>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOSDiskCaching(CachingTypes cachingType);
 
         /// <summary>
         /// Specifies the new size for the virtual machine.

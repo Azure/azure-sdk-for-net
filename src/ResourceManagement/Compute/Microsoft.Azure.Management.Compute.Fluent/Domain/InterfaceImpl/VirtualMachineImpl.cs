@@ -499,6 +499,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Specifies the caching type for the Operating System disk.
+        /// </summary>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IUpdate.WithOSDiskCaching(CachingTypes cachingType)
+        {
+            return this.WithOSDiskCaching(cachingType) as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the size of the OSDisk in GB.
+        /// </summary>
+        /// <param name="size">The disk size.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IUpdate.WithOSDiskSizeInGB(int size)
+        {
+            return this.WithOSDiskSizeInGB(size) as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies the default caching type for the managed data disks.
         /// </summary>
         /// <param name="storageAccountType">The storage account type.</param>
