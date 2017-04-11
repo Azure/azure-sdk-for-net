@@ -3,15 +3,12 @@
 
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.ServiceBus.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
 using System;
 using System.Linq;
-using System.Text;
 
 namespace ServiceBusPublishSubscribeAdvanceFeatures
 {
@@ -154,15 +151,7 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
 
                 //=============================================================
                 // Send a message to topic.
-                try
-                {
-                    var topicClient = new TopicClient(keys.PrimaryConnectionString, topic1Name);
-                    topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    topicClient.Close();
-                }
-                catch (Exception)
-                {
-                }
+                Utilities.SendMessageToTopic(keys.PrimaryConnectionString, topic1Name, "Hello");
                 //=============================================================
                 // Delete a topic and namespace
                 Console.WriteLine("Deleting topic " + topic1Name + "in namespace " + namespaceName + "...");
@@ -175,7 +164,7 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                 {
                     azure.ServiceBusNamespaces.DeleteById(serviceBusNamespace.Id);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
                 Console.WriteLine("Deleted namespace " + namespaceName + "...");

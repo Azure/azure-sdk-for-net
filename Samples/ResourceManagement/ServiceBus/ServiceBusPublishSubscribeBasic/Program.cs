@@ -8,7 +8,6 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
 using System;
 using System.Linq;
 using System.Text;
@@ -137,16 +136,7 @@ namespace ServiceBusPublishSubscribeBasic
 
                 //=============================================================
                 // Send a message to topic.
-                try
-                {
-                    var topicClient = new TopicClient(keys.PrimaryConnectionString, topicName);
-                    topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    topicClient.Close();
-                }
-                catch (Exception)
-                {
-                }
-
+                Utilities.SendMessageToTopic(keys.PrimaryConnectionString, topicName, "Hello");
                 //=============================================================
                 // Delete a queue and namespace
                 Console.WriteLine("Deleting subscription " + subscription1Name + " in topic " + topicName + " via update flow...");

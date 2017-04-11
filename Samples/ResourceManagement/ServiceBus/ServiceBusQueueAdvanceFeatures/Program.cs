@@ -3,12 +3,10 @@
 
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.ServiceBus.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
 using System;
 using System.Linq;
 using System.Text;
@@ -130,16 +128,7 @@ namespace ServiceBusQueueAdvanceFeatures
 
                 //=============================================================
                 // Send a message to queue.
-
-                try
-                {
-                    var queueClient = new QueueClient(keys.PrimaryConnectionString, queue1Name, ReceiveMode.PeekLock);
-                    queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    queueClient.Close();
-                }
-                catch (Exception)
-                {
-                }
+                Utilities.SendMessageToQueue(keys.PrimaryConnectionString, queue1Name, "Hello");
 
                 //=============================================================
                 // Delete a queue and namespace

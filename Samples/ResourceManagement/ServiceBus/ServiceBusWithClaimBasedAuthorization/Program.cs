@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
+
 using System;
 using System.Linq;
 using System.Text;
@@ -88,28 +88,10 @@ namespace ServiceBusWithClaimBasedAuthorization
 
                 //=============================================================
                 // Send a message to queue.
-                try
-                {
-                    var queueClient = new QueueClient(keys.PrimaryConnectionString, queueName, ReceiveMode.PeekLock);
-                    queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    queueClient.Close();
-                }
-                catch (Exception)
-                {
-                }
-
+                Utilities.SendMessageToQueue(keys.PrimaryConnectionString, queueName, "Hello");
                 //=============================================================
                 // Send a message to topic.
-                try
-                {
-                    var topicClient = new TopicClient(keys.PrimaryConnectionString, topicName);
-                    topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    topicClient.Close();
-                }
-                catch (Exception)
-                {
-                }
-
+                Utilities.SendMessageToTopic(keys.PrimaryConnectionString, topicName, "Hello");
                 //=============================================================
                 // Delete a namespace
                 Console.WriteLine("Deleting namespace " + namespaceName + " [topic, queues and subscription will delete along with that]...");
