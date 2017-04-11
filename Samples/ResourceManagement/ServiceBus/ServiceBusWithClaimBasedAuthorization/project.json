@@ -1,0 +1,28 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Common": "1.0.0-*",
+    "Microsoft.Azure.Management.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.ServiceBus": "0.0.2-preview",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    }
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

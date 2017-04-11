@@ -2,10 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update;
     using System;
-    using ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of the topic definition allowing to define default TTL for messages.
@@ -83,13 +82,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
     public interface IWithAuthorizationRule 
     {
         /// <summary>
-        /// Creates a send authorization rule for the topic.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewSendRule(string name);
-
-        /// <summary>
         /// Creates a listen authorization rule for the topic.
         /// </summary>
         /// <param name="name">Rule name.</param>
@@ -102,6 +94,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewManageRule(string name);
+
+        /// <summary>
+        /// Creates a send authorization rule for the topic.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the topic definition.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewSendRule(string name);
     }
 
     /// <summary>
@@ -134,20 +133,20 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
-        IWithSize,
-        IWithPartitioning,
-        IWithDeleteOnIdle,
-        IWithDefaultMessageTTL,
-        IWithExpressMessage,
-        IWithMessageBatching,
-        IWithDuplicateMessageDetection,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithSubscription,
-        IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithSize,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithPartitioning,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithExpressMessage,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithMessageBatching,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithSubscription,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithAuthorizationRule
     {
     }
 
@@ -155,8 +154,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
     /// The entirety of the Service Bus topic definition.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IBlank,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate
     {
     }
 
@@ -164,7 +163,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
     /// The first stage of a topic definition.
     /// </summary>
     public interface IBlank  :
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate
     {
     }
 

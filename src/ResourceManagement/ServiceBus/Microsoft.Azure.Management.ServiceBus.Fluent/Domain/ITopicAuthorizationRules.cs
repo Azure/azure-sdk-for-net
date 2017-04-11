@@ -2,21 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
-    using TopicAuthorizationRule.Definition;
-    using ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition;
     using Management.Fluent.ServiceBus;
 
     /// <summary>
     /// Entry point to topic authorization rules management API.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface ITopicAuthorizationRules  :
-        IAuthorizationRules<Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule>,
-        ISupportsCreating<TopicAuthorizationRule.Definition.IBlank>,
-        IHasInner<ITopicsOperations>
+        Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationRules<Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<TopicAuthorizationRule.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<ITopicsOperations>
     {
     }
 }

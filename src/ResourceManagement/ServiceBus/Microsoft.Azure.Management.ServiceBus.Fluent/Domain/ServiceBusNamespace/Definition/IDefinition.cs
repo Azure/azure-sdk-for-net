@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
     using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using ResourceManager.Fluent.Core.Resource.Definition;
-    using ResourceManager.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
 
     /// <summary>
     /// The stage of the Service Bus namespace definition allowing to add a new topic in the namespace.
@@ -26,24 +26,24 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
     /// The entirety of the Service Bus namespace definition.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IBlank,
         Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithGroup,
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate
     {
     }
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate>,
-        IWithSku,
-        IWithQueue,
-        IWithTopic,
-        IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<IWithCreate>,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithSku,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithQueue,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithTopic,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithAuthorizationRule
     {
     }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
     /// The stage of the Service Bus namespace definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        IWithGroup<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate>
     {
     }
 
@@ -75,13 +75,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
     /// </summary>
     public interface IWithAuthorizationRule 
     {
-        /// <summary>
-        /// Creates a send authorization rule for the Service Bus namespace.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewSendRule(string name);
-
         /// <summary>
         /// Creates a listen authorization rule for the Service Bus namespace.
         /// </summary>
@@ -95,13 +88,20 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewManageRule(string name);
+
+        /// <summary>
+        /// Creates a send authorization rule for the Service Bus namespace.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the Service Bus namespace definition.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewSendRule(string name);
     }
 
     /// <summary>
     /// The first stage of a Service Bus namespace definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithGroup>
     {
     }
 

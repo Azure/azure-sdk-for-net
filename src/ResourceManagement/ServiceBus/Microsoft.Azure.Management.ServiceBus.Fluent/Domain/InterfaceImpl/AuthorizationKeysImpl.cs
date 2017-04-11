@@ -2,8 +2,32 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+
     internal partial class AuthorizationKeysImpl 
     {
+        /// <summary>
+        /// Gets secondary connection string.
+        /// </summary>
+        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.SecondaryConnectionString
+        {
+            get
+            {
+                return this.SecondaryConnectionString();
+            }
+        }
+
+        /// <summary>
+        /// Gets secondary key associated with the rule.
+        /// </summary>
+        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.SecondaryKey
+        {
+            get
+            {
+                return this.SecondaryKey();
+            }
+        }
+
         /// <summary>
         /// Gets primary connection string.
         /// </summary>
@@ -23,28 +47,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.PrimaryKey();
-            }
-        }
-
-        /// <summary>
-        /// Gets secondary key associated with the rule.
-        /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.SecondaryKey
-        {
-            get
-            {
-                return this.SecondaryKey();
-            }
-        }
-
-        /// <summary>
-        /// Gets secondary connection string.
-        /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.SecondaryConnectionString
-        {
-            get
-            {
-                return this.SecondaryConnectionString();
             }
         }
     }

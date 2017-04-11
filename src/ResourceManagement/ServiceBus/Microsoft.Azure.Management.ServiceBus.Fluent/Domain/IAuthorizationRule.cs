@@ -4,40 +4,42 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
-    using ResourceManager.Fluent.Core;
-    using ResourceManager.Fluent.Core.ResourceActions;
+    using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus.Models;
 
     /// <summary>
     /// Type representing authorization rule.
     /// </summary>
-    /// <typeparam name="Rule">The specific rule type.</typeparam>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
+    /// <typeparam name="RuleT">The specific rule type.</typeparam>
     public interface IAuthorizationRule<RuleT>  :
-        IIndependentChildResource<ServiceBus.Fluent.IServiceBusManager, Management.Fluent.ServiceBus.Models.SharedAccessAuthorizationRuleInner>,
-        IRefreshable<RuleT>
-        where RuleT : IAuthorizationRule<RuleT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, SharedAccessAuthorizationRuleInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<RuleT>
     {
+        /// <return>Stream that emits primary, secondary keys and connection strings.</return>
+        Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <return>The primary, secondary keys and connection strings.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys GetKeys();
+
+        /// <summary>
+        /// Gets rights associated with the rule.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<AccessRights> Rights { get; }
+
         /// <summary>
         /// Regenerates primary or secondary keys.
         /// </summary>
         /// <param name="policykey">The key to regenerate.</param>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <return>Stream that emits primary, secondary keys and connection strings.</return>
-        Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets rights associated with the rule.
-        /// </summary>
-        System.Collections.Generic.IList<AccessRights> Rights { get; }
-
-        /// <return>The primary, secondary keys and connection strings.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys GetKeys();
 
         /// <summary>
         /// Regenerates primary or secondary keys.

@@ -27,6 +27,7 @@
       "Samples/ResourceManagement/ResourceManager",
       "Samples/ResourceManagement/Sql",
       "Samples/ResourceManagement/Storage",
-      "Samples/ResourceManagement/TrafficManager"
+      "Samples/ResourceManagement/TrafficManager",
+      "Samples/ResourceManagement/ServiceBus"
     ]
 }

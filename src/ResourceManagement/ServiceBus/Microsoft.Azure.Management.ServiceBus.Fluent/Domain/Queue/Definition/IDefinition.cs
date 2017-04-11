@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
-    using ResourceManager.Fluent.Core.ResourceActions;
     using System;
 
     /// <summary>
@@ -12,13 +12,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
     /// </summary>
     public interface IWithAuthorizationRule 
     {
-        /// <summary>
-        /// Creates a send authorization rule for the queue.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithNewSendRule(string name);
-
         /// <summary>
         /// Creates a listen authorization rule for the queue.
         /// </summary>
@@ -32,6 +25,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue definition.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithNewManageRule(string name);
+
+        /// <summary>
+        /// Creates a send authorization rule for the queue.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the queue definition.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithNewSendRule(string name);
     }
 
     /// <summary>
@@ -51,23 +51,23 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
-        IWithSize,
-        IWithPartitioning,
-        IWithDeleteOnIdle,
-        IWithMessageLockDuration,
-        IWithDefaultMessageTTL,
-        IWithSession,
-        IWithExpressMessage,
-        IWithMessageBatching,
-        IWithDuplicateMessageDetection,
-        IWithExpiredMessageMovedToDeadLetterQueue,
-        IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
-        IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithSize,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithPartitioning,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithMessageLockDuration,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithSession,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithExpressMessage,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithMessageBatching,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithExpiredMessageMovedToDeadLetterQueue,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithAuthorizationRule
     {
     }
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
     /// The first stage of a queue definition.
     /// </summary>
     public interface IBlank  :
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate
     {
     }
 
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
     /// The entirety of the Service Bus queue definition.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IBlank,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate
     {
     }
 

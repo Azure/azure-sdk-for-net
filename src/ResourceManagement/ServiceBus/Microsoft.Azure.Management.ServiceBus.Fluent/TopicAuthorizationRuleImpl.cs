@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             return this.parentName;
         }
 
-        IList<AccessRights> IAuthorizationRule<ITopicAuthorizationRule>.Rights
+        IReadOnlyList<AccessRights> IAuthorizationRule<ITopicAuthorizationRule>.Rights
         {
             get
             {

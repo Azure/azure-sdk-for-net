@@ -4,10 +4,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using ServiceBusNamespace.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition;
     using Microsoft.Rest;
-    using ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
     using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus;
 
@@ -15,20 +15,22 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// Entry point to Service Bus namespace API in Azure.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IServiceBusNamespaces  :
-        ISupportsCreating<ServiceBusNamespace.Definition.IBlank>,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsBatchDeletion,
-        ISupportsListing<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsGettingById<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        IHasManager<IServiceBusManager>,
-        IHasInner<INamespacesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<ServiceBusNamespace.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IServiceBusManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<INamespacesOperations>
     {
         /// <summary>
         /// Checks if namespace name is valid and is not in use asynchronously.

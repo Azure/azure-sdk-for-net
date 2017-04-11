@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
-    using ResourceManager.Fluent.Core.Resource.Update;
-    using ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of the Service Bus namespace update allowing to manage topics in the namespace.
@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Updat
     /// The template for a Service Bus namespace update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
-        IUpdateWithTags<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IUpdate>,
-        IWithSku,
-        IWithQueue,
-        IWithTopic,
-        IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IUpdate>,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IWithSku,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IWithQueue,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IWithTopic,
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IWithAuthorizationRule
     {
     }
 
@@ -68,13 +68,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Updat
     public interface IWithAuthorizationRule 
     {
         /// <summary>
-        /// Creates a send authorization rule for the Service Bus namespace.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the Service Bus namespace update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IUpdate WithNewSendRule(string name);
-
-        /// <summary>
         /// Creates a listen authorization rule for the Service Bus namespace.
         /// </summary>
         /// <param name="name">Rule name.</param>
@@ -94,6 +87,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Updat
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the Service Bus namespace update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IUpdate WithoutAuthorizationRule(string name);
+
+        /// <summary>
+        /// Creates a send authorization rule for the Service Bus namespace.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the Service Bus namespace update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update.IUpdate WithNewSendRule(string name);
     }
 
     /// <summary>
