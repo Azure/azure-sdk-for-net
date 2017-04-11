@@ -115,7 +115,7 @@ namespace ManageVirtualMachineAsync
                         .WithTag("where", "on azure")
                         .ApplyAsync();
 
-                Utilities.Log("Tagged Windows VM: " + windowsVM.Id);
+                Utilities.Log("Tagged Linux VM: " + linuxVM.Id);
 
                 //=============================================================
                 // Update - Add a data disk on Windows VM.
