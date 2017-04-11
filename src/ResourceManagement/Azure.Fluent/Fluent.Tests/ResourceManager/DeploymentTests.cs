@@ -101,18 +101,17 @@ namespace Fluent.Tests.ResourceManager
             {
                 IResourceManager resourceManager = TestHelper.CreateResourceManager();
 
-                resourceManager.Deployments
+                var deployment = resourceManager.Deployments
                     .Define(deploymentName3)
                     .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
                     .BeginCreate();
-                var deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName3);
-                Assert.Equal(deployment.Name, deploymentName3);
+                Assert.Equal(deploymentName3, deployment.Name);
                 deployment.Cancel();
                 deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName3);
-                Assert.Equal(deployment.ProvisioningState, "Canceled");
+                Assert.Equal("Canceled", deployment.ProvisioningState);
 
                 deployment.Update()
                     .WithTemplate(updateTemplate)
@@ -121,11 +120,23 @@ namespace Fluent.Tests.ResourceManager
                     .Apply();
                 deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName3);
                 Assert.True(deployment.Mode == DeploymentMode.Incremental);
-                Assert.Equal(deployment.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", deployment.ProvisioningState);
 
-                IGenericResource genericVnet = resourceManager.GenericResources.Get(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet2", "2015-06-15");
+                IGenericResource genericVnet = resourceManager.GenericResources.Get(
+                    rgName, 
+                    "Microsoft.Network", 
+                    "", 
+                    "virtualnetworks", 
+                    "VNet2", 
+                    "2015-06-15");
                 Assert.NotNull(genericVnet);
-                resourceManager.GenericResources.Delete(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet2", "2015-06-15");
+                resourceManager.GenericResources.Delete(
+                    rgName, 
+                    "Microsoft.Network", 
+                    "", 
+                    "virtualnetworks", 
+                    "VNet2", 
+                    "2015-06-15");
             }
         }
     }

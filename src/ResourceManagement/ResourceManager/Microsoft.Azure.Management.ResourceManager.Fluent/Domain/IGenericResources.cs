@@ -104,5 +104,22 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
         /// <param name="apiVersion">apiVersion the String value</param>
         void Delete (string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion);
 
+        /// <summary>
+        /// Delete resource and all of its child resources.
+        /// </summary>
+        /// <param name="resourceGroupName">resourceGroupName The name of the resource group. The name is case insensitive.</param>
+        /// <param name="resourceProviderNamespace">resourceProviderNamespace Resource identity.</param>
+        /// <param name="parentResourcePath">parentResourcePath Resource identity.</param>
+        /// <param name="resourceType">resourceType Resource identity.</param>
+        /// <param name="resourceName">resourceName Resource identity.</param>
+        /// <param name="apiVersion">apiVersion the String value</param>
+        Task DeleteAsync(
+            string resourceGroupName, 
+            string resourceProviderNamespace, 
+            string parentResourcePath, 
+            string resourceType, 
+            string resourceName, 
+            string apiVersion,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }
