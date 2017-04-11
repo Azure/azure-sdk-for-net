@@ -49,7 +49,7 @@ namespace Fluent.Tests.Compute
                         .WithUnmanagedDisks()
                         .WithOSDiskCaching(CachingTypes.ReadWrite)
                         .WithSize(VirtualMachineSizeTypes.StandardD3)
-                        .WithOsDiskName("javatest")
+                        .WithOSDiskName("javatest")
                         .Create();
 
                     var foundedVM = computeManager.VirtualMachines.ListByResourceGroup(GroupName)

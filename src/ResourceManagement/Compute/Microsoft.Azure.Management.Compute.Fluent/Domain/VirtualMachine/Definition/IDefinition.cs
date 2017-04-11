@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>,
-        IWithOsDiskSettings,
+        IWithOSDiskSettings,
         IWithVMSize,
         IWithStorageAccount,
         IWithAvailabilitySet,
@@ -940,7 +940,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify OS disk configurations.
     /// </summary>
-    public interface IWithOsDiskSettings 
+    public interface IWithOSDiskSettings 
     {
         /// <summary>
         /// Specifies the size of the OSDisk in GB.
@@ -961,14 +961,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="name">The OS Disk name.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOsDiskName(string name);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskName(string name);
 
         /// <summary>
         /// Specifies the encryption settings for the OS Disk.
         /// </summary>
         /// <param name="settings">The encryption settings.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOsDiskEncryptionSettings(DiskEncryptionSettings settings);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskEncryptionSettings(DiskEncryptionSettings settings);
     }
 
     /// <summary>

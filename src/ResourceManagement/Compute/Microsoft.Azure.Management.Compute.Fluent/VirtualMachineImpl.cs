@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:75485319699D66A3C75429B0EB7E0665:AE8D3788AAA49304D58C3DFB3E942C15
-        public VirtualMachineImpl WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
+        public VirtualMachineImpl WithOSDiskEncryptionSettings(DiskEncryptionSettings settings)
         {
             Inner.StorageProfile.OsDisk.EncryptionSettings = settings;
             return this;
@@ -705,7 +705,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C5EB453493B1100152604C49B4350246:28D2B19DAE6A4D168B24165D74135721
-        public VirtualMachineImpl WithOsDiskName(string name)
+        public VirtualMachineImpl WithOSDiskName(string name)
         {
             Inner.StorageProfile.OsDisk.Name = name;
             return this;
@@ -1493,7 +1493,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     }
                     if (osDisk.Name == null)
                     {
-                        WithOsDiskName(this.vmName + "-os-disk");
+                        WithOSDiskName(this.vmName + "-os-disk");
                     }
                 }
             }
@@ -1517,7 +1517,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     osDisk.ManagedDisk = null;
                     if (osDisk.Name == null)
                     {
-                        WithOsDiskName(this.vmName + "-os-disk");
+                        WithOSDiskName(this.vmName + "-os-disk");
                     }
                 }
             }

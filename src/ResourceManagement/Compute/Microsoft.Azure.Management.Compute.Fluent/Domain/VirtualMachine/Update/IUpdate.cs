@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         /// </summary>
         /// <param name="settings">The encryption settings.</param>
         /// <return>The stage representing creatable VM update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOsDiskEncryptionSettings(DiskEncryptionSettings settings);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOSDiskEncryptionSettings(DiskEncryptionSettings settings);
     }
 
     /// <summary>
