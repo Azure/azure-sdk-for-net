@@ -44,7 +44,7 @@ namespace ServiceBusPublishSubscribeBasic
                 //============================================================
                 // Create a namespace.
 
-                Console.WriteLine("Creating name space " + namespaceName + " in resource group " + rgName + "...");
+                Utilities.Log("Creating name space " + namespaceName + " in resource group " + rgName + "...");
 
                 var serviceBusNamespace = azure.ServiceBusNamespaces
                         .Define(namespaceName)
@@ -53,32 +53,32 @@ namespace ServiceBusPublishSubscribeBasic
                         .WithSku(NamespaceSku.PremiumCapacity1)
                         .Create();
 
-                Console.WriteLine("Created service bus " + serviceBusNamespace.Name);
+                Utilities.Log("Created service bus " + serviceBusNamespace.Name);
                 Utilities.Print(serviceBusNamespace);
 
                 //============================================================
                 // Create a topic in namespace
 
-                Console.WriteLine("Creating topic " + topicName + " in namespace " + namespaceName + "...");
+                Utilities.Log("Creating topic " + topicName + " in namespace " + namespaceName + "...");
 
                 var topic = serviceBusNamespace.Topics.Define(topicName)
                         .WithSizeInMB(2048)
                         .Create();
 
-                Console.WriteLine("Created second queue in namespace");
+                Utilities.Log("Created second queue in namespace");
 
                 Utilities.Print(topic);
 
                 //============================================================
                 // Get and update topic with new size and a subscription
-                Console.WriteLine("Updating topic " + topicName + " with new size and a subscription...");
+                Utilities.Log("Updating topic " + topicName + " with new size and a subscription...");
                 topic = serviceBusNamespace.Topics.GetByName(topicName);
                 topic = topic.Update()
                         .WithNewSubscription(subscription1Name)
                         .WithSizeInMB(3072)
                         .Apply();
 
-                Console.WriteLine("Updated topic to change its size in MB along with a subscription");
+                Utilities.Log("Updated topic to change its size in MB along with a subscription");
 
                 Utilities.Print(topic);
 
@@ -86,9 +86,9 @@ namespace ServiceBusPublishSubscribeBasic
                 Utilities.Print(firstSubscription);
                 //============================================================
                 // Create a subscription
-                Console.WriteLine("Adding second subscription" + subscription2Name + " to topic " + topicName + "...");
+                Utilities.Log("Adding second subscription" + subscription2Name + " to topic " + topicName + "...");
                 var secondSubscription = topic.Subscriptions.Define(subscription2Name).WithDeleteOnIdleDurationInMinutes(10).Create();
-                Console.WriteLine("Added second subscription" + subscription2Name + " to topic " + topicName + "...");
+                Utilities.Log("Added second subscription" + subscription2Name + " to topic " + topicName + "...");
 
                 Utilities.Print(secondSubscription);
 
@@ -96,7 +96,7 @@ namespace ServiceBusPublishSubscribeBasic
                 // List topics in namespaces
 
                 var topics = serviceBusNamespace.Topics.List();
-                Console.WriteLine("Number of topics in namespace :" + topics.Count());
+                Utilities.Log("Number of topics in namespace :" + topics.Count());
 
                 foreach (var topicInNamespace  in  topics)
                 {
@@ -107,7 +107,7 @@ namespace ServiceBusPublishSubscribeBasic
                 // List all subscriptions for topic in namespaces
 
                 var subscriptions = topic.Subscriptions.List();
-                Console.WriteLine("Number of subscriptions to topic: " + subscriptions.Count());
+                Utilities.Log("Number of subscriptions to topic: " + subscriptions.Count());
 
                 foreach (var subscription  in  subscriptions)
                 {
@@ -118,7 +118,7 @@ namespace ServiceBusPublishSubscribeBasic
                 // Get connection string for default authorization rule of namespace
 
                 var namespaceAuthorizationRules = serviceBusNamespace.AuthorizationRules.List();
-                Console.WriteLine("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
+                Utilities.Log("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
 
 
                 foreach (var namespaceAuthorizationRule in  namespaceAuthorizationRules)
@@ -126,11 +126,11 @@ namespace ServiceBusPublishSubscribeBasic
                     Utilities.Print(namespaceAuthorizationRule);
                 }
 
-                Console.WriteLine("Getting keys for authorization rule ...");
+                Utilities.Log("Getting keys for authorization rule ...");
 
                 var keys = namespaceAuthorizationRules.FirstOrDefault().GetKeys();
                 Utilities.Print(keys);
-                Console.WriteLine("Regenerating secondary key for authorization rule ...");
+                Utilities.Log("Regenerating secondary key for authorization rule ...");
                 keys = namespaceAuthorizationRules.FirstOrDefault().RegenerateKey(Policykey.SecondaryKey);
                 Utilities.Print(keys);
 
@@ -139,13 +139,13 @@ namespace ServiceBusPublishSubscribeBasic
                 Utilities.SendMessageToTopic(keys.PrimaryConnectionString, topicName, "Hello");
                 //=============================================================
                 // Delete a queue and namespace
-                Console.WriteLine("Deleting subscription " + subscription1Name + " in topic " + topicName + " via update flow...");
+                Utilities.Log("Deleting subscription " + subscription1Name + " in topic " + topicName + " via update flow...");
                 topic = topic.Update().WithoutSubscription(subscription1Name).Apply();
-                Console.WriteLine("Deleted subscription " + subscription1Name + "...");
+                Utilities.Log("Deleted subscription " + subscription1Name + "...");
 
-                Console.WriteLine("Number of subscriptions in the topic after deleting first subscription: " + topic.SubscriptionCount);
+                Utilities.Log("Number of subscriptions in the topic after deleting first subscription: " + topic.SubscriptionCount);
 
-                Console.WriteLine("Deleting namespace " + namespaceName + "...");
+                Utilities.Log("Deleting namespace " + namespaceName + "...");
                 // This will delete the namespace and queue within it.
                 try
                 {
@@ -154,23 +154,23 @@ namespace ServiceBusPublishSubscribeBasic
                 catch (Exception)
                 {
                 }
-                Console.WriteLine("Deleted namespace " + namespaceName + "...");
+                Utilities.Log("Deleted namespace " + namespaceName + "...");
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.BeginDeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {
-                    Console.WriteLine(g);
+                    Utilities.Log(g);
                 }
             }
         }

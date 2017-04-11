@@ -322,7 +322,6 @@ namespace Fluent.Tests.Compute
                             .WithSize(VirtualMachineSizeTypes.StandardD5V2)
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
                             .Create();
-                    Console.WriteLine("Waiting for some time before de-provision");
                     TestHelper.Delay(60 * 1000); // Wait for some time to ensure vm is publicly accessible
                     TestHelper.DeprovisionAgentInLinuxVM(virtualMachine1.GetPrimaryPublicIPAddress().Fqdn,
                             22,

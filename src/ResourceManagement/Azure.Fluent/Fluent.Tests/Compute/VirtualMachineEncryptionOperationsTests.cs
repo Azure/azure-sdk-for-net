@@ -83,7 +83,7 @@ namespace Azure.Tests.Compute
                     Assert.True(monitor1.DataDiskStatus.Equals(monitor2.DataDiskStatus));
                     monitor2.Refresh();
                     Assert.True(monitor2.OsDiskStatus.Equals(EncryptionStatus.EncryptionInProgress));
-                    Console.WriteLine(virtualMachine.Id);
+                    TestHelper.WriteLine(virtualMachine.Id);
                 }
                 finally
                 {

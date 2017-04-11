@@ -322,13 +322,13 @@ namespace Fluent.Tests.Common
             }
             using (var sshClient = new SshClient(host, port, userName, password))
             {
-                Console.WriteLine("Trying to de-provision: " + host);
+                TestHelper.WriteLine("Trying to de-provision: " + host);
                 sshClient.Connect();
                 var commandToExecute = "sudo waagent -deprovision+user --force";
                 using (var command = sshClient.CreateCommand(commandToExecute))
                 {
                     var commandOutput = command.Execute();
-                    Console.WriteLine(commandOutput);
+                    TestHelper.WriteLine(commandOutput);
                 }
                 sshClient.Disconnect();
             }
