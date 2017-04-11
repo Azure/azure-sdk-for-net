@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-preview",
+  "version": "0.2.0-preview",
   "description": "Provides developers with libraries to create and manage Namespaces and manage Authorization Rules. Note: This client library is for ServiceBus under Azure Resource Manager.",
   "authors": [ "Microsoft" ],
 
