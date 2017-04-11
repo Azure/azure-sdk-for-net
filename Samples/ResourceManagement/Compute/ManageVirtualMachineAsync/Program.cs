@@ -23,7 +23,7 @@ namespace ManageVirtualMachineAsync
          *      - add Tag
          *    - for Windows based:
          *      - deallocate the virtual machine
-         *      - resize (expand) the data disks
+         *      - add a data disk
          *      - start the virtual machine
          *  - List virtual machines and print details
          *  - Delete all virtual machines.
@@ -115,36 +115,17 @@ namespace ManageVirtualMachineAsync
                         .WithTag("where", "on azure")
                         .ApplyAsync();
 
-                Utilities.Log("Tagged Linux VM: " + windowsVM.Id);
+                Utilities.Log("Tagged Windows VM: " + windowsVM.Id);
 
                 //=============================================================
-                // First, deallocate the virtual machine and then proceed with resize
-
-                Utilities.Log("De-allocating VM: " + windowsVM.Id);
-
-                await windowsVM.DeallocateAsync();
-
-                Utilities.Log("De-allocated VM: " + windowsVM.Id + "; state = ");
-
-                //=============================================================
-                // Update - Resize (expand) the data disk on Windows VM.
+                // Update - Add a data disk on Windows VM.
 
                 await windowsVM.Update()
-                        .WithOSDiskSizeInGB(200)
+                        .WithNewDataDisk(200)
                         .ApplyAsync();
 
                 Utilities.Log("Expanded VM " + windowsVM.Id + "'s OS and data disks");
                 Utilities.PrintVirtualMachine(windowsVM);
-                
-                //=============================================================
-                // Start the virtual machine
-
-                Utilities.Log("Starting VM: " + windowsVM.Id);
-
-                await windowsVM.StartAsync();
-
-                Utilities.Log("Started VM: " + windowsVM.Id + "; state = " + windowsVM.PowerState);
-
                 
                 //=============================================================
                 // List virtual machines in the resource group
