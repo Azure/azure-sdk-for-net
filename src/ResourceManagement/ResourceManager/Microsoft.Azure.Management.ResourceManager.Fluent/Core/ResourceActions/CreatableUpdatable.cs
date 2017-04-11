@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
             return ApplyAsync(CancellationToken.None, true).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public virtual async Task<IFluentResourceT> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        public virtual async Task<IFluentResourceT> ApplyAsync(
+            CancellationToken cancellationToken = default(CancellationToken), 
+            bool multiThreaded = true)
         {
             return await CreateAsync(cancellationToken, multiThreaded);
         }

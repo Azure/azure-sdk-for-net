@@ -204,6 +204,18 @@ namespace Samples.Tests
         }
 
         [Fact]
+        [Trait("Samples", "Network")]
+        public void ManageVirtualMachineScaleSetTestAsync()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                (azure) => ManageVirtualMachineScaleSetAsync.Program
+                            .RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult());
+        }
+
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineTest()
         {
@@ -212,6 +224,18 @@ namespace Samples.Tests
                 var rollUpClient = TestHelper.CreateRollupClient();
                 ManageVirtualMachine.Program.RunSample(rollUpClient);
             }
+        }
+
+        [Fact(Skip = "Recording fails due to a failure on Managed disks backend")]
+        [Trait("Samples", "Compute")]
+        public void ManageVirtualMachineAsyncTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                (azure) => ManageVirtualMachineAsync.Program
+                            .RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult());
         }
 
         [Fact]

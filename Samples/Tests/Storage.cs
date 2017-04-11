@@ -25,5 +25,17 @@ namespace Samples.Tests
                 ManageStorageAccount.Program.RunSample(rollUpClient);
             }
         }
+
+        [Fact]
+        [Trait("Samples", "Storage")]
+        public void ManageStorageAccountTestAsync()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                (azure) => ManageStorageAccountAsync.Program
+                            .RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult());
+        }
     }
 }

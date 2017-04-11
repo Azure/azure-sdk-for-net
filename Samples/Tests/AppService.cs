@@ -37,6 +37,18 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "AppService")]
+        public void ManageWebAppSourceControlAsyncTest()
+        {
+            RunSampleAsTest(
+               this.GetType().FullName,
+               (azure) => ManageWebAppSourceControlAsync.Program.RunSampleAsync(azure)
+                            .GetAwaiter()
+                            .GetResult(),
+               Path.Combine("..", "Common"));
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
         public void ManageWebAppSlotsTest()
         {
             RunSampleAsTest(

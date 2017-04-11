@@ -62,6 +62,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             Inner.Delete(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion);
         }
 
+        public async Task DeleteAsync(
+            string resourceGroupName, 
+            string resourceProviderNamespace, 
+            string parentResourcePath, 
+            string resourceType, 
+            string resourceName, 
+            string apiVersion,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Inner.DeleteAsync(
+                resourceGroupName, 
+                resourceProviderNamespace, 
+                parentResourcePath, 
+                resourceType, 
+                resourceName, 
+                apiVersion,
+                cancellationToken);
+        }
+
         public IGenericResource Get(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
             // Correct for auto-gen'd API's treatment parent path as required even though it makes sense only for child resources
