@@ -2,17 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
     using Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition;
-    using ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule>
     {
     }
 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.De
     /// The first stage of topic authorization rule definition.
     /// </summary>
     public interface IBlank  :
-        IWithListenOrSendOrManage<Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition.IWithCreate>
+        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithListenOrSendOrManage<Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition.IWithCreate>
     {
     }
 
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.De
     /// The entirety of the topic authorization rule definition.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition.IBlank,
+        Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition.IWithCreate
     {
     }
 }

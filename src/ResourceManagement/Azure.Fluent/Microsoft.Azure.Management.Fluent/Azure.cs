@@ -12,11 +12,15 @@ using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.Servicebus.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using System;
 using System.Linq;
+using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
+using ISubscription = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscription;
+using Microsoft.Azure.Management.ServiceBus.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -38,6 +42,7 @@ namespace Microsoft.Azure.Management.Fluent
         private ICdnManager cdnManager;
         private IRedisManager redisManager;
         private IAppServiceManager appServiceManager;
+        private IServiceBusManager serviceBusManager;
 
         #endregion Service Managers
 
@@ -295,6 +300,14 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IServiceBusNamespaces ServiceBusNamespaces
+        {
+            get
+            {
+                return serviceBusManager.Namespaces;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -313,6 +326,8 @@ namespace Microsoft.Azure.Management.Fluent
             redisManager = RedisManager.Authenticate(restClient, subscriptionId);
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
+            serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
+
             SubscriptionId = subscriptionId;
             this.authenticated = authenticated;
         }
@@ -512,5 +527,7 @@ namespace Microsoft.Azure.Management.Fluent
         IDisks Disks { get; }
 
         ISnapshots Snapshots { get; }
+
+        IServiceBusNamespaces ServiceBusNamespaces { get; }
     }
 }

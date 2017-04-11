@@ -2,26 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
-    using ResourceManager.Fluent.Core.ResourceActions;
     using System;
 
     /// <summary>
     /// The template for Service Bus queue update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
-        IWithSize,
-        IWithDeleteOnIdle,
-        IWithMessageLockDuration,
-        IWithDefaultMessageTTL,
-        IWithSession,
-        IWithExpressMessage,
-        IWithMessageBatching,
-        IWithDuplicateMessageDetection,
-        IWithExpiredMessageMovedToDeadLetterQueue,
-        IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
-        IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithSize,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithMessageLockDuration,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithSession,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithExpressMessage,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithMessageBatching,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithExpiredMessageMovedToDeadLetterQueue,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithAuthorizationRule
     {
     }
 
@@ -63,17 +63,17 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
     public interface IWithExpressMessage 
     {
         /// <summary>
+        /// Specifies that messages in this queue are not express hence they should be cached in memory.
+        /// </summary>
+        /// <return>The next stage of queue update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutExpressMessage();
+
+        /// <summary>
         /// Specifies that messages in this queue are express hence they can be cached in memory
         /// for some time before storing it in messaging store.
         /// </summary>
         /// <return>The next stage of queue update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithExpressMessage();
-
-        /// <summary>
-        /// Specifies that messages in this queue are not express hence they should be cached in memory.
-        /// </summary>
-        /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutExpressMessage();
     }
 
     /// <summary>
@@ -157,13 +157,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
     public interface IWithAuthorizationRule 
     {
         /// <summary>
-        /// Creates a send authorization rule for the queue.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithNewSendRule(string name);
-
-        /// <summary>
         /// Creates a listen authorization rule for the queue.
         /// </summary>
         /// <param name="name">Rule name.</param>
@@ -183,6 +176,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutAuthorizationRule(string name);
+
+        /// <summary>
+        /// Creates a send authorization rule for the queue.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the queue update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithNewSendRule(string name);
     }
 
     /// <summary>

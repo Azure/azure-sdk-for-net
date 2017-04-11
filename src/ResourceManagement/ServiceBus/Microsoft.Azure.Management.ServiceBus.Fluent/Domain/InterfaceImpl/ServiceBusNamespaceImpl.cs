@@ -4,8 +4,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using ServiceBusNamespace.Definition;
-    using ServiceBusNamespace.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition;
+    using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update;
     using System.Collections.Generic;
     using System;
 
@@ -212,17 +214,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets entry point to manage queue entities in the Service Bus namespace.
-        /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.IQueues Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace.Queues
-        {
-            get
-            {
-                return this.Queues() as Microsoft.Azure.Management.Servicebus.Fluent.IQueues;
-            }
-        }
-
-        /// <summary>
         /// Gets entry point to manage topics entities in the Service Bus namespace.
         /// </summary>
         Microsoft.Azure.Management.Servicebus.Fluent.ITopics Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace.Topics
@@ -230,6 +221,17 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.Topics() as Microsoft.Azure.Management.Servicebus.Fluent.ITopics;
+            }
+        }
+
+        /// <summary>
+        /// Gets entry point to manage queue entities in the Service Bus namespace.
+        /// </summary>
+        Microsoft.Azure.Management.Servicebus.Fluent.IQueues Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace.Queues
+        {
+            get
+            {
+                return this.Queues() as Microsoft.Azure.Management.Servicebus.Fluent.IQueues;
             }
         }
 

@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
 {
+    using Management.Fluent.ServiceBus.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
     using System;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using Management.Fluent.ServiceBus.Models;
 
     /// <summary>
     /// The stage of the subscription definition allowing specify batching behaviour.
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
     /// The entirety of the subscription definition.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IBlank,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate
     {
     }
 
@@ -76,19 +76,19 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created (via  WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>,
-        IWithDeleteOnIdle,
-        IWithMessageLockDuration,
-        IWithDefaultMessageTTL,
-        IWithSession,
-        IWithMessageBatching,
-        IWithExpiredMessageMovedToDeadLetterSubscription,
-        IWithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount,
-        IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageLockDuration,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithSession,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageBatching,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount,
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException
     {
     }
 
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
     /// The first stage of a subscription definition.
     /// </summary>
     public interface IBlank  :
-        IWithCreate
+        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate
     {
     }
 

@@ -52,13 +52,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:AB1BA95F78B711F10D574A0046DE17B7:5297C65D2669C5460BC3173EBA6C2F1E
-        protected IList<Management.Fluent.ServiceBus.Models.AccessRights> Rights()
+        protected IReadOnlyList<Management.Fluent.ServiceBus.Models.AccessRights> Rights()
         {
             if (this.Inner.Rights == null)
             {
                 return new List<AccessRights>();
             }
-            IList<AccessRights> result = new List<AccessRights>();
+            List<AccessRights> result = new List<AccessRights>();
             foreach (AccessRights? right in this.Inner.Rights)
             {
                 if (right != null && right.HasValue)

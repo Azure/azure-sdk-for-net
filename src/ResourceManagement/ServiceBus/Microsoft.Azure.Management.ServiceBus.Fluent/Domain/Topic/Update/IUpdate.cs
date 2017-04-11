@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Servicebus.Fluent;
-    using ResourceManager.Fluent.Core.ResourceActions;
     using System;
 
     /// <summary>
@@ -43,15 +43,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update
     /// The template for a Service Bus topic update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
-        IWithSize,
-        IWithDeleteOnIdle,
-        IWithDefaultMessageTTL,
-        IWithExpressMessage,
-        IWithMessageBatching,
-        IWithDuplicateMessageDetection,
-        IWithSubscription,
-        IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithSize,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithExpressMessage,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithMessageBatching,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithSubscription,
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IWithAuthorizationRule
     {
     }
 
@@ -128,17 +128,17 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update
     public interface IWithExpressMessage 
     {
         /// <summary>
+        /// Specifies that messages in this topic are not express hence they should be cached in memory.
+        /// </summary>
+        /// <return>The next stage of topic update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IUpdate WithoutExpressMessage();
+
+        /// <summary>
         /// Specifies that messages in this topic are express hence they can be cached in memory
         /// for some time before storing it in messaging store.
         /// </summary>
         /// <return>The next stage of topic update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IUpdate WithExpressMessage();
-
-        /// <summary>
-        /// Specifies that messages in this topic are not express hence they should be cached in memory.
-        /// </summary>
-        /// <return>The next stage of topic update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IUpdate WithoutExpressMessage();
     }
 
     /// <summary>
@@ -147,13 +147,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update
     /// </summary>
     public interface IWithAuthorizationRule 
     {
-        /// <summary>
-        /// Creates a send authorization rule for the topic.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the topic update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IUpdate WithNewSendRule(string name);
-
         /// <summary>
         /// Creates a listen authorization rule for the topic.
         /// </summary>
@@ -174,5 +167,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic update.</return>
         Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IUpdate WithoutAuthorizationRule(string name);
+
+        /// <summary>
+        /// Creates a send authorization rule for the topic.
+        /// </summary>
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the topic update.</return>
+        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update.IUpdate WithNewSendRule(string name);
     }
 }

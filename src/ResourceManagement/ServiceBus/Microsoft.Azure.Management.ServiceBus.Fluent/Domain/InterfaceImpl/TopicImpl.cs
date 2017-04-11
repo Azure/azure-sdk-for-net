@@ -4,14 +4,50 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Topic.Definition;
-    using Topic.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition;
+    using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update;
     using System.Collections.Generic;
     using System;
+    using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus.Models;
 
     internal partial class TopicImpl 
     {
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IServiceBusManager>.Manager
+        {
+            get
+            {
+                return this.Manager as IServiceBusManager;
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
+        {
+            get
+            {
+                return this.Id;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
+
         /// <summary>
         /// The idle interval after which the topic is automatically deleted.
         /// Note: unless it is explicitly overridden the default delete on idle duration
@@ -76,6 +112,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
+        /// Specifies that duplicate message detection needs to be disabled.
+        /// </summary>
+        /// <return>The next stage of topic update.</return>
+        Topic.Update.IUpdate Topic.Update.IWithDuplicateMessageDetection.WithoutDuplicateMessageDetection()
+        {
+            return this.WithoutDuplicateMessageDetection() as Topic.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies the duration of the duplicate message detection history.
         /// </summary>
         /// <param name="duration">Duration of the history.</param>
@@ -86,12 +131,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Specifies that duplicate message detection needs to be disabled.
+        /// Specifies that partitioning should be enabled on this topic.
         /// </summary>
-        /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithDuplicateMessageDetection.WithoutDuplicateMessageDetection()
+        /// <return>The next stage of topic definition.</return>
+        Topic.Definition.IWithCreate Topic.Definition.IWithPartitioning.WithPartitioning()
         {
-            return this.WithoutDuplicateMessageDetection() as Topic.Update.IUpdate;
+            return this.WithPartitioning() as Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -106,12 +151,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Specifies that partitioning should be enabled on this topic.
+        /// Creates a send authorization rule for the topic.
         /// </summary>
-        /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithPartitioning.WithPartitioning()
+        /// <param name="name">Rule name.</param>
+        /// <return>Next stage of the topic definition.</return>
+        Topic.Definition.IWithCreate Topic.Definition.IWithAuthorizationRule.WithNewSendRule(string name)
         {
-            return this.WithPartitioning() as Topic.Definition.IWithCreate;
+            return this.WithNewSendRule(name) as Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -138,10 +184,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Creates a send authorization rule for the topic.
         /// </summary>
         /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithAuthorizationRule.WithNewSendRule(string name)
+        /// <return>Next stage of the topic update.</return>
+        Topic.Update.IUpdate Topic.Update.IWithAuthorizationRule.WithNewSendRule(string name)
         {
-            return this.WithNewSendRule(name) as Topic.Definition.IWithCreate;
+            return this.WithNewSendRule(name) as Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -165,16 +211,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Creates a send authorization rule for the topic.
-        /// </summary>
-        /// <param name="name">Rule name.</param>
-        /// <return>Next stage of the topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithAuthorizationRule.WithNewSendRule(string name)
-        {
-            return this.WithNewSendRule(name) as Topic.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Removes an authorization rule for the topic.
         /// </summary>
         /// <param name="name">Rule name.</param>
@@ -185,13 +221,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Removes a subscription entity associated with the Service Bus topic.
+        /// Creates a subscription entity for the Service Bus topic.
         /// </summary>
-        /// <param name="name">Subscription name.</param>
-        /// <return>Next stage of the Service Bus topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithSubscription.WithoutSubscription(string name)
+        /// <param name="name">Queue name.</param>
+        /// <return>The next stage of topic definition.</return>
+        Topic.Definition.IWithCreate Topic.Definition.IWithSubscription.WithNewSubscription(string name)
         {
-            return this.WithoutSubscription(name) as Topic.Update.IUpdate;
+            return this.WithNewSubscription(name) as Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -202,6 +238,16 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         Topic.Update.IUpdate Topic.Update.IWithSubscription.WithNewSubscription(string name)
         {
             return this.WithNewSubscription(name) as Topic.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Removes a subscription entity associated with the Service Bus topic.
+        /// </summary>
+        /// <param name="name">Subscription name.</param>
+        /// <return>Next stage of the Service Bus topic update.</return>
+        Topic.Update.IUpdate Topic.Update.IWithSubscription.WithoutSubscription(string name)
+        {
+            return this.WithoutSubscription(name) as Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -226,28 +272,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets current size of the topic, in bytes.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.CurrentSizeInBytes
-        {
-            get
-            {
-                return this.CurrentSizeInBytes();
-            }
-        }
-
-        /// <summary>
-        /// Gets the idle duration after which the topic is automatically deleted.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DeleteOnIdleDurationInMinutes
-        {
-            get
-            {
-                return this.DeleteOnIdleDurationInMinutes();
-            }
-        }
-
-        /// <summary>
         /// Gets number of subscriptions for the topic.
         /// </summary>
         int Microsoft.Azure.Management.Servicebus.Fluent.ITopic.SubscriptionCount
@@ -255,72 +279,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.SubscriptionCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets number of active messages in the topic.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.ActiveMessageCount
-        {
-            get
-            {
-                return this.ActiveMessageCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets indicates whether the topic is to be partitioned across multiple message brokers.
-        /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsPartitioningEnabled
-        {
-            get
-            {
-                return this.IsPartitioningEnabled();
-            }
-        }
-
-        /// <summary>
-        /// Gets the exact time the topic was created.
-        /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.CreatedAt
-        {
-            get
-            {
-                return this.CreatedAt();
-            }
-        }
-
-        /// <summary>
-        /// Gets indicates whether server-side batched operations are enabled.
-        /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsBatchedOperationsEnabled
-        {
-            get
-            {
-                return this.IsBatchedOperationsEnabled();
-            }
-        }
-
-        /// <summary>
-        /// Gets entry point to manage authorization rules for the Service Bus topic.
-        /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules Microsoft.Azure.Management.Servicebus.Fluent.ITopic.AuthorizationRules
-        {
-            get
-            {
-                return this.AuthorizationRules() as Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules;
-            }
-        }
-
-        /// <summary>
-        /// Gets the maximum size of memory allocated for the topic in megabytes.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.MaxSizeInMB
-        {
-            get
-            {
-                return this.MaxSizeInMB();
             }
         }
 
@@ -336,24 +294,24 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets the duration after which the message expires, starting from when the message is sent to topic.
+        /// Gets the maximum size of memory allocated for the topic in megabytes.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DefaultMessageTtlDuration
+        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.MaxSizeInMB
         {
             get
             {
-                return this.DefaultMessageTtlDuration();
+                return this.MaxSizeInMB();
             }
         }
 
         /// <summary>
-        /// Gets the current status of the topic.
+        /// Gets the exact time the topic was created.
         /// </summary>
-        EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.ITopic.Status
+        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.CreatedAt
         {
             get
             {
-                return this.Status();
+                return this.CreatedAt();
             }
         }
 
@@ -370,61 +328,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets indicates if this topic requires duplicate detection.
-        /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsDuplicateDetectionEnabled
-        {
-            get
-            {
-                return this.IsDuplicateDetectionEnabled();
-            }
-        }
-
-        /// <summary>
-        /// Gets the exact time the topic was updated.
-        /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.UpdatedAt
-        {
-            get
-            {
-                return this.UpdatedAt();
-            }
-        }
-
-        /// <summary>
-        /// Gets last time a message was sent, or the last time there was a receive request to this topic.
-        /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.AccessedAt
-        {
-            get
-            {
-                return this.AccessedAt();
-            }
-        }
-
-        /// <summary>
-        /// Gets number of messages transferred into dead letters.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.TransferDeadLetterMessageCount
-        {
-            get
-            {
-                return this.TransferDeadLetterMessageCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets the duration of the duplicate detection history.
-        /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DuplicateMessageDetectionHistoryDuration
-        {
-            get
-            {
-                return this.DuplicateMessageDetectionHistoryDuration();
-            }
-        }
-
-        /// <summary>
         /// Gets indicates whether express entities are enabled.
         /// </summary>
         bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsExpressEnabled
@@ -432,6 +335,28 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.IsExpressEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets current size of the topic, in bytes.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.CurrentSizeInBytes
+        {
+            get
+            {
+                return this.CurrentSizeInBytes();
+            }
+        }
+
+        /// <summary>
+        /// Gets number of active messages in the topic.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.ActiveMessageCount
+        {
+            get
+            {
+                return this.ActiveMessageCount();
             }
         }
 
@@ -447,6 +372,105 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
+        /// Gets the current status of the topic.
+        /// </summary>
+        EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.ITopic.Status
+        {
+            get
+            {
+                return this.Status();
+            }
+        }
+
+        /// <summary>
+        /// Gets the duration after which the message expires, starting from when the message is sent to topic.
+        /// </summary>
+        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DefaultMessageTtlDuration
+        {
+            get
+            {
+                return this.DefaultMessageTtlDuration();
+            }
+        }
+
+        /// <summary>
+        /// Gets entry point to manage authorization rules for the Service Bus topic.
+        /// </summary>
+        Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules Microsoft.Azure.Management.Servicebus.Fluent.ITopic.AuthorizationRules
+        {
+            get
+            {
+                return this.AuthorizationRules() as Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules;
+            }
+        }
+
+        /// <summary>
+        /// Gets last time a message was sent, or the last time there was a receive request to this topic.
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.AccessedAt
+        {
+            get
+            {
+                return this.AccessedAt();
+            }
+        }
+
+        /// <summary>
+        /// Gets indicates whether the topic is to be partitioned across multiple message brokers.
+        /// </summary>
+        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsPartitioningEnabled
+        {
+            get
+            {
+                return this.IsPartitioningEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets number of messages transferred into dead letters.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.TransferDeadLetterMessageCount
+        {
+            get
+            {
+                return this.TransferDeadLetterMessageCount();
+            }
+        }
+
+        /// <summary>
+        /// Gets the idle duration after which the topic is automatically deleted.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DeleteOnIdleDurationInMinutes
+        {
+            get
+            {
+                return this.DeleteOnIdleDurationInMinutes();
+            }
+        }
+
+        /// <summary>
+        /// Gets indicates whether server-side batched operations are enabled.
+        /// </summary>
+        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsBatchedOperationsEnabled
+        {
+            get
+            {
+                return this.IsBatchedOperationsEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets indicates if this topic requires duplicate detection.
+        /// </summary>
+        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsDuplicateDetectionEnabled
+        {
+            get
+            {
+                return this.IsDuplicateDetectionEnabled();
+            }
+        }
+
+        /// <summary>
         /// Gets number of messages in the dead-letter topic.
         /// </summary>
         long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DeadLetterMessageCount
@@ -454,6 +478,28 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.DeadLetterMessageCount();
+            }
+        }
+
+        /// <summary>
+        /// Gets the exact time the topic was updated.
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.UpdatedAt
+        {
+            get
+            {
+                return this.UpdatedAt();
+            }
+        }
+
+        /// <summary>
+        /// Gets the duration of the duplicate detection history.
+        /// </summary>
+        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DuplicateMessageDetectionHistoryDuration
+        {
+            get
+            {
+                return this.DuplicateMessageDetectionHistoryDuration();
             }
         }
 
@@ -489,6 +535,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
+        /// Specifies that messages in this topic are not express hence they should be cached in memory.
+        /// </summary>
+        /// <return>The next stage of topic update.</return>
+        Topic.Update.IUpdate Topic.Update.IWithExpressMessage.WithoutExpressMessage()
+        {
+            return this.WithoutExpressMessage() as Topic.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies that messages in this topic are express hence they can be cached in memory
         /// for some time before storing it in messaging store.
         /// </summary>
@@ -496,15 +551,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         Topic.Update.IUpdate Topic.Update.IWithExpressMessage.WithExpressMessage()
         {
             return this.WithExpressMessage() as Topic.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Specifies that messages in this topic are not express hence they should be cached in memory.
-        /// </summary>
-        /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithExpressMessage.WithoutExpressMessage()
-        {
-            return this.WithoutExpressMessage() as Topic.Update.IUpdate;
         }
     }
 }

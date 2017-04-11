@@ -4,12 +4,48 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Subscription.Definition;
-    using Subscription.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition;
+    using Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update;
     using System;
+    using ServiceBus.Fluent;
+    using Management.Fluent.ServiceBus.Models;
 
     internal partial class SubscriptionImpl 
     {
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IServiceBusManager>.Manager
+        {
+            get
+            {
+                return this.Manager as IServiceBusManager;
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
+        {
+            get
+            {
+                return this.Id;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
+
         /// <summary>
         /// The idle interval after which the subscription is automatically deleted.
         /// </summary>
@@ -33,16 +69,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Specifies that service bus can batch multiple message when it write messages to or delete
-        /// messages from it's internal store. This increases the throughput.
-        /// </summary>
-        /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageBatching.WithMessageBatching()
-        {
-            return this.WithMessageBatching() as Subscription.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Specifies that batching of messages should be disabled when service bus write messages to
         /// or delete messages from it's internal store.
         /// </summary>
@@ -50,6 +76,16 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         Subscription.Update.IUpdate Subscription.Update.IWithMessageBatching.WithoutMessageBatching()
         {
             return this.WithoutMessageBatching() as Subscription.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that service bus can batch multiple message when it write messages to or delete
+        /// messages from it's internal store. This increases the throughput.
+        /// </summary>
+        /// <return>The next stage of subscription update.</return>
+        Subscription.Update.IUpdate Subscription.Update.IWithMessageBatching.WithMessageBatching()
+        {
+            return this.WithMessageBatching() as Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -111,21 +147,21 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Specifies that filter evaluation failed message should not be moved to dead-letter subscription.
-        /// </summary>
-        /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
-        {
-            return this.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Subscription.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Specifies that filter evaluation failed message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
         Subscription.Update.IUpdate Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
         {
             return this.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Subscription.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that filter evaluation failed message should not be moved to dead-letter subscription.
+        /// </summary>
+        /// <return>The next stage of subscription update.</return>
+        Subscription.Update.IUpdate Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
+        {
+            return this.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -170,12 +206,47 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Specifies that session support should be enabled for the subscription.
+        /// Gets the name of the region the resource is in.
         /// </summary>
-        /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithSession.WithSession()
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
         {
-            return this.WithSession() as Subscription.Update.IUpdate;
+            get
+            {
+                return this.RegionName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the tags for the resource.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
+        {
+            get
+            {
+                return this.Tags as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+            }
+        }
+
+        /// <summary>
+        /// Gets the region the resource is in.
+        /// </summary>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
+        {
+            get
+            {
+                return this.Region as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
+        {
+            get
+            {
+                return this.Type;
+            }
         }
 
         /// <summary>
@@ -190,10 +261,52 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Specifies that session support should be enabled for the subscription.
         /// </summary>
+        /// <return>The next stage of subscription update.</return>
+        Subscription.Update.IUpdate Subscription.Update.IWithSession.WithSession()
+        {
+            return this.WithSession() as Subscription.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that session support should be enabled for the subscription.
+        /// </summary>
         /// <return>The next stage of subscription definition.</return>
         Subscription.Definition.IWithCreate Subscription.Definition.IWithSession.WithSession()
         {
             return this.WithSession() as Subscription.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Gets the name of the resource group.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
+        {
+            get
+            {
+                return this.ResourceGroupName;
+            }
+        }
+
+        /// <summary>
+        /// Gets indicates whether subscription has dead letter support on filter evaluation exceptions.
+        /// </summary>
+        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsDeadLetteringEnabledForFilterEvaluationFailedMessages
+        {
+            get
+            {
+                return this.IsDeadLetteringEnabledForFilterEvaluationFailedMessages();
+            }
+        }
+
+        /// <summary>
+        /// Gets the idle duration after which the subscription is automatically deleted.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DeleteOnIdleDurationInMinutes
+        {
+            get
+            {
+                return this.DeleteOnIdleDurationInMinutes();
+            }
         }
 
         /// <summary>
@@ -204,50 +317,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.ActiveMessageCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets the number of messages in the subscription.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.MessageCount
-        {
-            get
-            {
-                return this.MessageCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets last time there was a receive request to this subscription.
-        /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.AccessedAt
-        {
-            get
-            {
-                return this.AccessedAt();
-            }
-        }
-
-        /// <summary>
-        /// Gets indicates whether the subscription supports sessions.
-        /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsSessionEnabled
-        {
-            get
-            {
-                return this.IsSessionEnabled();
-            }
-        }
-
-        /// <summary>
-        /// Gets the duration after which the message expires, starting from when the message is sent to subscription.
-        /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DefaultMessageTtlDuration
-        {
-            get
-            {
-                return this.DefaultMessageTtlDuration();
             }
         }
 
@@ -263,35 +332,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets number of messages in the dead-letter subscription.
+        /// Gets indicates whether this subscription has dead letter support when a message expires.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DeadLetterMessageCount
+        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsDeadLetteringEnabledForExpiredMessages
         {
             get
             {
-                return this.DeadLetterMessageCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets number of messages transferred into dead letters.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.TransferDeadLetterMessageCount
-        {
-            get
-            {
-                return this.TransferDeadLetterMessageCount();
-            }
-        }
-
-        /// <summary>
-        /// Gets the duration of peek-lock which is the amount of time that the message is locked for other receivers.
-        /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.LockDurationInSeconds
-        {
-            get
-            {
-                return this.LockDurationInSeconds();
+                return this.IsDeadLetteringEnabledForExpiredMessages();
             }
         }
 
@@ -307,24 +354,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets indicates whether this subscription has dead letter support when a message expires.
+        /// Gets the number of messages in the subscription.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsDeadLetteringEnabledForExpiredMessages
+        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.MessageCount
         {
             get
             {
-                return this.IsDeadLetteringEnabledForExpiredMessages();
-            }
-        }
-
-        /// <summary>
-        /// Gets the exact time the message was updated.
-        /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.UpdatedAt
-        {
-            get
-            {
-                return this.UpdatedAt();
+                return this.MessageCount();
             }
         }
 
@@ -336,6 +372,39 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
             get
             {
                 return this.TransferMessageCount();
+            }
+        }
+
+        /// <summary>
+        /// Gets the duration after which the message expires, starting from when the message is sent to subscription.
+        /// </summary>
+        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DefaultMessageTtlDuration
+        {
+            get
+            {
+                return this.DefaultMessageTtlDuration();
+            }
+        }
+
+        /// <summary>
+        /// Gets indicates whether the subscription supports sessions.
+        /// </summary>
+        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsSessionEnabled
+        {
+            get
+            {
+                return this.IsSessionEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets the current status of the subscription.
+        /// </summary>
+        EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.Status
+        {
+            get
+            {
+                return this.Status();
             }
         }
 
@@ -352,24 +421,35 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets the current status of the subscription.
+        /// Gets the exact time the message was updated.
         /// </summary>
-        Management.Fluent.ServiceBus.Models.EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.Status
+        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.UpdatedAt
         {
             get
             {
-                return this.Status();
+                return this.UpdatedAt();
             }
         }
 
         /// <summary>
-        /// Gets the idle duration after which the subscription is automatically deleted.
+        /// Gets last time there was a receive request to this subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DeleteOnIdleDurationInMinutes
+        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.AccessedAt
         {
             get
             {
-                return this.DeleteOnIdleDurationInMinutes();
+                return this.AccessedAt();
+            }
+        }
+
+        /// <summary>
+        /// Gets number of messages transferred into dead letters.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.TransferDeadLetterMessageCount
+        {
+            get
+            {
+                return this.TransferDeadLetterMessageCount();
             }
         }
 
@@ -385,13 +465,24 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         /// <summary>
-        /// Gets indicates whether subscription has dead letter support on filter evaluation exceptions.
+        /// Gets the duration of peek-lock which is the amount of time that the message is locked for other receivers.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsDeadLetteringEnabledForFilterEvaluationFailedMessages
+        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.LockDurationInSeconds
         {
             get
             {
-                return this.IsDeadLetteringEnabledForFilterEvaluationFailedMessages();
+                return this.LockDurationInSeconds();
+            }
+        }
+
+        /// <summary>
+        /// Gets number of messages in the dead-letter subscription.
+        /// </summary>
+        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DeadLetterMessageCount
+        {
+            get
+            {
+                return this.DeadLetterMessageCount();
             }
         }
 
