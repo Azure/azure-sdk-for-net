@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus
         "SA1202:ElementsMustBeOrderedByAccess",
         Justification = "Following this rule here will mix up the EventIds and make it confusing")]
     [EventSource(Name = "Microsoft-Azure-ServiceBus")]
-    public sealed class MessagingEventSource : EventSource
+    internal sealed class MessagingEventSource : EventSource
     {
         public static MessagingEventSource Log { get; } = new MessagingEventSource();
 
