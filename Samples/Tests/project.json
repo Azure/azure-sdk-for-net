@@ -133,14 +133,10 @@
     "ManageWebAppStorageAccountConnection": "1.0.0-*",
     "ManageWebAppWithDomainSsl": "1.0.0-*",
     "ManageWebAppWithTrafficManager": "1.0.0-*",
-    "ConvertVirtualMachineToManagedDisks": "1.0.0-*",
-    "ManageVirtualMachineScaleSet": "1.0.0-*",
-    "ManageVirtualMachine": "1.0.0-*",
-    "ManageManagedDisks": "1.0.0-*",
     "ServiceBusPublishSubscribeAdvanceFeatures": "1.0.0-*",
     "ServiceBusPublishSubscribeBasic": "1.0.0-*",
-    "ServiceBusQueueBasic": "1.0.0-*",
     "ServiceBusQueueAdvanceFeatures": "1.0.0-*",
+    "ServiceBusQueueBasic": "1.0.0-*",
     "ServiceBusWithClaimBasedAuthorization": "1.0.0-*"
   }
 }
