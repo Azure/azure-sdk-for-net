@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="osDiskUrl">OsDiskUrl the url to the OS disk in the Azure Storage account.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithSpecializedOsUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType);
 
         /// <summary>
         /// Specifies the id of a Linux custom image to be used.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="disk">The managed disk to attach.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithSpecializedOsDisk(IDisk disk, OperatingSystemTypes osType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType);
     }
 
     /// <summary>

@@ -179,7 +179,7 @@ namespace ManageManagedDisks
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
                         .WithoutPrimaryPublicIPAddress()
-                        .WithSpecializedOsUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux)
+                        .WithSpecializedOSUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -264,7 +264,7 @@ namespace ManageManagedDisks
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
                         .WithoutPrimaryPublicIPAddress()
-                        .WithSpecializedOsDisk(newOSDisk, OperatingSystemTypes.Linux)
+                        .WithSpecializedOSDisk(newOSDisk, OperatingSystemTypes.Linux)
                         .WithExistingDataDisk(newDataDisk)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();

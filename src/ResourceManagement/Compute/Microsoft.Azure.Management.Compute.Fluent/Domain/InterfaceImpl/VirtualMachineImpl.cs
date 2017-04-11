@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="osDiskUrl">OsDiskUrl the url to the OS disk in the Azure Storage account.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOsUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
+        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
         {
             return this.WithSpecializedOsUnmanagedDisk(osDiskUrl, osType) as VirtualMachine.Definition.IWithUnmanagedCreate;
         }
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="disk">The managed disk to attach.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOsDisk(IDisk disk, OperatingSystemTypes osType)
+        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType)
         {
             return this.WithSpecializedOsDisk(disk, osType) as VirtualMachine.Definition.IWithManagedCreate;
         }
