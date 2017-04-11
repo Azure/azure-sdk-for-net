@@ -13,7 +13,7 @@ namespace Azure.Tests.WebApp
         private static readonly string GroupName = "javacsmrg9b9912262";
         private static readonly string DomainName = "graph-dm7720.com";
 
-        [Fact(Skip = "Test requires javacsmrg9b9912262 RG to be configured manually")]
+        [Fact(Skip = "TODO: Automate - Test requires javacsmrg9b9912262 RG to be configured manually")]
         public void CanCRUDDomain()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))

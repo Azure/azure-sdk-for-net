@@ -226,7 +226,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "Recording fails due to a failure on Managed disks backend")]
+        [Fact(Skip = "Rerecord: Recording fails due to a failure on Managed disks backend")]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineAsyncTest()
         {

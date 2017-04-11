@@ -14,7 +14,7 @@ namespace Fluent.Tests.Storage
 {
     public class StorageAccountsTests
     {
-        [Fact(Skip="Update on storage account is using patch and tags are not properly handled there.")]
+        [Fact(Skip="Investigate: Update on storage account is using patch and tags are not properly handled there.")]
         public void CanCRUDStorageAccount()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))

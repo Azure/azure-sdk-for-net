@@ -17,7 +17,7 @@ namespace Azure.Tests.Compute
 {
     public class VirtualMachineEncryptionOperationsTests
     {
-        [Fact(Skip = "Requires ServicePrincipal, KeyVault creation and association, requires SSH to vm and perform mounting")]
+        [Fact(Skip = "Manual only: Requires ServicePrincipal, KeyVault creation and association, requires SSH to vm and perform mounting")]
         public void CanEncryptVirtualMachine()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))

@@ -18,7 +18,7 @@ namespace Azure.Tests.WebApp
 {
     public class HostnameSslTests
     {
-        [Fact(Skip = "Test requires javacsmrg9b9912262 RG to be configured manually")]
+        [Fact(Skip = "Manual only - Test requires javacsmrg9b9912262 RG to be configured manually")]
         public async Task CanBindHostnameAndSsl()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
