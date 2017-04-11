@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="containerName">The name of the container in the selected storage account.</param>
         /// <param name="vhdName">The name for the OS Disk vhd.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithUnmanagedCreate.WithOsDiskVhdLocation(string containerName, string vhdName)
+        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithUnmanagedCreate.WithOSDiskVhdLocation(string containerName, string vhdName)
         {
             return this.WithOsDiskVhdLocation(containerName, vhdName) as VirtualMachine.Definition.IWithUnmanagedCreate;
         }
@@ -643,7 +643,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithManagedCreate.WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithManagedCreate.WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
             return this.WithOsDiskStorageAccountType(accountType) as VirtualMachine.Definition.IWithManagedCreate;
         }
