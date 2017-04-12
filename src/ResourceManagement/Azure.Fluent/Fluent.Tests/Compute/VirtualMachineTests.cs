@@ -238,17 +238,9 @@ namespace Fluent.Tests.Compute
 
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
-                    using (var sshClient = new SshClient(publicIPAddress.Fqdn, 22, username, password))
-                    {
-                        sshClient.Connect();
-                        var commandToExecute = "pwgen;";
-                        using (var command = sshClient.CreateCommand(commandToExecute))
-                        {
-                            var commandOutput = command.Execute();
-                            Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
-                        }
-                        sshClient.Disconnect();
-                    }
+                    var commandOutput = TestHelper.TrySsh(publicIPAddress.Fqdn, 22, username, password, "pwgen;");
+
+                    Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
                 }
             }
         }
@@ -285,11 +277,7 @@ namespace Fluent.Tests.Compute
 
                     if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                     {
-                        using (var sshClient = new SshClient(publicIPAddress.Fqdn, 22, username, password))
-                        {
-                            sshClient.Connect();
-                            sshClient.Disconnect();
-                        }
+                        TestHelper.TrySsh(publicIPAddress.Fqdn, 22, username, password, "pwgen;");
                     }
                 }
                 finally
@@ -302,47 +290,6 @@ namespace Fluent.Tests.Compute
                     { }
                 }
             }
-        }
-
-        private string TrySsh(ConnectionInfo connectionInfo, string commandToExecute, TimeSpan backoffTime, int retryCount)
-        {
-            string commandOutput = null;
-            while (retryCount > 0)
-            {
-                TestHelper.Delay(backoffTime);
-                using (var sshClient = new SshClient(connectionInfo))
-                {
-                    try
-                    {
-                        sshClient.Connect();
-                        if (commandToExecute != null)
-                        {
-                            using (var command = sshClient.CreateCommand(commandToExecute))
-                            {
-                                commandOutput = command.Execute();
-                            }
-                        }
-                        break;
-                    }
-                    catch (Exception exception)
-                    {
-                        retryCount--;
-                        if (retryCount == 0)
-                        {
-                            throw exception;
-                        }
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            sshClient.Disconnect();
-                        }
-                        catch { }
-                    }
-                }
-            }
-            return commandOutput;
         }
     }
 }
