@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     internal partial class AppServicePlanImpl 
     {
@@ -85,6 +84,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         AppServicePlan.Update.IUpdate AppServicePlan.Update.IWithPricingTier.WithPricingTier(PricingTier pricingTier)
         {
             return this.WithPricingTier(pricingTier) as AppServicePlan.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies free pricing tier for the app service plan.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithPricingTier.WithFreePricingTier()
+        {
+            return this.WithFreePricingTier() as AppServicePlan.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies shared pricing tier for the app service plan.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        AppServicePlan.Definition.IWithCreate AppServicePlan.Definition.IWithPricingTier.WithSharedPricingTier()
+        {
+            return this.WithSharedPricingTier() as AppServicePlan.Definition.IWithCreate;
         }
 
         /// <summary>

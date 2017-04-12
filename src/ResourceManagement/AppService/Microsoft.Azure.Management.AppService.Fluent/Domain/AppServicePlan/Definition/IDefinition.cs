@@ -27,6 +27,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
         /// <param name="pricingTier">The pricing tier enum.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithOperatingSystem WithPricingTier(PricingTier pricingTier);
+
+        /// <summary>
+        /// Specifies shared pricing tier for the app service plan.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithSharedPricingTier();
+
+        /// <summary>
+        /// Specifies free pricing tier for the app service plan.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition.IWithCreate WithFreePricingTier();
     }
 
     /// <summary>

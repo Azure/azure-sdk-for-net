@@ -18,6 +18,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public static readonly JavaVersion V8_25 = Parse("1.8.0_25");
         public static readonly JavaVersion V8_60 = Parse("1.8.0_60");
         public static readonly JavaVersion V8_73 = Parse("1.8.0_73");
-        public static readonly JavaVersion V8_92 = Parse("1.8.0_92");   
+        public static readonly JavaVersion V8_111 = Parse("1.8.0_111");
+        public static readonly JavaVersion ZuluV8_92 = Parse("1.8.0_92");
+        public static readonly JavaVersion ZuluV8_102 = Parse("1.8.0_102");
     }
 }
