@@ -27,6 +27,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 using Renci.SshNet;
 using Microsoft.Azure.Management.Servicebus.Fluent;
+using Microsoft.Azure.ServiceBus;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1681,6 +1682,38 @@ namespace Microsoft.Azure.Management.Samples.Common
         public static string GetCertificatePath(string certificateName)
         {
             return Path.Combine(Utilities.ProjectPath, "Asset", certificateName);
+        }
+
+        public static void SendMessageToTopic(string connectionString, string topicName, string message)
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    var topicClient = new TopicClient(connectionString, topicName);
+                    topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes(message))).Wait();
+                    topicClient.Close();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        public static void SendMessageToQueue(string connectionString, string queueName, string message)
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    var queueClient = new QueueClient(connectionString, queueName, ReceiveMode.PeekLock);
+                    queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes(message))).Wait();
+                    queueClient.Close();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
     }
 }

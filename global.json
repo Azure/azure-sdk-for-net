@@ -25,9 +25,9 @@
       "Samples/ResourceManagement/Network",
       "Samples/ResourceManagement/RedisCache",
       "Samples/ResourceManagement/ResourceManager",
+      "Samples/ResourceManagement/ServiceBus",
       "Samples/ResourceManagement/Sql",
       "Samples/ResourceManagement/Storage",
-      "Samples/ResourceManagement/TrafficManager",
-      "Samples/ResourceManagement/ServiceBus"
+      "Samples/ResourceManagement/TrafficManager"
     ]
 }

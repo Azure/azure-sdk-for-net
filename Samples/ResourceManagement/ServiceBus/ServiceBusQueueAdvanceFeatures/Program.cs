@@ -3,12 +3,10 @@
 
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.ServiceBus.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
 using System;
 using System.Linq;
 using System.Text;
@@ -46,7 +44,7 @@ namespace ServiceBusQueueAdvanceFeatures
                 //============================================================
                 // Create a namespace.
 
-                Console.WriteLine("Creating name space " + namespaceName + " in resource group " + rgName + "...");
+                Utilities.Log("Creating name space " + namespaceName + " in resource group " + rgName + "...");
 
                 var serviceBusNamespace = azure.ServiceBusNamespaces
                         .Define(namespaceName)
@@ -55,12 +53,12 @@ namespace ServiceBusQueueAdvanceFeatures
                         .WithSku(NamespaceSku.PremiumCapacity1)
                         .Create();
 
-                Console.WriteLine("Created service bus " + serviceBusNamespace.Name);
+                Utilities.Log("Created service bus " + serviceBusNamespace.Name);
                 Utilities.Print(serviceBusNamespace);
 
                 //============================================================
                 // Add a queue in namespace with features session and dead-lettering.
-                Console.WriteLine("Creating first queue " + queue1Name + ", with session, time to live and move to dead-letter queue features...");
+                Utilities.Log("Creating first queue " + queue1Name + ", with session, time to live and move to dead-letter queue features...");
 
                 var firstQueue = serviceBusNamespace.Queues.Define(queue1Name)
                         .WithSession()
@@ -73,7 +71,7 @@ namespace ServiceBusQueueAdvanceFeatures
                 //============================================================
                 // Create second queue with Deduplication and AutoDeleteOnIdle feature
 
-                Console.WriteLine("Creating second queue " + queue2Name + ", with De-duplication and AutoDeleteOnIdle features...");
+                Utilities.Log("Creating second queue " + queue2Name + ", with De-duplication and AutoDeleteOnIdle features...");
 
                 var secondQueue = serviceBusNamespace.Queues.Define(queue2Name)
                         .WithSizeInMB(2048)
@@ -81,7 +79,7 @@ namespace ServiceBusQueueAdvanceFeatures
                         .WithDeleteOnIdleDurationInMinutes(10)
                         .Create();
 
-                Console.WriteLine("Created second queue in namespace");
+                Utilities.Log("Created second queue in namespace");
 
                 Utilities.Print(secondQueue);
 
@@ -92,7 +90,7 @@ namespace ServiceBusQueueAdvanceFeatures
                         .WithDeleteOnIdleDurationInMinutes(5)
                         .Apply();
 
-                Console.WriteLine("Updated second queue to change its auto deletion time");
+                Utilities.Log("Updated second queue to change its auto deletion time");
 
                 Utilities.Print(secondQueue);
 
@@ -103,7 +101,7 @@ namespace ServiceBusQueueAdvanceFeatures
                         .WithNewSendRule(sendRuleName)
                         .Apply();
 
-                Console.WriteLine("Updated first queue to change dead-letter forwarding");
+                Utilities.Log("Updated first queue to change dead-letter forwarding");
 
                 Utilities.Print(secondQueue);
 
@@ -111,7 +109,7 @@ namespace ServiceBusQueueAdvanceFeatures
                 // Get connection string for default authorization rule of namespace
 
                 var namespaceAuthorizationRules = serviceBusNamespace.AuthorizationRules.List();
-                Console.WriteLine("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
+                Utilities.Log("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
 
 
                 foreach (var namespaceAuthorizationRule in namespaceAuthorizationRules)
@@ -119,7 +117,7 @@ namespace ServiceBusQueueAdvanceFeatures
                     Utilities.Print(namespaceAuthorizationRule);
                 }
 
-                Console.WriteLine("Getting keys for authorization rule ...");
+                Utilities.Log("Getting keys for authorization rule ...");
 
                 var keys = namespaceAuthorizationRules.FirstOrDefault().GetKeys();
                 Utilities.Print(keys);
@@ -130,24 +128,15 @@ namespace ServiceBusQueueAdvanceFeatures
 
                 //=============================================================
                 // Send a message to queue.
-
-                try
-                {
-                    var queueClient = new QueueClient(keys.PrimaryConnectionString, queue1Name, ReceiveMode.PeekLock);
-                    queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    queueClient.Close();
-                }
-                catch (Exception)
-                {
-                }
+                Utilities.SendMessageToQueue(keys.PrimaryConnectionString, queue1Name, "Hello");
 
                 //=============================================================
                 // Delete a queue and namespace
-                Console.WriteLine("Deleting queue " + queue1Name + "in namespace " + namespaceName + "...");
+                Utilities.Log("Deleting queue " + queue1Name + "in namespace " + namespaceName + "...");
                 serviceBusNamespace.Queues.DeleteByName(queue1Name);
-                Console.WriteLine("Deleted queue " + queue1Name + "...");
+                Utilities.Log("Deleted queue " + queue1Name + "...");
 
-                Console.WriteLine("Deleting namespace " + namespaceName + "...");
+                Utilities.Log("Deleting namespace " + namespaceName + "...");
                 // This will delete the namespace and queue within it.
                 try
                 {
@@ -156,20 +145,20 @@ namespace ServiceBusQueueAdvanceFeatures
                 catch (Exception)
                 {
                 }
-                Console.WriteLine("Deleted namespace " + namespaceName + "...");
+                Utilities.Log("Deleted namespace " + namespaceName + "...");
 
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.BeginDeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {

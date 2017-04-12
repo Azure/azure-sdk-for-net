@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
+
 using System;
 using System.Linq;
 using System.Text;
@@ -43,7 +43,7 @@ namespace ServiceBusWithClaimBasedAuthorization
                 //============================================================
                 // Create a namespace.
 
-                Console.WriteLine("Creating name space " + namespaceName + " along with a queue " + queueName + " and a topic " + topicName + " in resource group " + rgName + "...");
+                Utilities.Log("Creating name space " + namespaceName + " along with a queue " + queueName + " and a topic " + topicName + " in resource group " + rgName + "...");
 
                 var serviceBusNamespace = azure.ServiceBusNamespaces
                         .Define(namespaceName)
@@ -54,7 +54,7 @@ namespace ServiceBusWithClaimBasedAuthorization
                         .WithNewTopic(topicName, 1024)
                         .Create();
 
-                Console.WriteLine("Created service bus " + serviceBusNamespace.Name + " (with queue and topic)");
+                Utilities.Log("Created service bus " + serviceBusNamespace.Name + " (with queue and topic)");
                 Utilities.Print(serviceBusNamespace);
 
                 var queue = serviceBusNamespace.Queues.GetByName(queueName);
@@ -65,12 +65,12 @@ namespace ServiceBusWithClaimBasedAuthorization
 
                 //============================================================
                 // Create 2 subscriptions in topic using different methods.
-                Console.WriteLine("Creating a subscription in the topic using update on topic");
+                Utilities.Log("Creating a subscription in the topic using update on topic");
                 topic = topic.Update().WithNewSubscription(subscription1Name).Apply();
 
                 var subscription1 = topic.Subscriptions.GetByName(subscription1Name);
 
-                Console.WriteLine("Creating another subscription in the topic using direct create method for subscription");
+                Utilities.Log("Creating another subscription in the topic using direct create method for subscription");
                 var subscription2 = topic.Subscriptions.Define(subscription2Name).Create();
 
                 Utilities.Print(subscription1);
@@ -78,41 +78,23 @@ namespace ServiceBusWithClaimBasedAuthorization
 
                 //=============================================================
                 // Create new authorization rule for queue to send message.
-                Console.WriteLine("Create authorization rule for queue ...");
+                Utilities.Log("Create authorization rule for queue ...");
                 var sendQueueAuthorizationRule = serviceBusNamespace.AuthorizationRules.Define("SendRule").WithSendingEnabled().Create();
                 Utilities.Print(sendQueueAuthorizationRule);
 
-                Console.WriteLine("Getting keys for authorization rule ...");
+                Utilities.Log("Getting keys for authorization rule ...");
                 var keys = sendQueueAuthorizationRule.GetKeys();
                 Utilities.Print(keys);
 
                 //=============================================================
                 // Send a message to queue.
-                try
-                {
-                    var queueClient = new QueueClient(keys.PrimaryConnectionString, queueName, ReceiveMode.PeekLock);
-                    queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    queueClient.Close();
-                }
-                catch (Exception)
-                {
-                }
-
+                Utilities.SendMessageToQueue(keys.PrimaryConnectionString, queueName, "Hello");
                 //=============================================================
                 // Send a message to topic.
-                try
-                {
-                    var topicClient = new TopicClient(keys.PrimaryConnectionString, topicName);
-                    topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    topicClient.Close();
-                }
-                catch (Exception)
-                {
-                }
-
+                Utilities.SendMessageToTopic(keys.PrimaryConnectionString, topicName, "Hello");
                 //=============================================================
                 // Delete a namespace
-                Console.WriteLine("Deleting namespace " + namespaceName + " [topic, queues and subscription will delete along with that]...");
+                Utilities.Log("Deleting namespace " + namespaceName + " [topic, queues and subscription will delete along with that]...");
                 // This will delete the namespace and queue within it.
                 try
                 {
@@ -121,19 +103,19 @@ namespace ServiceBusWithClaimBasedAuthorization
                 catch (Exception)
                 {
                 }
-                Console.WriteLine("Deleted namespace " + namespaceName + "...");
+                Utilities.Log("Deleted namespace " + namespaceName + "...");
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.BeginDeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {

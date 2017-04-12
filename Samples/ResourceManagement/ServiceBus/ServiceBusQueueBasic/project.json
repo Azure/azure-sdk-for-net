@@ -10,7 +10,6 @@
       "target": "project",
       "type": "build"
     },
-    "Microsoft.Azure.ServiceBus": "0.0.2-preview",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"

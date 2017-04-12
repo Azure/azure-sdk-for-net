@@ -3,15 +3,12 @@
 
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.ServiceBus.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
 using System;
 using System.Linq;
-using System.Text;
 
 namespace ServiceBusPublishSubscribeAdvanceFeatures
 {
@@ -46,7 +43,7 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                 //============================================================
                 // Create a namespace.
 
-                Console.WriteLine("Creating name space " + namespaceName + " in resource group " + rgName + "...");
+                Utilities.Log("Creating name space " + namespaceName + " in resource group " + rgName + "...");
 
                 var serviceBusNamespace = azure.ServiceBusNamespaces
                         .Define(namespaceName)
@@ -56,10 +53,10 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                         .WithNewTopic(topic1Name, 1024)
                         .Create();
 
-                Console.WriteLine("Created service bus " + serviceBusNamespace.Name);
+                Utilities.Log("Created service bus " + serviceBusNamespace.Name);
                 Utilities.Print(serviceBusNamespace);
 
-                Console.WriteLine("Created topic following topic along with namespace " + namespaceName);
+                Utilities.Log("Created topic following topic along with namespace " + namespaceName);
 
                 var firstTopic = serviceBusNamespace.Topics.GetByName(topic1Name);
                 Utilities.Print(firstTopic);
@@ -67,7 +64,7 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                 //============================================================
                 // Create a service bus subscription in the topic with session and dead-letter enabled.
 
-                Console.WriteLine("Creating subscription " + subscription1Name + " in topic " + topic1Name + "...");
+                Utilities.Log("Creating subscription " + subscription1Name + " in topic " + topic1Name + "...");
                 var firstSubscription = firstTopic.Subscriptions.Define(subscription1Name)
                         .WithSession()
                         .WithDefaultMessageTTL(TimeSpan.FromMinutes(20))
@@ -75,26 +72,26 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                         .WithExpiredMessageMovedToDeadLetterSubscription()
                         .WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
                         .Create();
-                Console.WriteLine("Created subscription " + subscription1Name + " in topic " + topic1Name + "...");
+                Utilities.Log("Created subscription " + subscription1Name + " in topic " + topic1Name + "...");
 
                 Utilities.Print(firstSubscription);
 
                 //============================================================
                 // Create another subscription in the topic with auto deletion of idle entities.
-                Console.WriteLine("Creating another subscription " + subscription2Name + " in topic " + topic1Name + "...");
+                Utilities.Log("Creating another subscription " + subscription2Name + " in topic " + topic1Name + "...");
 
                 var secondSubscription = firstTopic.Subscriptions.Define(subscription2Name)
                         .WithSession()
                         .WithDeleteOnIdleDurationInMinutes(20)
                         .Create();
-                Console.WriteLine("Created subscription " + subscription2Name + " in topic " + topic1Name + "...");
+                Utilities.Log("Created subscription " + subscription2Name + " in topic " + topic1Name + "...");
 
                 Utilities.Print(secondSubscription);
 
                 //============================================================
                 // Create second topic with new Send Authorization rule, partitioning enabled and a new Service bus Subscription.
 
-                Console.WriteLine("Creating second topic " + topic2Name + ", with De-duplication and AutoDeleteOnIdle features...");
+                Utilities.Log("Creating second topic " + topic2Name + ", with De-duplication and AutoDeleteOnIdle features...");
 
                 var secondTopic = serviceBusNamespace.Topics.Define(topic2Name)
                         .WithNewSendRule(sendRuleName)
@@ -102,11 +99,11 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                         .WithNewSubscription(subscription3Name)
                         .Create();
 
-                Console.WriteLine("Created second topic in namespace");
+                Utilities.Log("Created second topic in namespace");
 
                 Utilities.Print(secondTopic);
 
-                Console.WriteLine("Creating following authorization rules in second topic ");
+                Utilities.Log("Creating following authorization rules in second topic ");
 
                 var authorizationRules = secondTopic.AuthorizationRules.List();
                 foreach (var authorizationRule in authorizationRules)
@@ -116,7 +113,7 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
 
                 //============================================================
                 // Update second topic to change time for AutoDeleteOnIdle time, without Send rule and with a new manage authorization rule.
-                Console.WriteLine("Updating second topic " + topic2Name + "...");
+                Utilities.Log("Updating second topic " + topic2Name + "...");
 
                 secondTopic = secondTopic.Update()
                         .WithDeleteOnIdleDurationInMinutes(5)
@@ -124,10 +121,10 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                         .WithNewManageRule(manageRuleName)
                         .Apply();
 
-                Console.WriteLine("Updated second topic to change its auto deletion time");
+                Utilities.Log("Updated second topic to change its auto deletion time");
 
                 Utilities.Print(secondTopic);
-                Console.WriteLine("Updated  following authorization rules in second topic, new list of authorization rules are ");
+                Utilities.Log("Updated  following authorization rules in second topic, new list of authorization rules are ");
 
                 authorizationRules = secondTopic.AuthorizationRules.List();
                 foreach (var authorizationRule in  authorizationRules)
@@ -139,7 +136,7 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                 // Get connection string for default authorization rule of namespace
 
                 var namespaceAuthorizationRules = serviceBusNamespace.AuthorizationRules.List();
-                Console.WriteLine("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
+                Utilities.Log("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
 
 
                 foreach (var namespaceAuthorizationRule in  namespaceAuthorizationRules)
@@ -147,51 +144,43 @@ namespace ServiceBusPublishSubscribeAdvanceFeatures
                     Utilities.Print(namespaceAuthorizationRule);
                 }
 
-                Console.WriteLine("Getting keys for authorization rule ...");
+                Utilities.Log("Getting keys for authorization rule ...");
 
                 var keys = namespaceAuthorizationRules.FirstOrDefault().GetKeys();
                 Utilities.Print(keys);
 
                 //=============================================================
                 // Send a message to topic.
-                try
-                {
-                    var topicClient = new TopicClient(keys.PrimaryConnectionString, topic1Name);
-                    topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    topicClient.Close();
-                }
-                catch (Exception)
-                {
-                }
+                Utilities.SendMessageToTopic(keys.PrimaryConnectionString, topic1Name, "Hello");
                 //=============================================================
                 // Delete a topic and namespace
-                Console.WriteLine("Deleting topic " + topic1Name + "in namespace " + namespaceName + "...");
+                Utilities.Log("Deleting topic " + topic1Name + "in namespace " + namespaceName + "...");
                 serviceBusNamespace.Topics.DeleteByName(topic1Name);
-                Console.WriteLine("Deleted topic " + topic1Name + "...");
+                Utilities.Log("Deleted topic " + topic1Name + "...");
 
-                Console.WriteLine("Deleting namespace " + namespaceName + "...");
+                Utilities.Log("Deleting namespace " + namespaceName + "...");
                 // This will delete the namespace and topic within it.
                 try
                 {
                     azure.ServiceBusNamespaces.DeleteById(serviceBusNamespace.Id);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
-                Console.WriteLine("Deleted namespace " + namespaceName + "...");
+                Utilities.Log("Deleted namespace " + namespaceName + "...");
 
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.BeginDeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {

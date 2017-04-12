@@ -8,7 +8,6 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Servicebus.Fluent;
-using Microsoft.Azure.ServiceBus;
 using System;
 using System.Linq;
 using System.Text;
@@ -43,7 +42,7 @@ namespace ServiceBusQueueBasic
                 //============================================================
                 // Create a namespace.
 
-                Console.WriteLine("Creating name space " + namespaceName + " in resource group " + rgName + "...");
+                Utilities.Log("Creating name space " + namespaceName + " in resource group " + rgName + "...");
 
                 var serviceBusNamespace = azure.ServiceBusNamespaces
                         .Define(namespaceName)
@@ -53,7 +52,7 @@ namespace ServiceBusQueueBasic
                         .WithNewQueue(queue1Name, 1024)
                         .Create();
 
-                Console.WriteLine("Created service bus " + serviceBusNamespace.Name);
+                Utilities.Log("Created service bus " + serviceBusNamespace.Name);
                 Utilities.Print(serviceBusNamespace);
 
                 var firstQueue = serviceBusNamespace.Queues.GetByName(queue1Name);
@@ -62,7 +61,7 @@ namespace ServiceBusQueueBasic
                 //============================================================
                 // Create a second queue in same namespace
 
-                Console.WriteLine("Creating second queue " + queue2Name + " in namespace " + namespaceName + "...");
+                Utilities.Log("Creating second queue " + queue2Name + " in namespace " + namespaceName + "...");
 
                 var secondQueue = serviceBusNamespace.Queues.Define(queue2Name)
                         .WithExpiredMessageMovedToDeadLetterQueue()
@@ -70,7 +69,7 @@ namespace ServiceBusQueueBasic
                         .WithMessageLockDurationInSeconds(20)
                         .Create();
 
-                Console.WriteLine("Created second queue in namespace");
+                Utilities.Log("Created second queue in namespace");
 
                 Utilities.Print(secondQueue);
 
@@ -80,24 +79,24 @@ namespace ServiceBusQueueBasic
                 secondQueue = serviceBusNamespace.Queues.GetByName(queue2Name);
                 secondQueue = secondQueue.Update().WithSizeInMB(3072).Apply();
 
-                Console.WriteLine("Updated second queue to change its size in MB");
+                Utilities.Log("Updated second queue to change its size in MB");
 
                 Utilities.Print(secondQueue);
 
                 //=============================================================
                 // Update namespace
-                Console.WriteLine("Updating sku of namespace " + serviceBusNamespace.Name + "...");
+                Utilities.Log("Updating sku of namespace " + serviceBusNamespace.Name + "...");
 
                 serviceBusNamespace = serviceBusNamespace
                         .Update()
                         .WithSku(NamespaceSku.PremiumCapacity1)
                         .Apply();
-                Console.WriteLine("Updated sku of namespace " + serviceBusNamespace.Name);
+                Utilities.Log("Updated sku of namespace " + serviceBusNamespace.Name);
 
                 //=============================================================
                 // List namespaces
 
-                Console.WriteLine("List of namespaces in resource group " + rgName + "...");
+                Utilities.Log("List of namespaces in resource group " + rgName + "...");
 
                 foreach (var serviceBusNamespace1  in  azure.ServiceBusNamespaces.ListByResourceGroup(rgName))
                 {
@@ -108,7 +107,7 @@ namespace ServiceBusQueueBasic
                 // List queues in namespaces
 
                 var queues = serviceBusNamespace.Queues.List();
-                Console.WriteLine("Number of queues in namespace :" + queues.Count());
+                Utilities.Log("Number of queues in namespace :" + queues.Count());
 
                 foreach (var queue in queues)
                 {
@@ -119,40 +118,31 @@ namespace ServiceBusQueueBasic
                 // Get connection string for default authorization rule of namespace
 
                 var namespaceAuthorizationRules = serviceBusNamespace.AuthorizationRules.List();
-                Console.WriteLine("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
+                Utilities.Log("Number of authorization rule for namespace :" + namespaceAuthorizationRules.Count());
 
                 foreach (var namespaceAuthorizationRule in namespaceAuthorizationRules)
                 {
                     Utilities.Print(namespaceAuthorizationRule);
                 }
 
-                Console.WriteLine("Getting keys for authorization rule ...");
+                Utilities.Log("Getting keys for authorization rule ...");
 
                 var keys = namespaceAuthorizationRules.FirstOrDefault().GetKeys();
                 Utilities.Print(keys);
-                Console.WriteLine("Regenerating secondary key for authorization rule ...");
+                Utilities.Log("Regenerating secondary key for authorization rule ...");
                 keys = namespaceAuthorizationRules.FirstOrDefault().RegenerateKey(Policykey.SecondaryKey);
                 Utilities.Print(keys);
 
                 //=============================================================
                 // Send a message to queue.
-                try
-                {
-                    var queueClient = new QueueClient(keys.PrimaryConnectionString, queue1Name, ReceiveMode.PeekLock);
-                    queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Hello"))).Wait();
-                    queueClient.Close();
-                }
-                catch (Exception)
-                {
-                }
-
+                Utilities.SendMessageToQueue(keys.PrimaryConnectionString, queue1Name, "Hello");
                 //=============================================================
                 // Delete a queue and namespace
-                Console.WriteLine("Deleting queue " + queue1Name + "in namespace " + namespaceName + "...");
+                Utilities.Log("Deleting queue " + queue1Name + "in namespace " + namespaceName + "...");
                 serviceBusNamespace.Queues.DeleteByName(queue1Name);
-                Console.WriteLine("Deleted queue " + queue1Name + "...");
+                Utilities.Log("Deleted queue " + queue1Name + "...");
 
-                Console.WriteLine("Deleting namespace " + namespaceName + "...");
+                Utilities.Log("Deleting namespace " + namespaceName + "...");
                 // This will delete the namespace and queue within it.
                 try
                 {
@@ -161,23 +151,23 @@ namespace ServiceBusQueueBasic
                 catch (Exception)
                 {
                 }
-                Console.WriteLine("Deleted namespace " + namespaceName + "...");
+                Utilities.Log("Deleted namespace " + namespaceName + "...");
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.BeginDeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {
-                    Console.WriteLine(g);
+                    Utilities.Log(g);
                 }
             }
         }
