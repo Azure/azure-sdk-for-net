@@ -584,7 +584,7 @@ namespace Fluent.Tests.Compute
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIPAddressDynamic()
                             .WithoutPrimaryPublicIPAddress()
-                            .WithSpecializedOsDisk(osDisk, OperatingSystemTypes.Linux)
+                            .WithSpecializedOSDisk(osDisk, OperatingSystemTypes.Linux)
                             .WithSize(VirtualMachineSizeTypes.StandardD5V2)
                             .WithOSDiskCaching(CachingTypes.ReadWrite)
                             .Create();

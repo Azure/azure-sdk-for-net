@@ -99,10 +99,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <summary>
         /// Specifies the specialized operating system unmanaged disk to be attached to the virtual machine.
         /// </summary>
-        /// <param name="osDiskUrl">OsDiskUrl the url to the OS disk in the Azure Storage account.</param>
+        /// <param name="osDiskUrl">osDiskUrl the url to the OS disk in the Azure Storage account.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithSpecializedOsUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType);
 
         /// <summary>
         /// Specifies the id of a Linux custom image to be used.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="disk">The managed disk to attach.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithSpecializedOsDisk(IDisk disk, OperatingSystemTypes osType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType);
     }
 
     /// <summary>
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>,
-        IWithOsDiskSettings,
+        IWithOSDiskSettings,
         IWithVMSize,
         IWithStorageAccount,
         IWithAvailabilitySet,
@@ -460,7 +460,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="containerName">The name of the container in the selected storage account.</param>
         /// <param name="vhdName">The name for the OS Disk vhd.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithOsDiskVhdLocation(string containerName, string vhdName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithOSDiskVhdLocation(string containerName, string vhdName);
     }
 
     /// <summary>
@@ -575,11 +575,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithDataDiskDefaultCachingType(CachingTypes cachingType);
 
         /// <summary>
-        /// Specifies the storage account type for managed Os disk.
+        /// Specifies the storage account type for managed OS disk.
         /// </summary>
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithOsDiskStorageAccountType(StorageAccountTypes accountType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithOSDiskStorageAccountType(StorageAccountTypes accountType);
     }
 
     /// <summary>
@@ -940,7 +940,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify OS disk configurations.
     /// </summary>
-    public interface IWithOsDiskSettings 
+    public interface IWithOSDiskSettings 
     {
         /// <summary>
         /// Specifies the size of the OSDisk in GB.
@@ -961,14 +961,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="name">The OS Disk name.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOsDiskName(string name);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskName(string name);
 
         /// <summary>
         /// Specifies the encryption settings for the OS Disk.
         /// </summary>
         /// <param name="settings">The encryption settings.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOsDiskEncryptionSettings(DiskEncryptionSettings settings);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskEncryptionSettings(DiskEncryptionSettings settings);
     }
 
     /// <summary>

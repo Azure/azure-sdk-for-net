@@ -179,7 +179,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
                         .WithoutPrimaryPublicIPAddress()
-                        .WithSpecializedOsDisk(newOSDisk, OperatingSystemTypes.Linux)
+                        .WithSpecializedOSDisk(newOSDisk, OperatingSystemTypes.Linux)
                         .WithExistingDataDisk(newDataDisks[0])
                         .WithExistingDataDisk(newDataDisks[1], 1, CachingTypes.ReadWrite)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)

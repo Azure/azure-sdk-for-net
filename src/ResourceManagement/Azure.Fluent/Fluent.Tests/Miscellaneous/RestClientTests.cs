@@ -19,7 +19,7 @@ namespace Fluent.Tests.Miscellaneous
 {
     public class RestClientTests
     {
-        [Fact(Skip="This code tries to connect in the playback mode")]
+        [Fact(Skip="Investigate: This code tries to connect in the playback mode")]
         public void CanSetMultipleDelegateHandlers()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))

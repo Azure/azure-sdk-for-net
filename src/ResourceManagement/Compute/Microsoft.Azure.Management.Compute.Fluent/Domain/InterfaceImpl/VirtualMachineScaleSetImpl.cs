@@ -1069,7 +1069,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDiskOptionals.WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDiskOptionals.WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
             return this.WithOsDiskStorageAccountType(accountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
         }
@@ -1142,7 +1142,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="name">The OS disk name.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskName(string name)
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskName(string name)
         {
             return this.WithOsDiskName(name) as VirtualMachineScaleSet.Definition.IWithCreate;
         }
@@ -1152,7 +1152,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskCaching(CachingTypes cachingType)
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskCaching(CachingTypes cachingType)
         {
             return this.WithOsDiskCaching(cachingType) as VirtualMachineScaleSet.Definition.IWithCreate;
         }

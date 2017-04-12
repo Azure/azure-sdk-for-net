@@ -144,7 +144,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromVhd
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
                         .WithoutPrimaryPublicIPAddress()
-                        .WithSpecializedOsDisk(osDisk, OperatingSystemTypes.Linux)
+                        .WithSpecializedOSDisk(osDisk, OperatingSystemTypes.Linux)
                         .WithExistingDataDisk(dataDisks[0])
                         .WithExistingDataDisk(dataDisks[1], 1, CachingTypes.ReadWrite)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)

@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="containerName">The name of the container in the selected storage account.</param>
         /// <param name="vhdName">The name for the OS Disk vhd.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithUnmanagedCreate.WithOsDiskVhdLocation(string containerName, string vhdName)
+        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithUnmanagedCreate.WithOSDiskVhdLocation(string containerName, string vhdName)
         {
             return this.WithOsDiskVhdLocation(containerName, vhdName) as VirtualMachine.Definition.IWithUnmanagedCreate;
         }
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="osDiskUrl">OsDiskUrl the url to the OS disk in the Azure Storage account.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOsUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
+        VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
         {
             return this.WithSpecializedOsUnmanagedDisk(osDiskUrl, osType) as VirtualMachine.Definition.IWithUnmanagedCreate;
         }
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="disk">The managed disk to attach.</param>
         /// <param name="osType">The OS type.</param>
         /// <return>The next stage of the Windows virtual machine definition.</return>
-        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOsDisk(IDisk disk, OperatingSystemTypes osType)
+        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType)
         {
             return this.WithSpecializedOsDisk(disk, osType) as VirtualMachine.Definition.IWithManagedCreate;
         }
@@ -643,7 +643,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithManagedCreate.WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithManagedCreate.WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
             return this.WithOsDiskStorageAccountType(accountType) as VirtualMachine.Definition.IWithManagedCreate;
         }
@@ -1077,7 +1077,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOsDiskSettings.WithOSDiskCaching(CachingTypes cachingType)
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOSDiskSettings.WithOSDiskCaching(CachingTypes cachingType)
         {
             return this.WithOSDiskCaching(cachingType) as VirtualMachine.Definition.IWithCreate;
         }
@@ -1087,7 +1087,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="size">The VHD size.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOsDiskSettings.WithOSDiskSizeInGB(int size)
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOSDiskSettings.WithOSDiskSizeInGB(int size)
         {
             return this.WithOSDiskSizeInGB(size) as VirtualMachine.Definition.IWithCreate;
         }
@@ -1097,9 +1097,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="name">The OS Disk name.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskName(string name)
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOSDiskSettings.WithOSDiskName(string name)
         {
-            return this.WithOsDiskName(name) as VirtualMachine.Definition.IWithCreate;
+            return this.WithOSDiskName(name) as VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -1107,9 +1107,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The encryption settings.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithOSDiskSettings.WithOSDiskEncryptionSettings(DiskEncryptionSettings settings)
         {
-            return this.WithOsDiskEncryptionSettings(settings) as VirtualMachine.Definition.IWithCreate;
+            return this.WithOSDiskEncryptionSettings(settings) as VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -1117,9 +1117,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The encryption settings.</param>
         /// <return>The stage representing creatable VM update.</return>
-        VirtualMachine.Update.IUpdate VirtualMachine.Update.IUpdate.WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IUpdate.WithOSDiskEncryptionSettings(DiskEncryptionSettings settings)
         {
-            return this.WithOsDiskEncryptionSettings(settings) as VirtualMachine.Update.IUpdate;
+            return this.WithOSDiskEncryptionSettings(settings) as VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>

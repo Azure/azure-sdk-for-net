@@ -70,7 +70,7 @@ namespace Azure.Tests.Sql
             }
         }
 
-        [Fact(Skip = "This test require existing SQL server so that there can be recommended elastic pools")]
+        [Fact(Skip = "Manual only: This test require existing SQL server so that there can be recommended elastic pools")]
         public void CanListRecommendedElasticPools()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))

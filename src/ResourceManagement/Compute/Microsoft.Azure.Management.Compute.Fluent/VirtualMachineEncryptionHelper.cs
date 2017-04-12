@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var diskEncryptionSettings = encryptConfig.StorageProfileEncryptionSettings();
             diskEncryptionSettings.DiskEncryptionKey.SecretUrl = encryptionSecretKeyVaultUrl;
             return await virtualMachine.Update()
-                .WithOsDiskEncryptionSettings(diskEncryptionSettings)
+                .WithOSDiskEncryptionSettings(diskEncryptionSettings)
                 .ApplyAsync(cancellationToken);
         }
 
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             DiskEncryptionSettings diskEncryptionSettings = encryptConfig.StorageProfileEncryptionSettings();
             return await virtualMachine.Update()
-                .WithOsDiskEncryptionSettings(diskEncryptionSettings)
+                .WithOSDiskEncryptionSettings(diskEncryptionSettings)
                 .ApplyAsync(cancellationToken);
         }
 

@@ -149,7 +149,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
                         .WithoutPrimaryPublicIPAddress()
-                        .WithSpecializedOsUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux) // New user credentials cannot be specified
+                        .WithSpecializedOSUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux) // New user credentials cannot be specified
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)         // when attaching a specialized VHD
                         .Create();
 

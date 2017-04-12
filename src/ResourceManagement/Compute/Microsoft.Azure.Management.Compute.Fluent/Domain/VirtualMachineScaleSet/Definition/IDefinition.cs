@@ -61,21 +61,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify OS disk configurations.
     /// </summary>
-    public interface IWithOsDiskSettings 
+    public interface IWithOSDiskSettings 
     {
         /// <summary>
         /// Specifies the name for the OS disk.
         /// </summary>
         /// <param name="name">The OS disk name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate WithOsDiskName(string name);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate WithOSDiskName(string name);
 
         /// <summary>
         /// Specifies the caching type for the operating system disk.
         /// </summary>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate WithOsDiskCaching(CachingTypes cachingType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate WithOSDiskCaching(CachingTypes cachingType);
     }
 
     /// <summary>
@@ -827,7 +827,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// </summary>
     public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        IWithOsDiskSettings,
+        IWithOSDiskSettings,
         IWithComputerNamePrefix,
         IWithCapacity,
         IWithUpgradePolicy,
@@ -859,10 +859,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedCreate WithDataDiskDefaultCachingType(CachingTypes cachingType);
 
         /// <summary>
-        /// Specifies the storage account type for managed Os disk.
+        /// Specifies the storage account type for managed OS disk.
         /// </summary>
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedCreate WithOsDiskStorageAccountType(StorageAccountTypes accountType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedCreate WithOSDiskStorageAccountType(StorageAccountTypes accountType);
     }
 }
