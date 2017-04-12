@@ -320,18 +320,14 @@ namespace Fluent.Tests.Common
             {
                 return;
             }
-            using (var sshClient = new SshClient(host, port, userName, password))
-            {
-                TestHelper.WriteLine("Trying to de-provision: " + host);
-                sshClient.Connect();
-                var commandToExecute = "sudo waagent -deprovision+user --force";
-                using (var command = sshClient.CreateCommand(commandToExecute))
-                {
-                    var commandOutput = command.Execute();
-                    TestHelper.WriteLine(commandOutput);
-                }
-                sshClient.Disconnect();
-            }
+
+            Console.WriteLine("Trying to de-provision: " + host);
+            Console.WriteLine("ssh connection status: " + TrySsh(
+                host,
+                port,
+                userName,
+                password,
+                "sudo waagent - deprovision + user--force"));
         }
 
         public static async Task<HttpResponseMessage> CheckAddress(string url)
@@ -347,6 +343,56 @@ namespace Fluent.Tests.Common
                         {
                             Content = new StringContent("Hello world from linux 4")
                         };
+        }
+
+        public static string TrySsh(
+            string host, 
+            int port, 
+            string userName, 
+            string password,
+            string commandToExecute)
+        {
+            string commandOutput = null;
+            var backoffTime = 30 * 1000;
+            var retryCount = 3;
+
+            while (retryCount > 0)
+            {
+                using (var sshClient = new SshClient(host, port, userName, password))
+                {
+                    try
+                    {
+                        sshClient.Connect();
+                        if (commandToExecute != null)
+                        {
+                            using (var command = sshClient.CreateCommand(commandToExecute))
+                            {
+                                commandOutput = command.Execute();
+                            }
+                        }
+                        break;
+                    }
+                    catch (Exception exception)
+                    {
+                        retryCount--;
+                        if (retryCount == 0)
+                        {
+                            throw exception;
+                        }
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            sshClient.Disconnect();
+                        }
+                        catch { }
+                    }
+                }
+                TestHelper.Delay(backoffTime);
+            }
+
+            return commandOutput;
         }
     }
 }
