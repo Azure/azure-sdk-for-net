@@ -2063,7 +2063,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+        /// 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2291,7 +2292,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+        /// 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2521,7 +2523,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='algorithm'>
         /// The signing/verification algorithm identifier. For more information on
         /// possible algorithm types, see JsonWebKeySignatureAlgorithm. Possible values
-        /// include: 'RS256', 'RS384', 'RS512', 'RSNULL'
+        /// include: 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2751,7 +2753,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='algorithm'>
         /// The signing/verification algorithm. For more information on possible
         /// algorithm types, see JsonWebKeySignatureAlgorithm. Possible values include:
-        /// 'RS256', 'RS384', 'RS512', 'RSNULL'
+        /// 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL'
         /// </param>
         /// <param name='digest'>
         /// The digest used for signing.
@@ -2988,7 +2990,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+        /// 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -3217,7 +3220,8 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key.
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+        /// 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -6145,126 +6149,126 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BackupSecretResult>> BackupSecretWithHttpMessagesAsync( string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default( CancellationToken ) )
+        public async Task<AzureOperationResponse<BackupSecretResult>> BackupSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if ( vaultBaseUrl == null )
+            if (vaultBaseUrl == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "vaultBaseUrl" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
             }
-            if ( secretName == null )
+            if (secretName == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "secretName" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "secretName");
             }
-            if ( ApiVersion == null )
+            if (ApiVersion == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "this.ApiVersion" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
-            if ( _shouldTrace )
+            if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString( );
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add( "vaultBaseUrl", vaultBaseUrl );
-                tracingParameters.Add( "secretName", secretName );
-                tracingParameters.Add( "cancellationToken", cancellationToken );
-                ServiceClientTracing.Enter( _invocationId, this, "BackupSecret", tracingParameters );
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("secretName", secretName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BackupSecret", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "secrets/{secret-name}/backup";
-            _url = _url.Replace( "{vaultBaseUrl}", vaultBaseUrl );
-            _url = _url.Replace( "{secret-name}", System.Uri.EscapeDataString( secretName ) );
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{secret-name}", System.Uri.EscapeDataString(secretName));
             List<string> _queryParameters = new List<string>();
-            if ( ApiVersion != null )
+            if (ApiVersion != null)
             {
-                _queryParameters.Add( string.Format( "api-version={0}", System.Uri.EscapeDataString( ApiVersion ) ) );
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
-            if ( _queryParameters.Count > 0 )
+            if (_queryParameters.Count > 0)
             {
-                _url += ( _url.Contains( "?" ) ? "&" : "?" ) + string.Join( "&", _queryParameters );
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
             var _httpRequest = new System.Net.Http.HttpRequestMessage();
             System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod( "POST" );
-            _httpRequest.RequestUri = new System.Uri( _url );
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if ( GenerateClientRequestId != null && GenerateClientRequestId.Value )
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation( "x-ms-client-request-id", System.Guid.NewGuid( ).ToString( ) );
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
-            if ( AcceptLanguage != null )
+            if (AcceptLanguage != null)
             {
-                if ( _httpRequest.Headers.Contains( "accept-language" ) )
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    _httpRequest.Headers.Remove( "accept-language" );
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation( "accept-language", AcceptLanguage );
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
             }
 
 
-            if ( customHeaders != null )
+            if (customHeaders != null)
             {
-                foreach ( var _header in customHeaders )
+                foreach(var _header in customHeaders)
                 {
-                    if ( _httpRequest.Headers.Contains( _header.Key ) )
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        _httpRequest.Headers.Remove( _header.Key );
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    _httpRequest.Headers.TryAddWithoutValidation( _header.Key, _header.Value );
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if ( Credentials != null )
+            if (Credentials != null)
             {
-                cancellationToken.ThrowIfCancellationRequested( );
-                await Credentials.ProcessHttpRequestAsync( _httpRequest, cancellationToken ).ConfigureAwait( false );
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if ( _shouldTrace )
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest( _invocationId, _httpRequest );
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
-            cancellationToken.ThrowIfCancellationRequested( );
-            _httpResponse = await HttpClient.SendAsync( _httpRequest, cancellationToken ).ConfigureAwait( false );
-            if ( _shouldTrace )
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse( _invocationId, _httpResponse );
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested( );
+            cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ( ( int )_statusCode != 200 )
+            if ((int)_statusCode != 200)
             {
                 var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync( ).ConfigureAwait( false );
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
-                    if ( _errorBody != null )
+                    if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch ( JsonException )
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper( _httpRequest, _requestContent );
-                ex.Response = new HttpResponseMessageWrapper( _httpResponse, _responseContent );
-                if ( _shouldTrace )
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error( _invocationId, ex );
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
-                _httpRequest.Dispose( );
-                if ( _httpResponse != null )
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
                 {
-                    _httpResponse.Dispose( );
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -6272,31 +6276,31 @@ namespace Microsoft.Azure.KeyVault
             var _result = new AzureOperationResponse<BackupSecretResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
-            if ( _httpResponse.Headers.Contains( "x-ms-request-id" ) )
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                _result.RequestId = _httpResponse.Headers.GetValues( "x-ms-request-id" ).FirstOrDefault( );
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ( ( int )_statusCode == 200 )
+            if ((int)_statusCode == 200)
             {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync( ).ConfigureAwait( false );
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<BackupSecretResult>( _responseContent, DeserializationSettings );
+                    _result.Body = SafeJsonConvert.DeserializeObject<BackupSecretResult>(_responseContent, DeserializationSettings);
                 }
-                catch ( JsonException ex )
+                catch (JsonException ex)
                 {
-                    _httpRequest.Dispose( );
-                    if ( _httpResponse != null )
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
                     {
-                        _httpResponse.Dispose( );
+                        _httpResponse.Dispose();
                     }
-                    throw new SerializationException( "Unable to deserialize the response.", _responseContent, ex );
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            if ( _shouldTrace )
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit( _invocationId, _result );
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -6331,136 +6335,136 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecretBundle>> RestoreSecretWithHttpMessagesAsync( string vaultBaseUrl, byte[ ] secretBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default( CancellationToken ) )
+        public async Task<AzureOperationResponse<SecretBundle>> RestoreSecretWithHttpMessagesAsync(string vaultBaseUrl, byte[] secretBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if ( vaultBaseUrl == null )
+            if (vaultBaseUrl == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "vaultBaseUrl" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
             }
-            if ( ApiVersion == null )
+            if (ApiVersion == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "this.ApiVersion" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
-            if ( secretBundleBackup == null )
+            if (secretBundleBackup == null)
             {
-                throw new ValidationException( ValidationRules.CannotBeNull, "secretBundleBackup" );
+                throw new ValidationException(ValidationRules.CannotBeNull, "secretBundleBackup");
             }
             SecretRestoreParameters parameters = new SecretRestoreParameters();
-            if ( secretBundleBackup != null )
+            if (secretBundleBackup != null)
             {
                 parameters.SecretBundleBackup = secretBundleBackup;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
-            if ( _shouldTrace )
+            if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString( );
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add( "vaultBaseUrl", vaultBaseUrl );
-                tracingParameters.Add( "parameters", parameters );
-                tracingParameters.Add( "cancellationToken", cancellationToken );
-                ServiceClientTracing.Enter( _invocationId, this, "RestoreSecret", tracingParameters );
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "RestoreSecret", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "secrets/restore";
-            _url = _url.Replace( "{vaultBaseUrl}", vaultBaseUrl );
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
             List<string> _queryParameters = new List<string>();
-            if ( ApiVersion != null )
+            if (ApiVersion != null)
             {
-                _queryParameters.Add( string.Format( "api-version={0}", System.Uri.EscapeDataString( ApiVersion ) ) );
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
-            if ( _queryParameters.Count > 0 )
+            if (_queryParameters.Count > 0)
             {
-                _url += ( _url.Contains( "?" ) ? "&" : "?" ) + string.Join( "&", _queryParameters );
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
             var _httpRequest = new System.Net.Http.HttpRequestMessage();
             System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod( "POST" );
-            _httpRequest.RequestUri = new System.Uri( _url );
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if ( GenerateClientRequestId != null && GenerateClientRequestId.Value )
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation( "x-ms-client-request-id", System.Guid.NewGuid( ).ToString( ) );
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
-            if ( AcceptLanguage != null )
+            if (AcceptLanguage != null)
             {
-                if ( _httpRequest.Headers.Contains( "accept-language" ) )
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    _httpRequest.Headers.Remove( "accept-language" );
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation( "accept-language", AcceptLanguage );
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
             }
 
 
-            if ( customHeaders != null )
+            if (customHeaders != null)
             {
-                foreach ( var _header in customHeaders )
+                foreach(var _header in customHeaders)
                 {
-                    if ( _httpRequest.Headers.Contains( _header.Key ) )
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        _httpRequest.Headers.Remove( _header.Key );
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    _httpRequest.Headers.TryAddWithoutValidation( _header.Key, _header.Value );
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
             string _requestContent = null;
-            if ( parameters != null )
+            if(parameters != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject( parameters, SerializationSettings );
-                _httpRequest.Content = new System.Net.Http.StringContent( _requestContent, System.Text.Encoding.UTF8 );
-                _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse( "application/json; charset=utf-8" );
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Set Credentials
-            if ( Credentials != null )
+            if (Credentials != null)
             {
-                cancellationToken.ThrowIfCancellationRequested( );
-                await Credentials.ProcessHttpRequestAsync( _httpRequest, cancellationToken ).ConfigureAwait( false );
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if ( _shouldTrace )
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest( _invocationId, _httpRequest );
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
-            cancellationToken.ThrowIfCancellationRequested( );
-            _httpResponse = await HttpClient.SendAsync( _httpRequest, cancellationToken ).ConfigureAwait( false );
-            if ( _shouldTrace )
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse( _invocationId, _httpResponse );
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested( );
+            cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ( ( int )_statusCode != 200 )
+            if ((int)_statusCode != 200)
             {
                 var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync( ).ConfigureAwait( false );
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
-                    if ( _errorBody != null )
+                    if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch ( JsonException )
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper( _httpRequest, _requestContent );
-                ex.Response = new HttpResponseMessageWrapper( _httpResponse, _responseContent );
-                if ( _shouldTrace )
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error( _invocationId, ex );
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
-                _httpRequest.Dispose( );
-                if ( _httpResponse != null )
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
                 {
-                    _httpResponse.Dispose( );
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -6468,31 +6472,31 @@ namespace Microsoft.Azure.KeyVault
             var _result = new AzureOperationResponse<SecretBundle>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
-            if ( _httpResponse.Headers.Contains( "x-ms-request-id" ) )
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                _result.RequestId = _httpResponse.Headers.GetValues( "x-ms-request-id" ).FirstOrDefault( );
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ( ( int )_statusCode == 200 )
+            if ((int)_statusCode == 200)
             {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync( ).ConfigureAwait( false );
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<SecretBundle>( _responseContent, DeserializationSettings );
+                    _result.Body = SafeJsonConvert.DeserializeObject<SecretBundle>(_responseContent, DeserializationSettings);
                 }
-                catch ( JsonException ex )
+                catch (JsonException ex)
                 {
-                    _httpRequest.Dispose( );
-                    if ( _httpResponse != null )
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
                     {
-                        _httpResponse.Dispose( );
+                        _httpResponse.Dispose();
                     }
-                    throw new SerializationException( "Unable to deserialize the response.", _responseContent, ex );
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            if ( _shouldTrace )
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit( _invocationId, _result );
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }

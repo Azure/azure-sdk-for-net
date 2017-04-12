@@ -113,6 +113,17 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
+        public void KeyVaultEncryptDecryptRsaOaep256Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                EncryptDecrypt( client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSAOAEP256 );
+            }
+        }
+
+        [Fact]
         public void KeyVaultEncryptDecryptWithOlderKeyVersion()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -193,6 +204,45 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
+        public void KeyVaultSignVerifyPS256Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                var digest = RandomHash(SHA256.Create(), 32);
+
+                SignVerify( client, _keyIdentifier, JsonWebKeySignatureAlgorithm.PS256, digest );
+            }
+        }
+
+        [Fact]
+        public void KeyVaultSignVerifyPS384Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                var digest = RandomHash(SHA384.Create(), 64);
+
+                SignVerify( client, _keyIdentifier, JsonWebKeySignatureAlgorithm.PS384, digest );
+            }
+        }
+
+        [Fact]
+        public void KeyVaultSignVerifyPS512Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+                var client = GetKeyVaultClient();
+
+                var digest = RandomHash(SHA512.Create(), 64);
+
+                SignVerify( client, _keyIdentifier, JsonWebKeySignatureAlgorithm.PS512, digest );
+            }
+        }
+
+        [Fact]
         public void KeyVaultWrapUnwrapRsaOaepTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -215,6 +265,19 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var symmetricKeyBytes = GetSymmetricKeyBytes();
                 WrapAndUnwrap(client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSA15, symmetricKeyBytes);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultWrapUnwrapRsaOaep256Test( )
+        {
+            using ( MockContext context = MockContext.Start( this.GetType( ).FullName ) )
+            {
+
+                var client = GetKeyVaultClient();
+
+                var symmetricKeyBytes = GetSymmetricKeyBytes();
+                WrapAndUnwrap( client, _keyIdentifier, JsonWebKeyEncryptionAlgorithm.RSAOAEP256, symmetricKeyBytes );
             }
         }
 

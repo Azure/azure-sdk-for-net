@@ -315,7 +315,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -346,7 +347,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -379,7 +381,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='algorithm'>
             /// The signing/verification algorithm identifier. For more information on
             /// possible algorithm types, see JsonWebKeySignatureAlgorithm. Possible values
-            /// include: 'RS256', 'RS384', 'RS512', 'RSNULL'
+            /// include: 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -412,7 +414,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='algorithm'>
             /// The signing/verification algorithm. For more information on possible
             /// algorithm types, see JsonWebKeySignatureAlgorithm. Possible values include:
-            /// 'RS256', 'RS384', 'RS512', 'RSNULL'
+            /// 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL'
             /// </param>
             /// <param name='digest'>
             /// The digest used for signing.
@@ -447,7 +449,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -479,7 +482,8 @@ namespace Microsoft.Azure.KeyVault
             /// The version of the key.
             /// </param>
             /// <param name='algorithm'>
-            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
+            /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA-OAEP-256',
+            /// 'RSA1_5'
             /// </param>
             /// <param name='value'>
             /// </param>
@@ -845,69 +849,69 @@ namespace Microsoft.Azure.KeyVault
                 }
             }
 
-        /// <summary>
-        /// Requests that a backup of the specified secret be downloaded to the client.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='vaultBaseUrl'>
-        /// The vault name, for example https://myvault.vault.azure.net.
-        /// </param>
-        /// <param name='secretName'>
-        /// The name of the secret.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public static async Task<BackupSecretResult> BackupSecretAsync( this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default( CancellationToken ) )
-        {
-            using ( var _result = await operations.BackupSecretWithHttpMessagesAsync( vaultBaseUrl, secretName, null, cancellationToken ).ConfigureAwait( false ) )
+            /// <summary>
+            /// Requests that a backup of the specified secret be downloaded to the client.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupSecretResult> BackupSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                return _result.Body;
+                using (var _result = await operations.BackupSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
-        }
 
-        /// <summary>
-        /// Restores a backed up secret to a vault.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='vaultBaseUrl'>
-        /// The vault name, for example https://myvault.vault.azure.net.
-        /// </param>
-        /// <param name='secretBundleBackup'>
-        /// The backup blob associated with a secret bundle.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public static async Task<SecretBundle> RestoreSecretAsync( this IKeyVaultClient operations, string vaultBaseUrl, byte[ ] secretBundleBackup, CancellationToken cancellationToken = default( CancellationToken ) )
-        {
-            using ( var _result = await operations.RestoreSecretWithHttpMessagesAsync( vaultBaseUrl, secretBundleBackup, null, cancellationToken ).ConfigureAwait( false ) )
+            /// <summary>
+            /// Restores a backed up secret to a vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='secretBundleBackup'>
+            /// The backup blob associated with a secret bundle.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SecretBundle> RestoreSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, byte[] secretBundleBackup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                return _result.Body;
+                using (var _result = await operations.RestoreSecretWithHttpMessagesAsync(vaultBaseUrl, secretBundleBackup, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
-        }
 
-        /// <summary>
-        /// List certificates in a specified key vault
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='vaultBaseUrl'>
-        /// The vault name, for example https://myvault.vault.azure.net.
-        /// </param>
-        /// <param name='maxresults'>
-        /// Maximum number of results to return in a page. If not specified the service
-        /// will return up to 25 results.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public static async Task<IPage<CertificateItem>> GetCertificatesAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            /// <summary>
+            /// List certificates in a specified key vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return in a page. If not specified the service
+            /// will return up to 25 results.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateItem>> GetCertificatesAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCertificatesWithHttpMessagesAsync(vaultBaseUrl, maxresults, null, cancellationToken).ConfigureAwait(false))
                 {

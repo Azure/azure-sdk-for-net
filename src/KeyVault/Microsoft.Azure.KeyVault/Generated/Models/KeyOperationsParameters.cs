@@ -29,7 +29,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the KeyOperationsParameters class.
         /// </summary>
         /// <param name="algorithm">algorithm identifier. Possible values
-        /// include: 'RSA-OAEP', 'RSA1_5'</param>
+        /// include: 'RSA-OAEP', 'RSA-OAEP-256', 'RSA1_5'</param>
         public KeyOperationsParameters(string algorithm, byte[] value)
         {
             Algorithm = algorithm;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.KeyVault.Models
 
         /// <summary>
         /// Gets or sets algorithm identifier. Possible values include:
-        /// 'RSA-OAEP', 'RSA1_5'
+        /// 'RSA-OAEP', 'RSA-OAEP-256', 'RSA1_5'
         /// </summary>
         [JsonProperty(PropertyName = "alg")]
         public string Algorithm { get; set; }
