@@ -74,16 +74,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
-                // Update Queue. 
-                //var updateQueuesParameter = new QueueCreateOrUpdateParameters()
-                //{
-                //    Location = location,
-                //    EnableExpress = true,                   
-                //    IsAnonymousAccessible = true,
-                //    MaxDeliveryCount = 5,
-                //    MaxSizeInMegabytes = 1024
-                //};
-
                 getQueueResponse.EnableExpress = true;
                 getQueueResponse.IsAnonymousAccessible = true;
                 getQueueResponse.MaxDeliveryCount = 5;
