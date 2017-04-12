@@ -14,7 +14,7 @@ namespace Fluent.Tests.Storage
 {
     public class StorageAccountsTests
     {
-        [Fact(Skip="Investigate: Update on storage account is using patch and tags are not properly handled there.")]
+        [Fact]
         public void CanCRUDStorageAccount()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
@@ -34,14 +34,13 @@ namespace Fluent.Tests.Storage
                         .Define(stgName)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
-                        .WithTag("t1", "v1")
-                        .WithTag("t2", "v2")
+                        .WithTag("tag1", "value1")
                         .Create();
 
                     Assert.True(string.Equals(storageAccount.ResourceGroupName, rgName));
                     Assert.True(storageAccount.Sku.Name == SkuName.StandardGRS);
                     Assert.NotNull(storageAccount.Tags);
-                    Assert.Equal(storageAccount.Tags.Count, 2);
+                    Assert.Equal(1, storageAccount.Tags.Count);
 
                     // List
                     var accounts = storageManager.StorageAccounts.ListByResourceGroup(rgName);
@@ -52,7 +51,7 @@ namespace Fluent.Tests.Storage
                     storageAccount = storageManager.StorageAccounts.GetByResourceGroup(rgName, stgName);
                     Assert.NotNull(storageAccount);
                     Assert.NotNull(storageAccount.Tags);
-                    Assert.Equal(storageAccount.Tags.Count, 2);
+                    Assert.Equal(storageAccount.Tags.Count, 1);
 
                     // Get keys 
                     Assert.True(storageAccount.GetKeys().Count() > 0);
@@ -70,12 +69,12 @@ namespace Fluent.Tests.Storage
                         .WithSku(SkuName.StandardLRS)
                         .WithTag("t3", "v3")
                         .WithTag("t4", "v4")
-                        .WithoutTag("t2")
+                        .WithoutTag("tag1")
                         .Apply();
 
                     Assert.Equal(storageAccount.Sku.Name, SkuName.StandardLRS);
                     Assert.NotNull(storageAccount.Tags);
-                    Assert.Equal(storageAccount.Tags.Count, 3);
+                    Assert.Equal(2, storageAccount.Tags.Count);
                 }
                 finally
                 {
