@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update;
     using System;
     using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus.Models;
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether subscription has dead letter support on filter evaluation exceptions.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsDeadLetteringEnabledForFilterEvaluationFailedMessages
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.IsDeadLetteringEnabledForFilterEvaluationFailedMessages
         {
             get
             {
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the idle duration after which the subscription is automatically deleted.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DeleteOnIdleDurationInMinutes
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.DeleteOnIdleDurationInMinutes
         {
             get
             {
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of active messages in the subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.ActiveMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.ActiveMessageCount
         {
             get
             {
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the exact time the message was created.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.CreatedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.CreatedAt
         {
             get
             {
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether this subscription has dead letter support when a message expires.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsDeadLetteringEnabledForExpiredMessages
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.IsDeadLetteringEnabledForExpiredMessages
         {
             get
             {
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether server-side batched operations are enabled.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsBatchedOperationsEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.IsBatchedOperationsEnabled
         {
             get
             {
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the number of messages in the subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.MessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.MessageCount
         {
             get
             {
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages transferred to another queue, topic, or subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.TransferMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.TransferMessageCount
         {
             get
             {
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to subscription.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DefaultMessageTtlDuration
+        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.DefaultMessageTtlDuration
         {
             get
             {
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether the subscription supports sessions.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.IsSessionEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.IsSessionEnabled
         {
             get
             {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the current status of the subscription.
         /// </summary>
-        EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.Status
+        EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.Status
         {
             get
             {
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Gets number of messages sent to the subscription that are yet to be released
         /// for consumption.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.ScheduledMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.ScheduledMessageCount
         {
             get
             {
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the exact time the message was updated.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.UpdatedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.UpdatedAt
         {
             get
             {
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets last time there was a receive request to this subscription.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.AccessedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.AccessedAt
         {
             get
             {
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages transferred into dead letters.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.TransferDeadLetterMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.TransferDeadLetterMessageCount
         {
             get
             {
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the maximum number of a message delivery before marking it as dead-lettered.
         /// </summary>
-        int Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.MaxDeliveryCountBeforeDeadLetteringMessage
+        int Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.MaxDeliveryCountBeforeDeadLetteringMessage
         {
             get
             {
@@ -467,7 +467,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration of peek-lock which is the amount of time that the message is locked for other receivers.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.LockDurationInSeconds
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.LockDurationInSeconds
         {
             get
             {
@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages in the dead-letter subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ISubscription.DeadLetterMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.DeadLetterMessageCount
         {
             get
             {

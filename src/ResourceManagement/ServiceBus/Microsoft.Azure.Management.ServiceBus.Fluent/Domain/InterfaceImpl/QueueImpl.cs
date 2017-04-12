@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update;
     using System.Collections.Generic;
     using System;
     using ServiceBus.Fluent;
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages transferred to another queue, topic, or subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.TransferMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.TransferMessageCount
         {
             get
             {
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the maximum size of memory allocated for the queue in megabytes.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.MaxSizeInMB
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.MaxSizeInMB
         {
             get
             {
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the exact time the queue was created.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.IQueue.CreatedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.CreatedAt
         {
             get
             {
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Gets number of messages sent to the queue that are yet to be released
         /// for consumption.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.ScheduledMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.ScheduledMessageCount
         {
             get
             {
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether express entities are enabled.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.IQueue.IsExpressEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.IsExpressEnabled
         {
             get
             {
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets current size of the queue, in bytes.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.CurrentSizeInBytes
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.CurrentSizeInBytes
         {
             get
             {
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of active messages in the queue.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.ActiveMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.ActiveMessageCount
         {
             get
             {
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the current status of the queue.
         /// </summary>
-        EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.IQueue.Status
+        EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.Status
         {
             get
             {
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to queue.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.IQueue.DefaultMessageTtlDuration
+        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.DefaultMessageTtlDuration
         {
             get
             {
@@ -467,18 +467,18 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage authorization rules for the Service Bus queue.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules Microsoft.Azure.Management.Servicebus.Fluent.IQueue.AuthorizationRules
+        Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRules Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.AuthorizationRules
         {
             get
             {
-                return this.AuthorizationRules() as Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules;
+                return this.AuthorizationRules() as Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRules;
             }
         }
 
         /// <summary>
         /// Gets the number of messages in the queue.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.MessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.MessageCount
         {
             get
             {
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration of peek-lock which is the amount of time that the message is locked for other receivers.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.LockDurationInSeconds
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.LockDurationInSeconds
         {
             get
             {
@@ -500,7 +500,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets last time a message was sent, or the last time there was a receive request to this queue.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.IQueue.AccessedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.AccessedAt
         {
             get
             {
@@ -511,7 +511,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether the queue is to be partitioned across multiple message brokers.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.IQueue.IsPartitioningEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.IsPartitioningEnabled
         {
             get
             {
@@ -522,7 +522,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages transferred into dead letters.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.TransferDeadLetterMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.TransferDeadLetterMessageCount
         {
             get
             {
@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the idle duration after which the queue is automatically deleted.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.DeleteOnIdleDurationInMinutes
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.DeleteOnIdleDurationInMinutes
         {
             get
             {
@@ -544,7 +544,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether this queue has dead letter support when a message expires.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.IQueue.IsDeadLetteringEnabledForExpiredMessages
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.IsDeadLetteringEnabledForExpiredMessages
         {
             get
             {
@@ -555,7 +555,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether server-side batched operations are enabled.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.IQueue.IsBatchedOperationsEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.IsBatchedOperationsEnabled
         {
             get
             {
@@ -566,7 +566,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates if this queue requires duplicate detection.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.IQueue.IsDuplicateDetectionEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.IsDuplicateDetectionEnabled
         {
             get
             {
@@ -577,7 +577,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages in the dead-letter queue.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.IQueue.DeadLetterMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.DeadLetterMessageCount
         {
             get
             {
@@ -588,7 +588,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the exact time the queue was updated.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.IQueue.UpdatedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.UpdatedAt
         {
             get
             {
@@ -599,7 +599,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the maximum number of a message delivery before marking it as dead-lettered.
         /// </summary>
-        int Microsoft.Azure.Management.Servicebus.Fluent.IQueue.MaxDeliveryCountBeforeDeadLetteringMessage
+        int Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.MaxDeliveryCountBeforeDeadLetteringMessage
         {
             get
             {
@@ -610,7 +610,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration of the duplicate detection history.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.IQueue.DuplicateMessageDetectionHistoryDuration
+        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.DuplicateMessageDetectionHistoryDuration
         {
             get
             {
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether the queue supports sessions.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.IQueue.IsSessionEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.IQueue.IsSessionEnabled
         {
             get
             {

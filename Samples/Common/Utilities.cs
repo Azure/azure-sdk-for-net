@@ -26,7 +26,7 @@ using CoreFtp;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 using Renci.SshNet;
-using Microsoft.Azure.Management.Servicebus.Fluent;
+using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 
 namespace Microsoft.Azure.Management.Samples.Common
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Log(builder.ToString());
         }
 
-        public static void Print(Servicebus.Fluent.ISubscription serviceBusSubscription)
+        public static void Print(ServiceBus.Fluent.ISubscription serviceBusSubscription)
         {
             StringBuilder builder = new StringBuilder()
                     .Append("Service bus subscription: ").Append(serviceBusSubscription.Id)

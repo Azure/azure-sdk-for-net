@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uTmFtZXNwYWNlQXV0aG9yaXphdGlvblJ1bGVJbXBs
     internal partial class NamespaceAuthorizationRuleImpl  :
-            AuthorizationRuleBaseImpl<Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRule,
-            Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespaceImpl,
+            AuthorizationRuleBaseImpl<Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRule,
+            Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespaceImpl,
             SharedAccessAuthorizationRuleInner,
-            Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRuleImpl,
+            Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRuleImpl,
             IHasId,
             NamespaceAuthorizationRule.Update.IUpdate,
             ServiceBus.Fluent.IServiceBusManager>,
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:60710D4DE8BBAA25BEA3436DAE67B2F8
-        protected async override Task<Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await this.Manager.Inner.Namespaces.CreateOrUpdateAuthorizationRuleAsync(this.ResourceGroupName,
                 this.NamespaceName(),

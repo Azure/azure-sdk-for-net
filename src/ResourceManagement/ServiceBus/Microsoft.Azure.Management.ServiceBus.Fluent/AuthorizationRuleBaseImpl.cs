@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <param name="policykey">The key to regenerate.</param>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         ///GENMHASH:4A88585D14A1F4B57527C071D5C0C394:8DF2BBCDED7039A4F19381688F737A50
-        protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await this.RegenerateKeysInnerAsync(policykey, cancellationToken);
             return new AuthorizationKeysImpl(inner);
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
 
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         ///GENMHASH:2751D8683222AD34691166D915065302:AD0DF6429EFF7A0256E5287F769C0BD5
-        protected async Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await this.GetKeysInnerAsync(cancellationToken);
             return new AuthorizationKeysImpl(inner);

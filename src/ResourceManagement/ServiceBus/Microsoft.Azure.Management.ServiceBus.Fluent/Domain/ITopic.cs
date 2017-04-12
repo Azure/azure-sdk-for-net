@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Management.Fluent.ServiceBus.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update;
     using ServiceBus.Fluent;
     using System;
 
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </remarks>
     public interface ITopic  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, TopicInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Topic.Update.IUpdate>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<TopicInner>
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage subscriptions associated with the topic.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.ISubscriptions Subscriptions { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.ISubscriptions Subscriptions { get; }
 
         /// <summary>
         /// Gets the current status of the topic.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage authorization rules for the Service Bus topic.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules AuthorizationRules { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRules AuthorizationRules { get; }
 
         /// <summary>
         /// Gets indicates whether server-side batched operations are enabled.

@@ -4,7 +4,7 @@
 using Microsoft.Azure.Management.Fluent.ServiceBus;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Microsoft.Azure.Management.Servicebus.Fluent;
+using Microsoft.Azure.Management.ServiceBus.Fluent;
 using System;
 using System.Linq;
 

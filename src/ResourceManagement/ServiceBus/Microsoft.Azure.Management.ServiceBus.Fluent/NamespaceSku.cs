@@ -3,7 +3,7 @@
 using Microsoft.Azure.Management.Fluent.ServiceBus.Models;
 using System;
 
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     /// <summary>
     /// Defines values for NamespaceSku.

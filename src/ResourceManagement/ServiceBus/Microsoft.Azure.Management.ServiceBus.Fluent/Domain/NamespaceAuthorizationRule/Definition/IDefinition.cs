@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRule.Definition
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Definition
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent;
-    using Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition;
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRul
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRule>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRule>
     {
     }
 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRul
     /// The first stage of namespace authorization rule definition.
     /// </summary>
     public interface IBlank  :
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithListenOrSendOrManage<Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRule.Definition.IWithCreate>
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition.IWithListenOrSendOrManage<Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Definition.IWithCreate>
     {
     }
 
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRul
     /// The entirety of the namespace authorization rule definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRule.Definition.IBlank,
-        Microsoft.Azure.Management.Servicebus.Fluent.NamespaceAuthorizationRule.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Definition.IBlank,
+        Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Definition.IWithCreate
     {
     }
 }

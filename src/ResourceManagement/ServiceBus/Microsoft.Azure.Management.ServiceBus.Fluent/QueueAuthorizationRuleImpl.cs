@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uUXVldWVBdXRob3JpemF0aW9uUnVsZUltcGw=
     internal partial class QueueAuthorizationRuleImpl  :
-        AuthorizationRuleBaseImpl<Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRule,
-            Microsoft.Azure.Management.Servicebus.Fluent.QueueImpl,
+        AuthorizationRuleBaseImpl<Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRule,
+            Microsoft.Azure.Management.ServiceBus.Fluent.QueueImpl,
             SharedAccessAuthorizationRuleInner,
-            Microsoft.Azure.Management.Servicebus.Fluent.QueueAuthorizationRuleImpl,
+            Microsoft.Azure.Management.ServiceBus.Fluent.QueueAuthorizationRuleImpl,
             IHasId,
             QueueAuthorizationRule.Update.IUpdate,
             ServiceBus.Fluent.IServiceBusManager>,
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:46F4637261BEB669A9232C7B41AE2D1A
-        protected async override Task<Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRule> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await this.Manager.Inner.Queues.CreateOrUpdateAuthorizationRuleAsync(this.ResourceGroupName,
                 this.namespaceName,

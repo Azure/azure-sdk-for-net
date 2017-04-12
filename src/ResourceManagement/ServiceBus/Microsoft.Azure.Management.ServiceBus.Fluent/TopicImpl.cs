@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         IDefinition,
         IUpdate
     {
-        private IList<ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>> subscriptionsToCreate;
-        private IList<ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule>> rulesToCreate;
+        private IList<ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription>> subscriptionsToCreate;
+        private IList<ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRule>> rulesToCreate;
         private IList<string> subscriptionsToDelete;
         private IList<string> rulesToDelete;
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:396C89E2447B0E70C3C95439926DFC1A:E32C091119D6FB6D73E1D3322965866B
         public TopicImpl WithNewManageRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithManagementEnabled());
             return this;
         }
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:41482A7907F5C3C16FDB1A8E3CEB3B9F:B5BA3212E181BC7B599A722AEFAC04B4
         public TopicImpl WithNewSendRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithSendingEnabled());
             return this;
         }
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:C9DAE4BC5B8D28759976D191CF3F2F49:132DDA9E524ED4559BBB94874F4BABA8
         public TopicImpl WithNewSubscription(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.ISubscriptions subscriptions = this.Subscriptions();
+            Microsoft.Azure.Management.ServiceBus.Fluent.ISubscriptions subscriptions = this.Subscriptions();
             this.subscriptionsToCreate.Add(subscriptions.Define(name));
             return this;
         }
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:645BAB1C541C407A2777CECFAAF22EBC
-        protected async override Task<Microsoft.Azure.Management.Servicebus.Fluent.ITopic> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:CF2CF801A7E4A9CAE7624D815E5EE4F4:E6E0C1CF73E25181AD5C0BE989C2DE15
         public TopicImpl WithNewListenRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithListeningEnabled());
             return this;
         }

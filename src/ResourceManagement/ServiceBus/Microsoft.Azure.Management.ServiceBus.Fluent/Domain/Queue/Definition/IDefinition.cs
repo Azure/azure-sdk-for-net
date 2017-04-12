@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using System;
 
     /// <summary>
@@ -17,21 +17,21 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithNewListenRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithNewListenRule(string name);
 
         /// <summary>
         /// Creates a manage authorization rule for the queue.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithNewManageRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithNewManageRule(string name);
 
         /// <summary>
         /// Creates a send authorization rule for the queue.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithNewSendRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithNewSendRule(string name);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="durationInSeconds">Duration of a lock in seconds.</param>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithMessageLockDurationInSeconds(int durationInSeconds);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithMessageLockDurationInSeconds(int durationInSeconds);
     }
 
     /// <summary>
@@ -55,19 +55,19 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithSize,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithPartitioning,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithDeleteOnIdle,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithMessageLockDuration,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithDefaultMessageTTL,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithSession,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithExpressMessage,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithMessageBatching,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithDuplicateMessageDetection,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithExpiredMessageMovedToDeadLetterQueue,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.IQueue>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithSize,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithPartitioning,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithMessageLockDuration,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithSession,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithExpressMessage,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithMessageBatching,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithExpiredMessageMovedToDeadLetterQueue,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithAuthorizationRule
     {
     }
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// from it's internal store.
         /// </summary>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithoutMessageBatching();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithoutMessageBatching();
     }
 
     /// <summary>
@@ -97,14 +97,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
     }
 
     /// <summary>
     /// The first stage of a queue definition.
     /// </summary>
     public interface IBlank  :
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate
     {
     }
 
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// Note: By default queue is not express.
         /// </summary>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithExpressMessage();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithExpressMessage();
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="deliveryCount">Maximum delivery count.</param>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(int deliveryCount);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(int deliveryCount);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// Specifies that expired message must be moved to dead-letter queue.
         /// </summary>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithExpiredMessageMovedToDeadLetterQueue();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithExpiredMessageMovedToDeadLetterQueue();
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithDefaultMessageTTL(TimeSpan ttl);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithDefaultMessageTTL(TimeSpan ttl);
     }
 
     /// <summary>
@@ -173,15 +173,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// Specifies that session support should be enabled for the queue.
         /// </summary>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithSession();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithSession();
     }
 
     /// <summary>
     /// The entirety of the Service Bus queue definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IBlank,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IBlank,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate
     {
     }
 
@@ -196,13 +196,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// disabled.
         /// </summary>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithoutPartitioning();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithoutPartitioning();
 
         /// <summary>
         /// Specifies that partitioning should be enabled on this queue.
         /// </summary>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithPartitioning();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithPartitioning();
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="duplicateDetectionHistoryDuration">Duration of the history.</param>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithDuplicateMessageDetection(TimeSpan duplicateDetectionHistoryDuration);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithDuplicateMessageDetection(TimeSpan duplicateDetectionHistoryDuration);
     }
 
     /// <summary>
@@ -229,6 +229,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition
         /// </summary>
         /// <param name="sizeInMB">Size in MB.</param>
         /// <return>The next stage of queue definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Definition.IWithCreate WithSizeInMB(long sizeInMB);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IWithCreate WithSizeInMB(long sizeInMB);
     }
 }
