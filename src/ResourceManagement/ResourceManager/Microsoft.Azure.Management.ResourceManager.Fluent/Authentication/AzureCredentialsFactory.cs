@@ -92,7 +92,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             File.ReadLines(authFile)
                 .All(line =>
                 {
+                    if (line.Trim().StartsWith("#"))
+                        return true; // Ignore comments
                     var keyVal = line.Trim().Split(new char[] { '=' }, 2);
+                    if(keyVal.Length < 2)
+                        return true; // Ignore lines that don't look like $$$=$$$
                     config[keyVal[0].ToLowerInvariant()] = keyVal[1];
                     return true;
                 });

@@ -15,7 +15,7 @@ namespace Samples.Tests
         {
         }
 
-        [Fact(Skip = "Investigae -- may require us to own a domain: Record test with pre-configured DNS")]
+        [Fact(Skip = "Investigate -- may require us to own a domain: Record test with pre-configured DNS")]
         [Trait("Samples", "Dns")]
         public void ManageDnsTest()
         {
