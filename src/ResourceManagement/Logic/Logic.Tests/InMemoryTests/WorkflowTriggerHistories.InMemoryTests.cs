@@ -194,10 +194,10 @@ namespace Test.Azure.Management.Logic
 
         #endregion
 
-        #region WorkflowTriggerHistoriesResubmit_Post
+        #region WorkflowTriggerHistories_Resubmit
 
         [Fact]
-        public void WorkflowTriggerHistoriesResubmit_Post_Exception()
+        public void WorkflowTriggerHistories_Resubmit_Exception()
         {
             var handler = new RecordedDelegatingHandler();
             var client = this.CreateWorkflowClient(handler);
@@ -216,14 +216,14 @@ namespace Test.Azure.Management.Logic
         }
 
         [Fact]
-        public void WorkflowTriggerHistoriesResubmit_Post_OK()
+        public void WorkflowTriggerHistories_Resubmit_OK()
         {
             var handler = new RecordedDelegatingHandler();
             var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.OK
+                StatusCode = HttpStatusCode.Accepted
             };
 
             client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", "historyName");
