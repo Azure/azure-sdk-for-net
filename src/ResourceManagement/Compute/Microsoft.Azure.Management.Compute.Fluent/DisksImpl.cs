@@ -100,7 +100,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:943063AEBCC7240660ED1B045E340B9C:5E0539B7C0A06A24BFDFF3DD193A9746
         protected override IDisk WrapModel(DiskInner inner)
         {
-            return new DiskImpl(inner.Name, inner, Manager);
+            return (inner != null) ? new DiskImpl(inner.Name, inner, Manager) : null;
         }
-    }
 }
