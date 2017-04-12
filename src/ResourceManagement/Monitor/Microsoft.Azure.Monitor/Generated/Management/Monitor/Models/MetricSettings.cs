@@ -32,11 +32,16 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// format.</param>
         /// <param name="enabled">a value indicating whether this timegrain is
         /// enabled.</param>
+        /// <param name="category">Name of a Diagnostic Metric category for a
+        /// resource type this setting is applied to. To obtain the list of
+        /// Diagnostic metric categories for a resource, first perform a GET
+        /// diagnostic settings operation.</param>
         /// <param name="retentionPolicy">the retention policy for this
         /// timegrain.</param>
-        public MetricSettings(System.TimeSpan timeGrain, bool enabled, RetentionPolicy retentionPolicy = default(RetentionPolicy))
+        public MetricSettings(System.TimeSpan timeGrain, bool enabled, string category = default(string), RetentionPolicy retentionPolicy = default(RetentionPolicy))
         {
             TimeGrain = timeGrain;
+            Category = category;
             Enabled = enabled;
             RetentionPolicy = retentionPolicy;
         }
@@ -46,6 +51,15 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         [JsonProperty(PropertyName = "timeGrain")]
         public System.TimeSpan TimeGrain { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of a Diagnostic Metric category for a resource
+        /// type this setting is applied to. To obtain the list of Diagnostic
+        /// metric categories for a resource, first perform a GET diagnostic
+        /// settings operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this timegrain is enabled.

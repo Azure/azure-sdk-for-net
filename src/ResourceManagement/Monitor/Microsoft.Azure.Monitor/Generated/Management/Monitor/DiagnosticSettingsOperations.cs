@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            string apiVersion = "2016-03-01";
+            string apiVersion = "2016-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            string apiVersion = "2016-03-01";
+            string apiVersion = "2016-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            string apiVersion = "2016-03-01";
+            string apiVersion = "2016-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -647,7 +647,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            string apiVersion = "2016-03-01";
+            string apiVersion = "2016-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
