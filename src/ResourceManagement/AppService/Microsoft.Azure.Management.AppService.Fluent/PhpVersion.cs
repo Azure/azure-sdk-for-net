@@ -14,5 +14,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public static readonly PhpVersion V5_5 = Parse("5.5");
         public static readonly PhpVersion V5_6 = Parse("5.6");
         public static readonly PhpVersion V7 = Parse("7.0");
+        public static readonly PhpVersion V7_1 = Parse("7.1");
     }
 }

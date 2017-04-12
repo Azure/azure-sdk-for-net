@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public static readonly PricingTier PremiumP1 = new PricingTier("Premium", "P1");
         public static readonly PricingTier PremiumP2 = new PricingTier("Premium", "P2");
         public static readonly PricingTier PremiumP3 = new PricingTier("Premium", "P3");
+        public static readonly PricingTier FreeF1 = new PricingTier("Free", "F1");
+        public static readonly PricingTier SharedD1 = new PricingTier("Shared", "D1");
 
         ///GENMHASH:B9CFE16F1B01DA31969DCEB63534EB1A:B18BAF7D223AB29E75CD572030AABDBC
         public SkuDescription SkuDescription { get; private set; }
