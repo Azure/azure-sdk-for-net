@@ -90,12 +90,5 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
         /// <param name="useSubDomain">useSubDomain whether indirect CName validation is enabled</param>
         /// <returns>the next stage of storage account update</returns>
         IUpdate WithCustomDomain(string name, bool useSubDomain);
-
-        /// <summary>
-        /// Clears the existing user domain assigned to the storage account.
-        /// </summary>
-        /// <returns>the next stage of storage account update</returns>
-        IUpdate WithoutCustomDomain();
-
     }
 }
