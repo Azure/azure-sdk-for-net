@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets secondary connection string.
         /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.SecondaryConnectionString
+        string Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys.SecondaryConnectionString
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets secondary key associated with the rule.
         /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.SecondaryKey
+        string Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys.SecondaryKey
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets primary connection string.
         /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.PrimaryConnectionString
+        string Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys.PrimaryConnectionString
         {
             get
             {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets primary key associated with the rule.
         /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys.PrimaryKey
+        string Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys.PrimaryKey
         {
             get
             {

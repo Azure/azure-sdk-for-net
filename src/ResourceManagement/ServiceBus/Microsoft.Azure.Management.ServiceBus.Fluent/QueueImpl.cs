@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         IDefinition,
         IUpdate
     {
-        private IList<ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRule>> rulesToCreate;
+        private IList<ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRule>> rulesToCreate;
         private IList<string> rulesToDelete;
 
         ///GENMHASH:2E16A3C3DDA5707111D704BA0D4871AD:E384D1DC0323D2359E002A2334C75FD1
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:396C89E2447B0E70C3C95439926DFC1A:E32C091119D6FB6D73E1D3322965866B
         public QueueImpl WithNewManageRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithManagementEnabled());
             return this;
         }
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:41482A7907F5C3C16FDB1A8E3CEB3B9F:B5BA3212E181BC7B599A722AEFAC04B4
         public QueueImpl WithNewSendRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithSendingEnabled());
             return this;
         }
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:92202640FA5E86BA9A0B8B1004BEF8C7
-        protected async override Task<Microsoft.Azure.Management.Servicebus.Fluent.IQueue> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Microsoft.Azure.Management.ServiceBus.Fluent.IQueue> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:CF2CF801A7E4A9CAE7624D815E5EE4F4:E6E0C1CF73E25181AD5C0BE989C2DE15
         public QueueImpl WithNewListenRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithListeningEnabled());
             return this;
         }

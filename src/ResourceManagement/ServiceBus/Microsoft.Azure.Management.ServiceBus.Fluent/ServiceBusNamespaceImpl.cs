@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:396C89E2447B0E70C3C95439926DFC1A:E32C091119D6FB6D73E1D3322965866B
         public ServiceBusNamespaceImpl WithNewManageRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithManagementEnabled());
             return this;
         }
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:41482A7907F5C3C16FDB1A8E3CEB3B9F:B5BA3212E181BC7B599A722AEFAC04B4
         public ServiceBusNamespaceImpl WithNewSendRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithSendingEnabled());
             return this;
         }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:0056597C3B557D2380B446CF23AF2A7B:3ED10B976FB7009877FF91F8B760BA3E
         public ServiceBusNamespaceImpl WithNewQueue(string name, int maxSizeInMB)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.IQueues queues = this.Queues();
+            Microsoft.Azure.Management.ServiceBus.Fluent.IQueues queues = this.Queues();
             this.queuesToCreate.Add(queues.Define(name).WithSizeInMB(maxSizeInMB));
             return this;
         }
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:CF2CF801A7E4A9CAE7624D815E5EE4F4:E6E0C1CF73E25181AD5C0BE989C2DE15
         public ServiceBusNamespaceImpl WithNewListenRule(string name)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
+            Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRules rules = this.AuthorizationRules();
             this.rulesToCreate.Add(rules.Define(name).WithListeningEnabled());
             return this;
         }
@@ -199,13 +199,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         ///GENMHASH:98A63A985E9B6B6F14188D0E5238F102:8647FDD47A835E6860B5FD34AEAF4704
         public ServiceBusNamespaceImpl WithNewTopic(string name, int maxSizeInMB)
         {
-            Microsoft.Azure.Management.Servicebus.Fluent.ITopics topics = this.Topics();
+            Microsoft.Azure.Management.ServiceBus.Fluent.ITopics topics = this.Topics();
             this.topicsToCreate.Add(topics.Define(name).WithSizeInMB(maxSizeInMB));
             return this;
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:BBFCE2924F9633469A6BC7350F5D2F05
-        public async override Task<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -16,12 +16,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNlcnZpY2VidXMuaW1wbGVtZW50YXRpb24uVG9waWNzSW1wbA==
     internal partial class TopicsImpl :
-        ServiceBusChildResourcesImpl<Microsoft.Azure.Management.Servicebus.Fluent.ITopic,
-            Microsoft.Azure.Management.Servicebus.Fluent.TopicImpl,
+        ServiceBusChildResourcesImpl<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic,
+            Microsoft.Azure.Management.ServiceBus.Fluent.TopicImpl,
             TopicInner,
             ITopicsOperations,
             IServiceBusManager,
-            Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+            Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace>,
         ITopics
     {
         private string resourceGroupName;
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:EA1A01CE829067751D1BD24D7AC819DA:DBE309666B1D8BDFE15651BA9A0DD4A1
-        public override Task<Microsoft.Azure.Management.Servicebus.Fluent.ITopic> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             // 'IndependentChildResourcesImpl' will be refactoring to remove all 'ByParent' methods
             // This method is not exposed to end user from any of the derived types of IndependentChildResourcesImpl

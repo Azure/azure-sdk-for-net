@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition
 {
     using Management.Fluent.ServiceBus.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using System;
 
     /// <summary>
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// from it's internal store.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithoutMessageBatching();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithoutMessageBatching();
     }
 
     /// <summary>
@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// </summary>
         /// <param name="deliveryCount">Maximum delivery count.</param>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount(int deliveryCount);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount(int deliveryCount);
     }
 
     /// <summary>
     /// The entirety of the subscription definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IBlank,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IBlank,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate
     {
     }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithDefaultMessageTTL(TimeSpan ttl);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithDefaultMessageTTL(TimeSpan ttl);
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// </summary>
         /// <param name="durationInSeconds">Duration of a lock in seconds.</param>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithMessageLockDurationInSeconds(int durationInSeconds);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithMessageLockDurationInSeconds(int durationInSeconds);
     }
 
     /// <summary>
@@ -80,15 +80,15 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription>,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithDeleteOnIdle,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageLockDuration,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithDefaultMessageTTL,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithSession,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageBatching,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount,
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageLockDuration,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithSession,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageBatching,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException
     {
     }
 
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// Specifies that session support should be enabled for the subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithSession();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithSession();
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// <param name="name">Rule name.</param>
         /// <param name="rights">Rule rights.</param>
         /// <return>Next stage of the subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithNewAuthorizationRule(string name, params AccessRights[] rights);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithNewAuthorizationRule(string name, params AccessRights[] rights);
     }
 
     /// <summary>
@@ -144,14 +144,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// Specifies that filter evaluation failed message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException();
     }
 
     /// <summary>
     /// The first stage of a subscription definition.
     /// </summary>
     public interface IBlank  :
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate
     {
     }
 
@@ -165,12 +165,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition
         /// Specifies that expired message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithExpiredMessageMovedToDeadLetterSubscription();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithExpiredMessageMovedToDeadLetterSubscription();
 
         /// <summary>
         /// Specifies that expired message should not be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Subscription.Definition.IWithCreate WithoutExpiredMessageMovedToDeadLetterSubscription();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate WithoutExpiredMessageMovedToDeadLetterSubscription();
     }
 }

@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition;
-    using Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update;
-    using Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Definition;
-    using Microsoft.Azure.Management.Servicebus.Fluent.TopicAuthorizationRule.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.TopicAuthorizationRule.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.TopicAuthorizationRule.Update;
     using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus.Models;
 
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the name of the namespace that the parent topic belongs to.
         /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule.NamespaceName
+        string Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRule.NamespaceName
         {
             get
             {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the name of the parent topic name.
         /// </summary>
-        string Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRule.TopicName
+        string Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRule.TopicName
         {
             get
             {

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:250033B2F34291DBD013248656522902
-        protected async override Task<Microsoft.Azure.Management.Servicebus.Fluent.ISubscription> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await this.Manager.Inner.Subscriptions.CreateOrUpdateAsync(this.ResourceGroupName,
                 this.namespaceName,

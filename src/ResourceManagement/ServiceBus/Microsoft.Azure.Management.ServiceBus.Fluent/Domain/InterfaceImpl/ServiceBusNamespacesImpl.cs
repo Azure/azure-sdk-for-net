@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition;
     using Microsoft.Rest;
 
     internal partial class ServiceBusNamespacesImpl 
@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// </summary>
         /// <param name="name">The account name to check.</param>
         /// <return>Whether the name is available and other info if not.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ICheckNameAvailabilityResult Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespaces.CheckNameAvailability(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespaces.CheckNameAvailability(string name)
         {
-            return this.CheckNameAvailability(name) as Microsoft.Azure.Management.Servicebus.Fluent.ICheckNameAvailabilityResult;
+            return this.CheckNameAvailability(name) as Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// </summary>
         /// <param name="name">The namespace name to check.</param>
         /// <return>Whether the name is available and other info if not.</return>
-        async Task<Microsoft.Azure.Management.Servicebus.Fluent.ICheckNameAvailabilityResult> Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespaces.CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult> Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespaces.CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken)
         {
-            return await this.CheckNameAvailabilityAsync(name, cancellationToken) as Microsoft.Azure.Management.Servicebus.Fluent.ICheckNameAvailabilityResult;
+            return await this.CheckNameAvailabilityAsync(name, cancellationToken) as Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult;
         }
     }
 }
