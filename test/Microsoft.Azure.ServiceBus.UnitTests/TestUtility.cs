@@ -16,6 +16,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         static TestUtility()
         {
             var envConnectionString = Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
+
             if (string.IsNullOrWhiteSpace(envConnectionString))
             {
                 throw new InvalidOperationException($"'{TestConstants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
@@ -145,6 +146,31 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 count++;
             }
             Log($"Deferred {count} messages");
+        }
+
+        internal static async Task SendSessionMessagesAsync(IMessageSender messageSender, int numberOfSessions, int messagesPerSession)
+        {
+            if (numberOfSessions == 0 || messagesPerSession == 0)
+            {
+                await Task.FromResult(false);
+            }
+
+            for (int i = 0; i < numberOfSessions; i++)
+            {
+                var messagesToSend = new List<Message>();
+                string sessionId = TestConstants.SessionPrefix + i;
+                for (int j = 0; j < messagesPerSession; j++)
+                {
+                    var message = new Message(Encoding.UTF8.GetBytes("test" + j));
+                    message.Label = "test" + j;
+                    message.SessionId = sessionId;
+                    messagesToSend.Add(message);
+                }
+
+                await messageSender.SendAsync(messagesToSend);
+            }
+
+            Log($"Sent {messagesPerSession} messages each for {numberOfSessions} sessions.");
         }
 
         static void VerifyUniqueMessages(List<Message> messages)

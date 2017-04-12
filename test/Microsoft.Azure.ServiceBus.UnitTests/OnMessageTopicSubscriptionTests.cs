@@ -47,7 +47,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 await this.OnMessageAsyncTestCase(
-                    topicClient.InnerClient.InnerSender,
+                    topicClient.InnerSender,
                     subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                     maxConcurrentCalls,
                     autoComplete,

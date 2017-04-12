@@ -22,5 +22,11 @@ namespace Microsoft.Azure.ServiceBus
 
             return renewAfter;
         }
+
+        public static bool ShouldRetry(Exception exception)
+        {
+            ServiceBusException serviceBusException = exception as ServiceBusException;
+            return serviceBusException != null && serviceBusException.IsTransient;
+        }
     }
 }

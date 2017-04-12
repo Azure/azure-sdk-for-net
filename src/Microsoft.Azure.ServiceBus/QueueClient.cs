@@ -9,6 +9,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Amqp;
     using Core;
+    using Microsoft.Azure.Amqp;
     using Primitives;
 
     /// <summary>
@@ -16,30 +17,161 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class QueueClient : ClientEntity, IQueueClient
     {
+        readonly bool ownsConnection;
+        readonly object syncLock;
+        MessageSender innerSender;
+        MessageReceiver innerReceiver;
+        AmqpSessionClient sessionClient;
+        SessionPumpHost sessionPumpHost;
+
         public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), entityPath, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
+            this.ownsConnection = true;
         }
 
         QueueClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, RetryPolicy retryPolicy)
             : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({entityPath})", retryPolicy)
         {
+            this.syncLock = new object();
             this.QueueName = entityPath;
             this.ReceiveMode = receiveMode;
-            this.InnerClient = new AmqpClient(serviceBusConnection, entityPath, MessagingEntityType.Queue, retryPolicy, receiveMode);
+            this.ServiceBusConnection = serviceBusConnection;
+            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
+                serviceBusConnection.SasKeyName,
+                serviceBusConnection.SasKey);
+            this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
         }
 
         public string QueueName { get; }
 
-        public ReceiveMode ReceiveMode { get; private set; }
+        public ReceiveMode ReceiveMode { get; }
 
         public string Path => this.QueueName;
 
-        internal IInnerSenderReceiver InnerClient { get; }
-
-        public override async Task CloseAsync()
+        internal MessageSender InnerSender
         {
-            await this.InnerClient.CloseAsync().ConfigureAwait(false);
+            get
+            {
+                if (this.innerSender == null)
+                {
+                    lock (this.syncLock)
+                    {
+                        if (this.innerSender == null)
+                        {
+                            this.innerSender = new AmqpMessageSender(
+                                this.QueueName,
+                                MessagingEntityType.Queue,
+                                this.ServiceBusConnection,
+                                this.CbsTokenProvider,
+                                this.RetryPolicy);
+                        }
+                    }
+                }
+
+                return this.innerSender;
+            }
+        }
+
+        internal MessageReceiver InnerReceiver
+        {
+            get
+            {
+                if (this.innerReceiver == null)
+                {
+                    lock (this.syncLock)
+                    {
+                        if (this.innerReceiver == null)
+                        {
+                            this.innerReceiver = new AmqpMessageReceiver(
+                                this.QueueName,
+                                MessagingEntityType.Queue,
+                                this.ReceiveMode,
+                                this.ServiceBusConnection.PrefetchCount,
+                                this.ServiceBusConnection,
+                                this.CbsTokenProvider,
+                                this.RetryPolicy);
+                        }
+                    }
+                }
+
+                return this.innerReceiver;
+            }
+        }
+
+        internal AmqpSessionClient SessionClient
+        {
+            get
+            {
+                if (this.sessionClient == null)
+                {
+                    lock (this.syncLock)
+                    {
+                        if (this.sessionClient == null)
+                        {
+                            this.sessionClient = new AmqpSessionClient(
+                                this.ClientId,
+                                this.Path,
+                                MessagingEntityType.Queue,
+                                this.ReceiveMode,
+                                this.ServiceBusConnection.PrefetchCount,
+                                this.ServiceBusConnection,
+                                this.CbsTokenProvider,
+                                this.RetryPolicy);
+                        }
+                    }
+                }
+
+                return this.sessionClient;
+            }
+        }
+
+        internal SessionPumpHost SessionPumpHost
+        {
+            get
+            {
+                if (this.sessionPumpHost == null)
+                {
+                    lock (this.syncLock)
+                    {
+                        if (this.sessionPumpHost == null)
+                        {
+                            this.sessionPumpHost = new SessionPumpHost(
+                                this.ClientId,
+                                this.ReceiveMode,
+                                this.SessionClient);
+                        }
+                    }
+                }
+
+                return this.sessionPumpHost;
+            }
+        }
+
+        ServiceBusConnection ServiceBusConnection { get; set; }
+
+        ICbsTokenProvider CbsTokenProvider { get; }
+
+        TokenProvider TokenProvider { get; }
+
+        public override async Task OnClosingAsync()
+        {
+            if (this.innerSender != null)
+            {
+                await this.innerSender.CloseAsync().ConfigureAwait(false);
+            }
+
+            if (this.innerReceiver != null)
+            {
+                await this.innerReceiver.CloseAsync().ConfigureAwait(false);
+            }
+
+            this.sessionPumpHost?.Close();
+
+            if (this.ownsConnection)
+            {
+                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -55,37 +187,53 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task SendAsync(IList<Message> messageList)
         {
-            return this.InnerClient.InnerSender.SendAsync(messageList);
+            return this.InnerSender.SendAsync(messageList);
         }
 
         public Task CompleteAsync(string lockToken)
         {
-            return this.InnerClient.InnerReceiver.CompleteAsync(lockToken);
+            return this.InnerReceiver.CompleteAsync(lockToken);
         }
 
         public Task AbandonAsync(string lockToken)
         {
-            return this.InnerClient.InnerReceiver.AbandonAsync(lockToken);
+            return this.InnerReceiver.AbandonAsync(lockToken);
         }
 
         public Task DeadLetterAsync(string lockToken)
         {
-            return this.InnerClient.InnerReceiver.DeadLetterAsync(lockToken);
+            return this.InnerReceiver.DeadLetterAsync(lockToken);
         }
 
         /// <summary>Asynchronously processes a message.</summary>
         /// <param name="handler"></param>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
         {
-            this.InnerClient.InnerReceiver.RegisterMessageHandler(handler);
+            this.InnerReceiver.RegisterMessageHandler(handler);
         }
 
         /// <summary>Asynchronously processes a message.</summary>
         /// <param name="handler"></param>
-        /// <param name="registerHandlerOptions">Calls a message option.</param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterHandlerOptions registerHandlerOptions)
+        /// <param name="registerMessageHandlerOptions">Options associated with message pump processing.</param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterMessageHandlerOptions registerMessageHandlerOptions)
         {
-            this.InnerClient.InnerReceiver.RegisterMessageHandler(handler, registerHandlerOptions);
+            this.InnerReceiver.RegisterMessageHandler(handler, registerMessageHandlerOptions);
+        }
+
+        /// <summary>Register a session handler.</summary>
+        /// <param name="handler"></param>
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler)
+        {
+            var sessionHandlerOptions = new RegisterSessionHandlerOptions();
+            this.RegisterSessionHandler(handler, sessionHandlerOptions);
+        }
+
+        /// <summary>Register a session handler.</summary>
+        /// <param name="handler"></param>
+        /// <param name="registerSessionHandlerOptions">Options associated with session pump processing.</param>
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, RegisterSessionHandlerOptions registerSessionHandlerOptions)
+        {
+            this.SessionPumpHost.OnSessionHandlerAsync(handler, registerSessionHandlerOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -96,7 +244,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>Sequence number that is needed for cancelling.</returns>
         public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
-            return this.InnerClient.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
+            return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
         }
 
         /// <summary>
@@ -106,7 +254,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns></returns>
         public Task CancelScheduledMessageAsync(long sequenceNumber)
         {
-            return this.InnerClient.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
+            return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
         }
     }
 }

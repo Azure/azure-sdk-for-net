@@ -14,6 +14,7 @@ namespace Microsoft.Azure.ServiceBus
     public abstract class ClientEntity : IClientEntity
     {
         static int nextId;
+        readonly object syncLock;
 
         protected ClientEntity(string clientId, RetryPolicy retryPolicy)
         {
@@ -24,18 +25,38 @@ namespace Microsoft.Azure.ServiceBus
 
             this.ClientId = clientId;
             this.RetryPolicy = retryPolicy;
+            this.syncLock = new object();
+        }
+
+        public bool IsClosedOrClosing
+        {
+            get;
+            set;
         }
 
         public string ClientId { get; private set; }
 
         public RetryPolicy RetryPolicy { get; private set; }
 
-        public abstract Task CloseAsync();
-
-        public void Close()
+        public async Task CloseAsync()
         {
-            this.CloseAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            bool callClose = false;
+            lock (this.syncLock)
+            {
+                if (!this.IsClosedOrClosing)
+                {
+                    this.IsClosedOrClosing = true;
+                    callClose = true;
+                }
+            }
+
+            if (callClose)
+            {
+                await this.OnClosingAsync().ConfigureAwait(false);
+            }
         }
+
+        public abstract Task OnClosingAsync();
 
         protected static long GetNextId()
         {

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
-        public override async Task CloseAsync()
+        public override async Task OnClosingAsync()
         {
             await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
             await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);

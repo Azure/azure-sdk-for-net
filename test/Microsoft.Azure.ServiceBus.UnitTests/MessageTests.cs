@@ -84,8 +84,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await TestUtility.SendMessagesAsync(queueClient.InnerClient.InnerSender, 1);
-                    var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerClient.InnerReceiver, 1);
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                    var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
                     Assert.True(receivedMessages.First().SystemProperties.IsReceived);
 
                     // TODO: remove when per test cleanup is possible
@@ -108,15 +108,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await TestUtility.SendMessagesAsync(queueClient.InnerClient.InnerSender, 1);
-                    var peekedMessage = await TestUtility.PeekMessageAsync(queueClient.InnerClient.InnerReceiver);
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                    var peekedMessage = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
                     var result = peekedMessage.SystemProperties.IsReceived;
                     Assert.True(result);
                 }
                 finally
                 {
-                    var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerClient.InnerReceiver, 1);
-                    await TestUtility.CompleteMessagesAsync(queueClient.InnerClient.InnerReceiver, messages);
+                    var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                    await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
                     await queueClient.CloseAsync();
                 }
             }

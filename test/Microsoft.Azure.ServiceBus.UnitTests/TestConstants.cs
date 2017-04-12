@@ -23,5 +23,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal const string SubscriptionName = "subscription";
         internal const string SessionSubscriptionName = "session-subscription";
+
+        internal const string SessionPrefix = "session";
     }
 }

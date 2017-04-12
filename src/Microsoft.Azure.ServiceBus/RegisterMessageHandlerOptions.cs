@@ -7,26 +7,26 @@ namespace Microsoft.Azure.ServiceBus
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
-    /// <see cref="QueueClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterHandlerOptions)" /> and
-    /// <see cref="SubscriptionClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterHandlerOptions)" />.</summary>
-    public sealed class RegisterHandlerOptions
+    /// <see cref="QueueClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterMessageHandlerOptions)" /> and
+    /// <see cref="SubscriptionClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterMessageHandlerOptions)" />.</summary>
+    public sealed class RegisterMessageHandlerOptions
     {
         int maxConcurrentCalls;
-        TimeSpan autoRenewTimeout;
+        TimeSpan maxAutoRenewDuration;
 
-        /// <summary>Initializes a new instance of the <see cref="RegisterHandlerOptions" /> class.
+        /// <summary>Initializes a new instance of the <see cref="RegisterMessageHandlerOptions" /> class.
         /// Default Values:
         ///     <see cref="MaxConcurrentCalls"/> = 1
         ///     <see cref="AutoComplete"/> = true
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
-        ///     <see cref="AutoRenewTimeout"/> = 5 minutes
+        ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        public RegisterHandlerOptions()
+        public RegisterMessageHandlerOptions()
         {
             this.MaxConcurrentCalls = 1;
             this.AutoComplete = true;
             this.ReceiveTimeOut = Constants.DefaultOperationTimeout;
-            this.AutoRenewTimeout = Constants.ClientPumpRenewLockTimeout;
+            this.MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
@@ -62,24 +62,21 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property. </summary>
         /// <value>The maximum duration during which locks are automatically renewed.</value>
-        public TimeSpan AutoRenewTimeout
+        public TimeSpan MaxAutoRenewDuration
         {
             get
             {
-                return this.autoRenewTimeout;
+                return this.maxAutoRenewDuration;
             }
 
             set
             {
-                TimeoutHelper.ThrowIfNegativeArgument(value, "value");
-                this.autoRenewTimeout = value;
+                TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
+                this.maxAutoRenewDuration = value;
             }
         }
 
-        internal bool AutoRenewLock
-        {
-            get { return this.AutoRenewTimeout > TimeSpan.Zero; }
-        }
+        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;
 
         internal ClientEntity MessageClientEntity { get; set; }
 

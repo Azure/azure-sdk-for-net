@@ -189,8 +189,11 @@
   <data name="MaxConcurrentCallsMustBeGreaterThanZero" xml:space="preserve">
     <value>The specified value '{0}' is invalid. "maxConcurrentCalls" must be greater than zero.</value>
   </data>
-  <data name="OnMessageAlreadyCalled" xml:space="preserve">
-    <value>The method 'OnMessageAsync' has already been called.</value>
+  <data name="MessageHandlerAlreadyRegistered" xml:space="preserve">
+    <value>A message handler has already been registered.</value>
+  </data>
+  <data name="SessionHandlerAlreadyRegistered" xml:space="preserve">
+    <value>A session handler has already been registered.</value>
   </data>
   <data name="DefaultServerBusyException" xml:space="preserve">
     <value>This request has been blocked because the entity or namespace is being throttled. Please retry the operation, and if condition continues, please slow down your rate of request.</value>

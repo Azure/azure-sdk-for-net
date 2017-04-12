@@ -31,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 await this.PeekLockTestCase(
-                    topicClient.InnerClient.InnerSender,
+                    topicClient.InnerSender,
                     subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                     messageCount);
             }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await
                     this.ReceiveDeleteTestCase(
-                        topicClient.InnerClient.InnerSender,
+                        topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
             }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await
                     this.PeekLockWithAbandonTestCase(
-                        topicClient.InnerClient.InnerSender,
+                        topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
             }
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await
                     this.PeekLockWithDeadLetterTestCase(
-                        topicClient.InnerClient.InnerSender,
+                        topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         deadLetterSubscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 await this.RenewLockTestCase(
-                    topicClient.InnerClient.InnerSender,
+                    topicClient.InnerSender,
                     subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                     messageCount);
             }
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await
                     this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(
-                        topicClient.InnerClient.InnerSender,
+                        topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
             }
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await
                     this.CancelScheduledMessagesAsyncTestCase(
-                        topicClient.InnerClient.InnerSender,
+                        topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
             }

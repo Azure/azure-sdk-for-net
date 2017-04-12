@@ -9,8 +9,10 @@ namespace Microsoft.Azure.ServiceBus
     {
         string ClientId { get; }
 
+        bool IsClosedOrClosing { get; }
+
         Task CloseAsync();
 
-        void Close();
+        Task OnClosingAsync();
     }
 }

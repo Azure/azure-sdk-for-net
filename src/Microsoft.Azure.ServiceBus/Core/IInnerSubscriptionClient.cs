@@ -6,10 +6,14 @@ namespace Microsoft.Azure.ServiceBus.Core
     using System.Threading.Tasks;
     using Filters;
 
-    internal interface IInnerSubscriptionClient : IInnerReceiver
+    internal interface IInnerSubscriptionClient
     {
+        MessageReceiver InnerReceiver { get; }
+
         Task OnAddRuleAsync(RuleDescription description);
 
         Task OnRemoveRuleAsync(string ruleName);
+
+        Task CloseAsync();
     }
 }

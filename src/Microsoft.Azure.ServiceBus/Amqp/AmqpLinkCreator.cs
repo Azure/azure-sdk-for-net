@@ -31,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             MessagingEventSource.Log.AmqpGetOrCreateConnectionStart();
             AmqpConnection connection = await this.serviceBusConnection.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-            MessagingEventSource.Log.AmqpGetOrCreateConnectionStop();
+            MessagingEventSource.Log.AmqpGetOrCreateConnectionStop(this.entityPath, connection.ToString(), connection.State.ToString());
 
             // Authenticate over CBS
             AmqpCbsLink cbsLink = connection.Extensions.Find<AmqpCbsLink>();
@@ -46,19 +46,33 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             AmqpSession session = null;
             try
             {
-                // Create our Session
+                // Create Session
                 AmqpSessionSettings sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
                 await session.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.AmqpSessionCreationException(this.entityPath, connection, exception);
+                session?.Abort();
+                throw;
+            }
 
-                // Create our Link
+            try
+            {
+                // Create Link
                 AmqpObject link = this.OnCreateAmqpLink(connection, this.amqpLinkSettings, session);
                 await link.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 return link;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                session?.Abort();
+                MessagingEventSource.Log.AmqpLinkCreationException(
+                    this.entityPath,
+                    session,
+                    connection,
+                    exception);
+
                 throw;
             }
         }

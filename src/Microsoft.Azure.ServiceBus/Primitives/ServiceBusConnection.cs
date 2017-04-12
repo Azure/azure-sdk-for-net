@@ -102,6 +102,7 @@ namespace Microsoft.Azure.ServiceBus
 
         static void CloseConnection(AmqpConnection connection)
         {
+            MessagingEventSource.Log.AmqpConnectionClosed(connection);
             connection.SafeClose();
         }
 
@@ -137,6 +138,8 @@ namespace Microsoft.Azure.ServiceBus
             {
                 connection.Extensions.Add(cbsLink);
             }
+
+            MessagingEventSource.Log.AmqpConnectionCreated(hostName, connection);
 
             return connection;
         }

@@ -10,16 +10,65 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Filters;
     using Messaging.Amqp;
 
-    internal sealed class AmqpSubscriptionClient : AmqpClient, IInnerSubscriptionClient
+    internal sealed class AmqpSubscriptionClient : IInnerSubscriptionClient
     {
+        readonly object syncLock;
+        MessageReceiver innerReceiver;
+
         public AmqpSubscriptionClient(
+            string path,
             ServiceBusConnection servicebusConnection,
-            string entityPath,
-            MessagingEntityType entityType,
             RetryPolicy retryPolicy,
+            ICbsTokenProvider cbsTokenProvider,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
-            : base(servicebusConnection, entityPath, entityType, retryPolicy, mode)
         {
+            this.syncLock = new object();
+            this.Path = path;
+            this.ServiceBusConnection = servicebusConnection;
+            this.RetryPolicy = retryPolicy;
+            this.CbsTokenProvider = cbsTokenProvider;
+            this.ReceiveMode = mode;
+        }
+
+        public MessageReceiver InnerReceiver
+        {
+            get
+            {
+                if (this.innerReceiver == null)
+                {
+                    lock (this.syncLock)
+                    {
+                        if (this.innerReceiver == null)
+                        {
+                            this.innerReceiver = new AmqpMessageReceiver(
+                                this.Path,
+                                MessagingEntityType.Subscriber,
+                                this.ReceiveMode,
+                                this.ServiceBusConnection.PrefetchCount,
+                                this.ServiceBusConnection,
+                                this.CbsTokenProvider,
+                                this.RetryPolicy);
+                        }
+                    }
+                }
+
+                return this.innerReceiver;
+            }
+        }
+
+        ServiceBusConnection ServiceBusConnection { get; set; }
+
+        RetryPolicy RetryPolicy { get; set; }
+
+        ICbsTokenProvider CbsTokenProvider { get; set; }
+
+        ReceiveMode ReceiveMode { get; set; }
+
+        string Path { get; }
+
+        public Task CloseAsync()
+        {
+            return this.innerReceiver?.CloseAsync();
         }
 
         public async Task OnAddRuleAsync(RuleDescription description)
@@ -36,8 +85,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 AmqpResponseMessage response =
                     await
-                        ((AmqpMessageReceiver)this.InnerReceiver).ExecuteRequestResponseAsync(amqpRequestMessage)
-                            .ConfigureAwait(false);
+                    ((AmqpMessageReceiver)this.InnerReceiver).ExecuteRequestResponseAsync(amqpRequestMessage)
+                    .ConfigureAwait(false);
 
                 if (response.StatusCode != AmqpResponseStatusCode.OK)
                 {
@@ -61,7 +110,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = ruleName;
 
-                var response = await ((AmqpMessageReceiver)this.InnerReceiver).ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var response =
+                    await
+                    ((AmqpMessageReceiver)this.InnerReceiver).ExecuteRequestResponseAsync(amqpRequestMessage)
+                    .ConfigureAwait(false);
 
                 if (response.StatusCode != AmqpResponseStatusCode.OK)
                 {

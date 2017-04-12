@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal abstract class MessageReceiver : ClientEntity, IMessageReceiver
+    public abstract class MessageReceiver : ClientEntity, IMessageReceiver
     {
         readonly TimeSpan operationTimeout;
         readonly object messageReceivePumpSyncLock;
@@ -72,9 +72,9 @@ namespace Microsoft.Azure.ServiceBus.Core
             get { return this.operationTimeout; }
         }
 
-        protected MessagingEntityType? EntityType { get; set; }
+        internal MessagingEntityType? EntityType { get; set; }
 
-        public override Task CloseAsync()
+        public override Task OnClosingAsync()
         {
             lock (this.messageReceivePumpSyncLock)
             {
@@ -379,13 +379,13 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
         {
-            this.RegisterMessageHandler(handler, new RegisterHandlerOptions() { ReceiveTimeOut = this.OperationTimeout });
+            this.RegisterMessageHandler(handler, new RegisterMessageHandlerOptions());
         }
 
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterHandlerOptions registerHandlerOptions)
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterMessageHandlerOptions registerMessageHandlerOptions)
         {
-            registerHandlerOptions.ReceiveTimeOut = this.OperationTimeout;
-            this.OnMessageHandlerAsync(registerHandlerOptions, handler).GetAwaiter().GetResult();
+            registerMessageHandlerOptions.MessageClientEntity = this;
+            this.OnMessageHandlerAsync(registerMessageHandlerOptions, handler).GetAwaiter().GetResult();
         }
 
         protected abstract Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         async Task OnMessageHandlerAsync(
-            RegisterHandlerOptions registerHandlerOptions,
+            RegisterMessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback)
         {
             MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, registerHandlerOptions);
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (this.receivePump != null)
                 {
-                    throw new InvalidOperationException(Resources.OnMessageAlreadyCalled);
+                    throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
                 }
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();

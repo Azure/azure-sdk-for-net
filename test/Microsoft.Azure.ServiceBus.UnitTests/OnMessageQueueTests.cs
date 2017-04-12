@@ -49,8 +49,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 await this.OnMessageAsyncTestCase(
-                    queueClient.InnerClient.InnerSender,
-                    queueClient.InnerClient.InnerReceiver,
+                    queueClient.InnerSender,
+                    queueClient.InnerReceiver,
                     maxConcurrentCalls,
                     autoComplete,
                     messageCount);

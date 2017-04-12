@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Tracing;
+    using Microsoft.Azure.Amqp;
 
     [SuppressMessage(
         "Microsoft.StyleCop.CSharp.OrderingRules",
@@ -439,12 +440,12 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        [Event(39, Level = EventLevel.Verbose, Message = "AmqpGetOrCreateConnection done.")]
-        public void AmqpGetOrCreateConnectionStop()
+        [Event(39, Level = EventLevel.Verbose, Message = "AmqpGetOrCreateConnection done. EntityPath: {0}, ConnectionInfo: {1}, ConnectionState: {2}")]
+        public void AmqpGetOrCreateConnectionStop(string entityPath, string connectionInfo, string connectionState)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(39);
+                this.WriteEvent(39, entityPath, connectionInfo, connectionState);
             }
         }
 
@@ -683,11 +684,11 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void RegisterOnMessageHandlerStart(string clientId, RegisterHandlerOptions registerHandlerOptions)
+        public void RegisterOnMessageHandlerStart(string clientId, RegisterMessageHandlerOptions registerHandlerOptions)
         {
             if (this.IsEnabled())
             {
-                this.RegisterOnMessageHandlerStart(clientId, registerHandlerOptions.AutoComplete, registerHandlerOptions.AutoRenewLock, registerHandlerOptions.MaxConcurrentCalls, (long)registerHandlerOptions.AutoRenewTimeout.TotalSeconds);
+                this.RegisterOnMessageHandlerStart(clientId, registerHandlerOptions.AutoComplete, registerHandlerOptions.AutoRenewLock, registerHandlerOptions.MaxConcurrentCalls, (long)registerHandlerOptions.MaxAutoRenewDuration.TotalSeconds);
             }
         }
 
@@ -782,18 +783,18 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceivePumpTaskException(string clientId, Exception exception)
+        public void MessageReceivePumpTaskException(string clientId, string sessionId, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceivePumpTaskException(clientId, exception.ToString());
+                this.MessageReceivePumpTaskException(clientId, sessionId, exception.ToString());
             }
         }
 
-        [Event(68, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump PumpTask Exception: Exception: {1}")]
-        void MessageReceivePumpTaskException(string clientId, string exception)
+        [Event(68, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump PumpTask Exception: SessionId: {1}, Exception: {2}")]
+        void MessageReceivePumpTaskException(string clientId, string sessionId, string exception)
         {
-            this.WriteEvent(68, clientId, exception);
+            this.WriteEvent(68, clientId, sessionId, exception);
         }
 
         [NonEvent]
@@ -929,6 +930,228 @@ namespace Microsoft.Azure.ServiceBus
         void RunOperationExceptionEncountered(string exception)
         {
             this.WriteEvent(77, exception);
+        }
+
+        [NonEvent]
+        public void RegisterOnSessionHandlerStart(string clientId, RegisterSessionHandlerOptions registerSessionHandlerOptions)
+        {
+            if (this.IsEnabled())
+            {
+                this.RegisterOnSessionHandlerStart(clientId, registerSessionHandlerOptions.AutoComplete, registerSessionHandlerOptions.MaxConcurrentSessions, (long)registerSessionHandlerOptions.MessageWaitTimeout.TotalSeconds, (long)registerSessionHandlerOptions.MaxAutoRenewDuration.TotalSeconds);
+            }
+        }
+
+        [Event(78, Level = EventLevel.Informational, Message = "{0}: Register OnSessionHandler start: RegisterSessionHandler Options: AutoComplete: {1}, MaxConcurrentSessions: {2}, MessageWaitTimeout: {3}, AutoRenewTimeout: {4}")]
+        void RegisterOnSessionHandlerStart(string clientId, bool autoComplete, int maxConcurrentSessions, long messageWaitTimeoutInSeconds, long autorenewTimeoutInSeconds)
+        {
+            this.WriteEvent(78, clientId, autoComplete, maxConcurrentSessions, messageWaitTimeoutInSeconds, autorenewTimeoutInSeconds);
+        }
+
+        [Event(79, Level = EventLevel.Informational, Message = "{0}: Register OnSessionHandler done.")]
+        public void RegisterOnSessionHandlerStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(79, clientId);
+            }
+        }
+
+        [NonEvent]
+        public void RegisterOnSessionHandlerException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.RegisterOnSessionHandlerException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(80, Level = EventLevel.Error, Message = "{0}: Register OnSessionHandler Exception: {1}")]
+        void RegisterOnSessionHandlerException(string clientId, string exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(80, clientId, exception);
+            }
+        }
+
+        [NonEvent]
+        public void SessionReceivePumpSessionReceiveException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.SessionReceivePumpSessionReceiveException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(81, Level = EventLevel.Error, Message = "{0}: Exception while Receving a session: SessionId: {1}")]
+        void SessionReceivePumpSessionReceiveException(string clientId, string exception)
+        {
+            this.WriteEvent(81, clientId, exception);
+        }
+
+        [Event(82, Level = EventLevel.Informational, Message = "{0}: Session has no more messages: SessionId: {1}")]
+        public void SessionReceivePumpSessionEmpty(string clientId, string sessionId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(82, clientId, sessionId);
+            }
+        }
+
+        [Event(83, Level = EventLevel.Informational, Message = "{0}: Session closed: SessionId: {1}")]
+        public void SessionReceivePumpSessionClosed(string clientId, string sessionId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(83, clientId, sessionId);
+            }
+        }
+
+        [NonEvent]
+        public void SessionReceivePumpSessionCloseException(string clientId, string sessionId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.SessionReceivePumpSessionCloseException(clientId, sessionId, exception.ToString());
+            }
+        }
+
+        [Event(84, Level = EventLevel.Error, Message = "{0}: Exception while closing session: SessionId: {1}, Exception: {2}")]
+        void SessionReceivePumpSessionCloseException(string clientId, string sessionId, string exception)
+        {
+            this.WriteEvent(84, clientId, sessionId, exception);
+        }
+
+        [NonEvent]
+        public void SessionReceivePumpSessionRenewLockStart(string clientId, string sessionId, TimeSpan renewAfterTimeSpan)
+        {
+            if (this.IsEnabled())
+            {
+                this.SessionReceivePumpSessionRenewLockStart(clientId, sessionId, (long)renewAfterTimeSpan.TotalSeconds);
+            }
+        }
+
+        [Event(85, Level = EventLevel.Informational, Message = "{0}: SessionRenewLock start. SessionId: {1}, RenewAfterTimeInSeconds: {2}")]
+        void SessionReceivePumpSessionRenewLockStart(string clientId, string sessionId, long totalSeconds)
+        {
+            this.WriteEvent(85, clientId, sessionId, totalSeconds);
+        }
+
+        [Event(86, Level = EventLevel.Informational, Message = "{0}: RenewSession done: SessionId: {1}")]
+        public void SessionReceivePumpSessionRenewLockStop(string clientId, string sessionId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(86, clientId, sessionId);
+            }
+        }
+
+        [NonEvent]
+        public void SessionReceivePumpSessionRenewLockExeption(string clientId, string sessionId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.SessionReceivePumpSessionRenewLockExeption(clientId, sessionId, exception.ToString());
+            }
+        }
+
+        [Event(87, Level = EventLevel.Error, Message = "{0}: Exception while renewing session lock: SessionId: {1}, Exception: {2}")]
+        void SessionReceivePumpSessionRenewLockExeption(string clientId, string sessionId, string exception)
+        {
+            this.WriteEvent(87, clientId, sessionId, exception);
+        }
+
+        [NonEvent]
+        public void AmqpSessionClientAcceptMessageSessionStart(string clientId, string entityPath, ReceiveMode receiveMode, int prefetchCount, string sessionId)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpSessionClientAcceptMessageSessionStart(clientId, entityPath, receiveMode.ToString(), prefetchCount, sessionId ?? string.Empty);
+            }
+        }
+
+        [Event(88, Level = EventLevel.Informational, Message = "{0}: AcceptMessageSession start: EntityPath: {1}, ReceiveMode: {2}, PrefetchCount: {3}, SessionId: {4}")]
+        void AmqpSessionClientAcceptMessageSessionStart(string clientId, string entityPath, string receiveMode, int prefetchCount, string sessionId)
+        {
+            this.WriteEvent(88, clientId, entityPath, receiveMode, prefetchCount, sessionId);
+        }
+
+        [Event(89, Level = EventLevel.Informational, Message = "{0}: AcceptMessageSession done: EntityPath: {1}, SessionId: {2}")]
+        public void AmqpSessionClientAcceptMessageSessionStop(string clientId, string entityPath, string sessionId)
+        {
+            this.WriteEvent(89, clientId, entityPath, sessionId);
+        }
+
+        [NonEvent]
+        public void AmqpSessionClientAcceptMessageSessionException(string clientId, string entityPath, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpSessionClientAcceptMessageSessionException(clientId, entityPath, exception.ToString());
+            }
+        }
+
+        [Event(90, Level = EventLevel.Error, Message = "{0}: AcceptMessageSession Exception: EntityPath: {1}, Exception: {2}")]
+        void AmqpSessionClientAcceptMessageSessionException(string clientId, string entityPath, string exception)
+        {
+            this.WriteEvent(90, clientId, entityPath, exception);
+        }
+
+        [NonEvent]
+        public void AmqpLinkCreationException(string entityPath, AmqpSession session, AmqpConnection connection, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpLinkCreationException(entityPath, session.ToString(), session.State.ToString(), session.TerminalException != null ? session.TerminalException.ToString() : string.Empty, connection.ToString(), connection.State.ToString(), exception.ToString());
+            }
+        }
+
+        [Event(91, Level = EventLevel.Error, Message = "AmqpLinkCreatorException Exception: EntityPath: {0}, SessionString: {1}, SessionState: {2}, TerminalException: {3}, ConnectionInfo: {4}, ConnectionState: {5}, Exception: {6}")]
+        void AmqpLinkCreationException(string entityPath, string session, string sessionState, string terminalException,  string connectionInfo, string connectionState, string exception)
+        {
+            this.WriteEvent(91, entityPath, session, sessionState, terminalException, connectionInfo, connectionState, exception);
+        }
+
+        [NonEvent]
+        public void AmqpConnectionCreated(string hostName, AmqpConnection connection)
+        {
+            this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString());
+        }
+
+        [Event(92, Level = EventLevel.Verbose, Message = "AmqpConnectionCreated: HostName: {0}, ConnectionInfo: {1}, ConnectionState: {2}")]
+        void AmqpConnectionCreated(string hostName, string connectionInfo, string connectionState)
+        {
+            this.WriteEvent(92, hostName, connectionInfo, connectionState);
+        }
+
+        [NonEvent]
+        public void AmqpConnectionClosed(AmqpConnection connection)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpConnectionClosed(connection.RemoteEndpoint.ToString(), connection.ToString(), connection.State.ToString());
+            }
+        }
+
+        [Event(93, Level = EventLevel.Verbose, Message = "AmqpConnectionClosed: HostName: {0}, ConnectionInfo: {1}, ConnectionState: {2}")]
+        public void AmqpConnectionClosed(string hostName, string connectionInfo, string connectionState)
+        {
+            this.WriteEvent(93, hostName, connectionInfo, connectionState);
+        }
+
+        [NonEvent]
+        public void AmqpSessionCreationException(string entityPath, AmqpConnection connection, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpSessionCreationException(entityPath, connection.ToString(), connection.State.ToString(), exception.ToString());
+            }
+        }
+
+        [Event(94, Level = EventLevel.Error, Message = "AmqpSessionCreationException Exception: EntityPath: {0}, ConnectionInfo: {1}, ConnectionState: {2}, Exception: {3}")]
+        void AmqpSessionCreationException(string entityPath, string connectionInfo, string connectionState, string exception)
+        {
+            this.WriteEvent(94, entityPath, connectionInfo, connectionState, exception);
         }
     }
 }

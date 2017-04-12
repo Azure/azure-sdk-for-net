@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    internal interface IMessageReceiver : IReceiverClient
+    public interface IMessageReceiver : IReceiverClient
     {
         int PrefetchCount { get; set; }
 

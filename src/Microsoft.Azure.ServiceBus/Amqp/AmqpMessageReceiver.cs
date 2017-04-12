@@ -76,6 +76,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 if (value != base.PrefetchCount)
                 {
+                    base.PrefetchCount = value;
                     ReceivingAmqpLink link;
                     if (this.ReceiveLinkManager.TryGetOpenedObject(out link))
                     {
@@ -108,9 +109,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
-        public override async Task CloseAsync()
+        public override async Task OnClosingAsync()
         {
-            await base.CloseAsync();
+            await base.OnClosingAsync().ConfigureAwait(false);
             await this.ReceiveLinkManager.CloseAsync().ConfigureAwait(false);
             await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
         }
