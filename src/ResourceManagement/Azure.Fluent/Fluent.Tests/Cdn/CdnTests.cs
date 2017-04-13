@@ -5,6 +5,7 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
 
@@ -12,20 +13,22 @@ namespace Azure.Tests.Cdn
 {
     public class CdnTests
     {
-        private const string cdnStandardProfileName = "cdnStandardProfile22";
-        private const string cdnPremiumProfileName = "cdnPremiumProfile22";
         private const string cdnEndpointName = "endpoint-f3757d2a3e10";
-        private const string cdnPremiumEndpointName = "premiumVerizonEndpointFluentTest22";
-        private const string rgName = "rgRCCDN";
         private const string endpointOriginHostname = "mylinuxapp.azurewebsites.net";
 
-        [Fact(Skip = "Fails due to DNS binding issue. Need to fix.")]
+        [Fact]
         public void CanCRUDCdn()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
+                var cdnStandardProfileName = TestUtilities.GenerateName("cdnStandardProfile");
+                var cdnPremiumProfileName = TestUtilities.GenerateName("cdnPremiumProfile22");
+                var cdnPremiumEndpointName = TestUtilities.GenerateName("premiumVerizonEndpointFluentTest22");
+                var rgName = TestUtilities.GenerateName("rgRCCDN");
+
                 try
                 {
+
                     var cdnManager = TestHelper.CreateCdnManager();
 
                     var standardProfile = cdnManager.Profiles.Define(cdnStandardProfileName)
