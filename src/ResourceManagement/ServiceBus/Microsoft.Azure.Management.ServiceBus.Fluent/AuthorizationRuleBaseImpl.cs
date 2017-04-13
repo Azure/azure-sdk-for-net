@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
     using ResourceManager.Fluent.Core;
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         }
 
         ///GENMHASH:AB1BA95F78B711F10D574A0046DE17B7:5297C65D2669C5460BC3173EBA6C2F1E
-        protected IReadOnlyList<Management.Fluent.ServiceBus.Models.AccessRights> Rights()
+        protected IReadOnlyList<Management.ServiceBus.Fluent.Models.AccessRights> Rights()
         {
             if (this.Inner.Rights == null)
             {
@@ -153,6 +153,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         protected abstract Task<ResourceListKeysInner> GetKeysInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:1475FAC06F3CDD8B38B0B8B1586C3D7E:27E486AB74A10242FF421C0798DDC450
-        protected abstract Task<Management.Fluent.ServiceBus.Models.ResourceListKeysInner> RegenerateKeysInnerAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));
+        protected abstract Task<Management.ServiceBus.Fluent.Models.ResourceListKeysInner> RegenerateKeysInnerAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

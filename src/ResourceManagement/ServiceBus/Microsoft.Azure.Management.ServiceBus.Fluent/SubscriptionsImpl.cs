@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Fluent.ServiceBus;
     using ServiceBus.Fluent;
     using Rest.Azure;
     using ResourceManager.Fluent.Core;
@@ -17,7 +16,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     internal partial class SubscriptionsImpl :
         ServiceBusChildResourcesImpl<Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription,
             Microsoft.Azure.Management.ServiceBus.Fluent.SubscriptionImpl,
-            Management.Fluent.ServiceBus.Models.SubscriptionInner,
+            Management.ServiceBus.Fluent.Models.SubscriptionInner,
             ISubscriptionsOperations,
             IServiceBusManager,
             Microsoft.Azure.Management.ServiceBus.Fluent.ITopic>,
@@ -47,14 +46,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
             return WrapModel(name);
         }
 
-        protected async override Task<IPage<Management.Fluent.ServiceBus.Models.SubscriptionInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<Management.ServiceBus.Fluent.Models.SubscriptionInner>> ListInnerFirstPageAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Inner.ListByTopicAsync(this.resourceGroupName, 
                 this.namespaceName, 
                 this.topicName, 
                 cancellationToken);
         }
-        protected async override Task<IPage<Management.Fluent.ServiceBus.Models.SubscriptionInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<IPage<Management.ServiceBus.Fluent.Models.SubscriptionInner>> ListInnerNextPageAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Inner.ListByTopicNextAsync(nextLink, 
                 cancellationToken);
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         }
 
         ///GENMHASH:AD2F63EB9B7A81CCDA7E3A349748EDF7:AC7DA12A153C81BA0050657D342ADB13
-        protected async override Task<Management.Fluent.ServiceBus.Models.SubscriptionInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        protected async override Task<Management.ServiceBus.Fluent.Models.SubscriptionInner> GetInnerByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Inner.GetAsync(this.resourceGroupName, 
                 this.namespaceName, 
@@ -79,12 +78,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 this.topicName,
                 name,
                 this.region,
-                new Management.Fluent.ServiceBus.Models.SubscriptionInner(),
+                new Management.ServiceBus.Fluent.Models.SubscriptionInner(),
                 this.Manager);
         }
 
         ///GENMHASH:74B2091B6489CB9BB077D200206A9817:B9A9842A672E25F235D522F599D8F9FE
-        protected override ISubscription WrapModel(Management.Fluent.ServiceBus.Models.SubscriptionInner inner)
+        protected override ISubscription WrapModel(Management.ServiceBus.Fluent.Models.SubscriptionInner inner)
         {
             return new SubscriptionImpl(this.resourceGroupName,
                 this.namespaceName,

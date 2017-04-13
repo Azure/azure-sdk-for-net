@@ -6,8 +6,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Entry point to service bus queue management API in Azure.

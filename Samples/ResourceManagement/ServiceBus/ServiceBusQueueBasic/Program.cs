@@ -3,11 +3,11 @@
 
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.ServiceBus.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
+using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
 using System;
 using System.Linq;
 using System.Text;

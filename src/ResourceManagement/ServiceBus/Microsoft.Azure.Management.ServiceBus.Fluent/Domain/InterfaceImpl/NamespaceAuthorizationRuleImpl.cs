@@ -9,8 +9,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update;
     using Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Definition;
     using Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Update;
-    using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
 
     internal partial class NamespaceAuthorizationRuleImpl 
     {

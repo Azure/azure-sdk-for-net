@@ -11,8 +11,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using ResourceManager.Fluent.Core.ResourceActions;
     using ResourceManager.Fluent;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent.Models;
     using System.Linq;
 
     /// <summary>

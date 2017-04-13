@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Collections.Generic;
     using System;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
 
     internal partial class TopicImpl 
     {

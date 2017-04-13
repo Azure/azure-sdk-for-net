@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update;
     using System;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Type representing Service Bus queue.

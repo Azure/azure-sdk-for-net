@@ -4,12 +4,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition;
-    using Microsoft.Rest;
-    using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus;
 
     /// <summary>
     /// Entry point to Service Bus namespace API in Azure.
