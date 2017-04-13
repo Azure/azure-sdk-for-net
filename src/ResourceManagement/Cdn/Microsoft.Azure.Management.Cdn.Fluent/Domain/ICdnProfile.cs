@@ -31,6 +31,13 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
 
         /// <summary>
+        /// Checks the availability of a endpoint name without creating the CDN endpoint.
+        /// </summary>
+        /// <param name="name">The endpoint resource name to validate.</param>
+        /// <return>The CheckNameAvailabilityResult object if successful.</return>
+        Task<CheckNameAvailabilityResult> CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets Checks if current instance of CDN profile Sku is Premium Verizon.
         /// </summary>
         /// <summary>
@@ -43,6 +50,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <return>URI used to login to third party web portal.</return>
         string GenerateSsoUri();
+
+        /// <summary>
+        /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal used for advanced management tasks.
+        /// </summary>
+        /// <return>URI used to login to third party web portal.</return>
+        Task<string> GenerateSsoUriAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Forcibly pre-loads CDN endpoint content in current profile. Available for Verizon Profiles.
@@ -124,5 +137,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
         Task StopEndpointAsync(string endpointName, CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
+        /// Retrieves endpoints usage under current profile
+        /// </summary>
+        /// <returns>quotas and actual usages of endpoints under the current CDN profile</returns>
+        IEnumerable<ResourceUsage> ListResourceUsage();
     }
 }

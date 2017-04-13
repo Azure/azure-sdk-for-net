@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using CdnProfile.Definition;
     using Microsoft.Azure.Management.Cdn.Fluent.Models;
     using System.Threading.Tasks;
+    using System.Linq;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for CdnProfile.
@@ -56,6 +58,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return Manager.Profiles.CheckEndpointNameAvailability(name);
         }
 
+        public async Task<CheckNameAvailabilityResult> CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Manager.Profiles.CheckEndpointNameAvailabilityAsync(name, cancellationToken);
+        }
+
         ///GENMHASH:636F3D57A21F57280580F7C29A78FFAD:9DF5985197AB928F69A541F4FD70E843
         public bool IsPremiumVerizon()
         {
@@ -79,6 +86,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             {
                 return null;
             }
+        }
+
+        public async Task<string> GenerateSsoUriAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            SsoUriInner ssoUri = await Manager.Inner.Profiles.GenerateSsoUriAsync(ResourceGroupName, Name, cancellationToken);
+            return ssoUri?.SsoUriValue;
         }
 
         ///GENMHASH:354CBBDA97F05BB45365CF6ACDACFE6A:8FB5265E82D3754CF30BC19DF6A29958
@@ -184,6 +197,13 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             endpointsImpl.Remove(name);
             return this;
+        }
+
+        public IEnumerable<ResourceUsage> ListResourceUsage()
+        {
+            return Manager.Inner.Profiles.ListResourceUsage(ResourceGroupName, Name)
+                .AsContinuousCollection(link => Manager.Inner.Profiles.ListResourceUsageNext(link))
+                .Select(inner => new ResourceUsage(inner));
         }
 
         ///GENMHASH:84C320030DC557769AE852230C16E745:0450D3EE7EB5FBD3AA9977432B475274

@@ -319,6 +319,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         /// <summary>
+        /// Checks the quota and usage of geo filters and custom domains under the current endpoint.
+        /// </summary>
+        /// <returns>list of quotas and usages of geo filters and custom domains under the current endpoint</returns>
+        IEnumerable<ResourceUsage> ICdnEndpoint.ListResourceUsage()
+        {
+            return this.ListResourceUsage();
+        }
+
+        /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint.
         /// </summary>
         /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
