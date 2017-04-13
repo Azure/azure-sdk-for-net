@@ -379,13 +379,13 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
         {
-            this.RegisterMessageHandler(handler, new RegisterMessageHandlerOptions());
+            this.RegisterMessageHandler(handler, new MessageHandlerOptions());
         }
 
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterMessageHandlerOptions registerMessageHandlerOptions)
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
-            registerMessageHandlerOptions.MessageClientEntity = this;
-            this.OnMessageHandlerAsync(registerMessageHandlerOptions, handler).GetAwaiter().GetResult();
+            messageHandlerOptions.MessageClientEntity = this;
+            this.OnMessageHandlerAsync(messageHandlerOptions, handler).GetAwaiter().GetResult();
         }
 
         protected abstract Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         async Task OnMessageHandlerAsync(
-            RegisterMessageHandlerOptions registerHandlerOptions,
+            MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback)
         {
             MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, registerHandlerOptions);

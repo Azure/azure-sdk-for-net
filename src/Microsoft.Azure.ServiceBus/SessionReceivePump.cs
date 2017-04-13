@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus
         readonly string clientId;
         readonly IMessageSessionEntity client;
         readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
-        readonly RegisterSessionHandlerOptions registerSessionHandlerOptions;
+        readonly SessionHandlerOptions sessionHandlerOptions;
         readonly CancellationToken pumpCancellationToken;
         readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
         readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus
             string clientId,
             IMessageSessionEntity client,
             ReceiveMode receiveMode,
-            RegisterSessionHandlerOptions registerSessionHandlerOptions,
+            SessionHandlerOptions sessionHandlerOptions,
             Func<IMessageSession, Message, CancellationToken, Task> callback,
             CancellationToken token)
         {
@@ -35,11 +35,11 @@ namespace Microsoft.Azure.ServiceBus
             this.client = client;
             this.clientId = clientId;
             this.ReceiveMode = receiveMode;
-            this.registerSessionHandlerOptions = registerSessionHandlerOptions;
+            this.sessionHandlerOptions = sessionHandlerOptions;
             this.userOnSessionCallback = callback;
             this.pumpCancellationToken = token;
-            this.maxConcurrentSessionsSemaphoreSlim = new SemaphoreSlim(this.registerSessionHandlerOptions.MaxConcurrentSessions);
-            this.maxPendingAcceptSessionsSemaphoreSlim = new SemaphoreSlim(this.registerSessionHandlerOptions.MaxConcurrentAcceptSessionCalls);
+            this.maxConcurrentSessionsSemaphoreSlim = new SemaphoreSlim(this.sessionHandlerOptions.MaxConcurrentSessions);
+            this.maxPendingAcceptSessionsSemaphoreSlim = new SemaphoreSlim(this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls);
         }
 
         ReceiveMode ReceiveMode { get; }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             // Schedule Tasks for doing PendingAcceptSession calls
-            for (int i = 0; i < this.registerSessionHandlerOptions.MaxConcurrentAcceptSessionCalls; i++)
+            for (int i = 0; i < this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls; i++)
             {
                 if (i == 0)
                 {
@@ -91,13 +91,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             return
                 this.ReceiveMode == ReceiveMode.PeekLock &&
-                this.registerSessionHandlerOptions.AutoRenewLock;
+                this.sessionHandlerOptions.AutoRenewLock;
         }
 
         void RaiseExceptionRecieved(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action);
-            this.registerSessionHandlerOptions.RaiseExceptionReceived(eventArgs);
+            this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
         async Task CompleteMessageIfNeededAsync(IMessageSession session, Message message)
@@ -105,14 +105,14 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 if (this.ReceiveMode == ReceiveMode.PeekLock &&
-                    this.registerSessionHandlerOptions.AutoComplete)
+                    this.sessionHandlerOptions.AutoComplete)
                 {
                     await session.CompleteAsync(new[] { message.SystemProperties.LockToken }).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
             {
-                this.registerSessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "Complete"));
+                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "Complete"));
             }
         }
 
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.registerSessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "Abandon"));
+                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "Abandon"));
             }
         }
 
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.ServiceBus
                     Message message;
                     try
                     {
-                        message = await session.ReceiveAsync(this.registerSessionHandlerOptions.MessageWaitTimeout).ConfigureAwait(false);
+                        message = await session.ReceiveAsync(this.sessionHandlerOptions.MessageWaitTimeout).ConfigureAwait(false);
                     }
                     catch (Exception exception)
                     {
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
 
                     // Set the timer
-                    userCallbackTimer.Change(this.registerSessionHandlerOptions.MaxAutoRenewDuration, TimeSpan.FromMilliseconds(-1));
+                    userCallbackTimer.Change(this.sessionHandlerOptions.MaxAutoRenewDuration, TimeSpan.FromMilliseconds(-1));
                     bool callbackExceptionOccured = false;
                     try
                     {
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.ServiceBus
                     // Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException))
                     {
-                        this.registerSessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "RenewLock"));
+                        this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "RenewLock"));
                     }
                     if (!MessagingUtilities.ShouldRetry(exception))
                     {

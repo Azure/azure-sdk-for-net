@@ -214,26 +214,26 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Asynchronously processes a message.</summary>
         /// <param name="handler"></param>
-        /// <param name="registerMessageHandlerOptions">Options associated with message pump processing.</param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterMessageHandlerOptions registerMessageHandlerOptions)
+        /// <param name="messageHandlerOptions">Options associated with message pump processing.</param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
-            this.InnerReceiver.RegisterMessageHandler(handler, registerMessageHandlerOptions);
+            this.InnerReceiver.RegisterMessageHandler(handler, messageHandlerOptions);
         }
 
         /// <summary>Register a session handler.</summary>
         /// <param name="handler"></param>
         public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler)
         {
-            var sessionHandlerOptions = new RegisterSessionHandlerOptions();
+            var sessionHandlerOptions = new SessionHandlerOptions();
             this.RegisterSessionHandler(handler, sessionHandlerOptions);
         }
 
         /// <summary>Register a session handler.</summary>
         /// <param name="handler"></param>
-        /// <param name="registerSessionHandlerOptions">Options associated with session pump processing.</param>
-        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, RegisterSessionHandlerOptions registerSessionHandlerOptions)
+        /// <param name="sessionHandlerOptions">Options associated with session pump processing.</param>
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
-            this.SessionPumpHost.OnSessionHandlerAsync(handler, registerSessionHandlerOptions).GetAwaiter().GetResult();
+            this.SessionPumpHost.OnSessionHandlerAsync(handler, sessionHandlerOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>

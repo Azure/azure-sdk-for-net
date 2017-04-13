@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler);
 
-        void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, RegisterMessageHandlerOptions registerHandlerOptions);
+        void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions registerHandlerOptions);
 
         Task CompleteAsync(string lockToken);
 

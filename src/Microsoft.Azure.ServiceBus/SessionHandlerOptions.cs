@@ -7,22 +7,22 @@ namespace Microsoft.Azure.ServiceBus
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>Provides options associated with session pump processing using
-    /// <see cref="QueueClient.RegisterSessionHandler(System.Func{IMessageSession, Message, System.Threading.CancellationToken, System.Threading.Tasks.Task}, RegisterSessionHandlerOptions)" /> and
-    /// <see cref="SubscriptionClient.RegisterSessionHandler(System.Func{IMessageSession, Message, System.Threading.CancellationToken, System.Threading.Tasks.Task}, RegisterSessionHandlerOptions)" />.</summary>
-    public sealed class RegisterSessionHandlerOptions
+    /// <see cref="QueueClient.RegisterSessionHandler(System.Func{IMessageSession, Message, System.Threading.CancellationToken, System.Threading.Tasks.Task}, SessionHandlerOptions)" /> and
+    /// <see cref="SubscriptionClient.RegisterSessionHandler(System.Func{IMessageSession, Message, System.Threading.CancellationToken, System.Threading.Tasks.Task}, SessionHandlerOptions)" />.</summary>
+    public sealed class SessionHandlerOptions
     {
         int maxConcurrentSessions;
         TimeSpan messageWaitTimeout;
         TimeSpan maxAutoRenewDuration;
 
-        /// <summary>Initializes a new instance of the <see cref="RegisterSessionHandlerOptions" /> class.
+        /// <summary>Initializes a new instance of the <see cref="SessionHandlerOptions" /> class.
         /// Default Values:
         ///     <see cref="MaxConcurrentSessions"/> = 2000
         ///     <see cref="AutoComplete"/> = true
         ///     <see cref="MessageWaitTimeout"/> = 1 minute
         ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        public RegisterSessionHandlerOptions()
+        public SessionHandlerOptions()
         {
             // These are default values
             this.AutoComplete = true;

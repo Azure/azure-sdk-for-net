@@ -7,21 +7,21 @@ namespace Microsoft.Azure.ServiceBus
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
-    /// <see cref="QueueClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterMessageHandlerOptions)" /> and
-    /// <see cref="SubscriptionClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},RegisterMessageHandlerOptions)" />.</summary>
-    public sealed class RegisterMessageHandlerOptions
+    /// <see cref="QueueClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},MessageHandlerOptions)" /> and
+    /// <see cref="SubscriptionClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},MessageHandlerOptions)" />.</summary>
+    public sealed class MessageHandlerOptions
     {
         int maxConcurrentCalls;
         TimeSpan maxAutoRenewDuration;
 
-        /// <summary>Initializes a new instance of the <see cref="RegisterMessageHandlerOptions" /> class.
+        /// <summary>Initializes a new instance of the <see cref="MessageHandlerOptions" /> class.
         /// Default Values:
         ///     <see cref="MaxConcurrentCalls"/> = 1
         ///     <see cref="AutoComplete"/> = true
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
         ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        public RegisterMessageHandlerOptions()
+        public MessageHandlerOptions()
         {
             this.MaxConcurrentCalls = 1;
             this.AutoComplete = true;

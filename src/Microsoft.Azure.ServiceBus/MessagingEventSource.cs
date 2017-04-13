@@ -684,7 +684,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void RegisterOnMessageHandlerStart(string clientId, RegisterMessageHandlerOptions registerHandlerOptions)
+        public void RegisterOnMessageHandlerStart(string clientId, MessageHandlerOptions registerHandlerOptions)
         {
             if (this.IsEnabled())
             {
@@ -933,11 +933,11 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void RegisterOnSessionHandlerStart(string clientId, RegisterSessionHandlerOptions registerSessionHandlerOptions)
+        public void RegisterOnSessionHandlerStart(string clientId, SessionHandlerOptions sessionHandlerOptions)
         {
             if (this.IsEnabled())
             {
-                this.RegisterOnSessionHandlerStart(clientId, registerSessionHandlerOptions.AutoComplete, registerSessionHandlerOptions.MaxConcurrentSessions, (long)registerSessionHandlerOptions.MessageWaitTimeout.TotalSeconds, (long)registerSessionHandlerOptions.MaxAutoRenewDuration.TotalSeconds);
+                this.RegisterOnSessionHandlerStart(clientId, sessionHandlerOptions.AutoComplete, sessionHandlerOptions.MaxConcurrentSessions, (long)sessionHandlerOptions.MessageWaitTimeout.TotalSeconds, (long)sessionHandlerOptions.MaxAutoRenewDuration.TotalSeconds);
             }
         }
 

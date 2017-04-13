@@ -67,8 +67,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             try
             {
-                RegisterSessionHandlerOptions handlerOptions =
-                    new RegisterSessionHandlerOptions()
+                SessionHandlerOptions handlerOptions =
+                    new SessionHandlerOptions()
                     {
                         MaxConcurrentSessions = 5,
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),

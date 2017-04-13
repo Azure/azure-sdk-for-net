@@ -48,7 +48,7 @@ namespace ReceiveSample
                         // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
                         await queueClient.CompleteAsync(message.SystemProperties.LockToken);
                     },
-                    new RegisterMessageHandlerOptions() {MaxConcurrentCalls = 1, AutoComplete = false});
+                    new MessageHandlerOptions() {MaxConcurrentCalls = 1, AutoComplete = false});
             }
             catch (Exception exception)
             {

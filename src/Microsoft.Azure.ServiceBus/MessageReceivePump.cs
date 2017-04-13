@@ -13,14 +13,14 @@ namespace Microsoft.Azure.ServiceBus
     {
         const int MaxInitialReceiveRetryCount = 3;
         readonly Func<Message, CancellationToken, Task> onMessageCallback;
-        readonly RegisterMessageHandlerOptions registerHandlerOptions;
+        readonly MessageHandlerOptions registerHandlerOptions;
         readonly MessageReceiver messageReceiver;
         readonly CancellationToken pumpCancellationToken;
         readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
 
         public MessageReceivePump(
             MessageReceiver messageReceiver,
-            RegisterMessageHandlerOptions registerHandlerOptions,
+            MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback,
             CancellationToken pumpCancellationToken)
         {

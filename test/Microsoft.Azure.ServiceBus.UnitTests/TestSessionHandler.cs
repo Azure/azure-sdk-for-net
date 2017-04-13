@@ -20,13 +20,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         readonly SessionPumpHost sessionPumpHost;
         readonly ReceiveMode receiveMode;
         readonly MessageSender sender;
-        readonly RegisterSessionHandlerOptions sessionHandlerOptions;
+        readonly SessionHandlerOptions sessionHandlerOptions;
         ConcurrentDictionary<string, int> sessionMessageMap;
         int totalMessageCount;
 
         public TestSessionHandler(
             ReceiveMode receiveMode,
-            RegisterSessionHandlerOptions sessionHandlerOptions,
+            SessionHandlerOptions sessionHandlerOptions,
             MessageSender sender,
             SessionPumpHost sessionPumpHost)
         {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             this.sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
 
-        public void RegisterSessionHandler(RegisterSessionHandlerOptions handlerOptions)
+        public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
             this.sessionPumpHost.OnSessionHandlerAsync(this.OnSessionHandler, this.sessionHandlerOptions).GetAwaiter().GetResult();
         }

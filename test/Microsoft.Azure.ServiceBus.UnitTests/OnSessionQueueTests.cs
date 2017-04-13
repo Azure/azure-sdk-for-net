@@ -59,8 +59,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         ReceiveMode.PeekLock);
             try
             {
-                RegisterSessionHandlerOptions handlerOptions =
-                    new RegisterSessionHandlerOptions()
+                SessionHandlerOptions handlerOptions =
+                    new SessionHandlerOptions()
                     {
                         MaxConcurrentSessions = 5,
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),
@@ -115,8 +115,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
             try
             {
-                RegisterSessionHandlerOptions handlerOptions =
-                    new RegisterSessionHandlerOptions()
+                SessionHandlerOptions handlerOptions =
+                    new SessionHandlerOptions()
                     {
                         MaxConcurrentSessions = maxConcurrentCalls,
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),

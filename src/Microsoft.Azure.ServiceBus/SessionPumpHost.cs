@@ -40,9 +40,9 @@ namespace Microsoft.Azure.ServiceBus
 
         public async Task OnSessionHandlerAsync(
             Func<IMessageSession, Message, CancellationToken, Task> callback,
-            RegisterSessionHandlerOptions registerSessionHandlerOptions)
+            SessionHandlerOptions sessionHandlerOptions)
         {
-            MessagingEventSource.Log.RegisterOnSessionHandlerStart(this.ClientId, registerSessionHandlerOptions);
+            MessagingEventSource.Log.RegisterOnSessionHandlerStart(this.ClientId, sessionHandlerOptions);
 
             lock (this.syncLock)
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus
                     this.ClientId,
                     this.SessionClient,
                     this.ReceiveMode,
-                    registerSessionHandlerOptions,
+                    sessionHandlerOptions,
                     callback,
                     this.sessionPumpCancellationTokenSource.Token);
             }
