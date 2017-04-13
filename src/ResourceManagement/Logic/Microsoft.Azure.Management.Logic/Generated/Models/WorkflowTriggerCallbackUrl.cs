@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Management;
     using Logic;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -28,9 +30,24 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the WorkflowTriggerCallbackUrl class.
         /// </summary>
         /// <param name="value">Gets the workflow trigger callback URL.</param>
-        public WorkflowTriggerCallbackUrl(string value = default(string))
+        /// <param name="method">Gets the workflow trigger callback URL HTTP
+        /// method.</param>
+        /// <param name="basePath">Gets the workflow trigger callback URL base
+        /// path.</param>
+        /// <param name="relativePath">Gets the workflow trigger callback URL
+        /// relative path.</param>
+        /// <param name="relativePathParameters">Gets the workflow trigger
+        /// callback URL relative path parameters.</param>
+        /// <param name="queries">Gets the workflow trigger callback URL query
+        /// parameters.</param>
+        public WorkflowTriggerCallbackUrl(string value = default(string), string method = default(string), string basePath = default(string), string relativePath = default(string), IList<string> relativePathParameters = default(IList<string>), WorkflowTriggerListCallbackUrlQueries queries = default(WorkflowTriggerListCallbackUrlQueries))
         {
             Value = value;
+            Method = method;
+            BasePath = basePath;
+            RelativePath = relativePath;
+            RelativePathParameters = relativePathParameters;
+            Queries = queries;
         }
 
         /// <summary>
@@ -38,6 +55,36 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; protected set; }
+
+        /// <summary>
+        /// Gets the workflow trigger callback URL HTTP method.
+        /// </summary>
+        [JsonProperty(PropertyName = "method")]
+        public string Method { get; protected set; }
+
+        /// <summary>
+        /// Gets the workflow trigger callback URL base path.
+        /// </summary>
+        [JsonProperty(PropertyName = "basePath")]
+        public string BasePath { get; protected set; }
+
+        /// <summary>
+        /// Gets the workflow trigger callback URL relative path.
+        /// </summary>
+        [JsonProperty(PropertyName = "relativePath")]
+        public string RelativePath { get; protected set; }
+
+        /// <summary>
+        /// Gets the workflow trigger callback URL relative path parameters.
+        /// </summary>
+        [JsonProperty(PropertyName = "relativePathParameters")]
+        public IList<string> RelativePathParameters { get; set; }
+
+        /// <summary>
+        /// Gets the workflow trigger callback URL query parameters.
+        /// </summary>
+        [JsonProperty(PropertyName = "queries")]
+        public WorkflowTriggerListCallbackUrlQueries Queries { get; set; }
 
     }
 }
