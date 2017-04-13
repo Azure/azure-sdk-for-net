@@ -1,27 +1,27 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using System;
 
     /// <summary>
     /// The template for Service Bus queue update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithSize,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithDeleteOnIdle,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithMessageLockDuration,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithDefaultMessageTTL,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithSession,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithExpressMessage,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithMessageBatching,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithDuplicateMessageDetection,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithExpiredMessageMovedToDeadLetterQueue,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.ServiceBus.Fluent.IQueue>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithSize,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithMessageLockDuration,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithSession,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithExpressMessage,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithMessageBatching,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithExpiredMessageMovedToDeadLetterQueue,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IWithAuthorizationRule
     {
     }
 
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// Specifies that session support should be disabled for the queue.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutSession();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithoutSession();
 
         /// <summary>
         /// Specifies that session support should be enabled for the queue.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithSession();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithSession();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
     }
 
     /// <summary>
@@ -66,14 +66,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// Specifies that messages in this queue are not express hence they should be cached in memory.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutExpressMessage();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithoutExpressMessage();
 
         /// <summary>
         /// Specifies that messages in this queue are express hence they can be cached in memory
         /// for some time before storing it in messaging store.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithExpressMessage();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithExpressMessage();
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithDefaultMessageTTL(TimeSpan ttl);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithDefaultMessageTTL(TimeSpan ttl);
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// </summary>
         /// <param name="deliveryCount">Maximum delivery count.</param>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(int deliveryCount);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(int deliveryCount);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// </summary>
         /// <param name="sizeInMB">Size in MB.</param>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithSizeInMB(long sizeInMB);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithSizeInMB(long sizeInMB);
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// </summary>
         /// <param name="durationInSeconds">Duration of a lock in seconds.</param>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithMessageLockDurationInSeconds(int durationInSeconds);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithMessageLockDurationInSeconds(int durationInSeconds);
     }
 
     /// <summary>
@@ -140,14 +140,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// Specifies that duplicate message detection needs to be disabled.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutDuplicateMessageDetection();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithoutDuplicateMessageDetection();
 
         /// <summary>
         /// Specifies the duration of the duplicate message detection history.
         /// </summary>
         /// <param name="duration">Duration of the history.</param>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithDuplicateMessageDetectionHistoryDuration(TimeSpan duration);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithDuplicateMessageDetectionHistoryDuration(TimeSpan duration);
     }
 
     /// <summary>
@@ -161,28 +161,28 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithNewListenRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithNewListenRule(string name);
 
         /// <summary>
         /// Creates a manage authorization rule for the queue.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithNewManageRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithNewManageRule(string name);
 
         /// <summary>
         /// Removes an authorization rule for the queue.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutAuthorizationRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithoutAuthorizationRule(string name);
 
         /// <summary>
         /// Creates a send authorization rule for the queue.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithNewSendRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithNewSendRule(string name);
     }
 
     /// <summary>
@@ -195,13 +195,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// Specifies that expired message should not be moved to dead-letter queue.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutExpiredMessageMovedToDeadLetterQueue();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithoutExpiredMessageMovedToDeadLetterQueue();
 
         /// <summary>
         /// Specifies that expired message must be moved to dead-letter queue.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithExpiredMessageMovedToDeadLetterQueue();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithExpiredMessageMovedToDeadLetterQueue();
     }
 
     /// <summary>
@@ -214,13 +214,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update
         /// messages from it's internal store. This increases the throughput.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithMessageBatching();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithMessageBatching();
 
         /// <summary>
         /// Specifies that batching of messages should be disabled when Service Bus write messages to
         /// or delete messages from it's internal store.
         /// </summary>
         /// <return>The next stage of queue update.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update.IUpdate WithoutMessageBatching();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update.IUpdate WithoutMessageBatching();
     }
 }

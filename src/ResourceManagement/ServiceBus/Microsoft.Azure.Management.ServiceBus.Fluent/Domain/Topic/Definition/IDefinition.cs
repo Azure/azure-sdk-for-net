@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using System;
 
     /// <summary>
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithDefaultMessageTTL(TimeSpan ttl);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithDefaultMessageTTL(TimeSpan ttl);
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// </summary>
         /// <param name="duplicateDetectionHistoryDuration">Duration of the history.</param>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithDuplicateMessageDetection(TimeSpan duplicateDetectionHistoryDuration);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithDuplicateMessageDetection(TimeSpan duplicateDetectionHistoryDuration);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithDeleteOnIdleDurationInMinutes(int durationInMinutes);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// </summary>
         /// <param name="sizeInMB">Size in MB.</param>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithSizeInMB(long sizeInMB);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithSizeInMB(long sizeInMB);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// </summary>
         /// <param name="name">Queue name.</param>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewSubscription(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithNewSubscription(string name);
     }
 
     /// <summary>
@@ -86,21 +86,21 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewListenRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithNewListenRule(string name);
 
         /// <summary>
         /// Creates a manage authorization rule for the topic.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewManageRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithNewManageRule(string name);
 
         /// <summary>
         /// Creates a send authorization rule for the topic.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithNewSendRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithNewSendRule(string name);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// Note: By default topic is not express.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithExpressMessage();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithExpressMessage();
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// from it's internal store.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithoutMessageBatching();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithoutMessageBatching();
     }
 
     /// <summary>
@@ -137,16 +137,16 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.ITopic>,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithSize,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithPartitioning,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithDeleteOnIdle,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithDefaultMessageTTL,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithExpressMessage,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithMessageBatching,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithDuplicateMessageDetection,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithSubscription,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithAuthorizationRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithSize,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithPartitioning,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithDeleteOnIdle,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithDefaultMessageTTL,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithExpressMessage,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithMessageBatching,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithDuplicateMessageDetection,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithSubscription,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithAuthorizationRule
     {
     }
 
@@ -154,8 +154,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
     /// The entirety of the Service Bus topic definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IBlank,
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IBlank,
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate
     {
     }
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
     /// The first stage of a topic definition.
     /// </summary>
     public interface IBlank  :
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate
     {
     }
 
@@ -178,12 +178,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition
         /// disabled.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithoutPartitioning();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithoutPartitioning();
 
         /// <summary>
         /// Specifies that partitioning should be enabled on this topic.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition.IWithCreate WithPartitioning();
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate WithPartitioning();
     }
 }

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Queue.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update;
     using System;
     using ServiceBus.Fluent;
     using Management.Fluent.ServiceBus.Models;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </remarks>
     public interface IQueue  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, QueueInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Servicebus.Fluent.IQueue>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.IQueue>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Queue.Update.IUpdate>
     {
         /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage authorization rules for the Service Bus queue.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.IQueueAuthorizationRules AuthorizationRules { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.IQueueAuthorizationRules AuthorizationRules { get; }
 
         /// <summary>
         /// Gets indicates whether server-side batched operations are enabled.

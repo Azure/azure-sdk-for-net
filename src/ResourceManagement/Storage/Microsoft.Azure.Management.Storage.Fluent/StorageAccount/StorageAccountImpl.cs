@@ -230,15 +230,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return this;
         }
 
-        IUpdate StorageAccount.Update.IWithCustomDomain.WithoutCustomDomain()
-        {
-            updateParameters.CustomDomain = new CustomDomain
-            {
-                Name = ""
-            };
-            return this;
-        }
-
         IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
         {
             updateParameters.Sku = new Sku()
@@ -308,6 +299,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         public async override Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             // overriding the base.ApplyAsync here since the parameter for update is different from the one for create.
+            updateParameters.Tags = Inner.Tags;
             var response = await Manager.Inner.StorageAccounts.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
             SetInner(response);
             return this;

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update
 {
     /// <summary>
     /// The stage of the Service Bus authorization rule update allowing to enable send policy.
@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update
     /// </summary>
     /// <typeparam name="T">The next stage of the update.</typeparam>
     public interface IWithListenOrSendOrManage<T>  :
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update.IWithListen<T>,
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update.IWithSendOrManage<T>
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update.IWithListen<T>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update.IWithSendOrManage<T>
     {
     }
 
@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update
     /// </summary>
     /// <typeparam name="T">The next stage of the update.</typeparam>
     public interface IWithSendOrManage<T>  :
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update.IWithSend<T>,
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Update.IWithManage<T>
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update.IWithSend<T>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update.IWithManage<T>
     {
     }
 

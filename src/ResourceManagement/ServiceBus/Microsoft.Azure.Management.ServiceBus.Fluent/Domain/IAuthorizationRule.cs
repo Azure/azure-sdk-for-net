@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<RuleT>
     {
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
-        Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <return>The primary, secondary keys and connection strings.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys GetKeys();
+        Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys GetKeys();
 
         /// <summary>
         /// Gets rights associated with the rule.
@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// </summary>
         /// <param name="policykey">The key to regenerate.</param>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
-        Task<Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Regenerates primary or secondary keys.
         /// </summary>
         /// <param name="policykey">The key to regenerate.</param>
         /// <return>Primary, secondary keys and connection strings.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.IAuthorizationKeys RegenerateKey(Policykey policykey);
+        Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys RegenerateKey(Policykey policykey);
     }
 }

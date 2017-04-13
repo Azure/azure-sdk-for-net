@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition
 {
     /// <summary>
     /// The stage of the Service Bus authorization rule definition allowing to enable listen, send or manage policy.
     /// </summary>
     /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithListenOrSendOrManage<T>  :
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithListen<T>,
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithSendOrManage<T>
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition.IWithListen<T>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition.IWithSendOrManage<T>
     {
     }
 
@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definit
     /// </summary>
     /// <typeparam name="T">The next stage of the definition.</typeparam>
     public interface IWithSendOrManage<T>  :
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithSend<T>,
-        Microsoft.Azure.Management.Servicebus.Fluent.AuthorizationRule.Definition.IWithManage<T>
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition.IWithSend<T>,
+        Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Definition.IWithManage<T>
     {
     }
 

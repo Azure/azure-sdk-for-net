@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Definition;
-    using Microsoft.Azure.Management.Servicebus.Fluent.Topic.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update;
     using System.Collections.Generic;
     using System;
     using ServiceBus.Fluent;
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of subscriptions for the topic.
         /// </summary>
-        int Microsoft.Azure.Management.Servicebus.Fluent.ITopic.SubscriptionCount
+        int Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.SubscriptionCount
         {
             get
             {
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages transferred to another topic, topic, or subscription.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.TransferMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.TransferMessageCount
         {
             get
             {
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the maximum size of memory allocated for the topic in megabytes.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.MaxSizeInMB
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.MaxSizeInMB
         {
             get
             {
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the exact time the topic was created.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.CreatedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.CreatedAt
         {
             get
             {
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// Gets number of messages sent to the topic that are yet to be released
         /// for consumption.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.ScheduledMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.ScheduledMessageCount
         {
             get
             {
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether express entities are enabled.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsExpressEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.IsExpressEnabled
         {
             get
             {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets current size of the topic, in bytes.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.CurrentSizeInBytes
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.CurrentSizeInBytes
         {
             get
             {
@@ -352,7 +352,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of active messages in the topic.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.ActiveMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.ActiveMessageCount
         {
             get
             {
@@ -363,18 +363,18 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage subscriptions associated with the topic.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.ISubscriptions Microsoft.Azure.Management.Servicebus.Fluent.ITopic.Subscriptions
+        Microsoft.Azure.Management.ServiceBus.Fluent.ISubscriptions Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.Subscriptions
         {
             get
             {
-                return this.Subscriptions() as Microsoft.Azure.Management.Servicebus.Fluent.ISubscriptions;
+                return this.Subscriptions() as Microsoft.Azure.Management.ServiceBus.Fluent.ISubscriptions;
             }
         }
 
         /// <summary>
         /// Gets the current status of the topic.
         /// </summary>
-        EntityStatus Microsoft.Azure.Management.Servicebus.Fluent.ITopic.Status
+        EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.Status
         {
             get
             {
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to topic.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DefaultMessageTtlDuration
+        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DefaultMessageTtlDuration
         {
             get
             {
@@ -396,18 +396,18 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage authorization rules for the Service Bus topic.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules Microsoft.Azure.Management.Servicebus.Fluent.ITopic.AuthorizationRules
+        Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRules Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.AuthorizationRules
         {
             get
             {
-                return this.AuthorizationRules() as Microsoft.Azure.Management.Servicebus.Fluent.ITopicAuthorizationRules;
+                return this.AuthorizationRules() as Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRules;
             }
         }
 
         /// <summary>
         /// Gets last time a message was sent, or the last time there was a receive request to this topic.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.AccessedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.AccessedAt
         {
             get
             {
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether the topic is to be partitioned across multiple message brokers.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsPartitioningEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.IsPartitioningEnabled
         {
             get
             {
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages transferred into dead letters.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.TransferDeadLetterMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.TransferDeadLetterMessageCount
         {
             get
             {
@@ -440,7 +440,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the idle duration after which the topic is automatically deleted.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DeleteOnIdleDurationInMinutes
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DeleteOnIdleDurationInMinutes
         {
             get
             {
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates whether server-side batched operations are enabled.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsBatchedOperationsEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.IsBatchedOperationsEnabled
         {
             get
             {
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets indicates if this topic requires duplicate detection.
         /// </summary>
-        bool Microsoft.Azure.Management.Servicebus.Fluent.ITopic.IsDuplicateDetectionEnabled
+        bool Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.IsDuplicateDetectionEnabled
         {
             get
             {
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets number of messages in the dead-letter topic.
         /// </summary>
-        long Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DeadLetterMessageCount
+        long Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DeadLetterMessageCount
         {
             get
             {
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the exact time the topic was updated.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Servicebus.Fluent.ITopic.UpdatedAt
+        System.DateTime Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.UpdatedAt
         {
             get
             {
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets the duration of the duplicate detection history.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.Servicebus.Fluent.ITopic.DuplicateMessageDetectionHistoryDuration
+        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DuplicateMessageDetectionHistoryDuration
         {
             get
             {

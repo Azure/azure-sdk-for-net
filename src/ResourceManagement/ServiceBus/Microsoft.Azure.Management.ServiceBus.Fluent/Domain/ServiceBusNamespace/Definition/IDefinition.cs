@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent;
-    using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
 
     /// <summary>
@@ -19,16 +19,16 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
         /// <param name="name">Topic name.</param>
         /// <param name="maxSizeInMB">Maximum size of memory allocated for the topic entity.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewTopic(string name, int maxSizeInMB);
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewTopic(string name, int maxSizeInMB);
     }
 
     /// <summary>
     /// The entirety of the Service Bus namespace definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IBlank,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithGroup,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IBlank,
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithGroup,
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate
     {
     }
 
@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<IWithCreate>,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithSku,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithQueue,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithTopic,
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithAuthorizationRule
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithSku,
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithQueue,
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithTopic,
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithAuthorizationRule
     {
     }
 
@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
         /// <param name="name">Queue name.</param>
         /// <param name="maxSizeInMB">Maximum size of memory allocated for the queue entity.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewQueue(string name, int maxSizeInMB);
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewQueue(string name, int maxSizeInMB);
     }
 
     /// <summary>
     /// The stage of the Service Bus namespace definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate>
     {
     }
 
@@ -80,28 +80,28 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewListenRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewListenRule(string name);
 
         /// <summary>
         /// Creates a manage authorization rule for the Service Bus namespace.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewManageRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewManageRule(string name);
 
         /// <summary>
         /// Creates a send authorization rule for the Service Bus namespace.
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewSendRule(string name);
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithNewSendRule(string name);
     }
 
     /// <summary>
     /// The first stage of a Service Bus namespace definition.
     /// </summary>
     public interface IBlank  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithGroup>
     {
     }
 
@@ -115,6 +115,6 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Defin
         /// </summary>
         /// <param name="namespaceSku">The sku.</param>
         /// <return>Next stage of the Service Bus namespace definition.</return>
-        Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithSku(NamespaceSku namespaceSku);
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate WithSku(NamespaceSku namespaceSku);
     }
 }

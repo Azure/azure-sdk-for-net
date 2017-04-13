@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Management.Fluent.ServiceBus;
     using Management.Fluent.ServiceBus.Models;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         }
 
         ///GENMHASH:42E0B61F5AA4A1130D7B90CCBAAE3A5D:9F33885F608914F714E6FA1E746CFA88
-        public async Task<Microsoft.Azure.Management.Servicebus.Fluent.ICheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var resultInner = await this.Inner.CheckNameAvailabilityMethodAsync(name, cancellationToken);
             return new CheckNameAvailabilityResultImpl(resultInner);

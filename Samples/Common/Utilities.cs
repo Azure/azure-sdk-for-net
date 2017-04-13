@@ -26,8 +26,9 @@ using CoreFtp;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 using Renci.SshNet;
-using Microsoft.Azure.Management.Servicebus.Fluent;
+using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -277,7 +278,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Log(builder.ToString());
         }
 
-        public static void Print(Servicebus.Fluent.ISubscription serviceBusSubscription)
+        public static void Print(ServiceBus.Fluent.ISubscription serviceBusSubscription)
         {
             StringBuilder builder = new StringBuilder()
                     .Append("Service bus subscription: ").Append(serviceBusSubscription.Id)
@@ -1631,26 +1632,14 @@ namespace Microsoft.Azure.Management.Samples.Common
         public static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
         {
             if (!IsRunningMocked)
-            {
-                try
-                {
-                    using (var sshClient = new SshClient(host, port, userName, password))
-                    {
-                        Utilities.Log("Trying to de-provision: " + host);
-                        sshClient.Connect();
-                        var commandToExecute = "sudo waagent -deprovision+user --force";
-                        using (var command = sshClient.CreateCommand(commandToExecute))
-                        {
-                            var commandOutput = command.Execute();
-                            Utilities.Log(commandOutput);
-                        }
-                        sshClient.Disconnect();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Utilities.Log(ex);
-                }
+            {                
+                Console.WriteLine("Trying to de-provision: " + host);
+                Console.WriteLine("ssh connection status: " + TrySsh(
+                    host,
+                    port,
+                    userName,
+                    password,
+                    "sudo waagent - deprovision + user--force"));
             }
         }
 
@@ -1714,6 +1703,56 @@ namespace Microsoft.Azure.Management.Samples.Common
                 {
                 }
             }
+        }
+
+        private static string TrySsh(
+            string host,
+            int port,
+            string userName,
+            string password,
+            string commandToExecute)
+        {
+            string commandOutput = null;
+            var backoffTime = 30 * 1000;
+            var retryCount = 3;
+
+            while (retryCount > 0)
+            {
+                using (var sshClient = new SshClient(host, port, userName, password))
+                {
+                    try
+                    {
+                        sshClient.Connect();
+                        if (commandToExecute != null)
+                        {
+                            using (var command = sshClient.CreateCommand(commandToExecute))
+                            {
+                                commandOutput = command.Execute();
+                            }
+                        }
+                        break;
+                    }
+                    catch (Exception exception)
+                    {
+                        retryCount--;
+                        if (retryCount == 0)
+                        {
+                            throw exception;
+                        }
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            sshClient.Disconnect();
+                        }
+                        catch { }
+                    }
+                }
+                Thread.Sleep(backoffTime);
+            }
+
+            return commandOutput;
         }
     }
 }

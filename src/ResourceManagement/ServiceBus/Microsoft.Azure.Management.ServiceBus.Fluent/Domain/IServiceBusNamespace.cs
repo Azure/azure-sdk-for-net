@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Servicebus.Fluent
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Management.Fluent.ServiceBus.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Servicebus.Fluent.ServiceBusNamespace.Update;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Update;
     using ServiceBus.Fluent;
     using System;
 
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
     /// </remarks>
     public interface IServiceBusNamespace  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IServiceBusManager, NamespaceModelInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Servicebus.Fluent.IServiceBusNamespace>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ServiceBusNamespace.Update.IUpdate>
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage topics entities in the Service Bus namespace.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.ITopics Topics { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.ITopics Topics { get; }
 
         /// <summary>
         /// Gets the relative DNS name of the Service Bus namespace.
@@ -45,17 +45,17 @@ namespace Microsoft.Azure.Management.Servicebus.Fluent
         /// <summary>
         /// Gets entry point to manage authorization rules for the Service Bus namespace.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.INamespaceAuthorizationRules AuthorizationRules { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRules AuthorizationRules { get; }
 
         /// <summary>
         /// Gets entry point to manage queue entities in the Service Bus namespace.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.IQueues Queues { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.IQueues Queues { get; }
 
         /// <summary>
         /// Gets sku value.
         /// </summary>
-        Microsoft.Azure.Management.Servicebus.Fluent.NamespaceSku Sku { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceSku Sku { get; }
 
         /// <summary>
         /// Gets fully qualified domain name (FQDN) of the Service Bus namespace.
