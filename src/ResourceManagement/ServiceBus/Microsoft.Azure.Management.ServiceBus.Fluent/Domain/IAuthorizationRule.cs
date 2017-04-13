@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Type representing authorization rule.

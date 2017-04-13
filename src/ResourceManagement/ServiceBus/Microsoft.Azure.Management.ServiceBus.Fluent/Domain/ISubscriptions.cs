@@ -2,12 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition;
-    using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus;
-
     /// <summary>
     /// Entry point to service bus queue management API in Azure.
     /// </summary>

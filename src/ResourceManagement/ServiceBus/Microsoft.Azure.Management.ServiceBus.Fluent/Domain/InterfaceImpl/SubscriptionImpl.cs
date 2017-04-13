@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update;
     using System;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
 
     internal partial class SubscriptionImpl 
     {

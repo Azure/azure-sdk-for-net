@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ServiceBus.Fluent.QueueAuthorizationRule.Definition;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent;
 
     /// <summary>
     /// Entry point to queue authorization rules management API.

@@ -6,12 +6,11 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
+namespace Microsoft.Azure.Management.ServiceBus.Fluent.Models
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Fluent;
-    using Microsoft.Azure.Management.Fluent.ServiceBus;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the CheckNameAvailability class.
         /// </summary>
-        /// <param name="name">The Name to check the namespce name availability
+        /// <param name="name">The Name to check the namespace name availability
         /// and The namespace name can contain only letters, numbers, and
         /// hyphens. The namespace must start with a letter, and it must end
         /// with a letter or number.</param>

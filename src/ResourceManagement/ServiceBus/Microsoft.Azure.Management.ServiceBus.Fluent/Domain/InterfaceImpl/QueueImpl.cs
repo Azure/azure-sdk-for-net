@@ -2,16 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition;
-    using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update;
-    using System.Collections.Generic;
     using System;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
 
     internal partial class QueueImpl 
     {

@@ -5,8 +5,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ServiceBus.Fluent.NamespaceAuthorizationRule.Definition;
-    using Management.Fluent.ServiceBus.Models;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Entry point to namespace authorization rules management API.

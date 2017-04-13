@@ -9,8 +9,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ServiceBus.Fluent.AuthorizationRule.Update;
     using Microsoft.Azure.Management.ServiceBus.Fluent.QueueAuthorizationRule.Definition;
     using Microsoft.Azure.Management.ServiceBus.Fluent.QueueAuthorizationRule.Update;
-    using Management.Fluent.ServiceBus.Models;
-    using ServiceBus.Fluent;
+    using Management.ServiceBus.Fluent.Models;
 
     internal partial class QueueAuthorizationRuleImpl 
     {
