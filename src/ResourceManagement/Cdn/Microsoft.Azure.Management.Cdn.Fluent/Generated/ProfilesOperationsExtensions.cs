@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='profileName'>
             /// Name of the CDN profile which is unique within the resource group.
             /// </param>
-            public static IPage<ResourceUsage> ListResourceUsage(this IProfilesOperations operations, string resourceGroupName, string profileName)
+            public static IPage<ResourceUsageInner> ListResourceUsage(this IProfilesOperations operations, string resourceGroupName, string profileName)
             {
                 return operations.ListResourceUsageAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
             }
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceUsage>> ListResourceUsageAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsageInner>> ListResourceUsageAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListResourceUsageWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceUsage> ListResourceUsageNext(this IProfilesOperations operations, string nextPageLink)
+            public static IPage<ResourceUsageInner> ListResourceUsageNext(this IProfilesOperations operations, string nextPageLink)
             {
                 return operations.ListResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceUsage>> ListResourceUsageNextAsync(this IProfilesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsageInner>> ListResourceUsageNextAsync(this IProfilesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

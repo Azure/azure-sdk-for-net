@@ -18,12 +18,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// <summary>
     /// Output of check resource usage API.
     /// </summary>
-    public partial class ResourceUsage
+    public partial class ResourceUsageInner
     {
         /// <summary>
         /// Initializes a new instance of the ResourceUsage class.
         /// </summary>
-        public ResourceUsage()
+        public ResourceUsageInner()
         {
           CustomInit();
         }
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         /// <param name="currentValue">Actual value of the resource
         /// type.</param>
         /// <param name="limit">Quota of the resource type.</param>
-        public ResourceUsage(string resourceType = default(string), string unit = default(string), int? currentValue = default(int?), int? limit = default(int?))
+        public ResourceUsageInner(string resourceType = default(string), string unit = default(string), int? currentValue = default(int?), int? limit = default(int?))
         {
             ResourceType = resourceType;
             Unit = unit;

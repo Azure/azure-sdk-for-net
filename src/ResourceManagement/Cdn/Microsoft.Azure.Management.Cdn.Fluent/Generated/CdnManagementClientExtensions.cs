@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ResourceUsage> ListResourceUsage(this ICdnManagementClient operations)
+            public static IPage<ResourceUsageInner> ListResourceUsage(this ICdnManagementClient operations)
             {
                 return operations.ListResourceUsageAsync().GetAwaiter().GetResult();
             }
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceUsage>> ListResourceUsageAsync(this ICdnManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsageInner>> ListResourceUsageAsync(this ICdnManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListResourceUsageWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceUsage> ListResourceUsageNext(this ICdnManagementClient operations, string nextPageLink)
+            public static IPage<ResourceUsageInner> ListResourceUsageNext(this ICdnManagementClient operations, string nextPageLink)
             {
                 return operations.ListResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceUsage>> ListResourceUsageNextAsync(this ICdnManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsageInner>> ListResourceUsageNextAsync(this ICdnManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

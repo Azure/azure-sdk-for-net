@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using System.Threading;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Models;
 
     internal partial class CdnProfilesImpl 
     {
@@ -148,6 +149,25 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         IEnumerable<Microsoft.Azure.Management.Cdn.Fluent.Operation> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListOperations()
         {
             return this.ListOperations();
+        }
+
+
+        /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the current subscription.
+        /// </summary>
+        /// <returns>quotas and actual usages of the CDN profiles under the current subscription.</returns>
+        IEnumerable<ResourceUsage> ICdnProfiles.ListResourceUsage()
+        {
+            return this.ListResourceUsage();
+        }
+
+        /// <summary>
+        /// Lists all the edge nodes of a CDN service.
+        /// </summary>
+        /// <returns>list of all the edge nodes of a CDN service.</returns>
+        IEnumerable<EdgeNode> ICdnProfiles.ListEdgeNodes()
+        {
+            return this.ListEdgeNodes();
         }
 
         /// <summary>

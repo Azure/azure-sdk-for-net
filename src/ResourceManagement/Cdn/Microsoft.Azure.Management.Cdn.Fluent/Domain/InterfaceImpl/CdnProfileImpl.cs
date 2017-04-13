@@ -234,12 +234,32 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         /// <summary>
+        /// Checks the availability of a endpoint name without creating the CDN endpoint.
+        /// </summary>
+        /// <param name="name">The endpoint resource name to validate.</param>
+        /// <return>The CheckNameAvailabilityResult object if successful.</return>
+        async Task<CheckNameAvailabilityResult> ICdnProfile.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
+        {
+            return await this.CheckEndpointNameAvailabilityAsync(name, cancellationToken);
+        }
+
+        /// <summary>
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal used for advanced management tasks.
         /// </summary>
         /// <return>URI used to login to third party web portal.</return>
         string ICdnProfile.GenerateSsoUri()
         {
             return this.GenerateSsoUri();
+        }
+
+
+        /// <summary>
+        /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal used for advanced management tasks.
+        /// </summary>
+        /// <return>URI used to login to third party web portal.</return>
+        async Task<string> ICdnProfile.GenerateSsoUriAsync(CancellationToken cancellationToken)
+        {
+            return await this.GenerateSsoUriAsync(cancellationToken);
         }
 
         /// <summary>
@@ -393,6 +413,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             CancellationToken cancellationToken)
         {
             await this.LoadEndpointContentAsync(endpointName, contentPaths, cancellationToken);
+        }
+
+
+        /// <summary>
+        /// Retrieves endpoints usage under current profile
+        /// </summary>
+        /// <returns>quotas and actual usages of endpoints under the current CDN profile</returns>
+        IEnumerable<ResourceUsage> ICdnProfile.ListResourceUsage()
+        {
+            return this.ListResourceUsage();
         }
 
         /// <summary>
