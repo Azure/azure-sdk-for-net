@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.HDInsight
     /// </summary>
     internal partial class ClusterOperations : IServiceOperations<HDInsightManagementClient>, IClusterOperations
     {
-        private const string _userAgentString = "ARM SDK v2.0.5";
-
+        private const string _userAgentString = "ARM SDK v2.0.6";
+        
         /// <summary>
         /// Initializes a new instance of the ClusterOperations class.
         /// </summary>
@@ -877,6 +877,32 @@ namespace Microsoft.Azure.Management.HDInsight
                                         }
                                     }
                                     
+                                    if (rolesItem.DataDisksGroups != null)
+                                    {
+                                        if (rolesItem.DataDisksGroups is ILazyCollection == false || ((ILazyCollection)rolesItem.DataDisksGroups).IsInitialized)
+                                        {
+                                            JArray dataDisksGroupsArray = new JArray();
+                                            foreach (DataDisksGroupProperties dataDisksGroupsItem in rolesItem.DataDisksGroups)
+                                            {
+                                                JObject dataDisksGroupPropertiesValue = new JObject();
+                                                dataDisksGroupsArray.Add(dataDisksGroupPropertiesValue);
+                                                
+                                                dataDisksGroupPropertiesValue["disksPerNode"] = dataDisksGroupsItem.DisksPerNode;
+                                                
+                                                if (dataDisksGroupsItem.StorageAccountType != null)
+                                                {
+                                                    dataDisksGroupPropertiesValue["storageAccountType"] = dataDisksGroupsItem.StorageAccountType;
+                                                }
+                                                
+                                                if (dataDisksGroupsItem.DiskSizeGB != null)
+                                                {
+                                                    dataDisksGroupPropertiesValue["diskSizeGB"] = dataDisksGroupsItem.DiskSizeGB.Value;
+                                                }
+                                            }
+                                            roleValue["dataDisksGroups"] = dataDisksGroupsArray;
+                                        }
+                                    }
+                                    
                                     if (rolesItem.ScriptActions != null)
                                     {
                                         if (rolesItem.ScriptActions is ILazyCollection == false || ((ILazyCollection)rolesItem.ScriptActions).IsInitialized)
@@ -1271,6 +1297,37 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 {
                                                     string subnetInstance = ((string)subnetValue);
                                                     virtualNetworkProfileInstance.SubnetName = subnetInstance;
+                                                }
+                                            }
+                                            
+                                            JToken dataDisksGroupsArray2 = rolesValue["dataDisksGroups"];
+                                            if (dataDisksGroupsArray2 != null && dataDisksGroupsArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken dataDisksGroupsValue in ((JArray)dataDisksGroupsArray2))
+                                                {
+                                                    DataDisksGroupProperties dataDisksGroupPropertiesInstance = new DataDisksGroupProperties();
+                                                    roleInstance.DataDisksGroups.Add(dataDisksGroupPropertiesInstance);
+                                                    
+                                                    JToken disksPerNodeValue = dataDisksGroupsValue["disksPerNode"];
+                                                    if (disksPerNodeValue != null && disksPerNodeValue.Type != JTokenType.Null)
+                                                    {
+                                                        int disksPerNodeInstance = ((int)disksPerNodeValue);
+                                                        dataDisksGroupPropertiesInstance.DisksPerNode = disksPerNodeInstance;
+                                                    }
+                                                    
+                                                    JToken storageAccountTypeValue = dataDisksGroupsValue["storageAccountType"];
+                                                    if (storageAccountTypeValue != null && storageAccountTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string storageAccountTypeInstance = ((string)storageAccountTypeValue);
+                                                        dataDisksGroupPropertiesInstance.StorageAccountType = storageAccountTypeInstance;
+                                                    }
+                                                    
+                                                    JToken diskSizeGBValue = dataDisksGroupsValue["diskSizeGB"];
+                                                    if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                    {
+                                                        int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                        dataDisksGroupPropertiesInstance.DiskSizeGB = diskSizeGBInstance;
+                                                    }
                                                 }
                                             }
                                             
@@ -2921,6 +2978,37 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 }
                                             }
                                             
+                                            JToken dataDisksGroupsArray = rolesValue["dataDisksGroups"];
+                                            if (dataDisksGroupsArray != null && dataDisksGroupsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken dataDisksGroupsValue in ((JArray)dataDisksGroupsArray))
+                                                {
+                                                    DataDisksGroupProperties dataDisksGroupPropertiesInstance = new DataDisksGroupProperties();
+                                                    roleInstance.DataDisksGroups.Add(dataDisksGroupPropertiesInstance);
+                                                    
+                                                    JToken disksPerNodeValue = dataDisksGroupsValue["disksPerNode"];
+                                                    if (disksPerNodeValue != null && disksPerNodeValue.Type != JTokenType.Null)
+                                                    {
+                                                        int disksPerNodeInstance = ((int)disksPerNodeValue);
+                                                        dataDisksGroupPropertiesInstance.DisksPerNode = disksPerNodeInstance;
+                                                    }
+                                                    
+                                                    JToken storageAccountTypeValue = dataDisksGroupsValue["storageAccountType"];
+                                                    if (storageAccountTypeValue != null && storageAccountTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string storageAccountTypeInstance = ((string)storageAccountTypeValue);
+                                                        dataDisksGroupPropertiesInstance.StorageAccountType = storageAccountTypeInstance;
+                                                    }
+                                                    
+                                                    JToken diskSizeGBValue = dataDisksGroupsValue["diskSizeGB"];
+                                                    if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                    {
+                                                        int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                        dataDisksGroupPropertiesInstance.DiskSizeGB = diskSizeGBInstance;
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken scriptActionsArray = rolesValue["scriptActions"];
                                             if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
                                             {
@@ -4218,6 +4306,37 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 }
                                             }
                                             
+                                            JToken dataDisksGroupsArray = rolesValue["dataDisksGroups"];
+                                            if (dataDisksGroupsArray != null && dataDisksGroupsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken dataDisksGroupsValue in ((JArray)dataDisksGroupsArray))
+                                                {
+                                                    DataDisksGroupProperties dataDisksGroupPropertiesInstance = new DataDisksGroupProperties();
+                                                    roleInstance.DataDisksGroups.Add(dataDisksGroupPropertiesInstance);
+                                                    
+                                                    JToken disksPerNodeValue = dataDisksGroupsValue["disksPerNode"];
+                                                    if (disksPerNodeValue != null && disksPerNodeValue.Type != JTokenType.Null)
+                                                    {
+                                                        int disksPerNodeInstance = ((int)disksPerNodeValue);
+                                                        dataDisksGroupPropertiesInstance.DisksPerNode = disksPerNodeInstance;
+                                                    }
+                                                    
+                                                    JToken storageAccountTypeValue = dataDisksGroupsValue["storageAccountType"];
+                                                    if (storageAccountTypeValue != null && storageAccountTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string storageAccountTypeInstance = ((string)storageAccountTypeValue);
+                                                        dataDisksGroupPropertiesInstance.StorageAccountType = storageAccountTypeInstance;
+                                                    }
+                                                    
+                                                    JToken diskSizeGBValue = dataDisksGroupsValue["diskSizeGB"];
+                                                    if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                    {
+                                                        int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                        dataDisksGroupPropertiesInstance.DiskSizeGB = diskSizeGBInstance;
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken scriptActionsArray = rolesValue["scriptActions"];
                                             if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
                                             {
@@ -5243,6 +5362,37 @@ namespace Microsoft.Azure.Management.HDInsight
                                                         }
                                                     }
                                                     
+                                                    JToken dataDisksGroupsArray = rolesValue["dataDisksGroups"];
+                                                    if (dataDisksGroupsArray != null && dataDisksGroupsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken dataDisksGroupsValue in ((JArray)dataDisksGroupsArray))
+                                                        {
+                                                            DataDisksGroupProperties dataDisksGroupPropertiesInstance = new DataDisksGroupProperties();
+                                                            roleInstance.DataDisksGroups.Add(dataDisksGroupPropertiesInstance);
+                                                            
+                                                            JToken disksPerNodeValue = dataDisksGroupsValue["disksPerNode"];
+                                                            if (disksPerNodeValue != null && disksPerNodeValue.Type != JTokenType.Null)
+                                                            {
+                                                                int disksPerNodeInstance = ((int)disksPerNodeValue);
+                                                                dataDisksGroupPropertiesInstance.DisksPerNode = disksPerNodeInstance;
+                                                            }
+                                                            
+                                                            JToken storageAccountTypeValue = dataDisksGroupsValue["storageAccountType"];
+                                                            if (storageAccountTypeValue != null && storageAccountTypeValue.Type != JTokenType.Null)
+                                                            {
+                                                                string storageAccountTypeInstance = ((string)storageAccountTypeValue);
+                                                                dataDisksGroupPropertiesInstance.StorageAccountType = storageAccountTypeInstance;
+                                                            }
+                                                            
+                                                            JToken diskSizeGBValue = dataDisksGroupsValue["diskSizeGB"];
+                                                            if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                            {
+                                                                int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                                dataDisksGroupPropertiesInstance.DiskSizeGB = diskSizeGBInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
                                                     JToken scriptActionsArray = rolesValue["scriptActions"];
                                                     if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
                                                     {
@@ -5854,6 +6004,37 @@ namespace Microsoft.Azure.Management.HDInsight
                                                         {
                                                             string subnetInstance = ((string)subnetValue);
                                                             virtualNetworkProfileInstance.SubnetName = subnetInstance;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken dataDisksGroupsArray = rolesValue["dataDisksGroups"];
+                                                    if (dataDisksGroupsArray != null && dataDisksGroupsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken dataDisksGroupsValue in ((JArray)dataDisksGroupsArray))
+                                                        {
+                                                            DataDisksGroupProperties dataDisksGroupPropertiesInstance = new DataDisksGroupProperties();
+                                                            roleInstance.DataDisksGroups.Add(dataDisksGroupPropertiesInstance);
+                                                            
+                                                            JToken disksPerNodeValue = dataDisksGroupsValue["disksPerNode"];
+                                                            if (disksPerNodeValue != null && disksPerNodeValue.Type != JTokenType.Null)
+                                                            {
+                                                                int disksPerNodeInstance = ((int)disksPerNodeValue);
+                                                                dataDisksGroupPropertiesInstance.DisksPerNode = disksPerNodeInstance;
+                                                            }
+                                                            
+                                                            JToken storageAccountTypeValue = dataDisksGroupsValue["storageAccountType"];
+                                                            if (storageAccountTypeValue != null && storageAccountTypeValue.Type != JTokenType.Null)
+                                                            {
+                                                                string storageAccountTypeInstance = ((string)storageAccountTypeValue);
+                                                                dataDisksGroupPropertiesInstance.StorageAccountType = storageAccountTypeInstance;
+                                                            }
+                                                            
+                                                            JToken diskSizeGBValue = dataDisksGroupsValue["diskSizeGB"];
+                                                            if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                            {
+                                                                int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                                dataDisksGroupPropertiesInstance.DiskSizeGB = diskSizeGBInstance;
+                                                            }
                                                         }
                                                     }
                                                     

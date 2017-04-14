@@ -194,6 +194,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
+        /// Gets or sets the worker node datadisksgroupproperties for worker nodes. Required For Kafka clusters only
+        /// </summary>
+        public List<DataDisksGroupProperties> WorkerNodeDataDisksGroups { get; set; }
+       
+        /// <summary>
         /// Gets or sets the component versions for each service in this HDInsight cluster.
         /// </summary>
         public Dictionary<string, string> ComponentVersion { get; set; }

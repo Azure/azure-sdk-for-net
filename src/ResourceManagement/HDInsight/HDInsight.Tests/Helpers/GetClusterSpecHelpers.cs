@@ -333,7 +333,6 @@ namespace HDInsight.Tests.Helpers
                 OrganizationalUnitDN = OrganizationalUnitDN,
                 ClusterUsersGroupDNs = ClusterUsersGroupDNs
             };
-            
             return clusterparams;
         }
 
@@ -343,6 +342,31 @@ namespace HDInsight.Tests.Helpers
             clusterparams.Version = "3.5";
             clusterparams.ClusterType = "Spark";
             clusterparams.ComponentVersion.Add("Spark", "2.0");
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersKafkaIaas()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.ClusterType = "Kafka";
+            clusterparams.Location = "Central US";
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersKafkaIaasWithManagedDisks()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.ClusterType = "Kafka";
+            clusterparams.Location = "Central US";
+            clusterparams.WorkerNodeDataDisksGroups = new List<DataDisksGroupProperties>
+            {   
+                new DataDisksGroupProperties()
+                {
+                     DisksPerNode = 8
+                }
+            };
             return clusterparams;
         }
 
@@ -397,7 +421,5 @@ namespace HDInsight.Tests.Helpers
                ? new AzureDataLakeStoreInfo(ADLDefaultStorageAccountName, ADLClusterRootPath)
                : new AzureDataLakeStoreInfo("tmp.azuredatalakestore.net", ADLClusterRootPath);
         }
-
-        
     }
 }
