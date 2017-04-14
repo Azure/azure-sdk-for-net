@@ -162,12 +162,6 @@ namespace ManageWebAppWithTrafficManager
                         .DefineAzureTargetEndpoint("endpoint3")
                             .ToResourceId(app3.Id)
                             .Attach()
-                        .DefineAzureTargetEndpoint("endpoint4")
-                            .ToResourceId(app4.Id)
-                            .Attach()
-                        .DefineAzureTargetEndpoint("endpoint5")
-                            .ToResourceId(app5.Id)
-                            .Attach()
                         .Create();
 
                 Utilities.Log("Created traffic manager " + trafficManager.Name);

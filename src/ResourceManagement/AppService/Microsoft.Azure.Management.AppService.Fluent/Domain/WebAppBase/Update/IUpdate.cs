@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
     public interface IWithSourceControl<FluentT> 
     {
         /// <summary>
-        /// Specifies the source control to be a local Git repository on the web app.
+        /// Removes source control for deployment from the web app.
         /// </summary>
         /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithLocalGitSourceControl();
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutSourceControl();
 
         /// <summary>
         /// Starts the definition of a new source control.
@@ -46,10 +46,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineSourceControl();
 
         /// <summary>
-        /// Removes source control for deployment from the web app.
+        /// Specifies the source control to be a local Git repository on the web app.
         /// </summary>
         /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutSourceControl();
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithLocalGitSourceControl();
     }
 
     /// <summary>
@@ -114,20 +114,28 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
     public interface IWithAppSettings<FluentT> 
     {
         /// <summary>
+        /// Adds an app setting to the web app. This app setting
+        /// will stay at the slot during a swap.
+        /// </summary>
+        /// <param name="key">The key for the app setting.</param>
+        /// <param name="value">The value for the app setting.</param>
+        /// <return>The next stage of the web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithStickyAppSetting(string key, string value);
+
+        /// <summary>
+        /// Removes an app setting from the web app.
+        /// </summary>
+        /// <param name="key">The key of the app setting to remove.</param>
+        /// <return>The next stage of the web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutAppSetting(string key);
+
+        /// <summary>
         /// Specifies the app settings for the web app as a  Map. These app settings
         /// will stay at the slot during a swap.
         /// </summary>
         /// <param name="settings">A  Map of app settings.</param>
         /// <return>The next stage of the web app update.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithStickyAppSettings(IDictionary<string,string> settings);
-
-        /// <summary>
-        /// Adds an app setting to the web app.
-        /// </summary>
-        /// <param name="key">The key for the app setting.</param>
-        /// <param name="value">The value for the app setting.</param>
-        /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithAppSetting(string key, string value);
 
         /// <summary>
         /// Changes the stickiness of an app setting.
@@ -138,13 +146,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithAppSettingStickiness(string key, bool sticky);
 
         /// <summary>
-        /// Adds an app setting to the web app. This app setting
-        /// will stay at the slot during a swap.
+        /// Adds an app setting to the web app.
         /// </summary>
         /// <param name="key">The key for the app setting.</param>
         /// <param name="value">The value for the app setting.</param>
         /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithStickyAppSetting(string key, string value);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithAppSetting(string key, string value);
 
         /// <summary>
         /// Specifies the app settings for the web app as a  Map.
@@ -152,13 +159,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         /// <param name="settings">A  Map of app settings.</param>
         /// <return>The next stage of the web app update.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithAppSettings(IDictionary<string,string> settings);
-
-        /// <summary>
-        /// Removes an app setting from the web app.
-        /// </summary>
-        /// <param name="key">The key of the app setting to remove.</param>
-        /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutAppSetting(string key);
     }
 
     /// <summary>
@@ -168,11 +168,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
     public interface IWithConnectionString<FluentT> 
     {
         /// <summary>
-        /// Removes a connection string from the web app.
+        /// Changes the stickiness of a connection string.
         /// </summary>
         /// <param name="name">The name of the connection string.</param>
+        /// <param name="sticky">True if the connection string sticks to the slot during a swap.</param>
         /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutConnectionString(string name);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithConnectionStringStickiness(string name, bool sticky);
 
         /// <summary>
         /// Adds a connection string to the web app.
@@ -184,6 +185,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithConnectionString(string name, string value, ConnectionStringType type);
 
         /// <summary>
+        /// Removes a connection string from the web app.
+        /// </summary>
+        /// <param name="name">The name of the connection string.</param>
+        /// <return>The next stage of the web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutConnectionString(string name);
+
+        /// <summary>
         /// Adds a connection string to the web app. This connection string
         /// will stay at the slot during a swap.
         /// </summary>
@@ -192,14 +200,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         /// <param name="type">The connection string type.</param>
         /// <return>The next stage of the web app update.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithStickyConnectionString(string name, string value, ConnectionStringType type);
-
-        /// <summary>
-        /// Changes the stickiness of a connection string.
-        /// </summary>
-        /// <param name="name">The name of the connection string.</param>
-        /// <param name="sticky">True if the connection string sticks to the slot during a swap.</param>
-        /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithConnectionStringStickiness(string name, bool sticky);
     }
 
     /// <summary>
@@ -210,11 +210,44 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
     public interface IWithSiteConfigs<FluentT> 
     {
         /// <summary>
-        /// Specifies the Java version.
+        /// Specifies the managed pipeline mode.
         /// </summary>
-        /// <param name="version">The Java version.</param>
+        /// <param name="managedPipelineMode">Managed pipeline mode.</param>
         /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IWithWebContainer<FluentT> WithJavaVersion(JavaVersion version);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode);
+
+        /// <summary>
+        /// Turn off Java support.
+        /// </summary>
+        /// <return>The next stage of web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutJava();
+
+        /// <summary>
+        /// Turn off Python support.
+        /// </summary>
+        /// <return>The next stage of web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutPython();
+
+        /// <summary>
+        /// Removes a default document.
+        /// </summary>
+        /// <param name="document">Default document to remove.</param>
+        /// <return>The next stage of web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutDefaultDocument(string document);
+
+        /// <summary>
+        /// Specifies the .NET Framework version.
+        /// </summary>
+        /// <param name="version">The .NET Framework version.</param>
+        /// <return>The next stage of web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithNetFrameworkVersion(NetFrameworkVersion version);
+
+        /// <summary>
+        /// Specifies the slot name to auto-swap when a deployment is completed in this web app / deployment slot.
+        /// </summary>
+        /// <param name="slotName">The name of the slot, or 'production', to auto-swap.</param>
+        /// <return>The next stage of web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithAutoSwapSlotName(string slotName);
 
         /// <summary>
         /// Specifies the PHP version.
@@ -224,37 +257,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithPhpVersion(PhpVersion version);
 
         /// <summary>
-        /// Turn off Python support.
+        /// Specifies the Java version.
         /// </summary>
+        /// <param name="version">The Java version.</param>
         /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutPython();
-
-        /// <summary>
-        /// Disables remote debugging.
-        /// </summary>
-        /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithRemoteDebuggingDisabled();
-
-        /// <summary>
-        /// Adds a default document.
-        /// </summary>
-        /// <param name="document">Default document.</param>
-        /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithDefaultDocument(string document);
-
-        /// <summary>
-        /// Specifies if the VM powering the web app is always powered on.
-        /// </summary>
-        /// <param name="alwaysOn">True if the web app is always powered on.</param>
-        /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithWebAppAlwaysOn(bool alwaysOn);
-
-        /// <summary>
-        /// Adds a list of default documents.
-        /// </summary>
-        /// <param name="documents">List of default documents.</param>
-        /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithDefaultDocuments(IList<string> documents);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IWithWebContainer<FluentT> WithJavaVersion(JavaVersion version);
 
         /// <summary>
         /// Specifies if web sockets are enabled.
@@ -271,38 +278,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithPlatformArchitecture(PlatformArchitecture platform);
 
         /// <summary>
-        /// Specifies the slot name to auto-swap when a deployment is completed in this web app / deployment slot.
+        /// Adds a list of default documents.
         /// </summary>
-        /// <param name="slotName">The name of the slot, or 'production', to auto-swap.</param>
+        /// <param name="documents">List of default documents.</param>
         /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithAutoSwapSlotName(string slotName);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithDefaultDocuments(IList<string> documents);
 
         /// <summary>
-        /// Specifies the .NET Framework version.
+        /// Disables remote debugging.
         /// </summary>
-        /// <param name="version">The .NET Framework version.</param>
         /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithNetFrameworkVersion(NetFrameworkVersion version);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithRemoteDebuggingDisabled();
 
         /// <summary>
-        /// Turn off Java support.
+        /// Specifies if the VM powering the web app is always powered on.
         /// </summary>
+        /// <param name="alwaysOn">True if the web app is always powered on.</param>
         /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutJava();
-
-        /// <summary>
-        /// Specifies the Python version.
-        /// </summary>
-        /// <param name="version">The Python version.</param>
-        /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithPythonVersion(PythonVersion version);
-
-        /// <summary>
-        /// Removes a default document.
-        /// </summary>
-        /// <param name="document">Default document to remove.</param>
-        /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutDefaultDocument(string document);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithWebAppAlwaysOn(bool alwaysOn);
 
         /// <summary>
         /// Specifies the Visual Studio version for remote debugging.
@@ -312,11 +305,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion);
 
         /// <summary>
-        /// Specifies the managed pipeline mode.
+        /// Specifies the Python version.
         /// </summary>
-        /// <param name="managedPipelineMode">Managed pipeline mode.</param>
+        /// <param name="version">The Python version.</param>
         /// <return>The next stage of web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithPythonVersion(PythonVersion version);
+
+        /// <summary>
+        /// Adds a default document.
+        /// </summary>
+        /// <param name="document">Default document.</param>
+        /// <return>The next stage of web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithDefaultDocument(string document);
     }
 
     /// <summary>
@@ -405,25 +405,23 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
     public interface IWithAuthentication<FluentT> 
     {
         /// <summary>
-        /// Gets Specifies the definition of a new authentication configuration.
-        /// </summary>
-        /// <summary>
-        /// Gets the first stage of an authentication definition.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineAuthentication { get; }
-
-        /// <summary>
-        /// Turns off the authentication on the web app.
-        /// </summary>
-        /// <return>The next stage of the web app update.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutAuthentication();
-
-        /// <summary>
         /// Gets Updates the authentication configuration of the web app.
         /// </summary>
         /// <summary>
         /// Gets the first stage of an authentication update.
         /// </summary>
         Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> UpdateAuthentication { get; }
+
+        /// <summary>
+        /// Specifies the definition of a new authentication configuration.
+        /// </summary>
+        /// <return>The first stage of an authentication definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineAuthentication();
+
+        /// <summary>
+        /// Turns off the authentication on the web app.
+        /// </summary>
+        /// <return>The next stage of the web app update.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT> WithoutAuthentication();
     }
 }

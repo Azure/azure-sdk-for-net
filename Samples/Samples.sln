@@ -181,6 +181,7 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageStorageAccountAsync", "ResourceManagement\Storage\ManageStorageAccountAsync\ManageStorageAccountAsync.xproj", "{316F1D19-2F1F-4EF3-A3A3-BC6249A6B630}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachineAsync", "ResourceManagement\Compute\ManageVirtualMachineAsync\ManageVirtualMachineAsync.xproj", "{D453DE01-05FF-4629-A07C-D673D820E02A}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceBus", "ServiceBus", "{78DACC9B-D429-417C-9225-F40563988CC3}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceBusPublishSubscribeBasic", "ResourceManagement\ServiceBus\ServiceBusPublishSubscribeBasic\ServiceBusPublishSubscribeBasic.xproj", "{F5503E04-D8D4-4A4A-9A32-0CA2E72E0638}"
@@ -192,6 +193,28 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceBusQueueAdvanceFeatures", "ResourceManagement\ServiceBus\ServiceBusQueueAdvanceFeatures\ServiceBusQueueAdvanceFeatures.xproj", "{078115C8-F6C8-4222-864D-BCB54EB0782F}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceBusPublishSubscribeAdvanceFeatures", "ResourceManagement\ServiceBus\ServiceBusPublishSubscribeAdvanceFeatures\ServiceBusPublishSubscribeAdvanceFeatures.xproj", "{17FC7D4A-3D41-4BBD-9AFD-C296C4F028C9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageFunctionAppBasic", "ResourceManagement\AppService\ManageFunctionAppBasic\ManageFunctionAppBasic.xproj", "{6ED990EE-DB7B-4376-A9B6-288B87918487}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageFunctionAppSourceControl", "ResourceManagement\AppService\ManageFunctionAppSourceControl\ManageFunctionAppSourceControl.xproj", "{86BA2A05-E41E-4435-8B5A-78F00F36A3BD}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageFunctionAppWithAuthentication", "ResourceManagement\AppService\ManageFunctionAppWithAuthentication\ManageFunctionAppWithAuthentication.xproj", "{E1F93966-BB01-4260-B2E5-6E9CDDB8E087}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageFunctionAppWithDomainSsl", "ResourceManagement\AppService\ManageFunctionAppWithDomainSsl\ManageFunctionAppWithDomainSsl.xproj", "{79934217-D650-4014-8741-C7578F419A38}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppBasic", "ResourceManagement\AppService\ManageLinuxWebAppBasic\ManageLinuxWebAppBasic.xproj", "{ABC02403-2B54-4383-B0DB-B7E9556C922E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppSourceControl", "ResourceManagement\AppService\ManageLinuxWebAppSourceControl\ManageLinuxWebAppSourceControl.xproj", "{63BE8D80-B579-4FB9-8C4D-727014004538}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppSqlConnection", "ResourceManagement\AppService\ManageLinuxWebAppSqlConnection\ManageLinuxWebAppSqlConnection.xproj", "{6AC19812-B54F-412B-B862-A674EF5F439F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppStorageAccountConnection", "ResourceManagement\AppService\ManageLinuxWebAppStorageAccountConnection\ManageLinuxWebAppStorageAccountConnection.xproj", "{D31B7C11-60BF-4735-9E2E-648892632C62}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppWithDomainSsl", "ResourceManagement\AppService\ManageLinuxWebAppWithDomainSsl\ManageLinuxWebAppWithDomainSsl.xproj", "{72AF59AF-83B9-481E-AB94-104EE85233ED}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppWithTrafficManager", "ResourceManagement\AppService\ManageLinuxWebAppWithTrafficManager\ManageLinuxWebAppWithTrafficManager.xproj", "{52C40F51-22ED-4306-B23A-6CE4164794E3}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithAuthentication", "ResourceManagement\AppService\ManageWebAppWithAuthentication\ManageWebAppWithAuthentication.xproj", "{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -515,6 +538,50 @@ Global
 		{17FC7D4A-3D41-4BBD-9AFD-C296C4F028C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17FC7D4A-3D41-4BBD-9AFD-C296C4F028C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17FC7D4A-3D41-4BBD-9AFD-C296C4F028C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED990EE-DB7B-4376-A9B6-288B87918487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED990EE-DB7B-4376-A9B6-288B87918487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED990EE-DB7B-4376-A9B6-288B87918487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED990EE-DB7B-4376-A9B6-288B87918487}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86BA2A05-E41E-4435-8B5A-78F00F36A3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86BA2A05-E41E-4435-8B5A-78F00F36A3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86BA2A05-E41E-4435-8B5A-78F00F36A3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86BA2A05-E41E-4435-8B5A-78F00F36A3BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F93966-BB01-4260-B2E5-6E9CDDB8E087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F93966-BB01-4260-B2E5-6E9CDDB8E087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F93966-BB01-4260-B2E5-6E9CDDB8E087}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F93966-BB01-4260-B2E5-6E9CDDB8E087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79934217-D650-4014-8741-C7578F419A38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79934217-D650-4014-8741-C7578F419A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79934217-D650-4014-8741-C7578F419A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79934217-D650-4014-8741-C7578F419A38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABC02403-2B54-4383-B0DB-B7E9556C922E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC02403-2B54-4383-B0DB-B7E9556C922E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABC02403-2B54-4383-B0DB-B7E9556C922E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC02403-2B54-4383-B0DB-B7E9556C922E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BE8D80-B579-4FB9-8C4D-727014004538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BE8D80-B579-4FB9-8C4D-727014004538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BE8D80-B579-4FB9-8C4D-727014004538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BE8D80-B579-4FB9-8C4D-727014004538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AC19812-B54F-412B-B862-A674EF5F439F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC19812-B54F-412B-B862-A674EF5F439F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC19812-B54F-412B-B862-A674EF5F439F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC19812-B54F-412B-B862-A674EF5F439F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31B7C11-60BF-4735-9E2E-648892632C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31B7C11-60BF-4735-9E2E-648892632C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31B7C11-60BF-4735-9E2E-648892632C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31B7C11-60BF-4735-9E2E-648892632C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AF59AF-83B9-481E-AB94-104EE85233ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AF59AF-83B9-481E-AB94-104EE85233ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AF59AF-83B9-481E-AB94-104EE85233ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AF59AF-83B9-481E-AB94-104EE85233ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52C40F51-22ED-4306-B23A-6CE4164794E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C40F51-22ED-4306-B23A-6CE4164794E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C40F51-22ED-4306-B23A-6CE4164794E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C40F51-22ED-4306-B23A-6CE4164794E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -598,5 +665,16 @@ Global
 		{2853E20E-6AA5-4B47-B0B7-0B7E6D50DBC2} = {78DACC9B-D429-417C-9225-F40563988CC3}
 		{078115C8-F6C8-4222-864D-BCB54EB0782F} = {78DACC9B-D429-417C-9225-F40563988CC3}
 		{17FC7D4A-3D41-4BBD-9AFD-C296C4F028C9} = {78DACC9B-D429-417C-9225-F40563988CC3}
+		{6ED990EE-DB7B-4376-A9B6-288B87918487} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{86BA2A05-E41E-4435-8B5A-78F00F36A3BD} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{E1F93966-BB01-4260-B2E5-6E9CDDB8E087} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{79934217-D650-4014-8741-C7578F419A38} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{ABC02403-2B54-4383-B0DB-B7E9556C922E} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{63BE8D80-B579-4FB9-8C4D-727014004538} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{6AC19812-B54F-412B-B862-A674EF5F439F} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{D31B7C11-60BF-4735-9E2E-648892632C62} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{72AF59AF-83B9-481E-AB94-104EE85233ED} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{52C40F51-22ED-4306-B23A-6CE4164794E3} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 	EndGlobalSection
 EndGlobal

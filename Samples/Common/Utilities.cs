@@ -29,6 +29,7 @@ using Renci.SshNet;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 using System.Threading;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1516,7 +1517,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
         }
 
-        public static void UploadFileToFtp(IPublishingProfile profile, string filePath)
+        public static void UploadFileToFtp(IPublishingProfile profile, string filePath, string fileName = null)
         {
             if (!IsRunningMocked)
             {
@@ -1531,9 +1532,36 @@ namespace Microsoft.Azure.Management.Samples.Common
                 {
                     var fileinfo = new FileInfo(filePath);
                     ftpClient.LoginAsync().GetAwaiter().GetResult();
-                    ftpClient.ChangeWorkingDirectoryAsync("./site/wwwroot/webapps").GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "site"))
+                    {
+                        ftpClient.CreateDirectoryAsync("site").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./site").GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "wwwroot"))
+                    {
+                        ftpClient.CreateDirectoryAsync("wwwroot").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./wwwroot").GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "webapps"))
+                    {
+                        ftpClient.CreateDirectoryAsync("webapps").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./webapps").GetAwaiter().GetResult();
 
-                    using (var writeStream = ftpClient.OpenFileWriteStreamAsync(Path.GetFileName(filePath)).GetAwaiter().GetResult())
+                    if (fileName == null)
+                    {
+                        fileName = Path.GetFileName(filePath);
+                    }
+                    while (fileName.Contains("/"))
+                    {
+                        int slash = fileName.IndexOf("/");
+                        string subDir = fileName.Substring(0, slash);
+                        ftpClient.CreateDirectoryAsync(subDir).GetAwaiter().GetResult();
+                        ftpClient.ChangeWorkingDirectoryAsync("./" + subDir);
+                        fileName = fileName.Substring(slash + 1);
+                    }
+
+                    using (var writeStream = ftpClient.OpenFileWriteStreamAsync(fileName).GetAwaiter().GetResult())
                     {
                         var fileReadStream = fileinfo.OpenRead();
                         fileReadStream.CopyToAsync(writeStream).GetAwaiter().GetResult();
@@ -1587,7 +1615,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
         }
 
-        public static void DeployByGit(IPublishingProfile profile)
+        public static void DeployByGit(IPublishingProfile profile, string repository)
         {
             if (!IsRunningMocked)
             {
@@ -1598,7 +1626,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 string gitPushArgument = $"push https://{profile.GitUsername}:{profile.GitPassword}@{profile.GitUrl} master:master -f";
 
                 ProcessStartInfo info = new ProcessStartInfo(gitCommand, gitInitArgument);
-                info.WorkingDirectory = Path.Combine(ProjectPath, "Asset", "azure-samples-appservice-helloworld");
+                info.WorkingDirectory = Path.Combine(ProjectPath, "Asset", repository);
                 Process.Start(info).WaitForExit();
                 info.Arguments = gitAddArgument;
                 Process.Start(info).WaitForExit();
@@ -1609,7 +1637,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
         }
         
-        public static string CheckAddress(string url)
+        public static string CheckAddress(string url, IDictionary<string, string> headers = null)
         {
             if (!IsRunningMocked)
             {
@@ -1617,10 +1645,44 @@ namespace Microsoft.Azure.Management.Samples.Common
                 {
                     using (var client = new HttpClient())
                     {
-                        return client.GetAsync(url).Result.ToString();
+                        if (headers != null)
+                        {
+                            foreach (var header in headers)
+                            {
+                                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                            }
+                        }
+                        return client.GetAsync(url).Result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     }
                 }
                 catch(Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+
+            return "[Running in PlaybackMode]";
+        }
+
+        public static string PostAddress(string url, string body, IDictionary<string, string> headers = null) 
+        {
+            if (!IsRunningMocked)
+            {
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        if (headers != null)
+                        {
+                            foreach (var header in headers)
+                            {
+                                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                            }
+                        }
+                        return client.PostAsync(url, new StringContent(body)).Result.ToString();
+                    }
+                }
+                catch (Exception ex)
                 {
                     Utilities.Log(ex);
                 }

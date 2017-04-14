@@ -254,12 +254,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the first stage of an authentication definition.
         /// </summary>
-        WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> WebAppBase.Update.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.DefineAuthentication
+        WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> WebAppBase.Update.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.DefineAuthentication()
         {
-            get
-            {
-                return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>>;
-            }
+            return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>>;
         }
 
         /// <summary>
@@ -282,12 +279,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the first stage of an authentication definition.
         /// </summary>
-        WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> WebAppBase.Definition.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.DefineAuthentication
+        WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> WebAppBase.Definition.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>.DefineAuthentication()
         {
-            get
-            {
-                return this.DefineAuthentication() as WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>>;
-            }
+            return this.DefineAuthentication() as WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>>;
         }
 
         /// <summary>

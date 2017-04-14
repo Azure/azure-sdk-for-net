@@ -1638,12 +1638,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the first stage of an authentication definition.
         /// </summary>
-        WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>> WebAppBase.Definition.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>.DefineAuthentication
+        WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>> WebAppBase.Definition.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>.DefineAuthentication()
         {
-            get
-            {
-                return this.DefineAuthentication() as WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>>;
-            }
+            return this.DefineAuthentication() as WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>>;
         }
 
         /// <summary>
@@ -1661,12 +1658,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the first stage of an authentication definition.
         /// </summary>
-        WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>> WebAppBase.Update.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>.DefineAuthentication
+        WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>> WebAppBase.Update.IWithAuthentication<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>.DefineAuthentication()
         {
-            get
-            {
-                return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>>;
-            }
+            return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>>;
         }
 
         /// <summary>

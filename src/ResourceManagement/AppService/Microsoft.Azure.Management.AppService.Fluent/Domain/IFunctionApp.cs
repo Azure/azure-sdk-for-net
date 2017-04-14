@@ -2,8 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.AppService.Fluent.FunctionApp.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent;
 
     /// <summary>
     /// An immutable client-side representation of an Azure Function App.
@@ -18,6 +21,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IFunctionApp>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<FunctionApp.Update.IUpdate>
     {
+        /// <return>The master key for the function app.</return>
+        string GetMasterKey();
+
+        /// <return>The master key for the function app.</return>
+        Task<string> GetMasterKeyAsync(CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Gets the storage account associated with the function app.
         /// </summary>

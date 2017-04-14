@@ -210,31 +210,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
-        /// Gets Specifies the definition of a new authentication configuration.
+        /// Specifies the definition of a new authentication configuration.
         /// </summary>
-        /// <summary>
-        /// Gets the first stage of an authentication definition.
-        /// </summary>
-        WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithAuthentication<FluentT>.DefineAuthentication
+        /// <return>The first stage of an authentication definition.</return>
+        WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithAuthentication<FluentT>.DefineAuthentication()
         {
-            get
-            {
-                return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
-            }
+            return this.DefineAuthentication() as WebAppAuthentication.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>
-        /// Gets Specifies the definition of a new authentication configuration.
+        /// Specifies the definition of a new authentication configuration.
         /// </summary>
-        /// <summary>
-        /// Gets the first stage of an authentication definition.
-        /// </summary>
-        WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>> WebAppBase.Definition.IWithAuthentication<FluentT>.DefineAuthentication
+        /// <return>The first stage of an authentication definition.</return>
+        WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>> WebAppBase.Definition.IWithAuthentication<FluentT>.DefineAuthentication()
         {
-            get
-            {
-                return this.DefineAuthentication() as WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>>;
-            }
+            return this.DefineAuthentication() as WebAppAuthentication.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>

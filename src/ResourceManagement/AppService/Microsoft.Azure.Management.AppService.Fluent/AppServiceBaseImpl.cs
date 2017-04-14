@@ -192,6 +192,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public virtual FluentImplT WithExistingAppServicePlan(IAppServicePlan appServicePlan)
         {
             Inner.ServerFarmId = appServicePlan.Id;
+            Inner.Reserved = appServicePlan.Inner.Reserved;
             if (newGroup != null && IsInCreateMode)
             {
                 ((IndexableRefreshableWrapper<IResourceGroup, ResourceGroupInner>)newGroup).Inner.Location = appServicePlan.RegionName;

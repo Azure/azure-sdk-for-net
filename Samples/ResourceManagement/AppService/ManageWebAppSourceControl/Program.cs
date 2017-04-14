@@ -102,7 +102,7 @@ namespace ManageWebAppSourceControl
                 Utilities.Log("Deploying a local Tomcat source to " + app2Name + " through Git...");
 
                 var profile = app2.GetPublishingProfile();
-                Utilities.DeployByGit(profile);
+                Utilities.DeployByGit(profile, "azure-samples-appservice-helloworld");
 
                 Utilities.Log("Deployment to web app " + app2.Name + " completed");
                 Utilities.Print(app2);
