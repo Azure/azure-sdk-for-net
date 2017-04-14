@@ -6,8 +6,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Cdn.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Rest;
 
     /// <summary>
     /// An immutable client-side representation of an Azure CDN endpoint.

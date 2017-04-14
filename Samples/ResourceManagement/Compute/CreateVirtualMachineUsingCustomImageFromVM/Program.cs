@@ -173,7 +173,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVM
                 Utilities.Log("Getting OS and data disks SAS Uris");
 
                 // OS Disk SAS Uri
-                var osDisk = azure.Disks.GetById(linuxVM3.OsDiskId);
+                var osDisk = azure.Disks.GetById(linuxVM3.OSDiskId);
 
                 var osDiskSasUri = osDisk.GrantAccess(24 * 60);
                 Utilities.Log("OS disk SAS Uri: " + osDiskSasUri);

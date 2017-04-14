@@ -137,7 +137,7 @@ namespace ManageVirtualMachineWithDisk
                 //======================================================================
                 // Resize the OS and Data Disks
 
-                var osDisk = azure.Disks.GetById(linuxVM.OsDiskId);
+                var osDisk = azure.Disks.GetById(linuxVM.OSDiskId);
                 var dataDisks = new List<IDisk>();
                 foreach (var vmDataDisk  in  linuxVM.DataDisks.Values)
                 {

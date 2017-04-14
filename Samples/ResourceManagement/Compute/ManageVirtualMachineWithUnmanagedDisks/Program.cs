@@ -107,7 +107,7 @@ namespace ManageVirtualMachineWithUnmanagedDisks
                 //=============================================================
                 // Update - Expand the OS drive size by 10 GB
 
-                int osDiskSizeInGb = windowsVM.OsDiskSize;
+                int osDiskSizeInGb = windowsVM.OSDiskSize;
                 if (osDiskSizeInGb == 0)
                 {
                     // Server is not returning the OS Disk size, possible bug in server

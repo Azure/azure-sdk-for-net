@@ -78,7 +78,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
 
                 // Gets the specialized managed OS and Data disks of the virtual machine
                 //
-                var osDisk = azure.Disks.GetById(linuxVM.OsDiskId);
+                var osDisk = azure.Disks.GetById(linuxVM.OSDiskId);
                 var dataDisks = new List<IDisk>();
                 foreach (var disk in linuxVM.DataDisks.Values)
                 {
@@ -217,7 +217,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                 Utilities.Log("Getting OS and data disks SAS Uris");
 
                 // OS Disk SAS Uri
-                osDisk = azure.Disks.GetById(linuxVM2.OsDiskId);
+                osDisk = azure.Disks.GetById(linuxVM2.OSDiskId);
 
                 var osDiskSasUri = osDisk.GrantAccess(24 * 60);
 
