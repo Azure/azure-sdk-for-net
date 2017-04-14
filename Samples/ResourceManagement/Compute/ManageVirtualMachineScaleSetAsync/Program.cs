@@ -83,7 +83,7 @@ namespace ManageVirtualMachineScaleSetAsync
                         }),
                         azure.PublicIPAddresses.Define(publicIpName)
                         .WithRegion(region)
-                        .WithExistingResourceGroup(rgName)
+                        .WithNewResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpName)
                         .CreateAsync()
                         .ContinueWith(pip =>
