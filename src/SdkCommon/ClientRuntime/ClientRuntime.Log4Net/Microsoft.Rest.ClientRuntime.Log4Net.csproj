@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))" />
+  <PropertyGroup>
+    <Description>Enables logging of event messages for AutoRest generated client libraries via Log4Net.</Description>
+    <AssemblyTitle>Log4Net Logger for Microsoft AutoRest Generated Clients</AssemblyTitle>
+    <VersionPrefix>2.1.3</VersionPrefix>
+    <Authors>Microsoft</Authors>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Log4Net</AssemblyName>
+    <!--<AssemblyOriginatorKeyFile>../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>-->
+    <PackageId>Microsoft.Rest.ClientRuntime.Log4Net</PackageId>
+    <PackageTags>Rest ClientRuntime Azure Test Log4Net $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\net452\Microsoft.Rest.ClientRuntime.Log4Net.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
+  </ItemGroup>
+  
+  <!--
+    Add list of project references that you need inside VS IDE for debugging purpose.
+    Also add list of nuget packages references that will be replaced during build outside of VS
+    These are mutually exclusive references.
+    Project references that are added should not be added as nuget references at the same time.
+    Hence we have two properties
+    AddProjectReferenceForDebuggingPurpose
+    AddNugetReferenceForCIandCmdlineBuild (this is for building your nuget project on CI and for release
+  
+  <ItemGroup Condition=" '$(AddProjectReferenceForDebuggingPurpose)' == 'true' ">
+    <ProjectReference Include="..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(AddNugetReferenceForCIandCmdlineBuild)' == 'true' ">
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.5,3.0)" />
+  </ItemGroup>
+  -->
+<!--
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+-->
+</Project>

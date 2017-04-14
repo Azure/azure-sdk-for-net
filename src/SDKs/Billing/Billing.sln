@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Billing", "Microsoft.Azure.Management.Billing\Microsoft.Azure.Management.Billing.xproj", "{1370136C-378A-46ED-9D4E-DB5A925709D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Billing", "Microsoft.Azure.Management.Billing\Microsoft.Azure.Management.Billing.csproj", "{1370136C-378A-46ED-9D4E-DB5A925709D4}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Billing.Tests", "Billing.Tests\Billing.Tests.xproj", "{F4CDC178-3DBE-4535-A384-633AB0A802B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing.Tests", "Billing.Tests\Billing.Tests.csproj", "{F4CDC178-3DBE-4535-A384-633AB0A802B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

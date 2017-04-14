@@ -1,0 +1,4 @@
+<Project ToolsVersion="15.0">
+	<Import Project="tools\buildTargets\common.Build.props"/>
+	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
+</Project>

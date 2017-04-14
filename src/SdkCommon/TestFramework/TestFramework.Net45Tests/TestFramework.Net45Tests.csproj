@@ -93,7 +93,7 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.TestFramework\TestFramework.xproj">
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj">
       <Project>{c4c4e1c8-b99d-4d90-8c27-6d0c0a268ba5}</Project>
       <Name>TestFramework</Name>
     </ProjectReference>

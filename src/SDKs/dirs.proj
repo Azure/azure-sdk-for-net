@@ -1,0 +1,9 @@
+﻿<Project>
+	<ItemGroup Label="SDKProject">
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization.Azure\Authorization.Tests\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="TestSDKProject">
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Microsoft.Azure.Management.Authorization\Authorization.Tests.csproj" ProjectType="Test" />
+  </ItemGroup> 
+</Project>

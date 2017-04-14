@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebSites.Tests", "WebSites.Tests\WebSites.Tests.xproj", "{9D70B803-B060-45D1-BABA-DCB357009BB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSites.Tests", "WebSites.Tests\WebSites.Tests.csproj", "{9D70B803-B060-45D1-BABA-DCB357009BB5}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Websites", "Microsoft.Azure.Management.Websites\Microsoft.Azure.Management.Websites.xproj", "{866744FF-9DA7-479E-9B22-6E33187726BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Websites", "Microsoft.Azure.Management.Websites\Microsoft.Azure.Management.Websites.csproj", "{866744FF-9DA7-479E-9B22-6E33187726BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

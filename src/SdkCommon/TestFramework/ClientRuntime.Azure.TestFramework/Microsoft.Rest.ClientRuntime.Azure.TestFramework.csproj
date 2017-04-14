@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+  <PropertyGroup>
+    <Description>Microsoft.Rest.ClientRuntime.Azure.TestFramework</Description>
+    <AssemblyTitle>Test framework for Microsoft AutoRest Generated Clients</AssemblyTitle>
+    <VersionPrefix>1.6.0</VersionPrefix>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.TestFramework</AssemblyName>
+    <PackageId>Microsoft.Rest.ClientRuntime.Azure.TestFramework</PackageId>
+    <PackageTags>Microsoft AutoRest ClientRuntime REST TestFramework</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TestProjectType>true</TestProjectType>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  
+  <!--
+  netstandard1.4;netstandard1.5
+    Add list of project references that you need inside VS IDE for debugging purpose.
+    Also add list of nuget packages references that will be replaced during build outside of VS
+    These are mutually exclusive references.
+    Project references that are added should not be added as nuget references at the same time.
+    Hence we have two properties
+    AddProjectReferenceForDebuggingPurpose
+    AddNugetReferenceForCIandCmdlineBuild (this is for building your nuget project on CI and for release
+  -->
+  <ItemGroup Condition=" '$(AddProjectReferenceForDebuggingPurpose)' == 'true' ">
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(AddNugetReferenceForCIandCmdlineBuild)' == 'true' ">
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+  </ItemGroup>
+  <!--
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.5,3.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD15;PORTABLE</DefineConstants>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+-->
+</Project>

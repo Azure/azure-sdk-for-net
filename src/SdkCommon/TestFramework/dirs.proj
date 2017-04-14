@@ -1,0 +1,14 @@
+﻿<Project>
+	<ItemGroup>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />		
+	</ItemGroup>
+
+	<!--
+	<ItemGroup>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)HttpRecorder.Tests\HttpRecorder.Tests.csproj" ProjectType="Test"  />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TestFramework.Net45Tests\TestFramework.Net45Tests.csroj" ProjectType="Test" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TestFramework.Tests\TestFramework.Tests.csproj" ProjectType="Test" />
+	</ItemGroup>
+	-->
+</Project>

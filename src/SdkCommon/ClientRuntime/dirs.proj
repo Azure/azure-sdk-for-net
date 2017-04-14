@@ -1,0 +1,24 @@
+﻿<Project>
+	<PropertyGroup>
+		<NugetCommonTags>Common ClientRuntime</NugetCommonTags>
+	</PropertyGroup>
+  <ItemGroup Label="SDKProject">
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />    
+	<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Etw\Microsoft.Rest.ClientRuntime.Etw.csproj" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Log4Net\Microsoft.Rest.ClientRuntime.Log4Net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="TestSDKProject">
+  <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Tests\Microsoft.Rest.ClientRuntime.Tests.csproj" ProjectType="Test" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Azure.Tests\Microsoft.Rest.ClientRuntime.Azure.Tests.csproj" ProjectType="Test" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Tests\Microsoft.Rest.ClientRuntime.Tests.csproj" ProjectType="Test" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Tracing.Tests\Microsoft.Rest.ClientRuntime.Tracing.Tests.csproj" ProjectType="Test" />
+	
+	<!-- 
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.E2E.Tests\ClientRuntime.E2E.Tests.csproj" ProjectType="Test" />
+	-->
+  </ItemGroup>  
+  
+</Project>
