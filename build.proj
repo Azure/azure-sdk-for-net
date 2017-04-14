@@ -1,25 +1,12 @@
 <Project>
-<Import Project="directory.Build.props" />
-<Import Project="directory.Build.targets" />
-<Import Project="test.props" />
-<Import Project="AzSdk.props" />
+	<Import Project="directory.Build.props" />
+	<Import Project="directory.Build.targets" />
+	<Import Project="test.props" />
+	<Import Project="AzSdk.props" />
 
-<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />  
-  <Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
+	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />  
+	<Target Name="Build" DependsOnTargets="$(RestoreTraversedProjectsDependsOn);$(BuildTraversedProjectsDependsOn)" />
+	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" />
+	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
   
-    <Target Name="PublishLocal">
-			<Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
-			  IgnoreExitCode="true"
-			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
-
-  </Target>
-
-<!--
-  <Import Project="dirs.proj" />
-  
-  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-  -->
-  
-
-
 </Project>

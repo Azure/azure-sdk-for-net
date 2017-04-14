@@ -17,7 +17,19 @@
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>	
-	<!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
+	
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.0</RuntimeFrameworkVersion>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>
+	
+	<!-- 
+	<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+	
+	<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.1' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.1' ">1.6.1</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.5' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.5' ">1.6.1</NetStandardImplicitPackageVersion>
+	-->
 	</PropertyGroup>
 	
 <PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)'=='Debug' ">

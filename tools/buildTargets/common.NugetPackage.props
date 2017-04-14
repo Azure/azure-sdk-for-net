@@ -20,6 +20,9 @@
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
     <PackageTags>$(PackageTags) $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+	<PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>    
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.4' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.4' ">1.6.1</NetStandardImplicitPackageVersion>
     
 
     <!--

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Tracing.Tests", "Test\ClientRuntime.Tracing.Tests\Microsoft.Rest.ClientRuntime.Tracing.Tests.csproj", "{05A3BD74-8C1B-457B-A85A-35C7B393449E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientRuntime.E2E.Tests", "Test\ClientRuntime.E2E.Tests\ClientRuntime.E2E.Tests.csproj", "{935BFCFC-6CE6-45D4-A39A-2416F900FDE3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime", "ClientRuntime\Microsoft.Rest.ClientRuntime.csproj", "{20392A6A-3240-4429-B62D-AAE1BC8773F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure", "ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj", "{0D20004D-46DC-4EB2-9193-8B399BA918A0}"
@@ -45,10 +43,6 @@ Global
 		{05A3BD74-8C1B-457B-A85A-35C7B393449E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05A3BD74-8C1B-457B-A85A-35C7B393449E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05A3BD74-8C1B-457B-A85A-35C7B393449E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{935BFCFC-6CE6-45D4-A39A-2416F900FDE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{935BFCFC-6CE6-45D4-A39A-2416F900FDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{935BFCFC-6CE6-45D4-A39A-2416F900FDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{935BFCFC-6CE6-45D4-A39A-2416F900FDE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20392A6A-3240-4429-B62D-AAE1BC8773F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20392A6A-3240-4429-B62D-AAE1BC8773F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20392A6A-3240-4429-B62D-AAE1BC8773F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,6 +79,5 @@ Global
 		{FEB95626-8C88-4E1D-8543-EE428AAE096D} = {FC756A84-660A-4917-85D0-0BBFB19FF71C}
 		{046D03E7-A0EC-4FC6-95FA-98B525819FC5} = {FC756A84-660A-4917-85D0-0BBFB19FF71C}
 		{05A3BD74-8C1B-457B-A85A-35C7B393449E} = {FC756A84-660A-4917-85D0-0BBFB19FF71C}
-		{935BFCFC-6CE6-45D4-A39A-2416F900FDE3} = {FC756A84-660A-4917-85D0-0BBFB19FF71C}
 	EndGlobalSection
 EndGlobal

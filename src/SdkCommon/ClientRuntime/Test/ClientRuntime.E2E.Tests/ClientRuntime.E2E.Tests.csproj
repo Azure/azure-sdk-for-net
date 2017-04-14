@@ -22,10 +22,8 @@
 
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.5" />
-    <!--<PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />-->
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
-
-    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />    
   </ItemGroup>
   
   <ItemGroup>
@@ -39,6 +37,7 @@
   </ItemGroup>
 
   <!--
+  <ProjectReference Include="..\..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
     Add list of project references that you need inside VS IDE for debugging purpose.
     Also add list of nuget packages references that will be replaced during build outside of VS
     These are mutually exclusive references.
