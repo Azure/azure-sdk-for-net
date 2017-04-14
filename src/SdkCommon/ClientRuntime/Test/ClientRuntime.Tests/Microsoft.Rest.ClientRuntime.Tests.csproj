@@ -9,7 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.0</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
     <TestProjectType>true</TestProjectType>
   </PropertyGroup>
 
@@ -28,6 +28,7 @@
   <!--
   
     <ItemGroup Condition=" '$(TargetFramework)' != 'net452' ">
+    <ProjectReference Include="..\..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />    
     <PackageReference Update="Mirosoft.NETCore.App" Version="1.0.2" />
     <PackageReference Update="NETStandard.Library" Version="1.6.1" />
   </ItemGroup>

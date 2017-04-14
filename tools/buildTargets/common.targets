@@ -17,10 +17,14 @@
   <PropertyGroup>
     <BuildTraversedProjectsDependsOn>
       PreBuildStaticAnalysis;
-      RestoreLatestProjects;
+      <!-- RestoreLatestProjects; -->
       BuildLatestProjects;
       Package
     </BuildTraversedProjectsDependsOn>
+	
+	<RestoreTraversedProjectsDependsOn>
+		RestoreLatestProjects;
+	</RestoreTraversedProjectsDependsOn>
 
     <CleanTraversedProjectsDependsOn>
       CleanLatestProjects;
