@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:677041EE7B045118782B0F039AD8F8C2:E22D7D9513E288182D42BE3859574904
         public SnapshotImpl WithDataFromDisk(IDisk managedDisk)
         {
-            if (managedDisk.OsType != null && managedDisk.OsType.HasValue)
+            if (managedDisk.OSType != null && managedDisk.OSType.HasValue)
             {
                 return WithDataFromDisk(managedDisk.Id)
-                    .WithOSType(managedDisk.OsType.Value)
+                    .WithOSType(managedDisk.OSType.Value)
                     .WithSku(managedDisk.Sku);
             }
             else
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public SnapshotImpl WithWindowsFromDisk(IDisk sourceDisk)
         {
             WithWindowsFromDisk(sourceDisk.Id);
-            if (sourceDisk.OsType != null && sourceDisk.OsType.HasValue)
+            if (sourceDisk.OSType != null && sourceDisk.OSType.HasValue)
             {
-                this.WithOSType(sourceDisk.OsType.Value);
+                this.WithOSType(sourceDisk.OSType.Value);
             }
             this.WithSku(sourceDisk.Sku);
             return this;
@@ -153,9 +153,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public SnapshotImpl WithLinuxFromDisk(IDisk sourceDisk)
         {
             WithLinuxFromDisk(sourceDisk.Id);
-            if (sourceDisk.OsType != null && sourceDisk.OsType.HasValue)
+            if (sourceDisk.OSType != null && sourceDisk.OSType.HasValue)
             {
-                WithOSType(sourceDisk.OsType.Value);
+                WithOSType(sourceDisk.OSType.Value);
             }
             WithSku(sourceDisk.Sku);
             return this;
@@ -213,9 +213,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public SnapshotImpl WithWindowsFromSnapshot(ISnapshot sourceSnapshot)
         {
             WithWindowsFromSnapshot(sourceSnapshot.Id);
-            if (sourceSnapshot.OsType != null && sourceSnapshot.OsType.HasValue)
+            if (sourceSnapshot.OSType != null && sourceSnapshot.OSType.HasValue)
             {
-                WithOSType(sourceSnapshot.OsType.Value);
+                WithOSType(sourceSnapshot.OSType.Value);
             }
             WithSku(sourceSnapshot.Sku);
             return this;
@@ -268,9 +268,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public SnapshotImpl WithLinuxFromSnapshot(ISnapshot sourceSnapshot)
         {
             WithLinuxFromSnapshot(sourceSnapshot.Id);
-            if (sourceSnapshot.OsType != null && sourceSnapshot.OsType.HasValue)
+            if (sourceSnapshot.OSType != null && sourceSnapshot.OSType.HasValue)
             {
-                WithOSType(sourceSnapshot.OsType.Value);
+                WithOSType(sourceSnapshot.OSType.Value);
             }
             WithSku(sourceSnapshot.Sku);
             return this;

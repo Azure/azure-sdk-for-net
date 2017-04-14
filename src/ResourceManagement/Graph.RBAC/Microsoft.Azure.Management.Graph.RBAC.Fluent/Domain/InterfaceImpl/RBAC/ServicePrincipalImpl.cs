@@ -2,63 +2,79 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models ;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Update;
-    public partial class ServicePrincipalImpl 
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
+
+    internal partial class ServicePrincipalImpl 
     {
         /// <summary>
         /// Specifies whether the service principal account is enabled upon creation.
         /// </summary>
-        /// <param name="enabled">enabled if set to true, the service principal account is enabled.</param>
-        /// <returns>the next stage in service principal definition</returns>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithAccountEnabled.WithAccountEnabled(bool enabled) { 
-            return this.WithAccountEnabled( enabled) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate;
+        /// <param name="enabled">If set to true, the service principal account is enabled.</param>
+        /// <return>The next stage in service principal definition.</return>
+        ServicePrincipal.Definition.IWithCreate ServicePrincipal.Definition.IWithAccountEnabled.WithAccountEnabled(bool enabled)
+        {
+            return this.WithAccountEnabled(enabled) as ServicePrincipal.Definition.IWithCreate;
         }
 
-        /// <returns>object type.</returns>
-        string Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.ObjectType
-        {
-            get
-            { 
-            return this.ObjectType() as string;
-            }
-        }
-        /// <returns>object Id.</returns>
+        /// <summary>
+        /// Gets object Id.
+        /// </summary>
         string Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.ObjectId
         {
             get
-            { 
-            return this.ObjectId() as string;
+            {
+                return this.ObjectId();
             }
         }
-        /// <returns>service principal display name.</returns>
-        string Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.DisplayName
-        {
-            get
-            { 
-            return this.DisplayName() as string;
-            }
-        }
-        /// <returns>app id.</returns>
+
+        /// <summary>
+        /// Gets app id.
+        /// </summary>
         string Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.AppId
         {
             get
-            { 
-            return this.AppId() as string;
+            {
+                return this.AppId();
             }
         }
-        /// <returns>the list of names.</returns>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.ServicePrincipalNames
+
+        /// <summary>
+        /// Gets service principal display name.
+        /// </summary>
+        string Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.DisplayName
         {
             get
-            { 
-            return this.ServicePrincipalNames() as System.Collections.Generic.IList<string>;
+            {
+                return this.DisplayName();
+            }
+        }
+
+        /// <summary>
+        /// Gets object type.
+        /// </summary>
+        string Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.ObjectType
+        {
+            get
+            {
+                return this.ObjectType();
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of names.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal.ServicePrincipalNames
+        {
+            get
+            {
+                return this.ServicePrincipalNames() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
     }

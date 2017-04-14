@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:56EA228A05D500A0D3F52C7711ECC751
-        public IList<ISqlFirewallRule> List()
+        public IReadOnlyList<ISqlFirewallRule> List()
         {
             return this.sqlFirewallRules.ListBySqlServer(this.resourceGroupName, this.sqlServerName);
         }

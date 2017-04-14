@@ -2,8 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using AvailabilitySet.Definition;
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
@@ -11,16 +10,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Entry point to availability set management API.
     /// </summary>
     public interface IAvailabilitySets  :
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        ISupportsCreating<AvailabilitySet.Definition.IBlank>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        IHasManager<IComputeManager>,
-        IHasInner<IAvailabilitySetsOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<AvailabilitySet.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Compute.Fluent.IComputeManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySetsOperations>
     {
     }
 }

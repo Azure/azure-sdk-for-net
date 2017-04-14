@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
     /// Container interface for all the definitions related to an availability set.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IBlank,
         Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup,
-        IWithCreate
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate
     {
     }
 
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
     /// The first stage of an availability set definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup>
     {
     }
 
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
     public interface IWithSku 
     {
         /// <summary>
-        /// Specifies the sku type for the availability set.
+        /// Specifies the SKU type for the availability set.
         /// </summary>
         /// <param name="skuType">The sku type.</param>
         /// <return>The next stage of the definition.</return>
@@ -75,15 +75,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
 
     /// <summary>
     /// The stage of an availability set definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>,
-        IWithUpdateDomainCount,
-        IWithFaultDomainCount,
-        IWithSku
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithUpdateDomainCount,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithFaultDomainCount,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithSku
     {
     }
 }

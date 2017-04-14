@@ -2,68 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
 {
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent;
 
-    using Management.Storage.Fluent.Models;
-    using ResourceManager.Fluent.Core.Resource.Update;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    /// <summary>
-    /// A storage account update stage allowing to change the parameters.
-    /// </summary>
-    public interface IWithSku 
-    {
-        /// <summary>
-        /// Specifies the sku of the storage account. This used to be called
-        /// account types.             *
-        /// </summary>
-        /// <param name="skuName">skuName the sku</param>
-        /// <returns>the next stage of storage account update</returns>
-        IUpdate WithSku(SkuName skuName);
-
-    }
-    /// <summary>
-    /// The template for a storage account update operation, containing all the settings that can be modified.
-    /// </summary>
-    public interface IUpdate  :
-        IAppliable<IStorageAccount>,
-        IWithSku,
-        IWithCustomDomain,
-        IWithEncryption,
-        IWithAccessTier,
-        IUpdateWithTags<Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate>
-    {
-    }
-    /// <summary>
-    /// A storage account update allowing encryption to be specified.
-    /// </summary>
-    public interface IWithEncryption 
-    {
-        /// <summary>
-        /// Specifies the encryption setting on the account.
-        /// <p>
-        /// The default setting is unencrypted.
-        /// </summary>
-        /// <param name="encryption">encryption the encryption setting</param>
-        /// <returns>the nest stage of storage account update</returns>
-        IUpdate WithEncryption(Encryption encryption);
-
-    }
-    /// <summary>
-    /// A blob storage account update stage allowing access tier to be specified.
-    /// </summary>
-    public interface IWithAccessTier 
-    {
-        /// <summary>
-        /// Specifies the access tier used for billing.
-        /// <p>
-        /// Access tier cannot be changed more than once every 7 days (168 hours).
-        /// Access tier cannot be set for StandardLRS, StandardGRS, StandardRAGRS,
-        /// or PremiumLRS account types.
-        /// </summary>
-        /// <param name="accessTier">accessTier the access tier value</param>
-        /// <returns>the next stage of storage account update</returns>
-        IUpdate WithAccessTier(AccessTier accessTier);
-
-    }
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
     /// </summary>
@@ -72,23 +15,85 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
         /// </summary>
-        /// <param name="customDomain">customDomain the user domain assigned to the storage account</param>
-        /// <returns>the next stage of storage account update</returns>
-        IUpdate WithCustomDomain(CustomDomain customDomain);
+        /// <param name="customDomain">The user domain assigned to the storage account.</param>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithCustomDomain(CustomDomain customDomain);
 
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
         /// </summary>
-        /// <param name="name">name the custom domain name, which is the CNAME source</param>
-        /// <returns>the next stage of storage account update</returns>
-        IUpdate WithCustomDomain(string name);
+        /// <param name="name">The custom domain name, which is the CNAME source.</param>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithCustomDomain(string name);
 
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
         /// </summary>
-        /// <param name="name">name the custom domain name, which is the CNAME source</param>
-        /// <param name="useSubDomain">useSubDomain whether indirect CName validation is enabled</param>
-        /// <returns>the next stage of storage account update</returns>
-        IUpdate WithCustomDomain(string name, bool useSubDomain);
+        /// <param name="name">The custom domain name, which is the CNAME source.</param>
+        /// <param name="useSubDomain">Whether indirect CName validation is enabled.</param>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithCustomDomain(string name, bool useSubDomain);
+    }
+
+    /// <summary>
+    /// The template for a storage account update operation, containing all the settings that can be modified.
+    /// </summary>
+    public interface IUpdate  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IWithSku,
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IWithCustomDomain,
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IWithEncryption,
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IWithAccessTier,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate>
+    {
+    }
+
+    /// <summary>
+    /// A storage account update allowing encryption to be specified.
+    /// </summary>
+    public interface IWithEncryption 
+    {
+        /// <summary>
+        /// Specifies the encryption setting on the account.
+        /// The default setting is unencrypted.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="encryption">The encryption setting.</param>
+        /// <return>The nest stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithEncryption(Encryption encryption);
+    }
+
+    /// <summary>
+    /// A storage account update stage allowing to change the parameters.
+    /// </summary>
+    public interface IWithSku 
+    {
+        /// <summary>
+        /// Specifies the sku of the storage account. This used to be called
+        /// account types.
+        /// </summary>
+        /// <param name="skuName">The sku.</param>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithSku(SkuName skuName);
+    }
+
+    /// <summary>
+    /// A blob storage account update stage allowing access tier to be specified.
+    /// </summary>
+    public interface IWithAccessTier 
+    {
+        /// <summary>
+        /// Specifies the access tier used for billing.
+        /// Access tier cannot be changed more than once every 7 days (168 hours).
+        /// Access tier cannot be set for StandardLRS, StandardGRS, StandardRAGRS,
+        /// or PremiumLRS account types.
+        /// </summary>
+        /// <param name="accessTier">The access tier value.</param>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithAccessTier(AccessTier accessTier);
     }
 }

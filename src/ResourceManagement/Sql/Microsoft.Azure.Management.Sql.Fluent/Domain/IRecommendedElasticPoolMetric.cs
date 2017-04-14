@@ -3,24 +3,24 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Replication link.
     /// </summary>
     public interface IRecommendedElasticPoolMetric  :
-        IHasInner<Models.RecommendedElasticPoolMetric>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.RecommendedElasticPoolMetric>
     {
-        /// <summary>
-        /// Gets the size in gigabytes.
-        /// </summary>
-        double SizeGB { get; }
-
         /// <summary>
         /// Gets the time of metric (ISO8601 format).
         /// </summary>
         System.DateTime DateTimeProperty { get; }
+
+        /// <summary>
+        /// Gets the size in gigabytes.
+        /// </summary>
+        double SizeGB { get; }
 
         /// <summary>
         /// Gets the DTUs (Database Transaction Units)

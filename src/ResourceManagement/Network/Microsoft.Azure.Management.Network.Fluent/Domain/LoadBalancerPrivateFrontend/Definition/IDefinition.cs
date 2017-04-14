@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// <summary>
     /// The stage of a private frontend definition allowing to specify a subnet from the selected network.
     /// </summary>
-    /// <typeparam name="ParentT">The next stage of the parent definition.</typeparam>
+    /// <typeparam name="ParentT">The next stage of the definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithSubnet<ParentT>
     {
     }
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// <summary>
     /// The first stage of a private frontend definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithSubnet<ParentT>
     {
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinitionAlt<ParentT>,
-        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
     }
 }

@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// The entirety of a private frontend update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
-        IWithSubnet,
-        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IWithSubnet,
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Update.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>
     {
     }
 

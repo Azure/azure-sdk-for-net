@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// The stage of a virtual machine scale set extension definition allowing to specify the publisher of the
     /// extension image this extension is based on.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPublisher<ParentT> 
     {
         /// <summary>
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// The stage of a virtual machine scale set extension definition allowing to enable or disable auto upgrade of the
     /// extension when when a new minor version of virtual machine scale set extension image gets published.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAutoUpgradeMinorVersion<ParentT> 
     {
         /// <summary>
@@ -44,9 +44,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// <summary>
     /// The stage of a virtual machine scale set extension definition allowing to specify the public and private settings.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithSettings<ParentT> 
     {
+        /// <summary>
+        /// Specifies private settings.
+        /// </summary>
+        /// <param name="settings">The private settings.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAttach<ParentT> WithProtectedSettings(IDictionary<string,object> settings);
+
+        /// <summary>
+        /// Specifies public settings.
+        /// </summary>
+        /// <param name="settings">The public settings.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAttach<ParentT> WithPublicSettings(IDictionary<string,object> settings);
+
         /// <summary>
         /// Specifies a private settings entry.
         /// </summary>
@@ -62,33 +76,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
         /// <param name="value">The value of the public settings entry.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAttach<ParentT> WithPublicSetting(string key, object value);
-
-        /// <summary>
-        /// Specifies public settings.
-        /// </summary>
-        /// <param name="settings">The public settings.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAttach<ParentT> WithPublicSettings(IDictionary<string,object> settings);
-
-        /// <summary>
-        /// Specifies private settings.
-        /// </summary>
-        /// <param name="settings">The private settings.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAttach<ParentT> WithProtectedSettings(IDictionary<string,object> settings);
     }
 
     /// <summary>
     /// The entirety of a virtual machine scale set extension definition as a part of a parent definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithImageOrPublisher<ParentT>,
-        IWithPublisher<ParentT>,
-        IWithType<ParentT>,
-        IWithVersion<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithImageOrPublisher<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithPublisher<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithType<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithVersion<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAttach<ParentT>
     {
     }
 
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// The stage of a virtual machine scale set extension definition allowing to specify the type of the virtual machine
     /// scale set extension image this extension is based on.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithType<ParentT> 
     {
         /// <summary>
@@ -109,14 +109,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
 
     /// <summary>
     /// The final stage of a virtual machine scale set extension definition.
-    /// At this stage, any remaining optional settings can be specified, or the virtual machine scale set extension definition
-    /// can be attached to the parent virtual machine scale set definition using VirtualMachineExtension.DefinitionStages.WithAttach.attach().
     /// </summary>
-    /// <typeparam name="Parent">The return type of VirtualMachineExtension.DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
-        IWithAutoUpgradeMinorVersion<ParentT>,
-        IWithSettings<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithAutoUpgradeMinorVersion<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithSettings<ParentT>
     {
     }
 
@@ -124,9 +122,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// The stage of a virtual machines scale set extension definition allowing to specify an extension image or
     /// specify name of the virtual machine scale set extension publisher.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithImageOrPublisher<ParentT>  :
-        IWithPublisher<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithPublisher<ParentT>
     {
         /// <summary>
         /// Specifies the virtual machine scale set extension image to use.
@@ -139,9 +137,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// <summary>
     /// The first stage of a virtual machine scale set extension definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithImageOrPublisher<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition.IWithImageOrPublisher<ParentT>
     {
     }
 
@@ -149,7 +147,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// The stage of a virtual machine scale set extension definition allowing to specify the type of the virtual machine
     /// scale set extension version this extension is based on.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithVersion<ParentT> 
     {
         /// <summary>

@@ -14,11 +14,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerProbe  :
-        IHasInner<Models.ProbeInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IHasLoadBalancingRules,
-        IHasProtocol<ProbeProtocol>,
-        IHasPort
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ProbeInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules,
+        Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.ProbeProtocol>,
+        Microsoft.Azure.Management.Network.Fluent.IHasPort
     {
         /// <summary>
         /// Gets number of seconds between probes.

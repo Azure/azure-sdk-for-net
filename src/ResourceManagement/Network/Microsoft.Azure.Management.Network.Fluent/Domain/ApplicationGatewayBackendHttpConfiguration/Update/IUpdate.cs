@@ -59,11 +59,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// The entirety of an application gateway backend HTTP configuration update as part of an application gateway update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithPort,
-        IWithAffinity,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithAffinity,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithProtocol,
-        IWithRequestTimeout
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithRequestTimeout
     {
     }
 }

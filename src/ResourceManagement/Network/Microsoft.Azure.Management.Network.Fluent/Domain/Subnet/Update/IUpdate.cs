@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Update
     /// The entirety of a subnet update as part of a network update.
     /// </summary>
     public interface IUpdate  :
-        IWithAddressPrefix,
-        IWithNetworkSecurityGroup,
-        IWithRouteTable,
-        ISettable<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IWithAddressPrefix,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IWithNetworkSecurityGroup,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IWithRouteTable,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>
     {
     }
 

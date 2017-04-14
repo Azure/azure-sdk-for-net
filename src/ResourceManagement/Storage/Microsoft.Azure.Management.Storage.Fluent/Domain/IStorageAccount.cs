@@ -2,90 +2,124 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    using ResourceManager.Fluent.Core;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;
+    using Microsoft.Rest;
+    using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// An immutable client-side representation of an Azure storage account.
     /// </summary>
     public interface IStorageAccount  :
-        IGroupableResource<IStorageManager, Models.StorageAccountInner>,
-        IRefreshable<IStorageAccount>,
-        IUpdatable<StorageAccount.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Storage.Fluent.IStorageManager,Models.StorageAccountInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<StorageAccount.Update.IUpdate>
     {
-        /// <returns>the status indicating whether the primary and secondary location of</returns>
-        /// <returns>the storage account is available or unavailable. Possible values include:</returns>
-        /// <returns>'Available', 'Unavailable'</returns>
-        AccountStatuses AccountStatuses { get; }
+        /// <summary>
+        /// Gets access tier used for billing. Access tier cannot be changed more
+        /// than once every 7 days (168 hours). Access tier cannot be set for
+        /// StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types.
+        /// Possible values include: 'Hot', 'Cool'.
+        /// </summary>
+        Models.AccessTier AccessTier { get; }
 
-        /// <returns>the sku of this storage account. Possible names include:</returns>
-        /// <returns>'Standard_LRS', 'Standard_ZRS', 'Standard_GRS', 'Standard_RAGRS',</returns>
-        /// <returns>'Premium_LRS'. Possible tiers include: 'Standard', 'Premium'.</returns>
-        Management.Storage.Fluent.Models.Sku Sku { get; }
+        /// <summary>
+        /// Gets the sku of this storage account. Possible names include:
+        /// 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS', 'Standard_RAGRS',
+        /// 'Premium_LRS'. Possible tiers include: 'Standard', 'Premium'.
+        /// </summary>
+        Models.Sku Sku { get; }
 
-        /// <returns>the kind of the storage account. Possible values are 'Storage',</returns>
-        /// <returns>'BlobStorage'.</returns>
-        Management.Storage.Fluent.Models.Kind Kind { get; }
+        /// <summary>
+        /// Gets the kind of the storage account. Possible values are 'Storage',
+        /// 'BlobStorage'.
+        /// </summary>
+        Models.Kind Kind { get; }
 
-        /// <returns>the creation date and time of the storage account in UTC</returns>
+        /// <summary>
+        /// Fetch the up-to-date access keys from Azure for this storage account asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>Observable to the access keys for this storage account.</return>
+        Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the URLs that are used to perform a retrieval of a public blob,
+        /// queue or table object. Note that StandardZRS and PremiumLRS accounts
+        /// only return the blob endpoint.
+        /// </summary>
+        Microsoft.Azure.Management.Storage.Fluent.PublicEndpoints EndPoints { get; }
+
+        /// <summary>
+        /// Fetch the up-to-date access keys from Azure for this storage account.
+        /// </summary>
+        /// <return>The access keys for this storage account.</return>
+        System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey> GetKeys();
+
+        /// <summary>
+        /// Gets the user assigned custom domain assigned to this storage account.
+        /// </summary>
+        Models.CustomDomain CustomDomain { get; }
+
+        /// <summary>
+        /// Gets the encryption settings on the account. If unspecified the account
+        /// is unencrypted.
+        /// </summary>
+        Models.Encryption Encryption { get; }
+
+        /// <summary>
+        /// Gets the status indicating whether the primary and secondary location of
+        /// the storage account is available or unavailable. Possible values include:
+        /// 'Available', 'Unavailable'.
+        /// </summary>
+        Microsoft.Azure.Management.Storage.Fluent.AccountStatuses AccountStatuses { get; }
+
+        /// <summary>
+        /// Regenerates the access keys for this storage account asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="keyName">If the key name.</param>
+        /// <return>Observable to the access keys for this storage account.</return>
+        Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the creation date and time of the storage account in UTC.
+        /// </summary>
         System.DateTime CreationTime { get; }
 
-        /// <returns>the user assigned custom domain assigned to this storage account</returns>
-        Management.Storage.Fluent.Models.CustomDomain CustomDomain { get; }
+        /// <summary>
+        /// Gets the status of the storage account at the time the operation was
+        /// called. Possible values include: 'Creating', 'ResolvingDNS',
+        /// 'Succeeded'.
+        /// </summary>
+        Models.ProvisioningState ProvisioningState { get; }
 
-        /// <returns>the timestamp of the most recent instance of a failover to the</returns>
-        /// <returns>secondary location. Only the most recent timestamp is retained. This</returns>
-        /// <returns>element is not returned if there has never been a failover instance.</returns>
-        /// <returns>Only available if the accountType is StandardGRS or StandardRAGRS</returns>
+        /// <summary>
+        /// Regenerates the access keys for this storage account.
+        /// </summary>
+        /// <param name="keyName">If the key name.</param>
+        /// <return>The generated access keys for this storage account.</return>
+        System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey> RegenerateKey(string keyName);
+
+        /// <summary>
+        /// Gets the timestamp of the most recent instance of a failover to the
+        /// secondary location. Only the most recent timestamp is retained. This
+        /// element is not returned if there has never been a failover instance.
+        /// Only available if the accountType is StandardGRS or StandardRAGRS.
+        /// </summary>
         System.DateTime LastGeoFailoverTime { get; }
-
-        /// <returns>the status of the storage account at the time the operation was</returns>
-        /// <returns>called. Possible values include: 'Creating', 'ResolvingDNS',</returns>
-        /// <returns>'Succeeded'</returns>
-        Management.Storage.Fluent.Models.ProvisioningState ProvisioningState { get; }
-
-        /// <returns>the URLs that are used to perform a retrieval of a public blob,</returns>
-        /// <returns>queue or table object. Note that StandardZRS and PremiumLRS accounts</returns>
-        /// <returns>only return the blob endpoint</returns>
-        PublicEndpoints EndPoints { get; }
-
-        /// <returns>the encryption settings on the account. If unspecified the account</returns>
-        /// <returns>is unencrypted.</returns>
-        Management.Storage.Fluent.Models.Encryption Encryption { get; }
-
-        /// <returns>access tier used for billing. Access tier cannot be changed more</returns>
-        /// <returns>than once every 7 days (168 hours). Access tier cannot be set for</returns>
-        /// <returns>StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types.</returns>
-        /// <returns>Possible values include: 'Hot', 'Cool'.</returns>
-        Management.Storage.Fluent.Models.AccessTier AccessTier { get; }
-
-        /// <summary>
-        /// Fetch the up-to-date access keys from Azure for this storage account.
-        /// </summary>
-        /// <returns>the access keys for this storage account</returns>
-        IList<Models.StorageAccountKey> GetKeys();
-
-        /// <summary>
-        /// Fetch the up-to-date access keys from Azure for this storage account.
-        /// </summary>
-        /// <returns>the access keys for this storage account</returns>
-        Task<IList<Models.StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
-        
-        /// <summary>
-        /// Regenerates the access keys for this storage account.
-        /// </summary>
-        /// <param name="keyName">keyName if the key name</param>
-        /// <returns>the generated access keys for this storage account</returns>
-        IList<Models.StorageAccountKey> RegenerateKey(string keyName);
-
-        /// <summary>
-        /// Regenerates the access keys for this storage account.
-        /// </summary>
-        /// <param name="keyName">keyName if the key name</param>
-        /// <returns>the generated access keys for this storage account</returns>
-        Task<IList<Models.StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

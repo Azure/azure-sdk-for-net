@@ -14,23 +14,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGatewayFrontend  :
-        IHasInner<Models.ApplicationGatewayFrontendIPConfigurationInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IHasPrivateIPAddress,
-        IHasSubnet,
-        IHasPublicIPAddress
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayFrontendIPConfigurationInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet,
+        Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress
     {
         /// <return>The associated subnet.</return>
         Microsoft.Azure.Management.Network.Fluent.ISubnet GetSubnet();
 
         /// <summary>
-        /// Gets true if the frontend is accessible via a public IP address, else false.
-        /// </summary>
-        bool IsPublic { get; }
-
-        /// <summary>
         /// Gets true is the frontend is accessible via an private IP address.
         /// </summary>
         bool IsPrivate { get; }
+
+        /// <summary>
+        /// Gets true if the frontend is accessible via a public IP address, else false.
+        /// </summary>
+        bool IsPublic { get; }
     }
 }

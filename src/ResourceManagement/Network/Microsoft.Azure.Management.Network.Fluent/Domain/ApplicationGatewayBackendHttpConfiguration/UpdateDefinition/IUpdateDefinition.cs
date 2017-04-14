@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithPort<ParentT>,
-        IWithAffinity<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAffinity<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithProtocol<ParentT>,
-        IWithRequestTimeout<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithRequestTimeout<ParentT>
     {
     }
 
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 

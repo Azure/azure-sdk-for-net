@@ -2,20 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using System;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using System;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL database's Upgrade hint.
     /// </summary>
-    public interface IUpgradeHint  :
-        IHasInner<Models.UpgradeHint>
+    public interface IUpgradeHintInterface  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.UpgradeHint>
     {
-        /// <return>Target ServiceLevelObjectiveId for upgrade hint.</return>
-        System.Guid TargetServiceLevelObjectiveId { get; }
-
-        /// <return>Target ServiceLevelObjective for upgrade hint.</return>
+        /// <summary>
+        /// Gets Target ServiceLevelObjective for upgrade hint.
+        /// </summary>
         string TargetServiceLevelObjective { get; }
+
+        /// <summary>
+        /// Gets Target ServiceLevelObjectiveId for upgrade hint.
+        /// </summary>
+        System.Guid TargetServiceLevelObjectiveId { get; }
     }
 }

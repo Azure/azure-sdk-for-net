@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabases.SqlDatabaseCreatabl
     /// Entry point to SQL FirewallRule management API, which already have the SQLServer specified.
     /// </summary>
     public interface ISqlDatabaseCreatable  :
-        ISqlDatabases
+        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabases
     {
         Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IBlank DefinedWithSqlServer(string resourceGroupName, string sqlServerName, string databaseName, Region region);
     }

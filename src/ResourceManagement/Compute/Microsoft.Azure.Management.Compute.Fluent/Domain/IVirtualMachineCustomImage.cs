@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -11,27 +11,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine custom image.
     /// </summary>
     public interface IVirtualMachineCustomImage  :
-        IGroupableResource<IComputeManager, ImageInner>,
-        IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Compute.Fluent.IComputeManager,Models.ImageInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
     {
         /// <summary>
-        /// Gets operating system disk image in this image.
-        /// </summary>
-        Models.ImageOSDisk OsDiskImage { get; }
-
-        /// <summary>
-        /// Gets true if this image is created by capturing a virtual machine.
+        /// Gets true if this image was created by capturing a virtual machine.
         /// </summary>
         bool IsCreatedFromVirtualMachine { get; }
 
         /// <summary>
-        /// Gets id of the virtual machine if this image is created by capturing that virtual machine.
+        /// Gets ID of the virtual machine if this image was created by capturing that virtual machine.
         /// </summary>
         string SourceVirtualMachineId { get; }
 
         /// <summary>
-        /// Gets data disk images in this image, indexed by the disk lun.
+        /// Gets data disk images in this image, indexed by the disk LUN.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<int,Models.ImageDataDisk> DataDiskImages { get; }
+
+        /// <summary>
+        /// Gets operating system disk image in this image.
+        /// </summary>
+        Models.ImageOSDisk OSDiskImage { get; }
     }
 }

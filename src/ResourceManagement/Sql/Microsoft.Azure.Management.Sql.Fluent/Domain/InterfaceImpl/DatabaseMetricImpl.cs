@@ -3,19 +3,30 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System;
 
     internal partial class DatabaseMetricImpl 
     {
         /// <summary>
-        /// Gets the current limit of the metric.
+        /// Gets the name of the resource.
         /// </summary>
-        double Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.Limit
+        string Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.ResourceName
         {
             get
             {
-                return this.Limit();
+                return this.ResourceName();
+            }
+        }
+
+        /// <summary>
+        /// Gets the next reset time for the metric (ISO8601 format).
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.NextResetTime
+        {
+            get
+            {
+                return this.NextResetTime();
             }
         }
 
@@ -27,17 +38,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.DisplayName();
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.ResourceName
-        {
-            get
-            {
-                return this.ResourceName();
             }
         }
 
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Gets the next reset time for the metric (ISO8601 format).
+        /// Gets the current limit of the metric.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.NextResetTime
+        double Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.Limit
         {
             get
             {
-                return this.NextResetTime();
+                return this.Limit();
             }
         }
     }

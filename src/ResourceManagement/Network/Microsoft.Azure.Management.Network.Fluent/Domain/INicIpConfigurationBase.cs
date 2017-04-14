@@ -16,9 +16,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         bool IsPrimary { get; }
 
-        /// <return>The virtual network associated with this IP configuration.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetwork GetNetwork();
-
         /// <return>The load balancer backends associated with this network interface IP configuration.</return>
         System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListAssociatedLoadBalancerBackends();
 
@@ -26,6 +23,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets private IP address version.
         /// </summary>
         Models.IPVersion PrivateIPAddressVersion { get; }
+
+        /// <return>The virtual network associated with this IP configuration.</return>
+        Microsoft.Azure.Management.Network.Fluent.INetwork GetNetwork();
 
         /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>
         System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();

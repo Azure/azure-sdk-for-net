@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
@@ -12,7 +13,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal partial class DeploymentSlotsImpl 
     {
-
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its resource name.
         /// </summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
  
             this.DeleteByName(name);
         }
-        
+
         /// <summary>
         /// Asynchronously delete a resource from Azure, identifying it by its resource name.
         /// </summary>
@@ -126,11 +126,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the manager client of this resource type.
         /// </summary>
-        IAppServiceManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IAppServiceManager>.Manager
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager>.Manager
         {
             get
             {
-                return this.Manager as IAppServiceManager;
+                return this.Manager as Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager;
             }
         }
     }

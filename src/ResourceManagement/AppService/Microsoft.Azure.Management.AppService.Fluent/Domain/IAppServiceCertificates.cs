@@ -3,7 +3,6 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Definition;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
@@ -23,8 +22,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IAppServiceManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<ICertificatesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.AppService.Fluent.ICertificatesOperations>
     {
     }
 }

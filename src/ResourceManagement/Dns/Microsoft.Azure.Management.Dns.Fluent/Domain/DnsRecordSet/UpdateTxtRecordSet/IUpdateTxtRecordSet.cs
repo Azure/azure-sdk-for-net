@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet
     /// The entirety of a TXT record set update as a part of parent DNS zone update.
     /// </summary>
     public interface IUpdateTxtRecordSet  :
-        IWithTxtRecordTextValue,
-        IUpdate
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IWithTxtRecordTextValue,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IUpdate
     {
     }
 }

@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithPrivateIP<ParentT>  :
-        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.UpdateDefinition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
 
@@ -61,10 +61,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdateAlt<ParentT>,
-        IWithPublicIPAddress<ParentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInUpdateAlt<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithPublicIPAddress<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithSubnet<ParentT>,
-        IWithPrivateIP<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithPrivateIP<ParentT>
     {
     }
 
@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// The stage of an application gateway frontend definition allowing to specify an existing public IP address to make
     /// the application gateway available at as Internet-facing.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPublicIPAddress<ParentT>  :
-        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
 }

@@ -9,14 +9,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The entirety of the managed disk based virtual machine scale set definition.
     /// </summary>
     public interface IDefinitionManaged  :
-        IDefinitionShared,
-        IWithLinuxRootUsernameManaged,
-        IWithLinuxRootPasswordOrPublicKeyManaged,
-        IWithWindowsAdminUsernameManaged,
-        IWithWindowsAdminPasswordManaged,
-        IWithLinuxCreateManaged,
-        IWithWindowsCreateManaged,
-        IWithManagedCreate
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.DefinitionShared.IDefinitionShared,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedCreate
     {
     }
 }

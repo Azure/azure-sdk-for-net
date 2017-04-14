@@ -6,9 +6,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition.Bla
 
     /// <summary>
     /// The stage of the CDN profile endpoint definition allowing to specify the origin
-    /// for CDN Profile with Premium Verizon sku.
+    /// for CDN Profile with the Premium Verizon SKU.
     /// </summary>
-    /// <typeparam name="Parent">The return type of AttachablePremium.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent CDN profile update to return to after attaching this definition.</typeparam>
     public interface IPremiumEndpoint<ParentT> 
     {
         /// <summary>

@@ -2,11 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     internal partial class ComputeUsageImpl 
     {
+        /// <summary>
+        /// Gets the name of the type of usage.
+        /// </summary>
+        Models.UsageName Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Name
+        {
+            get
+            {
+                return this.Name() as Models.UsageName;
+            }
+        }
+
         /// <summary>
         /// Gets the maximum count of the resources that can be allocated in the
         /// subscription.
@@ -20,13 +31,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the name of the type of usage.
+        /// Gets the unit of measurement.
         /// </summary>
-        Models.UsageName Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Name
+        Models.ComputeUsageUnit Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Unit
         {
             get
             {
-                return this.Name() as Models.UsageName;
+                return this.Unit() as Models.ComputeUsageUnit;
             }
         }
 
@@ -38,17 +49,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.CurrentValue();
-            }
-        }
-
-        /// <summary>
-        /// Gets the unit of measurement.
-        /// </summary>
-        Models.ComputeUsageUnit Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Unit
-        {
-            get
-            {
-                return this.Unit() as Models.ComputeUsageUnit;
             }
         }
     }

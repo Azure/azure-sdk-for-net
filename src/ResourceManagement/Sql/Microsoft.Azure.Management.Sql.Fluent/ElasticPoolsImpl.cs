@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:4696CE89C64991C8EEE3386298E90611
-        public IList<ISqlElasticPool> List()
+        public IReadOnlyList<ISqlElasticPool> List()
         {
             return this.elasticPools.ListBySqlServer(this.resourceGroupName, this.sqlServerName);
         }

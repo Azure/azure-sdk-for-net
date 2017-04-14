@@ -4,35 +4,121 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using SqlElasticPool.Definition;
-    using SqlElasticPool.Update;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System.Collections.Generic;
     using System;
 
     internal partial class SqlElasticPoolImpl 
     {
         /// <summary>
-        /// Sets the edition for the SQL Elastic Pool.
+        /// Gets the manager client of this resource type.
         /// </summary>
-        /// <param name="edition">Edition to be set for elastic pool.</param>
-        /// <return>The next stage of the definition.</return>
-        SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithEdition.WithEdition(string edition)
+        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
         {
-            return this.WithEdition(edition) as SqlElasticPool.Definition.IWithCreate;
+            get
+            {
+                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
+            }
         }
 
         /// <summary>
-        /// Creates a new database in the SQL elastic pool.
+        /// Gets the resource ID string.
         /// </summary>
-        /// <param name="databaseName">Name of the new database to be added in the elastic pool.</param>
-        /// <return>The next stage of the definition.</return>
-        SqlElasticPool.Update.IUpdate SqlElasticPool.Update.IWithDatabase.WithNewDatabase(string databaseName)
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
-            return this.WithNewDatabase(databaseName) as SqlElasticPool.Update.IUpdate;
+            get
+            {
+                return this.Id;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new child resource under parent resource.
+        /// </summary>
+        /// <param name="existingParentResource">The parent resource under which this resource to be created.</param>
+        /// <return>The creatable for the child resource.</return>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition.IWithParentResource<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool,Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.WithExistingParentResource(ISqlServer existingParentResource)
+        {
+            return this.WithExistingParentResource(existingParentResource) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+        }
+
+        /// <summary>
+        /// Creates a new child resource under parent resource.
+        /// </summary>
+        /// <param name="groupName">The name of the resource group for parent resource.</param>
+        /// <param name="parentName">The name of the parent resource.</param>
+        /// <return>The creatable for the child resource.</return>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition.IWithParentResource<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool,Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.WithExistingParentResource(string groupName, string parentName)
+        {
+            return this.WithExistingParentResource(groupName, parentName) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+        }
+
+        /// <summary>
+        /// Creates a new child resource under parent resource.
+        /// </summary>
+        /// <param name="parentResourceCreatable">A creatable definition for the parent resource.</param>
+        /// <return>The creatable for the child resource.</return>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition.IWithParentResource<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool,Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.WithNewParentResource(ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer> parentResourceCreatable)
+        {
+            return this.WithNewParentResource(parentResourceCreatable) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+        }
+
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
+
+        /// <summary>
+        /// Specifies tags for the resource as a  Map.
+        /// </summary>
+        /// <param name="tags">A  Map of tags.</param>
+        /// <return>The next stage of the definition.</return>
+        SqlElasticPool.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<SqlElasticPool.Definition.IWithCreate>.WithTags(IDictionary<string,string> tags)
+        {
+            return this.WithTags(tags) as SqlElasticPool.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Adds a tag to the resource.
+        /// </summary>
+        /// <param name="key">The key for the tag.</param>
+        /// <param name="value">The value for the tag.</param>
+        /// <return>The next stage of the definition.</return>
+        SqlElasticPool.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<SqlElasticPool.Definition.IWithCreate>.WithTag(string key, string value)
+        {
+            return this.WithTag(key, value) as SqlElasticPool.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Sets the maximum DTU any one SQL Azure Database can consume.
+        /// </summary>
+        /// <param name="databaseDtuMax">Maximum DTU any one SQL Azure Database can consume.</param>
+        /// <return>The next stage of definition.</return>
+        SqlElasticPool.Update.IUpdate SqlElasticPool.Update.IWithDatabaseDtuMax.WithDatabaseDtuMax(int databaseDtuMax)
+        {
+            return this.WithDatabaseDtuMax(databaseDtuMax) as SqlElasticPool.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Sets the maximum DTU any one SQL Azure Database can consume.
+        /// </summary>
+        /// <param name="databaseDtuMax">Maximum DTU any one SQL Azure Database can consume.</param>
+        /// <return>The next stage of the definition.</return>
+        SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithDatabaseDtuMax.WithDatabaseDtuMax(int databaseDtuMax)
+        {
+            return this.WithDatabaseDtuMax(databaseDtuMax) as SqlElasticPool.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -60,9 +146,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="databaseName">Name of the new database to be added in the elastic pool.</param>
         /// <return>The next stage of the definition.</return>
-        SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithDatabase.WithNewDatabase(string databaseName)
+        SqlElasticPool.Update.IUpdate SqlElasticPool.Update.IWithDatabase.WithNewDatabase(string databaseName)
         {
-            return this.WithNewDatabase(databaseName) as SqlElasticPool.Definition.IWithCreate;
+            return this.WithNewDatabase(databaseName) as SqlElasticPool.Update.IUpdate;
         }
 
         /// <summary>
@@ -86,6 +172,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
+        /// Creates a new database in the SQL elastic pool.
+        /// </summary>
+        /// <param name="databaseName">Name of the new database to be added in the elastic pool.</param>
+        /// <return>The next stage of the definition.</return>
+        SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithDatabase.WithNewDatabase(string databaseName)
+        {
+            return this.WithNewDatabase(databaseName) as SqlElasticPool.Definition.IWithCreate;
+        }
+
+        /// <summary>
         /// Sets the total shared DTU for the SQL Azure Database Elastic Pool.
         /// </summary>
         /// <param name="dtu">Total shared DTU for the SQL Azure Database Elastic Pool.</param>
@@ -106,23 +202,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Sets the maximum DTU any one SQL Azure Database can consume.
+        /// Sets the edition for the SQL Elastic Pool.
         /// </summary>
-        /// <param name="databaseDtuMax">Maximum DTU any one SQL Azure Database can consume.</param>
-        /// <return>The next stage of definition.</return>
-        SqlElasticPool.Update.IUpdate SqlElasticPool.Update.IWithDatabaseDtuMax.WithDatabaseDtuMax(int databaseDtuMax)
-        {
-            return this.WithDatabaseDtuMax(databaseDtuMax) as SqlElasticPool.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Sets the maximum DTU any one SQL Azure Database can consume.
-        /// </summary>
-        /// <param name="databaseDtuMax">Maximum DTU any one SQL Azure Database can consume.</param>
+        /// <param name="edition">Edition to be set for elastic pool.</param>
         /// <return>The next stage of the definition.</return>
-        SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithDatabaseDtuMax.WithDatabaseDtuMax(int databaseDtuMax)
+        SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithEdition.WithEdition(string edition)
         {
-            return this.WithDatabaseDtuMax(databaseDtuMax) as SqlElasticPool.Definition.IWithCreate;
+            return this.WithEdition(edition) as SqlElasticPool.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -145,13 +231,173 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.WithStorageCapacity(storageMB) as SqlElasticPool.Definition.IWithCreate;
         }
 
-        /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>.Refresh()
+        /// <return>The information about databases in elastic pool.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.ListDatabases()
         {
-            return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool;
+            return this.ListDatabases() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
+        }
+
+        /// <summary>
+        /// Gets name of the SQL Server to which this elastic pool belongs.
+        /// </summary>
+        string Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.SqlServerName
+        {
+            get
+            {
+                return this.SqlServerName();
+            }
+        }
+
+        /// <summary>
+        /// Gets the edition of Azure SQL Elastic Pool.
+        /// </summary>
+        string Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.Edition
+        {
+            get
+            {
+                return this.Edition();
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum DTU any one SQL Azure database can consume.
+        /// </summary>
+        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.DatabaseDtuMax
+        {
+            get
+            {
+                return this.DatabaseDtuMax();
+            }
+        }
+
+        /// <summary>
+        /// Gets The total shared DTU for the SQL Azure Database Elastic Pool.
+        /// </summary>
+        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.Dtu
+        {
+            get
+            {
+                return this.Dtu();
+            }
+        }
+
+        /// <summary>
+        /// Gets the storage limit for the SQL Azure Database Elastic Pool in MB.
+        /// </summary>
+        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.StorageMB
+        {
+            get
+            {
+                return this.StorageMB();
+            }
+        }
+
+        /// <return>The information about elastic pool activities.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.ListActivities()
+        {
+            return this.ListActivities() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity>;
+        }
+
+        /// <summary>
+        /// Gets the specific database in the elastic pool.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to look into.</param>
+        /// <return>The information about specific database in elastic pool.</return>
+        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.GetDatabase(string databaseName)
+        {
+            return this.GetDatabase(databaseName) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
+        }
+
+        /// <summary>
+        /// Deletes the elastic pool from the server.
+        /// </summary>
+        void Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.Delete()
+        {
+ 
+            this.Delete();
+        }
+
+        /// <summary>
+        /// Gets the creation date of the Azure SQL Elastic Pool.
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.CreationDate
+        {
+            get
+            {
+                return this.CreationDate();
+            }
+        }
+
+        /// <summary>
+        /// Gets the minimum DTU all SQL Azure Databases are guaranteed.
+        /// </summary>
+        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.DatabaseDtuMin
+        {
+            get
+            {
+                return this.DatabaseDtuMin();
+            }
+        }
+
+        /// <return>The information about elastic pool database activities.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.ListDatabaseActivities()
+        {
+            return this.ListDatabaseActivities() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity>;
+        }
+
+        /// <summary>
+        /// Gets the state of the Azure SQL Elastic Pool.
+        /// </summary>
+        string Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.State
+        {
+            get
+            {
+                return this.State();
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the region the resource is in.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
+        {
+            get
+            {
+                return this.RegionName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the tags for the resource.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
+        {
+            get
+            {
+                return this.Tags as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+            }
+        }
+
+        /// <summary>
+        /// Gets the region the resource is in.
+        /// </summary>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
+        {
+            get
+            {
+                return this.Region as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
+        {
+            get
+            {
+                return this.Type;
+            }
         }
 
         /// <summary>
@@ -175,127 +421,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Gets the creation date of the Azure SQL Elastic Pool.
+        /// Gets the name of the resource group.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.CreationDate
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
         {
             get
             {
-                return this.CreationDate();
-            }
-        }
-
-        /// <return>The information about databases in elastic pool.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.ListDatabases()
-        {
-            return this.ListDatabases() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
-        }
-
-        /// <summary>
-        /// Gets the state of the Azure SQL Elastic Pool.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.State
-        {
-            get
-            {
-                return this.State();
-            }
-        }
-
-        /// <summary>
-        /// Gets the edition of Azure SQL Elastic Pool.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.Edition
-        {
-            get
-            {
-                return this.Edition();
-            }
-        }
-
-        /// <summary>
-        /// Gets the minimum DTU all SQL Azure Databases are guaranteed.
-        /// </summary>
-        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.DatabaseDtuMin
-        {
-            get
-            {
-                return this.DatabaseDtuMin();
-            }
-        }
-
-        /// <summary>
-        /// Gets The total shared DTU for the SQL Azure Database Elastic Pool.
-        /// </summary>
-        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.Dtu
-        {
-            get
-            {
-                return this.Dtu();
-            }
-        }
-
-        /// <summary>
-        /// Gets the maximum DTU any one SQL Azure database can consume.
-        /// </summary>
-        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.DatabaseDtuMax
-        {
-            get
-            {
-                return this.DatabaseDtuMax();
-            }
-        }
-
-        /// <summary>
-        /// Gets the specific database in the elastic pool.
-        /// </summary>
-        /// <param name="databaseName">Name of the database to look into.</param>
-        /// <return>The information about specific database in elastic pool.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.GetDatabase(string databaseName)
-        {
-            return this.GetDatabase(databaseName) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
-        }
-
-        /// <return>The information about elastic pool activities.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.ListActivities()
-        {
-            return this.ListActivities() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity>;
-        }
-
-        /// <return>The information about elastic pool database activities.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.ListDatabaseActivities()
-        {
-            return this.ListDatabaseActivities() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity>;
-        }
-
-        /// <summary>
-        /// Gets name of the SQL Server to which this elastic pool belongs.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.SqlServerName
-        {
-            get
-            {
-                return this.SqlServerName();
-            }
-        }
-
-        /// <summary>
-        /// Deletes the elastic pool from the server.
-        /// </summary>
-        void Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.Delete()
-        {
- 
-            this.Delete();
-        }
-
-        /// <summary>
-        /// Gets the storage limit for the SQL Azure Database Elastic Pool in MB.
-        /// </summary>
-        int Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool.StorageMB
-        {
-            get
-            {
-                return this.StorageMB();
+                return this.ResourceGroupName;
             }
         }
     }

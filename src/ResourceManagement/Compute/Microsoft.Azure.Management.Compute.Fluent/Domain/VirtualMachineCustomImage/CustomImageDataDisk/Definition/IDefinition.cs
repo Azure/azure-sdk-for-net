@@ -9,49 +9,49 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.Cu
     /// <summary>
     /// The stage of the image definition allowing to choose the source of the data disk image.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final CustomImageDataDisk.DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithImageSource<ParentT> 
     {
         /// <summary>
+        /// Specifies the source snapshot for the data disk image.
+        /// </summary>
+        /// <param name="sourceSnapshotId">Source snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromSnapshot(string sourceSnapshotId);
+
+        /// <summary>
+        /// Specifies the source VHD for the data disk image.
+        /// </summary>
+        /// <param name="sourceVhdUrl">Source virtual hard disk URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromVhd(string sourceVhdUrl);
+
+        /// <summary>
         /// Specifies the source managed disk for the data disk image.
         /// </summary>
-        /// <param name="sourceManagedDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the data disk image definition.</return>
+        /// <param name="sourceManagedDiskId">Source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromManagedDisk(string sourceManagedDiskId);
 
         /// <summary>
         /// Specifies the source managed disk for the data disk image.
         /// </summary>
         /// <param name="sourceManagedDisk">Source managed disk.</param>
-        /// <return>The next stage of the data disk image definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromManagedDisk(IDisk sourceManagedDisk);
-
-        /// <summary>
-        /// Specifies the source VHD for the data disk image.
-        /// </summary>
-        /// <param name="sourceVhdUrl">Source virtual hard disk url.</param>
-        /// <return>The next stage of the data disk image definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromVhd(string sourceVhdUrl);
-
-        /// <summary>
-        /// Specifies the source snapshot for the data disk image.
-        /// </summary>
-        /// <param name="sourceSnapshotId">Source snapshot resource id.</param>
-        /// <return>The next stage of the data disk image definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromSnapshot(string sourceSnapshotId);
     }
 
     /// <summary>
-    /// The stage of the image definition allowing to specify the lun for the disk image.
+    /// The stage of the image definition allowing to specify the LUN for the disk image.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final CustomImageDataDisk.DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDiskLun<ParentT> 
     {
         /// <summary>
-        /// Specifies the lun for the data disk to be created from the disk image.
+        /// Specifies the LUN for the data disk to be created from the disk image.
         /// </summary>
-        /// <param name="lun">The unique lun for the data disk.</param>
-        /// <return>The next stage of the data disk image definition.</return>
+        /// <param name="lun">The unique LUN for the data disk.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithImageSource<ParentT> WithLun(int lun);
     }
 
@@ -59,55 +59,55 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.Cu
     /// The stage of data disk image definition allowing to specify configurations for the data disk when it
     /// is created from the same data disk image.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final CustomImageDataDisk.DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDiskSettings<ParentT> 
     {
-        /// <summary>
-        /// Specifies the size in GB for data disk.
-        /// </summary>
-        /// <param name="diskSizeGB">The disk size in GB.</param>
-        /// <return>The next stage of the data disk image definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> WithDiskSizeInGB(int diskSizeGB);
-
         /// <summary>
         /// Specifies the caching type for data disk.
         /// </summary>
         /// <param name="cachingType">The disk caching type.</param>
-        /// <return>The next stage of the data disk image definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> WithDiskCaching(CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies the size in GB for data disk.
+        /// </summary>
+        /// <param name="diskSizeGB">The disk size in GB.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> WithDiskSizeInGB(int diskSizeGB);
     }
 
     /// <summary>
     /// The first stage of the data disk image definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final CustomImageDataDisk.DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithDiskLun<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithDiskLun<ParentT>
     {
     }
 
     /// <summary>
     /// The final stage of the data disk image definition.
     /// At this stage, any remaining optional settings can be specified, or the data disk definition
-    /// can be attached to the parent image definition using CustomImageDataDisk.DefinitionStages.WithAttach.attach().
+    /// can be attached to the parent image definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of CustomImageDataDisk.DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
-        IWithDiskSettings<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithDiskSettings<ParentT>
     {
     }
 
     /// <summary>
     /// The entirety of a data disk image definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithDiskLun<ParentT>,
-        IWithImageSource<ParentT>,
-        IWithDiskSettings<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithDiskLun<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithImageSource<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithDiskSettings<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT>
     {
     }
 }

@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:E10A5B0FD0E95947B1A669D51E6BD5C9:977A64CFAC7B27FE0960C4DC670C662E
-        public override async Task<System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var bindingsList = await PagedCollection<IHostNameBinding, HostNameBindingInner>.LoadPage(
                 async (cancellation) => await Manager.Inner.WebApps.ListHostNameBindingsAsync(ResourceGroupName, Name, cancellation),

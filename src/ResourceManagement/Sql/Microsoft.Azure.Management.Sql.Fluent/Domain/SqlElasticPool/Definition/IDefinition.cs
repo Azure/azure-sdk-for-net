@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithCreate>,
-        IWithDatabaseDtuMin,
-        IWithDatabaseDtuMax,
-        IWithDtu,
-        IWithStorageCapacity,
-        IWithDatabase
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithCreate>,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithDatabaseDtuMin,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithDatabaseDtuMax,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithDtu,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithStorageCapacity,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithDatabase
     {
     }
 
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithEdition,
-        IWithCreate
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IBlank,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithEdition,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithCreate
     {
     }
 
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition
     /// The first stage of the SQL Server definition.
     /// </summary>
     public interface IBlank  :
-        IWithEdition
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IWithEdition
     {
     }
 }

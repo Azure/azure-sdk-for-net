@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Type representing encryption configuration to be applied to a Windows virtual machine.
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuV2luZG93c1ZNRGlza0VuY3J5cHRpb25Db25maWd1cmF0aW9u
-    public sealed class WindowsVMDiskEncryptionConfiguration  :
+    public sealed partial class WindowsVMDiskEncryptionConfiguration  :
         VirtualMachineEncryptionConfiguration<Microsoft.Azure.Management.Compute.Fluent.WindowsVMDiskEncryptionConfiguration>
     {
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:5FB785552E5FD74C28F297EA7778027A

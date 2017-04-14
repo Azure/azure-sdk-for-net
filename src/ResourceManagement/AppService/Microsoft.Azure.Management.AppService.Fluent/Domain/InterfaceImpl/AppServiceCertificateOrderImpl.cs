@@ -2,15 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition;
-    using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     internal partial class AppServiceCertificateOrderImpl 
     {
@@ -150,7 +145,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Gets expiration time.
         /// </summary>
         System.DateTime? Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ExpirationTime
-
         {
             get
             {

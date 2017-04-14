@@ -12,8 +12,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ParentT>
     {
     }
 
@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithPort<ParentT>,
-        IWithAffinity<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithAffinity<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithProtocol<ParentT>,
-        IWithRequestTimeout<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithRequestTimeout<ParentT>
     {
     }
 
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ParentT>
     {
     }
 

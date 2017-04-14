@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Update
 {
-
-
     /// <summary>
     /// The template for a user update operation, containing all the settings that can be modified.
     /// </summary>

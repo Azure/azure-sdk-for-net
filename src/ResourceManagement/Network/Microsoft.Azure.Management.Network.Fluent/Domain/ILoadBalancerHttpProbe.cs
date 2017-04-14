@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerHttpProbe  :
-        ILoadBalancerProbe
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerProbe
     {
         /// <summary>
         /// Gets the HTTP request path for the HTTP probe to call to check the health status.

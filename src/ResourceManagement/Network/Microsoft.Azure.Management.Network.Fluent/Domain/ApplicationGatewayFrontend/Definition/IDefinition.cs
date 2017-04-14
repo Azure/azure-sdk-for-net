@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithPublicIPAddress<ParentT>  :
-        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
     {
     }
 
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithPrivateIP<ParentT>  :
-        IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>>
     {
     }
 
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithPublicIPAddress<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithPublicIPAddress<ParentT>
     {
     }
 
@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinitionAlt<ParentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithSubnet<ParentT>,
-        IWithPrivateIP<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Definition.IWithPrivateIP<ParentT>
     {
     }
 }

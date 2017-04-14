@@ -3,15 +3,15 @@
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// Entry point to NS record sets in a DNS zone.
+    /// Entry point to NS record sets in an Azure DNS zone.
     /// </summary>
     public interface INSRecordSets  :
-        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.INSRecordSet>,
-        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.INSRecordSet>,
-        IHasParent<IDnsZone>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.INSRecordSet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.INSRecordSet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasParent<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>
     {
     }
 }

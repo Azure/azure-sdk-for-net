@@ -2,25 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using DnsZone.Definition;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to DNS zone management API in Azure.
     /// </summary>
     public interface IDnsZones  :
-        ISupportsCreating<DnsZone.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsGettingById<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        ISupportsBatchDeletion,
-        IHasManager<IDnsZoneManager>,
-        IHasInner<IZonesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<DnsZone.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Dns.Fluent.IDnsZoneManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Dns.Fluent.IZonesOperations>
     {
     }
 }

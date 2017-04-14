@@ -1,41 +1,47 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    using ResourceManager.Fluent.Core;
-    using ResourceManager.Fluent.Core.CollectionActions;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
+    using Microsoft.Rest;
 
     /// <summary>
     /// Entry point for storage accounts management API.
     /// </summary>
     public interface IStorageAccounts  :
-        ISupportsListing<IStorageAccount>,
-        ISupportsCreating<StorageAccount.Definition.IBlank>,
-        ISupportsDeletingById,
-        ISupportsListingByResourceGroup<IStorageAccount>,
-        ISupportsGettingByResourceGroup<IStorageAccount>,
-        ISupportsGettingById<IStorageAccount>,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<IStorageAccount>,
-        ISupportsBatchDeletion,
-        IHasManager<IStorageManager>,
-        IHasInner<IStorageAccountsOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<StorageAccount.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Storage.Fluent.IStorageManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Storage.Fluent.IStorageAccountsOperations>
     {
         /// <summary>
-        /// Checks that account name is valid and is not in use.
+        /// Checks that account name is valid and is not in use asynchronously.
         /// </summary>
-        /// <param name="name">name the account name to check</param>
-        /// <returns>whether the name is available and other info if not</returns>
-        CheckNameAvailabilityResult CheckNameAvailability(string name);
-        
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="name">The account name to check.</param>
+        /// <return>Whether the name is available and other info if not.</return>
+        Task<Microsoft.Azure.Management.Storage.Fluent.CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Checks that account name is valid and is not in use.
         /// </summary>
-        /// <param name="name">name the account name to check</param>
-        /// <returns>whether the name is available and other info if not</returns>
-        Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name="name">The account name to check.</param>
+        /// <return>Whether the name is available and other info if not.</return>
+        Microsoft.Azure.Management.Storage.Fluent.CheckNameAvailabilityResult CheckNameAvailability(string name);
     }
 }

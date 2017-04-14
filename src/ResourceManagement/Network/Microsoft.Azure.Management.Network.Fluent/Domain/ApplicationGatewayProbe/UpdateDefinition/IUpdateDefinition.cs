@@ -25,13 +25,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Upda
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithAttach<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithProtocol<ParentT>,
-        IWithPath<ParentT>,
-        IWithHost<ParentT>,
-        IWithTimeout<ParentT>,
-        IWithInterval<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithPath<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithHost<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithTimeout<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithInterval<ParentT>
     {
     }
 
@@ -43,16 +43,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Upda
         Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithTimeout<ParentT>,Microsoft.Azure.Management.Network.Fluent.Models.ApplicationGatewayProtocol>
     {
         /// <summary>
-        /// Specifies HTTP as the probe protocol.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithTimeout<ParentT> WithHttp();
-
-        /// <summary>
         /// Specifies HTTPS as the probe protocol.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithTimeout<ParentT> WithHttps();
+
+        /// <summary>
+        /// Specifies HTTP as the probe protocol.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithTimeout<ParentT> WithHttp();
     }
 
     /// <summary>
@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Upda
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdateAlt<ParentT>,
-        IWithInterval<ParentT>,
-        IWithRetries<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInUpdateAlt<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithInterval<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithRetries<ParentT>
     {
     }
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Upda
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithHost<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition.IWithHost<ParentT>
     {
     }
 

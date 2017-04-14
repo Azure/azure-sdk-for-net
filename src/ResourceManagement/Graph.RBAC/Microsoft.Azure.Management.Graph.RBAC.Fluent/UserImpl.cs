@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Implementation for User and its parent interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmdyYXBocmJhYy5pbXBsZW1lbnRhdGlvbi5Vc2VySW1wbA==
-    public partial class UserImpl :
+    internal partial class UserImpl :
         CreatableUpdatable<IUser, UserInner, UserImpl, IUser, IUpdate>,
         IUser,
         IDefinition,

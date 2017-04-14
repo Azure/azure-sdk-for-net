@@ -2,43 +2,48 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
 {
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet;
-    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
 
     /// <summary>
-    /// The stage of the Soa record definition allowing to update its attributes.
+    /// The stage of the NS record set definition allowing to add or remove a NS record.
+    /// </summary>
+    public interface IWithNSRecordNameServer 
+    {
+        /// <summary>
+        /// Rmoves a NS record with the provided name server from this record set.
+        /// </summary>
+        /// <param name="nameServerHostName">The name server host name.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithoutNameServer(string nameServerHostName);
+
+        /// <summary>
+        /// Creates a NS record with the provided name server in this record set.
+        /// </summary>
+        /// <param name="nameServerHostName">The name server host name.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithNameServer(string nameServerHostName);
+    }
+
+    /// <summary>
+    /// The stage of the SOA record definition allowing to update its attributes.
     /// </summary>
     public interface IWithSoaRecordAttributes 
     {
         /// <summary>
-        /// Specifies time in seconds that a secondary name server should wait before trying to contact the
-        /// the primary name server for a zone file update.
-        /// </summary>
-        /// <param name="refreshTimeInSeconds">The refresh time in seconds.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRefreshTimeInSeconds(long refreshTimeInSeconds);
-
-        /// <summary>
-        /// Specifies the email server associated with the Soa record.
+        /// Specifies the email server associated with the SOA record.
         /// </summary>
         /// <param name="emailServerHostName">The email server.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithEmailServer(string emailServerHostName);
-
-        /// <summary>
-        /// Specifies the serial number for the zone file.
-        /// </summary>
-        /// <param name="serialNumber">The serial number.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithSerialNumber(long serialNumber);
 
         /// <summary>
         /// Specifies the time in seconds that a secondary name server will treat its cached zone file as valid
@@ -49,19 +54,34 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithExpireTimeInSeconds(long expireTimeInSeconds);
 
         /// <summary>
+        /// Specifies the serial number for the zone file.
+        /// </summary>
+        /// <param name="serialNumber">The serial number.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithSerialNumber(long serialNumber);
+
+        /// <summary>
+        /// Specifies the time in seconds that any name server or resolver should cache a negative response.
+        /// </summary>
+        /// <param name="negativeCachingTimeToLive">The TTL for cached negative response.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithNegativeResponseCachingTimeToLiveInSeconds(long negativeCachingTimeToLive);
+
+        /// <summary>
+        /// Specifies time in seconds that a secondary name server should wait before trying to contact the
+        /// the primary name server for a zone file update.
+        /// </summary>
+        /// <param name="refreshTimeInSeconds">The refresh time in seconds.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRefreshTimeInSeconds(long refreshTimeInSeconds);
+
+        /// <summary>
         /// Specifies the time in seconds that a secondary name server should wait before trying to contact
         /// the primary name server again after a failed attempt to check for a zone file update.
         /// </summary>
         /// <param name="refreshTimeInSeconds">The retry time in seconds.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRetryTimeInSeconds(long refreshTimeInSeconds);
-
-        /// <summary>
-        /// Specifies the time in seconds that any name server or resolver should cache a negative response.
-        /// </summary>
-        /// <param name="negativeCachingTimeToLive">The Ttl for cached negative response.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithNegativeResponseCachingTimeToLiveInSeconds(long negativeCachingTimeToLive);
     }
 
     /// <summary>
@@ -69,16 +89,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     /// </summary>
     public interface IWithSrvRecordEntry 
     {
-        /// <summary>
-        /// Removes a service record for a service.
-        /// </summary>
-        /// <param name="target">The canonical name of the target host running the service.</param>
-        /// <param name="port">The port on which the service is bounded.</param>
-        /// <param name="priority">The priority of the target host.</param>
-        /// <param name="weight">The relative weight (preference) of the records.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet WithoutRecord(string target, int port, int priority, int weight);
-
         /// <summary>
         /// Specifies a service record for a service.
         /// </summary>
@@ -88,26 +98,26 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
         /// <param name="weight">The relative weight (preference) of the records with the same priority, higher the value more the preference.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet WithRecord(string target, int port, int priority, int weight);
+
+        /// <summary>
+        /// Removes a service record for a service.
+        /// </summary>
+        /// <param name="target">The canonical name of the target host running the service.</param>
+        /// <param name="port">The port on which the service is bounded.</param>
+        /// <param name="priority">The priority of the target host.</param>
+        /// <param name="weight">The relative weight (preference) of the records.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet WithoutRecord(string target, int port, int priority, int weight);
     }
 
     /// <summary>
-    /// The stage of the A record set update allowing to add or remove A record.
+    /// The set of configurations that can be updated for DNS record set irrespective of their type  RecordType.
     /// </summary>
-    public interface IWithARecordIPv4Address 
+    public interface IUpdate  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IWithMetadata,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IWithTtl
     {
-        /// <summary>
-        /// Removes the A record with the provided IPv4 address from the record set.
-        /// </summary>
-        /// <param name="ipv4Address">The IPv4 address.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithoutIPv4Address(string ipv4Address);
-
-        /// <summary>
-        /// Creates an A record with the provided IPv4 address in the record set.
-        /// </summary>
-        /// <param name="ipv4Address">The IPv4 address.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithIPv4Address(string ipv4Address);
     }
 
     /// <summary>
@@ -133,53 +143,43 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The set of configurations that can be updated for DNS record set irrespective of their type RecordType.
+    /// The stage of the AAAA record set update allowing to add or remove AAAA record.
     /// </summary>
-    public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate>,
-        IWithMetadata,
-        IWithTtl
+    public interface IWithAaaaRecordIPv6Address 
     {
+        /// <summary>
+        /// Creates an AAAA record with the provided IPv6 address in this record set.
+        /// </summary>
+        /// <param name="ipv6Address">The IPv6 address.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithIPv6Address(string ipv6Address);
+
+        /// <summary>
+        /// Removes an AAAA record with the provided IPv6 address from this record set.
+        /// </summary>
+        /// <param name="ipv6Address">The IPv6 address.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIPv6Address(string ipv6Address);
     }
 
     /// <summary>
-    /// The stage of the NS record set definition allowing to add or remove a NS record.
-    /// </summary>
-    public interface IWithNSRecordNameServer 
-    {
-        /// <summary>
-        /// Removes a NS record with the provided name server from this record set.
-        /// </summary>
-        /// <param name="nameServerHostName">The name server host name.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithoutNameServer(string nameServerHostName);
-
-        /// <summary>
-        /// Creates a NS record with the provided name server in this record set.
-        /// </summary>
-        /// <param name="nameServerHostName">The name server host name.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet WithNameServer(string nameServerHostName);
-    }
-
-    /// <summary>
-    /// The stage of the CName record set definition allowing to add or remove CNAME record.
+    /// The stage of the CName record set definition allowing to add or remove CName record.
     /// </summary>
     public interface IWithPtrRecordTargetDomainName 
     {
-        /// <summary>
-        /// Creates a CName record with the provided canonical name in this record set.
-        /// </summary>
-        /// <param name="targetDomainName">The target domain name.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet WithTargetDomainName(string targetDomainName);
-
         /// <summary>
         /// Removes the CName record with the provided canonical name from this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet WithoutTargetDomainName(string targetDomainName);
+
+        /// <summary>
+        /// Creates a CName record with the provided canonical name in this record set.
+        /// </summary>
+        /// <param name="targetDomainName">The target domain name.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet WithTargetDomainName(string targetDomainName);
     }
 
     /// <summary>
@@ -188,14 +188,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     public interface IWithTxtRecordTextValue 
     {
         /// <summary>
-        /// Removes a TXT record with the given text from this record set.
+        /// Removes a Txt record with the given text from this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet WithoutText(string text);
 
         /// <summary>
-        /// Creates a TXT record with the given text in this record set.
+        /// Creates a Txt record with the given text in this record set.
         /// </summary>
         /// <param name="text">The text value.</param>
         /// <return>The next stage of the record set update.</return>
@@ -203,36 +203,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     }
 
     /// <summary>
-    /// The stage of the record set update allowing to specify Ttl for the records in this record set.
+    /// The stage of the record set update allowing to specify TTL for the records in this record set.
     /// </summary>
     public interface IWithTtl 
     {
         /// <summary>
-        /// Specifies the Ttl for the records in the record set.
+        /// Specifies the TTL for the records in the record set.
         /// </summary>
-        /// <param name="ttlInSeconds">Ttl in seconds.</param>
+        /// <param name="ttlInSeconds">TTL in seconds.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IUpdate WithTimeToLive(long ttlInSeconds);
-    }
-
-    /// <summary>
-    /// The stage of the AAAA record set update allowing to add or remove AAAA record.
-    /// </summary>
-    public interface IWithAaaaRecordIPv6Address 
-    {
-        /// <summary>
-        /// Removes an AAAA record with the provided IPv6 address from this record set.
-        /// </summary>
-        /// <param name="ipv6Address">The IPv6 address.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithoutIPv6Address(string ipv6Address);
-
-        /// <summary>
-        /// Creates an AAAA record with the provided IPv6 address in this record set.
-        /// </summary>
-        /// <param name="ipv6Address">The IPv6 address.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet WithIPv6Address(string ipv6Address);
     }
 
     /// <summary>
@@ -254,5 +234,25 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
         /// <param name="value">The value for the metadata.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IUpdate WithMetadata(string key, string value);
+    }
+
+    /// <summary>
+    /// The stage of the A record set update allowing to add or remove A record.
+    /// </summary>
+    public interface IWithARecordIPv4Address 
+    {
+        /// <summary>
+        /// Removes the A record with the provided IPv4 address from the record set.
+        /// </summary>
+        /// <param name="ipv4Address">An IPv4 address.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithoutIPv4Address(string ipv4Address);
+
+        /// <summary>
+        /// Creates an A record with the provided IPv4 address in the record set.
+        /// </summary>
+        /// <param name="ipv4Address">An IPv4 address.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet WithIPv4Address(string ipv4Address);
     }
 }

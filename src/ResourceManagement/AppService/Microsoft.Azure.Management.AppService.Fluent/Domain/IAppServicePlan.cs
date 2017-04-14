@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// version number.).
     /// </remarks>
     public interface IAppServicePlan  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.AppServicePlanInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.AppServicePlanInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<AppServicePlan.Update.IUpdate>
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the operating system the web app is running on.
         /// </summary>
-        OperatingSystem OperatingSystem { get; }
+        Microsoft.Azure.Management.AppService.Fluent.OperatingSystem OperatingSystem { get; }
 
         /// <summary>
         /// Gets if apps assigned to this App Service Plan can be scaled independently.

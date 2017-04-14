@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
@@ -10,12 +10,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// in a scale set.
     /// </summary>
     public interface IVirtualMachineScaleSetVMInstanceExtension  :
-        IVirtualMachineExtensionBase,
-        IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>
     {
         /// <summary>
         /// Gets the instance view of the scale set virtual machine extension.
         /// </summary>
-        VirtualMachineExtensionInstanceView InstanceView { get; }
+        Models.VirtualMachineExtensionInstanceView InstanceView { get; }
     }
 }

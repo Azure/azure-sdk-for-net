@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition
     /// The first stage of the SQL Server definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithGroup>
     {
     }
 
@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate>,
-        IWithElasticPool,
-        IWithDatabase,
-        IWithFirewallRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate>,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithElasticPool,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithDatabase,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithFirewallRule
     {
     }
 
@@ -101,19 +101,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition
         /// <summary>
         /// Creates new firewall rule in the SQL Server.
         /// </summary>
-        /// <param name="startIpAddress">Start ipAddress for the firewall rule.</param>
-        /// <param name="endIpAddress">End ipAddress for the firewall rule.</param>
+        /// <param name="startIPAddress">Start IP address for the firewall rule.</param>
+        /// <param name="endIPAddress">End IP address for the firewall rule.</param>
         /// <return>Next stage of the SQL Server definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate WithNewFirewallRule(string startIpAddress, string endIpAddress);
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate WithNewFirewallRule(string startIPAddress, string endIPAddress);
 
         /// <summary>
         /// Creates new firewall rule in the SQL Server.
         /// </summary>
-        /// <param name="startIpAddress">Start ipAddress for the firewall rule.</param>
-        /// <param name="endIpAddress">End ipAddress for the firewall rule.</param>
+        /// <param name="startIPAddress">Start IP address for the firewall rule.</param>
+        /// <param name="endIPAddress">End IP address for the firewall rule.</param>
         /// <param name="firewallRuleName">Name for the firewall rule.</param>
         /// <return>Next stage of the SQL Server definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate WithNewFirewallRule(string startIpAddress, string endIpAddress, string firewallRuleName);
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate WithNewFirewallRule(string startIPAddress, string endIPAddress, string firewallRuleName);
     }
 
     /// <summary>
@@ -133,14 +133,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IBlank,
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithGroup,
-        IWithAdministratorLogin,
-        IWithAdministratorPassword,
-        IWithElasticPool,
-        IWithDatabase,
-        IWithFirewallRule,
-        IWithCreate
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithAdministratorLogin,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithAdministratorPassword,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithElasticPool,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithDatabase,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithFirewallRule,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Definition.IWithCreate
     {
     }
 }

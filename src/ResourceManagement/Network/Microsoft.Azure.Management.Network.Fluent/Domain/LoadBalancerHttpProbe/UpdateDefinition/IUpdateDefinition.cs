@@ -9,9 +9,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithRequestPath<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithRequestPath<ParentT>
     {
     }
 
@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
-        IWithPort<ParentT>,
-        IWithIntervalInSeconds<ParentT>,
-        IWithNumberOfProbes<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithPort<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithIntervalInSeconds<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithNumberOfProbes<ParentT>
     {
     }
 
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The first stage of the probe definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithRequestPath<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithRequestPath<ParentT>
     {
     }
 

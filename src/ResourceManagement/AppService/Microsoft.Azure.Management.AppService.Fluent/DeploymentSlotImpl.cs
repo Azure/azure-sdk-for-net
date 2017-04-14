@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await Manager.Inner.WebApps.UpdateAuthSettingsSlotAsync(ResourceGroupName, parent.Name, inner, Name(), cancellationToken);
         }
 
-        public async override Task<IDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IReadOnlyDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var bindingsList = await PagedCollection<IHostNameBinding, HostNameBindingInner>.LoadPage(
                 async (cancellation) => await Manager.Inner.WebApps.ListHostNameBindingsSlotAsync(ResourceGroupName, parent.Name, Name(), cancellation),

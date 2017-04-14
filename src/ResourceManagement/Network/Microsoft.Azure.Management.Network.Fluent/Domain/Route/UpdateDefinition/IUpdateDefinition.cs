@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition
     /// <summary>
     /// The first stage of a route definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithDestinationAddressPrefix<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithDestinationAddressPrefix<ParentT>
     {
     }
 
@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithNextHopType<ParentT>,
-        IWithDestinationAddressPrefix<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithNextHopType<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithDestinationAddressPrefix<ParentT>
     {
     }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
     }
 
@@ -58,18 +58,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition
     public interface IWithNextHopType<ParentT> 
     {
         /// <summary>
-        /// Specifies the IP address of the virtual appliance for the next hop to go to.
-        /// </summary>
-        /// <param name="ipAddress">An IP address of an existing virtual appliance (virtual machine).</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithAttach<ParentT> WithNextHopToVirtualAppliance(string ipAddress);
-
-        /// <summary>
         /// Specifies the next hop type.
         /// To use a virtual appliance, use  .withNextHopToVirtualAppliance(String) instead and specify its IP address.
         /// </summary>
         /// <param name="nextHopType">A hop type.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithAttach<ParentT> WithNextHop(RouteNextHopType nextHopType);
+
+        /// <summary>
+        /// Specifies the IP address of the virtual appliance for the next hop to go to.
+        /// </summary>
+        /// <param name="ipAddress">An IP address of an existing virtual appliance (virtual machine).</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition.IWithAttach<ParentT> WithNextHopToVirtualAppliance(string ipAddress);
     }
 }

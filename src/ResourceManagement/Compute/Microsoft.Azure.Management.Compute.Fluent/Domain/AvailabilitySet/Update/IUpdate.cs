@@ -10,24 +10,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update
     /// <summary>
     /// The template for an availability set update operation, containing all the settings that
     /// can be modified.
-    /// Call Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update.IUpdate>,
-        IWithSku
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update.IUpdate>,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update.IWithSku
     {
     }
 
     /// <summary>
-    /// The stage of the availability set definition allowing to specify sku.
+    /// The stage of the availability set definition allowing to specify SKU.
     /// </summary>
     public interface IWithSku 
     {
         /// <summary>
-        /// Specifies the sku type for the availability set.
+        /// Specifies the SKU type for the availability set.
         /// </summary>
-        /// <param name="skuType">The sku type.</param>
+        /// <param name="skuType">The SKU type.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update.IUpdate WithSku(AvailabilitySetSkuTypes skuType);
     }

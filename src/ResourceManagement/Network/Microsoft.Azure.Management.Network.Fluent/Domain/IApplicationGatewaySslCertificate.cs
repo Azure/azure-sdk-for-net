@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGatewaySslCertificate  :
-        IHasInner<Models.ApplicationGatewaySslCertificateInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewaySslCertificateInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
     {
         /// <summary>
         /// Gets the public data of the certificate.

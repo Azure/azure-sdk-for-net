@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using KeyVault.Fluent;
 
     /// <summary>
     /// Container interface for all the definitions that need to be implemented.

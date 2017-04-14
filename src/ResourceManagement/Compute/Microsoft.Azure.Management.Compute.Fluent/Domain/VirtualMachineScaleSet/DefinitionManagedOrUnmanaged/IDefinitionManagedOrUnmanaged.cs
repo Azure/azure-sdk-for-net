@@ -9,15 +9,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The entirety of the virtual machine scale set definition.
     /// </summary>
     public interface IDefinitionManagedOrUnmanaged  :
-        IDefinitionShared,
-        IWithLinuxRootUsernameManagedOrUnmanaged,
-        IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged,
-        IWithWindowsAdminUsernameManagedOrUnmanaged,
-        IWithWindowsAdminPasswordManagedOrUnmanaged,
-        IWithLinuxCreateManagedOrUnmanaged,
-        IWithWindowsCreateManagedOrUnmanaged,
-        IWithManagedCreate,
-        IWithUnmanagedCreate
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.DefinitionShared.IDefinitionShared,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithWindowsCreateManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedCreate,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithUnmanagedCreate
     {
     }
 }

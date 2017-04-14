@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     internal partial class AppServicePlanImpl 
     {
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the operating system the web app is running on.
         /// </summary>
-        OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.OperatingSystem
+        Microsoft.Azure.Management.AppService.Fluent.OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.OperatingSystem
         {
             get
             {

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// Implementation for BatchAccount and its parent interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmJhdGNoLmltcGxlbWVudGF0aW9uLkJhdGNoQWNjb3VudEltcGw=
-    public partial class BatchAccountImpl :
+    internal partial class BatchAccountImpl :
         GroupableResource<
             IBatchAccount,
             BatchAccountInner,

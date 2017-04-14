@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:2E256CC1ACCA4253233F61C79F9D712E:B8220E91EC25625885438BBA3AFCE559
-        public IUpgradeHint GetUpgradeHint()
+        public IUpgradeHintInterface GetUpgradeHint()
         {
             if (Inner.UpgradeHint == null)
             {
@@ -338,16 +338,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
 
             return new ReadOnlyDictionary<string, IServiceTierAdvisor>(serviceTierAdvisorMap);
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)
-        {
-            return base.WithTags(tags);
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
-        {
-            return base.WithTag(key, value);
         }
     }
 }

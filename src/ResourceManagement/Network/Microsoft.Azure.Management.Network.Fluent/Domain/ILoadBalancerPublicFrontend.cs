@@ -11,8 +11,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerPublicFrontend  :
-        ILoadBalancerFrontend,
-        IHasPublicIPAddress
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend,
+        Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress
     {
     }
 }

@@ -10,14 +10,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update
     /// <summary>
     /// The template for an update operation, containing all the settings that
     /// can be modified.
-    /// Call Disk.Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
-        IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IUpdate>,
-        IWithSku,
-        IWithOsSettings
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IUpdate>,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IWithSku,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IWithOSSettings
     {
+    }
+
+    /// <summary>
+    /// The stage of the managed snapshot update allowing to specify OS settings.
+    /// </summary>
+    public interface IWithOSSettings 
+    {
+        /// <summary>
+        /// Specifies the operating system type.
+        /// </summary>
+        /// <param name="osType">Operating system type.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IUpdate WithOSType(OperatingSystemTypes osType);
     }
 
     /// <summary>
@@ -28,21 +40,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update
         /// <summary>
         /// Specifies the account type.
         /// </summary>
-        /// <param name="sku">Sku type.</param>
-        /// <return>The next stage of the managed snapshot update.</return>
+        /// <param name="sku">SKU type.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IUpdate WithSku(DiskSkuTypes sku);
-    }
-
-    /// <summary>
-    /// The stage of the managed snapshot update allowing to specify Os settings.
-    /// </summary>
-    public interface IWithOsSettings 
-    {
-        /// <summary>
-        /// Specifies the operating system type.
-        /// </summary>
-        /// <param name="osType">Operating system type.</param>
-        /// <return>The next stage of the managed snapshot update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Update.IUpdate WithOSType(OperatingSystemTypes osType);
     }
 }

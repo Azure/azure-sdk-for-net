@@ -232,15 +232,5 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             return Inner.State;
         }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)
-        {
-            return base.WithTags(tags);
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
-        {
-            return base.WithTag(key, value);
-        }
     }
 }

@@ -31,30 +31,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="appServicePlanCreatable">The new app service plan creatable.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition.IWithDockerContainerImage WithNewLinuxPlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable);
 
         /// <summary>
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="pricingTier">The sku of the app service plan.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition.IWithCreate WithNewWindowsPlan(PricingTier pricingTier);
 
         /// <summary>
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="appServicePlanCreatable">The new app service plan creatable.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition.IWithCreate WithNewWindowsPlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable);
 
         /// <summary>
         /// Creates a new free app service plan. This will fail if there are 10 or more
         /// free plans in the current subscription.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition.IWithCreate WithNewFreeAppServicePlan();
     }
+
     /// <summary>
     /// A web app definition allowing docker registry credentials to be set.
     /// </summary>
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition
         /// </summary>
         /// <param name="username">The username for Docker Hub or the docker registry.</param>
         /// <param name="password">The password for Docker Hub or the docker registry.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Definition.IWithStartUpCommand WithCredentials(string username, string password);
     }
 

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// The stage of an application gateway definition allowing to define one or more public, or Internet-facing, frontends.
     /// </summary>
     public interface IWithPublicFrontend  :
-        IWithPublicIPAddress
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicIPAddress
     {
         /// <summary>
         /// Specifies that the application gateway should not be Internet-facing.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// its private IP address from.
     /// </summary>
     public interface IWithExistingSubnet  :
-        IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
     {
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// The first stage of an application gateway definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithGroup>
     {
     }
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// The stage of an application gateway definition allowing to add a new Internet-facing frontend with a public IP address.
     /// </summary>
     public interface IWithPublicIPAddress  :
-        IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithPublicIPAddressNoDnsLabel<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
     {
     }
 
@@ -200,9 +200,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     public interface IDefinition  :
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IBlank,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithGroup,
-        IWithCreate,
-        IWithRequestRoutingRule,
-        IWithRequestRoutingRuleOrCreate
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRule,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate
     {
     }
 
@@ -211,8 +211,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// or start specifying optional settings, or create the application gateway.
     /// </summary>
     public interface IWithRequestRoutingRuleOrCreate  :
-        IWithRequestRoutingRule,
-        IWithCreate
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRule,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate
     {
     }
 
@@ -244,21 +244,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>,
-        IWithSize,
-        IWithInstanceCount,
-        IWithSslCert,
-        IWithFrontendPort,
-        IWithListener,
-        IWithBackendHttpConfig,
-        IWithBackend,
-        IWithExistingSubnet,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithSize,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithInstanceCount,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithSslCert,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithFrontendPort,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithListener,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithBackendHttpConfig,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithBackend,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithExistingSubnet,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateIPAddress,
-        IWithPrivateFrontend,
-        IWithPublicFrontend,
-        IWithPublicIPAddress,
-        IWithProbe
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateFrontend,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicFrontend,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicIPAddress,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithProbe
     {
     }
 

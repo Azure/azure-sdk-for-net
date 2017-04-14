@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using Microsoft.Rest;
 
     internal partial class ServiceBusNamespacesImpl 
@@ -25,9 +27,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        ServiceBusNamespace.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<ServiceBusNamespace.Definition.IBlank>.Define(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IBlank>.Define(string name)
         {
-            return this.Define(name) as ServiceBusNamespace.Definition.IBlank;
+            return this.Define(name) as Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IBlank;
         }
 
         /// <summary>
@@ -43,11 +45,17 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Checks if namespace name is valid and is not in use asynchronously.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <param name="name">The namespace name to check.</param>
         /// <return>Whether the name is available and other info if not.</return>
         async Task<Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult> Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespaces.CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken)
         {
             return await this.CheckNameAvailabilityAsync(name, cancellationToken) as Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult;
         }
+
     }
 }

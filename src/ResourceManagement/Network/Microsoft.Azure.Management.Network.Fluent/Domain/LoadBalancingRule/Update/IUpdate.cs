@@ -68,14 +68,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
     /// The entirety of a load balancing rule update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFrontendPort,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFrontend,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithProtocol,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithBackendPort,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFloatingIP,
-        IWithIdleTimeoutInMinutes,
-        IWithLoadDistribution
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithIdleTimeoutInMinutes,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithLoadDistribution
     {
     }
 

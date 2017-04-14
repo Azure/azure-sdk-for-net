@@ -9,15 +9,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasServerNameIndication.Upda
     public interface IWithServerNameIndication<ReturnT> 
     {
         /// <summary>
-        /// Requires server name indication (SNI).
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        ReturnT WithServerNameIndication();
-
-        /// <summary>
         /// Ensures server name indication (SNI) is not required.
         /// </summary>
         /// <return>The next stage of the update.</return>
         ReturnT WithoutServerNameIndication();
+
+        /// <summary>
+        /// Requires server name indication (SNI).
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        ReturnT WithServerNameIndication();
     }
 }

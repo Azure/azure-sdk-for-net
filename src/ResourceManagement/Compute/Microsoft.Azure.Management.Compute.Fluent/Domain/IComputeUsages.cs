@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Entry point for compute resource usage management API.
     /// </summary>
     public interface IComputeUsages  :
-        ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IComputeUsage>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IComputeUsage>
     {
     }
 }

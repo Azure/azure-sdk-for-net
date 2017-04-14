@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// An immutable client-side representation of a A (IPv4) record set in Azure DNS Zone.
     /// </summary>
     public interface IARecordSet  :
-        IDnsRecordSet
+        Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet
     {
         /// <summary>
-        /// Gets the IPv4 addresses of A records in this record set.
+        /// Gets the IP v4 addresses of A records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<string> IPv4Addresses { get; }
+        System.Collections.Generic.IReadOnlyList<string> IPv4Addresses { get; }
     }
 }

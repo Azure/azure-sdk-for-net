@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update
     /// </summary>
     /// <typeparam name="ReturnT">The next stage of the update.</typeparam>
     public interface IWithPublicIPAddress<ReturnT>  :
-        IWithExistingPublicIPAddress<ReturnT>,
-        IWithNewPublicIPAddress<ReturnT>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ReturnT>,
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithNewPublicIPAddress<ReturnT>
     {
     }
 
@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update
     /// </summary>
     /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithPublicIPAddressNoDnsLabel<ReturnT>  :
-        IWithExistingPublicIPAddress<ReturnT>,
-        IWithNewPublicIPAddressNoDnsLabel<ReturnT>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithExistingPublicIPAddress<ReturnT>,
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithNewPublicIPAddressNoDnsLabel<ReturnT>
     {
     }
 
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update
     /// </summary>
     /// <typeparam name="ReturnT">The next stage of the definition.</typeparam>
     public interface IWithNewPublicIPAddress<ReturnT>  :
-        IWithNewPublicIPAddressNoDnsLabel<ReturnT>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithNewPublicIPAddressNoDnsLabel<ReturnT>
     {
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label

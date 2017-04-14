@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfigur
     /// </summary>
     /// <typeparam name="ParentT">The parent type.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfigur
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
     }
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfigur
     /// <summary>
     /// The first stage of an application gateway IP configuration definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition.IWithSubnet<ParentT>
     {

@@ -2,81 +2,81 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update
 {
-
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
-    using Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition;
-    using Microsoft.Azure.Management.Batch.Fluent.Application.Update;
     using Microsoft.Azure.Management.Batch.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.Batch.Fluent.Application.Update;
+    using Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition;
+
     /// <summary>
-    /// The stage of the batch account update definition allowing to specify storage account.
+    /// The stage of a Batch account update allowing to specify a storage account.
     /// </summary>
     public interface IWithStorageAccount 
     {
         /// <summary>
-        /// Specifies that an existing storage account to be attached with the batch account.
+        /// Removes the associated storage account.
         /// </summary>
-        /// <param name="storageAccount">storageAccount existing storage account to be used</param>
-        /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithExistingStorageAccount(IStorageAccount storageAccount);
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithoutStorageAccount();
 
         /// <summary>
-        /// Specifies that a storage account to be attached with the batch account.
+        /// Specifies a new storage account to create and associate with the Batch account.
         /// </summary>
-        /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
-        /// <returns>the stage representing updatable batch account definition</returns>
+        /// <param name="storageAccountCreatable">The definition of the storage account.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable);
 
         /// <summary>
-        /// Specifies that an existing storage account to be attached with the batch account.
+        /// Specifies a new storage account to create and associate with the Batch account.
         /// </summary>
-        /// <param name="storageAccountName">storageAccountName name of new storage account to be created and used in batch account</param>
-        /// <returns>the stage representing updatable batch account definition</returns>
+        /// <param name="storageAccountName">The name of a new storage account.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithNewStorageAccount(string storageAccountName);
 
         /// <summary>
-        /// Specifies that storage account should be removed from the batch account.
+        /// Specifies an existing storage account to associate with the Batch account.
         /// </summary>
-        /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithoutStorageAccount();
-
+        /// <param name="storageAccount">An existing storage account.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithExistingStorageAccount(IStorageAccount storageAccount);
     }
+
     /// <summary>
-    /// A batch account definition to allow creation of application.
+    /// The template for a Batch account update operation, containing all the settings that can be modified.
+    /// </summary>
+    public interface IUpdate  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>,
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithStorageAccount,
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithApplication
+    {
+    }
+
+    /// <summary>
+    /// The stage of a Batch account definition allowing the creation of a Batch application.
     /// </summary>
     public interface IWithApplication 
     {
         /// <summary>
-        /// Specifies definition of an application to be created in a batch account.
+        /// Starts a definition of an application to be created in the Batch account.
         /// </summary>
-        /// <param name="applicationId">applicationId the reference name for application</param>
-        /// <returns>the stage representing configuration for the extension</returns>
+        /// <param name="applicationId">The reference name for the application.</param>
+        /// <return>The first stage of a Batch application definition.</return>
         Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition.IBlank<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate> DefineNewApplication(string applicationId);
 
         /// <summary>
-        /// Begins the description of an update of an existing application of this batch account.
+        /// Removes the specified application from the Batch account.
         /// </summary>
-        /// <param name="applicationId">applicationId the reference name for the application to be updated</param>
-        /// <returns>the stage representing updatable application.</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Application.Update.IUpdate UpdateApplication(string applicationId);
-
-        /// <summary>
-        /// Deletes specified application from the batch account.
-        /// </summary>
-        /// <param name="applicationId">applicationId the reference name for the application to be removed</param>
-        /// <returns>the stage representing updatable batch account definition.</returns>
+        /// <param name="applicationId">The reference name for the application to be removed.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate WithoutApplication(string applicationId);
 
-    }
-    /// <summary>
-    /// The template for a storage account update operation, containing all the settings that can be modified.
-    /// </summary>
-    public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        IUpdateWithTags<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>,
-        IWithStorageAccount,
-        IWithApplication
-    {
+        /// <summary>
+        /// Begins the description of an update of an existing Batch application in this Batch account.
+        /// </summary>
+        /// <param name="applicationId">The reference name of the application to be updated.</param>
+        /// <return>The first stage of a Batch application update.</return>
+        Microsoft.Azure.Management.Batch.Fluent.Application.Update.IUpdate UpdateApplication(string applicationId);
     }
 }

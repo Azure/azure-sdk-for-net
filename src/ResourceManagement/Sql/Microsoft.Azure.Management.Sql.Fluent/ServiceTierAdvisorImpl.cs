@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     {
         private ResourceId resourceId;
         private IDatabasesOperations databasesInner;
-        private IEnumerable<ISloUsageMetric> sloUsageMetrics;
+        private IEnumerable<ISloUsageMetricInterface> sloUsageMetrics;
 
         ///GENMHASH:0150BB5F92ED226BF84D3AC5255EFE3F:F8EEA9E1BE10E299F96C7CA9D025C464
         public string CurrentServiceLevelObjective()
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7FD5A8D2A26E9E6B12E7585A7DBE1CE3:9055AAEF8F9A4DFD881586C59581634F
-        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics()
+        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetricInterface> ServiceLevelObjectiveUsageMetrics()
         {
             if (sloUsageMetrics == null)
             {

@@ -14,13 +14,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
     public interface IDatabases 
     {
         /// <summary>
-        /// Gets a particular sql database.
-        /// </summary>
-        /// <param name="databaseName">Name of the sql database to get.</param>
-        /// <return>Returns the database with in the SQL Server.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Get(string databaseName);
-
-        /// <summary>
         /// Creates a new database in SQL Server.
         /// </summary>
         /// <param name="databaseName">Name of the database to be created.</param>
@@ -28,22 +21,29 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
         Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IBlank Define(string databaseName);
 
         /// <summary>
-        /// Delete specified database in the server.
+        /// Gets a particular sql database.
         /// </summary>
-        /// <param name="databaseName">Name of the database to delete.</param>
-        /// <return>Observable for the delete operation.</return>
-        Task DeleteAsync(string databaseName, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Returns all the databases for the server.
-        /// </summary>
-        /// <return>List of databases for the server.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> List();
+        /// <param name="databaseName">Name of the sql database to get.</param>
+        /// <return>Returns the database with in the SQL Server.</return>
+        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Get(string databaseName);
 
         /// <summary>
         /// Delete specified database in the server.
         /// </summary>
         /// <param name="databaseName">Name of the database to delete.</param>
         void Delete(string databaseName);
+
+        /// <summary>
+        /// Returns all the databases for the server.
+        /// </summary>
+        /// <return>List of databases for the server.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> List();
+
+        /// <summary>
+        /// Delete specified database in the server.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to delete.</param>
+        /// <return>Observable for the delete operation.</return>
+        Task DeleteAsync(string databaseName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

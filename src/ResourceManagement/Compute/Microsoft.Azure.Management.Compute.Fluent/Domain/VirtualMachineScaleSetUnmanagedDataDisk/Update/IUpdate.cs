@@ -10,15 +10,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmana
     /// The entirety of a unmanaged data disk update as part of a virtual machine scale set update.
     /// </summary>
     public interface IUpdate  :
-        IWithDiskSize,
-        IWithDiskLun,
-        IWithDiskCaching,
-        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IUpdate>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update.IWithDiskSize,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update.IWithDiskLun,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update.IWithDiskCaching,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IUpdate>
     {
     }
 
     /// <summary>
-    /// The stage of the unmanaged data disk update allowing to set the disk lun.
+    /// The stage of the unmanaged data disk update allowing to set the disk LUN.
     /// </summary>
     public interface IWithDiskLun 
     {

@@ -7,20 +7,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDe
     /// <summary>
     /// The stage of the network rule definition allowing the destination address to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDestinationAddress<ParentT> 
     {
         /// <summary>
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<ParentT> ToAnyAddress();
 
         /// <summary>
         /// Specifies the traffic destination address range to which this rule applies.
         /// </summary>
         /// <param name="cidr">An IP address range expressed in the CIDR notation.</param>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<ParentT> ToAddress(string cidr);
     }
 
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDe
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
         /// <summary>
         /// Specifies the priority to assign to this rule.
@@ -52,51 +52,51 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDe
     /// <summary>
     /// The stage of the network rule definition allowing the source address to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithSourceAddress<ParentT> 
     {
+        /// <summary>
+        /// Specifies that the rule applies to any traffic source address.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<ParentT> FromAnyAddress();
+
         /// <summary>
         /// Specifies the traffic source address prefix to which this rule applies.
         /// </summary>
         /// <param name="cidr">An IP address prefix expressed in the CIDR notation.</param>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<ParentT> FromAddress(string cidr);
-
-        /// <summary>
-        /// Specifies that the rule applies to any traffic source address.
-        /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<ParentT> FromAnyAddress();
     }
 
     /// <summary>
     /// The stage of the network rule description allowing the direction and the access type to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDirectionAccess<ParentT> 
     {
         /// <summary>
-        /// Allows outbound traffic.
-        /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<ParentT> AllowOutbound();
-
-        /// <summary>
         /// Allows inbound traffic.
         /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<ParentT> AllowInbound();
 
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<ParentT> DenyInbound();
+
+        /// <summary>
+        /// Allows outbound traffic.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<ParentT> AllowOutbound();
 
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<ParentT> DenyOutbound();
     }
 
@@ -105,91 +105,91 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDe
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithDirectionAccess<ParentT>,
-        IWithSourceAddress<ParentT>,
-        IWithSourcePort<ParentT>,
-        IWithDestinationAddress<ParentT>,
-        IWithDestinationPort<ParentT>,
-        IWithProtocol<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
     /// <summary>
     /// The stage of the security rule definition allowing the protocol that the rule applies to to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithProtocol<ParentT> 
     {
-        /// <summary>
-        /// Makes this rule apply to any supported protocol.
-        /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithAttach<ParentT> WithAnyProtocol();
-
         /// <summary>
         /// Specifies the protocol that this rule applies to.
         /// </summary>
         /// <param name="protocol">One of the supported protocols.</param>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithAttach<ParentT> WithProtocol(string protocol);
+
+        /// <summary>
+        /// Makes this rule apply to any supported protocol.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithAttach<ParentT> WithAnyProtocol();
     }
 
     /// <summary>
     /// The stage of the network rule definition allowing the destination port(s) to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDestinationPort<ParentT> 
     {
-        /// <summary>
-        /// Specifies the destination port to which this rule applies.
-        /// </summary>
-        /// <param name="port">The destination port number.</param>
-        /// <return>The next stage of the security rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithProtocol<ParentT> ToPort(int port);
-
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
         /// </summary>
         /// <param name="from">The starting port number.</param>
         /// <param name="to">The ending port number.</param>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithProtocol<ParentT> ToPortRange(int from, int to);
 
         /// <summary>
         /// Makes this rule apply to any destination port.
         /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithProtocol<ParentT> ToAnyPort();
+
+        /// <summary>
+        /// Specifies the destination port to which this rule applies.
+        /// </summary>
+        /// <param name="port">The destination port number.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithProtocol<ParentT> ToPort(int port);
     }
 
     /// <summary>
     /// The stage of the network rule definition allowing the source port(s) to be specified.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithSourcePort<ParentT> 
     {
-        /// <summary>
-        /// Specifies the source port to which this rule applies.
-        /// </summary>
-        /// <param name="port">The source port number.</param>
-        /// <return>The next stage of the security rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<ParentT> FromPort(int port);
-
-        /// <summary>
-        /// Makes this rule apply to any source port.
-        /// </summary>
-        /// <return>The next stage of the security rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<ParentT> FromAnyPort();
-
         /// <summary>
         /// Specifies the source port range to which this rule applies.
         /// </summary>
         /// <param name="from">The starting port number.</param>
         /// <param name="to">The ending port number.</param>
-        /// <return>The next stage of the security rule definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<ParentT> FromPortRange(int from, int to);
+
+        /// <summary>
+        /// Specifies the source port to which this rule applies.
+        /// </summary>
+        /// <param name="port">The source port number.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<ParentT> FromPort(int port);
+
+        /// <summary>
+        /// Makes this rule apply to any source port.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<ParentT> FromAnyPort();
     }
 
     /// <summary>
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDe
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
     public interface IBlank<ParentT>  :
-        IWithDirectionAccess<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<ParentT>
     {
     }
 }

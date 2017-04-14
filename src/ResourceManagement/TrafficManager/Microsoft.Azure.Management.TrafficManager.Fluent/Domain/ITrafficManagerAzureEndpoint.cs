@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     /// An immutable client-side representation of an Azure traffic manager profile Azure endpoint.
     /// </summary>
     public interface ITrafficManagerAzureEndpoint  :
-        ITrafficManagerEndpoint
+        Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint
     {
         /// <summary>
         /// Gets the resource id of the target Azure resource.

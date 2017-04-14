@@ -12,18 +12,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update
     public interface IWithIPAddress 
     {
         /// <summary>
+        /// Enables dynamic IP address allocation.
+        /// </summary>
+        /// <return>The next stage of the resource update.</return>
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate WithDynamicIP();
+
+        /// <summary>
         /// Enables static IP address allocation.
         /// Use  PublicIPAddress.ipAddress() after the public IP address is updated to
         /// obtain the actual IP address allocated for this resource by Azure.
         /// </summary>
         /// <return>The next stage of the resource update.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate WithStaticIP();
-
-        /// <summary>
-        /// Enables dynamic IP address allocation.
-        /// </summary>
-        /// <return>The next stage of the resource update.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate WithDynamicIP();
     }
 
     /// <summary>
@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update
     /// Use  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        IWithIPAddress,
-        IWithLeafDomainLabel,
-        IWithReverseFQDN,
-        IWithIdleTimout,
-        IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IWithIPAddress,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IWithLeafDomainLabel,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IWithReverseFQDN,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IWithIdleTimout,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update.IUpdate>
     {
     }
 

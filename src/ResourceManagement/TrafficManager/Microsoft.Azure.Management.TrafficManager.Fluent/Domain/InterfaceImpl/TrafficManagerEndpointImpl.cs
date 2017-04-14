@@ -7,21 +7,22 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
-    using TrafficManagerEndpoint.Definition;
-    using TrafficManagerEndpoint.UpdateAzureEndpoint;
-    using TrafficManagerEndpoint.UpdateDefinition;
-    using TrafficManagerEndpoint.UpdateExternalEndpoint;
-    using TrafficManagerEndpoint.UpdateNestedProfileEndpoint;
-    using TrafficManagerEndpoint.Update;
-    using TrafficManagerProfile.Definition;
-    using TrafficManagerProfile.Update;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateAzureEndpoint;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.Models;
 
     internal partial class TrafficManagerEndpointImpl 
     {
         /// <summary>
         /// Specifies that this endpoint should be excluded from receiving traffic.
         /// </summary>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithTrafficDisabled<TrafficManagerProfile.Definition.IWithCreate>.WithTrafficDisabled()
         {
             return this.WithTrafficDisabled() as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
@@ -38,10 +39,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the location of the endpoint that will be used when the parent profile is configured with
-        /// Performance routing method TrafficRoutingMethod.PERFORMANCE.
+        /// Performance routing method  TrafficRoutingMethod.PERFORMANCE.
         /// </summary>
         /// <param name="region">The location.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithEndpointThreshold<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
         {
             return this.FromRegion(region) as TrafficManagerEndpoint.Definition.IWithEndpointThreshold<TrafficManagerProfile.Definition.IWithCreate>;
@@ -49,10 +50,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the location of the endpoint that will be used when the parent profile is configured with
-        /// Performance routing method TrafficRoutingMethod.PERFORMANCE.
+        /// Performance routing method  TrafficRoutingMethod.PERFORMANCE.
         /// </summary>
         /// <param name="region">The location.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
         {
             return this.FromRegion(region) as TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<TrafficManagerProfile.Update.IUpdate>;
@@ -60,10 +61,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the priority for the endpoint that will be used when the parent profile is configured with
-        /// Priority routing method TrafficRoutingMethod.PRIORITY.
+        /// Priority routing method  TrafficRoutingMethod.PRIORITY.
         /// </summary>
         /// <param name="priority">The endpoint priority.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithRoutingPriority<TrafficManagerProfile.Definition.IWithCreate>.WithRoutingPriority(int priority)
         {
             return this.WithRoutingPriority(priority) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the weight for the endpoint that will be used when priority-based routing method
-        /// is TrafficRoutingMethod.PRIORITY enabled on the profile.
+        /// is  TrafficRoutingMethod.PRIORITY enabled on the profile.
         /// </summary>
         /// <param name="priority">
         /// Priority of this endpoint. Possible values are from 1 to 1000, lower
@@ -133,10 +134,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the weight for the endpoint that will be used when the parent profile is configured with
-        /// Weighted routing method TrafficRoutingMethod.WEIGHTED.
+        /// Weighted routing method  TrafficRoutingMethod.WEIGHTED.
         /// </summary>
         /// <param name="weight">The endpoint weight.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithRoutingWeight<TrafficManagerProfile.Definition.IWithCreate>.WithRoutingWeight(int weight)
         {
             return this.WithRoutingWeight(weight) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
@@ -157,7 +158,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
         /// </summary>
         /// <param name="count">The number of endpoints.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithEndpointThreshold<TrafficManagerProfile.Definition.IWithCreate>.WithMinimumEndpointsToEnableTraffic(int count)
         {
             return this.WithMinimumEndpointsToEnableTraffic(count) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
@@ -167,7 +168,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
         /// </summary>
         /// <param name="count">The number of endpoints.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<TrafficManagerProfile.Update.IUpdate>.WithMinimumEndpointsToEnableTraffic(int count)
         {
             return this.WithMinimumEndpointsToEnableTraffic(count) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
@@ -217,7 +218,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Specifies the FQDN of an external endpoint.
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithFqdn<TrafficManagerProfile.Definition.IWithCreate>.ToFqdn(string externalFqdn)
         {
             return this.ToFqdn(externalFqdn) as TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<TrafficManagerProfile.Definition.IWithCreate>;
@@ -227,7 +228,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Specifies the FQDN of an external endpoint.
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithFqdn<TrafficManagerProfile.Update.IUpdate>.ToFqdn(string externalFqdn)
         {
             return this.ToFqdn(externalFqdn) as TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<TrafficManagerProfile.Update.IUpdate>;
@@ -235,7 +236,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the weight for the endpoint that will be used when priority-based routing method
-        /// is TrafficRoutingMethod.PRIORITY enabled on the profile.
+        /// is  TrafficRoutingMethod.PRIORITY enabled on the profile.
         /// </summary>
         /// <param name="priority">The endpoint priority.</param>
         /// <return>The next stage of the update.</return>
@@ -246,10 +247,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the location of the endpoint that will be used when the parent profile is configured with
-        /// Performance routing method TrafficRoutingMethod.PERFORMANCE.
+        /// Performance routing method  TrafficRoutingMethod.PERFORMANCE.
         /// </summary>
         /// <param name="region">The location.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
         {
             return this.FromRegion(region) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
@@ -257,10 +258,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
 
         /// <summary>
         /// Specifies the location of the endpoint that will be used when the parent profile is configured with
-        /// Performance routing method TrafficRoutingMethod.PERFORMANCE.
+        /// Performance routing method  TrafficRoutingMethod.PERFORMANCE.
         /// </summary>
         /// <param name="region">The location.</param>
-        /// <return>The next stage of the endpoint definition.</return>
+        /// <return>The next stage of the definition.</return>
         TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
         {
             return this.FromRegion(region) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
@@ -323,7 +324,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Gets the priority of the endpoint which is used when traffic manager profile is configured with
         /// Priority traffic-routing method.
         /// </summary>
-        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.RoutingPriority
+        long Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.RoutingPriority
         {
             get
             {
@@ -357,7 +358,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Gets the weight of the endpoint which is used when traffic manager profile is configured with
         /// Weighted traffic-routing method.
         /// </summary>
-        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.RoutingWeight
+        long Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.RoutingWeight
         {
             get
             {

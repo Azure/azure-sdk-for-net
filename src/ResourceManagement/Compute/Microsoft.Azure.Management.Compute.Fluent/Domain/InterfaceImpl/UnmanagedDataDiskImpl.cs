@@ -2,17 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
-    using VirtualMachine.Definition;
-    using VirtualMachine.Update;
-    using VirtualMachineUnmanagedDataDisk.Definition;
-    using VirtualMachineUnmanagedDataDisk.DefinitionWithExistingVhd;
-    using VirtualMachineUnmanagedDataDisk.DefinitionWithImage;
-    using VirtualMachineUnmanagedDataDisk.DefinitionWithNewVhd;
-    using VirtualMachineUnmanagedDataDisk.Update;
-    using VirtualMachineUnmanagedDataDisk.UpdateDefinition;
-    using VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithExistingVhd;
-    using VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithNewVhd;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.DefinitionWithExistingVhd;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.DefinitionWithImage;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.DefinitionWithNewVhd;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithExistingVhd;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinitionWithNewVhd;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets uri to the virtual hard disk backing this data disk.
+        /// Gets URI to the virtual hard disk backing this data disk.
         /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk.VhdUri
         {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets Gets the disk caching type.
+        /// Gets the disk caching type.
         /// possible values are: 'None', 'ReadOnly', 'ReadWrite'.
         /// </summary>
         /// <summary>
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// null will be returned if this disk is not based on an image.
         /// </summary>
         /// <summary>
-        /// Gets the uri of the source vhd image.
+        /// Gets the URI of the source VHD image.
         /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk.SourceImageUri
         {
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the existing source vhd of the disk.
+        /// Specifies the existing source VHD of the disk.
         /// </summary>
         /// <param name="storageAccountName">The storage account name.</param>
         /// <param name="containerName">The name of the container holding VHD file.</param>
@@ -323,9 +323,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the image lun identifier of the source disk image.
+        /// Specifies the image LUN identifier of the source disk image.
         /// </summary>
-        /// <param name="imageLun">The lun.</param>
+        /// <param name="imageLun">The LUN.</param>
         /// <return>The next stage of data disk definition.</return>
         VirtualMachineUnmanagedDataDisk.Definition.IWithFromImageDiskSettings<VirtualMachine.Definition.IWithUnmanagedCreate> VirtualMachineUnmanagedDataDisk.Definition.IWithDiskSource<VirtualMachine.Definition.IWithUnmanagedCreate>.FromImage(int imageLun)
         {
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies that disk needs to be created with a new vhd of given size.
+        /// Specifies that disk needs to be created with a new VHD of given size.
         /// </summary>
         /// <param name="sizeInGB">The initial disk size in GB.</param>
         /// <return>The next stage of data disk definition.</return>
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the existing source vhd of the disk.
+        /// Specifies the existing source VHD of the disk.
         /// </summary>
         /// <param name="storageAccountName">The storage account name.</param>
         /// <param name="containerName">The name of the container holding VHD file.</param>
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies that disk needs to be created with a new vhd of given size.
+        /// Specifies that disk needs to be created with a new VHD of given size.
         /// </summary>
         /// <param name="sizeInGB">The initial disk size in GB.</param>
         /// <return>The next stage of data disk definition.</return>

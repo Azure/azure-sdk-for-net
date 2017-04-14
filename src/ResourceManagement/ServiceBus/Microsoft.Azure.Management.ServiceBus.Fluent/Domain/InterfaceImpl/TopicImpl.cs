@@ -6,23 +6,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update;
     using System.Collections.Generic;
     using System;
-    using ServiceBus.Fluent;
-    using Management.ServiceBus.Fluent.Models;
 
     internal partial class TopicImpl 
     {
         /// <summary>
         /// Gets the manager client of this resource type.
         /// </summary>
-        IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IServiceBusManager>.Manager
+        Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager>.Manager
         {
             get
             {
-                return this.Manager as IServiceBusManager;
+                return this.Manager as Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager;
             }
         }
 
@@ -55,9 +54,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
         {
-            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Topic.Definition.IWithCreate;
+            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -65,9 +64,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
         {
-            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Topic.Update.IUpdate;
+            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -76,9 +75,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// from it's internal store.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithMessageBatching.WithoutMessageBatching()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithMessageBatching.WithoutMessageBatching()
         {
-            return this.WithoutMessageBatching() as Topic.Definition.IWithCreate;
+            return this.WithoutMessageBatching() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -86,9 +85,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// or delete messages from it's internal store.
         /// </summary>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithMessageBatching.WithoutMessageBatching()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithMessageBatching.WithoutMessageBatching()
         {
-            return this.WithoutMessageBatching() as Topic.Update.IUpdate;
+            return this.WithoutMessageBatching() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -96,9 +95,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// messages from it's internal store. This increases the throughput.
         /// </summary>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithMessageBatching.WithMessageBatching()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithMessageBatching.WithMessageBatching()
         {
-            return this.WithMessageBatching() as Topic.Update.IUpdate;
+            return this.WithMessageBatching() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -106,18 +105,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="duplicateDetectionHistoryDuration">Duration of the history.</param>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithDuplicateMessageDetection.WithDuplicateMessageDetection(TimeSpan duplicateDetectionHistoryDuration)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithDuplicateMessageDetection.WithDuplicateMessageDetection(TimeSpan duplicateDetectionHistoryDuration)
         {
-            return this.WithDuplicateMessageDetection(duplicateDetectionHistoryDuration) as Topic.Definition.IWithCreate;
+            return this.WithDuplicateMessageDetection(duplicateDetectionHistoryDuration) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Specifies that duplicate message detection needs to be disabled.
         /// </summary>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithDuplicateMessageDetection.WithoutDuplicateMessageDetection()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithDuplicateMessageDetection.WithoutDuplicateMessageDetection()
         {
-            return this.WithoutDuplicateMessageDetection() as Topic.Update.IUpdate;
+            return this.WithoutDuplicateMessageDetection() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -125,18 +124,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="duration">Duration of the history.</param>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithDuplicateMessageDetection.WithDuplicateMessageDetectionHistoryDuration(TimeSpan duration)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithDuplicateMessageDetection.WithDuplicateMessageDetectionHistoryDuration(TimeSpan duration)
         {
-            return this.WithDuplicateMessageDetectionHistoryDuration(duration) as Topic.Update.IUpdate;
+            return this.WithDuplicateMessageDetectionHistoryDuration(duration) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that partitioning should be enabled on this topic.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithPartitioning.WithPartitioning()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithPartitioning.WithPartitioning()
         {
-            return this.WithPartitioning() as Topic.Definition.IWithCreate;
+            return this.WithPartitioning() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -145,9 +144,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// disabled.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithPartitioning.WithoutPartitioning()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithPartitioning.WithoutPartitioning()
         {
-            return this.WithoutPartitioning() as Topic.Definition.IWithCreate;
+            return this.WithoutPartitioning() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -155,9 +154,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithAuthorizationRule.WithNewSendRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithAuthorizationRule.WithNewSendRule(string name)
         {
-            return this.WithNewSendRule(name) as Topic.Definition.IWithCreate;
+            return this.WithNewSendRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -165,9 +164,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithAuthorizationRule.WithNewManageRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithAuthorizationRule.WithNewManageRule(string name)
         {
-            return this.WithNewManageRule(name) as Topic.Definition.IWithCreate;
+            return this.WithNewManageRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -175,9 +174,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithAuthorizationRule.WithNewListenRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithAuthorizationRule.WithNewListenRule(string name)
         {
-            return this.WithNewListenRule(name) as Topic.Definition.IWithCreate;
+            return this.WithNewListenRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -185,9 +184,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithAuthorizationRule.WithNewSendRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithAuthorizationRule.WithNewSendRule(string name)
         {
-            return this.WithNewSendRule(name) as Topic.Update.IUpdate;
+            return this.WithNewSendRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -195,9 +194,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithAuthorizationRule.WithNewManageRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithAuthorizationRule.WithNewManageRule(string name)
         {
-            return this.WithNewManageRule(name) as Topic.Update.IUpdate;
+            return this.WithNewManageRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -205,9 +204,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithAuthorizationRule.WithNewListenRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithAuthorizationRule.WithNewListenRule(string name)
         {
-            return this.WithNewListenRule(name) as Topic.Update.IUpdate;
+            return this.WithNewListenRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -215,9 +214,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Rule name.</param>
         /// <return>Next stage of the topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithAuthorizationRule.WithoutAuthorizationRule(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithAuthorizationRule.WithoutAuthorizationRule(string name)
         {
-            return this.WithoutAuthorizationRule(name) as Topic.Update.IUpdate;
+            return this.WithoutAuthorizationRule(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -225,9 +224,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Queue name.</param>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithSubscription.WithNewSubscription(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithSubscription.WithNewSubscription(string name)
         {
-            return this.WithNewSubscription(name) as Topic.Definition.IWithCreate;
+            return this.WithNewSubscription(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -235,9 +234,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Queue name.</param>
         /// <return>Next stage of the Service Bus topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithSubscription.WithNewSubscription(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithSubscription.WithNewSubscription(string name)
         {
-            return this.WithNewSubscription(name) as Topic.Update.IUpdate;
+            return this.WithNewSubscription(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -245,9 +244,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">Subscription name.</param>
         /// <return>Next stage of the Service Bus topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithSubscription.WithoutSubscription(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithSubscription.WithoutSubscription(string name)
         {
-            return this.WithoutSubscription(name) as Topic.Update.IUpdate;
+            return this.WithoutSubscription(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -256,9 +255,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
         {
-            return this.WithDefaultMessageTTL(ttl) as Topic.Definition.IWithCreate;
+            return this.WithDefaultMessageTTL(ttl) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -266,9 +265,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
         {
-            return this.WithDefaultMessageTTL(ttl) as Topic.Update.IUpdate;
+            return this.WithDefaultMessageTTL(ttl) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -374,7 +373,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the current status of the topic.
         /// </summary>
-        EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.Status
+        Microsoft.Azure.Management.ServiceBus.Fluent.Models.EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.Status
         {
             get
             {
@@ -385,7 +384,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to topic.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DefaultMessageTtlDuration
+        System.TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DefaultMessageTtlDuration
         {
             get
             {
@@ -495,7 +494,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration of the duplicate detection history.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DuplicateMessageDetectionHistoryDuration
+        System.TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ITopic.DuplicateMessageDetectionHistoryDuration
         {
             get
             {
@@ -504,13 +503,57 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         }
 
         /// <summary>
+        /// Gets the name of the region the resource is in.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
+        {
+            get
+            {
+                return this.RegionName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of the resource.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
+        {
+            get
+            {
+                return this.Type;
+            }
+        }
+
+        /// <summary>
+        /// Gets the region the resource is in.
+        /// </summary>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
+        {
+            get
+            {
+                return this.Region as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
+            }
+        }
+
+        /// <summary>
+        /// Gets the tags for the resource.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
+        {
+            get
+            {
+                return this.Tags as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+            }
+        }
+
+        /// <summary>
         /// Specifies the maximum size of memory allocated for the topic.
         /// </summary>
         /// <param name="sizeInMB">Size in MB.</param>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithSize.WithSizeInMB(long sizeInMB)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithSize.WithSizeInMB(long sizeInMB)
         {
-            return this.WithSizeInMB(sizeInMB) as Topic.Definition.IWithCreate;
+            return this.WithSizeInMB(sizeInMB) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -518,9 +561,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="sizeInMB">Size in MB.</param>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithSize.WithSizeInMB(long sizeInMB)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithSize.WithSizeInMB(long sizeInMB)
         {
-            return this.WithSizeInMB(sizeInMB) as Topic.Update.IUpdate;
+            return this.WithSizeInMB(sizeInMB) as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -529,18 +572,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// Note: By default topic is not express.
         /// </summary>
         /// <return>The next stage of topic definition.</return>
-        Topic.Definition.IWithCreate Topic.Definition.IWithExpressMessage.WithExpressMessage()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithExpressMessage.WithExpressMessage()
         {
-            return this.WithExpressMessage() as Topic.Definition.IWithCreate;
+            return this.WithExpressMessage() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Specifies that messages in this topic are not express hence they should be cached in memory.
         /// </summary>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithExpressMessage.WithoutExpressMessage()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithExpressMessage.WithoutExpressMessage()
         {
-            return this.WithoutExpressMessage() as Topic.Update.IUpdate;
+            return this.WithoutExpressMessage() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
         }
 
         /// <summary>
@@ -548,9 +591,20 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// for some time before storing it in messaging store.
         /// </summary>
         /// <return>The next stage of topic update.</return>
-        Topic.Update.IUpdate Topic.Update.IWithExpressMessage.WithExpressMessage()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IWithExpressMessage.WithExpressMessage()
         {
-            return this.WithExpressMessage() as Topic.Update.IUpdate;
+            return this.WithExpressMessage() as Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Gets the name of the resource group.
+        /// </summary>
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
+        {
+            get
+            {
+                return this.ResourceGroupName;
+            }
         }
     }
 }
