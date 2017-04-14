@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.Insights
 
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
+        /// **WARNING**: This method will be deprecated in future releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -77,6 +78,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete()]
         public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> GetWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
@@ -227,6 +229,7 @@ namespace Microsoft.Azure.Management.Insights
 
         /// <summary>
         /// Create or update new diagnostic settings for the specified resource.
+        /// **WARNING**: This method will be deprecated in future releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -255,6 +258,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete()]
         public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
@@ -425,7 +429,8 @@ namespace Microsoft.Azure.Management.Insights
 
         /// <summary>
         /// Updates an existing ServiceDiagnosticSettingsResource. To update other
-        /// fields use the CreateOrUpdate method.
+        /// fields use the CreateOrUpdate method. **WARNING**: This method will be
+        /// deprecated in future releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -454,6 +459,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete()]
         public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource serviceDiagnosticSettingsResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)

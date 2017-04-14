@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Insights
     {
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
+        /// **WARNING**: This method will be deprecated in future releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -38,16 +39,18 @@ namespace Microsoft.Azure.Management.Insights
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
+        [System.Obsolete()]
         Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> GetWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update new diagnostic settings for the specified
-        /// resource.
+        /// resource. **WARNING**: This method will be deprecated in future
+        /// releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -61,19 +64,21 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
+        [System.Obsolete()]
         Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing ServiceDiagnosticSettingsResource. To update
-        /// other fields use the CreateOrUpdate method.
+        /// other fields use the CreateOrUpdate method. **WARNING**: This
+        /// method will be deprecated in future releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -90,12 +95,13 @@ namespace Microsoft.Azure.Management.Insights
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
+        [System.Obsolete()]
         Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource serviceDiagnosticSettingsResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

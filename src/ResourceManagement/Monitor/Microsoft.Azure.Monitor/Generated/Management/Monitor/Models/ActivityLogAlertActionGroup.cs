@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         /// <param name="actionGroupId">The resourceId of the action group.
         /// This cannot be null or empty.</param>
-        /// <param name="webhookProperties">the dictionary of custom properties
+        /// <param name="webhookProperties">The dictionary of custom properties
         /// to include with the post operation. These data are appended to the
         /// webhook payload.</param>
         public ActivityLogAlertActionGroup(string actionGroupId, IDictionary<string, string> webhookProperties = default(IDictionary<string, string>))
