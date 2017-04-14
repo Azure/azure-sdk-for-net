@@ -170,6 +170,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return GetMasterKeyAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This method is used to retrieve the master key for the function app. Once this method is added in the web app OpenAPI
+        /// specs, this method will call that in WebAppsOperations.cs instead.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>the master key of the function app.</returns>
         public async Task<string> GetMasterKeyAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             string apiVersion = "2016-08-01";
