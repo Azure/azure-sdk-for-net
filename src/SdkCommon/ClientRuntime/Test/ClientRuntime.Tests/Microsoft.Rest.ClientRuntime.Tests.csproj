@@ -1,0 +1,90 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+  <PropertyGroup>
+    <Description>Test Project for Microsoft.Rest.ClientRuntime</Description>
+    <VersionPrefix>2.0.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Tests</AssemblyName>
+    <PackageId>Microsoft.Rest.ClientRuntime.Tests</PackageId>
+    <!--<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>-->
+    <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netcoreapp1.0</TargetFrameworks>
+    <TestProjectType>true</TestProjectType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />    
+  </ItemGroup>
+
+  <!--
+  
+    <ItemGroup Condition=" '$(TargetFramework)' != 'net452' ">
+    <PackageReference Update="Mirosoft.NETCore.App" Version="1.0.2" />
+    <PackageReference Update="NETStandard.Library" Version="1.6.1" />
+  </ItemGroup>
+    Add list of project references that you need inside VS IDE for debugging purpose.
+    Also add list of nuget packages references that will be replaced during build outside of VS
+    These are mutually exclusive references.
+    Project references that are added should not be added as nuget references at the same time.
+    Hence we have two properties
+    AddProjectReferenceForDebuggingPurpose
+    AddNugetReferenceForCIandCmdlineBuild (this is for building your nuget project on CI and for release
+  
+  
+  <ItemGroup Condition=" '$(AddProjectReferenceForDebuggingPurpose)' == 'true' ">
+    <ProjectReference Include="..\..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(AddNugetReferenceForCIandCmdlineBuild)' == 'true' ">
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.5,3.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.5" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="2.2.12" />
+  </ItemGroup>
+-->
+  
+  <!--
+    <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+    <Reference Include="System" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <DefineConstants>$(DefineConstants);PORTABLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+  </ItemGroup>
+-->
+ 
+</Project>

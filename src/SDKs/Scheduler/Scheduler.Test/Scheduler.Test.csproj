@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Scheduler.Tests Class Library</Description>
+    <Authors>Microsoft Corporation</Authors>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <DelaySign>true</DelaySign>
+    <AssemblyName>Scheduler.Test</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PackageId>Scheduler.Test</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Management.Scheduler\Microsoft.Azure.Management.Scheduler.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.6.6-preview,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.5.0-preview,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.2,4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.2,3.0)" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <PackageReference Include="System.Diagnostics.Tracing" Version="4.1.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))" />
+  <PropertyGroup>
+    <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation.</Description>
+    <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
+    <VersionPrefix>3.3.5</VersionPrefix>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
+    <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
+    <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
+  </ItemGroup>
+  
+  <!--
+    Add list of project references that you need inside VS IDE for debugging purpose.
+    Also add list of nuget packages references that will be replaced during build outside of VS
+    These are mutually exclusive references.
+    Project references that are added should not be added as nuget references at the same time.
+    Hence we have two properties
+    AddProjectReferenceForDebuggingPurpose
+    AddNugetReferenceForCIandCmdlineBuild (this is for building your nuget project on CI and for release
+  
+  <ItemGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+    <ProjectReference Include="..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(BuildingInsideVisualStudio)' != 'true' ">
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
+  </ItemGroup>
+  -->
+  <!--
+    <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>$(DefineConstants);NET45</DefineConstants>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD11;PORTABLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD15</DefineConstants>
+  </PropertyGroup>
+
+  -->
+</Project>

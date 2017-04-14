@@ -1,0 +1,44 @@
+<Project ToolsVersion="15.0">
+	<!-- <Import Project="tools\buildTargets\testTargets\test.Build.props" /> -->
+	<!-- <Import Project="dirs.proj" /> -->
+	<ItemGroup>
+		<PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+		<!-- <PackageReference Include="Microsoft.NETCore.App" Version="1.0.2" /> -->
+	</ItemGroup>
+  
+  
+  <PropertyGroup>    
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+	  <NugetCommonProfileTags>RandomTag</NugetCommonProfileTags>
+	  <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
+    <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
+    <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+    <SkipBuildingTestProject>false</SkipBuildingTestProject>	
+	<!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
+	</PropertyGroup>
+	
+<PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)'=='Debug' ">
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>  
+
+  <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)'=='Release' ">
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>  
+  
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <DefineConstants>FullNetFx</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' "> 
+    <DefineConstants>netcoreapp1.0</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+	<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+</Project>

@@ -1,0 +1,4 @@
+﻿<Project>
+	<Import Project="src\dirs.proj" />
+  <!-- Import Condition="Exists('\dir.proj')" Project="\dir.proj" / -->
+</Project>

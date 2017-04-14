@@ -1,0 +1,31 @@
+﻿<Project>  
+<Import Project="tools\buildTargets\common.targets" />
+  
+  <!-- <Target Name="BuildSdk" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" /> -->
+  
+  <!-- 
+
+  
+  <Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />  
+  <Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
+  
+    <Target Name="PublishLocal">
+			<Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
+			  IgnoreExitCode="true"
+			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+
+  </Target>
+   -->
+</Project>
+
+<!--
+<Import Project="$([MSBuild]::GetPathOfFileAbove('reference.props'))" />
+<Set this true only if you want to test the code sign workflow locally>
+		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+<FxTargetList>portable;net40;net45</FxTargetList>
+		<FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
+		<ZipExeFolder>$(LibraryToolsFolder)\7-Zip</ZipExeFolder>
+		<ZipExe>$(ZipExeFolder)\7z.exe</ZipExe>
+		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
+-->

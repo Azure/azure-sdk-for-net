@@ -1,0 +1,73 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+  
+  <PropertyGroup>
+    <Description>Test Project for Microsoft.Rest.ClientRuntime.Azure</Description>
+    <VersionPrefix>2.0.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Tests</AssemblyName>
+    <PackageId>Microsoft.Rest.ClientRuntime.Azure.Tests</PackageId>
+    <PackageTags>Rest ClientRuntime Azure Test $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.0</TargetFrameworks>
+    <TestProjectType>true</TestProjectType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+  </ItemGroup>
+<!--
+  <ItemGroup>
+    <ProjectReference Include="..\..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+  </ItemGroup>
+  -->
+  <!--
+    Add list of project references that you need inside VS IDE for debugging purpose.
+    Also add list of nuget packages references that will be replaced during build outside of VS
+    These are mutually exclusive references.
+    Project references that are added should not be added as nuget references at the same time.
+    Hence we have two properties
+    AddProjectReferenceForDebuggingPurpose
+    AddNugetReferenceForCIandCmdlineBuild (this is for building your nuget project on CI and for release
+  
+  <ItemGroup Condition=" '$(AddProjectReferenceForDebuggingPurpose)' == 'true' ">
+    <ProjectReference Include="..\..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(AddNugetReferenceForCIandCmdlineBuild)' == 'true' ">
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.5" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.5" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="2.2.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  -->
+  <!--
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <DefineConstants>$(DefineConstants);PORTABLE</DefineConstants>
+  </PropertyGroup>
+
+-->  
+  
+</Project>

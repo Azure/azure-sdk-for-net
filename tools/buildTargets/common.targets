@@ -1,0 +1,153 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<!--
+  <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets"/>
+  <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
+  <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets" />
+  -->
+  
+  
+  <PropertyGroup>
+    <PreBuildStaticAnalysisTargets>
+      CategorizeProjects;
+    </PreBuildStaticAnalysisTargets>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <BuildTraversedProjectsDependsOn>
+      PreBuildStaticAnalysis;
+      RestoreLatestProjects;
+      BuildLatestProjects;
+      Package
+    </BuildTraversedProjectsDependsOn>
+
+    <CleanTraversedProjectsDependsOn>
+      CleanLatestProjects;
+      _CleanSDKPackageFiles
+    </CleanTraversedProjectsDependsOn>
+  </PropertyGroup>
+  
+  <Target Name="CleanLatestProjects">
+    <PropertyGroup>
+      <LatestProjectDefaultCleanTarget Condition=" '$(LatestProjectDefaultCleanTarget)' == '' ">Clean</LatestProjectDefaultCleanTarget>
+    </PropertyGroup>
+
+    <Message Text="Cleaning Initiated....." />
+    <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
+         Projects="@(ProjectToBuild)"
+             Properties="PackageOutputPath=$(PackageOutputPath)"
+         ContinueOnError="ErrorAndStop" />
+  </Target>
+
+  <Target Name="_CleanSDKPackageFiles">
+    <ItemGroup>
+      <_SDKPackageFilesToDelete Include="$(PackageOutputPath)\*.nupkg"/>
+      <_SDKPackageFilesToDelete Include="$(BaseIntermediateOutputPath)\*.nuspec"/>
+    </ItemGroup>
+    <Message Text="Cleaning..... @(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " />
+    <Delete Files="@(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " ContinueOnError="true"/>
+  </Target>
+
+
+  <Target Name="RestoreLatestProjects">
+    <PropertyGroup>
+      <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
+    </PropertyGroup>	
+	  <Message Text="Now Restoring @(ProjectToBuild)" />
+	
+    <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
+         Projects="@(ProjectToBuild)"
+         ContinueOnError="ErrorAndStop" />
+  </Target>
+  
+  <Target Name="BuildLatestProjects">
+    <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
+    <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
+    <PropertyGroup>
+	<!-- $(MSBuildProjectDefaultTargets)-->
+      <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
+    </PropertyGroup>
+	
+	  
+	  <Message Text="Building SDK Projects ..... @(SDKProject)" />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+         Projects="@(SDKProject)"         
+         ContinueOnError="ErrorAndStop" />
+    
+    <Message Text="Building SDKTest Projects ....... @(SDKTestProject)" />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+         Projects="@(SDKTestProject)"
+         Condition=" '$(SkipBuildingTestProjects)' != 'false' "
+         ContinueOnError="ErrorAndStop" />
+        
+         <!--<Properties="GeneratePackageOnBuild=true;IncludeSymbols=true">-->
+         
+  </Target>
+
+  <Target Name="Package">
+    <Message Text="Packaging..... @(SDKProject)"/>
+    <MSBuild
+        Projects="@(SDKProject)"
+        Targets="Pack"
+        Properties="Configuration=$(Configuration);
+        VisualStudioVersion=$(VisualStudioVersion); 
+        PackageOutputPath=$(PackageOutputPath); 
+        NoPackageAnalysis=true; 
+        IncludeSymbols=false; 
+        NoBuild=true;">
+    </MSBuild>
+
+  </Target>
+  
+  <Target Name="PublishNugetPackage">
+    
+  </Target>
+
+  <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)">
+  <!--
+    <MSBuild Targets="GetPackageReferences"
+            Projects="@(ProjectToBuild)"
+            ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="OtherProjectReferences" />
+    </MSBuild>
+  
+    <Error Condition=" '@(OtherProjectReferences)' != '' " Text="Contains Project References, build cannot continue. Please remove all Project references from CI builds" />
+  -->
+  </Target>
+  
+  <Target Name="GetPackageReferences" Returns="@(ProjectReference)" />
+  
+  <Target Name="CategorizeProjects">
+  <Message Text="Categorizing...."/>
+    <ItemGroup>
+      <SDKProject Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' "/>
+      <SDKTestProject Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' == 'Test' "/>
+    </ItemGroup>
+    
+	<Message Text="Building SDK Projects ..... @(SDKProject)" />
+	
+	<Message Text="Building Test Projects ..... @(SDKTestProject)" />
+	
+  </Target>
+
+  <Target Name="PrintStuff">
+    <Message Text="ProgFiles .... $(ProgramFiles)" />
+    <Message Text="$(MSBuildExtensionsPath)" />
+    <!--
+    <Message Text="%(VsIDENugetPackageReference.Identity) and %(VsIDENugetPackageReference.Version) "/>
+    <Message Text="%(VsIDEProjectReference.Identity) "/>
+-->
+    
+  </Target>
+
+  <Target Name="GetWellKnownProperties">
+    
+  </Target>
+  
+  <Target Name="_SplitProjectReferencesByFileExistence">
+	<!-- Noop --> 
+</Target>
+
+
+</Project>

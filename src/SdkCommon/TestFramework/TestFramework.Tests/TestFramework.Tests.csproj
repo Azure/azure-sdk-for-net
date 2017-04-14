@@ -1,0 +1,117 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+  <PropertyGroup>
+    <Description>TestFramework.Tests Class Library</Description>
+    <AssemblyName>TestFramework.Tests</AssemblyName>
+    <PackageId>TestFramework.Tests</PackageId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TestProjectType>true</TestProjectType>
+  </PropertyGroup>
+
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.5,3.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+    
+  </ItemGroup>
+  
+  <!--
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+    
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+
+  </ItemGroup>
+-->
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />-->
+
+    
+  </ItemGroup>
+  
+  <!--
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+
+    <PackageReference Include="Microsoft.NETCoreApp" Version="1.1.1" />
+  </ItemGroup>
+-->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+<!--
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+-->
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\CsmClientSubscriptionNone.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\CsmTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\RdfeTestsWithAADAuth.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\RdfeTestsWithCertAuthBaseuriEnvironmentInDogfood.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\RdfeTestsWithCertAuthBaseUriInDogfood.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\RdfeTestsWithCertAuthBaseuriInProd.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\RdfeTestsWithCertAuthEnvironmentInDogfood.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription\TestsWithSubscriptionIdUsesValueFromTheTestFile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <!--
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+    
+    <ItemGroup>
+    <Compile Include="..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.5,3.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.props" />
+-->
+  
+</Project>

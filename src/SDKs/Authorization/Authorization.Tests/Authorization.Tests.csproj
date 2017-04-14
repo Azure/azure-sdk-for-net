@@ -1,0 +1,103 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <Description>Authorization.Tests Class Library</Description>
+    <AssemblyName>Authorization.Tests</AssemblyName>
+    <PackageId>Authorization.Tests</PackageId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.1.0-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\ClassicAdministratorListTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentAtScopeAndAboveTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentByIdTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListByFilterTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListForScopeTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListWithAssignedToFilterTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentPagingTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentsCreateDeleteTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentsListGetTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionCreateTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsByIdTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsListGetTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsListWithFilterTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionUpdateTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetNonExistentResourceGroupPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetNonExistentResourcePermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetResourceGroupPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetResourcePermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Authorization.Tests.TestExecutionContext\.ctor.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <!--
+  <ItemGroup>
+    <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.6.7-preview,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.5.0-preview,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.1,4.0.0)" />
+    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.0.0-preview" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+  </ItemGroup>
+-->
+</Project>

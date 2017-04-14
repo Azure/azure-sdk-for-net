@@ -7,11 +7,14 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.Analysis;
 using Microsoft.Azure.Management.Analysis.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using Xunit;
 
 namespace AnalysisServices.Tests.ScenarioTests
@@ -21,6 +24,9 @@ namespace AnalysisServices.Tests.ScenarioTests
         [Fact]
         public void CreateGetUpdateDeleteTest()
         {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var client = this.GetAnalysisServicesClient(context);
@@ -157,5 +163,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.True(listResponse.Count() >= 0);
             }
         }
+
+        
     }
 }

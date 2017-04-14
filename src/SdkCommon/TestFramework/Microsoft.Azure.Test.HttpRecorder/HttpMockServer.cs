@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,6 +62,18 @@ namespace Microsoft.Azure.Test.HttpRecorder
             servers = new List<HttpMockServer>();
             records = new Records(Matcher);
             Variables = new Dictionary<string, string>();
+
+            var asmCollection = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach(Assembly asm in asmCollection)
+            {
+                if(asm.GetType(CallerIdentity) != null)
+                {
+                    string location = Path.GetDirectoryName(asm.Location);
+                    RecordsDirectory = Path.Combine(location, RecordsDirectory);
+                }
+            }
+            
 
             if (Mode == HttpRecorderMode.Playback)
             {

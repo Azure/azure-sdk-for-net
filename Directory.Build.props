@@ -1,0 +1,65 @@
+﻿<Project>  
+  <Import Project="dirs.proj" />
+  
+	<PropertyGroup>
+		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
+		<LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
+		<LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+		<LibraryNugetPackageFolder>$(LibraryRoot)\restoredPackages</LibraryNugetPackageFolder>
+		<LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
+		<AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
+		<ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
+		<BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
+		<BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
+		<CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
+		<Scope Condition=" '$(Scope)' == '' ">All</Scope>
+		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
+		<ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
+		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
+		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Exclude="$(LibrarySourceFolder)\KeyVault\Microsoft.Azure.KeyVault.Samples\Microsoft.Azure.KeyVault.Samples.sln" Condition=" '$(Scope)' == 'all'  " />
+		<LibraryFxTargetList Include="$(FxTargetList)" />
+		<AutoRestLibraryFxTargetList Include="portable;net45" />
+		<ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj"/>
+		<ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj"/>
+		<ClientRuntimeRootDir Include="%(ClientRuntimeProjects.RootDir)"/>
+	</ItemGroup>
+
+  <PropertyGroup Label="Well Known Properties">
+    <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>
+    <SdkCommonRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</SdkCommonRootDir>
+  </PropertyGroup>
+
+  
+  <!--
+  <Import Project="tools\buildTargets\common.Build.props"/>
+  <Import Project="tools\buildTargets\common.NugetPackage.props" />
+  <Import Project="tools\buildTargets\common.targets" />
+  <Import Project="tools\buildTargets\testTargets\test.Build.props" Condition=" '$(TestProjectType)' == 'true' "/>
+  -->
+
+  
+  
+  
+    <Target Name="PublishLocal">
+			<Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
+			  IgnoreExitCode="true"
+			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+
+  </Target>
+  
+</Project>
+
+<!--
+<Import Project="$([MSBuild]::GetPathOfFileAbove('reference.props'))" />
+<Set this true only if you want to test the code sign workflow locally>
+		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+<FxTargetList>portable;net40;net45</FxTargetList>
+		<FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
+		<ZipExeFolder>$(LibraryToolsFolder)\7-Zip</ZipExeFolder>
+		<ZipExe>$(ZipExeFolder)\7z.exe</ZipExe>
+		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
+-->

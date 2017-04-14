@@ -1,0 +1,8 @@
+﻿<Project>
+	<Import Project="SdkCommon\dirs.proj" />
+<!--
+	<Import Condition="Exists('Profiles\dir.proj')" Project="Profiles\dirs.proj" />
+	<Import Condition="Exists('SdkCommon\dir.proj')" Project="SdkCommon\dirs.proj" />
+	<Import Condition="Exists('SDKs\dir.proj')" Project="SDKs\dirs.proj" />
+	-->
+</Project>

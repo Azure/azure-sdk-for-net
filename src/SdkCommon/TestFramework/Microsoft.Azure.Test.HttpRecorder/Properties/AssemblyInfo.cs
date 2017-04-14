@@ -7,6 +7,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+[assembly: ComVisible(false)]
+
+[assembly: Guid("c77934b2-fc7c-4f23-b2e1-12da90bfe716")]
+
+/*
 [assembly: AssemblyTitle("HttpRecorder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -16,8 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: ComVisible(false)]
 
-[assembly: Guid("c77934b2-fc7c-4f23-b2e1-12da90bfe716")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.6.9.0")]
+*/

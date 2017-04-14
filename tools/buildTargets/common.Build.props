@@ -1,0 +1,97 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>    
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <!--<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>-->
+    <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+	  <NugetCommonProfileTags>RandomTag</NugetCommonProfileTags>
+	  <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
+    <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
+    <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+    <SkipBuildingTestProject>false</SkipBuildingTestProject>
+	<!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
+	</PropertyGroup>
+	
+  <PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Debug|AnyCPU' ">
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Release|AnyCPU' ">
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+
+
+
+<!--    
+
+  <ItemGroup>
+	<PackageReference Include="NETStandard.Library" Version="1.6.1"/>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+	<Reference Include="System.Net.Http.WebRequest" />
+  </ItemGroup>
+  
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />    
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">   
+	<Reference Include="System.Runtime" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+	<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />   
+  </ItemGroup>
+    -->
+	
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <DefineConstants>FullNetFx</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+	<GenerateDocumentationFile Condition=" '$(GenerateDocumentationFile)' == '' ">true</GenerateDocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <DefineConstants>NETSTANDARD14</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+	<GenerateDocumentationFile Condition=" '$(GenerateDocumentationFile)' == '' ">true</GenerateDocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <!--
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <DefineConstants>NETSTANDARD15</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' "> 
+    <DefineConstants>netcoreapp1.0</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+-->
+
+  <Choose>
+    <When Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+      <PropertyGroup>
+        <AddProjectReferenceForDebuggingPurpose>true</AddProjectReferenceForDebuggingPurpose>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+    </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+
+<PropertyGroup>
+  
+</PropertyGroup>
+  <!--<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('build.props'))" />-->
+</Project>

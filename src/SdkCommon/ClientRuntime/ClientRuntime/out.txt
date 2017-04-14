@@ -1,0 +1,2402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+============================================================================================================================================
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj
+============================================================================================================================================
+-->
+<Project DefaultTargets="Build">
+  <!--
+============================================================================================================================================
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk">
+  This import was added implicitly because of the Project element's Sdk attribute specified "Microsoft.NET.Sdk".
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Sdk.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildThisFileDirectory)..\build\Microsoft.NET.Sdk.props">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.Sdk.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!-- Default configuration and platform to Debug|AnyCPU-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <!--
+    Ensure VS sees two default configurations: Debug|AnyCPU and Release|AnyCPU
+
+    This is temporary until we have designed and implemented a new configuration management scheme,
+    which is tracked by https://github.com/dotnet/sdk/issues/350. In the meantime, one consequence of
+    defining these defaults here with the old inference-from-usage scheme here is that the user cannot
+    remove or rename them.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <!-- User-facing configuration-agnostic defaults -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <OutputType>Library</OutputType>
+    <FileAlignment>512</FileAlignment>
+    <ErrorReport>prompt</ErrorReport>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <!-- User-facing configuration-specific defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <!-- User-facing platform-specific defaults -->
+  <!-- 
+    NOTE:
+    
+     * We cannot compare against $(Platform) directly as that will give VS cause to instantiate extra 
+       configurations, for each combination, which leads to performance problems and clutter in the sln
+       in the common AnyCPU-only case.
+
+     * We cannot just set $(PlatformTarget) to $(Platform) here because $(Platform) can be set to anything
+       at the solution level, but there are a fixed set valid $(PlatformTarget) values that can be passed
+       to the compiler. It is up to the user to explicitly set PlatformTarget to non-AnyCPU (if desired)
+       outside the 1:1 defaults below.
+  -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <_PlatformWithoutConfigurationInference>$(Platform)</_PlatformWithoutConfigurationInference>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(_PlatformWithoutConfigurationInference)' == 'x64' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(_PlatformWithoutConfigurationInference)' == 'x86' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(_PlatformWithoutConfigurationInference)' == 'ARM' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PlatformTarget>ARM</PlatformTarget>
+  </PropertyGroup>
+  <!-- Default settings for all projects built with this Sdk package -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <DebugType>portable</DebugType>
+    <!-- This will turn off the base UWP-specific 'ResolveNuGetPackages' target -->
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+    <!-- Skip import of Microsoft.NuGet.props and Microsoft.NuGet.targets -->
+    <SkipImportNuGetProps>true</SkipImportNuGetProps>
+    <SkipImportNuGetBuildTargets>true</SkipImportNuGetBuildTargets>
+    <!-- NuGet should always restore .NET SDK projects with "PackageReference" style restore.  Setting this property will
+         cause the right thing to happen even if there aren't any PackageReference items in the project, such as when
+         a project targets .NET Framework and doesn't have any direct package dependencies. -->
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <!-- Exclude GAC, registry, output directory from search paths. -->
+    <AssemblySearchPaths>{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory};{RawFileName}</AssemblySearchPaths>
+    <DesignTimeAssemblySearchPaths>$(AssemblySearchPaths)</DesignTimeAssemblySearchPaths>
+    <AllowUnsafeBlocks Condition="'$(AllowUnsafeBlocks)'==''">false</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors Condition="'$(TreatWarningsAsErrors)'==''">false</TreatWarningsAsErrors>
+    <Prefer32Bit Condition="'$(Prefer32Bit)'==''">false</Prefer32Bit>
+    <SignAssembly Condition="'$(SignAssembly)'==''">false</SignAssembly>
+    <DelaySign Condition="'$(DelaySign)'==''">false</DelaySign>
+    <GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)'==''">false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance Condition="'$(PackageRequireLicenseAcceptance)'==''">false</PackageRequireLicenseAcceptance>
+    <DebugSymbols Condition="'$(DebugSymbols)'==''">false</DebugSymbols>
+    <CheckForOverflowUnderflow Condition="'$(CheckForOverflowUnderflow)'==''">false</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <!-- Default item includes (globs and implicit references) -->
+  <!--
+============================================================================================================================================
+  <Import Project="Microsoft.NET.Sdk.DefaultItems.props">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.DefaultItems.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.Sdk.DefaultItems.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Compile Include="**/*$(DefaultLanguageSourceExtension)" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <EmbeddedResource Include="**/*.resx" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' And '$(EnableDefaultNoneItems)' == 'true' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <None Include="**/*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+    <None Remove="**/*$(DefaultLanguageSourceExtension)" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <None Remove="**/*.resx" Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " />
+  </ItemGroup>
+  <!-- Automatically reference NETStandard.Library or Microsoft.NETCore.App package if targeting the corresponding target framework.
+      We can refer here in the .props file to properties set in the .targets files because items and their conditions are
+      evaluated in the second pass of evaluation, after all properties have been evaluated. -->
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETStandard'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PackageReference Include="NETStandard.Library" Version="$(NetStandardImplicitPackageVersion)" IsImplicitlyDefined="true" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PackageReference Include="Microsoft.NETCore.App" Version="$(RuntimeFrameworkVersion)" IsImplicitlyDefined="true" />
+  </ItemGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.props
+============================================================================================================================================
+-->
+  <!-- Temporary workarounds -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Workaround: https://github.com/dotnet/roslyn/issues/12167 -->
+    <NoLogo>true</NoLogo>
+    <!-- Workaround: https://github.com/Microsoft/msbuild/issues/720 -->
+    <OverrideToolHost Condition=" '$(DotnetHostPath)' != '' and '$(OverrideToolHost)' == ''">$(DotnetHostPath)</OverrideToolHost>
+  </PropertyGroup>
+  <!-- Workaround: https://github.com/Microsoft/msbuild/issues/1293 -->
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <GenerateResourceMSBuildArchitecture>CurrentArchitecture</GenerateResourceMSBuildArchitecture>
+    <GenerateResourceMSBuildRuntime>CurrentRuntime</GenerateResourceMSBuildRuntime>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.NET.Sdk.CSharp.props" Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.CSharp.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.Sdk.CSharp.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;1705</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.props
+============================================================================================================================================
+-->
+  <!--<Import Project="$(MSBuildThisFileDirectory)Microsoft.NET.Sdk.VisualBasic.props" Condition="'$(MSBuildProjectExtension)' == '.vbproj'" />-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Microsoft.Common.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.Common.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ImportByWildcardBeforeMicrosoftCommonProps Condition="'$(ImportByWildcardBeforeMicrosoftCommonProps)' == ''">true</ImportByWildcardBeforeMicrosoftCommonProps>
+    <ImportByWildcardAfterMicrosoftCommonProps Condition="'$(ImportByWildcardAfterMicrosoftCommonProps)' == ''">true</ImportByWildcardAfterMicrosoftCommonProps>
+    <ImportUserLocationsByWildcardBeforeMicrosoftCommonProps Condition="'$(ImportUserLocationsByWildcardBeforeMicrosoftCommonProps)' == ''">true</ImportUserLocationsByWildcardBeforeMicrosoftCommonProps>
+    <ImportUserLocationsByWildcardAfterMicrosoftCommonProps Condition="'$(ImportUserLocationsByWildcardAfterMicrosoftCommonProps)' == ''">true</ImportUserLocationsByWildcardAfterMicrosoftCommonProps>
+    <ImportDirectoryBuildProps Condition="'$(ImportDirectoryBuildProps)' == ''">true</ImportDirectoryBuildProps>
+  </PropertyGroup>
+  <!-- 
+        Determine the path to the directory build props file if the user did not disable $(ImportDirectoryBuildProps) and
+        they did not already specify an absolute path to use via $(DirectoryBuildPropsPath)
+    -->
+  <PropertyGroup Condition="'$(ImportDirectoryBuildProps)' == 'true' and '$(DirectoryBuildPropsPath)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <_DirectoryBuildPropsFile Condition="'$(_DirectoryBuildPropsFile)' == ''">Directory.Build.props</_DirectoryBuildPropsFile>
+    <_DirectoryBuildPropsBasePath Condition="'$(_DirectoryBuildPropsBasePath)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), '$(_DirectoryBuildPropsFile)'))</_DirectoryBuildPropsBasePath>
+    <DirectoryBuildPropsPath Condition="'$(_DirectoryBuildPropsBasePath)' != '' and '$(_DirectoryBuildPropsFile)' != ''">$([System.IO.Path]::Combine('$(_DirectoryBuildPropsBasePath)', '$(_DirectoryBuildPropsFile)'))</DirectoryBuildPropsPath>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(ImportDirectoryBuildProps)' == 'true' and exists('$(DirectoryBuildPropsPath)')">
+
+C:\MyFork\vs17Dev\Directory.Build.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="dirs.proj">
+
+C:\MyFork\vs17Dev\dirs.proj
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="src\dirs.proj">
+
+C:\MyFork\vs17Dev\src\dirs.proj
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="SdkCommon\dirs.proj">
+
+C:\MyFork\vs17Dev\src\SdkCommon\dirs.proj
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="ClientRuntime\dirs.proj">
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\dirs.proj
+============================================================================================================================================
+-->
+  <PropertyGroup>
+    <NugetCommonTags>Common ClientRuntime</NugetCommonTags>
+  </PropertyGroup>
+  <!--
+  <ItemGroup Label="SDKProject">
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />    
+	<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Etw\Microsoft.Rest.ClientRuntime.Etw.csproj" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Log4Net\Microsoft.Rest.ClientRuntime.Log4Net.csproj" />
+	
+  </ItemGroup>
+-->
+  <ItemGroup Label="TestSDKProject">
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Tests\Microsoft.Rest.ClientRuntime.Tests.csproj" ProjectType="Test" />
+    <!--
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Azure.Tests\Microsoft.Rest.ClientRuntime.Azure.Tests.csproj" ProjectType="Test" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.E2E.Tests\ClientRuntime.E2E.Tests.csproj" ProjectType="Test" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Tests\Microsoft.Rest.ClientRuntime.Tests.csproj" ProjectType="Test" />
+    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Test\ClientRuntime.Tracing.Tests\Microsoft.Rest.ClientRuntime.Tracing.Tests.csproj" ProjectType="Test" />
+	-->
+  </ItemGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\src\SdkCommon\dirs.proj
+============================================================================================================================================
+-->
+  <!--
+  <Import Condition="Exists('TestFramework\dirs.proj')" Project="TestFramework\dirs.proj" />
+  <Import Condition="Exists('ClientRuntime\dirs.proj')" Project="ClientRuntime\dirs.proj" />
+  -->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\src\dirs.proj
+============================================================================================================================================
+-->
+  <!--
+	<Import Condition="Exists('Profiles\dir.proj')" Project="Profiles\dirs.proj" />
+	<Import Condition="Exists('SdkCommon\dir.proj')" Project="SdkCommon\dirs.proj" />
+	<Import Condition="Exists('SDKs\dir.proj')" Project="SDKs\dirs.proj" />
+	-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\dirs.proj
+============================================================================================================================================
+-->
+  <!-- Import Condition="Exists('\dir.proj')" Project="\dir.proj" / -->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\Directory.Build.props
+============================================================================================================================================
+-->
+  <PropertyGroup>
+    <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
+    <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
+    <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+    <LibraryNugetPackageFolder>$(LibraryRoot)\restoredPackages</LibraryNugetPackageFolder>
+    <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
+    <AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
+    <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
+    <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
+    <BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
+    <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
+    <Scope Condition=" '$(Scope)' == '' ">All</Scope>
+    <NuGetCommand>"$(LibraryToolsFolder)\nuget.exe"</NuGetCommand>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
+    <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
+    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Exclude="$(LibrarySourceFolder)\KeyVault\Microsoft.Azure.KeyVault.Samples\Microsoft.Azure.KeyVault.Samples.sln" Condition=" '$(Scope)' == 'all'  " />
+    <LibraryFxTargetList Include="$(FxTargetList)" />
+    <AutoRestLibraryFxTargetList Include="portable;net45" />
+    <ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj" />
+    <ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj" />
+    <ClientRuntimeRootDir Include="%(ClientRuntimeProjects.RootDir)" />
+  </ItemGroup>
+  <PropertyGroup Label="Well Known Properties">
+    <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>
+    <SdkCommonRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</SdkCommonRootDir>
+  </PropertyGroup>
+  <!--
+  <Import Project="tools\buildTargets\common.Build.props"/>
+  <Import Project="tools\buildTargets\common.NugetPackage.props" />
+  <Import Project="tools\buildTargets\common.targets" />
+  <Import Project="tools\buildTargets\testTargets\test.Build.props" Condition=" '$(TestProjectType)' == 'true' "/>
+  -->
+  <Target Name="PublishLocal">
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)" IgnoreExitCode="true" Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+  </Target>
+  <!--
+<Import Project="$([MSBuild]::GetPathOfFileAbove('reference.props'))" />
+<Set this true only if you want to test the code sign workflow locally>
+		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+<FxTargetList>portable;net40;net45</FxTargetList>
+		<FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
+		<ZipExeFolder>$(LibraryToolsFolder)\7-Zip</ZipExeFolder>
+		<ZipExe>$(ZipExeFolder)\7z.exe</ZipExe>
+		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Microsoft.Common.props
+============================================================================================================================================
+-->
+  <!-- 
+        Prepare to import project extensions which usually come from packages.  Package management systems will create a file at:
+          $(MSBuildProjectExtensionsPath)\$(MSBuildProjectFile).<SomethingUnique>.props
+          
+        Each package management system should use a unique moniker to avoid collisions.  It is a wild-card import so the package
+        management system can write out multiple files but the order of the import is alphabetic because MSBuild sorts the list.
+    -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+            The declaration of $(BaseIntermediateOutputPath) had to be moved up from Microsoft.Common.CurrentVersion.targets
+            in order for the $(MSBuildProjectExtensionsPath) to use it as a default.
+        -->
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="!HasTrailingSlash('$(BaseIntermediateOutputPath)')">$(BaseIntermediateOutputPath)\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath Condition="'$(MSBuildProjectExtensionsPath)' == '' ">$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+    <!--
+        Import paths that are relative default to be relative to the importing file.  However, since MSBuildExtensionsPath
+        defaults to BaseIntermediateOutputPath we expect it to be relative to the project directory.  So if the path is relative
+        it needs to be made absolute based on the project directory.
+      -->
+    <MSBuildProjectExtensionsPath Condition="'$([System.IO.Path]::IsPathRooted($(MSBuildProjectExtensionsPath)))' == 'false'">$([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', '$(MSBuildProjectExtensionsPath)'))</MSBuildProjectExtensionsPath>
+    <MSBuildProjectExtensionsPath Condition="!HasTrailingSlash('$(MSBuildProjectExtensionsPath)')">$(MSBuildProjectExtensionsPath)\</MSBuildProjectExtensionsPath>
+    <ImportProjectExtensionProps Condition="'$(ImportProjectExtensionProps)' == ''">true</ImportProjectExtensionProps>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.props" Condition="'$(ImportProjectExtensionProps)' == 'true' and exists('$(MSBuildProjectExtensionsPath)')">
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\obj\Microsoft.Rest.ClientRuntime.csproj.nuget.g.props
+============================================================================================================================================
+-->
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\obj\project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\abhishah\.nuget\packages\</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">4.0.0</NuGetToolVersion>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Microsoft.Common.props
+============================================================================================================================================
+-->
+  <!-- 
+        Import wildcard "ImportBefore" props files if we're actually in a 12.0+ project (rather than a project being
+        treated as 4.0)
+    -->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' != ''">-->
+  <!-- 
+            Wildcard imports come from $(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props.d folder.
+            This is very similar to the same extension point used in Microsoft.Common.targets, which is located in
+            the $(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.targets\ directory. Unfortunately, there
+            is already a file named "Microsoft.Common.props" in this directory so we have to have a slightly different
+            directory name to hold extensions.
+        -->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportBefore\*" Condition="'$(ImportUserLocationsByWildcardBeforeMicrosoftCommonProps)' == 'true' and exists('$(MSBuildUserExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportBefore')" />-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportBefore\*" Condition="'$(ImportByWildcardBeforeMicrosoftCommonProps)' == 'true' and exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportBefore')">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Imports\Microsoft.Common.props\ImportBefore\Microsoft.NuGet.ImportBefore.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NuGet.ImportBefore.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <NuGetProps Condition="'$(NuGetProps)'==''">$(MSBuildExtensionsPath)\Microsoft\NuGet\$(VisualStudioVersion)\Microsoft.NuGet.props</NuGetProps>
+  </PropertyGroup>
+  <!--<Import Project="$(NuGetProps)" Condition="Exists('$(NuGetProps)') and '$(SkipImportNuGetProps)' != 'true'" />-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Microsoft.Common.props
+============================================================================================================================================
+-->
+  <!--</ImportGroup>-->
+  <!-- 
+        In VS 2010 SP1 and VS 2012, both supported for asset compatibility, the MSBuild installed 
+        as part of them did not enforce using the local ToolsVersion (4.0) in all cases, but instead 
+        just used whatever ToolsVersion was in the project file if it existed on the machine, and 
+        only forced 4.0 if that ToolsVersion did not exist.  
+
+        Moving forward, we do want to enforce a single acting ToolsVersion per version of Visual Studio, 
+        but in order to approximate this behavior on VS 2010 SP1 and VS 2012 as well, we've redirected 
+        the targets:  If we're building using 4.X MSBuild (which doesn't define the new reserved 
+        property, MSBuildAssemblyVersion), we'll point right back at the 4.0 targets, which still exist 
+        as part of the .NET Framework.  Only if we're using the new MSBuild will we point to the current
+        targets. 
+   -->
+  <PropertyGroup Condition="'$(MSBuildAssemblyVersion)' == '' and ('$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' &gt;= '12.0')" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+           Reset VisualStudioVersion if it's 12.0+: Should be 10.0 if VS 2010 is installed or 11.0 otherwise, 
+           but since we don't have a good way of telling whether VS 2010 is installed, make it 11.0 if 
+           VS 2012 is installed or 10.0 otherwise.  The reset should be safe because if it was already 
+           set to something (e.g. 11.0 in a VS 2012 command prompt) then MSBuild's internal 
+           VisualStudioVersion-defaulting code should never come into the picture, so the only way it could 
+           be 12.0+ when building a TV 12.0 project (because we're in this file) using MSBuild 4.5 (because 
+           MSBuildAssemblyVersion hasn't been set) is if it's a TV 12.0 project on an empty command prompt. 
+      -->
+    <VisualStudioVersion Condition="Exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.props')">11.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="!Exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.props')">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <!-- If building using 4.X MSBuild, we want to act like this project is TV 4.0, so override 
+         the custom extensibility target locations with the hard-coded 4.0 equivalent. -->
+  <PropertyGroup Condition="'$(MSBuildAssemblyVersion)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <CustomBeforeMicrosoftCommonProps Condition="'$(CustomBeforeMicrosoftCommonProps)'==''">$(MSBuildExtensionsPath)\v4.0\Custom.Before.$(MSBuildThisFile)</CustomBeforeMicrosoftCommonProps>
+    <CustomAfterMicrosoftCommonProps Condition="'$(CustomAfterMicrosoftCommonProps)'==''">$(MSBuildExtensionsPath)\v4.0\Custom.After.$(MSBuildThisFile)</CustomAfterMicrosoftCommonProps>
+  </PropertyGroup>
+  <!-- If building using 4.X MSBuild, we want to act like this project is TV 4.0, so import
+         Microsoft.Common.props from the 4.0 location, and make sure everything else in here is 
+         set up such that if it's defaulted to something there, it won't be overridden here. -->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.Common.props" Condition="'$(MSBuildAssemblyVersion)' == '' and Exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.props')" />-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <CustomBeforeMicrosoftCommonProps Condition="'$(CustomBeforeMicrosoftCommonProps)'==''">$(MSBuildExtensionsPath)\v$(MSBuildToolsVersion)\Custom.Before.$(MSBuildThisFile)</CustomBeforeMicrosoftCommonProps>
+    <CustomAfterMicrosoftCommonProps Condition="'$(CustomAfterMicrosoftCommonProps)'==''">$(MSBuildExtensionsPath)\v$(MSBuildToolsVersion)\Custom.After.$(MSBuildThisFile)</CustomAfterMicrosoftCommonProps>
+  </PropertyGroup>
+  <!-- 
+         Only import the extension targets if we're actually in a 12.0 project here (rather than one we're attempting 
+         to treat as 4.0) OR if the Dev11 Microsoft.Common.props don't exist.  If it's a 12.0 project we're redirecting 
+         to 4.0 and the Dev11 Microsoft.Common.props do exist, the extension targets will have been imported already 
+         so there's no need to import them twice.
+     -->
+  <!--<Import Project="$(CustomBeforeMicrosoftCommonProps)" Condition="'$(CustomBeforeMicrosoftCommonProps)' != '' and Exists('$(CustomBeforeMicrosoftCommonProps)') and ('$(MSBuildAssemblyVersion)' != '' or !Exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.props'))" />-->
+  <!-- This is used to determine whether Microsoft.Common.targets needs to import 
+         Microsoft.Common.props itself, or whether it has been imported previously,
+         e.g. by the project itself. -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MicrosoftCommonPropsHasBeenImported>true</MicrosoftCommonPropsHasBeenImported>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Configuration Condition=" '$(Configuration)' == '' and '$(DefaultProjectConfiguration)' != '' ">$(DefaultProjectConfiguration)</Configuration>
+    <Platform Condition=" '$(Platform)' == '' and '$(DefaultProjectPlatform)' != '' ">$(DefaultProjectPlatform)</Platform>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <WMSJSProject Condition="'$(WMSJSProject)' == ''">WJProject</WMSJSProject>
+    <WMSJSProjectDirectory Condition="'$(WMSJSProjectDirectory)' == ''">JavaScript</WMSJSProjectDirectory>
+  </PropertyGroup>
+  <!--<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.VisualStudioVersion.v*.Common.props" Condition="'$(VisualStudioVersion)' == ''" />-->
+  <!-- 
+         Only import the extension targets if we're actually in a 12.0 project here (rather than one we're attempting 
+         to treat as 4.0) OR if the Dev11 Microsoft.Common.props don't exist.  If it's a 12.0 project we're redirecting 
+         to 4.0 and the Dev11 Microsoft.Common.props do exist, the extension targets will have been imported already 
+         so there's no need to import them twice.
+     -->
+  <!--<Import Project="$(CustomAfterMicrosoftCommonProps)" Condition="'$(CustomAfterMicrosoftCommonProps)' != '' and Exists('$(CustomAfterMicrosoftCommonProps)') and ('$(MSBuildAssemblyVersion)' != '' or !Exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.props'))" />-->
+  <!-- 
+        Import wildcard "ImportAfter" props files if we're actually in a 12.0+ project (rather than a project being
+        treated as 4.0)
+    -->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' != ''">-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportAfter\*" Condition="'$(ImportUserLocationsByWildcardAfterMicrosoftCommonProps)' == 'true' and exists('$(MSBuildUserExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportAfter')" />-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportAfter\*" Condition="'$(ImportByWildcardAfterMicrosoftCommonProps)' == 'true' and exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportAfter')" />-->
+  <!--</ImportGroup>-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))">
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\clientruntime.reference.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))">
+
+C:\MyFork\vs17Dev\AzSdk.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="tools\buildTargets\common.Build.props">
+
+C:\MyFork\vs17Dev\tools\buildTargets\common.Build.props
+============================================================================================================================================
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <!--<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>-->
+    <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+    <NugetCommonProfileTags>RandomTag</NugetCommonProfileTags>
+    <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
+    <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
+    <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+    <SkipBuildingTestProject>false</SkipBuildingTestProject>
+    <!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
+  </PropertyGroup>
+  <PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Debug|AnyCPU' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Release|AnyCPU' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <!--    
+
+  <ItemGroup>
+	<PackageReference Include="NETStandard.Library" Version="1.6.1"/>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+	<Reference Include="System.Net.Http.WebRequest" />
+  </ItemGroup>
+  
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />    
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">   
+	<Reference Include="System.Runtime" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+	<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />   
+  </ItemGroup>
+    -->
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <DefineConstants>FullNetFx</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <GenerateDocumentationFile Condition=" '$(GenerateDocumentationFile)' == '' ">true</GenerateDocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <DefineConstants>NETSTANDARD14</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <GenerateDocumentationFile Condition=" '$(GenerateDocumentationFile)' == '' ">true</GenerateDocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <!--
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <DefineConstants>NETSTANDARD15</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' "> 
+    <DefineConstants>netcoreapp1.0</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+-->
+  <Choose xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <When Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+      <PropertyGroup>
+        <AddProjectReferenceForDebuggingPurpose>true</AddProjectReferenceForDebuggingPurpose>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <!--<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('build.props'))" />-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\AzSdk.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="tools\buildTargets\common.NugetPackage.props">
+
+C:\MyFork\vs17Dev\tools\buildTargets\common.NugetPackage.props
+============================================================================================================================================
+-->
+  <PropertyGroup Label="PackageMetaData" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Copyright>Copyright (c) Microsoft Corporation</Copyright>
+    <Authors>Microsoft</Authors>
+    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/Azure/AutoRest</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
+    <!-- <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.4' ">$(PackageTargetFallback)</PackageTargetFallback> -->
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.4' ">1.6.1</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <PackageTags>$(PackageTags) $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <!--
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.1' ">$(PackageTargetFallback)</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.1' ">1.6.1</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.5' ">$(PackageTargetFallback)</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.5' ">1.6.1</NetStandardImplicitPackageVersion>
+    -->
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\AzSdk.props
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\clientruntime.reference.props
+============================================================================================================================================
+-->
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <!--<PackageReference Update="NETStandard.Library" Version="1.6.1" />-->
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <!-- <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" /> -->
+    <!-- <PackageReference Include="NETStandard.Library" Version="1.6.1" /> -->
+  </ItemGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj
+============================================================================================================================================
+-->
+  <PropertyGroup>
+    <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
+    <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
+    <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
+    <VersionPrefix>2.3.6</VersionPrefix>
+    <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
+    <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk">
+  This import was added implicitly because of the Project element's Sdk attribute specified "Microsoft.NET.Sdk".
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Sdk.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!-- Using the same property as Microsoft.CSharp.targets and presumably Microsoft.VisualBasic.targets here -->
+  <PropertyGroup Condition="'$(TargetFrameworks)' != '' and '$(TargetFramework)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <IsCrossTargetingBuild>true</IsCrossTargetingBuild>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildThisFileDirectory)..\build\Microsoft.NET.Sdk.BeforeCommonCrossTargeting.targets" Condition="'$(IsCrossTargetingBuild)' == 'true'">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.BeforeCommonCrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.Sdk.BeforeCommonCrossTargeting.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.NET.DefaultAssemblyInfo.targets">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.DefaultAssemblyInfo.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.DefaultAssemblyInfo.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Version)' == '' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.0</VersionPrefix>
+    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
+    <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Authors Condition=" '$(Authors)'=='' ">$(AssemblyName)</Authors>
+    <Company Condition=" '$(Company)'=='' ">$(Authors)</Company>
+    <AssemblyTitle Condition=" '$(AssemblyTitle)' == '' ">$(AssemblyName)</AssemblyTitle>
+    <Product Condition=" '$(Product)' == ''">$(AssemblyName)</Product>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.BeforeCommonCrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.NET.DefaultOutputPaths.targets">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.DefaultOutputPaths.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.DefaultOutputPaths.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <!--
+    Apply the same default output paths as Microsoft.Common.targets now since we're running before them,
+    but need to adjust them and/or make decisions in terms of them.
+
+    Also note that common targets only set a default OutputPath if neither configuration nor 
+    platform were set by the user. This was used to validate that a valid configuration is passed, 
+    assuming the convention maintained by VS that every Configuration|Platform combination had 
+    an explicit OutputPath. Since we now want to support leaner project files with less 
+    duplication and more automatic defaults, we always set a default OutputPath and can no
+    longer depend on that convention for validation. Getting validation re-enabled with a 
+    different mechanism is tracked by https://github.com/dotnet/sdk/issues/350
+   -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+    <Platform Condition="'$(Platform)'==''">AnyCPU</Platform>
+    <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
+    <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">bin\</BaseOutputPath>
+    <BaseOutputPath Condition="!HasTrailingSlash('$(BaseOutputPath)')">$(BaseOutputPath)\</BaseOutputPath>
+    <OutputPath Condition="'$(OutputPath)' == '' and '$(PlatformName)' == 'AnyCPU'">$(BaseOutputPath)$(Configuration)\</OutputPath>
+    <OutputPath Condition="'$(OutputPath)' == '' and '$(PlatformName)' != 'AnyCPU'">$(BaseOutputPath)$(PlatformName)\$(Configuration)\</OutputPath>
+    <OutputPath Condition="!HasTrailingSlash('$(OutputPath)')">$(OutputPath)\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="!HasTrailingSlash('$(BaseIntermediateOutputPath)')">$(BaseIntermediateOutputPath)\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath Condition=" $(IntermediateOutputPath) == '' and '$(PlatformName)' == 'AnyCPU' ">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+    <IntermediateOutputPath Condition=" $(IntermediateOutputPath) == '' and '$(PlatformName)' != 'AnyCPU' ">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
+    <IntermediateOutputPath Condition="!HasTrailingSlash('$(IntermediateOutputPath)')">$(IntermediateOutputPath)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <!-- Set the package output path (for nuget pack target) now, before the TargetFramework is appended -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(OutputPath)</PackageOutputPath>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.BeforeCommonCrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.targets
+============================================================================================================================================
+-->
+  <!--<Import Project="$(MSBuildThisFileDirectory)..\build\Microsoft.NET.Sdk.BeforeCommon.targets" Condition="'$(IsCrossTargetingBuild)' != 'true'" />-->
+  <PropertyGroup Condition="'$(LanguageTargets)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <LanguageTargets Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
+    <LanguageTargets Condition="'$(MSBuildProjectExtension)' == '.vbproj'">$(MSBuildToolsPath)\Microsoft.VisualBasic.targets</LanguageTargets>
+    <!-- If LanguageTargets isn't otherwise set, then just import the common targets.  This should allow the restore target to run,
+         which could bring in NuGet packages that set the LanguageTargets to something else.  This means support for different
+         languages could either be supplied via an SDK or via a NuGet package. -->
+    <LanguageTargets Condition="'$(LanguageTargets)' == ''">$(MSBuildToolsPath)\Microsoft.Common.CurrentVersion.targets</LanguageTargets>
+  </PropertyGroup>
+  <!-- REMARK: Dont remove/rename, the LanguageTargets property is used by F# to hook inside the project's sdk 
+               using Sdk attribute (from .NET Core Sdk 1.0.0-preview4) -->
+  <!--
+============================================================================================================================================
+  <Import Project="$(LanguageTargets)">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.CSharp.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.CSharp.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+This file defines the steps in the standard build process specific for C# .NET projects.
+For example, it contains the step that actually calls the C# compiler.  The remainder
+of the build process is defined in Microsoft.Common.targets, which is imported by 
+this file.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+  <!-- 
+        We are doing a cross-targeting build if there is no list of target frameworks specified
+        nor is there a current target framework being built individually. In that case, this import is
+        redirected to Microsoft.CSharp.CrossTargeting.targets.
+   -->
+  <PropertyGroup Condition="'$(TargetFrameworks)' != '' and '$(TargetFramework)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <IsCrossTargetingBuild>true</IsCrossTargetingBuild>
+  </PropertyGroup>
+  <!--
+        In VS 2010 SP1 and VS 2012, both supported for asset compatibility, the MSBuild installed 
+        as part of them did not enforce using the local ToolsVersion (4.0) in all cases, but instead 
+        just used whatever ToolsVersion was in the project file if it existed on the machine, and 
+        only forced 4.0 if that ToolsVersion did not exist.  
+
+        Moving forward, we do want to enforce a single acting ToolsVersion per version of Visual Studio, 
+        but in order to approximate this behavior on VS 2010 SP1 and VS 2012 as well, we've redirected 
+        the targets:  If we're building using 4.X MSBuild (which doesn't define the new reserved 
+        property, MSBuildAssemblyVersion), we'll point right back at the 4.0 targets, which still exist 
+        as part of the .NET Framework.  Only if we're using the new MSBuild will we point to the current
+        targets. 
+   -->
+  <Choose xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <When Condition="'$(MSBuildAssemblyVersion)' == ''">
+      <PropertyGroup>
+        <CSharpTargetsPath>$(MSBuildFrameworkToolsPath)\Microsoft.CSharp.targets</CSharpTargetsPath>
+        <!-- Same condition as in .NET 4.5 C# targets so that we can override the behavior where it defaults to 
+                 MSBuildToolsPath, which would be incorrect in this case -->
+        <CscToolPath Condition="'$(CscToolPath)' == '' and '$(BuildingInsideVisualStudio)' != 'true'">$(MsBuildFrameworkToolsPath)</CscToolPath>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(IsCrossTargetingBuild)' == 'true'">
+      <PropertyGroup>
+        <CSharpTargetsPath>$(MSBuildToolsPath)\Microsoft.CSharp.CrossTargeting.targets</CSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <CSharpTargetsPath>$(MSBuildToolsPath)\Microsoft.CSharp.CurrentVersion.targets</CSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <PropertyGroup Condition="'$(MSBuildAssemblyVersion)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- 
+           Overrides for the Microsoft.Common.targets extension targets. Used to make sure that only the imports we specify 
+           (hard-coded to 4.0 locations) are used, not the 12.0 locations that would be used by default. Defined here because 
+           Microsoft.CSharp.targets imports Microsoft.Common.targets from the current directory rather than using MSBuildToolsPath, 
+           so defining these in Microsoft.Common.targets alone would not suffice for C# projects.
+
+           NOTE: This logic is duplicated in Microsoft.VisualBasic.targets (VB has the same problem) and in Microsoft.Common.targets
+           (for anyone who DOES import it directly), so for any changes to this logic in this file, please also edit the other two. 
+       -->
+    <ImportByWildcardBefore40MicrosoftCommonTargets Condition="'$(ImportByWildcardBefore40MicrosoftCommonTargets)' == ''">$(ImportByWildcardBeforeMicrosoftCommonTargets)</ImportByWildcardBefore40MicrosoftCommonTargets>
+    <ImportByWildcardBefore40MicrosoftCommonTargets Condition="'$(ImportByWildcardBefore40MicrosoftCommonTargets)' == ''">true</ImportByWildcardBefore40MicrosoftCommonTargets>
+    <ImportByWildcardAfter40MicrosoftCommonTargets Condition="'$(ImportByWildcardAfter40MicrosoftCommonTargets)' == ''">$(ImportByWildcardAfterMicrosoftCommonTargets)</ImportByWildcardAfter40MicrosoftCommonTargets>
+    <ImportByWildcardAfter40MicrosoftCommonTargets Condition="'$(ImportByWildcardAfter40MicrosoftCommonTargets)' == ''">true</ImportByWildcardAfter40MicrosoftCommonTargets>
+    <ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets)' == ''">$(ImportUserLocationsByWildcardBeforeMicrosoftCommonTargets)</ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets>
+    <ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets)' == ''">true</ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets>
+    <ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets)' == ''">$(ImportUserLocationsByWildcardAfterMicrosoftCommonTargets)</ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets>
+    <ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets)' == ''">true</ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets>
+    <ImportByWildcardBeforeMicrosoftCommonTargets>false</ImportByWildcardBeforeMicrosoftCommonTargets>
+    <ImportByWildcardAfterMicrosoftCommonTargets>false</ImportByWildcardAfterMicrosoftCommonTargets>
+    <ImportUserLocationsByWildcardBeforeMicrosoftCommonTargets>false</ImportUserLocationsByWildcardBeforeMicrosoftCommonTargets>
+    <ImportUserLocationsByWildcardAfterMicrosoftCommonTargets>false</ImportUserLocationsByWildcardAfterMicrosoftCommonTargets>
+    <CustomBeforeMicrosoftCommonTargets Condition="'$(CustomBeforeMicrosoftCommonTargets)' == ''">$(MSBuildExtensionsPath)\v4.0\Custom.Before.Microsoft.Common.targets</CustomBeforeMicrosoftCommonTargets>
+    <CustomAfterMicrosoftCommonTargets Condition="'$(CustomAfterMicrosoftCommonTargets)' == ''">$(MSBuildExtensionsPath)\v4.0\Custom.After.Microsoft.Common.targets</CustomAfterMicrosoftCommonTargets>
+    <!-- Overrides for the Microsoft.CSharp.targets extension targets -->
+    <ImportByWildcardBefore40MicrosoftCSharpTargets Condition="'$(ImportByWildcardBefore40MicrosoftCSharpTargets)' == ''">$(ImportByWildcardBeforeMicrosoftCSharpTargets)</ImportByWildcardBefore40MicrosoftCSharpTargets>
+    <ImportByWildcardBefore40MicrosoftCSharpTargets Condition="'$(ImportByWildcardBefore40MicrosoftCSharpTargets)' == ''">true</ImportByWildcardBefore40MicrosoftCSharpTargets>
+    <ImportByWildcardAfter40MicrosoftCSharpTargets Condition="'$(ImportByWildcardAfter40MicrosoftCSharpTargets)' == ''">$(ImportByWildcardAfterMicrosoftCSharpTargets)</ImportByWildcardAfter40MicrosoftCSharpTargets>
+    <ImportByWildcardAfter40MicrosoftCSharpTargets Condition="'$(ImportByWildcardAfter40MicrosoftCSharpTargets)' == ''">true</ImportByWildcardAfter40MicrosoftCSharpTargets>
+    <ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets)' == ''">$(ImportUserLocationsByWildcardBeforeMicrosoftCSharpTargets)</ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets>
+    <ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets)' == ''">true</ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets>
+    <ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets)' == ''">$(ImportUserLocationsByWildcardAfterMicrosoftCSharpTargets)</ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets>
+    <ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets)' == ''">true</ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets>
+    <ImportByWildcardBeforeMicrosoftCSharpTargets>false</ImportByWildcardBeforeMicrosoftCSharpTargets>
+    <ImportByWildcardAfterMicrosoftCSharpTargets>false</ImportByWildcardAfterMicrosoftCSharpTargets>
+    <ImportUserLocationsByWildcardBeforeMicrosoftCSharpTargets>false</ImportUserLocationsByWildcardBeforeMicrosoftCSharpTargets>
+    <ImportUserLocationsByWildcardAfterMicrosoftCSharpTargets>false</ImportUserLocationsByWildcardAfterMicrosoftCSharpTargets>
+    <CustomBeforeMicrosoftCSharpTargets Condition="'$(CustomBeforeMicrosoftCSharpTargets)' == ''">$(MSBuildExtensionsPath)\v4.0\Custom.Before.Microsoft.CSharp.targets</CustomBeforeMicrosoftCSharpTargets>
+    <CustomAfterMicrosoftCSharpTargets Condition="'$(CustomAfterMicrosoftCSharpTargets)' == ''">$(MSBuildExtensionsPath)\v4.0\Custom.After.Microsoft.CSharp.targets</CustomAfterMicrosoftCSharpTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildAssemblyVersion)' == '' and ('$(TargetFrameworkIdentifier)' == '.NETFramework' or '$(TargetFrameworkIdentifier)' == 'Silverlight' or ('$(TargetFrameworkIdentifier)' == '' and ('$(TargetRuntime)' == 'Managed' or '$(TargetRuntime)' == '')))" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- 
+            Overrides for the Microsoft.NETFramework.props extension targets. Used to make sure that only the imports we specify 
+            (hard-coded to 4.0 locations) are used, not the 12.0 locations that would be used by default. Required because 
+            Microsoft.Common.targets imports it from the current directory, so we don't get a chance to redirect these in its 
+            own redirection targets.
+
+            NOTE: This logic is duplicated in Microsoft.VisualBasic.targets and in Microsoft.Common.targets because VB and C#
+            import Microsoft.Common.targets from the current directory and thus don't get the benefit of these redirections either, 
+            so for any changes to this logic in this file, please also edit the other two. 
+        -->
+    <ImportByWildcardBefore40MicrosoftNetFrameworkProps Condition="'$(ImportByWildcardBefore40MicrosoftNetFrameworkProps)' == ''">$(ImportByWildcardBeforeMicrosoftNetFrameworkProps)</ImportByWildcardBefore40MicrosoftNetFrameworkProps>
+    <ImportByWildcardBefore40MicrosoftNetFrameworkProps Condition="'$(ImportByWildcardBefore40MicrosoftNetFrameworkProps)' == ''">true</ImportByWildcardBefore40MicrosoftNetFrameworkProps>
+    <ImportByWildcardAfter40MicrosoftNetFrameworkProps Condition="'$(ImportByWildcardAfter40MicrosoftNetFrameworkProps)' == ''">$(ImportByWildcardAfterMicrosoftNetFrameworkProps)</ImportByWildcardAfter40MicrosoftNetFrameworkProps>
+    <ImportByWildcardAfter40MicrosoftNetFrameworkProps Condition="'$(ImportByWildcardAfter40MicrosoftNetFrameworkProps)' == ''">true</ImportByWildcardAfter40MicrosoftNetFrameworkProps>
+    <ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps)' == ''">$(ImportUserLocationsByWildcardBeforeMicrosoftNetFrameworkProps)</ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps>
+    <ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps)' == ''">true</ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps>
+    <ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps)' == ''">$(ImportUserLocationsByWildcardAfterMicrosoftNetFrameworkProps)</ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps>
+    <ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps)' == ''">true</ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps>
+    <ImportByWildcardBeforeMicrosoftNetFrameworkProps>false</ImportByWildcardBeforeMicrosoftNetFrameworkProps>
+    <ImportByWildcardAfterMicrosoftNetFrameworkProps>false</ImportByWildcardAfterMicrosoftNetFrameworkProps>
+    <ImportUserLocationsByWildcardBeforeMicrosoftNetFrameworkProps>false</ImportUserLocationsByWildcardBeforeMicrosoftNetFrameworkProps>
+    <ImportUserLocationsByWildcardAfterMicrosoftNetFrameworkProps>false</ImportUserLocationsByWildcardAfterMicrosoftNetFrameworkProps>
+  </PropertyGroup>
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' == ''">-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportBefore\*" Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftCSharpTargets)' == 'true' and exists('$(MSBuildUserExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportBefore')" />-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportBefore\*" Condition="'$(ImportByWildcardBefore40MicrosoftCSharpTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportBefore')" />-->
+  <!--</ImportGroup>-->
+  <!-- Really should be imported right before Microsoft.Common.targets, but because Microsoft.CSharp.targets imports 
+        Microsoft.Common.targets from the current directory rather than using MSBuildToolsPath (which would redirect to our
+        targets), we're stuck doing it this way instead. -->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' == ''">-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\4.0\Microsoft.Common.targets\ImportBefore\*" Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftCommonTargets)' == 'true' and exists('$(MSBuildUserExtensionsPath)\4.0\Microsoft.Common.targets\ImportBefore')" />-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.Common.targets\ImportBefore\*" Condition="'$(ImportByWildcardBefore40MicrosoftCommonTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.targets\ImportBefore')" />-->
+  <!--</ImportGroup>-->
+  <!-- Really should be imported right before Microsoft.NETFramework.props, but because Microsoft.CSharp.targets imports 
+        Microsoft.Common.targets from the current directory rather than using MSBuildToolsPath (which would redirect to our
+        targets), and Microsoft.Common.targets does likewise with Microsoft.NETFramework.props, we're stuck doing it this 
+        way instead. -->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' == ''">-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportBefore\*" Condition="'$(ImportUserLocationsByWildcardBefore40MicrosoftNetFrameworkProps)' == 'true' and exists('$(MSBuildUserExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportBefore')" />-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportBefore\*" Condition="'$(ImportByWildcardBefore40MicrosoftNetFrameworkProps)' == 'true' and exists('$(MSBuildExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportBefore')" />-->
+  <!--</ImportGroup>-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(CSharpTargetsPath)">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.CSharp.CrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.CSharp.CrossTargeting.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+  <!-- Import design time targets for Roslyn Project System. These are only available if Visual Studio is installed. -->
+  <!-- Import design time targets before the common crosstargeting targets, which import targets from Nuget. -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <CSharpDesignTimeTargetsPath Condition="'$(CSharpDesignTimeTargetsPath)'==''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\Managed\Microsoft.CSharp.DesignTime.targets</CSharpDesignTimeTargetsPath>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(CSharpDesignTimeTargetsPath)" Condition="'$(CSharpDesignTimeTargetsPath)' != '' and Exists('$(CSharpDesignTimeTargetsPath)')">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.CSharp.DesignTime.targets
+============================================================================================================================================
+-->
+  <!--
+
+  This file contains Visual Studio and designer-related properties and items for C# projects.
+
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="Microsoft.Managed.DesignTime.targets">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.Managed.DesignTime.targets
+============================================================================================================================================
+-->
+  <!--
+
+  This file contains Visual Studio and designer-related properties and items for managed projects.
+
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Turn off capabilities from Microsoft.Common.CurrentVersions.targets and explicitly include the ones we want. The list below
+       currently matches what is in common targets, but removes BuildWindowsDesktopTarget -->
+    <DefineCommonItemSchemas>false</DefineCommonItemSchemas>
+    <DefineCommonCapabilities>false</DefineCommonCapabilities>
+    <DefineCommonReferenceSchemas>false</DefineCommonReferenceSchemas>
+    <DefineCommonManagedCapabilities Condition=" '$(DefineCommonManagedCapabilities)' == '' ">true</DefineCommonManagedCapabilities>
+    <DefineCommonManagedItemSchemas Condition=" '$(DefineCommonManagedItemSchemas)' == '' ">true</DefineCommonManagedItemSchemas>
+    <DefineCommonManagedReferenceSchemas Condition=" '$(DefineCommonManagedReferenceSchemas)' == '' ">true</DefineCommonManagedReferenceSchemas>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!--
+    Locate the approriate localized xaml resources based on the language ID or name.
+
+    The logic here matches the resource manager sufficiently to handle the fixed set of 
+    possible VS languages and directories on disk.
+
+    We cannot respect the exact probe order of the resource manager as this has to evaluate statically
+    and we have only LangName and LangID and no access to System.Globalization API.
+  -->
+  <PropertyGroup Condition="'$(ManagedXamlResourcesDirectory)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- 1. Probe for exact match against LangName. (e.g. pt-BR) -->
+    <ManagedXamlResourcesDirectory>$(MSBuildThisFileDirectory)$(LangName)</ManagedXamlResourcesDirectory>
+    <!-- 2. Handle special cases of languages which would not match above or below. -->
+    <ManagedXamlResourcesDirectory Condition="!Exists('$(ManagedXamlResourcesDirectory)') and '$(LangID)' == '2052'">$(MSBuildThisFileDirectory)zh-Hans</ManagedXamlResourcesDirectory>
+    <ManagedXamlResourcesDirectory Condition="!Exists('$(ManagedXamlResourcesDirectory)') and '$(LangID)' == '1028'">$(MSBuildThisFileDirectory)zh-Hant</ManagedXamlResourcesDirectory>
+    <!-- 3. Probe for parent by taking portion the portion before the hyphen (e.g. fr-FR -> fr) -->
+    <ManagedXamlResourcesDirectory Condition="!Exists('$(ManagedXamlResourcesDirectory)')">$(MSBuildThisFileDirectory)$(LangName.Split('-')[0])</ManagedXamlResourcesDirectory>
+    <!-- 4. Fall back to neutral English resources if all of the above fail -->
+    <ManagedXamlResourcesDirectory Condition="!Exists('$(ManagedXamlResourcesDirectory)')">$(MSBuildThisFileDirectory)</ManagedXamlResourcesDirectory>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ManagedXamlResourcesDirectory Condition="!HasTrailingSlash('$(ManagedXamlResourcesDirectory)')">$(ManagedXamlResourcesDirectory)\</ManagedXamlResourcesDirectory>
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <!-- Project Capabilities -->
+  <ItemGroup Condition="'$(DefineCommonManagedCapabilities)' == 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ProjectCapability Include="ManagedLang" />
+    <!-- Temporary: See https://github.com/dotnet/roslyn-project-system/issues/47 -->
+    <ProjectCapability Include="UseFileGlobs" />
+    <!-- DependenciesTree capability lights up a Dependencies tree node and it's sub node providers-->
+    <ProjectCapability Include="DependenciesTree" />
+    <ProjectCapability Include="LaunchProfiles" />
+    <ProjectCapability Include="NoGeneralDependentFileIcon" />
+    <!--
+      List of capabilities below is adding back common capabilities defined in imported targets.
+      We disabled them with the property DefineCommonCapabilities=false to get rid of default
+      References capability, but everything else we want back.
+    -->
+    <ProjectCapability Include="&#xD;&#xA;                          AssemblyReferences;&#xD;&#xA;                          COMReferences;&#xD;&#xA;                          ProjectReferences;&#xD;&#xA;                          PackageReferences;&#xD;&#xA;                          SharedProjectReferences;&#xD;&#xA;                          OutputGroups;&#xD;&#xA;                          AllTargetOutputGroups;&#xD;&#xA;                          VisualStudioWellKnownOutputGroups;&#xD;&#xA;                          SingleFileGenerators;&#xD;&#xA;                          DeclaredSourceItems;&#xD;&#xA;                          UserSourceItems;" />
+    <ProjectCapability Include="LanguageService" />
+    <ProjectCapability Include="ProjectConfigurationsInferredFromUsage" />
+    <!-- Reference Manager capabilities -->
+    <ProjectCapability Include="ReferenceManagerAssemblies" />
+    <ProjectCapability Include="ReferenceManagerBrowse" />
+    <ProjectCapability Include="ReferenceManagerCOM" />
+    <ProjectCapability Include="ReferenceManagerProjects" />
+    <ProjectCapability Include="ReferenceManagerSharedProjects" />
+    <ProjectCapability Include="ReferenceManagerWinRT" />
+    <!-- Settings page capability -->
+    <ProjectCapability Include="AppSettings" Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'" />
+  </ItemGroup>
+  <!-- Common Project System rules that override rules defined in msbuild. These are exact copy of the rules defined in msbuild. -->
+  <ItemGroup Condition="'$(DefineCommonManagedItemSchemas)' == 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)DebuggerGeneral.xaml">
+      <Context>Project</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ConfigurationGeneralFile.xaml">
+      <Context>File</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)SourceControl.xaml">
+      <Context>Invisible</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)Folder.xaml">
+      <Context>File;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)Content.xaml">
+      <Context>File;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)EmbeddedResource.xaml">
+      <Context>File;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)SpecialFolder.xaml">
+      <Context>File;ProjectSubscriptionService</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)AppDesigner.xaml">
+      <Context>ProjectSubscriptionService</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)CompilerCommandLineArgs.xaml">
+      <Context>ProjectSubscriptionService</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)GeneralBrowseObject.xaml">
+      <Context>BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)GeneralConfiguredBrowseObject.xaml">
+      <Context>ConfiguredBrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)AdditionalFiles.xaml">
+      <Context>File;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)None.xaml">
+      <Context>File;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ConfigurationGeneral.xaml">
+      <Context>Project;ProjectSubscriptionService</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ProjectItemsSchema.xaml">
+      <Context>Project</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ProjectDebugger.xaml">
+      <Context>Project</Context>
+    </PropertyPageSchema>
+  </ItemGroup>
+  <ItemGroup Condition="'$(DefineCommonManagedReferenceSchemas)' == 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Assembly references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)AssemblyReference.xaml">
+      <Context>;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ResolvedAssemblyReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <!-- COM references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)COMReference.xaml">
+      <Context>;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ResolvedCOMReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <!-- Project references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ProjectReference.xaml">
+      <Context>;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ResolvedProjectReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <!-- Sdk references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)SdkReference.xaml">
+      <Context>Project;ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ResolvedSdkReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <!-- Package references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)PackageReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ResolvedPackageReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <!-- Tool references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)DotNetCliToolReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <!-- NuGet Restore Properties -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)NuGetRestore.xaml">
+      <Context>ProjectSubscriptionService</Context>
+    </PropertyPageSchema>
+    <!-- Analyzer references -->
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)AnalyzerReference.xaml">
+      <Context>Project;ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)ResolvedAnalyzerReference.xaml">
+      <Context>ProjectSubscriptionService;BrowseObject</Context>
+    </PropertyPageSchema>
+  </ItemGroup>
+  <!-- Targets -->
+  <!-- For a newly created project with no packages restored, Design time build complains that there is no ResolvePackageDependenciesDesignTime
+       target, that is available only after restoring the .Net Core SDK targets. This No-op target will satisfy the check and will get overriden
+       once the actual targets are available after package restore-->
+  <Target Name="ResolvePackageDependenciesDesignTime" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="CollectSDKReferencesDesignTime" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="CollectResolvedSDKReferencesDesignTime" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <!-- This target is used to collect the PackageReferences in the project. This target can be overriden to add\remove packagereferences before they are
+       sent to NuGet to be restored.-->
+  <Target Name="CollectPackageReferences" Returns="@(PackageReference)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <!-- Validates that the correct properties have been set for design-time compiles  -->
+  <Target Name="_CheckCompileDesignTimePrerequisite" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Error Condition="'$(SkipCompilerExecution)|$(ProvideCommandLineArgs)' != 'true|true'" Text="SkipCompilerExecution and ProvideCommandLineArgs should be set before calling the CompileDesignTime target" />
+  </Target>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.CSharp.DesignTime.targets
+============================================================================================================================================
+-->
+  <!-- Properties -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <AppDesignerFolder Condition="'$(AppDesignerFolder)' == ''">Properties</AppDesignerFolder>
+    <AppDesignerFolderContentsVisibleOnlyInShowAllFiles Condition="'$(AppDesignerFolderContentsVisibleOnlyInShowAllFiles)' == ''">false</AppDesignerFolderContentsVisibleOnlyInShowAllFiles>
+    <LanguageServiceName Condition="'$(LanguageServiceName)' == ''">C#</LanguageServiceName>
+    <TemplateLanguage Condition="'$(TemplateLanguage)' == ''">CSharp</TemplateLanguage>
+    <AddItemTemplatesGuid Condition="'$(AddItemTemplatesGuid)' == ''">{FAE04EC0-301F-11d3-BF4B-00C04F79EFBC}</AddItemTemplatesGuid>
+  </PropertyGroup>
+  <ItemGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)CSharp.ProjectItemsSchema.xaml;" />
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)CSharp.xaml;">
+      <Context>File</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(ManagedXamlResourcesDirectory)CSharp.BrowseObject.xaml;">
+      <Context>BrowseObject</Context>
+    </PropertyPageSchema>
+    <ProjectCapability Include="CSharp;Managed" />
+  </ItemGroup>
+  <!-- Targets -->
+  <!-- Returns Csc command-line arguments for the language service -->
+  <Target Name="CompileDesignTime" Returns="@(_CompilerCommandLineArgs)" DependsOnTargets="_CheckCompileDesignTimePrerequisite;Compile" Condition="'$(IsCrossTargetingBuild)' != 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+      <_CompilerCommandLineArgs Include="@(CscCommandLineArgs)" />
+    </ItemGroup>
+  </Target>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.CSharp.CrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="Microsoft.Common.CrossTargeting.targets">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.Common.CrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.Common.CrossTargeting.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ImportByWildcardBeforeMicrosoftCommonCrossTargetingTargets Condition="'$(ImportByWildcardBeforeMicrosoftCommonCrossTargetingTargets)' == ''">true</ImportByWildcardBeforeMicrosoftCommonCrossTargetingTargets>
+  </PropertyGroup>
+  <!--<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.CrossTargeting.targets\ImportBefore\*.targets" Condition="'$(ImportByWildcardBeforeMicrosoftCommonCrossTargetingTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.CrossTargeting.targets\ImportBefore')" />-->
+  <!--<Import Project="$(CustomBeforeMicrosoftCommonCrossTargetingTargets)" Condition="'$(CustomBeforeMicrosoftCommonCrossTargetingTargets)' != '' and Exists('$(CustomBeforeMicrosoftCommonCrossTargetingTargets)')" />-->
+  <!--
+  ============================================================
+                                       DispatchToInnerBuilds
+
+     Builds this project with /t:$(InnerTarget) /p:TargetFramework=X for each
+     value X in $(TargetFrameworks)
+
+     [IN]
+     $(TargetFrameworks) - Semicolon delimited list of target frameworks.
+     $(InnerTargets) - The targets to build for each target framework
+
+     [OUT]
+     @(InnerOutput) - The combined output items of the inner targets across
+                      all target frameworks..
+  ============================================================
+  -->
+  <Target Name="DispatchToInnerBuilds" Returns="@(InnerOutput)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+      <_TargetFramework Include="$(TargetFrameworks)" />
+    </ItemGroup>
+    <MSBuild Projects="$(MSBuildProjectFile)" Condition="'$(TargetFrameworks)' != '' " Targets="$(InnerTargets)" Properties="TargetFramework=%(_TargetFramework.Identity)">
+      <Output ItemName="InnerOutput" TaskParameter="TargetOutputs" />
+    </MSBuild>
+  </Target>
+  <!--
+  ============================================================
+                                       Build
+
+   Cross-targeting version of Build.
+
+   [IN]
+   $(TargetFrameworks) - Semicolon delimited list of target frameworks.
+
+   $(InnerTargets)     - The targets to build for each target framework. Defaults
+                         to 'Build' if unset, but allows override to support
+                         `msbuild /p:InnerTargets=X;Y;Z` which will build X, Y,
+                         and Z targets for each target framework.
+
+   [OUT]
+   @(InnerOutput) - The combined output items of the inner targets across
+                    all builds.
+  ============================================================
+  -->
+  <Target Name="Build" DependsOnTargets="_SetBuildInnerTarget;DispatchToInnerBuilds" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="_SetBuildInnerTarget" Returns="@(InnerOutput)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup Condition="'$(InnerTargets)' == ''">
+      <InnerTargets>Build</InnerTargets>
+    </PropertyGroup>
+  </Target>
+  <!--
+  ============================================================
+                                       Clean
+
+   Cross-targeting version of clean.
+  ============================================================
+  -->
+  <Target Name="Clean" DependsOnTargets="_SetCleanInnerTarget;DispatchToInnerBuilds" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="_SetCleanInnerTarget" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <InnerTargets>Clean</InnerTargets>
+    </PropertyGroup>
+  </Target>
+  <!--
+  ============================================================
+                                       Rebuild
+
+   Cross-targeting version of rebuild.
+  ============================================================
+  -->
+  <Target Name="Rebuild" DependsOnTargets="_SetRebuildInnerTarget;DispatchToInnerBuilds" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="_SetRebuildInnerTarget" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <InnerTargets>Rebuild</InnerTargets>
+    </PropertyGroup>
+  </Target>
+  <!--
+    This will import NuGet restore targets, which is a special case separate from the package -> project extension 
+    mechanism below. For obvious reasons,  we need restore to work before any package assets are available.
+
+    TODO: https://github.com/Microsoft/msbuild/issues/1061: This is now generalized with less coupling to nuget, 
+          but this codepath should remain as a compat shim until NuGet and the CLI use the CrossTargeting imports.
+  -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ImportByWildcardAfterMicrosoftCommonTargets Condition="'$(ImportByWildcardAfterMicrosoftCommonTargets)' == ''">true</ImportByWildcardAfterMicrosoftCommonTargets>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.targets\ImportAfter\*.NuGet.*.targets" Condition="'$(ImportByWildcardAfterMicrosoftCommonTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.targets\ImportAfter')">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Microsoft.Common.targets\ImportAfter\Microsoft.NuGet.ImportAfter.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NuGet.ImportAfter.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <NuGetTargets Condition="'$(NuGetTargets)'==''">$(MSBuildExtensionsPath)\Microsoft\NuGet\$(VisualStudioVersion)\Microsoft.NuGet.targets</NuGetTargets>
+  </PropertyGroup>
+  <!--<Import Project="$(NuGetTargets)" Condition="Exists('$(NuGetTargets)') and '$(SkipImportNuGetBuildTargets)' != 'true'" />-->
+  <!-- Import NuGet.targets for Restore -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <NuGetRestoreTargets Condition="'$(NuGetRestoreTargets)'==''">$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets</NuGetRestoreTargets>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(NuGetRestoreTargets)" Condition="Exists('$(NuGetRestoreTargets)')">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+NuGet.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved.
+***********************************************************************************************
+
+  This target file contains the NuGet Restore target for walking the project and reference graph
+  and restoring dependencies from the graph.
+
+  Ways to use this targets file:
+  1. Invoke it directly and provide project file paths using $(RestoreGraphProjectInput).
+  2. With a solution this may be used as a target in the metaproj.
+  3. Import the targets file from a project.
+
+  Restore flow summary:
+  1. Top level projects (entry points) are determined.
+  2. Each project and all of its project references are walked recursively.
+  3. The project is evaluated for each $(TargetFramework). Items are created 
+     for project properties and dependencies. Each item is marked
+     with the project it came from so that it can be matched up later.
+  4. All restore items generated by the walk are grouped together by 
+     project and convert into a project spec.
+
+  The result file contains:
+  1. A list of projects to restore.
+  2. The complete closure of all projects referenced (Includes project references that are not being restored directly).
+  3. Package and project dependencies for each project.
+  4. DotnetCliTool references
+  -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Mark that this target file has been loaded.  -->
+    <IsRestoreTargetsFileLoaded>true</IsRestoreTargetsFileLoaded>
+    <!-- Load NuGet.Build.Tasks.dll, this can be overridden to use a different version with $(RestoreTaskAssemblyFile) -->
+    <RestoreTaskAssemblyFile Condition=" '$(RestoreTaskAssemblyFile)' == '' ">NuGet.Build.Tasks.dll</RestoreTaskAssemblyFile>
+    <!-- Recurse by default -->
+    <RestoreRecursive Condition=" '$(RestoreRecursive)' == '' ">true</RestoreRecursive>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <!-- RuntimeIdentifier compatibility check -->
+    <ValidateRuntimeIdentifierCompatibility Condition=" '$(ValidateRuntimeIdentifierCompatibility)' == '' ">false</ValidateRuntimeIdentifierCompatibility>
+    <!-- Error handling while walking projects -->
+    <RestoreContinueOnError Condition=" '$(RestoreContinueOnError)' == '' ">WarnAndContinue</RestoreContinueOnError>
+  </PropertyGroup>
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Generate a restore graph for each entry point project. -->
+    <_GenerateRestoreGraphProjectEntryInputProperties>
+      RestoreUseCustomAfterTargets=$(RestoreUseCustomAfterTargets);
+      NuGetRestoreTargets=$(MSBuildThisFileFullPath);
+      BuildProjectReferences=false;
+      ExcludeRestorePackageImports=true;
+    </_GenerateRestoreGraphProjectEntryInputProperties>
+    <!-- Standalone mode
+         This is used by NuGet.exe to inject targets into the project that will be
+         walked next. In normal /t:Restore mode this causes a duplicate import 
+         since NuGet.targets it loaded as part of MSBuild, there is should be 
+         skipped. -->
+    <_GenerateRestoreGraphProjectEntryInputProperties Condition=" '$(RestoreUseCustomAfterTargets)' == 'true' ">
+      $(_GenerateRestoreGraphProjectEntryInputProperties);
+      CustomAfterMicrosoftCommonCrossTargetingTargets=$(MSBuildThisFileFullPath);
+      CustomAfterMicrosoftCommonTargets=$(MSBuildThisFileFullPath);
+    </_GenerateRestoreGraphProjectEntryInputProperties>
+  </PropertyGroup>
+  <!-- Tasks -->
+  <UsingTask TaskName="NuGet.Build.Tasks.RestoreTask" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.WriteRestoreGraphTask" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.GetRestoreProjectJsonPathTask" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.GetRestoreProjectReferencesTask" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.GetRestorePackageReferencesTask" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.GetRestoreDotnetCliToolsTask" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.GetRestoreProjectFrameworks" AssemblyFile="$(RestoreTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <!--
+    ============================================================
+    Restore
+    Main entry point for restoring packages
+    ============================================================
+  -->
+  <Target Name="Restore" DependsOnTargets="_GenerateRestoreGraph" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Drop any duplicate items -->
+    <RemoveDuplicates Inputs="@(_RestoreGraphEntry)">
+      <Output TaskParameter="Filtered" ItemName="_RestoreGraphEntryFiltered" />
+    </RemoveDuplicates>
+    <!-- Call restore -->
+    <RestoreTask RestoreGraphItems="@(_RestoreGraphEntryFiltered)" RestoreSources="$(RestoreSources)" RestorePackagesPath="$(RestorePackagesPath)" RestoreDisableParallel="$(RestoreDisableParallel)" RestoreConfigFile="$(RestoreConfigFile)" RestoreNoCache="$(RestoreNoCache)" RestoreIgnoreFailedSources="$(RestoreIgnoreFailedSources)" RestoreRecursive="$(RestoreRecursive)" />
+  </Target>
+  <!--
+    ============================================================
+    GenerateRestoreGraphFile
+    Writes the output of _GenerateRestoreGraph to disk
+    ============================================================
+  -->
+  <Target Name="GenerateRestoreGraphFile" DependsOnTargets="_GenerateRestoreGraph" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Validate  -->
+    <Error Condition="$(RestoreGraphOutputPath) == ''" Text="Missing RestoreGraphOutputPath property!" />
+    <!-- Drop any duplicate items -->
+    <RemoveDuplicates Inputs="@(_RestoreGraphEntry)">
+      <Output TaskParameter="Filtered" ItemName="_RestoreGraphEntryFiltered" />
+    </RemoveDuplicates>
+    <!-- Write file -->
+    <WriteRestoreGraphTask RestoreGraphItems="@(_RestoreGraphEntryFiltered)" RestoreGraphOutputPath="$(RestoreGraphOutputPath)" RestoreRecursive="$(RestoreRecursive)" />
+  </Target>
+  <!--
+    ============================================================
+    _LoadRestoreGraphEntryPoints
+    Find project entry points and load them into items.
+    ============================================================
+  -->
+  <Target Name="_LoadRestoreGraphEntryPoints" Returns="@(RestoreGraphProjectInputItems)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Allow overriding items with RestoreGraphProjectInput -->
+    <ItemGroup Condition=" @(RestoreGraphProjectInputItems) == '' ">
+      <RestoreGraphProjectInputItems Include="$(RestoreGraphProjectInput)" />
+    </ItemGroup>
+    <!-- Solution case -->
+    <ItemGroup Condition=" $(MSBuildProjectFullPath.EndsWith('.metaproj')) == 'true' AND @(RestoreGraphProjectInputItems) == '' ">
+      <RestoreGraphProjectInputItems Include="@(ProjectReference)" />
+    </ItemGroup>
+    <!-- Project case -->
+    <ItemGroup Condition=" $(MSBuildProjectFullPath.EndsWith('.metaproj')) != 'true' AND @(RestoreGraphProjectInputItems) == '' ">
+      <RestoreGraphProjectInputItems Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+  </Target>
+  <!--
+    ============================================================
+    _FilterRestoreGraphProjectInputItems"
+    Filter out unsupported project entry points.
+    ============================================================
+  -->
+  <Target Name="_FilterRestoreGraphProjectInputItems" DependsOnTargets="_LoadRestoreGraphEntryPoints" Returns="@(FilteredRestoreGraphProjectInputItems)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <RestoreProjectFilterMode Condition=" '$(RestoreProjectFilterMode)' == '' ">exclusionlist</RestoreProjectFilterMode>
+    </PropertyGroup>
+    <!-- Filter to a list of known supported types -->
+    <ItemGroup Condition=" '$(RestoreProjectFilterMode)' == 'inclusionlist' ">
+      <FilteredRestoreGraphProjectInputItems Include="@(RestoreGraphProjectInputItems)" Condition=" '%(RestoreGraphProjectInputItems.Extension)' == '.csproj' Or&#xD;&#xA;                   '%(RestoreGraphProjectInputItems.Extension)' == '.vbproj' Or&#xD;&#xA;                   '%(RestoreGraphProjectInputItems.Extension)' == '.fsproj' Or&#xD;&#xA;                   '%(RestoreGraphProjectInputItems.Extension)' == '.nuproj' Or&#xD;&#xA;                   '%(RestoreGraphProjectInputItems.Extension)' == '.msbuildproj' Or&#xD;&#xA;                   '%(RestoreGraphProjectInputItems.Extension)' == '.vcxproj' " />
+    </ItemGroup>
+    <!-- Filter out disallowed types -->
+    <ItemGroup Condition=" '$(RestoreProjectFilterMode)' == 'exclusionlist' ">
+      <FilteredRestoreGraphProjectInputItems Include="@(RestoreGraphProjectInputItems)" Condition=" '%(RestoreGraphProjectInputItems.Extension)' != '.metaproj' &#xD;&#xA;                   AND '%(RestoreGraphProjectInputItems.Extension)' != '.shproj'&#xD;&#xA;                   AND '%(RestoreGraphProjectInputItems.Extension)' != '.vcxitems'&#xD;&#xA;                   AND '%(RestoreGraphProjectInputItems.Extension)' != '' " />
+    </ItemGroup>
+    <!-- No filtering -->
+    <ItemGroup Condition=" '$(RestoreProjectFilterMode)' != 'exclusionlist' AND '$(RestoreProjectFilterMode)' != 'inclusionlist' ">
+      <FilteredRestoreGraphProjectInputItems Include="@(RestoreGraphProjectInputItems)" />
+    </ItemGroup>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreGraph
+    Entry point for creating the project to project restore graph.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreGraph" DependsOnTargets="_FilterRestoreGraphProjectInputItems" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Message Text="Generating dg file" Importance="low" />
+    <Message Text="%(FilteredRestoreGraphProjectInputItems.Identity)" Importance="low" />
+    <!-- Walk projects -->
+    <MsBuild Projects="@(FilteredRestoreGraphProjectInputItems)" Targets="_GenerateRestoreGraphProjectEntry" ContinueOnError="$(RestoreContinueOnError)" Properties="%(_MSBuildProjectReferenceExistent.SetConfiguration);&#xD;&#xA;                    %(_MSBuildProjectReferenceExistent.SetPlatform);&#xD;&#xA;                    $(_GenerateRestoreGraphProjectEntryInputProperties)" RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
+      <Output TaskParameter="TargetOutputs" ItemName="_RestoreGraphEntry" />
+    </MsBuild>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreGraphProjectEntry
+    Top level entry point within a project.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreGraphProjectEntry" DependsOnTargets="_GenerateRestoreSpecs;_GenerateDotnetCliToolReferenceSpecs;_GenerateRestoreGraphWalk" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Returns restore graph entries for the project and all dependencies -->
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreSpecs
+    Mark entry points for restore.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreSpecs" DependsOnTargets="_GetRestoreProjectStyle" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Message Text="Restore entry point $(MSBuildProjectFullPath)" Importance="low" />
+    <!-- Mark entry point -->
+    <ItemGroup Condition=" '$(RestoreProjects)' == '' OR '$(RestoreProjects)' == 'true' ">
+      <_RestoreGraphEntry Include="$([System.Guid]::NewGuid())" Condition=" '$(RestoreProjectStyle)' != 'Unknown' ">
+        <Type>RestoreSpec</Type>
+        <ProjectUniqueName>$(MSBuildProjectFullPath)</ProjectUniqueName>
+      </_RestoreGraphEntry>
+    </ItemGroup>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateDotnetCliToolReferenceSpecs
+    Collect DotnetCliToolReferences
+    ============================================================
+  -->
+  <Target Name="_GenerateDotnetCliToolReferenceSpecs" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <DotnetCliToolTargetFramework Condition=" '$(DotnetCliToolTargetFramework)' == '' ">netcoreapp1.0</DotnetCliToolTargetFramework>
+    </PropertyGroup>
+    <!-- Write out tool references -->
+    <GetRestoreDotnetCliToolsTask Condition=" '$(RestoreDotnetCliToolReferences)' == '' OR '$(RestoreDotnetCliToolReferences)' == 'true' " ProjectPath="$(MSBuildProjectFullPath)" ToolFramework="$(DotnetCliToolTargetFramework)" DotnetCliToolReferences="@(DotnetCliToolReference)">
+      <Output TaskParameter="RestoreGraphItems" ItemName="_RestoreGraphEntry" />
+    </GetRestoreDotnetCliToolsTask>
+  </Target>
+  <!--
+    ============================================================
+    _GetProjectJsonPath
+    Discover the project.json path if one exists for the project.
+    ============================================================
+  -->
+  <Target Name="_GetProjectJsonPath" Returns="$(_CurrentProjectJsonPath)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Get project.json path -->
+    <!-- Skip this if the project style is already set. -->
+    <GetRestoreProjectJsonPathTask ProjectPath="$(MSBuildProjectFullPath)" Condition=" '$(RestoreProjectStyle)' == 'ProjectJson' OR '$(RestoreProjectStyle)' == '' ">
+      <Output TaskParameter="ProjectJsonPath" PropertyName="_CurrentProjectJsonPath" />
+    </GetRestoreProjectJsonPathTask>
+  </Target>
+  <!--
+    ============================================================
+    _GetRestoreProjectStyle
+    Determine the project restore type.
+    ============================================================
+  -->
+  <Target Name="_GetRestoreProjectStyle" DependsOnTargets="_GetProjectJsonPath" Returns="$(RestoreProjectStyle)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- This may be overridden by setting RestoreProjectStyle in the project. -->
+    <PropertyGroup>
+      <!-- If any PackageReferences exist treat it as PackageReference. This has priority over project.json. -->
+      <RestoreProjectStyle Condition=" '$(RestoreProjectStyle)' == '' AND @(PackageReference) != '' ">PackageReference</RestoreProjectStyle>
+      <!-- If this is not a PackageReference project check if project.json or projectName.project.json exists. -->
+      <RestoreProjectStyle Condition=" '$(RestoreProjectStyle)' == '' AND '$(_CurrentProjectJsonPath)' != '' ">ProjectJson</RestoreProjectStyle>
+      <!-- This project is either a packages.config project or one that does not use NuGet at all. -->
+      <RestoreProjectStyle Condition=" '$(RestoreProjectStyle)' == '' ">Unknown</RestoreProjectStyle>
+    </PropertyGroup>
+  </Target>
+  <!--
+    ============================================================
+    _GetRestoreTargetFrameworksOutput
+    Read target frameworks from the project.
+    ============================================================
+  -->
+  <Target Name="_GetRestoreTargetFrameworksOutput" DependsOnTargets="_GetRestoreProjectStyle" Condition=" '$(RestoreProjectStyle)' != 'ProjectJson' " Returns="@(_RestoreTargetFrameworksOutputFiltered)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <_RestoreProjectFramework />
+    </PropertyGroup>
+    <!-- For project.json projects target frameworks will be read from project.json. -->
+    <GetRestoreProjectFrameworks ProjectPath="$(MSBuildProjectFullPath)" TargetFrameworks="$(TargetFrameworks)" TargetFramework="$(TargetFramework)" TargetFrameworkMoniker="$(TargetFrameworkMoniker)" TargetPlatformIdentifier="$(TargetPlatformIdentifier)" TargetPlatformVersion="$(TargetPlatformVersion)">
+      <Output TaskParameter="ProjectTargetFrameworks" PropertyName="_RestoreProjectFramework" />
+    </GetRestoreProjectFrameworks>
+    <ItemGroup Condition=" '$(_RestoreProjectFramework)' != '' ">
+      <_RestoreTargetFrameworksOutputFiltered Include="$(_RestoreProjectFramework.Split(';'))" />
+    </ItemGroup>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreProjectSpec
+    Generate a restore project spec for the current project.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreProjectSpec" DependsOnTargets="_GetRestoreProjectStyle;_GetRestoreTargetFrameworksOutput" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Determine the restore output path -->
+    <PropertyGroup Condition=" '$(RestoreProjectStyle)' == 'PackageReference' ">
+      <RestoreOutputPath Condition=" '$(RestoreOutputPath)' == '' ">$(BaseIntermediateOutputPath)</RestoreOutputPath>
+    </PropertyGroup>
+    <ConvertToAbsolutePath Paths="$(RestoreOutputPath)" Condition=" '$(RestoreProjectStyle)' == 'PackageReference' ">
+      <Output TaskParameter="AbsolutePaths" PropertyName="RestoreOutputAbsolutePath" />
+    </ConvertToAbsolutePath>
+    <!-- 
+      Determine project name for the assets file.
+      Highest priority: PackageId
+      If PackageId does not exist use: AssemblyName
+      If AssemblyName does not exist fallback to the project file name without the extension: $(MSBuildProjectName)
+
+      For non-NETCore projects use only: $(MSBuildProjectName)
+    -->
+    <PropertyGroup>
+      <_RestoreProjectName>$(MSBuildProjectName)</_RestoreProjectName>
+      <_RestoreProjectName Condition=" '$(RestoreProjectStyle)' == 'PackageReference' AND '$(AssemblyName)' != '' ">$(AssemblyName)</_RestoreProjectName>
+      <_RestoreProjectName Condition=" '$(RestoreProjectStyle)' == 'PackageReference' AND '$(PackageId)' != '' ">$(PackageId)</_RestoreProjectName>
+    </PropertyGroup>
+    <!-- 
+      Determine project version for .NETCore projects
+      Default to 1.0.0
+      Use Version if it exists
+      Override with PackageVersion if it exists (same as pack)
+    -->
+    <PropertyGroup Condition=" '$(RestoreProjectStyle)' == 'PackageReference' ">
+      <_RestoreProjectVersion>1.0.0</_RestoreProjectVersion>
+      <_RestoreProjectVersion Condition=" '$(Version)' != '' ">$(Version)</_RestoreProjectVersion>
+      <_RestoreProjectVersion Condition=" '$(PackageVersion)' != '' ">$(PackageVersion)</_RestoreProjectVersion>
+    </PropertyGroup>
+    <!-- Determine if this will use cross targeting -->
+    <PropertyGroup Condition=" '$(RestoreProjectStyle)' == 'PackageReference' AND '$(TargetFrameworks)' != '' ">
+      <_RestoreCrossTargeting>true</_RestoreCrossTargeting>
+    </PropertyGroup>
+    <!-- Determine if ContentFiles should be written by NuGet -->
+    <PropertyGroup Condition=" '$(RestoreProjectStyle)' == 'PackageReference' AND '$(_RestoreSkipContentFileWrite)' == '' ">
+      <_RestoreSkipContentFileWrite Condition=" '$(TargetFrameworks)' == '' AND '$(TargetFramework)' == '' ">true</_RestoreSkipContentFileWrite>
+    </PropertyGroup>
+    <!-- Write properties for the top level entry point -->
+    <ItemGroup Condition=" '$(RestoreProjectStyle)' == 'PackageReference' ">
+      <_RestoreGraphEntry Include="$([System.Guid]::NewGuid())">
+        <Type>ProjectSpec</Type>
+        <Version>$(_RestoreProjectVersion)</Version>
+        <ProjectUniqueName>$(MSBuildProjectFullPath)</ProjectUniqueName>
+        <ProjectPath>$(MSBuildProjectFullPath)</ProjectPath>
+        <ProjectName>$(_RestoreProjectName)</ProjectName>
+        <Sources>$(RestoreSources)</Sources>
+        <FallbackFolders>$(RestoreFallbackFolders)</FallbackFolders>
+        <PackagesPath>$(RestorePackagesPath)</PackagesPath>
+        <ProjectStyle>$(RestoreProjectStyle)</ProjectStyle>
+        <OutputPath>$(RestoreOutputAbsolutePath)</OutputPath>
+        <TargetFrameworks>@(_RestoreTargetFrameworksOutputFiltered)</TargetFrameworks>
+        <RuntimeIdentifiers>$(RuntimeIdentifiers);$(RuntimeIdentifier)</RuntimeIdentifiers>
+        <RuntimeSupports>$(RuntimeSupports)</RuntimeSupports>
+        <CrossTargeting>$(_RestoreCrossTargeting)</CrossTargeting>
+        <RestoreLegacyPackagesDirectory>$(RestoreLegacyPackagesDirectory)</RestoreLegacyPackagesDirectory>
+        <ValidateRuntimeAssets>$(ValidateRuntimeIdentifierCompatibility)</ValidateRuntimeAssets>
+        <SkipContentFileWrite>$(_RestoreSkipContentFileWrite)</SkipContentFileWrite>
+      </_RestoreGraphEntry>
+    </ItemGroup>
+    <!-- Use project.json -->
+    <ItemGroup Condition=" '$(RestoreProjectStyle)' == 'ProjectJson' ">
+      <_RestoreGraphEntry Include="$([System.Guid]::NewGuid())">
+        <Type>ProjectSpec</Type>
+        <ProjectUniqueName>$(MSBuildProjectFullPath)</ProjectUniqueName>
+        <ProjectPath>$(MSBuildProjectFullPath)</ProjectPath>
+        <ProjectName>$(_RestoreProjectName)</ProjectName>
+        <Sources>$(RestoreSources)</Sources>
+        <FallbackFolders>$(RestoreFallbackFolders)</FallbackFolders>
+        <PackagesPath>$(RestorePackagesPath)</PackagesPath>
+        <FallbackFolders>$(RestoreFallbackFolders)</FallbackFolders>
+        <ProjectJsonPath>$(_CurrentProjectJsonPath)</ProjectJsonPath>
+        <ProjectStyle>$(RestoreProjectStyle)</ProjectStyle>
+      </_RestoreGraphEntry>
+    </ItemGroup>
+    <!-- Non-NuGet type -->
+    <ItemGroup Condition=" '$(RestoreProjectStyle)' == 'Unknown' ">
+      <_RestoreGraphEntry Include="$([System.Guid]::NewGuid())">
+        <Type>ProjectSpec</Type>
+        <ProjectUniqueName>$(MSBuildProjectFullPath)</ProjectUniqueName>
+        <ProjectPath>$(MSBuildProjectFullPath)</ProjectPath>
+        <ProjectName>$(_RestoreProjectName)</ProjectName>
+        <ProjectStyle>$(RestoreProjectStyle)</ProjectStyle>
+        <TargetFrameworks>@(_RestoreTargetFrameworksOutputFiltered)</TargetFrameworks>
+      </_RestoreGraphEntry>
+    </ItemGroup>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreDependencies
+    Generate items for package and project references.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreDependencies" DependsOnTargets="_GetRestoreProjectStyle;_GetRestoreTargetFrameworksOutput" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Get project and package references  -->
+    <!-- Evaluate for each framework -->
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="_GenerateRestoreGraphWalkPerFramework" ContinueOnError="$(RestoreContinueOnError)" Properties="TargetFramework=%(_RestoreTargetFrameworksOutputFiltered.Identity);&#xD;&#xA;                  %(_MSBuildProjectReferenceExistent.SetConfiguration);&#xD;&#xA;                  %(_MSBuildProjectReferenceExistent.SetPlatform);&#xD;&#xA;                  $(_GenerateRestoreGraphProjectEntryInputProperties)" RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
+      <Output TaskParameter="TargetOutputs" ItemName="_RestoreGraphEntry" />
+    </MSBuild>
+  </Target>
+  <!--
+    ============================================================
+    _GetAllRestoreProjectReferences
+    Get all project references regardless of framework
+    ============================================================
+  -->
+  <Target Name="_GetAllRestoreProjectReferences" DependsOnTargets="_GetRestoreProjectStyle;_GetRestoreTargetFrameworksOutput" Returns="@(RestoreGraphProjectFullPathForOutput)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Get complete set of project references  -->
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="_GenerateRestoreProjectReferencePaths" ContinueOnError="$(RestoreContinueOnError)" Properties="TargetFramework=%(_RestoreTargetFrameworksOutputFiltered.Identity);&#xD;&#xA;                  %(_MSBuildProjectReferenceExistent.SetConfiguration);&#xD;&#xA;                  %(_MSBuildProjectReferenceExistent.SetPlatform);&#xD;&#xA;                  $(_GenerateRestoreGraphProjectEntryInputProperties)" RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
+      <Output TaskParameter="TargetOutputs" ItemName="RestoreGraphProjectFullPathForOutput" />
+    </MSBuild>
+  </Target>
+  <!--
+    ============================================================
+    _GetChildRestoreProjects
+    Get all projects for restore.
+    ============================================================
+  -->
+  <Target Name="_GetChildRestoreProjects" DependsOnTargets="_GetRestoreProjectStyle;_GetAllRestoreProjectReferences" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Recurse into referenced projects -->
+    <MSBuild Projects="@(RestoreGraphProjectFullPathForOutput)" Targets="_GenerateRestoreGraphWalk" ContinueOnError="$(RestoreContinueOnError)" Properties="%(_MSBuildProjectReferenceExistent.SetConfiguration);&#xD;&#xA;                  %(_MSBuildProjectReferenceExistent.SetPlatform);&#xD;&#xA;                  $(_GenerateRestoreGraphProjectEntryInputProperties)" RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
+      <Output TaskParameter="TargetOutputs" ItemName="_RestoreGraphEntry" />
+    </MSBuild>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreGraphWalk
+    Recursively walk project to project references.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreGraphWalk" DependsOnTargets="&#xD;&#xA;      _GetRestoreProjectStyle;&#xD;&#xA;      _GetRestoreTargetFrameworksOutput;&#xD;&#xA;      _GenerateRestoreProjectSpec;&#xD;&#xA;      _GenerateRestoreDependencies;&#xD;&#xA;      _GetChildRestoreProjects" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Output from dependency targets -->
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreGraphWalkPerFramework
+    Walk dependencies using $(TargetFramework)
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreGraphWalkPerFramework" DependsOnTargets="_GetRestoreProjectStyle" Returns="@(_RestoreGraphEntry)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Write out project references -->
+    <GetRestoreProjectReferencesTask ProjectUniqueName="$(MSBuildProjectFullPath)" ProjectReferences="@(ProjectReference)" TargetFrameworks="$(TargetFramework)" ParentProjectPath="$(MSBuildProjectFullPath)">
+      <Output TaskParameter="RestoreGraphItems" ItemName="_RestoreGraphEntry" />
+    </GetRestoreProjectReferencesTask>
+    <!-- Write out package references for NETCore -->
+    <GetRestorePackageReferencesTask Condition=" '$(RestoreProjectStyle)' == 'PackageReference' " ProjectUniqueName="$(MSBuildProjectFullPath)" PackageReferences="@(PackageReference)" TargetFrameworks="$(TargetFramework)">
+      <Output TaskParameter="RestoreGraphItems" ItemName="_RestoreGraphEntry" />
+    </GetRestorePackageReferencesTask>
+    <!-- Write out target framework information -->
+    <ItemGroup Condition="  '$(RestoreProjectStyle)' == 'PackageReference' AND '$(PackageTargetFallback)' != '' ">
+      <_RestoreGraphEntry Include="$([System.Guid]::NewGuid())">
+        <Type>TargetFrameworkInformation</Type>
+        <ProjectUniqueName>$(MSBuildProjectFullPath)</ProjectUniqueName>
+        <PackageTargetFallback>$(PackageTargetFallback)</PackageTargetFallback>
+        <TargetFramework>$(TargetFramework)</TargetFramework>
+      </_RestoreGraphEntry>
+    </ItemGroup>
+  </Target>
+  <!--
+    ============================================================
+    _GenerateRestoreProjectReferencePaths
+    Get absolute paths for all project references.
+    ============================================================
+  -->
+  <Target Name="_GenerateRestoreProjectReferencePaths" DependsOnTargets="_SplitProjectReferencesByFileExistence" Returns="@(RestoreGraphProjectFullPathForOutput)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+      <!-- Filter out project references that specify ReferenceOutputAssembly=false -->
+      <ValidProjectInputForRestoreGraph Include="@(ProjectReference)" Condition=" '%(ProjectReference.ReferenceOutputAssembly)' == '' OR '%(ProjectReference.ReferenceOutputAssembly)' == 'true' " />
+    </ItemGroup>
+    <!-- Get the absolute paths to all projects -->
+    <ConvertToAbsolutePath Paths="@(ValidProjectInputForRestoreGraph)">
+      <Output TaskParameter="AbsolutePaths" PropertyName="RestoreGraphAbsoluteProjectPaths" />
+    </ConvertToAbsolutePath>
+    <ItemGroup>
+      <RestoreGraphProjectFullPathForOutput Include="$(RestoreGraphAbsoluteProjectPaths)" />
+    </ItemGroup>
+  </Target>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Microsoft.Common.targets\ImportAfter\Microsoft.NuGet.ImportAfter.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.Common.CrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--<Import Project="$(CustomAfterMicrosoftCommonCrossTargetingTargets)" Condition="'$(CustomAfterMicrosoftCommonCrossTargetingTargets)' != '' and Exists('$(CustomAfterMicrosoftCommonCrossTargetingTargets)')" />-->
+  <!--
+    Allow extensions like NuGet restore to work before any package assets are available.
+  -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ImportByWildcardAfterMicrosoftCommonCrossTargetingTargets Condition="'$(ImportByWildcardAfterMicrosoftCommonCrossTargetingTargets)' == ''">true</ImportByWildcardAfterMicrosoftCommonCrossTargetingTargets>
+  </PropertyGroup>
+  <!--<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.CrossTargeting.targets\ImportAfter\*.targets" Condition="'$(ImportByWildcardAfterMicrosoftCommonCrossTargetingTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.CrossTargeting.targets\ImportAfter')" />-->
+  <!--
+    Import project extensions which usually come from packages.  Package management systems will create a file at:
+      $(MSBuildProjectExtensionsPath)\$(MSBuildProjectFile).<SomethingUnique>.targets
+
+    Each package management system should use a unique moniker to avoid collisions.  It is a wild-card iport so the package
+    management system can write out multiple files but the order of the import is alphabetic because MSBuild sorts the list.
+
+    This is the same import that would happen in an inner (non-cross targeting) build. Package management systems are responsible for generating 
+    appropriate conditions based on $(IsCrossTargetingBuild) to pull in only those package targets that are meant to participate in a cross-targeting 
+    build.
+  -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ImportProjectExtensionTargets Condition="'$(ImportProjectExtensionTargets)' == ''">true</ImportProjectExtensionTargets>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.targets" Condition="'$(ImportProjectExtensionTargets)' == 'true' and exists('$(MSBuildProjectExtensionsPath)')">
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\obj\Microsoft.Rest.ClientRuntime.csproj.nuget.g.targets
+============================================================================================================================================
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.Common.CrossTargeting.targets
+============================================================================================================================================
+-->
+  <!-- TODO: https://github.com/Microsoft/msbuild/issues/1062: Remove this temporary hook when possible. -->
+  <!--<Import Project="$(CoreCrossTargetingTargetsPath)" Condition="'$(CoreCrossTargetingTargetsPath)' != '' and Exists('$(CoreCrossTargetingTargetsPath)')" />-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.CSharp.CrossTargeting.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\bin\Microsoft.CSharp.targets
+============================================================================================================================================
+-->
+  <!-- Really should be imported right after Microsoft.NETFramework.props, but because Microsoft.CSharp.targets imports 
+        Microsoft.Common.targets from the current directory rather than using MSBuildToolsPath (which would redirect to our
+        targets), and Microsoft.Common.targets does likewise with Microsoft.NETFramework.props, we're stuck doing it this 
+        way instead. -->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' == ''">-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportAfter\*" Condition="'$(ImportByWildcardAfter40MicrosoftNetFrameworkProps)' == 'true' and exists('$(MSBuildExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportAfter')" />-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportAfter\*" Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftNetFrameworkProps)' == 'true' and exists('$(MSBuildUserExtensionsPath)\4.0\Microsoft.NETFramework.props\ImportAfter')" />-->
+  <!--</ImportGroup>-->
+  <!-- Really should be imported right after Microsoft.Common.targets, but because Microsoft.CSharp.targets imports 
+        Microsoft.Common.targets from the current directory rather than using MSBuildToolsPath (which would redirect to our
+        targets), we're stuck doing it this way instead. -->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' == ''">-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.Common.targets\ImportAfter\*" Condition="'$(ImportByWildcardAfter40MicrosoftCommonTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\4.0\Microsoft.Common.targets\ImportAfter')" />-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\4.0\Microsoft.Common.targets\ImportAfter\*" Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftCommonTargets)' == 'true' and exists('$(MSBuildUserExtensionsPath)\4.0\Microsoft.Common.targets\ImportAfter')" />-->
+  <!--</ImportGroup>-->
+  <!--<ImportGroup Condition="'$(MSBuildAssemblyVersion)' == ''">-->
+  <!--<Import Project="$(MSBuildExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportAfter\*" Condition="'$(ImportByWildcardAfter40MicrosoftCSharpTargets)' == 'true' and exists('$(MSBuildExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportAfter')" />-->
+  <!--<Import Project="$(MSBuildUserExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportAfter\*" Condition="'$(ImportUserLocationsByWildcardAfter40MicrosoftCSharpTargets)' == 'true' and exists('$(MSBuildUserExtensionsPath)\4.0\Microsoft.CSharp.targets\ImportAfter')" />-->
+  <!--</ImportGroup>-->
+  <!-- Fix up FrameworkPathOverride, which is primarily used to determine the location of mscorlib.dll in the 
+        (relatively uncommon) situation where the reference assemblies, in which it's usually found, are not 
+        installed.  Defined here rather than in Microsoft.Common.targets because the .NET Microsoft.CSharp.targets 
+        imports Microsoft.Common.targets from the current directory. -->
+  <PropertyGroup Condition="'$(MSBuildAssemblyVersion)' == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <FrameworkPathOverride Condition="!Exists('$(FrameworkPathOverride)\mscorlib.dll')">$(MSBuildFrameworkToolsPath)</FrameworkPathOverride>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildThisFileDirectory)..\buildCrossTargeting\Microsoft.NET.Sdk.targets" Condition="'$(IsCrossTargetingBuild)' == 'true'">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\buildCrossTargeting\Microsoft.NET.Sdk.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.Sdk.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="..\build\Microsoft.NET.Sdk.Common.targets">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\build\Microsoft.NET.Sdk.Common.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.NET.Sdk.Common.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <!-- This file is imported by both cross-targeting and inner builds. Set properties that need to be available to both here. -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <MicrosoftNETBuildTasksDirectoryRoot>$(MSBuildThisFileDirectory)..\tools\</MicrosoftNETBuildTasksDirectoryRoot>
+    <MicrosoftNETBuildTasksTFM Condition=" '$(MSBuildRuntimeType)' == 'Core'">netcoreapp1.0</MicrosoftNETBuildTasksTFM>
+    <MicrosoftNETBuildTasksTFM Condition=" '$(MicrosoftNETBuildTasksTFM)' == ''">net46</MicrosoftNETBuildTasksTFM>
+    <MicrosoftNETBuildTasksDirectory>$(MicrosoftNETBuildTasksDirectoryRoot)$(MicrosoftNETBuildTasksTFM)/</MicrosoftNETBuildTasksDirectory>
+    <MicrosoftNETBuildTasksAssembly>$(MicrosoftNETBuildTasksDirectory)Microsoft.NET.Build.Tasks.dll</MicrosoftNETBuildTasksAssembly>
+    <!-- 
+          Hardcoded list of known implicit packges that are added to project from default SDK targets implicitly.
+          Should be re-visited when multiple TFM support is added to Dependencies logic.
+    -->
+    <DefaultImplicitPackages>Microsoft.NETCore.App;NETStandard.Library</DefaultImplicitPackages>
+  </PropertyGroup>
+  <UsingTask TaskName="GetNearestTargetFramework" AssemblyFile="$(MicrosoftNETBuildTasksAssembly)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NETSdkError" AssemblyFile="$(MicrosoftNETBuildTasksAssembly)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <!--
+  ============================================================
+                              GetTargetFrameworkProperties
+
+    Invoked by common targets to return the set of properties 
+    (in the form  "key1=value1;...keyN=valueN") needed to build 
+    against the target framework that best matches the referring
+    project's target framework.
+
+    The referring project's $(TargetFrameworkMoniker) is passed 
+    in as $(ReferringTargetFramework).
+
+    This is in the common targets so that it will apply to both
+    cross-targeted and single-targeted projects.  It is run
+    for single-targeted projects so that an error will be
+    generated if the referenced project is not compatible
+    with the referencing project's target framework.
+  ============================================================
+   -->
+  <Target Name="GetTargetFrameworkProperties" Returns="TargetFramework=$(NearestTargetFramework);ProjectHasSingleTargetFramework=$(_HasSingleTargetFramework);ProjectIsRidAgnostic=$(_IsRidAgnostic)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <!-- indicate to caller that project is RID agnostic so that a global property RuntimeIdentifier value can be removed -->
+      <_IsRidAgnostic>false</_IsRidAgnostic>
+      <_IsRidAgnostic Condition=" '$(RuntimeIdentifier)' == '' and '$(RuntimeIdentifiers)' == '' ">true</_IsRidAgnostic>
+      <!-- If a ReferringTargetFramework was not specified, and we only have one TargetFramework, then don't try to check compatibility -->
+      <_SkipNearestTargetFrameworkResolution Condition="'$(TargetFramework)' != '' and '$(ReferringTargetFramework)' == ''">true</_SkipNearestTargetFrameworkResolution>
+      <NearestTargetFramework Condition="'$(_SkipNearestTargetFrameworkResolution)' == 'true'">$(TargetFramework)</NearestTargetFramework>
+      <!-- A project can only have more than one output if the current global properties are such that the current build is a cross-targeting one. -->
+      <_HasSingleTargetFramework Condition="'$(IsCrossTargetingBuild)' != 'true'">true</_HasSingleTargetFramework>
+      <_HasSingleTargetFramework Condition="'$(_HasSingleTargetFramework)' == ''">false</_HasSingleTargetFramework>
+      <_PossibleTargetFrameworks Condition="'$(TargetFramework)' != ''">$(TargetFramework)</_PossibleTargetFrameworks>
+      <_PossibleTargetFrameworks Condition="'$(TargetFramework)' == ''">$(TargetFrameworks)</_PossibleTargetFrameworks>
+    </PropertyGroup>
+    <GetNearestTargetFramework ReferringTargetFramework="$(ReferringTargetFramework)" PossibleTargetFrameworks="$(_PossibleTargetFrameworks)" ProjectFilePath="$(MSBuildProjectFullPath)" Condition="'$(_SkipNearestTargetFrameworkResolution)' != 'true'">
+      <Output PropertyName="NearestTargetFramework" TaskParameter="NearestTargetFramework" />
+    </GetNearestTargetFramework>
+  </Target>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\buildCrossTargeting\Microsoft.NET.Sdk.targets
+============================================================================================================================================
+-->
+  <!--
+  ============================================================
+                              Publish
+
+   This is the Publish target for cross-targeting.
+   Currently it is unsupported to publish for multiple target frameworks
+   because users can specify the $(PublishDir), and publish would put
+   multiple published applications in a single directory.
+  ============================================================
+   -->
+  <Target Name="Publish" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Error Text="The 'Publish' target is not supported without specifying a target framework. The current project targets multiple frameworks, please specify the framework for the published application." />
+  </Target>
+  <!--
+  ============================================================
+                                      GetAllRuntimeIdentifiers
+
+  Outer build implementation of GetAllRuntimeIdentifiers returns
+  a union of all runtime identifiers used across inner and outer
+  build evaluations.
+
+  It is further set to run before '_GenerateRestoreProjecSpec' 
+  (note that running only 'Restore' is too late and will not work
+  with solution level restore). This ensures that any conditioning
+  of runtime  identifiers against TargetFramework does not prevent
+  restore from providing  the necessary RID-specific assets for all
+  inner builds.
+  
+  It also brings parity to VS vs. command line behavior in this
+  scenario because VS passes all of the information from each
+  configured inner build to restore, whereas command-line restore
+  without this target would only use the runtime identifiers that
+  are statically set in the outer evaluation.
+  ============================================================
+  -->
+  <Target Name="GetAllRuntimeIdentifiers" Returns="$(RuntimeIdentifiers)" BeforeTargets="_GenerateRestoreProjectSpec" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+      <_GetAllRuntimeIdentifiersTargetFrameworks Include="$(TargetFrameworks)" />
+      <_AllRuntimeIdentifiers Include="$(RuntimeIdentifiers);$(RuntimeIdentifier)" />
+    </ItemGroup>
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="GetAllRuntimeIdentifiers" Properties="TargetFramework=%(_GetAllRuntimeIdentifiersTargetFrameworks.Identity)">
+      <Output ItemName="_AllRuntimeIdentifiers" TaskParameter="TargetOutputs" />
+    </MSBuild>
+    <PropertyGroup>
+      <RuntimeIdentifiers>@(_AllRuntimeIdentifiers-&gt;Distinct())</RuntimeIdentifiers>
+    </PropertyGroup>
+  </Target>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.targets
+============================================================================================================================================
+-->
+  <!--<Import Project="$(MSBuildThisFileDirectory)..\build\Microsoft.NET.Sdk.targets" Condition="'$(IsCrossTargetingBuild)' != 'true'" />-->
+  <!-- Import targets from NuGet.Build.Tasks.Pack package/Sdk -->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <NuGetBuildTasksPackTargets Condition="'$(IsCrossTargetingBuild)' == 'true'">$(MSBuildSDKsPath)\NuGet.Build.Tasks.Pack\buildCrossTargeting\NuGet.Build.Tasks.Pack.targets</NuGetBuildTasksPackTargets>
+    <NuGetBuildTasksPackTargets Condition="'$(IsCrossTargetingBuild)' != 'true'">$(MSBuildSDKsPath)\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets</NuGetBuildTasksPackTargets>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(NuGetBuildTasksPackTargets)" Condition="Exists('$(NuGetBuildTasksPackTargets)')">
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\NuGet.Build.Tasks.Pack\buildCrossTargeting\NuGet.Build.Tasks.Pack.targets
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+NuGet.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+  <!-- Load NuGet.Build.Tasks.Pack.dll, this can be overridden to use a different version with $(NugetTaskAssemblyFile) -->
+  <PropertyGroup Condition="$(NugetTaskAssemblyFile) == ''" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <NugetTaskAssemblyFile Condition="'$(MSBuildRuntimeType)' == 'Core'">..\CoreCLR\NuGet.Build.Tasks.Pack.dll</NugetTaskAssemblyFile>
+    <NugetTaskAssemblyFile Condition="'$(MSBuildRuntimeType)' != 'Core'">..\Desktop\NuGet.Build.Tasks.Pack.dll</NugetTaskAssemblyFile>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <UsingTask TaskName="NuGet.Build.Tasks.Pack.PackTask" AssemblyFile="$(NugetTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <UsingTask TaskName="NuGet.Build.Tasks.Pack.PackNuspecTask" AssemblyFile="$(NugetTaskAssemblyFile)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PackageId Condition=" '$(PackageId)' == '' ">$(AssemblyName)</PackageId>
+    <PackageVersion Condition=" '$(PackageVersion)' == '' ">$(Version)</PackageVersion>
+    <IncludeContentInPack Condition="'$(IncludeContentInPack)'==''">true</IncludeContentInPack>
+    <GenerateNuspecDependsOn>_LoadPackInputItems; _WalkEachTargetPerFramework; _GetPackageFiles; $(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
+    <Description Condition="'$(Description)'==''">Package Description</Description>
+    <IsPackable Condition="'$(IsPackable)'==''">true</IsPackable>
+    <IncludeBuildOutput Condition="'$(IncludeBuildOutput)'==''">true</IncludeBuildOutput>
+    <BuildOutputTargetFolder Condition="'$(BuildOutputTargetFolder)' == '' AND '$(IsTool)' == 'true'">tools</BuildOutputTargetFolder>
+    <BuildOutputTargetFolder Condition="'$(BuildOutputTargetFolder)' == ''">lib</BuildOutputTargetFolder>
+    <ContentTargetFolders Condition="'$(ContentTargetFolders)' == ''">content;contentFiles</ContentTargetFolders>
+    <PackDependsOn>GenerateNuspec; $(PackDependsOn)</PackDependsOn>
+    <IsInnerBuild Condition="'$(TargetFramework)' != '' AND '$(TargetFrameworks)' != ''">true</IsInnerBuild>
+    <NoBuild Condition="'$(GeneratePackageOnBuild)' == 'true'">true</NoBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(NoBuild)' == 'true' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <GenerateNuspecDependsOn>$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(NoBuild)' != 'true' " xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <GenerateNuspecDependsOn>Build;$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
+  </PropertyGroup>
+  <ItemGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ProjectCapability Include="Pack" />
+    <_TargetFrameworks Condition="'$(TargetFramework)' == ''" Include="$(TargetFrameworks.Split(';'))" />
+    <_TargetFrameworks Condition="'$(TargetFramework)' != ''" Include="$(TargetFramework)" />
+  </ItemGroup>
+  <!--
+    ============================================================
+    Pack
+    Post Build Target
+    ============================================================
+  -->
+  <Target Name="_PackAsBuildAfterTarget" AfterTargets="Build" Condition="'$(GeneratePackageOnBuild)' == 'true' AND '$(IsInnerBuild)' != 'true'" DependsOnTargets="Pack" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="_CleanPackageFiles" AfterTargets="Clean" Condition="'$(GeneratePackageOnBuild)' == 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+      <_PackageFilesToDelete Include="$(PackageOutputPath)*.nupkg" />
+      <_PackageFilesToDelete Include="$(BaseIntermediateOutputPath)*.nuspec" />
+    </ItemGroup>
+    <Delete Files="@(_PackageFilesToDelete)" />
+  </Target>
+  <!--
+    ============================================================
+    Pack
+    Main entry point for packing packages
+    ============================================================
+  -->
+  <Target Name="Pack" DependsOnTargets="_IntermediatePack;$(PackDependsOn)" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+  <Target Name="_IntermediatePack" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <ContinuePackingAfterGeneratingNuspec>true</ContinuePackingAfterGeneratingNuspec>
+    </PropertyGroup>
+  </Target>
+  <Target Name="GenerateNuspec" DependsOnTargets="$(GenerateNuspecDependsOn)" Condition="$(IsPackable) == 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup Condition="$(ContinuePackingAfterGeneratingNuspec) == '' ">
+      <ContinuePackingAfterGeneratingNuspec>false</ContinuePackingAfterGeneratingNuspec>
+    </PropertyGroup>
+    <PropertyGroup>
+      <PackageOutputPath Condition=" '$(PackageOutputPath)' == '' ">$(OutputPath)</PackageOutputPath>
+      <RestoreOutputPath Condition=" '$(RestoreOutputPath)' == '' ">$(BaseIntermediateOutputPath)</RestoreOutputPath>
+    </PropertyGroup>
+    <ConvertToAbsolutePath Paths="$(RestoreOutputPath)">
+      <Output TaskParameter="AbsolutePaths" PropertyName="RestoreOutputAbsolutePath" />
+    </ConvertToAbsolutePath>
+    <ConvertToAbsolutePath Paths="$(PackageOutputPath)">
+      <Output TaskParameter="AbsolutePaths" PropertyName="PackageOutputAbsolutePath" />
+    </ConvertToAbsolutePath>
+    <ConvertToAbsolutePath Condition="$(NuspecFile) != ''" Paths="$(NuspecFile)">
+      <Output TaskParameter="AbsolutePaths" PropertyName="NuspecFileAbsolutePath" />
+    </ConvertToAbsolutePath>
+    <!-- Call Pack -->
+    <PackTask PackItem="$(PackProjectInputFile)" PackageFiles="@(_PackageFiles)" PackageFilesToExclude="@(_PackageFilesToExclude)" PackageVersion="$(PackageVersion)" PackageId="$(PackageId)" Title="$(Title)" Authors="$(Authors)" Description="$(Description)" Copyright="$(Copyright)" RequireLicenseAcceptance="$(PackageRequireLicenseAcceptance)" LicenseUrl="$(PackageLicenseUrl)" ProjectUrl="$(PackageProjectUrl)" IconUrl="$(PackageIconUrl)" ReleaseNotes="$(PackageReleaseNotes)" Tags="$(PackageTags)" TargetPathsToAssemblies="@(_TargetPathsToAssemblies->'%(FinalOutputPath)')" TargetPathsToSymbols="@(_TargetPathsToSymbols)" TargetFrameworks="@(_TargetFrameworks)" AssemblyName="$(AssemblyName)" PackageOutputPath="$(PackageOutputAbsolutePath)" IncludeSymbols="$(IncludeSymbols)" IncludeSource="$(IncludeSource)" PackageTypes="$(PackageType)" IsTool="$(IsTool)" RepositoryUrl="$(RepositoryUrl)" RepositoryType="$(RepositoryType)" SourceFiles="@(_SourceFiles-&gt;Distinct())" NoPackageAnalysis="$(NoPackageAnalysis)" MinClientVersion="$(MinClientVersion)" Serviceable="$(Serviceable)" AssemblyReferences="@(_References)" ContinuePackingAfterGeneratingNuspec="$(ContinuePackingAfterGeneratingNuspec)" NuspecOutputPath="$(BaseIntermediateOutputPath)" IncludeBuildOutput="$(IncludeBuildOutput)" BuildOutputFolder="$(BuildOutputTargetFolder)" ContentTargetFolders="$(ContentTargetFolders)" RestoreOutputPath="$(RestoreOutputAbsolutePath)" NuspecFile="$(NuspecFileAbsolutePath)" NuspecBasePath="$(NuspecBasePath)" NuspecProperties="$(NuspecProperties)" />
+  </Target>
+  <!--
+    ============================================================
+    _LoadPackGraphEntryPoints
+    Find project entry points and load them into items.
+    ============================================================
+  -->
+  <Target Name="_LoadPackInputItems" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Allow overriding items with ProjectFileToPack -->
+    <PropertyGroup Condition="'$(PackProjectInputFile)' == ''">
+      <PackProjectInputFile>$(ProjectFileToPack)</PackProjectInputFile>
+    </PropertyGroup>
+    <!-- Project case -->
+    <PropertyGroup Condition="$(MSBuildProjectFullPath.EndsWith('.csproj')) == 'true' AND '$(PackProjectInputFile)' == ''">
+      <PackProjectInputFile>$(MSBuildProjectFullPath)</PackProjectInputFile>
+    </PropertyGroup>
+  </Target>
+  <Target Name="_WalkEachTargetPerFramework" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuild Condition="'$(IncludeBuildOutput)' == 'true'" Projects="$(MSBuildProjectFullPath)" Targets="BuiltProjectOutputGroup;DocumentationProjectOutputGroup" Properties="TargetFramework=%(_TargetFrameworks.Identity);&#xD;&#xA;                  BuildProjectReferences=false;">
+      <Output TaskParameter="TargetOutputs" ItemName="_TargetPathsToAssemblies" />
+    </MSBuild>
+    <!--Projects with target framework like UWP, Win8, wpa81 produce a Pri file
+    in their bin dir. This Pri file is not included in the BuiltProjectGroupOutput, and
+    has to be added manually here.-->
+    <ItemGroup Condition="'$(IncludeProjectPriFile)' == 'true'">
+      <_TargetPathsToAssemblies Include="$(ProjectPriFullPath)">
+        <FinalOutputPath>$(ProjectPriFullPath)</FinalOutputPath>
+      </_TargetPathsToAssemblies>
+    </ItemGroup>
+    <MSBuild Condition="'$(IncludeSymbols)' == 'true' OR '$(IncludeSource)' == 'true'" Projects="$(MSBuildProjectFullPath)" Targets="DebugSymbolsProjectOutputGroup" Properties="TargetFramework=%(_TargetFrameworks.Identity);&#xD;&#xA;                  BuildProjectReferences=false;">
+      <Output TaskParameter="TargetOutputs" ItemName="_TargetPathsToSymbols" />
+    </MSBuild>
+    <MSBuild Condition="'$(IncludeSource)' == 'true'" Projects="$(MSBuildProjectFullPath)" Targets="SourceFilesProjectOutputGroup" Properties="TargetFramework=%(_TargetFrameworks.Identity);&#xD;&#xA;                  BuildProjectReferences=false;">
+      <Output TaskParameter="TargetOutputs" ItemName="_SourceFiles" />
+    </MSBuild>
+  </Target>
+  <!--
+    ============================================================
+    _GetPackageFiles
+    Entry point for generating the project to project references.
+    ============================================================
+  -->
+  <Target Name="_GetPackageFiles" Condition="$(IncludeContentInPack) == 'true'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+      <_PackageFilesToExclude Include="@(Content)" Condition="'%(Content.Pack)' == 'false'" />
+    </ItemGroup>
+    <!-- Include PackageFiles and Content of the project being packed -->
+    <ItemGroup>
+      <_PackageFiles Include="@(Content)" Condition=" %(Content.Pack) != 'false' ">
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(Compile)" Condition=" %(Compile.Pack) == 'true' ">
+        <BuildAction>Compile</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(None)" Condition=" %(None.Pack) == 'true' ">
+        <BuildAction>None</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(EmbeddedResource)" Condition=" %(EmbeddedResource.Pack) == 'true' ">
+        <BuildAction>EmbeddedResource</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(ApplicationDefinition)" Condition=" %(ApplicationDefinition.Pack) == 'true' ">
+        <BuildAction>ApplicationDefinition</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(Page)" Condition=" %(Page.Pack) == 'true' ">
+        <BuildAction>Page</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(Resource)" Condition=" %(Resource.Pack) == 'true' ">
+        <BuildAction>Resource</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(SplashScreen)" Condition=" %(SplashScreen.Pack) == 'true' ">
+        <BuildAction>SplashScreen</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(DesignData)" Condition=" %(DesignData.Pack) == 'true' ">
+        <BuildAction>DesignData</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(DesignDataWithDesignTimeCreatableTypes)" Condition=" %(DesignDataWithDesignTimeCreatableTypes.Pack) == 'true' ">
+        <BuildAction>DesignDataWithDesignTimeCreatableTypes</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(CodeAnalysisDictionary)" Condition=" %(CodeAnalysisDictionary.Pack) == 'true' ">
+        <BuildAction>CodeAnalysisDictionary</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(AndroidAsset)" Condition=" %(AndroidAsset.Pack) == 'true' ">
+        <BuildAction>AndroidAsset</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(AndroidResource)" Condition=" %(AndroidResource.Pack) == 'true' ">
+        <BuildAction>AndroidResource</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="@(BundleResource)" Condition=" %(BundleResource.Pack) == 'true' ">
+        <BuildAction>BundleResource</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.targets
+============================================================================================================================================
+-->
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\MyFork\vs17Dev\src\SdkCommon\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj
+============================================================================================================================================
+-->
+</Project>

@@ -1,0 +1,8 @@
+﻿<Project>
+	<Import Project="ClientRuntime\dirs.proj" />
+	<Import Project="TestFramework\dirs.proj" />
+  <!--
+  <Import Condition="Exists('TestFramework\dirs.proj')" Project="TestFramework\dirs.proj" />
+  <Import Condition="Exists('ClientRuntime\dirs.proj')" Project="ClientRuntime\dirs.proj" />
+  -->
+</Project>

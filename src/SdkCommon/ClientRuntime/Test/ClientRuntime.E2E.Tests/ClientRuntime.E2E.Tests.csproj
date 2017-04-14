@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+  
+  <PropertyGroup>
+    <Description>Microsoft Rest ClientRuntime End to End Tests</Description>
+    <AssemblyName>ClientRuntime.E2E.Tests</AssemblyName>
+    <PackageId>ClientRuntime.E2E.Tests</PackageId>
+    <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TestProjectType>true</TestProjectType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <!--<PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />-->
+    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.1.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="6.1.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Compute" Version="14.1.0-prerelease" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="[5.0.1-preview,7.0)" />
+
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.5" />
+    <!--<PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />-->
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
+
+    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="SessionRecords\Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests.VMTests\UpdateVM_DoNotSerializeProtected.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <!--
+    Add list of project references that you need inside VS IDE for debugging purpose.
+    Also add list of nuget packages references that will be replaced during build outside of VS
+    These are mutually exclusive references.
+    Project references that are added should not be added as nuget references at the same time.
+    Hence we have two properties
+    AddProjectReferenceForDebuggingPurpose
+    AddNugetReferenceForCIandCmdlineBuild (this is for building your nuget project on CI and for release
+  
+  <ItemGroup Condition=" '$(AddProjectReferenceForDebuggingPurpose)' == 'true' ">
+    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <ProjectReference Include="..\..\..\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(AddNugetReferenceForCIandCmdlineBuild)' == 'true' ">
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
+  </ItemGroup>
+  -->
+  <!--
+  <ItemGroup>
+    <Compile Include="..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Rest.ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Rest.ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.0.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="4.1.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Compute" Version="14.1.0-prerelease" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="[5.0.1-preview,7.0)" />
+  </ItemGroup>
+-->
+</Project>
