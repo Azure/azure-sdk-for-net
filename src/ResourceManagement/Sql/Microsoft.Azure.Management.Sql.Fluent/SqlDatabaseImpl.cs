@@ -24,10 +24,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IndependentChildResourceImpl<ISqlDatabase, ISqlServer, DatabaseInner, SqlDatabaseImpl, IHasId, IUpdate, ISqlManager>,
         ISqlDatabase,
         IDefinition,
-        IUpdate,
-        SqlDatabase.Definition.IWithCollation,
-        SqlDatabase.Definition.IWithMaxSizeBytes,
-        IWithParentResource<ISqlDatabase, ISqlServer>
+        IWithCreateWithElasticPoolOptions,
+        IWithExistingDatabase,
+        IUpdate, IWithParentResource<ISqlDatabase, ISqlServer>
     {
         private string elasticPoolCreatableKey;
 
