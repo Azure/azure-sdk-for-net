@@ -36,13 +36,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="status">The status of the server version. Possible
         /// values include: 'Visible', 'Available', 'Default',
         /// 'Disabled'</param>
-        /// <param name="supportedEditions">The list of supported server
+        /// <param name="supportedEditions">The list of supported database
         /// editions.</param>
-        public ServerVersionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<EditionCapability> supportedEditions = default(IList<EditionCapability>))
+        /// <param name="supportedElasticPoolEditions">The list of supported
+        /// elastic pool editions.</param>
+        public ServerVersionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<EditionCapability> supportedEditions = default(IList<EditionCapability>), IList<ElasticPoolEditionCapability> supportedElasticPoolEditions = default(IList<ElasticPoolEditionCapability>))
         {
             Name = name;
             Status = status;
             SupportedEditions = supportedEditions;
+            SupportedElasticPoolEditions = supportedElasticPoolEditions;
             CustomInit();
         }
 
@@ -65,10 +68,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
-        /// Gets the list of supported server editions.
+        /// Gets the list of supported database editions.
         /// </summary>
         [JsonProperty(PropertyName = "supportedEditions")]
         public IList<EditionCapability> SupportedEditions { get; private set; }
+
+        /// <summary>
+        /// Gets the list of supported elastic pool editions.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedElasticPoolEditions")]
+        public IList<ElasticPoolEditionCapability> SupportedElasticPoolEditions { get; private set; }
 
     }
 }
