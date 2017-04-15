@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition
     using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
 
     /// <summary>
     /// An app service plan definition allowing resource group to be set.

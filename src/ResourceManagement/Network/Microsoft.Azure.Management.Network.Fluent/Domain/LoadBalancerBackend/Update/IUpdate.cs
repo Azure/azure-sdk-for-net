@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update
     /// The entirety of a load balancer backend update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>
     {
     }
 }

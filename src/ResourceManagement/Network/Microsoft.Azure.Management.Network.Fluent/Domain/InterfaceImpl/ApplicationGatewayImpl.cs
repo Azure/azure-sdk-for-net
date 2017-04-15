@@ -7,7 +7,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
@@ -292,6 +313,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Stops the application gateway asynchronously.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StopAsync(CancellationToken cancellationToken)
         {
@@ -431,15 +457,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        /// <return>Frontend listeners, indexed by name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Listeners
-        {
-            get
-            {
-                return this.Listeners() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener>;
-            }
-        }
-
         /// <summary>
         /// Gets the tier of the application gateway.
         /// </summary>
@@ -452,22 +469,38 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Gets Frontend listeners, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Listeners
+        {
+            get
+            {
+                return this.Listeners() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener>;
+            }
+        }
+
+        /// <summary>
+        /// Starts the application gateway asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StartAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.StartAsync(cancellationToken);
+        }
+
+        /// <summary>
         /// Stops the application gateway.
         /// </summary>
         void Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Stop()
         {
  
             this.Stop();
-        }
-
-        /// <summary>
-        /// Starts the application gateway asynchronously.
-        /// </summary>
-        /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StartAsync(CancellationToken cancellationToken)
-        {
- 
-            await this.StartAsync(cancellationToken);
         }
 
         /// <summary>

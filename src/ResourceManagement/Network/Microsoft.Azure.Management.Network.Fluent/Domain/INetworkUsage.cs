@@ -9,18 +9,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an Azure compute resource usage info object.
     /// </summary>
     public interface INetworkUsage  :
-        IHasInner<Models.Usage>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.Usage>
     {
-        /// <summary>
-        /// Gets the unit of measurement.
-        /// </summary>
-        Models.NetworkUsageUnit Unit { get; }
-
         /// <summary>
         /// Gets the maximum count of the resources that can be allocated in the
         /// subscription.
         /// </summary>
         long Limit { get; }
+
+        /// <summary>
+        /// Gets the unit of measurement.
+        /// </summary>
+        Models.NetworkUsageUnit Unit { get; }
 
         /// <summary>
         /// Gets the name of the type of usage.

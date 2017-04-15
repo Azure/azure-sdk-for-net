@@ -9,15 +9,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionSha
     /// virtual machine definitions.
     /// </summary>
     public interface IDefinitionShared  :
-        IBlank,
-        IWithGroup,
-        IWithNetwork,
-        IWithSubnet,
-        IWithPrivateIP,
-        IWithPublicIPAddress,
-        IWithPrimaryNetworkInterface,
-        IWithOS,
-        IWithCreate
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IBlank,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithGroup,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithNetwork,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithSubnet,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIP,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPublicIPAddress,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrimaryNetworkInterface,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate
     {
     }
 }

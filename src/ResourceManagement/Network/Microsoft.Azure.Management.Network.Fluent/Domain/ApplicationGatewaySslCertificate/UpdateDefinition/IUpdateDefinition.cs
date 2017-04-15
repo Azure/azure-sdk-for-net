@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
     }
 
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 }

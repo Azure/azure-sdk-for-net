@@ -2,19 +2,52 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Dns.Fluent.Models;
     using System.Collections.Generic;
 
     internal partial class TxtRecordSetImpl 
     {
         /// <summary>
-        /// Gets the TXT records in this record set.
+        /// Gets the metadata associated with this record set.
         /// </summary>
-        System.Collections.Generic.IList<TxtRecord> Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet.Records
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.Metadata
         {
             get
             {
-                return this.Records() as System.Collections.Generic.IList<TxtRecord>;
+                return this.Metadata() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+            }
+        }
+
+        /// <summary>
+        /// Gets TTL of the records in this record set.
+        /// </summary>
+        long Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.TimeToLive
+        {
+            get
+            {
+                return this.TimeToLive();
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of records in this record set.
+        /// </summary>
+        Models.RecordType Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.RecordType
+        {
+            get
+            {
+                return this.RecordType();
+            }
+        }
+
+        /// <summary>
+        /// Gets the TXT records in this record set.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<Models.TxtRecord> Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet.Records
+        {
+            get
+            {
+                return this.Records() as System.Collections.Generic.IReadOnlyList<Models.TxtRecord>;
             }
         }
     }

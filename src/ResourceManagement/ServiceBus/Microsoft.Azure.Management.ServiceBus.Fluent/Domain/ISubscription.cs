@@ -2,7 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using Management.ServiceBus.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update;
     using System;
 
     /// <summary>
@@ -14,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// version number.).
     /// </remarks>
     public interface ISubscription  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, SubscriptionInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.SubscriptionInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Subscription.Update.IUpdate>
     {
@@ -36,7 +39,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the current status of the subscription.
         /// </summary>
-        EntityStatus Status { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.Models.EntityStatus Status { get; }
 
         /// <summary>
         /// Gets number of active messages in the subscription.
@@ -87,7 +90,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to subscription.
         /// </summary>
-        TimeSpan DefaultMessageTtlDuration { get; }
+        System.TimeSpan DefaultMessageTtlDuration { get; }
 
         /// <summary>
         /// Gets number of messages transferred to another queue, topic, or subscription.

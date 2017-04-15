@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using Microsoft.Azure.Management.Dns.Fluent.Models;
-
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
+    using Microsoft.Azure.Management.Dns.Fluent.Models;
+
     /// <summary>
-    /// An immutable client-side representation of a Soa (start of authority) record set in Azure DNS Zone.
+    /// An immutable client-side representation of a SOA (start of authority) record set in Azure DNS Zone.
     /// </summary>
     public interface ISoaRecordSet  :
-        IDnsRecordSet
+        Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet
     {
         /// <summary>
-        /// Gets the Soa record in this record set.
+        /// Gets the SOA record in this record set.
         /// </summary>
-        SoaRecord Record { get; }
+        Models.SoaRecord Record { get; }
     }
 }

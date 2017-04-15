@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Entry point to virtual machine image extension versions.
     /// </summary>
     public interface IVirtualMachineExtensionImageVersions  :
-        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion>
     {
     }
 }

@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// The entirety of a probe update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
-        IWithIntervalInSeconds,
-        IWithNumberOfProbes,
-        IWithPort,
-        IWithRequestPath
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithIntervalInSeconds,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithNumberOfProbes,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithPort,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithRequestPath
     {
     }
 

@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDe
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -21,16 +21,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDe
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
     }
 
     /// <summary>
     /// The first stage of a load balancer backend definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 }

@@ -9,15 +9,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionMan
     /// The entirety of the managed disk based virtual machine definition.
     /// </summary>
     public interface IDefinitionManaged  :
-        IDefinitionShared,
-        IWithLinuxRootUsernameManaged,
-        IWithLinuxRootPasswordOrPublicKeyManaged,
-        IWithWindowsAdminUsernameManaged,
-        IWithWindowsAdminPasswordManaged,
-        IWithFromImageCreateOptionsManaged,
-        IWithLinuxCreateManaged,
-        IWithWindowsCreateManaged,
-        IWithManagedCreate
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionShared.IDefinitionShared,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminPasswordManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate
     {
     }
 }

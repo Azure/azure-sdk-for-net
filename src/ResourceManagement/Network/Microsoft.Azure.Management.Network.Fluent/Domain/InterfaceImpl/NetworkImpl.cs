@@ -6,6 +6,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Network.Fluent.Network.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Network.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
@@ -96,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name to assign to the subnet.</param>
         /// <param name="cidr">The address space of the subnet, within the address space of the network, using the CIDR notation.</param>
-        /// <return>The next stage of the virtual network definition.</return>
+        /// <return>The next stage of the definition.</return>
         Network.Definition.IWithCreateAndSubnet Network.Definition.IWithSubnet.WithSubnet(string name, string cidr)
         {
             return this.WithSubnet(name, cidr) as Network.Definition.IWithCreateAndSubnet;
@@ -117,7 +120,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Explicitly defines subnets in the virtual network based on the provided map.
         /// </summary>
         /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
-        /// <return>The next stage of the virtual network definition.</return>
+        /// <return>The next stage of the definition.</return>
         Network.Definition.IWithCreateAndSubnet Network.Definition.IWithSubnet.WithSubnets(IDictionary<string,string> nameCidrPairs)
         {
             return this.WithSubnets(nameCidrPairs) as Network.Definition.IWithCreateAndSubnet;
@@ -179,7 +182,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// a cloud exception may be thrown at the time the network is created.
         /// </summary>
         /// <param name="cidr">The CIDR representation of the address space.</param>
-        /// <return>The next stage of the virtual network definition.</return>
+        /// <return>The next stage of the definition.</return>
         Network.Definition.IWithCreateAndSubnet Network.Definition.IWithCreate.WithAddressSpace(string cidr)
         {
             return this.WithAddressSpace(cidr) as Network.Definition.IWithCreateAndSubnet;
@@ -191,7 +194,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// to the network.
         /// </summary>
         /// <param name="ipAddress">The IP address of the DNS server.</param>
-        /// <return>The next stage of the virtual network definition.</return>
+        /// <return>The next stage of the definition.</return>
         Network.Definition.IWithCreate Network.Definition.IWithCreate.WithDnsServer(string ipAddress)
         {
             return this.WithDnsServer(ipAddress) as Network.Definition.IWithCreate;

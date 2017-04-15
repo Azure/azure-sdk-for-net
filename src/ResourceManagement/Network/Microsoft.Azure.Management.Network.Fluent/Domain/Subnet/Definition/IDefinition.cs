@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
         /// Specifies the IP address space of the subnet, within the address space of the network.
         /// </summary>
         /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
-        /// <return>The next stage of the subnet definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<ParentT> WithAddressPrefix(string cidr);
     }
 
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// <summary>
     /// The first stage of the subnet definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAddressPrefix<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAddressPrefix<ParentT>
     {
     }
 
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAddressPrefix<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAddressPrefix<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<ParentT>
     {
     }
 
@@ -88,9 +88,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Definition
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
-        IWithNetworkSecurityGroup<ParentT>,
-        IWithRouteTable<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithNetworkSecurityGroup<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithRouteTable<ParentT>
     {
     }
 }

@@ -9,16 +9,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionMan
     /// The entirety of the virtual machine definition.
     /// </summary>
     public interface IDefinitionManagedOrUnmanaged  :
-        IDefinitionShared,
-        IWithLinuxRootUsernameManagedOrUnmanaged,
-        IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged,
-        IWithWindowsAdminUsernameManagedOrUnmanaged,
-        IWithWindowsAdminPasswordManagedOrUnmanaged,
-        IWithFromImageCreateOptionsManagedOrUnmanaged,
-        IWithLinuxCreateManagedOrUnmanaged,
-        IWithWindowsCreateManagedOrUnmanaged,
-        IWithManagedCreate,
-        IWithUnmanagedCreate
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionShared.IDefinitionShared,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminPasswordManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManagedOrUnmanaged,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate
     {
     }
 }

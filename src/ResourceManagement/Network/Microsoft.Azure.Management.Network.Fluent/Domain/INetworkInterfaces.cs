@@ -11,17 +11,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point to network interface management.
     /// </summary>
     public interface INetworkInterfaces  :
-        ISupportsCreating<NetworkInterface.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        ISupportsBatchDeletion,
-        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
-        IHasInner<Microsoft.Azure.Management.Network.Fluent.INetworkInterfacesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<NetworkInterface.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.INetworkInterfacesOperations>
     {
         /// <summary>
         /// List the network interfaces associated with a virtual machine scale set.

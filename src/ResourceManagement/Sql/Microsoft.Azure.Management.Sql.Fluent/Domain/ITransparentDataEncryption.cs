@@ -3,30 +3,27 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System.Collections.Generic;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL database's TransparentDataEncryption.
     /// </summary>
     public interface ITransparentDataEncryption  :
-        IHasInner<Models.TransparentDataEncryptionInner>,
-        IHasResourceGroup,
-        IHasName,
-        IHasId
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.TransparentDataEncryptionInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
-        /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities();
-
         /// <summary>
         /// Gets name of the SQL Database to which this replication belongs.
         /// </summary>
         string DatabaseName { get; }
 
         /// <summary>
-        /// Gets name of the SQL Server to which this replication belongs.
+        /// Gets the status of the Azure SQL Database Transparent Data Encryption.
         /// </summary>
-        string SqlServerName { get; }
+        Models.TransparentDataEncryptionStates Status { get; }
 
         /// <summary>
         /// Updates the state of the transparent data encryption status.
@@ -36,8 +33,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption UpdateStatus(TransparentDataEncryptionStates transparentDataEncryptionState);
 
         /// <summary>
-        /// Gets the status of the Azure SQL Database Transparent Data Encryption.
+        /// Gets name of the SQL Server to which this replication belongs.
         /// </summary>
-        Models.TransparentDataEncryptionStates Status { get; }
+        string SqlServerName { get; }
+
+        /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities();
     }
 }

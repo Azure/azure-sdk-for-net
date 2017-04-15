@@ -17,13 +17,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.INetworkInterface GetPrimaryNetworkInterface();
 
         /// <summary>
-        /// Gets the resource id of the primary network interface associated with this resource.
-        /// </summary>
-        string PrimaryNetworkInterfaceId { get; }
-
-        /// <summary>
         /// Gets the list of resource IDs of the network interfaces associated with this resource.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<string> NetworkInterfaceIds { get; }
+
+        /// <summary>
+        /// Gets the resource id of the primary network interface associated with this resource.
+        /// </summary>
+        string PrimaryNetworkInterfaceId { get; }
     }
 }

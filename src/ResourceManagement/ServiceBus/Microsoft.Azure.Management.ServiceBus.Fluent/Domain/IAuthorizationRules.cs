@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using ServiceBus.Fluent;
 
     /// <summary>
     /// Entry point to authorization rules management API.
@@ -19,7 +18,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<RuleT>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<RuleT>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IServiceBusManager>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager>
     {
     }
 }

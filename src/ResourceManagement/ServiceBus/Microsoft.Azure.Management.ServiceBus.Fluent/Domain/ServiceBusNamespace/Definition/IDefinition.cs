@@ -5,7 +5,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Defin
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ServiceBus.Fluent;
-    using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
 
     /// <summary>
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Defin
     /// </summary>
     public interface IWithCreate  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<IWithCreate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithCreate>,
         Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithSku,
         Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithQueue,
         Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Definition.IWithTopic,

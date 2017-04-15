@@ -51,11 +51,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
     /// The entirety of an inbound NAT pool update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithProtocol,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithFrontend,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithBackendPort,
-        IWithFrontendPortRange
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithFrontendPortRange
     {
     }
 }

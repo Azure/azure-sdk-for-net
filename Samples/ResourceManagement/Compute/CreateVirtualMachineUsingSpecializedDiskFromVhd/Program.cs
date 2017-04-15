@@ -79,7 +79,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromVhd
 
                 // Gets the specialized OS and Data disk VHDs of the virtual machine
                 //
-                var specializedOSVhdUri = linuxVM.OsUnmanagedDiskVhdUri;
+                var specializedOSVhdUri = linuxVM.OSUnmanagedDiskVhdUri;
                 var dataVhdUris = new List<string>();
                 foreach (var dataDisk  in  linuxVM.UnmanagedDataDisks.Values)
                 {

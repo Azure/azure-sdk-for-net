@@ -2,28 +2,35 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-
-    using Microsoft.Azure.Management.Batch.Fluent.Models;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Models;
+    using System.Collections.Generic;
+
     /// <summary>
-    /// An immutable client-side representation of an Azure batch account application.
+    /// An immutable client-side representation of an Azure Batch account application.
     /// </summary>
     public interface IApplication  :
-        IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplication,Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        IHasInner<Microsoft.Azure.Management.Batch.Fluent.Models.ApplicationInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplication,Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<ApplicationInner>
     {
-        /// <returns>the display name for application</returns>
-        string DisplayName { get; }
-
-        /// <returns>the list of application packages</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage> ApplicationPackages { get; }
-
-        /// <returns>true if automatic updates are allowed, otherwise false</returns>
-        bool UpdatesAllowed { get; }
-
-        /// <returns>the default version for application.</returns>
+        /// <summary>
+        /// Gets the default version for the application.
+        /// </summary>
         string DefaultVersion { get; }
 
+        /// <summary>
+        /// Gets application packages.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage> ApplicationPackages { get; }
+
+        /// <summary>
+        /// Gets true if automatic updates are allowed, otherwise false.
+        /// </summary>
+        bool UpdatesAllowed { get; }
+
+        /// <summary>
+        /// Gets the display name of the application.
+        /// </summary>
+        string DisplayName { get; }
     }
 }

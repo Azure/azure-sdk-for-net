@@ -167,7 +167,7 @@ namespace ManageManagedDisks
                 // Create a VM from a VHD (Create Virtual Machine Using Specialized VHD)
 
                 var linuxVmName4 = SdkContext.RandomResourceName("vm" + "-", 10);
-                var specializedVhd = linuxVM.OsUnmanagedDiskVhdUri;
+                var specializedVhd = linuxVM.OSUnmanagedDiskVhdUri;
 
                 azure.VirtualMachines.DeleteById(linuxVM.Id);
 
@@ -190,7 +190,7 @@ namespace ManageManagedDisks
                 Utilities.Log("Preparing specialized virtual machine with managed disks");
 
                 var linuxVM5 = PrepareSpecializedManagedVirtualMachine(azure, region, rgName);
-                var osDisk = azure.Disks.GetById(linuxVM5.OsDiskId);
+                var osDisk = azure.Disks.GetById(linuxVM5.OSDiskId);
                 var dataDisks = new List<IDisk>();
                 foreach (var disk in linuxVM5.DataDisks.Values)
                 {

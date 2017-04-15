@@ -6,9 +6,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
     using System.Collections.Generic;
-    using ServiceBus.Fluent;
-    using Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Type representing authorization rule.
@@ -20,9 +19,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// </remarks>
     /// <typeparam name="RuleT">The specific rule type.</typeparam>
     public interface IAuthorizationRule<RuleT>  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, SharedAccessAuthorizationRuleInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.SharedAccessAuthorizationRuleInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<RuleT>
     {
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
 
@@ -32,11 +36,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets rights associated with the rule.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<AccessRights> Rights { get; }
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.ServiceBus.Fluent.Models.AccessRights> Rights { get; }
 
         /// <summary>
         /// Regenerates primary or secondary keys.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <param name="policykey">The key to regenerate.</param>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken = default(CancellationToken));

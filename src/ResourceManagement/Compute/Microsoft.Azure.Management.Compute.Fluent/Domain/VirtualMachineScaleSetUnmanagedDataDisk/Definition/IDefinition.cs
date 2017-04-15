@@ -8,27 +8,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmana
     /// <summary>
     /// The first stage of a unmanaged data disk definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithDiskSource<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithDiskSource<ParentT>
     {
     }
 
     /// <summary>
     /// The final stage of the unmanaged data disk definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>
     {
     }
 
     /// <summary>
-    /// The stage that allows configure the unmanaged disk based on new vhd.
+    /// The stage that allows configure the unmanaged disk based on new VHD.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithNewVhdDiskSettings<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithAttach<ParentT>
     {
         /// <summary>
         /// Specifies the logical unit number for the unmanaged data disk.
@@ -48,30 +48,30 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmana
     /// <summary>
     /// The stage of the unmanaged data disk definition allowing to choose the source.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithDiskSource<ParentT> 
     {
         /// <summary>
-        /// Specifies the image lun identifier of the source disk image.
-        /// </summary>
-        /// <param name="imageLun">The lun.</param>
-        /// <return>The next stage of unmanaged data disk definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithFromImageDiskSettings<ParentT> FromImage(int imageLun);
-
-        /// <summary>
-        /// Specifies that unmanaged disk needs to be created with a new vhd of given size.
+        /// Specifies that unmanaged disk needs to be created with a new VHD of given size.
         /// </summary>
         /// <param name="sizeInGB">The initial disk size in GB.</param>
         /// <return>The next stage of unmanaged data disk definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithNewVhdDiskSettings<ParentT> WithNewVhd(int sizeInGB);
+
+        /// <summary>
+        /// Specifies the image LUN identifier of the source disk image.
+        /// </summary>
+        /// <param name="imageLun">The LUN.</param>
+        /// <return>The next stage of unmanaged data disk definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithFromImageDiskSettings<ParentT> FromImage(int imageLun);
     }
 
     /// <summary>
     /// The stage that allows configure the unmanaged disk based on an image.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithFromImageDiskSettings<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithAttach<ParentT>
     {
         /// <summary>
         /// Specifies the size in GB the unmanaged disk needs to be resized.

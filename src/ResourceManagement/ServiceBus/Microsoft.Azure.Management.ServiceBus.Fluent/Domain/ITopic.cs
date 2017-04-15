@@ -2,11 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using Management.ServiceBus.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Update;
-    using ServiceBus.Fluent;
     using System;
 
     /// <summary>
@@ -18,10 +17,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// version number.).
     /// </remarks>
     public interface ITopic  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, TopicInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.TopicInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Topic.Update.IUpdate>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<TopicInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.ServiceBus.Fluent.Models.TopicInner>
     {
         /// <summary>
         /// Gets last time a message was sent, or the last time there was a receive request to this topic.
@@ -41,7 +40,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the current status of the topic.
         /// </summary>
-        EntityStatus Status { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.Models.EntityStatus Status { get; }
 
         /// <summary>
         /// Gets number of active messages in the topic.
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration of the duplicate detection history.
         /// </summary>
-        TimeSpan DuplicateMessageDetectionHistoryDuration { get; }
+        System.TimeSpan DuplicateMessageDetectionHistoryDuration { get; }
 
         /// <summary>
         /// Gets the exact time the topic was updated.
@@ -117,7 +116,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to topic.
         /// </summary>
-        TimeSpan DefaultMessageTtlDuration { get; }
+        System.TimeSpan DefaultMessageTtlDuration { get; }
 
         /// <summary>
         /// Gets number of subscriptions for the topic.

@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using Management.ServiceBus.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Authorization key and connection string of authorization rule associated with Service Bus entities.
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// version number.).
     /// </remarks>
     public interface IAuthorizationKeys  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<ResourceListKeysInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.ServiceBus.Fluent.Models.ResourceListKeysInner>
     {
         /// <summary>
         /// Gets primary key associated with the rule.

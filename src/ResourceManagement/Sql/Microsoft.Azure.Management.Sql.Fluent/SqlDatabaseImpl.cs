@@ -24,10 +24,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IndependentChildResourceImpl<ISqlDatabase, ISqlServer, DatabaseInner, SqlDatabaseImpl, IHasId, IUpdate, ISqlManager>,
         ISqlDatabase,
         IDefinition,
-        IUpdate,
-        SqlDatabase.Definition.IWithCollation,
-        SqlDatabase.Definition.IWithMaxSizeBytes,
-        IWithParentResource<ISqlDatabase, ISqlServer>
+        IWithCreateWithElasticPoolOptions,
+        IWithExistingDatabase,
+        IUpdate, IWithParentResource<ISqlDatabase, ISqlServer>
     {
         private string elasticPoolCreatableKey;
 
@@ -114,7 +113,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:2E256CC1ACCA4253233F61C79F9D712E:B8220E91EC25625885438BBA3AFCE559
-        public IUpgradeHint GetUpgradeHint()
+        public IUpgradeHintInterface GetUpgradeHint()
         {
             if (Inner.UpgradeHint == null)
             {
@@ -194,13 +193,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0E666BFDFC9A666CA31FD735D7839414:F7AAC54BC083EB0E4E1C567F427FB501
-        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages()
         {
             Func<DatabaseMetric, DatabaseMetricImpl> convertor = (databaseMetricInner) => new DatabaseMetricImpl(databaseMetricInner);
 
             return Manager.Inner.Databases
                 .ListUsages(ResourceGroupName,SqlServerName(),Name)
-                .Select(inner => convertor(inner));
+                .Select(inner => convertor(inner)).ToList();
         }
 
         ///GENMHASH:61F5809AB3B985C61AC40B98B1FBC47E:04B212B505D5C86A62596EEEE457DD66
@@ -266,13 +265,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:37206883074CEB63F8267ADE2545CF11:7A5A0501B5D9CE9FC49981A622109CC5
-        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints()
         {
             Func<RestorePointInner, RestorePointImpl> convertor = (restorePointInner) => new RestorePointImpl(restorePointInner);
 
             return Manager.Inner.Databases
                 .ListRestorePoints(ResourceGroupName, SqlServerName(), Name)
-                .Select(inner => convertor(inner));
+                .Select(inner => convertor(inner)).ToList();
         }
 
         ///GENMHASH:ED7351448838F0ED89C6E4AE8FB19EAE:E3FFCB76DD3743CD850897669FC40D12
@@ -338,16 +337,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
 
             return new ReadOnlyDictionary<string, IServiceTierAdvisor>(serviceTierAdvisorMap);
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)
-        {
-            return base.WithTags(tags);
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
-        {
-            return base.WithTag(key, value);
         }
     }
 }

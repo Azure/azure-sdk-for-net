@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;

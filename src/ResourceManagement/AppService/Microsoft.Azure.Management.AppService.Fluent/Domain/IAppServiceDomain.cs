@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// version number.).
     /// </remarks>
     public interface IAppServiceDomain  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.DomainInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.DomainInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<AppServiceDomain.Update.IUpdate>

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
         /// Ensures that no leaf domain label will be used.
         /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithoutLeafDomainLabel();
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
         /// will be constructed automatically by appending the rest of the domain to this label.
         /// </summary>
         /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithLeafDomainLabel(string dnsName);
     }
 
@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     /// Container interface for all the definitions.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IBlank,
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup,
-        IWithCreate
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate
     {
     }
 
@@ -53,18 +53,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     public interface IWithIPAddress 
     {
         /// <summary>
+        /// Enables dynamic IP address allocation.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithDynamicIP();
+
+        /// <summary>
         /// Enables static IP address allocation.
         /// Use  PublicIPAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithStaticIP();
-
-        /// <summary>
-        /// Enables dynamic IP address allocation.
-        /// </summary>
-        /// <return>The next stage of the public IP address definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithDynamicIP();
     }
 
     /// <summary>
@@ -73,12 +73,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        IWithLeafDomainLabel,
-        IWithIPAddress,
-        IWithReverseFQDN,
-        IWithIdleTimeout,
-        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithLeafDomainLabel,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithIPAddress,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithReverseFQDN,
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithIdleTimeout,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate>
     {
     }
 
@@ -91,13 +91,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
         /// Specifies the reverse FQDN to assign to this public IP address.
         /// </summary>
         /// <param name="reverseFQDN">The reverse FQDN to assign.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithReverseFqdn(string reverseFQDN);
 
         /// <summary>
         /// Ensures that no reverse FQDN will be used.
         /// </summary>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithoutReverseFqdn();
     }
 
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     /// The first stage of a public IP address definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithGroup>
     {
     }
 
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
         /// Specifies the timeout (in minutes) for an idle connection.
         /// </summary>
         /// <param name="minutes">The length of the time out in minutes.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithIdleTimeoutInMinutes(int minutes);
     }
 }

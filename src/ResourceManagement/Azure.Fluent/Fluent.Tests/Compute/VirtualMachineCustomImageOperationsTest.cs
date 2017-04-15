@@ -40,8 +40,8 @@ namespace Fluent.Tests.Compute
                             .Define(vhdBasedImageName)
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
-                            .WithLinuxFromVhd(linuxVM.OsUnmanagedDiskVhdUri, OperatingSystemStateTypes.Generalized)
-                            .WithOSDiskCaching(linuxVM.OsDiskCachingType);
+                            .WithLinuxFromVhd(linuxVM.OSUnmanagedDiskVhdUri, OperatingSystemStateTypes.Generalized)
+                            .WithOSDiskCaching(linuxVM.OSDiskCachingType);
                     foreach (var disk in linuxVM.UnmanagedDataDisks.Values)
                     {
                         creatableDisk.DefineDataDiskImage()
@@ -56,11 +56,11 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(customImage.Name, vhdBasedImageName);
                     Assert.False(customImage.IsCreatedFromVirtualMachine);
                     Assert.Null(customImage.SourceVirtualMachineId);
-                    Assert.NotNull(customImage.OsDiskImage);
-                    Assert.NotNull(customImage.OsDiskImage.BlobUri);
-                    Assert.Equal(customImage.OsDiskImage.Caching, CachingTypes.ReadWrite);
-                    Assert.Equal(customImage.OsDiskImage.OsState, OperatingSystemStateTypes.Generalized);
-                    Assert.Equal(customImage.OsDiskImage.OsType, OperatingSystemTypes.Linux);
+                    Assert.NotNull(customImage.OSDiskImage);
+                    Assert.NotNull(customImage.OSDiskImage.BlobUri);
+                    Assert.Equal(customImage.OSDiskImage.Caching, CachingTypes.ReadWrite);
+                    Assert.Equal(customImage.OSDiskImage.OsState, OperatingSystemStateTypes.Generalized);
+                    Assert.Equal(customImage.OSDiskImage.OsType, OperatingSystemTypes.Linux);
                     Assert.NotNull(customImage.DataDiskImages);
                     Assert.Equal(customImage.DataDiskImages.Count, linuxVM.UnmanagedDataDisks.Count);
                     foreach (ImageDataDisk diskImage in customImage.DataDiskImages.Values)
@@ -142,9 +142,9 @@ namespace Fluent.Tests.Compute
                             .Create();
 
                     Assert.True(customImage.Name.Equals(imageName, StringComparison.OrdinalIgnoreCase));
-                    Assert.NotNull(customImage.OsDiskImage);
-                    Assert.Equal(customImage.OsDiskImage.OsState, OperatingSystemStateTypes.Generalized);
-                    Assert.Equal(customImage.OsDiskImage.OsType, OperatingSystemTypes.Linux);
+                    Assert.NotNull(customImage.OSDiskImage);
+                    Assert.Equal(customImage.OSDiskImage.OsState, OperatingSystemStateTypes.Generalized);
+                    Assert.Equal(customImage.OSDiskImage.OsType, OperatingSystemTypes.Linux);
                     Assert.NotNull(customImage.DataDiskImages);
                     Assert.Equal(customImage.DataDiskImages.Count, 2);
                     Assert.NotNull(customImage.SourceVirtualMachineId);
@@ -211,7 +211,7 @@ namespace Fluent.Tests.Compute
                             .Create();
 
                     Assert.False(nativeVM.IsManagedDiskEnabled);
-                    var osVhdUri = nativeVM.OsUnmanagedDiskVhdUri;
+                    var osVhdUri = nativeVM.OSUnmanagedDiskVhdUri;
                     Assert.NotNull(osVhdUri);
                     var dataDisks = nativeVM.UnmanagedDataDisks;
                     Assert.Equal(dataDisks.Count, 2);
@@ -272,9 +272,9 @@ namespace Fluent.Tests.Compute
 
                     Assert.NotNull(customImage);
                     Assert.True(customImage.Name.Equals(imageName, StringComparison.OrdinalIgnoreCase));
-                    Assert.NotNull(customImage.OsDiskImage);
-                    Assert.Equal(customImage.OsDiskImage.OsState, OperatingSystemStateTypes.Generalized);
-                    Assert.Equal(customImage.OsDiskImage.OsType, OperatingSystemTypes.Linux);
+                    Assert.NotNull(customImage.OSDiskImage);
+                    Assert.Equal(customImage.OSDiskImage.OsState, OperatingSystemStateTypes.Generalized);
+                    Assert.Equal(customImage.OSDiskImage.OsType, OperatingSystemTypes.Linux);
                     Assert.NotNull(customImage.DataDiskImages);
                     Assert.Equal(customImage.DataDiskImages.Count, 2);
                     Assert.Null(customImage.SourceVirtualMachineId);

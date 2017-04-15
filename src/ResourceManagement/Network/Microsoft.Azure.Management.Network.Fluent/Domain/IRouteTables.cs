@@ -10,17 +10,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point to route table management.
     /// </summary>
     public interface IRouteTables  :
-        ISupportsCreating<RouteTable.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
-        ISupportsBatchDeletion,
-        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
-        IHasInner<Microsoft.Azure.Management.Network.Fluent.IRouteTablesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<RouteTable.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.IRouteTablesOperations>
     {
     }
 }

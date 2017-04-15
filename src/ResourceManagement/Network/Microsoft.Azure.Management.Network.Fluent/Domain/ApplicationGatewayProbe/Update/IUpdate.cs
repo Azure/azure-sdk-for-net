@@ -28,29 +28,29 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Upda
         Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate,Microsoft.Azure.Management.Network.Fluent.Models.ApplicationGatewayProtocol>
     {
         /// <summary>
-        /// Specifies HTTP as the probe protocol.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate WithHttp();
-
-        /// <summary>
         /// Specifies HTTPS as the probe protocol.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate WithHttps();
+
+        /// <summary>
+        /// Specifies HTTP as the probe protocol.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate WithHttp();
     }
 
     /// <summary>
     /// The entirety of an application gateway probe update as part of an application gateway update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IWithProtocol,
-        IWithPath,
-        IWithHost,
-        IWithTimeout,
-        IWithInterval,
-        IWithRetries
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IWithPath,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IWithHost,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IWithTimeout,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IWithInterval,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IWithRetries
     {
     }
 

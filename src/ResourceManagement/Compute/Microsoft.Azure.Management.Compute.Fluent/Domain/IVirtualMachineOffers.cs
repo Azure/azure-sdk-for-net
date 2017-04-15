@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Entry point to virtual machine image offers.
     /// </summary>
     public interface IVirtualMachineOffers  :
-        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer>
     {
     }
 }

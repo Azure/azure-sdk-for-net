@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// version number.).
     /// </remarks>
     public interface IAppServiceCertificateKeyVaultBinding  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IAppServiceManager,Models.AppServiceCertificateResourceInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.AppServiceCertificateResourceInner>
     {
         /// <summary>
         /// Gets the status of the Key Vault secret.

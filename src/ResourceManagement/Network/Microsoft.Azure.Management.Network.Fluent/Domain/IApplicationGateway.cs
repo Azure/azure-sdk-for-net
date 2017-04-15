@@ -19,21 +19,21 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGateway  :
-        IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.ApplicationGatewayInner>,
-        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IUpdatable<ApplicationGateway.Update.IUpdate>,
-        IHasSubnet,
-        IHasPrivateIPAddress
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.ApplicationGatewayInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet,
+        Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress
     {
         /// <summary>
-        /// Gets frontend IP configurations, indexed by name.
+        /// Stops the application gateway.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> Frontends { get; }
+        void Stop();
 
         /// <summary>
-        /// Gets the SSL policy for the application gateway.
+        /// Gets backend address pools of this application gateway, indexed by name.
         /// </summary>
-        Models.ApplicationGatewaySslPolicy SslPolicy { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> Backends { get; }
 
         /// <summary>
         /// Finds a frontend listener associated with the specified frontend port number, if any.
@@ -43,19 +43,60 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener ListenerByPortNumber(int portNumber);
 
         /// <summary>
+        /// Gets the tier of the application gateway.
+        /// </summary>
+        Models.ApplicationGatewayTier Tier { get; }
+
+        /// <summary>
+        /// Gets the operational state of the application gateway.
+        /// </summary>
+        Models.ApplicationGatewayOperationalState OperationalState { get; }
+
+        /// <summary>
+        /// Gets frontend IP configurations with a private IP address on a subnet, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> PrivateFrontends { get; }
+
+        /// <summary>
+        /// Gets named frontend ports of this application gateway, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,int> FrontendPorts { get; }
+
+        /// <summary>
+        /// Gets probes of this application gateway, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe> Probes { get; }
+
+        /// <summary>
+        /// Gets frontend IP configurations with a public IP address, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> PublicFrontends { get; }
+
+        /// <summary>
+        /// Starts the application gateway asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration DefaultIPConfiguration { get; }
+
+        /// <summary>
+        /// Gets the frontend IP configuration associated with a public IP address, if any, that frontend listeners and request routing rules can reference implicitly.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend DefaultPublicFrontend { get; }
+
+        /// <summary>
         /// Gets true if the application gateway has at least one internally load balanced frontend accessible within the virtual network.
         /// </summary>
         bool IsPrivate { get; }
-
-        /// <summary>
-        /// Gets the frontend IP configuration associated with a private IP address, if any, that frontend listeners and request routing rules can reference implicitly.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend DefaultPrivateFrontend { get; }
-
-        /// <summary>
-        /// Gets request routing rules, indexed by name.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; }
 
         /// <summary>
         /// Gets IP configurations of this application gateway, indexed by name.
@@ -63,13 +104,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration> IPConfigurations { get; }
 
         /// <summary>
-        /// Gets the tier of the application gateway.
+        /// Gets number of instances.
         /// </summary>
-        Models.ApplicationGatewayTier Tier { get; }
+        int InstanceCount { get; }
+
+        /// <summary>
+        /// Gets SSL certificates, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate> SslCertificates { get; }
+
+        /// <summary>
+        /// Gets Frontend listeners, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Listeners { get; }
 
         /// <summary>
         /// Stops the application gateway asynchronously.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
 
@@ -79,34 +135,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
         bool IsPublic { get; }
 
         /// <summary>
-        /// Gets the frontend IP configuration associated with a public IP address, if any, that frontend listeners and request routing rules can reference implicitly.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend DefaultPublicFrontend { get; }
-
-        /// <summary>
-        /// Gets probes of this application gateway, indexed by name.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe> Probes { get; }
-
-        /// <summary>
-        /// Returns the name of the existing port, if any, that is associated with the specified port number.
-        /// </summary>
-        /// <param name="portNumber">A port number.</param>
-        /// <return>The existing port name for that port number, or null if none found.</return>
-        string FrontendPortNameFromNumber(int portNumber);
-
-        /// <summary>
         /// Gets the SKU of this application gateway.
         /// </summary>
         Models.ApplicationGatewaySku Sku { get; }
 
-        /// <return>Frontend listeners, indexed by name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Listeners { get; }
+        /// <summary>
+        /// Gets request routing rules, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; }
 
         /// <summary>
-        /// Gets SSL certificates, indexed by name.
+        /// Gets the size of the application gateway.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate> SslCertificates { get; }
+        Models.ApplicationGatewaySkuName Size { get; }
+
+        /// <summary>
+        /// Gets the SSL policy for the application gateway.
+        /// </summary>
+        Models.ApplicationGatewaySslPolicy SslPolicy { get; }
+
+        /// <summary>
+        /// Gets the frontend IP configuration associated with a private IP address, if any, that frontend listeners and request routing rules can reference implicitly.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend DefaultPrivateFrontend { get; }
 
         /// <summary>
         /// Starts the application gateway.
@@ -119,54 +170,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfiguration> BackendHttpConfigurations { get; }
 
         /// <summary>
-        /// Gets backend address pools of this application gateway, indexed by name.
+        /// Returns the name of the existing port, if any, that is associated with the specified port number.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> Backends { get; }
+        /// <param name="portNumber">A port number.</param>
+        /// <return>The existing port name for that port number, or null if none found.</return>
+        string FrontendPortNameFromNumber(int portNumber);
 
         /// <summary>
-        /// Starts the application gateway asynchronously.
+        /// Gets frontend IP configurations, indexed by name.
         /// </summary>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets named frontend ports of this application gateway, indexed by name.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,int> FrontendPorts { get; }
-
-        /// <summary>
-        /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration DefaultIPConfiguration { get; }
-
-        /// <summary>
-        /// Stops the application gateway.
-        /// </summary>
-        void Stop();
-
-        /// <summary>
-        /// Gets the size of the application gateway.
-        /// </summary>
-        Models.ApplicationGatewaySkuName Size { get; }
-
-        /// <summary>
-        /// Gets number of instances.
-        /// </summary>
-        int InstanceCount { get; }
-
-        /// <summary>
-        /// Gets frontend IP configurations with a public IP address, indexed by name.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> PublicFrontends { get; }
-
-        /// <summary>
-        /// Gets frontend IP configurations with a private IP address on a subnet, indexed by name.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> PrivateFrontends { get; }
-
-        /// <summary>
-        /// Gets the operational state of the application gateway.
-        /// </summary>
-        Models.ApplicationGatewayOperationalState OperationalState { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> Frontends { get; }
     }
 }

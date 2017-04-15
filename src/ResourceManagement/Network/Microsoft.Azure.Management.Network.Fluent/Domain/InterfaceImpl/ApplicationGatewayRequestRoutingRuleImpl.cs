@@ -352,7 +352,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        /// <return>The associated frontend HTTP listener.</return>
+        /// <summary>
+        /// Gets the associated frontend HTTP listener.
+        /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule.Listener
         {
             get

@@ -18,18 +18,42 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGateways  :
-        ISupportsCreating<ApplicationGateway.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        ISupportsBatchDeletion,
-        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
-        IHasInner<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaysOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<ApplicationGateway.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaysOperations>
     {
+        /// <summary>
+        /// Stops the specified application gateways in parallel asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="ids">Application gateway resource ids.</param>
+        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
+        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Stops the specified application gateways in parallel asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="ids">Application gateway resource id.</param>
+        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
+        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Stops the specified application gateways.
         /// </summary>
@@ -55,22 +79,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         void Start(IList<string> ids);
 
         /// <summary>
-        /// Stops the specified application gateways in parallel asynchronously.
-        /// </summary>
-        /// <param name="ids">Application gateway resource ids.</param>
-        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
-        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Stops the specified application gateways in parallel asynchronously.
-        /// </summary>
-        /// <param name="ids">Application gateway resource id.</param>
-        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
-        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Starts the specified application gateways in parallel asynchronously.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <param name="ids">Application gateway resource id.</param>
         /// <return>An Observable emitting the resource ID for each successfully started application gateway.</return>
         Task<System.Collections.Generic.IEnumerable<string>> StartAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken));
@@ -78,6 +93,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Starts the specified application gateways in parallel asynchronously.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <param name="ids">Application gateway resource id.</param>
         /// <return>An Observable emitting the resource ID for each successfully started application gateway.</return>
         Task<System.Collections.Generic.IEnumerable<string>> StartAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));

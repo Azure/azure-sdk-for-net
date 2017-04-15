@@ -51,14 +51,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
             return this.parentName;
         }
 
-        IReadOnlyList<AccessRights> IAuthorizationRule<INamespaceAuthorizationRule>.Rights
-        {
-            get
-            {
-                return base.Rights();
-            }
-        }
-
         ///GENMHASH:323E13EA523CC5C9992A3C5081E83085:3854D5948CC5EB985EFD17B41F7BD546
         protected async override Task<ResourceListKeysInner> GetKeysInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -100,56 +92,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 this.NamespaceName(),
                 this.Name,
                 cancellationToken);
-        }
-
-        async Task<IAuthorizationKeys> IAuthorizationRule<INamespaceAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
-        {
-            return await base.RegenerateKeyAsync(policykey, cancellationToken);
-        }
-
-        async Task<IAuthorizationKeys> IAuthorizationRule<INamespaceAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
-        {
-            return await base.GetKeysAsync(cancellationToken);
-        }
-
-        IAuthorizationKeys IAuthorizationRule<INamespaceAuthorizationRule>.GetKeys()
-        {
-            return base.GetKeys();
-        }
-
-        IAuthorizationKeys IAuthorizationRule<INamespaceAuthorizationRule>.RegenerateKey(Policykey policykey)
-        {
-            return base.RegenerateKey(policykey);
-        }
-
-        IUpdate AuthorizationRule.Update.IWithListen<IUpdate>.WithListeningEnabled()
-        {
-            return base.WithListeningEnabled();
-        }
-
-        IUpdate AuthorizationRule.Update.IWithSend<IUpdate>.WithSendingEnabled()
-        {
-            return base.WithSendingEnabled();
-        }
-
-        IUpdate AuthorizationRule.Update.IWithManage<IUpdate>.WithManagementEnabled()
-        {
-            return base.WithManagementEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithListen<IWithCreate>.WithListeningEnabled()
-        {
-            return base.WithListeningEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithSend<IWithCreate>.WithSendingEnabled()
-        {
-            return base.WithSendingEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithManage<IWithCreate>.WithManagementEnabled()
-        {
-            return base.WithManagementEnabled();
         }
     }
 }

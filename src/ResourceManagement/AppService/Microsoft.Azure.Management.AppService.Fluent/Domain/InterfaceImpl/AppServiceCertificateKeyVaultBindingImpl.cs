@@ -2,11 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-
     internal partial class AppServiceCertificateKeyVaultBindingImpl 
     {
         /// <summary>
@@ -122,11 +117,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the manager client of this resource type.
         /// </summary>
-        IAppServiceManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IAppServiceManager>.Manager
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager>.Manager
         {
             get
             {
-                return this.Manager as IAppServiceManager;
+                return this.Manager as Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager;
             }
         }
     }

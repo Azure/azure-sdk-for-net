@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
 
     internal partial class AuthorizationKeysImpl 
     {

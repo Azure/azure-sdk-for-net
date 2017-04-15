@@ -15,14 +15,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGatewayBackend  :
-        IHasInner<Models.ApplicationGatewayBackendAddressPoolInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IHasBackendNics
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayBackendAddressPoolInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.Network.Fluent.IHasBackendNics
     {
         /// <summary>
-        /// Gets addresses on the backend of the application gateway, indexed by their FQDN.
+        /// Checks whether the specified FQDN is referenced by this backend address pool.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Addresses { get; }
+        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
+        /// <return>True if the specified FQDN is referenced by this backend, else false.</return>
+        bool ContainsFqdn(string fqdn);
 
         /// <summary>
         /// Checks whether the specified IP address is referenced by this backend address pool.
@@ -32,10 +34,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         bool ContainsIPAddress(string ipAddress);
 
         /// <summary>
-        /// Checks whether the specified FQDN is referenced by this backend address pool.
+        /// Gets addresses on the backend of the application gateway, indexed by their FQDN.
         /// </summary>
-        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
-        /// <return>True if the specified FQDN is referenced by this backend, else false.</return>
-        bool ContainsFqdn(string fqdn);
+        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Addresses { get; }
     }
 }

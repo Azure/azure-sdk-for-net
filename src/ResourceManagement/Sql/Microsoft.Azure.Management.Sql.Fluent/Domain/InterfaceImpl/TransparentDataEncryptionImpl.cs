@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System.Collections.Generic;
 
     internal partial class TransparentDataEncryptionImpl 
@@ -21,6 +20,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
+        /// Updates the state of the transparent data encryption status.
+        /// </summary>
+        /// <param name="transparentDataEncryptionState">State of the data encryption to set.</param>
+        /// <return>The new encryption settings after modifyState.</return>
+        Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.UpdateStatus(TransparentDataEncryptionStates transparentDataEncryptionState)
+        {
+            return this.UpdateStatus(transparentDataEncryptionState) as Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption;
+        }
+
+        /// <summary>
         /// Gets the status of the Azure SQL Database Transparent Data Encryption.
         /// </summary>
         Models.TransparentDataEncryptionStates Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.Status
@@ -29,6 +38,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             {
                 return this.Status();
             }
+        }
+
+        /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.ListActivities()
+        {
+            return this.ListActivities() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity>;
         }
 
         /// <summary>
@@ -54,19 +69,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Updates the state of the transparent data encryption status.
+        /// Gets the resource ID string.
         /// </summary>
-        /// <param name="transparentDataEncryptionState">State of the data encryption to set.</param>
-        /// <return>The new encryption settings after modifyState.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.UpdateStatus(TransparentDataEncryptionStates transparentDataEncryptionState)
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
-            return this.UpdateStatus(transparentDataEncryptionState) as Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption;
-        }
-
-        /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.ListActivities()
-        {
-            return this.ListActivities() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity>;
+            get
+            {
+                return this.Id();
+            }
         }
 
         /// <summary>
@@ -77,17 +87,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.ResourceGroupName();
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
             }
         }
     }

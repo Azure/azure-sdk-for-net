@@ -9,16 +9,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasFloatingIP.Definition
     public interface IWithFloatingIP<ReturnT> 
     {
         /// <summary>
-        /// Disables floating IP support.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        ReturnT WithFloatingIPDisabled();
-
-        /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ReturnT WithFloatingIPEnabled();
+
+        /// <summary>
+        /// Disables floating IP support.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        ReturnT WithFloatingIPDisabled();
 
         /// <summary>
         /// Sets the floating IP enablement.

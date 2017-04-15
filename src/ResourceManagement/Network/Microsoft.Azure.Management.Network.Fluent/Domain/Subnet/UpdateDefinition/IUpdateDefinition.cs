@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
-        IWithNetworkSecurityGroup<ParentT>,
-        IWithRouteTable<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithNetworkSecurityGroup<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithRouteTable<ParentT>
     {
     }
 
@@ -65,19 +65,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAddressPrefix<ParentT>,
-        IWithNetworkSecurityGroup<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAddressPrefix<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithNetworkSecurityGroup<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
     /// <summary>
     /// The first stage of the subnet definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAddressPrefix<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAddressPrefix<ParentT>
     {
     }
 
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition
         /// Specifies the IP address space of the subnet, within the address space of the network.
         /// </summary>
         /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
-        /// <return>The next stage of the subnet definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<ParentT> WithAddressPrefix(string cidr);
     }
 }

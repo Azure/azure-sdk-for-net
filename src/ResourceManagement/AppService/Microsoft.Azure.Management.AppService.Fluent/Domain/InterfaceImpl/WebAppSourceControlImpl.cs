@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using System.Threading.Tasks;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition;

@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:DDC88190329C40E33404F24D728694C7
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> List()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> List()
         {
             return this.databases.ListBySqlServer(this.resourceGroupName, this.sqlServerName);
         }

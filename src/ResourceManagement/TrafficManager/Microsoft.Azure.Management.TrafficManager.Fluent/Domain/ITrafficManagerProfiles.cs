@@ -2,41 +2,49 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
     using System.Threading;
     using System.Threading.Tasks;
-    using TrafficManagerProfile.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition;
+    using Microsoft.Rest;
 
     /// <summary>
     /// Entry point to traffic manager profile management API in Azure.
     /// </summary>
     public interface ITrafficManagerProfiles  :
-        ISupportsCreating<TrafficManagerProfile.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsGettingById<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        ISupportsBatchDeletion,
-        IHasManager<ITrafficManager>,
-        IHasInner<IProfilesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<TrafficManagerProfile.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.TrafficManager.Fluent.IProfilesOperations>
     {
         /// <summary>
-        /// Checks that the DNS name is valid for traffic manager profile and is not in use.
+        /// Asynchronously checks that the DNS name is valid for traffic manager profile and is not in use.
         /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <param name="dnsNameLabel">The DNS name to check.</param>
-        /// <return>Whether the DNS is available to be used for a traffic manager profile and other info if not.</return>
-        CheckProfileDnsNameAvailabilityResult CheckDnsNameAvailability(string dnsNameLabel);
-
+        /// <return>
+        /// Observable to response containing whether the DNS is available to be used for a traffic manager profile
+        /// and other info if not.
+        /// </return>
+        Task<Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(string dnsNameLabel, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Checks that the DNS name is valid for traffic manager profile and is not in use.
         /// </summary>
         /// <param name="dnsNameLabel">The DNS name to check.</param>
         /// <return>Whether the DNS is available to be used for a traffic manager profile and other info if not.</return>
-        Task<CheckProfileDnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(string dnsNameLabel, CancellationToken cancellationToken = default(CancellationToken));
+        Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult CheckDnsNameAvailability(string dnsNameLabel);
     }
 }

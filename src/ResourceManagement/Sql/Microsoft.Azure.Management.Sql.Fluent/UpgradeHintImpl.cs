@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5VcGdyYWRlSGludEltcGw=
     internal partial class UpgradeHintImpl :
         Wrapper<Models.UpgradeHint>,
-        IUpgradeHint
+        IUpgradeHintInterface
     {
 
         ///GENMHASH:47B0CCFDDE32BC2E26AB51DB1F9DA342:507DFB69022C36CEE10273849AA5004C

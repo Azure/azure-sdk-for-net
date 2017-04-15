@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerBackend  :
-        IHasInner<Models.BackendAddressPoolInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IHasLoadBalancingRules,
-        IHasBackendNics
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.BackendAddressPoolInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules,
+        Microsoft.Azure.Management.Network.Fluent.IHasBackendNics
     {
         /// <return>A list of the resource IDs of the virtual machines associated with this backend.</return>
         System.Collections.Generic.ISet<string> GetVirtualMachineIds();

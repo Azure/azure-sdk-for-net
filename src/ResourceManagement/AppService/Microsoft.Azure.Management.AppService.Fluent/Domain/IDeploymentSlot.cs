@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// version number.).
     /// </remarks>
     public interface IDeploymentSlot  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IAppServiceManager,Models.SiteInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.SiteInner>,
         Microsoft.Azure.Management.AppService.Fluent.IWebAppBase,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<DeploymentSlot.Update.IUpdate>,

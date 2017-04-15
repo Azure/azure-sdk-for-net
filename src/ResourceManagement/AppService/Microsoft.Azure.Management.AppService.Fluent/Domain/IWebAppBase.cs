@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </remarks>
     public interface IWebAppBase  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.SiteInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.SiteInner>
     {
         /// <summary>
         /// Gets Last time web app was modified in UTC.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Microsoft.Azure.Management.AppService.Fluent.PhpVersion PhpVersion { get; }
 
         /// <return>The mapping from host names and the host name bindings.</return>
-        Task<System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets name of repository site.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the operating system the web app is running on.
         /// </summary>
-        OperatingSystem OperatingSystem { get; }
+        Microsoft.Azure.Management.AppService.Fluent.OperatingSystem OperatingSystem { get; }
 
         /// <summary>
         /// Gets the auto swap slot name.

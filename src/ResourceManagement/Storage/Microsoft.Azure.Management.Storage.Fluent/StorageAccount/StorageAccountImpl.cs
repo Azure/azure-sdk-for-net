@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         private string name;
         private StorageAccountCreateParametersInner createParameters;
         private StorageAccountUpdateParametersInner updateParameters;
-        private IList<StorageAccountKey> cachedAccountKeys;
+        private IReadOnlyList<StorageAccountKey> cachedAccountKeys;
 
         internal StorageAccountImpl(string name, StorageAccountInner innerObject, IStorageManager manager)
             : base(name, innerObject, manager)
@@ -129,12 +129,12 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             }
         }
 
-        public IList<StorageAccountKey> GetKeys()
+        public IReadOnlyList<StorageAccountKey> GetKeys()
         {
             return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<IList<StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IReadOnlyList<StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (cachedAccountKeys == null)
             {
@@ -245,30 +245,34 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return this;
         }
                 
-        public async Task<IList<StorageAccountKey>> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IReadOnlyList<StorageAccountKey>> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.ListKeysAsync(
                 ResourceGroupName, 
                 Name,
                 cancellationToken);
-            cachedAccountKeys = storageAccountListKeysResultInner.Keys;
+            var list = new List<StorageAccountKey>();
+            list.AddRange(storageAccountListKeysResultInner.Keys);
+            cachedAccountKeys = list;
             return cachedAccountKeys;
         }
 
-        public IList<StorageAccountKey> RegenerateKey(string keyName)
+        public IReadOnlyList<StorageAccountKey> RegenerateKey(string keyName)
         {
             return RegenerateKeyAsync(keyName).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<IList<StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IReadOnlyList<StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.RegenerateKeyAsync(
                 ResourceGroupName, 
                 Name, 
                 keyName,
                 cancellationToken);
-            cachedAccountKeys = storageAccountListKeysResultInner.Keys;
-            return cachedAccountKeys;
+            var list = new List<StorageAccountKey>();
+            list.AddRange(storageAccountListKeysResultInner.Keys);
+            cachedAccountKeys = list;
+            return list;
         }
 
         protected override async Task<StorageAccountInner> GetInnerAsync(CancellationToken cancellationToken)

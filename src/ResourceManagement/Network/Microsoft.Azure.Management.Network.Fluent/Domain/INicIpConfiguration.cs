@@ -9,12 +9,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An IP configuration in a network interface.
     /// </summary>
     public interface INicIPConfiguration  :
-        INicIPConfigurationBase,
-        IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        IHasPrivateIPAddress,
-        IHasPublicIPAddress,
-        IHasSubnet
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress,
+        Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet
     {
     }
 }

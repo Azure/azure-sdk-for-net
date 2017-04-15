@@ -4,28 +4,30 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
-    using VirtualMachineScaleSet.DefinitionManaged;
-    using VirtualMachineScaleSet.DefinitionManagedOrUnmanaged;
-    using VirtualMachineScaleSet.Definition;
-    using VirtualMachineScaleSet.DefinitionUnmanaged;
-    using VirtualMachineScaleSet.Update;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.DefinitionManaged;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.DefinitionManagedOrUnmanaged;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.DefinitionUnmanaged;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.Storage.Fluent;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
-    using System.Collections.Generic;
+    using Microsoft.Rest;
 
     internal partial class VirtualMachineScaleSetImpl 
     {
         /// <summary>
         /// Specifies the SSH root user name for the Linux virtual machine.
         /// </summary>
-        /// <param name="rootUserName">The Linux SSH root user name. This must follow the required naming convention for Linux user name.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <param name="rootUserName">A root user name following the required naming convention for Linux user names.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameUnmanaged.WithRootUsername(string rootUserName)
         {
             return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged;
@@ -36,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// virtual machines in the scale set.
         /// </summary>
         /// <param name="backendNames">Names of existing backends in the selected load balancer.</param>
-        /// <return>The next stage of the virtual machine scale set definition.</return>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool;
@@ -78,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">The SSH public key in PEM format.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged.WithSsh(string publicKey)
         {
             return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged;
@@ -87,8 +89,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the SSH root password for the Linux virtual machine.
         /// </summary>
-        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <param name="rootPassword">A password following the complexity criteria for Azure Linux VM passwords.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged.WithRootPassword(string rootPassword)
         {
             return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged;
@@ -99,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// scale set virtual machine.
         /// </summary>
         /// <param name="natPoolNames">Inbound NAT pool names.</param>
-        /// <return>The next stage of the virtual machine scale set definition.</return>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithOS VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
             return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Definition.IWithOS;
@@ -108,8 +110,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the SSH root user name for the Linux virtual machine.
         /// </summary>
-        /// <param name="rootUserName">The Linux SSH root user name. This must follow the required naming convention for Linux user name.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <param name="rootUserName">A root user name following the required naming convention for Linux user names.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged.WithRootUsername(string rootUserName)
         {
             return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged;
@@ -129,7 +131,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that a managed disk needs to be created implicitly with the given settings.
         /// </summary>
         /// <param name="sizeInGB">The size of the managed disk.</param>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
         VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType)
@@ -141,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that a managed disk needs to be created implicitly with the given settings.
         /// </summary>
         /// <param name="sizeInGB">The size of the managed disk.</param>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <param name="storageAccountType">The storage account type.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
@@ -151,9 +153,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Detaches managed data disk with the given lun from the virtual machine scale set instances.
+        /// Detaches managed data disk with the given LUN from the virtual machine scale set instances.
         /// </summary>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
         VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithoutDataDisk(int lun)
         {
@@ -163,7 +165,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the data disk to be created from the data disk image in the virtual machine image.
         /// </summary>
-        /// <param name="imageLun">The lun of the source data disk image.</param>
+        /// <param name="imageLun">The LUN of the source data disk image.</param>
         /// <return>The next stage of virtual machine definition.</return>
         VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDiskFromImage(int imageLun)
         {
@@ -173,7 +175,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the data disk to be created from the data disk image in the virtual machine image.
         /// </summary>
-        /// <param name="imageLun">The lun of the source data disk image.</param>
+        /// <param name="imageLun">The LUN of the source data disk image.</param>
         /// <param name="newSizeInGB">The new size that overrides the default size specified in the data disk image.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The next stage of virtual machine definition.</return>
@@ -185,7 +187,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the data disk to be created from the data disk image in the virtual machine image.
         /// </summary>
-        /// <param name="imageLun">The lun of the source data disk image.</param>
+        /// <param name="imageLun">The LUN of the source data disk image.</param>
         /// <param name="newSizeInGB">The new size that overrides the default size specified in the data disk image.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <param name="storageAccountType">The storage account type.</param>
@@ -209,7 +211,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that a managed disk needs to be created implicitly with the given settings.
         /// </summary>
         /// <param name="sizeInGB">The size of the managed disk.</param>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The next stage of virtual machine definition.</return>
         VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType)
@@ -221,13 +223,33 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies that a managed disk needs to be created implicitly with the given settings.
         /// </summary>
         /// <param name="sizeInGB">The size of the managed disk.</param>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <param name="storageAccountType">The storage account type.</param>
         /// <return>The next stage of virtual machine definition.</return>
         VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType)
         {
             return this.WithNewDataDisk(sizeInGB, lun, cachingType, storageAccountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the caching type for the operating system disk.
+        /// </summary>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskCaching(CachingTypes cachingType)
+        {
+            return this.WithOsDiskCaching(cachingType) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the name for the OS disk.
+        /// </summary>
+        /// <param name="name">The OS disk name.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskName(string name)
+        {
+            return this.WithOsDiskName(name) as VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -245,8 +267,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the user (custom) Linux image used as the virtual machine's operating system.
         /// </summary>
-        /// <param name="imageUrl">The url the the VHD.</param>
-        /// <return>The next stage of the virtual machine scale set definition.</return>
+        /// <param name="imageUrl">The URL the the VHD.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
         {
             return this.WithStoredLinuxImage(imageUrl) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameUnmanaged;
@@ -263,9 +285,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the id of a Linux custom image to be used.
+        /// Specifies the ID of a Linux custom image to be used.
         /// </summary>
-        /// <param name="customImageId">The resource id of the custom image.</param>
+        /// <param name="customImageId">The resource ID of the custom image.</param>
         /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged VirtualMachineScaleSet.Definition.IWithOS.WithLinuxCustomImage(string customImageId)
         {
@@ -285,9 +307,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the id of a Windows custom image to be used.
+        /// Specifies the ID of a Windows custom image to be used.
         /// </summary>
-        /// <param name="customImageId">The resource id of the custom image.</param>
+        /// <param name="customImageId">The resource ID of the custom image.</param>
         /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManaged VirtualMachineScaleSet.Definition.IWithOS.WithWindowsCustomImage(string customImageId)
         {
@@ -305,16 +327,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the specific version of a marketplace Windows image needs to be used.
-        /// </summary>
-        /// <param name="imageReference">Describes publisher, offer, SKU and version of the marketplace image.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
-        {
-            return this.WithSpecificWindowsImageVersion(imageReference) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged;
-        }
-
-        /// <summary>
         /// Specifies a known marketplace Linux image used as the virtual machine's operating system.
         /// </summary>
         /// <param name="knownImage">A known market-place image.</param>
@@ -325,11 +337,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Specifies the specific version of a marketplace Windows image needs to be used.
+        /// </summary>
+        /// <param name="imageReference">Describes publisher, offer, SKU and version of the marketplace image.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
+        {
+            return this.WithSpecificWindowsImageVersion(imageReference) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged;
+        }
+
+        /// <summary>
         /// Specifies the user (custom) Windows image to be used as the operating system for the virtual machines in the
         /// scale set.
         /// </summary>
         /// <param name="imageUrl">The URL of the VHD.</param>
-        /// <return>The next stage of the virtual machine scale set definition.</return>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
         {
             return this.WithStoredWindowsImage(imageUrl) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameUnmanaged;
@@ -433,6 +455,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Disables automatic updates.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutAutoUpdate()
+        {
+            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+        }
+
+        /// <summary>
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
@@ -444,12 +475,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Disables automatic updates.
+        /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutAutoUpdate()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVMAgent()
         {
-            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -460,15 +491,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithTimeZone(string timeZone)
         {
             return this.WithTimeZone(timeZone) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
-        }
-
-        /// <summary>
-        /// Enables the VM agent.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVMAgent()
-        {
-            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -484,7 +506,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the maximum number of virtual machines in the scale set.
         /// </summary>
-        /// <param name="capacity">The virtual machine capacity.</param>
+        /// <param name="capacity">Number of virtual machines.</param>
         /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithCapacity.WithCapacity(int capacity)
         {
@@ -510,6 +532,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Disables automatic updates.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutAutoUpdate()
+        {
+            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
         /// Specifies the WinRM listener.
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
@@ -521,12 +552,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Disables automatic updates.
+        /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutAutoUpdate()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVMAgent()
         {
-            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
         }
 
         /// <summary>
@@ -540,20 +571,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Enables the VM agent.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVMAgent()
-        {
-            return this.WithVMAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
-        }
-
-        /// <summary>
         /// Specifies the SSH public key.
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">The SSH public key in PEM format.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithSsh(string publicKey)
         {
             return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged;
@@ -562,8 +584,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the SSH root password for the Linux virtual machine.
         /// </summary>
-        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <param name="rootPassword">A password following the complexity criteria for Azure Linux VM passwords.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithRootPassword(string rootPassword)
         {
             return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged;
@@ -641,7 +663,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies an existing StorageAccount for the OS and data disk VHDs of
+        /// Specifies an existing storage account for the OS and data disk VHDs of
         /// the virtual machines in the scale set.
         /// </summary>
         /// <param name="storageAccount">An existing storage account.</param>
@@ -654,7 +676,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
         /// scale set.
-        /// This will replace the current internet-facing load balancer associated with the virtual machines in the
+        /// This will replace the current Internet-facing load balancer associated with the virtual machines in the
         /// scale set (if any).
         /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
         /// network interface of the virtual machines unless a subset of them is selected in the next stages.
@@ -677,6 +699,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ReimageAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.ReimageAsync(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the extensions attached to the virtual machines in the scale set.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Extensions
@@ -688,7 +725,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>
-        /// The internet-facing load balancer associated with the primary network interface of
+        /// The Internet-facing load balancer associated with the primary network interface of
         /// the virtual machines in the scale set.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
@@ -700,7 +737,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the name of the OS disk of virtual machines in the scale set.
         /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OsDiskName
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OSDiskName
         {
             get
             {
@@ -709,9 +746,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
-        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
         {
-            return this.ListNetworkInterfaces();
+            return this.ListNetworkInterfaces() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <return>
@@ -728,21 +765,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// List the network interface associated with a specific virtual machine instance in the scale set.
+        /// Lists the network interface associated with a specific virtual machine instance in the scale set.
         /// </summary>
-        /// <param name="virtualMachineInstanceId">The instance id.</param>
+        /// <param name="virtualMachineInstanceId">The instance ID.</param>
         /// <return>The network interfaces.</return>
-        IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
         {
-            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId);
+            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
         /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set.
         /// </summary>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Reimage()
         {
  
@@ -752,7 +786,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the operating system disk caching type.
         /// </summary>
-        Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OsDiskCachingType
+        Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OSDiskCachingType
         {
             get
             {
@@ -763,20 +797,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the URL to storage containers that store the VHDs of the virtual machines in the scale set.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.VhdContainers
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.VhdContainers
         {
             get
             {
-                return this.VhdContainers() as System.Collections.Generic.IList<string>;
+                return this.VhdContainers() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 
         /// <summary>
         /// Starts the virtual machines in the scale set.
         /// </summary>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Start()
         {
  
@@ -784,20 +815,33 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>
+        /// Gets the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer
+        /// of the scale set.
+        /// </return>
+        /// <summary>
+        /// Gets IOException the IO exception.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PrimaryPublicIPAddressIds
+        {
+            get
+            {
+                return this.PrimaryPublicIPAddressIds() as System.Collections.Generic.IReadOnlyList<string>;
+            }
+        }
+
+        /// <return>
         /// Available SKUs for the virtual machine scale set, including the minimum and maximum virtual machine instances
         /// allowed for a particular SKU.
         /// </return>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListAvailableSkus()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListAvailableSkus()
         {
-            return this.ListAvailableSkus();
+            return this.ListAvailableSkus() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku>;
         }
 
         /// <summary>
         /// Gets the operating system of the virtual machines in the scale set.
         /// </summary>
-        Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OsType
+        Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OSType
         {
             get
             {
@@ -808,9 +852,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Shuts down the virtual machines in the scale set and releases its compute resources.
         /// </summary>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Deallocate()
         {
  
@@ -818,7 +859,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>
-        /// The internet-facing load balancer's backends associated with the primary network interface
+        /// The Internet-facing load balancer's backends associated with the primary network interface
         /// of the virtual machines in the scale set.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
@@ -851,9 +892,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Powers off (stops) the virtual machines in the scale set.
         /// </summary>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PowerOff()
         {
  
@@ -893,7 +931,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the upgradeModel.
+        /// Gets the upgrade model.
         /// </summary>
         Models.UpgradeMode Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.UpgradeModel
         {
@@ -906,9 +944,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Restarts the virtual machines in the scale set.
         /// </summary>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Restart()
         {
  
@@ -938,9 +973,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Starts the virtual machines in the scale set asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.StartAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.StartAsync(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a network interface associated with a virtual machine scale set instance.
         /// </summary>
-        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
+        /// <param name="instanceId">The virtual machine scale set vm instance ID.</param>
         /// <param name="name">The network interface name.</param>
         /// <return>The network interface.</return>
         Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.GetNetworkInterfaceByInstanceId(string instanceId, string name)
@@ -959,19 +1009,34 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>
-        /// Gets the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer
-        /// of the scale set.
-        /// </return>
         /// <summary>
-        /// Gets IOException the IO exception.
+        /// Powers off (stops) the virtual machines in the scale set asynchronously.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PrimaryPublicIPAddressIds
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PowerOffAsync(CancellationToken cancellationToken)
         {
-            get
-            {
-                return this.PrimaryPublicIPAddressIds() as System.Collections.Generic.IList<string>;
-            }
+ 
+            await this.PowerOffAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Shuts down the virtual machines in the scale set and releases its compute resources asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.DeallocateAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.DeallocateAsync(cancellationToken);
         }
 
         /// <return>
@@ -982,6 +1047,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools()
         {
             return this.ListPrimaryInternalLoadBalancerInboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
+        }
+
+        /// <summary>
+        /// Restarts the virtual machines in the scale set asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.RestartAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.RestartAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1007,7 +1087,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>
-        /// The internet-facing load balancer's inbound NAT pool associated with the primary network interface
+        /// The Internet-facing load balancer's inbound NAT pool associated with the primary network interface
         /// of the virtual machines in the scale set.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
@@ -1048,7 +1128,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">The SSH public key in PEM format.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged.WithSsh(string publicKey)
         {
             return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged;
@@ -1057,15 +1137,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the SSH root password for the Linux virtual machine.
         /// </summary>
-        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <param name="rootPassword">A password following the complexity criteria for Azure Linux VM passwords.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged.WithRootPassword(string rootPassword)
         {
             return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged;
         }
 
         /// <summary>
-        /// Specifies the storage account type for managed Os disk.
+        /// Specifies the storage account type for managed OS disk.
         /// </summary>
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
@@ -1138,26 +1218,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the name for the OS disk.
-        /// </summary>
-        /// <param name="name">The OS disk name.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskName(string name)
-        {
-            return this.WithOsDiskName(name) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Specifies the caching type for the operating system disk.
-        /// </summary>
-        /// <param name="cachingType">The caching type.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskCaching(CachingTypes cachingType)
-        {
-            return this.WithOsDiskCaching(cachingType) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
         /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
         /// This removes the association between primary network interface configuration and all the backends and
         /// inbound NAT pools in the load balancer.
@@ -1212,10 +1272,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.Refresh()
+        /// <return>The Observable to refreshed resource.</return>
+        async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.RefreshAsync(CancellationToken cancellationToken)
         {
-            return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
         }
 
         /// <summary>
@@ -1380,15 +1440,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the SSH root user name for the Linux virtual machine.
         /// </summary>
-        /// <param name="rootUserName">The Linux SSH root user name. This must follow the required naming convention for Linux user name.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
+        /// <param name="rootUserName">A root user name following the required naming conventions for Linux user names.</param>
+        /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged.WithRootUsername(string rootUserName)
         {
             return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged;
         }
     }
 
-    internal partial class ManagedDataDiskCollection 
+    public partial class ManagedDataDiskCollection 
     {
     }
 }

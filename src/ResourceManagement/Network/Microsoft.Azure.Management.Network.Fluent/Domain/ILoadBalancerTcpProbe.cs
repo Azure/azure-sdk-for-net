@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerTcpProbe  :
-        ILoadBalancerProbe
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerProbe
     {
     }
 }

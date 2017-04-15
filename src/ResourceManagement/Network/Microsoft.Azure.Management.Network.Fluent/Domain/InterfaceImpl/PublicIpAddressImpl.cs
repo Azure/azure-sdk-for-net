@@ -2,6 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+
     internal partial class PublicIPAddressImpl 
     {
         /// <summary>
@@ -76,6 +83,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.GetAssignedNetworkInterfaceIPConfiguration()
+        {
+            return this.GetAssignedNetworkInterfaceIPConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration;
+        }
+
         /// <summary>
         /// Gets the idle connection timeout setting (in minutes).
         /// </summary>
@@ -85,12 +98,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return this.IdleTimeoutInMinutes();
             }
-        }
-
-        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
-        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.GetAssignedNetworkInterfaceIPConfiguration()
-        {
-            return this.GetAssignedNetworkInterfaceIPConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration;
         }
 
         /// <summary>
@@ -129,7 +136,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Specifies the reverse FQDN to assign to this public IP address.
         /// </summary>
         /// <param name="reverseFQDN">The reverse FQDN to assign.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithReverseFQDN.WithReverseFqdn(string reverseFQDN)
         {
             return this.WithReverseFqdn(reverseFQDN) as PublicIPAddress.Definition.IWithCreate;
@@ -138,7 +145,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Ensures that no reverse FQDN will be used.
         /// </summary>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithReverseFQDN.WithoutReverseFqdn()
         {
             return this.WithoutReverseFqdn() as PublicIPAddress.Definition.IWithCreate;
@@ -167,7 +174,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Ensures that no leaf domain label will be used.
         /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithLeafDomainLabel.WithoutLeafDomainLabel()
         {
             return this.WithoutLeafDomainLabel() as PublicIPAddress.Definition.IWithCreate;
@@ -179,7 +186,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// will be constructed automatically by appending the rest of the domain to this label.
         /// </summary>
         /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsName)
         {
             return this.WithLeafDomainLabel(dnsName) as PublicIPAddress.Definition.IWithCreate;
@@ -212,7 +219,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Use  PublicIPAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithIPAddress.WithStaticIP()
         {
             return this.WithStaticIP() as PublicIPAddress.Definition.IWithCreate;
@@ -221,7 +228,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Enables dynamic IP address allocation.
         /// </summary>
-        /// <return>The next stage of the public IP address definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithIPAddress.WithDynamicIP()
         {
             return this.WithDynamicIP() as PublicIPAddress.Definition.IWithCreate;
@@ -251,7 +258,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Specifies the timeout (in minutes) for an idle connection.
         /// </summary>
         /// <param name="minutes">The length of the time out in minutes.</param>
-        /// <return>The next stage of the resource definition.</return>
+        /// <return>The next stage of the definition.</return>
         PublicIPAddress.Definition.IWithCreate PublicIPAddress.Definition.IWithIdleTimeout.WithIdleTimeoutInMinutes(int minutes)
         {
             return this.WithIdleTimeoutInMinutes(minutes) as PublicIPAddress.Definition.IWithCreate;

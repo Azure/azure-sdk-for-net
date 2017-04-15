@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataD
     /// The entirety of a data disk update as part of a virtual machine update.
     /// </summary>
     public interface IUpdate  :
-        IWithDiskSize,
-        IWithDiskLun,
-        IWithDiskCaching,
-        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Update.IWithDiskSize,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Update.IWithDiskLun,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Update.IWithDiskCaching,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>
     {
     }
 
     /// <summary>
-    /// The stage of the virtual machine data disk update allowing to set the disk lun.
+    /// The stage of the virtual machine data disk update allowing to set the disk LUN.
     /// </summary>
     public interface IWithDiskLun 
     {

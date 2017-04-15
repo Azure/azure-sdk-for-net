@@ -126,7 +126,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
 
                 Utilities.PrintVirtualMachine(linuxVM2);
 
-                var specializedVhd = linuxVM2.OsUnmanagedDiskVhdUri;
+                var specializedVhd = linuxVM2.OSUnmanagedDiskVhdUri;
                 //=============================================================
                 // Deleting the virtual machine
                 Utilities.Log("Deleting VM: " + linuxVM2.Id);

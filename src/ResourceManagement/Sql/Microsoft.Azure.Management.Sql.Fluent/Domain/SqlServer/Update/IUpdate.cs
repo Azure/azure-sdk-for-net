@@ -9,11 +9,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
     /// The template for a SQLServer update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        IWithAdministratorPassword,
-        IWithElasticPool,
-        IWithDatabase,
-        IWithFirewallRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IWithAdministratorPassword,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IWithElasticPool,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IWithDatabase,
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IWithFirewallRule
     {
     }
 
@@ -23,35 +23,35 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
     public interface IWithFirewallRule 
     {
         /// <summary>
-        /// Removes firewall rule from the SQL Server.
-        /// </summary>
-        /// <param name="firewallRuleName">Name of the firewall rule to be removed.</param>
-        /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutFirewallRule(string firewallRuleName);
-
-        /// <summary>
         /// Create new firewall rule in the SQL Server.
         /// </summary>
-        /// <param name="ipAddress">IpAddress for the firewall rule.</param>
+        /// <param name="ipAddress">IP address for the firewall rule.</param>
         /// <return>Next stage of the SQL Server update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string ipAddress);
 
         /// <summary>
         /// Create new firewall rule in the SQL Server.
         /// </summary>
-        /// <param name="startIpAddress">Start ipAddress for the firewall rule.</param>
-        /// <param name="endIpAddress">IpAddress for the firewall rule.</param>
+        /// <param name="startIPAddress">Start IP address for the firewall rule.</param>
+        /// <param name="endIPAddress">IP address for the firewall rule.</param>
         /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string startIpAddress, string endIpAddress);
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string startIPAddress, string endIPAddress);
 
         /// <summary>
         /// Creates new firewall rule in the SQL Server.
         /// </summary>
-        /// <param name="startIpAddress">Start ipAddress for the firewall rule.</param>
-        /// <param name="endIpAddress">End ipAddress for the firewall rule.</param>
+        /// <param name="startIPAddress">Start IP address for the firewall rule.</param>
+        /// <param name="endIPAddress">End IP address for the firewall rule.</param>
         /// <param name="firewallRuleName">Name for the firewall rule.</param>
         /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string startIpAddress, string endIpAddress, string firewallRuleName);
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string startIPAddress, string endIPAddress, string firewallRuleName);
+
+        /// <summary>
+        /// Removes firewall rule from the SQL Server.
+        /// </summary>
+        /// <param name="firewallRuleName">Name of the firewall rule to be removed.</param>
+        /// <return>Next stage of the SQL Server update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutFirewallRule(string firewallRuleName);
     }
 
     /// <summary>
@@ -60,18 +60,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
     public interface IWithDatabase 
     {
         /// <summary>
-        /// Remove database from the SQL Server.
-        /// </summary>
-        /// <param name="databaseName">Name of the database to be removed.</param>
-        /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutDatabase(string databaseName);
-
-        /// <summary>
         /// Create new database in the SQL Server.
         /// </summary>
         /// <param name="databaseName">Name of the database to be created.</param>
         /// <return>Next stage of the SQL Server update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewDatabase(string databaseName);
+
+        /// <summary>
+        /// Remove database from the SQL Server.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to be removed.</param>
+        /// <return>Next stage of the SQL Server update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutDatabase(string databaseName);
     }
 
     /// <summary>

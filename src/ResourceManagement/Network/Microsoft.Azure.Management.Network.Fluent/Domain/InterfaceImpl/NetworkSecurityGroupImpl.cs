@@ -6,6 +6,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition;
     using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;

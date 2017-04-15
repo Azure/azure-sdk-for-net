@@ -10,11 +10,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// scale set.
     /// </summary>
     public interface IVirtualMachineScaleSetNicIPConfiguration  :
-        INicIPConfigurationBase,
-        IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
-        IHasPrivateIPAddress,
-        IHasSubnet
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
+        Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet
     {
     }
 }

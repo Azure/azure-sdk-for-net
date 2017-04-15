@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using System.Threading.Tasks;
     using Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition;
@@ -13,6 +12,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using System.IO;
 
     internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> 
     {

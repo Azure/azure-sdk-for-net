@@ -68,11 +68,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update
     /// The template for a SQLDatabase modifyState operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IWithEdition,
-        IWithElasticPoolName,
-        IWithMaxSizeBytes,
-        IWithServiceObjective,
-        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IWithEdition,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IWithElasticPoolName,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IWithMaxSizeBytes,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IWithServiceObjective,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
     {
     }
 

@@ -9,43 +9,43 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
 
     /// <summary>
-    /// The stage of the managed disk definition allowing to choose source operating system image.
+    /// The stage of the managed disk definition allowing to choose a source operating system image.
     /// </summary>
-    public interface IWithOsSnapshotFromImage 
+    public interface IWithOSSnapshotFromImage 
     {
         /// <summary>
-        /// Specifies id of the image containing operating system.
+        /// Specifies an image containing an operating system.
         /// </summary>
-        /// <param name="imageId">Image resource id.</param>
+        /// <param name="imageId">Image resource ID.</param>
         /// <param name="osType">Operating system type.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate FromImage(string imageId, OperatingSystemTypes osType);
 
         /// <summary>
-        /// Specifies the image containing operating system.
+        /// Specifies an image containing an operating system.
         /// </summary>
         /// <param name="image">The image.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate FromImage(IVirtualMachineImage image);
 
         /// <summary>
-        /// Specifies the custom image containing operating system.
+        /// Specifies a custom image containing an operating system.
         /// </summary>
         /// <param name="image">The image.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate FromImage(IVirtualMachineCustomImage image);
     }
 
     /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
+    /// the resource to be created, but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate>,
-        IWithSize,
-        IWithSku
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate>,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithSize,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithSku
     {
     }
 
@@ -55,17 +55,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     public interface IWithDataSnapshotFromDisk 
     {
         /// <summary>
-        /// Specifies the id of source data managed disk.
+        /// Specifies the ID of source data managed disk.
         /// </summary>
-        /// <param name="managedDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="managedDiskId">Source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithDataFromDisk(string managedDiskId);
 
         /// <summary>
         /// Specifies the source data managed disk.
         /// </summary>
-        /// <param name="managedDisk">Source managed disk.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="managedDisk">A source managed disk.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithDataFromDisk(IDisk managedDisk);
     }
 
@@ -75,10 +75,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     public interface IWithSku 
     {
         /// <summary>
-        /// Specifies the sku type.
+        /// Specifies the SKU type.
         /// </summary>
-        /// <param name="sku">Sku type.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sku">SKU type.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithSku(DiskSkuTypes sku);
     }
 
@@ -90,15 +90,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
         /// <summary>
         /// Specifies the source data managed snapshot.
         /// </summary>
-        /// <param name="snapshotId">Snapshot resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="snapshotId">A snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithDataFromSnapshot(string snapshotId);
 
         /// <summary>
         /// Specifies the source data managed snapshot.
         /// </summary>
-        /// <param name="snapshot">Snapshot resource.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="snapshot">A snapshot resource.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithDataFromSnapshot(ISnapshot snapshot);
     }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     /// The first stage of a managed snapshot definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithGroup>
     {
     }
 
@@ -122,9 +122,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     /// The stage of the managed snapshot definition allowing to choose data source.
     /// </summary>
     public interface IWithDataSnapshotSource  :
-        IWithDataSnapshotFromVhd,
-        IWithDataSnapshotFromDisk,
-        IWithDataSnapshotFromSnapshot
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotFromVhd,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotFromDisk,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotFromSnapshot
     {
     }
 
@@ -132,9 +132,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     /// The stage of the managed snapshot definition allowing to choose OS source or data source.
     /// </summary>
     public interface IWithSnapshotSource  :
-        IWithWindowsSnapshotSource,
-        IWithLinuxSnapshotSource,
-        IWithDataSnapshotSource
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithWindowsSnapshotSource,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithLinuxSnapshotSource,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotSource
     {
     }
 
@@ -147,48 +147,48 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
         /// Specifies the disk size.
         /// </summary>
         /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithSizeInGB(int sizeInGB);
     }
 
     /// <summary>
-    /// The stage of the managed snapshot definition allowing to choose Linux OS source.
+    /// The stage of the managed snapshot definition allowing to choose a Linux OS source.
     /// </summary>
     public interface IWithLinuxSnapshotSource 
     {
         /// <summary>
-        /// Specifies the source specialized or generalized Linux OS vhd.
+        /// Specifies the source specialized or generalized Linux OS VHD.
         /// </summary>
-        /// <param name="vhdUrl">The source vhd url.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithLinuxFromVhd(string vhdUrl);
 
         /// <summary>
         /// Specifies the source Linux OS managed disk.
         /// </summary>
-        /// <param name="sourceDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceDiskId">A source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithLinuxFromDisk(string sourceDiskId);
 
         /// <summary>
         /// Specifies the source Linux OS managed disk.
         /// </summary>
-        /// <param name="sourceDisk">Source managed disk.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceDisk">A source managed disk.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithLinuxFromDisk(IDisk sourceDisk);
 
         /// <summary>
         /// Specifies the source Linux OS managed snapshot.
         /// </summary>
-        /// <param name="sourceSnapshotId">Snapshot resource id.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceSnapshotId">A snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithLinuxFromSnapshot(string sourceSnapshotId);
 
         /// <summary>
         /// Specifies the source Linux OS managed snapshot.
         /// </summary>
-        /// <param name="sourceSnapshot">Source snapshot.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceSnapshot">A source snapshot.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithLinuxFromSnapshot(ISnapshot sourceSnapshot);
     }
 
@@ -196,16 +196,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     /// The entirety of the managed snapshot definition.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IBlank,
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithGroup,
-        IWithSnapshotSource,
-        IWithWindowsSnapshotSource,
-        IWithLinuxSnapshotSource,
-        IWithDataSnapshotSource,
-        IWithDataSnapshotFromVhd,
-        IWithDataSnapshotFromDisk,
-        IWithDataSnapshotFromSnapshot,
-        IWithCreate
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithSnapshotSource,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithWindowsSnapshotSource,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithLinuxSnapshotSource,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotSource,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotFromVhd,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotFromDisk,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithDataSnapshotFromSnapshot,
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate
     {
     }
 
@@ -215,39 +215,39 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     public interface IWithWindowsSnapshotSource 
     {
         /// <summary>
-        /// Specifies the source specialized or generalized Windows OS vhd.
-        /// </summary>
-        /// <param name="vhdUrl">The source vhd url.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromVhd(string vhdUrl);
-
-        /// <summary>
         /// Specifies the source Windows OS managed snapshot.
         /// </summary>
-        /// <param name="sourceSnapshotId">Snapshot resource id.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceSnapshotId">A snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromSnapshot(string sourceSnapshotId);
 
         /// <summary>
         /// Specifies the source Windows OS managed snapshot.
         /// </summary>
-        /// <param name="sourceSnapshot">Source snapshot.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceSnapshot">A source snapshot.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromSnapshot(ISnapshot sourceSnapshot);
 
         /// <summary>
         /// Specifies the source Windows OS managed disk.
         /// </summary>
-        /// <param name="sourceDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceDiskId">A source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromDisk(string sourceDiskId);
 
         /// <summary>
         /// Specifies the source Windows OS managed disk.
         /// </summary>
-        /// <param name="sourceDisk">Source managed disk.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="sourceDisk">A source managed disk.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromDisk(IDisk sourceDisk);
+
+        /// <summary>
+        /// Specifies the source specialized or generalized Windows OS VHD.
+        /// </summary>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromVhd(string vhdUrl);
     }
 
     /// <summary>
@@ -256,40 +256,40 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     public interface IWithDataSnapshotFromImage 
     {
         /// <summary>
-        /// Specifies id of the image containing source data disk image.
+        /// Specifies an image containing source data disk image.
         /// </summary>
-        /// <param name="imageId">Image resource id.</param>
-        /// <param name="diskLun">Lun of the disk image.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="imageId">An image resource ID.</param>
+        /// <param name="diskLun">LUN of the disk image.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate FromImage(string imageId, int diskLun);
 
         /// <summary>
-        /// Specifies the image containing source data disk image.
+        /// Specifies an image containing a source data disk image.
         /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="diskLun">Lun of the disk image.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="image">An image.</param>
+        /// <param name="diskLun">LUN of the disk image.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate FromImage(IVirtualMachineImage image, int diskLun);
 
         /// <summary>
-        /// Specifies the custom image containing source data disk image.
+        /// Specifies a custom image containing a source data disk image.
         /// </summary>
         /// <param name="image">The image.</param>
-        /// <param name="diskLun">Lun of the disk image.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="diskLun">LUN of the disk image.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate FromImage(IVirtualMachineCustomImage image, int diskLun);
     }
 
     /// <summary>
-    /// The stage of the managed disk definition allowing to choose source data disk vhd.
+    /// The stage of the managed disk definition allowing to choose source data disk VHD.
     /// </summary>
     public interface IWithDataSnapshotFromVhd 
     {
         /// <summary>
-        /// Specifies the source data vhd.
+        /// Specifies the source data VHD.
         /// </summary>
-        /// <param name="vhdUrl">The source vhd url.</param>
-        /// <return>The next stage of the managed snapshot definition.</return>
+        /// <param name="vhdUrl">A source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithDataFromVhd(string vhdUrl);
     }
 }

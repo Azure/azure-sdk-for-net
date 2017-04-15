@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TbG9Vc2FnZU1ldHJpY0ltcGw=
     internal partial class SloUsageMetricImpl :
         Wrapper<SloUsageMetric>,
-        ISloUsageMetric
+        ISloUsageMetricInterface
     {
         ///GENMHASH:298C815F4D2EB576C32862C86A0F98CB:C0C35E00AF4E17F141675A2C05C7067B
         internal SloUsageMetricImpl(SloUsageMetric innerObject)

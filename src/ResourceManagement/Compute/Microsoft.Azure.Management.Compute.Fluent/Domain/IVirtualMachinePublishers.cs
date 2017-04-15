@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Entry point to virtual machine image publishers.
     /// </summary>
     public interface IVirtualMachinePublishers  :
-        ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher>
     {
     }
 }

@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// it when system resources are available.
         /// </summary>
         /// <return>An observable of the request.</return>
-        async Task<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        async Task<IHostNameBinding> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
             return await this.CreateAsync(cancellationToken);
         }

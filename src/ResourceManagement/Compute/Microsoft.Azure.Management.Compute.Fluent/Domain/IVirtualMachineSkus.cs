@@ -5,10 +5,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 
     /// <summary>
-    /// Entry point to virtual machine image offer skus.
+    /// Entry point to virtual machine image offer SKUs.
     /// </summary>
     public interface IVirtualMachineSkus  :
-        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku>
     {
     }
 }

@@ -45,14 +45,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
     /// The entirety of an application gateway HTTP listener update as part of an application gateway update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithServerNameIndication,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithHostName,
-        IWithProtocol,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithProtocol,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithSslCertificate,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithSslPassword,
-        IWithFrontendPort,
-        IWithFrontend
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithFrontendPort,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithFrontend
     {
     }
 
@@ -62,20 +62,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
     public interface IWithFrontend 
     {
         /// <summary>
-        /// Associates the listener with the application gateway's private (internal) frontend.
-        /// If the private frontend does not exist yet, it will be created under an auto-generated name
-        /// and associated with the application gateway's subnet.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithPrivateFrontend();
-
-        /// <summary>
         /// Associates the listener with the application gateway's public (Internet-facing) frontend.
         /// If the public frontend does not exist yet, it will be created under an auto-generated name
         /// and associated with the application gateway's public IP address.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithPublicFrontend();
+
+        /// <summary>
+        /// Associates the listener with the application gateway's private (internal) frontend.
+        /// If the private frontend does not exist yet, it will be created under an auto-generated name
+        /// and associated with the application gateway's subnet.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithPrivateFrontend();
     }
 
     /// <summary>
@@ -84,16 +84,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
     public interface IWithProtocol 
     {
         /// <summary>
-        /// Specifies that the listener is for the HTTP protocol.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithHttp();
-
-        /// <summary>
         /// Specifies that the listener is for the HTTPS protocol.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithSslCertificate WithHttps();
+
+        /// <summary>
+        /// Specifies that the listener is for the HTTP protocol.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithHttp();
     }
 
     /// <summary>

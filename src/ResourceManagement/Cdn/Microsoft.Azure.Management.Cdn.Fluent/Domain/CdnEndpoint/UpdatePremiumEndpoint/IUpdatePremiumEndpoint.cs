@@ -8,62 +8,62 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoin
     /// The stage of an CDN profile endpoint update allowing to specify endpoint properties.
     /// </summary>
     public interface IUpdatePremiumEndpoint  :
-        IUpdate
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Update.IUpdate
     {
-        /// <summary>
-        /// Specifies if https traffic is allowed.
-        /// </summary>
-        /// <param name="httpsAllowed">If set to true Https traffic will be allowed.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpsAllowed(bool httpsAllowed);
-
-        /// <summary>
-        /// Specifies http port for http traffic.
-        /// </summary>
-        /// <param name="httpPort">Http port number.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpPort(int httpPort);
-
-        /// <summary>
-        /// Removes CDN custom domain within an endpoint.
-        /// </summary>
-        /// <param name="hostName">Custom domain host name.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithoutCustomDomain(string hostName);
-
         /// <summary>
         /// Adds a new CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name="hostName">Custom domain host name.</param>
+        /// <param name="hostName">A custom domain host name.</param>
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithCustomDomain(string hostName);
 
         /// <summary>
-        /// Specifies https port for http traffic.
+        /// Specifies the origin path.
         /// </summary>
-        /// <param name="httpsPort">Https port number.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpsPort(int httpsPort);
-
-        /// <summary>
-        /// Specifies if http traffic is allowed.
-        /// </summary>
-        /// <param name="httpAllowed">If set to true Http traffic will be allowed.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpAllowed(bool httpAllowed);
-
-        /// <summary>
-        /// Specifies origin path.
-        /// </summary>
-        /// <param name="originPath">Origin path.</param>
+        /// <param name="originPath">An origin path.</param>
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithOriginPath(string originPath);
 
         /// <summary>
-        /// Specifies host header.
+        /// Removes CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name="hostHeader">Host header.</param>
+        /// <param name="hostName">A custom domain host name.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithoutCustomDomain(string hostName);
+
+        /// <summary>
+        /// Specifies the port for HTTPS traffic.
+        /// </summary>
+        /// <param name="httpsPort">A port number.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpsPort(int httpsPort);
+
+        /// <summary>
+        /// Specifies the host header.
+        /// </summary>
+        /// <param name="hostHeader">A host header.</param>
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHostHeader(string hostHeader);
+
+        /// <summary>
+        /// Specifies if HTTP traffic is allowed.
+        /// </summary>
+        /// <param name="httpAllowed">If true then HTTP traffic will be allowed.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpAllowed(bool httpAllowed);
+
+        /// <summary>
+        /// Specifies the port for HTTP traffic.
+        /// </summary>
+        /// <param name="httpPort">A port number.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpPort(int httpPort);
+
+        /// <summary>
+        /// Specifies if HTTPS traffic is allowed.
+        /// </summary>
+        /// <param name="httpsAllowed">If true then HTTPS traffic will be allowed.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdatePremiumEndpoint.IUpdatePremiumEndpoint WithHttpsAllowed(bool httpsAllowed);
     }
 }

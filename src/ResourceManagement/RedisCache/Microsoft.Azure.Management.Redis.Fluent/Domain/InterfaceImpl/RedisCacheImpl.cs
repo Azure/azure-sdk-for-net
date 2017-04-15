@@ -1,16 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
-    using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Redis.Fluent.Models;
     using Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition;
     using Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.Redis.Fluent.Models;
-    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
+    using System;
+
     internal partial class RedisCacheImpl 
     {
         /// <summary>
@@ -55,12 +57,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <summary>
         /// Assigns the specified subnet to this instance of Redis Cache.
         /// </summary>
-        /// <param name="networkResource">Instance of Network object.</param>
+        /// <param name="network">Instance of Network object.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of Redis Cache definition.</return>
-        RedisCache.Definition.IWithCreate RedisCache.Definition.IWithCreate.WithSubnet(IHasId networkResource, string subnetName)
+        RedisCache.Definition.IWithCreate RedisCache.Definition.IWithCreate.WithSubnet(IHasId network, string subnetName)
         {
-            return this.WithSubnet(networkResource, subnetName) as RedisCache.Definition.IWithCreate;
+            return this.WithSubnet(network, subnetName) as RedisCache.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="dayOfWeek">Day of week when cache can be patched.</param>
         /// <param name="startHourUtc">Start hour after which cache patching can start.</param>
         /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
-        RedisCache.Update.IUpdate RedisCache.Update.IUpdate.WithPatchSchedule(DayOfWeek dayOfWeek, int startHourUtc)
+        RedisCache.Update.IUpdate RedisCache.Update.IUpdate.WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc)
         {
             return this.WithPatchSchedule(dayOfWeek, startHourUtc) as RedisCache.Update.IUpdate;
         }
@@ -90,7 +92,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="startHourUtc">Start hour after which cache patching can start.</param>
         /// <param name="maintenanceWindow">ISO8601 timespan specifying how much time cache patching can take.</param>
         /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
-        RedisCache.Update.IUpdate RedisCache.Update.IUpdate.WithPatchSchedule(DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow)
+        RedisCache.Update.IUpdate RedisCache.Update.IUpdate.WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc, TimeSpan maintenanceWindow)
         {
             return this.WithPatchSchedule(dayOfWeek, startHourUtc, maintenanceWindow) as RedisCache.Update.IUpdate;
         }
@@ -152,7 +154,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="dayOfWeek">Day of week when cache can be patched.</param>
         /// <param name="startHourUtc">Start hour after which cache patching can start.</param>
         /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
-        RedisCache.Definition.IWithPremiumSkuCreate RedisCache.Definition.IWithPremiumSkuCreate.WithPatchSchedule(DayOfWeek dayOfWeek, int startHourUtc)
+        RedisCache.Definition.IWithPremiumSkuCreate RedisCache.Definition.IWithPremiumSkuCreate.WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc)
         {
             return this.WithPatchSchedule(dayOfWeek, startHourUtc) as RedisCache.Definition.IWithPremiumSkuCreate;
         }
@@ -164,7 +166,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="startHourUtc">Start hour after which cache patching can start.</param>
         /// <param name="maintenanceWindow">ISO8601 timespan specifying how much time cache patching can take.</param>
         /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
-        RedisCache.Definition.IWithPremiumSkuCreate RedisCache.Definition.IWithPremiumSkuCreate.WithPatchSchedule(DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow)
+        RedisCache.Definition.IWithPremiumSkuCreate RedisCache.Definition.IWithPremiumSkuCreate.WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc, TimeSpan maintenanceWindow)
         {
             return this.WithPatchSchedule(dayOfWeek, startHourUtc, maintenanceWindow) as RedisCache.Definition.IWithPremiumSkuCreate;
         }
@@ -228,17 +230,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>The generated access keys for this Redis Cache.</return>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.RegenerateKey(RedisKeyType keyType)
         {
-            return ((IRedisCache)this).RegenerateKeyAsync(keyType).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Regenerates the access keys for this Redis Cache.
-        /// </summary>
-        /// <param name="keyType">Key type to regenerate.</param>
-        /// <return>The generated access keys for this Redis Cache.</return>
-        async Task<IRedisAccessKeys> IRedisCache.RegenerateKeyAsync(RedisKeyType keyType, CancellationToken cancellationToken)
-        {
-            return await this.RegenerateKeyAsync(keyType, cancellationToken);
+            return this.RegenerateKeyAsync(keyType).GetAwaiter().GetResult() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
         }
 
         /// <summary>
@@ -290,15 +282,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </summary>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.GetKeys()
         {
-            return ((IRedisCache)this).GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Gets a Redis Cache's access keys. This operation requires write permission to the Cache resource.
-        /// </summary>
-        async Task<IRedisAccessKeys> IRedisCache.GetKeysAsync(CancellationToken cancellationToken)
-        {
-            return await this.GetKeysAsync(cancellationToken);
+            return this.GetKeysAsync().GetAwaiter().GetResult() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
         }
 
         /// <summary>
@@ -340,16 +324,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>The access keys for this Redis Cache.</return>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.RefreshKeys()
         {
-            return ((IRedisCache)this).RefreshKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Fetch the up-to-date access keys from Azure for this Redis Cache.
-        /// </summary>
-        /// <return>The access keys for this Redis Cache.</return>
-        async Task<IRedisAccessKeys> IRedisCache.RefreshKeysAsync(CancellationToken cancellationToken)
-        {
-            return await this.RefreshKeysAsync(cancellationToken);
+            return this.RefreshKeysAsync().GetAwaiter().GetResult() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
         }
 
         /// <summary>
@@ -384,7 +359,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 return this.SubnetId();
             }
         }
-        
+
+        /// <return>Exposes features available only to Premium Sku Redis Cache instances.</return>
+        Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium Microsoft.Azure.Management.Redis.Fluent.IRedisCache.AsPremium()
+        {
+            return this.AsPremium() as Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium;
+        }
+
         /// <summary>
         /// Disables non-ssl Redis server port (6379).
         /// </summary>
@@ -407,7 +388,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Begins an update for a new resource.
         /// This is the beginning of the builder pattern used to update top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
-        /// process in Azure is Appliable.apply().
+        /// process in Azure is  Appliable.apply().
         /// </summary>
         /// <return>The stage of new resource update.</return>
         RedisCache.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<RedisCache.Update.IUpdate>.Update()
@@ -575,17 +556,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="prefix">Prefix to use for exported files.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportData(string containerSASUrl, string prefix)
         {
-             ((IRedisCachePremium)this).ExportDataAsync(containerSASUrl, prefix).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Export data from Redis Cache.
-        /// </summary>
-        /// <param name="containerSASUrl">Container name to export to.</param>
-        /// <param name="prefix">Prefix to use for exported files.</param>
-        async Task Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportDataAsync(string containerSASUrl, string prefix, CancellationToken cancellationToken)
-        {
-            await this.ExportDataAsync(containerSASUrl, prefix, cancellationToken);
+ 
+            this.ExportDataAsync(containerSASUrl, prefix).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -595,19 +567,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="prefix">Prefix to use for exported files.</param>
         /// <param name="fileFormat">Specifies file format.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportData(string containerSASUrl, string prefix, string fileFormat)
-        { 
-            ((IRedisCachePremium)this).ExportDataAsync(containerSASUrl, prefix, fileFormat).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Export data from Redis Cache.
-        /// </summary>
-        /// <param name="containerSASUrl">Container name to export to.</param>
-        /// <param name="prefix">Prefix to use for exported files.</param>
-        /// <param name="fileFormat">Specifies file format.</param>
-        async Task IRedisCachePremium.ExportDataAsync(string containerSASUrl, string prefix, string fileFormat, CancellationToken cancellationToken)
         {
-            await this.ExportDataAsync(containerSASUrl, prefix, fileFormat, cancellationToken);
+ 
+            this.ExportDataAsync(containerSASUrl, prefix, fileFormat).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -616,16 +578,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="files">Files to import.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ImportData(IList<string> files)
         {
-             ((IRedisCachePremium)this).ImportDataAsync(files).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Import data into Redis Cache.
-        /// </summary>
-        /// <param name="files">Files to import.</param>
-        async Task IRedisCachePremium.ImportDataAsync(IList<string> files, CancellationToken cancellationToken)
-        {
-            await this.ImportDataAsync(files, cancellationToken);
+ 
+            this.ImportDataAsync(files).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -634,25 +588,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="files">Files to import.</param>
         /// <param name="fileFormat">Specifies file format.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ImportData(IList<string> files, string fileFormat)
-        { 
-            ((IRedisCachePremium)this).ImportDataAsync(files, fileFormat).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Import data into Redis Cache.
-        /// </summary>
-        /// <param name="files">Files to import.</param>
-        /// <param name="fileFormat">Specifies file format.</param>
-        async Task IRedisCachePremium.ImportDataAsync(IList<string> files, string fileFormat, CancellationToken cancellationToken)
         {
-            await this.ImportDataAsync(files, fileFormat, cancellationToken);
+ 
+            this.ImportDataAsync(files, fileFormat).GetAwaiter().GetResult();
         }
 
         /// <summary>
         /// Deletes the patching schedule for Redis Cache.
         /// </summary>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.DeletePatchSchedule()
-        { 
+        {
+ 
             this.DeletePatchSchedule();
         }
 
@@ -660,9 +606,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Gets the patching schedule for Redis Cache.
         /// </summary>
         /// <return>List of patch schedules for current Redis Cache.</return>
-        System.Collections.Generic.IList<Models.ScheduleEntry> Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ListPatchSchedules()
+        System.Collections.Generic.IReadOnlyList<Models.ScheduleEntry> Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ListPatchSchedules()
         {
-            return this.ListPatchSchedules() as System.Collections.Generic.IList<Models.ScheduleEntry>;
+            return this.ListPatchSchedules() as System.Collections.Generic.IReadOnlyList<Models.ScheduleEntry>;
         }
 
         /// <summary>
@@ -674,19 +620,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ForceReboot(string rebootType)
         {
-             ((IRedisCachePremium)this).ForceRebootAsync(rebootType).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
-        /// </summary>
-        /// <param name="rebootType">
-        /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
-        /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
-        /// </param>
-        async Task IRedisCachePremium.ForceRebootAsync(string rebootType, CancellationToken cancellationToken)
-        {
-            await this.ForceRebootAsync(rebootType, cancellationToken);
+ 
+            this.ForceRebootAsync(rebootType).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -699,29 +634,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="shardId">In case of cluster cache, this specifies shard id which should be rebooted.</param>
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ForceReboot(string rebootType, int shardId)
         {
-            ((IRedisCachePremium)this).ForceRebootAsync(rebootType, shardId).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
-        /// </summary>
-        /// <param name="rebootType">
-        /// Specifies which Redis node(s) to reboot. Depending on this value data loss is
-        /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
-        /// </param>
-        /// <param name="shardId">In case of cluster cache, this specifies shard id which should be rebooted.</param>
-        async Task IRedisCachePremium.ForceRebootAsync(string rebootType, int shardId, CancellationToken cancellationToken)
-        {
-            await this.ForceRebootAsync(rebootType, shardId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Redis.Fluent.IRedisCache Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.Redis.Fluent.IRedisCache;
+ 
+            this.ForceRebootAsync(rebootType, shardId).GetAwaiter().GetResult();
         }
     }
 }

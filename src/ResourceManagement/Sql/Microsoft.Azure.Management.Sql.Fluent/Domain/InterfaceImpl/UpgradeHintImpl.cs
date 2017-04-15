@@ -3,7 +3,6 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
     using System;
 
     internal partial class UpgradeHintImpl 
@@ -11,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets Target ServiceLevelObjectiveId for upgrade hint.
         /// </summary>
-        System.Guid Microsoft.Azure.Management.Sql.Fluent.IUpgradeHint.TargetServiceLevelObjectiveId
+        System.Guid Microsoft.Azure.Management.Sql.Fluent.IUpgradeHintInterface.TargetServiceLevelObjectiveId
         {
             get
             {
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets Target ServiceLevelObjective for upgrade hint.
         /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.IUpgradeHint.TargetServiceLevelObjective
+        string Microsoft.Azure.Management.Sql.Fluent.IUpgradeHintInterface.TargetServiceLevelObjective
         {
             get
             {

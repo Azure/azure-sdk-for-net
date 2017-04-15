@@ -8,8 +8,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Collections.Generic;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
+    using Microsoft.Azure.Management.ServiceBus.Fluent;
     using Microsoft.Rest;
-    using ServiceBus.Fluent;
 
     internal partial class QueuesImpl 
     {
@@ -38,9 +40,20 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        Queue.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<Queue.Definition.IBlank>.Define(string name)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IBlank>.Define(string name)
         {
-            return this.Define(name) as Queue.Definition.IBlank;
+            return this.Define(name) as Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Definition.IBlank;
+        }
+
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager>.Manager
+        {
+            get
+            {
+                return this.Manager as Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager;
+            }
         }
     }
 }

@@ -2,21 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Redis.Fluent.Models;
 
     internal partial class RedisAccessKeysImpl 
     {
-        /// <summary>
-        /// Gets a primary key value.
-        /// </summary>
-        string Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys.PrimaryKey
-        {
-            get
-            {
-                return this.PrimaryKey;
-            }
-        }
-
         /// <summary>
         /// Gets a secondary key value.
         /// </summary>
@@ -25,6 +14,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             get
             {
                 return this.SecondaryKey;
+            }
+        }
+
+        /// <summary>
+        /// Gets a primary key value.
+        /// </summary>
+        string Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys.PrimaryKey
+        {
+            get
+            {
+                return this.PrimaryKey;
             }
         }
     }

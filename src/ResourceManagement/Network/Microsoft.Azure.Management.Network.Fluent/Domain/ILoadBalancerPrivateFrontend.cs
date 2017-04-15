@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerPrivateFrontend  :
-        ILoadBalancerFrontend,
-        IHasPrivateIPAddress,
-        IHasSubnet
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend,
+        Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet
     {
         /// <return>
         /// Associated subnet

@@ -3,22 +3,22 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL ElasticPool's Database Activity.
     /// </summary>
     public interface IElasticPoolDatabaseActivity  :
-        IHasInner<Models.ElasticPoolDatabaseActivityInner>,
-        IHasResourceGroup,
-        IHasName,
-        IHasId
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ElasticPoolDatabaseActivityInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
         /// <summary>
-        /// Gets the database name.
+        /// Gets the error message if available.
         /// </summary>
-        string DatabaseName { get; }
+        string ErrorMessage { get; }
 
         /// <summary>
         /// Gets the name of the current Elastic Pool the database is in if available.
@@ -26,19 +26,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string CurrentElasticPoolName { get; }
 
         /// <summary>
-        /// Gets the error message if available.
+        /// Gets the percentage complete if available.
         /// </summary>
-        string ErrorMessage { get; }
+        int PercentComplete { get; }
 
         /// <summary>
-        /// Gets the error severity if available.
+        /// Gets the current state of the operation.
         /// </summary>
-        int ErrorSeverity { get; }
-
-        /// <summary>
-        /// Gets the error code if available.
-        /// </summary>
-        int ErrorCode { get; }
+        string State { get; }
 
         /// <summary>
         /// Gets the name of the Azure SQL Server the Elastic Pool is in.
@@ -46,24 +41,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string ServerName { get; }
 
         /// <summary>
-        /// Gets the percentage complete if available.
+        /// Gets the time the operation finished (ISO8601 format).
         /// </summary>
-        int PercentComplete { get; }
-
-        /// <summary>
-        /// Gets the name of the current service objective if available.
-        /// </summary>
-        string CurrentServiceObjective { get; }
-
-        /// <summary>
-        /// Gets the name for the Elastic Pool the database is moving into if available.
-        /// </summary>
-        string RequestedElasticPoolName { get; }
-
-        /// <summary>
-        /// Gets the name of the requested service objective if available.
-        /// </summary>
-        string RequestedServiceObjective { get; }
+        System.DateTime EndTime { get; }
 
         /// <summary>
         /// Gets the unique operation ID.
@@ -76,18 +56,38 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         System.DateTime StartTime { get; }
 
         /// <summary>
-        /// Gets the time the operation finished (ISO8601 format).
+        /// Gets the database name.
         /// </summary>
-        System.DateTime EndTime { get; }
+        string DatabaseName { get; }
 
         /// <summary>
-        /// Gets the current state of the operation.
+        /// Gets the error severity if available.
         /// </summary>
-        string State { get; }
+        int ErrorSeverity { get; }
 
         /// <summary>
         /// Gets the operation name.
         /// </summary>
         string Operation { get; }
+
+        /// <summary>
+        /// Gets the error code if available.
+        /// </summary>
+        int ErrorCode { get; }
+
+        /// <summary>
+        /// Gets the name for the Elastic Pool the database is moving into if available.
+        /// </summary>
+        string RequestedElasticPoolName { get; }
+
+        /// <summary>
+        /// Gets the name of the requested service objective if available.
+        /// </summary>
+        string RequestedServiceObjective { get; }
+
+        /// <summary>
+        /// Gets the name of the current service objective if available.
+        /// </summary>
+        string CurrentServiceObjective { get; }
     }
 }

@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// An immutable client-side representation of an NS (name server) record set in Azure DNS Zone.
     /// </summary>
     public interface INSRecordSet  :
-        IDnsRecordSet
+        Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet
     {
         /// <summary>
         /// Gets the name server names of NS (name server) records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<string> NameServers { get; }
+        System.Collections.Generic.IReadOnlyList<string> NameServers { get; }
     }
 }
