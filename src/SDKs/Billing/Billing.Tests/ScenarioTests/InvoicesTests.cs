@@ -5,10 +5,13 @@ using Billing.Tests.Helpers;
 using Microsoft.Azure.Management.Billing;
 using Microsoft.Azure.Management.Billing.Models;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using Xunit;
 
 namespace Billing.Tests.ScenarioTests
@@ -22,6 +25,7 @@ namespace Billing.Tests.ScenarioTests
         [Fact]
         public void ListInvoicesTest()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -35,6 +39,7 @@ namespace Billing.Tests.ScenarioTests
         [Fact]
         public void ListInvoicesWithQueryParametersTest()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -64,6 +69,7 @@ namespace Billing.Tests.ScenarioTests
         [Fact]
         public void GetInvoiceWithName()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -78,6 +84,7 @@ namespace Billing.Tests.ScenarioTests
         [Fact]
         public void GetInvoicesNoResult()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             string rangeFilter = "invoicePeriodEndDate lt 2016-01-31";
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -96,5 +103,13 @@ namespace Billing.Tests.ScenarioTests
                 }
             }
         }
+
+        private static string GetSessionsDirectoryPath()
+        {
+            System.Type something = typeof(Billing.Tests.ScenarioTests.InvoicesTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+        }
+
     }
 }

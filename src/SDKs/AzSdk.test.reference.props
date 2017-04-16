@@ -5,7 +5,14 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0)" />
+	<PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.1.0-preview" />
+	
+	<!-- This is needed for discovering tests in test explorer -->
+	<PackageReference Include="System.Runtime.InteropServices" Version="4.1.0" />
+	
   </ItemGroup>
+  
+
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
   <!--
@@ -16,6 +23,8 @@
   </ItemGroup>
 
   <!-- 
+	
+  
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">    
     
 	<PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />

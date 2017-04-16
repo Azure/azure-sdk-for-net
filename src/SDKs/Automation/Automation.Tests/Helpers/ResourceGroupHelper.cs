@@ -5,21 +5,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test;
+//using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Net.Http;
 
 namespace Microsoft.Azure.Management.Automation.Testing
 {
     public static class ResourceGroupHelper
     {
 
-        public static AutomationManagementClient GetAutomationClient(RecordedDelegatingHandler handler)
+        public static AutomationManagementClient GetAutomationClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<AutomationManagementClient>(new CSMTestEnvironmentFactory());
+            //return TestBase.GetServiceClient<AutomationManagementClient>(new CSMTestEnvironmentFactory());
+            return context.GetServiceClient<AutomationManagementClient>(false, handler);
         }
 
-        public static ResourceManagementClient GetResourcesClient(RecordedDelegatingHandler handler)
+        public static ResourceManagementClient GetResourcesClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            
+            return context.GetServiceClient<ResourceManagementClient>(false, handler);
+            //return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
         /// <summary>
@@ -36,9 +41,9 @@ namespace Microsoft.Azure.Management.Automation.Testing
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.Provider.ResourceTypes)
+            foreach (var resource in provider.ResourceTypes)
             {
-                if (string.Equals(resource.Name, parts[1], StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {
                     location = resource.Locations.FirstOrDefault(supportedLocations.Contains);
                 }

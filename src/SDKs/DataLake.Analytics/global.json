@@ -1,3 +1,0 @@
-{
-  "projects": [ "Microsoft.Azure.Management.DataLake.Analytics", "DataLakeAnalytics.Tests", "../DataLake.Store" ]
-}

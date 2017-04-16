@@ -7,14 +7,27 @@ using System.Linq;
 using System.Net;
 using Xunit;
 using Microsoft.Azure.Management.Billing;
+using Microsoft.Azure.Test.HttpRecorder;
+using System.IO;
+using System.Reflection;
 
 namespace Billing.Tests.ScenarioTests
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class OperationsTests : TestBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         [Fact]
         public void ListOperationsTest()
         {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 // Create client

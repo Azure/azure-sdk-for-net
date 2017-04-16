@@ -36,7 +36,8 @@ namespace Authorization.Tests
             _output = output;
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void ClassicAdministratorListTests()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -67,7 +68,8 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleAssignmentByIdTests()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -120,7 +122,8 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleAssignmentsListGetTests()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -172,7 +175,8 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleAssignmentsCreateDeleteTests()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -212,7 +216,8 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleAssignmentAtScopeAndAboveTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -242,9 +247,11 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleAssignmentListByFilterTest()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -294,6 +301,7 @@ namespace Authorization.Tests
         [Fact(Skip = "PAS Service Issue - Paging not enabled")]
         public void RoleAssignmentPagingTest()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -389,9 +397,11 @@ namespace Authorization.Tests
         }
 
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleAssignmentListForScopeTest()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -420,9 +430,11 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Graph issue when adding user to group, needs investigation")]
+        //[Fact(Skip = "Graph issue when adding user to group, needs investigation")]
+        [Fact]
         public void RoleAssignmentListWithAssignedToFilterTest()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -492,9 +504,12 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleDefinitionsListGetTests()
         {
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -580,9 +595,12 @@ namespace Authorization.Tests
         //    }
         //}
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleDefinitionsByIdTests()
         {
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -614,10 +632,13 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
+        [Fact]
         public void RoleDefinitionUpdateTests()
         {
-			using (MockContext context = MockContext.Start(this.GetType().FullName))
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
 
@@ -696,9 +717,12 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
+        [Fact]
         public void RoleDefinitionCreateTests()
         {
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
             const string RoleDefIdPrefix = "/providers/Microsoft.Authorization/roleDefinitions/";
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {

@@ -65,7 +65,7 @@
          ContinueOnError="ErrorAndStop" />
   </Target>
   
-  <Target Name="BuildLatestProjects">
+  <Target Name="BuildLatestProjects">  
     <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
     <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
     <PropertyGroup>

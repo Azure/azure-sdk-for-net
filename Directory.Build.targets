@@ -1,5 +1,8 @@
 ﻿<Project>  
 <Import Project="tools\buildTargets\common.targets" />
+
+	
+
   
   <!-- <Target Name="BuildSdk" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" /> -->
   

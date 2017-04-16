@@ -8,9 +8,10 @@ using System.Net;
 using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
+//using Microsoft.Azure.Test;
 using Newtonsoft.Json;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Microsoft.Azure.Management.Automation.Testing
 {
@@ -20,12 +21,12 @@ namespace Microsoft.Azure.Management.Automation.Testing
         private const string automationAccount = "SDKTestAccount";
         private const string location = "East Us";
         
-        public AutomationTestBase()
+        public AutomationTestBase(MockContext context)
         {
             var handler = new RecordedDelegatingHandler();
-            AutomationClient = ResourceGroupHelper.GetAutomationClient(handler);
+            AutomationClient = ResourceGroupHelper.GetAutomationClient(context, handler);
 
-            ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+            ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourcesClient(context, handler);
 
             try
             {
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Automation.Testing
             {
                 if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
             }
-            
+
 
             // Clean up the automation account, delete runbooks, schedules, variables, etc.
             this.CleanUpCredentials();
@@ -58,6 +59,45 @@ namespace Microsoft.Azure.Management.Automation.Testing
             this.CleanUpVariables();
             this.CleanUpWebhooks();
         }
+
+        //public AutomationTestBase()
+        //{
+        //    var handler = new RecordedDelegatingHandler();
+        //    AutomationClient = ResourceGroupHelper.GetAutomationClient(handler);
+
+        //    ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+
+        //    try
+        //    {
+        //        resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroup,
+        //        new ResourceGroup
+        //        {
+        //            Location = location
+        //        });
+
+        //        AutomationClient.AutomationAccounts.CreateOrUpdate(resourceGroup, new AutomationAccountCreateOrUpdateParameters
+        //        {
+        //            Name = automationAccount,
+        //            Location = location,
+        //            Properties = new AutomationAccountCreateOrUpdateProperties()
+        //            {
+        //                Sku = new Sku() { Name = "Free", Family = "Test", Capacity = 1 }
+        //            }
+        //        });
+        //    }
+        //    catch (CloudException ex)
+        //    {
+        //        if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
+        //    }
+            
+
+        //    // Clean up the automation account, delete runbooks, schedules, variables, etc.
+        //    this.CleanUpCredentials();
+        //    this.CleanUpRunbooks();
+        //    this.CleanUpSchedules();
+        //    this.CleanUpVariables();
+        //    this.CleanUpWebhooks();
+        //}
 
         public AutomationManagementClient AutomationClient { get; private set; }
 

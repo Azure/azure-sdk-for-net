@@ -1,5 +1,6 @@
 ﻿<Project>  
-  <Import Project="dirs.proj" />
+	<Import Project="dirs.proj" />
+	
   
 	<PropertyGroup>
 		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
@@ -50,6 +51,9 @@
 
   </Target>
   
+  
+	<Import Project="tools\buildTargets\common.Build.props"/>
+	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
 </Project>
 
 <!--
