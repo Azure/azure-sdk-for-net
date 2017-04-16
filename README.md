@@ -13,17 +13,17 @@ that take advantage of scalable cloud computing resources.
 
 ### To build:
 
-####Full Build
+#### Full Build
 
  1. Navigate to repository root directory
  2. Invoke **msbuild** build.proj
 
-####Build one nuget package
+#### Build one nuget package
 
  1. **msbuild** build.proj /t:build;package /p:scope=ResourceManagement\Compute
 
 
-####Using Visual Studio:
+#### Using Visual Studio:
 
   
 
