@@ -42,7 +42,7 @@ namespace Fluent.Tests.Miscellaneous
                     azure = Microsoft.Azure.Management.Fluent.Azure
                         .Configure()
                         .WithUserAgent("azure-fluent-test", "1.0.0-prelease")
-                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                         .WithDelegatingHandlers(TestHelper.GetHandlers())
                         .Authenticate(credentials)
                         .WithDefaultSubscription();
