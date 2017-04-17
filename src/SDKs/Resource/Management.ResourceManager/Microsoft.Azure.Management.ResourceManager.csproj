@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
+    <Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
+    <AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
+    <VersionPrefix>1.5.0-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure resource management;resource management;resource groups</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>  
+</Project>

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Websites</PackageId>
+    <Description>Provides website management capabilities for Microsoft Azure.</Description>
+    <AssemblyName>Microsoft.Azure.Management.Websites</AssemblyName>
+    <VersionPrefix>1.6.0-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure website management;website management</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>  
+</Project>

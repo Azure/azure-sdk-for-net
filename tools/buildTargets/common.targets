@@ -76,7 +76,8 @@
 	  
 	  <Message Text="Building SDK Projects ..... @(SDKProject)" />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
-         Projects="@(SDKProject)"         
+         Projects="@(SDKProject)"
+		BuildInParallel="$(BuildInParallel)"
          ContinueOnError="ErrorAndStop" />
     
     <Message Text="Building SDKTest Projects ....... @(SDKTestProject)" />

@@ -8,7 +8,9 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +26,7 @@ namespace AzureRedisCache.Tests
         
         public TestsFixtureWithCacheCreate()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             _context = new MockContext();
             MockContext.Start(this.GetType().FullName, ".ctor");
             try
@@ -53,8 +56,15 @@ namespace AzureRedisCache.Tests
 
         private void Cleanup()
         {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
             _context.Dispose();
+        }
+
+        private static string GetSessionsDirectoryPath()
+        {
+            string executingAssemblyPath = typeof(AzureRedisCache.Tests.TestsFixtureWithCacheCreate).GetTypeInfo().Assembly.Location;
+            return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
     }
 }

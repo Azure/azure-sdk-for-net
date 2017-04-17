@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.TrafficManager</PackageId>
+    <Description>Microsoft Azure Management TrafficManager Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
+    <VersionPrefix>2.1.0-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management</PackageTags>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

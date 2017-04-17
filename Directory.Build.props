@@ -17,6 +17,10 @@
 		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
 		<ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
 	</PropertyGroup>
+	
+	<PropertyGroup>
+		<BuildInParallel>true</BuildInParallel>
+	</PropertyGroup>
 
 	<ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
 		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />

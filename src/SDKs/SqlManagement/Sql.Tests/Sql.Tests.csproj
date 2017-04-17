@@ -1,38 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
-    <DelaySign>true</DelaySign>
-    <AssemblyName>Sql.Tests</AssemblyName>
-    <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
     <PackageId>Sql.Tests</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <AssemblyName>Sql.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
-
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+    <PackageReference Include="Microsoft.Azure.Management.Sql" Version="1.2.0-preview" />
+    
+    <!--<ProjectReference Include="..\Management.Sql\Microsoft.Azure.Management.Sql.csproj" />-->
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
+  <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
-    <ProjectReference Include="..\..\..\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.Management.Sql\Microsoft.Azure.Management.Sql.csproj" />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.3" />
-    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.3" />
-    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.0.0-preview" />
-  </ItemGroup>
-
 </Project>

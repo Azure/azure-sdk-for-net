@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Management.ServiceFabric</PackageId>
+    <Description>Microsoft Azure Management ServiceFabric Library</Description>
+    <AssemblyName>Management.ServiceFabric</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure Management Library;ServiceFabric;ServiceFabric management</PackageTags>    
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
