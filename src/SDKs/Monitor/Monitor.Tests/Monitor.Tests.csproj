@@ -10,11 +10,10 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Monitor" Version="0.16.0-preview" />
-    
-    <!--<ProjectReference Include="..\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />-->
+    <!-- PackageReference Include="Microsoft.Azure.Management.Monitor" Version="0.16.0-preview" / -->
+    <ProjectReference Include="..\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

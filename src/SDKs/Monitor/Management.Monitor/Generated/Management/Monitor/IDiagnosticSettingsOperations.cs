@@ -19,34 +19,18 @@ namespace Microsoft.Azure.Management.Insights
     using System.Threading.Tasks;
 
     /// <summary>
-    /// LogProfilesOperations operations.
+    /// DiagnosticSettingsOperations operations.
     /// </summary>
-    public partial interface ILogProfilesOperations
+    public partial interface IDiagnosticSettingsOperations
     {
         /// <summary>
-        /// Deletes the log profile.
+        /// Gets the active diagnostic settings for the specified resource.
         /// </summary>
-        /// <param name='logProfileName'>
-        /// The name of the log profile.
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string logProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the log profile.
-        /// </summary>
-        /// <param name='logProfileName'>
-        /// The name of the log profile.
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,23 +47,26 @@ namespace Microsoft.Azure.Management.Insights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LogProfileResource>> GetWithHttpMessagesAsync(string logProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticSettingsResource>> GetWithHttpMessagesAsync(string resourceUri, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a log profile in Azure Monitoring REST API.
+        /// Creates or updates diagnostic settings for the specified resource.
         /// </summary>
-        /// <param name='logProfileName'>
-        /// The name of the log profile.
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
         /// </param>
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -88,17 +75,49 @@ namespace Microsoft.Azure.Management.Insights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LogProfileResource>> CreateOrUpdateWithHttpMessagesAsync(string logProfileName, LogProfileResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticSettingsResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceUri, DiagnosticSettingsResource parameters, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List the log profiles.
+        /// Deletes existing diagnostic settings for the specified resource.
         /// </summary>
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceUri, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates an existing DiagnosticSettingsResource tags. To update
+        /// other fields use the CreateOrUpdate method.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='diagnosticSettingResource'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -107,6 +126,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<LogProfileResource>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, DiagnosticSettingsResource diagnosticSettingResource, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

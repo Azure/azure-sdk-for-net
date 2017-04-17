@@ -19,20 +19,18 @@ namespace Microsoft.Azure.Management.Insights.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of a service diagnostic setting
+    /// Description of diagnostic setting
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServiceDiagnosticSettingsResource : Resource
+    public partial class DiagnosticSettingsResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ServiceDiagnosticSettingsResource
-        /// class.
+        /// Initializes a new instance of the DiagnosticSettingsResource class.
         /// </summary>
-        public ServiceDiagnosticSettingsResource() { }
+        public DiagnosticSettingsResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceDiagnosticSettingsResource
-        /// class.
+        /// Initializes a new instance of the DiagnosticSettingsResource class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Azure resource Id</param>
@@ -54,7 +52,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Analytics workspace) for a Log Analytics workspace to which you
         /// would like to send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2</param>
-        public ServiceDiagnosticSettingsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountId = default(string), string serviceBusRuleId = default(string), string eventHubAuthorizationRuleId = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
+        public DiagnosticSettingsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountId = default(string), string serviceBusRuleId = default(string), string eventHubAuthorizationRuleId = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
             : base(location, id, name, type, tags)
         {
             StorageAccountId = storageAccountId;
