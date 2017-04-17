@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     {
 
         ///GENMHASH:04586DB2C8D9E7DB2F3AB47785D5A15A:F328364702E41F21DD4388BDA9FC5770
-        public IList<string> Ipv4Addresses()
+        public IReadOnlyList<string> Ipv4Addresses()
         {
             List<string> ipv4Addresses = new List<string>();
             if (Inner.ARecords != null) {

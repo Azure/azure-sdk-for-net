@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Collections.Generic;
     using DnsZone.Definition;
     using Models;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for DnsZone.
@@ -56,9 +57,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:2EBE0E253F1D6DB178F3433FF5310EA8:676B110D94D76F014EEEE150AEE3144F
-        public IList<string> NameServers()
+        public IReadOnlyList<string> NameServers()
         {
-            return Inner.NameServers;
+            return Inner.NameServers?.ToList();
         }
 
         ///GENMHASH:11F6C7A282BFB4C2631CAE48D9B23761:266B9231EBE6B8B39DE5D64A23C759BF
