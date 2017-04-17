@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:EFC1A644FBCF1755C5FEB8713E37C978:7F01B6BD1881008A6F33AB93CA13267F
-        internal IDictionary<string, IApplicationPackage> ApplicationPackages()
+        internal IReadOnlyDictionary<string, IApplicationPackage> ApplicationPackages()
         {
             return applicationPackages.AsMap();
         }

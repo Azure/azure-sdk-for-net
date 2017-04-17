@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:2BD1C2DEE2E7FBB6D90AB920FAD6E9EE:EA53AD3391D9207B84DE8253439698A9
-        public IList<InstanceViewStatus> Statuses()
+        public IReadOnlyList<InstanceViewStatus> Statuses()
         {
-            return Inner.Statuses;
+            return Inner.Statuses?.ToList();
         }
 
         ///GENMHASH:1FF50300531E284E780AF0F5120C9D38:294D69029925C7F021009A4279127F9F

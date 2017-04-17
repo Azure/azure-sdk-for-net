@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         }
 
         ///GENMHASH:310B2185D2F2431DF2BBDBC06E585C74:F487B2409E11AB3B3255E980C7B88B89
-        internal IDictionary<string, Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage> AsMap()
+        internal IReadOnlyDictionary<string, Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage> AsMap()
         {
             var result = new Dictionary<string, IApplicationPackage>();
 
