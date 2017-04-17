@@ -55,6 +55,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:467A5E1DBEFF6DFFFD3FD21A958498A3:FAFE8BE8CCB0532D78869AAF9E2F5DDF
         public IReadOnlyList<DataDiskImage> DataDiskImages()
         {
+            return Inner.DataDiskImages?.ToList();
         }
 
         public ImageReference ImageReference()
