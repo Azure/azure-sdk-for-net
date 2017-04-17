@@ -1701,7 +1701,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     port,
                     userName,
                     password,
-                    "sudo waagent - deprovision + user--force"));
+                    "sudo waagent -deprovision+user --force"));
             }
         }
 
