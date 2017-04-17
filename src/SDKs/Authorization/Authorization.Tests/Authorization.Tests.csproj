@@ -10,7 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />
+    <PackageReference Include="Microsoft.Azure.Management.Authorization" Version="2.5.0-preview" />
+    <!--<ProjectReference Include="..\Microsoft.Azure.Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>

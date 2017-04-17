@@ -480,7 +480,6 @@ namespace KeyVault.Management.Tests
             Assert.NotNull(deletedVault.Id);
             return true;
         }
-
         public static bool IsEqual(this Vault vault1, Vault vault2)
         {
             Assert.Equal(vault2.Location, vault1.Location);

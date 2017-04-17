@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <Description>Cdn.Tests Class Library</Description>
     <VersionPrefix>1.0.2</VersionPrefix>
     <Authors>Microsoft Corporation</Authors>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <!--<TargetFramework>netcoreapp1.0</TargetFramework>
     <DelaySign>true</DelaySign>
     <AssemblyName>Cdn.Tests</AssemblyName>
     <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>true</SignAssembly>-->
     <PackageId>Cdn.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
@@ -24,7 +24,93 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
 
+  <ItemGroup>    
+    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.1.0-preview" />
+
+    <PackageReference Include="Microsoft.Azure.Management.Cdn" Version="3.1.0-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.CustomDomainTests\CustomDomainCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointCheckUsageTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointCreateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointDeleteTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointGetListTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointPurgeLoadTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointStartStopTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\EndpointUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.EndpointTests\ValidateCustomDomainTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.GetEdgeNodeTests\GetEdgeNodeTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.NameAvailabilityTests\EndpointCheckNameAvailabilityTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.OperationsTests\ListOperationsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.OriginTests\OriginCreateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.OriginTests\OriginDeleteTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.OriginTests\OriginGetListTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.OriginTests\OriginUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\GenerateSsoUriTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\ProfileCheckUsageTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\ProfileCreateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\ProfileDeleteTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\ProfileGetListTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\ProfileListBySubcriptionTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Cdn.Tests.ScenarioTests.ProfileTests\ProfileUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <!--
   <ItemGroup>
     <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
   </ItemGroup>
@@ -41,5 +127,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Management.Cdn\Microsoft.Azure.Management.Cdn.csproj" />
   </ItemGroup>
-
+-->
 </Project>

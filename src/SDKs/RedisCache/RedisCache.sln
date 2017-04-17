@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisCache.Tests", "RedisCache.Tests\RedisCache.Tests.csproj", "{4980E1E9-7021-452E-863A-87E4D9A47898}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Redis", "Microsoft.Azure.Management.Redis\Microsoft.Azure.Management.Redis.csproj", "{A8DC2FFF-5761-4F7D-9D8F-80917B251768}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Redis", "Management.Redis\Microsoft.Azure.Management.Redis.csproj", "{81E66A55-F17C-4088-80F6-EF7C01C11E37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{4980E1E9-7021-452E-863A-87E4D9A47898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4980E1E9-7021-452E-863A-87E4D9A47898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4980E1E9-7021-452E-863A-87E4D9A47898}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8DC2FFF-5761-4F7D-9D8F-80917B251768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8DC2FFF-5761-4F7D-9D8F-80917B251768}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8DC2FFF-5761-4F7D-9D8F-80917B251768}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8DC2FFF-5761-4F7D-9D8F-80917B251768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E66A55-F17C-4088-80F6-EF7C01C11E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E66A55-F17C-4088-80F6-EF7C01C11E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E66A55-F17C-4088-80F6-EF7C01C11E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E66A55-F17C-4088-80F6-EF7C01C11E37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

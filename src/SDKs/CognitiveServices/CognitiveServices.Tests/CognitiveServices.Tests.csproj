@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <Description>CognitiveServices.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
+    <AssemblyName>CognitiveServices.Tests</AssemblyName>
+    <!--
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <DelaySign>true</DelaySign>
-    <AssemblyName>CognitiveServices.Tests</AssemblyName>
     <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    -->
     <PackageId>CognitiveServices.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
@@ -23,7 +25,82 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.CognitiveServices" Version="0.3.0-preview" />
+    <PackageReference Include="System.Runtime" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <!--
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountCreateAndGetDifferentSkusTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountCreateErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountCreateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountDeleteTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountEnumerateSkusTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountKeysErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountListByResourceGroupTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountListBySubscriptionTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountListKeysTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountRegenerateKeyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesAccountUpdateWithCreateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesCreateAccountErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesCreateAccountErrorTest2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesDeleteAccountErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesEnumerateSkusErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesGetAccountErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicesUpdateAccountErrorTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\CognitiveServices.Tests.CognitiveServicesAccountTests\CognitiveServicsAccountCreateAllApisTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <!--
   <ItemGroup>
     <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
   </ItemGroup>
@@ -45,5 +122,5 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
     <DefineConstants>$(DefineConstants);PORTABLE</DefineConstants>
   </PropertyGroup>
-
+-->
 </Project>

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Network</PackageId>
+    <Description>Provides management capabilities for Network services.</Description>
+    <AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
+    <VersionPrefix>9.1.0-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure Network management;Network;Network management;windowsazureofficial</PackageTags>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>  
+</Project>

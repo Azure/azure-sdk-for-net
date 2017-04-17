@@ -5,7 +5,8 @@
 using System;
 using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.Azure.Test;
+//using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -16,10 +17,11 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteRunbook()
         {
-            using (var undoContext = UndoContext.Current)
+            //using (var undoContext = UndoContext.Current)
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                //undoContext.Start();
+                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
                 {
                     string runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
                     string runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
@@ -61,11 +63,13 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteSchedule()
         {
-            using (var undoContext = UndoContext.Current)
+            //using (var undoContext = UndoContext.Current)
+            //{
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
+                //undoContext.Start();
 
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
                 {
                     var scheduleName = TestUtilities.GenerateName("hourlySche");
                     var startTime = DateTimeOffset.Now.AddMinutes(30);
@@ -99,11 +103,13 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteVariable()
         {
-            using (var undoContext = UndoContext.Current)
+            //using (var undoContext = UndoContext.Current)
+            //{
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
+                //undoContext.Start();
 
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
                 {
                     var variableName = TestUtilities.GenerateName("variable");
                     var value = 10;
@@ -138,11 +144,13 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteWebhook()
         {
-            using (var undoContext = UndoContext.Current)
+            //using (var undoContext = UndoContext.Current)
+            //{
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
+                //undoContext.Start();
 
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
                 {
                     var webhookName = TestUtilities.GenerateName("webhook");
                     var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
@@ -188,11 +196,13 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteCredential()
         {
-            using (var undoContext = UndoContext.Current)
+            //using (var undoContext = UndoContext.Current)
+            //{
+            //undoContext.Start();
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                undoContext.Start();
 
-                using (AutomationTestBase _testFixture = new AutomationTestBase())
+                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
                 {
                     var credentialName = TestUtilities.GenerateName("credential");
                     var userName = "userName1";

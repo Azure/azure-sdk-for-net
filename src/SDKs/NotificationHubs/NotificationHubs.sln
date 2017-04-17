@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.NotificationHubs", "Microsoft.Azure.Management.NotificationHubs\Microsoft.Azure.Management.NotificationHubs.csproj", "{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationHubs.Tests", "NotificationHubs.Tests\NotificationHubs.Tests.csproj", "{90FE65CB-D848-4ED8-97F5-7C967102CEAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.NotificationHubs", "Management.NotificationHubs\Microsoft.Azure.Management.NotificationHubs.csproj", "{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,22 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net40-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net40-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net40-Release|Any CPU.Build.0 = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{90FE65CB-D848-4ED8-97F5-7C967102CEAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{90FE65CB-D848-4ED8-97F5-7C967102CEAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90FE65CB-D848-4ED8-97F5-7C967102CEAF}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -51,6 +35,22 @@ Global
 		{90FE65CB-D848-4ED8-97F5-7C967102CEAF}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
 		{90FE65CB-D848-4ED8-97F5-7C967102CEAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90FE65CB-D848-4ED8-97F5-7C967102CEAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net40-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net40-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net40-Release|Any CPU.Build.0 = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89CF3FB-C5D2-4DB8-91A7-3AB34E99DB98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

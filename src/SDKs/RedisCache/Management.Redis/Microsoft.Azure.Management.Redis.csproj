@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Redis</PackageId>
+    <Description>Provides redis cache management capabilities for Microsoft Azure.</Description>
+    <VersionPrefix>4.3.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
+    <PackageTags>Microsoft Azure Redis Cache management;Redis Management</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

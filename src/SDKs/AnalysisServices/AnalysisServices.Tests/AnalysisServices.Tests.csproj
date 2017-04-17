@@ -10,7 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />
+    <PackageReference Include="Microsoft.Azure.Management.Analysis" Version="1.1.0-preview" />
+    <!--<ProjectReference Include="..\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>

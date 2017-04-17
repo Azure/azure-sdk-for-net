@@ -65,7 +65,7 @@
          ContinueOnError="ErrorAndStop" />
   </Target>
   
-  <Target Name="BuildLatestProjects">
+  <Target Name="BuildLatestProjects">  
     <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
     <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
     <PropertyGroup>
@@ -76,7 +76,8 @@
 	  
 	  <Message Text="Building SDK Projects ..... @(SDKProject)" />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
-         Projects="@(SDKProject)"         
+         Projects="@(SDKProject)"
+		BuildInParallel="$(BuildInParallel)"
          ContinueOnError="ErrorAndStop" />
     
     <Message Text="Building SDKTest Projects ....... @(SDKTestProject)" />

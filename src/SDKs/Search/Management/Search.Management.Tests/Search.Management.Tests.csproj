@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Search.Management.Tests</PackageId>
+    <Description>Search.Management.Tests Class Library</Description>
+    <AssemblyName>Search.Management.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Search" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Azure.Search" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.1.1-preview" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!--Do not remove until VS Test Tools fixes #472-->
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+</Project>
+  <!--
+  <ItemGroup>
+    <Compile Include="..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.6.7-preview,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.5.1-preview,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.4,4.0)" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.1.1-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Search" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Azure.Search" Version="3.0.3" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <DefineConstants>$(DefineConstants);PORTABLE</DefineConstants>
+  </PropertyGroup>
+
+</Project>
+-->

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Scheduler</PackageId>
+    <Description>Provides job collection and job management capabilities for Microsoft Azure Scheduler.</Description>
+    <AssemblyName>Microsoft.Azure.Management.Scheduler</AssemblyName>
+    <VersionPrefix>2.2.0</VersionPrefix>
+    <PackageTags>Microsoft Azure Scheduler;Scheduler</PackageTags>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

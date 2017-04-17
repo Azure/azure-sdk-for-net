@@ -18,7 +18,7 @@ namespace Test.Azure.Management.Logic
         /// <summary>
         /// Tests the get operation of provider.
         /// </summary>
-        [Fact]
+        [Fact(Skip = @"Missing recording file 'Message: System.ArgumentException : Unable to find recorded mock file '.\src\SDKs\Logic\Logic.Tests\bin\Debug\netcoreapp1.1\SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\GetProviderOperations.json'.' ")]
         public void GetProviderOperations()
         {
             using (

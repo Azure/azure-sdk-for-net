@@ -8,19 +8,22 @@
 		<!-- <PackageReference Include="Microsoft.NETCore.App" Version="1.0.2" /> -->
 	</ItemGroup>
   
+  <ItemGroup>
+	<Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
   
   <PropertyGroup>    
 		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
-	  <NugetCommonProfileTags>RandomTag</NugetCommonProfileTags>
-	  <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
-    <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
-    <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
-    <SkipBuildingTestProject>false</SkipBuildingTestProject>	
-	
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
-    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.0</RuntimeFrameworkVersion>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>
+		<RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+		<NugetCommonProfileTags>RandomTag</NugetCommonProfileTags>
+		<PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
+		<AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
+		<AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+		<SkipBuildingTestProject>false</SkipBuildingTestProject>	
+		
+		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+		<RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.0</RuntimeFrameworkVersion>
+		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>
 	
 	<!-- 
 	<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
@@ -32,14 +35,18 @@
 	-->
 	</PropertyGroup>
 	
-<PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)'=='Debug' ">
-    <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>  
+	<!--
+	<PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)'=='Debug' ">
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>true</DelaySign>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>	
+	</PropertyGroup>  
+
 
   <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)'=='Release' ">
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>  
+-->
   
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
     <DefineConstants>FullNetFx</DefineConstants>
