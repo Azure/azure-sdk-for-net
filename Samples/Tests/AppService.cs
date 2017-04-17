@@ -85,13 +85,110 @@ namespace Samples.Tests
                 Path.Combine("..", "Common"));
         }
 
-        [Fact(Skip = "TODO: Investigate and fix the failure in the product")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppWithTrafficManagerTest()
         {
             RunSampleAsTest(
                 this.GetType().FullName,
                 ManageWebAppWithTrafficManager.Program.RunSample,
+                Path.Combine("..", "Common"));
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppBasicTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageLinuxWebAppBasic.Program.RunSample);
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppSourceControlTest()
+        {
+            RunSampleAsTest(
+               this.GetType().FullName,
+               ManageLinuxWebAppSourceControl.Program.RunSample,
+               Path.Combine("..", "Common"));
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppSqlConnectionTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageLinuxWebAppSqlConnection.Program.RunSample);
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppStorageAccountConnectionTest()
+        {
+            RunSampleAsTest(
+               this.GetType().FullName,
+               ManageLinuxWebAppStorageAccountConnection.Program.RunSample,
+               Path.Combine("..", "Common"));
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppWithDomainSslTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageLinuxWebAppWithDomainSsl.Program.RunSample,
+                Path.Combine("..", "Common"));
+        }
+        
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppWithTrafficManagerTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageLinuxWebAppWithTrafficManager.Program.RunSample,
+                Path.Combine("..", "Common"));
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageFunctionAppBasicTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageFunctionAppBasic.Program.RunSample);
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageFunctionAppSourceControlTest()
+        {
+            RunSampleAsTest(
+               this.GetType().FullName,
+               ManageFunctionAppSourceControl.Program.RunSample,
+               Path.Combine("..", "Common"));
+        }
+
+        [Fact(Skip = "Need to call function app api to get function key")]
+        [Trait("Samples", "AppService")]
+        public void ManageFunctionAppWithAuthenticationTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageFunctionAppWithAuthentication.Program.RunSample,
+                Path.Combine("..", "Common"));
+        }
+
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageFunctionAppWithDomainSslTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageFunctionAppWithDomainSsl.Program.RunSample,
                 Path.Combine("..", "Common"));
         }
     }

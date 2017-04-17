@@ -20,11 +20,38 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     public interface IWithSiteConfigs<FluentT> 
     {
         /// <summary>
-        /// Specifies the Java version.
+        /// Specifies the managed pipeline mode.
         /// </summary>
-        /// <param name="version">The Java version.</param>
+        /// <param name="managedPipelineMode">Managed pipeline mode.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithWebContainer<FluentT> WithJavaVersion(JavaVersion version);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode);
+
+        /// <summary>
+        /// Removes a default document.
+        /// </summary>
+        /// <param name="document">Default document to remove.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithoutDefaultDocument(string document);
+
+        /// <summary>
+        /// Specifies the .NET Framework version.
+        /// </summary>
+        /// <param name="version">The .NET Framework version.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithNetFrameworkVersion(NetFrameworkVersion version);
+
+        /// <summary>
+        /// Turn off PHP support.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithoutPhp();
+
+        /// <summary>
+        /// Specifies the slot name to auto-swap when a deployment is completed in this web app / deployment slot.
+        /// </summary>
+        /// <param name="slotName">The name of the slot, or 'production', to auto-swap.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithAutoSwapSlotName(string slotName);
 
         /// <summary>
         /// Specifies the PHP version.
@@ -34,31 +61,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithPhpVersion(PhpVersion version);
 
         /// <summary>
-        /// Disables remote debugging.
+        /// Specifies the Java version.
         /// </summary>
+        /// <param name="version">The Java version.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithRemoteDebuggingDisabled();
-
-        /// <summary>
-        /// Adds a default document.
-        /// </summary>
-        /// <param name="document">Default document.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithDefaultDocument(string document);
-
-        /// <summary>
-        /// Specifies if the VM powering the web app is always powered on.
-        /// </summary>
-        /// <param name="alwaysOn">True if the web app is always powered on.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithWebAppAlwaysOn(bool alwaysOn);
-
-        /// <summary>
-        /// Adds a list of default documents.
-        /// </summary>
-        /// <param name="documents">List of default documents.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithDefaultDocuments(IList<string> documents);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithWebContainer<FluentT> WithJavaVersion(JavaVersion version);
 
         /// <summary>
         /// Specifies if web sockets are enabled.
@@ -75,38 +82,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithPlatformArchitecture(PlatformArchitecture platform);
 
         /// <summary>
-        /// Specifies the slot name to auto-swap when a deployment is completed in this web app / deployment slot.
+        /// Adds a list of default documents.
         /// </summary>
-        /// <param name="slotName">The name of the slot, or 'production', to auto-swap.</param>
+        /// <param name="documents">List of default documents.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithAutoSwapSlotName(string slotName);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithDefaultDocuments(IList<string> documents);
 
         /// <summary>
-        /// Specifies the .NET Framework version.
+        /// Disables remote debugging.
         /// </summary>
-        /// <param name="version">The .NET Framework version.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithNetFrameworkVersion(NetFrameworkVersion version);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithRemoteDebuggingDisabled();
 
         /// <summary>
-        /// Turn off PHP support.
+        /// Specifies if the VM powering the web app is always powered on.
         /// </summary>
+        /// <param name="alwaysOn">True if the web app is always powered on.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithoutPhp();
-
-        /// <summary>
-        /// Specifies the Python version.
-        /// </summary>
-        /// <param name="version">The Python version.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithPythonVersion(PythonVersion version);
-
-        /// <summary>
-        /// Removes a default document.
-        /// </summary>
-        /// <param name="document">Default document to remove.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithoutDefaultDocument(string document);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithWebAppAlwaysOn(bool alwaysOn);
 
         /// <summary>
         /// Specifies the Visual Studio version for remote debugging.
@@ -116,11 +109,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion);
 
         /// <summary>
-        /// Specifies the managed pipeline mode.
+        /// Specifies the Python version.
         /// </summary>
-        /// <param name="managedPipelineMode">Managed pipeline mode.</param>
+        /// <param name="version">The Python version.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithPythonVersion(PythonVersion version);
+
+        /// <summary>
+        /// Adds a default document.
+        /// </summary>
+        /// <param name="document">Default document.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithDefaultDocument(string document);
     }
 
     /// <summary>
@@ -130,12 +130,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     public interface IWithAuthentication<FluentT> 
     {
         /// <summary>
-        /// Gets Specifies the definition of a new authentication configuration.
+        /// Specifies the definition of a new authentication configuration.
         /// </summary>
-        /// <summary>
-        /// Gets the first stage of an authentication definition.
-        /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineAuthentication { get; }
+        /// <return>The first stage of an authentication definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineAuthentication();
     }
 
     /// <summary>
@@ -245,16 +243,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     public interface IWithSourceControl<FluentT> 
     {
         /// <summary>
-        /// Specifies the source control to be a local Git repository on the web app.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithLocalGitSourceControl();
-
-        /// <summary>
         /// Starts the definition of a new source control.
         /// </summary>
         /// <return>The first stage of a source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineSourceControl();
+
+        /// <summary>
+        /// Specifies the source control to be a local Git repository on the web app.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithLocalGitSourceControl();
     }
 
     /// <summary>
@@ -292,6 +290,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
     public interface IWithAppSettings<FluentT> 
     {
         /// <summary>
+        /// Adds an app setting to the web app. This app setting will be swapped
+        /// as well after a deployment slot swap.
+        /// </summary>
+        /// <param name="key">The key for the app setting.</param>
+        /// <param name="value">The value for the app setting.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithStickyAppSetting(string key, string value);
+
+        /// <summary>
         /// Specifies the app settings for the web app as a  Map. These app settings will be swapped
         /// as well after a deployment slot swap.
         /// </summary>
@@ -306,15 +313,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         /// <param name="value">The value for the app setting.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithAppSetting(string key, string value);
-
-        /// <summary>
-        /// Adds an app setting to the web app. This app setting will be swapped
-        /// as well after a deployment slot swap.
-        /// </summary>
-        /// <param name="key">The key for the app setting.</param>
-        /// <param name="value">The value for the app setting.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT> WithStickyAppSetting(string key, string value);
 
         /// <summary>
         /// Specifies the app settings for the web app as a  Map.
